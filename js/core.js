@@ -48,7 +48,8 @@ function exerciseKey(ex, packageId = ex.packageId) { return packageId ? JSON.str
 function eligible(ex) { return ex.examEligible === true; }
 function generateExam(pool, cfg, lastAttempt = {}, rnd = Math.random) {
   const dist = cfg.dist || { Easy: 5, Medium: 5, Hard: 2, Extreme: 0 };
-  const base = pool.filter(e => eligible(e) && (!cfg.course || e.course === cfg.course));
+  const selectedCourses = Array.isArray(cfg.courses) ? new Set(cfg.courses) : null;
+  const base = pool.filter(e => eligible(e) && (selectedCourses ? selectedCourses.has(e.course) : !cfg.course || e.course === cfg.course));
   const shortage = {}, picked = [];
   for (const d of DIFF) { const need = dist[d] || 0; if (!need) continue;
     const have = base.filter(e => e.difficulty === d);

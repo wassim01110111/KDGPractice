@@ -2389,9 +2389,10 @@ async function pageExam(root, isCurrent = () => true) {
     }
   }
   const courses = uniq(S.exercises, (e) => e.course),
-    cfg = { course: "", Easy: 5, Medium: 5, Hard: 2, Extreme: 0, mins: 60 },
+    cfg = { courses: [...courses], Easy: 5, Medium: 5, Hard: 2, Extreme: 0, mins: 60 },
     msg = h("div");
   const difficultyInputs = {};
+  const courseInputs = new Map();
   if (!S.exercises.some((e) => e.examEligible))
     return root.append(
       empty(
@@ -2420,26 +2421,42 @@ async function pageExam(root, isCurrent = () => true) {
   });
   const updateExamSummary = () => {
     const count = cfg.Easy + cfg.Medium + cfg.Hard + cfg.Extreme;
+    const selectedCourses =
+      cfg.courses.length === courses.length
+        ? "All courses"
+        : cfg.courses.length
+          ? cfg.courses.map(courseLabel).join(", ")
+          : "No courses selected";
     examSummary.replaceChildren(
       h("strong", {}, `${count} questions`),
       h(
         "span",
         {},
-        `${cfg.course ? courseLabel(cfg.course) : "All courses"} · ${cfg.mins} minutes`,
+        `${selectedCourses} · ${cfg.mins} minutes`,
       ),
     );
   };
-  const courseSelect = h(
-    "select",
-    {
-      onchange: (e) => {
-        cfg.course = e.target.value;
-        updateDifficultyLimits();
-        updateExamSummary();
-      },
-    },
-    h("option", { value: "" }, "All courses"),
-    courses.map((c) => h("option", { value: c }, courseLabel(c))),
+  const courseOptions = h(
+    "div",
+    { class: "exam-course-checkboxes", role: "group", "aria-label": "Courses" },
+    courses.map((course) => {
+      const input = h("input", {
+        type: "checkbox",
+        checked: true,
+        onchange: () => {
+          cfg.courses = courses.filter((name) => courseInputs.get(name).checked);
+          updateDifficultyLimits();
+          updateExamSummary();
+        },
+      });
+      courseInputs.set(course, input);
+      return h(
+        "label",
+        { class: "exam-course-checkbox" },
+        input,
+        h("span", {}, courseLabel(course)),
+      );
+    }),
   );
   const minuteControl = h(
     "label",
@@ -2461,7 +2478,7 @@ async function pageExam(root, isCurrent = () => true) {
       const available = S.exercises.filter(
         (exercise) =>
           Core.eligible(exercise) &&
-          (!cfg.course || exercise.course === cfg.course) &&
+          cfg.courses.includes(exercise.course) &&
           exercise.difficulty === difficulty,
       ).length;
       const input = difficultyInputs[difficulty];
@@ -2494,17 +2511,17 @@ async function pageExam(root, isCurrent = () => true) {
         h(
           "p",
           {},
-          "Choose the course, difficulty mix, and time limit for your exam.",
+          "Choose courses, a difficulty mix, and a time limit for your exam.",
         ),
       ),
       h(
         "div",
         { class: "exam-setup-controls" },
         h(
-          "label",
+          "div",
           { class: "exam-course-control" },
-          h("span", {}, "Course"),
-          courseSelect,
+          h("span", {}, "Courses"),
+          courseOptions,
         ),
         difficultyControls,
         examSummary,
@@ -2517,10 +2534,15 @@ async function pageExam(root, isCurrent = () => true) {
           {
             class: "exam-start-button",
             onclick: async () => {
+              if (!cfg.courses.length) {
+                return msg.replaceChildren(
+                  h("p", { class: "bad" }, "Select at least one course."),
+                );
+              }
               const r = generateExam(
                 S.exercises,
                 {
-                  course: cfg.course,
+                  courses: cfg.courses,
                   dist: {
                     Easy: cfg.Easy,
                     Medium: cfg.Medium,
@@ -2535,7 +2557,7 @@ async function pageExam(root, isCurrent = () => true) {
                   S.exercises.filter(
                     (e) =>
                       Core.eligible(e) &&
-                      (!cfg.course || e.course === cfg.course) &&
+                      cfg.courses.includes(e.course) &&
                       e.difficulty === d,
                   ).length;
                 return msg.replaceChildren(

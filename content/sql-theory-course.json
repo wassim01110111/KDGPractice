@@ -3,22 +3,70 @@
   "packageId": "sql-theory-course",
   "version": "1.1.0",
   "topics": [
-    {"id": "database-fundamentals", "title": "Database Fundamentals", "examEligible": true},
-    {"id": "relational-tables", "title": "Relational Tables", "examEligible": true},
-    {"id": "keys-and-relationships", "title": "Keys and Relationships", "examEligible": true},
-    {"id": "multiplicities", "title": "Relationship Multiplicities", "examEligible": true},
-    {"id": "data-modeling", "title": "Data Modeling", "examEligible": true},
-    {"id": "database-roles", "title": "Database Roles", "examEligible": true},
-    {"id": "relational-integrity", "title": "Relational Integrity", "examEligible": true},
-    {"id": "sql-language", "title": "SQL Language", "examEligible": true},
-    {"id": "sql-execution-order", "title": "SQL Execution Order", "examEligible": true},
-    {"id": "text-comparisons", "title": "Text Comparisons", "examEligible": true},
-    {"id": "type-conversion", "title": "Type Conversion", "examEligible": true},
-    {"id": "date-formatting", "title": "Date Formatting", "examEligible": true},
-    {"id": "numeric-formatting", "title": "Numeric Formatting", "examEligible": true},
-    {"id": "numeric-functions", "title": "Numeric Functions", "examEligible": true},
-    {"id": "joins", "title": "Joins", "examEligible": true},
-    {"id": "aggregate-functions", "title": "Aggregate Functions", "examEligible": true}
+    {
+      "id": "database-fundamentals",
+      "title": "Database Fundamentals",
+      "examEligible": true
+    },
+    {
+      "id": "relational-tables",
+      "title": "Relational Tables",
+      "examEligible": true
+    },
+    {
+      "id": "keys-and-relationships",
+      "title": "Keys and Relationships",
+      "examEligible": true
+    },
+    {
+      "id": "multiplicities",
+      "title": "Relationship Multiplicities",
+      "examEligible": true
+    },
+    { "id": "data-modeling", "title": "Data Modeling", "examEligible": true },
+    { "id": "database-roles", "title": "Database Roles", "examEligible": true },
+    {
+      "id": "relational-integrity",
+      "title": "Relational Integrity",
+      "examEligible": true
+    },
+    { "id": "sql-language", "title": "SQL Language", "examEligible": true },
+    {
+      "id": "sql-execution-order",
+      "title": "SQL Execution Order",
+      "examEligible": true
+    },
+    {
+      "id": "text-comparisons",
+      "title": "Text Comparisons",
+      "examEligible": true
+    },
+    {
+      "id": "type-conversion",
+      "title": "Type Conversion",
+      "examEligible": true
+    },
+    {
+      "id": "date-formatting",
+      "title": "Date Formatting",
+      "examEligible": true
+    },
+    {
+      "id": "numeric-formatting",
+      "title": "Numeric Formatting",
+      "examEligible": true
+    },
+    {
+      "id": "numeric-functions",
+      "title": "Numeric Functions",
+      "examEligible": true
+    },
+    { "id": "joins", "title": "Joins", "examEligible": true },
+    {
+      "id": "aggregate-functions",
+      "title": "Aggregate Functions",
+      "examEligible": true
+    }
   ],
   "exercises": [
     {
@@ -591,7 +639,7 @@
     {
       "id": "aggregate-functions-001",
       "course": "sql",
-      "category": "aggregate-functions",
+      "category": "aggregate",
       "topic": "aggregate-functions",
       "title": "Nested Aggregate Functions",
       "instructions": "Select the one correct answer. Why does PostgreSQL reject directly nesting aggregate functions such as AVG(MAX(salary))?",

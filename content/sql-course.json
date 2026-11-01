@@ -1020,7 +1020,7 @@
     {
       "id": "sql-week2-pagination-050",
       "course": "sql",
-      "category": "fetch-offset",
+      "category": "fetch",
 
       "title": "Second page of projects",
       "instructions": "The project list is sorted by project ID. Return rows 6 through 10 of that list.",
@@ -1060,7 +1060,7 @@
     {
       "id": "sql-week2-pagination-052",
       "course": "sql",
-      "category": "fetch-offset",
+      "category": "fetch",
 
       "title": "Next six employees by hire date",
       "instructions": "Display employee IDs, names and hire dates for employees 6 through 11 when ordered from newest hire to oldest.",
@@ -1080,7 +1080,7 @@
     {
       "id": "sql-week2-pagination-053",
       "course": "sql",
-      "category": "fetch-offset",
+      "category": "fetch",
 
       "title": "Paged products within one category",
       "instructions": "For category 2, list the product names and stock quantities ordered alphabetically, skipping the first two and returning the next three.",
@@ -1204,7 +1204,7 @@
     {
       "id": "sql-week2-pagination-059",
       "course": "sql",
-      "category": "fetch-offset",
+      "category": "fetch",
 
       "title": "Top three consultant rates after excluding low rates",
       "instructions": "Return the second, third and fourth highest consultant hourly rates, with consultant names.",
@@ -1425,7 +1425,7 @@
     {
       "id": "sql-week3-text-functions-005",
       "course": "sql",
-      "category": "left",
+      "category": "outer-join",
 
       "title": "Product SKU prefixes",
       "instructions": "For every product, display a normalized SKU with the part before the hyphen in uppercase and the part after the hyphen in lowercase, joined by a hyphen.",
@@ -1567,7 +1567,7 @@
     {
       "id": "sql-week3-text-functions-012",
       "course": "sql",
-      "category": "concat-ws",
+      "category": "concat",
 
       "title": "Create a customer location label",
       "instructions": "Combine customer city and postal code using a comma and a space as separator.",
@@ -1711,7 +1711,7 @@
     {
       "id": "sql-week3-text-functions-019",
       "course": "sql",
-      "category": "concat-ws",
+      "category": "concat",
 
       "title": "Names with optional email",
       "instructions": "Create one label from each employee’s full name and email, separated by a pipe. Missing emails should not create an empty placeholder.",
@@ -1857,7 +1857,7 @@
     {
       "id": "sql-week3-text-functions-026",
       "course": "sql",
-      "category": "left",
+      "category": "outer-join",
 
       "title": "Extract category code prefixes",
       "instructions": "Display category codes and the first three characters of each code.",
@@ -2163,7 +2163,7 @@
     {
       "id": "sql-week3-date-functions-041",
       "course": "sql",
-      "category": "current-date",
+      "category": "Time",
 
       "title": "Show the current date",
       "instructions": "Return today’s date as a single result.",
@@ -2183,7 +2183,7 @@
     {
       "id": "sql-week3-date-functions-042",
       "course": "sql",
-      "category": "current-time",
+      "category": "Time",
 
       "title": "Show the current time",
       "instructions": "Return the current time as a single result.",
@@ -2223,7 +2223,7 @@
     {
       "id": "sql-week3-date-functions-044",
       "course": "sql",
-      "category": "extract-year",
+      "category": "extract",
 
       "title": "Employee hire years",
       "instructions": "Display employee names and the year in which each employee was hired.",
@@ -2243,7 +2243,7 @@
     {
       "id": "sql-week3-date-functions-045",
       "course": "sql",
-      "category": "extract-month",
+      "category": "extract",
 
       "title": "Course start months",
       "instructions": "Display each section code and the month number of its start date.",
@@ -2263,7 +2263,7 @@
     {
       "id": "sql-week3-date-functions-046",
       "course": "sql",
-      "category": "extract-day",
+      "category": "extract",
 
       "title": "Order day numbers",
       "instructions": "Show each order ID and the day of the month on which it was placed.",
@@ -2325,7 +2325,7 @@
     {
       "id": "sql-week3-date-functions-049",
       "course": "sql",
-      "category": "age-two-dates",
+      "category": "age",
 
       "title": "Time between project dates",
       "instructions": "For projects with a recorded end date, show the project name and the interval between start and end dates.",
@@ -2385,7 +2385,7 @@
     {
       "id": "sql-week3-date-functions-052",
       "course": "sql",
-      "category": "age-filter",
+      "category": "age",
 
       "title": "Employees older than thirty",
       "instructions": "Display employees whose age interval is greater than 30 years.",
@@ -2405,7 +2405,7 @@
     {
       "id": "sql-week3-date-functions-053",
       "course": "sql",
-      "category": "extract-age",
+      "category": "extract",
 
       "title": "Student age in whole years",
       "instructions": "Display student names and the whole-year age extracted from each age interval.",
@@ -2425,7 +2425,7 @@
     {
       "id": "sql-week3-date-functions-054",
       "course": "sql",
-      "category": "extract-date-parts",
+      "category": "extract",
 
       "title": "Project schedule components",
       "instructions": "Show project names, start year, start month and start day as separate columns.",
@@ -2569,7 +2569,7 @@
     {
       "id": "sql-week3-conversion-061",
       "course": "sql",
-      "category": "cast-shorthand",
+      "category": "cast",
 
       "title": "Convert customer postal codes to integers",
       "instructions": "Display customer IDs and postal codes converted to integer values.",
@@ -4159,7 +4159,7 @@
     {
       "id": "sql-week4-inner-joins-063",
       "course": "sql",
-      "category": "join-concept",
+      "category": "join",
 
       "title": "What INNER JOIN keeps",
       "instructions": "Which rows are returned by an INNER JOIN?",
@@ -4180,7 +4180,7 @@
     {
       "id": "sql-week4-inner-joins-064",
       "course": "sql",
-      "category": "join-condition",
+      "category": "join",
 
       "title": "Purpose of ON",
       "instructions": "What is the purpose of the ON clause in a JOIN?",
@@ -4306,7 +4306,7 @@
     {
       "id": "sql-week4-multi-table-joins-070",
       "course": "sql",
-      "category": "join-aliases",
+      "category": "join",
 
       "title": "Avoiding ambiguous columns",
       "instructions": "When two joined tables contain a column with the same name, what is the clearest way to refer to it?",
@@ -4347,7 +4347,7 @@
     {
       "id": "sql-week5-aggregates-002",
       "course": "sql",
-      "category": "count-column",
+      "category": "count",
 
       "title": "Count employees with email addresses",
       "instructions": "Return the number of employees whose email address is recorded.",
@@ -4367,7 +4367,7 @@
     {
       "id": "sql-week5-aggregates-003",
       "course": "sql",
-      "category": "count-distinct",
+      "category": "count",
 
       "title": "Count distinct customer cities",
       "instructions": "Return the number of different non-NULL cities represented in the customer table.",
@@ -4467,7 +4467,7 @@
     {
       "id": "sql-week5-aggregates-008",
       "course": "sql",
-      "category": "count-column",
+      "category": "count",
 
       "title": "Count enrollments with a recorded grade",
       "instructions": "Return the number of enrollments with a non-NULL final grade.",
@@ -4487,7 +4487,7 @@
     {
       "id": "sql-week5-aggregates-009",
       "course": "sql",
-      "category": "count-vs-count-column",
+      "category": "count",
 
       "title": "Compare all enrollments with graded enrollments",
       "instructions": "Return both the total number of enrollment rows and the number with a recorded final grade.",
@@ -4587,7 +4587,7 @@
     {
       "id": "sql-week5-aggregates-014",
       "course": "sql",
-      "category": "count-distinct",
+      "category": "count",
 
       "title": "Count products with unique category assignments",
       "instructions": "Return the number of different non-NULL category IDs represented in products.",
@@ -5345,7 +5345,7 @@
     {
       "id": "sql-week5-outer-joins-051",
       "course": "sql",
-      "category": "left-join",
+      "category": "outer-join",
 
       "title": "All departments and any employees",
       "instructions": "Display every department name together with employee names where employees are assigned. Keep departments even when no employee matches.",
@@ -5365,7 +5365,7 @@
     {
       "id": "sql-week5-outer-joins-052",
       "course": "sql",
-      "category": "left-join",
+      "category": "outer-join",
 
       "title": "All customers and their orders",
       "instructions": "Display every customer name and any matching order ID, including customers who have never placed an order.",
@@ -5385,7 +5385,7 @@
     {
       "id": "sql-week5-outer-joins-053",
       "course": "sql",
-      "category": "left-join",
+      "category": "outer-join",
 
       "title": "All courses and enrolled student IDs",
       "instructions": "Display every course title and matching student IDs for courses with enrollments, retaining courses without any enrollment.",
@@ -5405,7 +5405,7 @@
     {
       "id": "sql-week5-outer-joins-054",
       "course": "sql",
-      "category": "left-join",
+      "category": "outer-join",
 
       "title": "All projects and staffing records",
       "instructions": "Show every project name with any assigned consultant ID, including projects without assignments.",
@@ -5425,7 +5425,7 @@
     {
       "id": "sql-week5-outer-joins-055",
       "course": "sql",
-      "category": "left-join",
+      "category": "outer-join",
 
       "title": "Find customers without orders",
       "instructions": "Return customer IDs and names for customers who have no matching order.",
@@ -5447,7 +5447,7 @@
     {
       "id": "sql-week5-outer-joins-056",
       "course": "sql",
-      "category": "left-join",
+      "category": "outer-join",
 
       "title": "Find courses without enrollments",
       "instructions": "Display course IDs and titles for courses with no enrollment records.",
@@ -5469,7 +5469,7 @@
     {
       "id": "sql-week5-outer-joins-057",
       "course": "sql",
-      "category": "left-join",
+      "category": "outer-join",
 
       "title": "Find employees without tasks",
       "instructions": "Display employee names for employees who have no matching task record.",
@@ -5489,7 +5489,7 @@
     {
       "id": "sql-week5-outer-joins-058",
       "course": "sql",
-      "category": "left-join",
+      "category": "outer-join",
 
       "title": "Find projects without assigned consultants",
       "instructions": "Return project IDs and names where no assignment row exists.",
@@ -5506,11 +5506,11 @@
       "hints": ["Test a non-NULL join-key column from the right table."],
       "explanation": "The consultant_id is required in a real assignment; NULL therefore identifies projects with no assignment."
     },
+
     {
       "id": "sql-week5-outer-joins-059",
       "course": "sql",
-      "category": "right-join",
-
+      "category": "outer-join",
       "title": "Preserve every location",
       "instructions": "Display all locations and any departments assigned to them, keeping locations that currently have no department.",
       "difficulty": "Medium",
@@ -5519,20 +5519,19 @@
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
       "contentVersion": 1,
       "datasetId": "sql-business",
-      "referenceSolution": "SELECT l.city, d.department_name FROM departments d RIGHT JOIN locations l ON d.location_id = l.location_id;",
+      "referenceSolution": "SELECT l.city, d.department_name FROM locations l LEFT JOIN departments d ON l.location_id = d.location_id;",
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
       "hints": [
-        "RIGHT JOIN preserves the rows from the table written on the right."
+        "LEFT JOIN preserves all rows from the table written on the left."
       ],
-      "explanation": "The right join keeps every location and returns NULL department columns for unused locations."
+      "explanation": "LEFT JOIN keeps every location and returns NULL department columns for locations without an assigned department."
     },
     {
       "id": "sql-week5-outer-joins-060",
       "course": "sql",
-      "category": "right-join",
-
+      "category": "outer-join",
       "title": "Preserve every category",
       "instructions": "Display all product categories and any matching products, retaining categories with no products.",
       "difficulty": "Medium",
@@ -5541,15 +5540,37 @@
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
       "contentVersion": 1,
       "datasetId": "sql-retail",
-      "referenceSolution": "SELECT p.product_name, c.category_name FROM products p RIGHT JOIN categories c ON p.category_id = c.category_id;",
+      "referenceSolution": "SELECT c.category_name, p.product_name FROM categories c LEFT JOIN products p ON c.category_id = p.category_id;",
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
       "hints": [
-        "Categories must be the right-hand table to preserve all of them."
+        "Put categories on the left side of the LEFT JOIN to preserve all categories."
       ],
-      "explanation": "RIGHT JOIN keeps every category and returns NULL product details when no product matches."
+      "explanation": "LEFT JOIN keeps every category and returns NULL product details when no product matches."
     },
+    {
+      "id": "sql-week5-outer-joins-067",
+      "course": "sql",
+      "category": "outer-join",
+      "title": "All sessions and participants",
+      "instructions": "Display every training session and any participant names, retaining sessions without participants. Put training_sessions on the left side of the join.",
+      "difficulty": "Medium",
+      "type": "sql-query",
+      "examEligible": true,
+      "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
+      "contentVersion": 1,
+      "datasetId": "sql-projects",
+      "referenceSolution": "SELECT s.session_title, p.participant_name FROM training_sessions s LEFT JOIN participants p ON s.session_id = p.session_id;",
+      "orderMatters": false,
+      "compareColumnNames": true,
+      "columnOrderMatters": true,
+      "hints": [
+        "LEFT JOIN keeps all rows from training_sessions when it is the left-hand table."
+      ],
+      "explanation": "LEFT JOIN preserves every training session and supplies NULL participant names for sessions without registrations."
+    },
+
     {
       "id": "sql-week5-outer-joins-061",
       "course": "sql",
@@ -5595,7 +5616,7 @@
     {
       "id": "sql-week5-outer-joins-063",
       "course": "sql",
-      "category": "outer-join-count",
+      "category": "outer-join",
 
       "title": "Count tasks for every employee",
       "instructions": "Display every employee ID and the number of matching tasks, including employees with no tasks.",
@@ -5617,7 +5638,7 @@
     {
       "id": "sql-week5-outer-joins-064",
       "course": "sql",
-      "category": "outer-join-count",
+      "category": "outer-join",
 
       "title": "Count orders for every customer",
       "instructions": "Display every customer ID and their number of matching orders, including customers with zero orders.",
@@ -5639,7 +5660,7 @@
     {
       "id": "sql-week5-outer-joins-065",
       "course": "sql",
-      "category": "outer-join-count",
+      "category": "outer-join",
 
       "title": "Count students per course including empty courses",
       "instructions": "Display each course ID and the number of matching enrollment records, including courses with no enrollment.",
@@ -5659,7 +5680,7 @@
     {
       "id": "sql-week5-outer-joins-066",
       "course": "sql",
-      "category": "outer-join-count",
+      "category": "outer-join",
 
       "title": "Count consultants per project including unstaffed work",
       "instructions": "Display every project ID and the number of consultant assignments, including projects with none.",
@@ -5675,28 +5696,6 @@
       "columnOrderMatters": true,
       "hints": ["Count the right-side assignment key after a LEFT JOIN."],
       "explanation": "COUNT(a.consultant_id) returns zero for a project without an assignment because the right-side key is NULL."
-    },
-    {
-      "id": "sql-week5-outer-joins-067",
-      "course": "sql",
-      "category": "right-join",
-
-      "title": "All right-side sessions and participants",
-      "instructions": "Display every training session and any participant names, retaining sessions without participants. Put training_sessions on the right side of the join.",
-      "difficulty": "Medium",
-      "type": "sql-query",
-      "examEligible": true,
-      "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
-      "contentVersion": 1,
-      "datasetId": "sql-projects",
-      "referenceSolution": "SELECT s.session_title, p.participant_name FROM participants p RIGHT JOIN training_sessions s ON p.session_id = s.session_id;",
-      "orderMatters": false,
-      "compareColumnNames": true,
-      "columnOrderMatters": true,
-      "hints": [
-        "RIGHT JOIN keeps all rows from training_sessions in this query."
-      ],
-      "explanation": "The right join preserves every session and supplies NULL participant names for sessions without registrations."
     },
     {
       "id": "sql-week5-outer-joins-068",
@@ -5723,7 +5722,7 @@
     {
       "id": "sql-week5-having-069",
       "course": "sql",
-      "category": "aggregate-join",
+      "category": "aggregate",
 
       "title": "Total quantity sold by category",
       "instructions": "Display each product category and the total units sold for that category.",
@@ -5743,7 +5742,7 @@
     {
       "id": "sql-week5-having-070",
       "course": "sql",
-      "category": "aggregate-join",
+      "category": "aggregate",
 
       "title": "Average assignment hours by client",
       "instructions": "Display client names and the average project assignment hours associated with each client.",
@@ -5765,7 +5764,7 @@
     {
       "id": "sql-week5-outer-joins-071",
       "course": "sql",
-      "category": "outer-join-having",
+      "category": "outer-join",
 
       "title": "Departments with at least one employee",
       "instructions": "Display all departments that have at least one employee and show the number of employees in each.",
@@ -5787,7 +5786,7 @@
     {
       "id": "sql-week5-outer-joins-072",
       "course": "sql",
-      "category": "outer-join-having",
+      "category": "outer-join",
 
       "title": "Customers with two or more orders",
       "instructions": "Display customer names and their order counts for customers with at least two orders.",
@@ -5809,7 +5808,7 @@
     {
       "id": "sql-week5-having-073",
       "course": "sql",
-      "category": "aggregate-join",
+      "category": "aggregate",
 
       "title": "Average grade by teacher",
       "instructions": "Display teacher names and the average final grade of enrollments in sections taught by each teacher.",
@@ -5831,7 +5830,7 @@
     {
       "id": "sql-week5-outer-joins-074",
       "course": "sql",
-      "category": "outer-join-null",
+      "category": "outer-join",
 
       "title": "Show products that have never been ordered",
       "instructions": "Display product IDs and names for products that do not appear in any order line.",
@@ -5853,7 +5852,7 @@
     {
       "id": "sql-week5-having-075",
       "course": "sql",
-      "category": "aggregate-join",
+      "category": "aggregate",
 
       "title": "Total spending by customer above threshold",
       "instructions": "Display customer IDs and total order value for customers whose combined order-line value exceeds 1000.",
@@ -5875,7 +5874,7 @@
     {
       "id": "sql-week5-outer-joins-076",
       "course": "sql",
-      "category": "outer-join-count",
+      "category": "outer-join",
 
       "title": "Count participants for every session with capacity",
       "instructions": "Display every session title, its maximum capacity and its number of registered participants, including sessions with none.",
@@ -5997,7 +5996,7 @@
     {
       "id": "sql-week5-aggregates-082",
       "course": "sql",
-      "category": "aggregate-null",
+      "category": "aggregate",
 
       "title": "How AVG treats NULL",
       "instructions": "How does AVG(column) handle NULL values?",
@@ -6034,7 +6033,7 @@
     {
       "id": "sql-week5-outer-joins-084",
       "course": "sql",
-      "category": "outer-join-null",
+      "category": "outer-join",
 
       "title": "Identify unmatched right-side rows",
       "instructions": "After a LEFT JOIN, which test is commonly used to find left-side rows with no match?",
@@ -6164,7 +6163,7 @@
     {
       "id": "sql-week5-having-086",
       "course": "sql",
-      "category": "aggregate-join",
+      "category": "aggregate",
 
       "title": "Highest sales total per shipping city threshold",
       "instructions": "Display shipping cities and the total order-line value for each city, considering only orders placed in 2025 and keeping cities whose total value is above 700.",

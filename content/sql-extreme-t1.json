@@ -463,7 +463,7 @@
     {
       "id": "sql-extreme-021",
       "course": "sql",
-      "category": "aggregation-grouping-having",
+      "category": "aggregate",
       "title": "Hierarchy-aware employee and project audit",
       "instructions": "For each employee-manager-manager's-manager chain with at least one project assignment, report employee identity, manager identity, senior manager identity, department, distinct assigned projects, known and missing work-log hours, earliest log date, latest log date, and formatted tenure. Include employees with no department where they have assignments. Keep chains with at least one logged hour or at least one missing log-hour value. Sort by department, project count descending, and employee name; return the first 15 rows.",
       "difficulty": "Extreme",
@@ -485,7 +485,7 @@
     {
       "id": "sql-extreme-022",
       "course": "sql",
-      "category": "aggregation-grouping-having",
+      "category": "aggregate",
       "title": "Course prerequisite comparison across cohorts",
       "instructions": "Produce one row per faculty, course and section, including sections with no enrolments. Show lecturer and supervisor names, distinct student count, known grade count, average grade, minimum and maximum registration dates, total known tuition, and the number of distinct students whose mentor belongs to the lecturer's supervisory chain. Exclude sections beginning before 2025; retain groups with no students or at least two students with known grades. Sort by faculty, course code and average grade descending NULLS LAST.",
       "difficulty": "Extreme",
@@ -507,7 +507,7 @@
     {
       "id": "sql-extreme-023",
       "course": "sql",
-      "category": "aggregation-grouping-having",
+      "category": "aggregate",
       "title": "Cross-region project staffing comparison",
       "instructions": "For each employee-manager-manager's-manager chain with at least one project assignment, report employee identity, manager identity, senior manager identity, department, distinct assigned projects, known and missing work-log hours, earliest log date, latest log date, and formatted tenure. Include employees with no department where they have assignments. Keep chains with at least one logged hour or at least one missing log-hour value. Sort by department, project count descending, and employee name; return the first 15 rows.",
       "difficulty": "Extreme",
@@ -529,7 +529,7 @@
     {
       "id": "sql-extreme-024",
       "course": "sql",
-      "category": "aggregation-grouping-having",
+      "category": "aggregate",
       "title": "Student mentor performance and payment analysis",
       "instructions": "Produce one row per faculty, course and section, including sections with no enrolments. Show lecturer and supervisor names, distinct student count, known grade count, average grade, minimum and maximum registration dates, total known tuition, and the number of distinct students whose mentor belongs to the lecturer's supervisory chain. Exclude sections beginning before 2025; retain groups with no students or at least two students with known grades. Sort by faculty, course code and average grade descending NULLS LAST.",
       "difficulty": "Extreme",
@@ -551,7 +551,7 @@
     {
       "id": "sql-extreme-025",
       "course": "sql",
-      "category": "aggregation-grouping-having",
+      "category": "aggregate",
       "title": "NULL-sensitive departmental delivery summary",
       "instructions": "For each employee-manager-manager's-manager chain with at least one project assignment, report employee identity, manager identity, senior manager identity, department, distinct assigned projects, known and missing work-log hours, earliest log date, latest log date, and formatted tenure. Include employees with no department where they have assignments. Keep chains with at least one logged hour or at least one missing log-hour value. Sort by department, project count descending, and employee name; return the first 15 rows.",
       "difficulty": "Extreme",

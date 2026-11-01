@@ -25,6 +25,24 @@ t('Extreme exam shortages are reported without substitution', () => {
   assert(!r.ok);
   assert.deepStrictEqual(r.shortage, { Extreme: { need: 1, have: 0 } });
 });
+t('exam course selection supports multiple and empty selections', () => {
+  const mixedPool = [
+    ...pool,
+    ...pool.map(exercise => ({ ...exercise, id: `os-${exercise.id}`, course: 'os' })),
+  ];
+  const selected = C.generateExam(mixedPool, {
+    courses: ['sql', 'os'],
+    dist: { Easy: 12, Medium: 0, Hard: 0, Extreme: 0 },
+  }, {}, () => 0);
+  assert(selected.ok);
+  assert.deepStrictEqual(new Set(selected.exercises.map(exercise => exercise.course)), new Set(['sql', 'os']));
+  const noneSelected = C.generateExam(mixedPool, {
+    courses: [],
+    dist: { Easy: 1, Medium: 0, Hard: 0, Extreme: 0 },
+  });
+  assert(!noneSelected.ok);
+  assert.deepStrictEqual(noneSelected.shortage, { Easy: { need: 1, have: 0 } });
+});
 t('shortage, no substitution', () => { const r = C.generateExam(pool.filter(e => e.id !== 'h2'), {}); assert(!r.ok); assert.deepStrictEqual(r.shortage, { Hard: { need: 2, have: 1 } }); });
 t('not-exam exercise excluded (GREP)', () => { const p = [...pool, mk('g1', 'Easy', false)];
   const r = C.generateExam(p, {}); assert(r.ok && !r.exercises.some(e => e.id === 'g1')); });
