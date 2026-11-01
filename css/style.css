@@ -643,7 +643,7 @@ button.schema-view-toggle.on {
 }
 .plantuml-controls-hint {
   display: block;
-  margin-top: -0.35rem;
+  margin: 0.75rem 0 1rem;
   color: var(--mut);
   font-size: 0.75rem;
 }
