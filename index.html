@@ -4,6 +4,13 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>ACS Practice</title>
+    <script>
+      try {
+        const theme = localStorage.getItem("acs-practice-theme");
+        if (theme === "light" || theme === "dark")
+          document.documentElement.dataset.theme = theme;
+      } catch {}
+    </script>
     <link rel="icon" type="image/png" href="assets/favicon.png" />
     <link rel="stylesheet" href="css/style.css" />
   </head>
@@ -21,10 +28,22 @@
         <a href="#/reader">Reference</a><a href="#/practice">Practice</a
         ><a href="#/exam">Exam</a><a href="#/progress">Progress</a>
       </nav>
-      <div class="maker-signature" aria-label="Made by Wassim">
-        <span>MADE BY</span>
-        <strong data-text="WASSIM">WASSIM</strong>
-        <span class="maker-cursor" aria-hidden="true">_</span>
+      <div class="header-tools">
+        <div class="maker-signature" aria-label="Made by Wassim">
+          <span>MADE BY</span>
+          <strong data-text="WASSIM">WASSIM</strong>
+          <span class="maker-cursor" aria-hidden="true">_</span>
+        </div>
+        <button
+          id="theme-toggle"
+          class="theme-toggle"
+          type="button"
+          aria-label="Switch to dark mode"
+          title="Switch to dark mode"
+        >
+          <span aria-hidden="true">☾</span>
+        </button>
+        <span id="theme-status" class="visually-hidden" role="status" aria-live="polite"></span>
       </div>
     </header>
     <div id="terminal-artifact" class="terminal-artifact" aria-hidden="true"></div>

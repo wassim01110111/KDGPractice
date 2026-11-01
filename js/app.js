@@ -18,6 +18,65 @@ const empty = (a, b) =>
   h("div", { class: "empty" }, h("strong", {}, a), h("div", {}, b || ""));
 const uniq = (arr, f) =>
   [...new Set(arr.map(f).filter((x) => x !== undefined && x !== ""))].sort();
+let activeConfirmDialog = null;
+let confirmDialogId = 0;
+function confirmInApp({
+  title,
+  message,
+  confirmLabel = "Continue",
+  cancelLabel = "Cancel",
+  danger = false,
+}) {
+  if (activeConfirmDialog?.open) activeConfirmDialog.close("cancel");
+  return new Promise((resolve) => {
+    const titleId = `app-confirm-title-${++confirmDialogId}`;
+    const dialog = h(
+      "dialog",
+      { class: "app-confirm-dialog", "aria-labelledby": titleId },
+      h(
+        "div",
+        { class: "app-confirm-content" },
+        h("h2", { id: titleId }, title),
+        h("p", {}, message),
+        h(
+          "div",
+          { class: "app-confirm-actions" },
+          h(
+            "button",
+            {
+              type: "button",
+              class: "sec",
+              onclick: () => dialog.close("cancel"),
+            },
+            cancelLabel,
+          ),
+          h(
+            "button",
+            {
+              type: "button",
+              class: danger ? "danger" : "",
+              onclick: () => dialog.close("confirm"),
+            },
+            confirmLabel,
+          ),
+        ),
+      ),
+    );
+    dialog.addEventListener(
+      "close",
+      () => {
+        if (activeConfirmDialog === dialog) activeConfirmDialog = null;
+        dialog.remove();
+        resolve(dialog.returnValue === "confirm");
+      },
+      { once: true },
+    );
+    document.body.append(dialog);
+    activeConfirmDialog = dialog;
+    dialog.showModal();
+    dialog.querySelector(".sec").focus();
+  });
+}
 
 // ---------- storage ----------
 const idb = new Promise((res, rej) => {
@@ -62,6 +121,29 @@ const kv = {
     });
   },
 };
+const ACTIVE_EXAM_CHECKPOINT = "practice-site-active-exam";
+let examSaveQueue = Promise.resolve();
+function saveExamState(exam) {
+  const snapshot = { ...exam, savedAt: Date.now() };
+  const write = async () => {
+    await kv.set("exam", snapshot);
+    localStorage.setItem(ACTIVE_EXAM_CHECKPOINT, JSON.stringify(snapshot));
+  };
+  examSaveQueue = examSaveQueue.then(write, write);
+  return examSaveQueue;
+}
+function readExamCheckpoint() {
+  const value = localStorage.getItem(ACTIVE_EXAM_CHECKPOINT);
+  return value === null ? null : JSON.parse(value);
+}
+async function discardExamState() {
+  const discard = async () => {
+    await kv.del("exam");
+    localStorage.removeItem(ACTIVE_EXAM_CHECKPOINT);
+  };
+  examSaveQueue = examSaveQueue.then(discard, discard);
+  return examSaveQueue;
+}
 
 const S = {
   exercises: [],
@@ -1224,6 +1306,308 @@ function qView(ex, mode, get, set, onAttempt = () => {}) {
 }
 
 // ---------- markdown (small, for the supplied reference files) ----------
+function renderMermaidFlowchart(source) {
+  const lines = source
+      .split(/\r?\n/)
+      .map((line) => line.trim())
+      .filter(Boolean),
+    direction = lines[0]?.match(/^flowchart\s+(LR|RL|TB|TD|BT)\b/i)?.[1]?.toUpperCase();
+  if (!direction) return null;
+  const nodes = new Map(),
+    edges = [];
+  const nodePattern = String.raw`([A-Za-z0-9_]+)(?:\["([^"]*)"\]|\['([^']*)'\]|\(([^)]*)\)|\{([^}]*)\})?`;
+  const edgePattern = new RegExp(
+    String.raw`^\s*${nodePattern}\s*-->\s*(?:\|([^|]*)\|\s*)?${nodePattern}\s*$`,
+  );
+  const register = (id, square, single, rounded, diamond) => {
+    const label = square ?? single ?? rounded ?? diamond;
+    if (!nodes.has(id) || (nodes.get(id) === id && label))
+      nodes.set(id, label ?? id);
+    return id;
+  };
+  for (const line of lines.slice(1)) {
+    if (line.startsWith("%%")) continue;
+    const match = edgePattern.exec(line);
+    if (!match) continue;
+    const [, from, fromSquare, fromSingle, fromRounded, fromDiamond, label, to, toSquare, toSingle, toRounded, toDiamond] =
+      match;
+    register(from, fromSquare, fromSingle, fromRounded, fromDiamond);
+    register(to, toSquare, toSingle, toRounded, toDiamond);
+    edges.push({ from, to, label: label?.replace(/^["']|["']$/g, "") });
+  }
+  if (!nodes.size || !edges.length) return null;
+  const nodeOrder = new Map(
+    [...nodes.keys()].map((id, index) => [id, index]),
+  );
+  const nodeWidth = 144,
+    nodeHeight = 54,
+    gap = 82,
+    padding = 44,
+    centerY = direction === "TB" || direction === "TD" || direction === "BT"
+      ? padding + nodeHeight / 2
+      : 150,
+    positionIndex = (index) =>
+      direction === "RL" || direction === "BT"
+        ? nodes.size - index - 1
+        : index,
+    positions = new Map(
+      [...nodes.keys()].map((id, index) => [
+        id,
+        direction === "TB" || direction === "TD" || direction === "BT"
+          ? {
+              x: 120,
+              y:
+                padding +
+                positionIndex(index) * (nodeHeight + gap) +
+                nodeHeight / 2,
+            }
+          : {
+              x:
+                padding +
+                positionIndex(index) * (nodeWidth + gap) +
+                nodeWidth / 2,
+              y: centerY,
+            },
+      ]),
+    ),
+    width =
+      direction === "TB" || direction === "TD" || direction === "BT"
+        ? 240
+        : padding * 2 + nodes.size * nodeWidth + (nodes.size - 1) * gap,
+    height =
+      direction === "TB" || direction === "TD" || direction === "BT"
+        ? padding * 2 + nodes.size * nodeHeight + (nodes.size - 1) * gap
+        : 300,
+    markerId = `reference-flow-arrow-${++renderMermaidFlowchart.markerId}`;
+  const reciprocalRows = [];
+  for (const edge of edges) {
+    const reverse = edges.findIndex(
+      (candidate) =>
+        candidate.from === edge.to && candidate.to === edge.from,
+    );
+    if (reverse < 0) break;
+    if (nodeOrder.get(edge.from) < nodeOrder.get(edge.to))
+      reciprocalRows.push([edge, edges[reverse]]);
+  }
+  const hasOnlyReciprocalPairs =
+    reciprocalRows.length > 0 && reciprocalRows.length * 2 === edges.length;
+  const reciprocalMarkup = hasOnlyReciprocalPairs
+    ? reciprocalRows
+        .map((pair, rowIndex) => {
+          const centerY = 76 + rowIndex * 170,
+            leftX = 124,
+            rightX = 576,
+            leftEdge = leftX + nodeWidth / 2,
+            rightEdge = rightX - nodeWidth / 2,
+            curve = 32,
+            edgePath = (fromLeft, offset) => {
+              const startX = fromLeft ? leftEdge : rightEdge,
+                endX = fromLeft ? rightEdge : leftEdge,
+                controlStartX = fromLeft
+                  ? leftEdge + (rightEdge - leftEdge) / 3
+                  : rightEdge - (rightEdge - leftEdge) / 3,
+                controlEndX = fromLeft
+                  ? leftEdge + (2 * (rightEdge - leftEdge)) / 3
+                  : rightEdge - (2 * (rightEdge - leftEdge)) / 3;
+              return {
+                path: `M ${startX} ${centerY} C ${controlStartX} ${centerY + offset}, ${controlEndX} ${centerY + offset}, ${endX} ${centerY}`,
+                labelX: (startX + endX) / 2,
+                labelY: centerY + offset * 0.78,
+              };
+            },
+            [forward, reverse] = pair,
+            forwardCurve = edgePath(true, -curve),
+            reverseCurve = edgePath(false, curve);
+          return `<path class="flow-edge" d="${forwardCurve.path}" marker-end="url(#${markerId})"/>${
+            forward.label
+              ? `<text class="flow-edge-label" x="${forwardCurve.labelX}" y="${forwardCurve.labelY - 5}" text-anchor="middle">${escapeHtml(forward.label)}</text>`
+              : ""
+          }<path class="flow-edge" d="${reverseCurve.path}" marker-end="url(#${markerId})"/>${
+            reverse.label
+              ? `<text class="flow-edge-label" x="${reverseCurve.labelX}" y="${reverseCurve.labelY + 13}" text-anchor="middle">${escapeHtml(reverse.label)}</text>`
+              : ""
+          }<g class="flow-node"><rect x="${leftX - nodeWidth / 2}" y="${centerY - nodeHeight / 2}" width="${nodeWidth}" height="${nodeHeight}" rx="9"/><text x="${leftX}" y="${centerY}" text-anchor="middle" dominant-baseline="middle">${escapeHtml(nodes.get(forward.from))}</text></g><g class="flow-node"><rect x="${rightX - nodeWidth / 2}" y="${centerY - nodeHeight / 2}" width="${nodeWidth}" height="${nodeHeight}" rx="9"/><text x="${rightX}" y="${centerY}" text-anchor="middle" dominant-baseline="middle">${escapeHtml(nodes.get(forward.to))}</text></g>`;
+        })
+        .join("")
+    : "";
+  const edgeMarkup = hasOnlyReciprocalPairs
+    ? reciprocalMarkup
+    : edges
+    .map(({ from, to, label }, edgeIndex) => {
+      const start = positions.get(from),
+        end = positions.get(to),
+        horizontal = direction === "LR" || direction === "RL",
+        sourceFirst = horizontal ? start.x < end.x : start.y < end.y,
+        startPoint = horizontal
+          ? { x: start.x + (sourceFirst ? nodeWidth / 2 : -nodeWidth / 2), y: start.y }
+          : { x: start.x, y: start.y + (sourceFirst ? nodeHeight / 2 : -nodeHeight / 2) },
+        endPoint = horizontal
+          ? { x: end.x + (sourceFirst ? -nodeWidth / 2 : nodeWidth / 2), y: end.y }
+          : { x: end.x, y: end.y + (sourceFirst ? -nodeHeight / 2 : nodeHeight / 2) },
+        pairIndex = edges.findIndex(
+          (edge, index) =>
+            index < edgeIndex &&
+            edge.from === to &&
+            edge.to === from,
+        ),
+        curve = pairIndex < 0 ? 34 : -34 - (pairIndex % 3) * 18,
+        controlX = (startPoint.x + endPoint.x) / 2 + (horizontal ? 0 : curve),
+        controlY = (startPoint.y + endPoint.y) / 2 + (horizontal ? curve : 0),
+        labelX = (startPoint.x + 2 * controlX + endPoint.x) / 4,
+        labelY = (startPoint.y + 2 * controlY + endPoint.y) / 4;
+      return `<path class="flow-edge" d="M ${startPoint.x} ${startPoint.y} Q ${controlX} ${controlY} ${endPoint.x} ${endPoint.y}" marker-end="url(#${markerId})"/>${
+        label
+          ? `<text class="flow-edge-label" x="${labelX}" y="${labelY - 5}" text-anchor="middle">${escapeHtml(label)}</text>`
+          : ""
+      }`;
+    })
+    .join("");
+  const nodeMarkup = hasOnlyReciprocalPairs
+    ? ""
+    : [...nodes].map(([id, label]) => {
+    const point = positions.get(id);
+    return `<g class="flow-node"><rect x="${point.x - nodeWidth / 2}" y="${point.y - nodeHeight / 2}" width="${nodeWidth}" height="${nodeHeight}" rx="9"/><text x="${point.x}" y="${point.y}" text-anchor="middle" dominant-baseline="middle">${escapeHtml(label)}</text></g>`;
+  }).join("");
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.setAttribute("class", "reference-flowchart");
+  const diagramWidth = hasOnlyReciprocalPairs ? 700 : width,
+    diagramHeight = hasOnlyReciprocalPairs
+      ? reciprocalRows.length * 170 + 30
+      : height;
+  svg.setAttribute("viewBox", `0 0 ${diagramWidth} ${diagramHeight}`);
+  svg.setAttribute("width", String(diagramWidth));
+  svg.setAttribute("height", String(diagramHeight));
+  svg.setAttribute("role", "img");
+  svg.setAttribute("aria-label", "Flowchart: " + [...nodes.values()].join(", "));
+  const markerDefinition = `<defs><marker id="${markerId}" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L8,4 L0,8 z"/></marker></defs>`;
+  svg.innerHTML = markerDefinition + edgeMarkup + nodeMarkup;
+  const container = document.createElement("div");
+  container.className = "reference-flowchart-scroll";
+  container.append(svg);
+  if (hasOnlyReciprocalPairs) {
+    const mobileSvg = document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "svg",
+    );
+    mobileSvg.setAttribute("class", "reference-flowchart reference-flowchart-mobile");
+    mobileSvg.setAttribute("viewBox", `0 0 340 ${reciprocalRows.length * 205 + 10}`);
+    mobileSvg.setAttribute("width", "340");
+    mobileSvg.setAttribute("height", String(reciprocalRows.length * 205 + 10));
+    mobileSvg.setAttribute("role", "img");
+    mobileSvg.setAttribute(
+      "aria-label",
+      "Flowchart: " + [...nodes.values()].join(", "),
+    );
+    const mobileMarkup = reciprocalRows
+      .map(([forward, reverse], rowIndex) => {
+        const x = 170,
+          topY = 45 + rowIndex * 205,
+          bottomY = topY + 105,
+          halfHeight = nodeHeight / 2,
+          forwardStart = topY + halfHeight,
+          forwardEnd = bottomY - halfHeight,
+          forwardX = x - 22,
+          reverseX = x + 22,
+          labelY = (forwardStart + forwardEnd) / 2 + 5,
+          edgePaths = `<path class="flow-edge" d="M ${forwardX} ${forwardStart} L ${forwardX} ${forwardEnd}" marker-end="url(#${markerId})"/><text class="flow-edge-label flow-edge-label-left" x="${forwardX - 10}" y="${labelY}" text-anchor="end">${escapeHtml(forward.label || "")}</text><path class="flow-edge" d="M ${reverseX} ${forwardEnd} L ${reverseX} ${forwardStart}" marker-end="url(#${markerId})"/><text class="flow-edge-label flow-edge-label-right" x="${reverseX + 10}" y="${labelY}" text-anchor="start">${escapeHtml(reverse.label || "")}</text>`,
+          topNode = `<g class="flow-node"><rect x="${x - nodeWidth / 2}" y="${topY - nodeHeight / 2}" width="${nodeWidth}" height="${nodeHeight}" rx="9"/><text x="${x}" y="${topY}" text-anchor="middle" dominant-baseline="middle">${escapeHtml(nodes.get(forward.from))}</text></g>`,
+          bottomNode = `<g class="flow-node"><rect x="${x - nodeWidth / 2}" y="${bottomY - nodeHeight / 2}" width="${nodeWidth}" height="${nodeHeight}" rx="9"/><text x="${x}" y="${bottomY}" text-anchor="middle" dominant-baseline="middle">${escapeHtml(nodes.get(forward.to))}</text></g>`;
+        return edgePaths + topNode + bottomNode;
+      })
+      .join("");
+    mobileSvg.innerHTML = markerDefinition + mobileMarkup;
+    container.append(mobileSvg);
+  }
+  return container;
+}
+renderMermaidFlowchart.markerId = 0;
+const escapeHtml = (value) =>
+  String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+
+function appendSanitizedReferenceHtml(target, source) {
+  const allowedElements = new Set(
+      "a b blockquote br code div em h1 h2 h3 h4 h5 h6 hr i li ol p pre section span strong style table tbody td th thead tr ul"
+        .split(" "),
+    ),
+    allowedAttributes = new Set([
+      "class",
+      "id",
+      "style",
+      "title",
+      "role",
+      "href",
+      "colspan",
+      "rowspan",
+      "data-a",
+    ]),
+    parsed = new DOMParser().parseFromString(source, "text/html"),
+    cleanNode = (node) => {
+      if (node.nodeType === Node.TEXT_NODE)
+        return document.createTextNode(node.nodeValue);
+      if (node.nodeType !== Node.ELEMENT_NODE) return null;
+      const element = node,
+        tag = element.tagName.toLowerCase();
+      if (
+        ["script", "iframe", "object", "embed", "template"].includes(tag)
+      )
+        return null;
+      if (!allowedElements.has(tag)) {
+        const content = document.createDocumentFragment();
+        [...element.childNodes].forEach((child) => {
+          const clean = cleanNode(child);
+          if (clean) content.append(clean);
+        });
+        return content;
+      }
+      if (tag === "style") {
+        const css = element.textContent;
+        if (/@|url\s*\(|expression\s*\(|javascript:/i.test(css)) return null;
+        const scopedCss = css.replace(/([^{}]+)\{([^{}]*)\}/g, (rule, selectors, declarations) => {
+          if (/url\s*\(|expression\s*\(|javascript:/i.test(declarations))
+            return "";
+          const scopedSelectors = selectors
+            .split(",")
+            .map((selector) => `.md ${selector.trim()}`)
+            .join(", ");
+          return `${scopedSelectors}{${declarations}}`;
+        });
+        if (!scopedCss.trim()) return null;
+        const style = document.createElement("style");
+        style.textContent = scopedCss;
+        return style;
+      }
+      const clean = document.createElement(tag);
+      for (const attribute of element.attributes) {
+        const name = attribute.name.toLowerCase(),
+          value = attribute.value;
+        if (
+          name.startsWith("on") ||
+          (!allowedAttributes.has(name) && !name.startsWith("aria-")) ||
+          (name === "href" &&
+            !/^(?:#|https?:\/\/)/i.test(value.trim())) ||
+          (name === "style" &&
+            /url\s*\(|expression\s*\(|javascript:|@import/i.test(value))
+        )
+          continue;
+        clean.setAttribute(name, value);
+      }
+      [...element.childNodes].forEach((child) => {
+        const sanitized = cleanNode(child);
+        if (sanitized) clean.append(sanitized);
+      });
+      return clean;
+    };
+  [...parsed.body.childNodes].forEach((node) => {
+    const clean = cleanNode(node);
+    if (clean) target.append(clean);
+  });
+}
+
 function md(src) {
   const esc = (s) =>
     s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -1294,9 +1678,35 @@ function md(src) {
     fs();
     if (/^```/.test(l)) {
       fl();
+      const language = l.match(/^```\s*([^\s`]*)/)?.[1]?.toLowerCase() || "";
       const b = [];
       for (i++; i < L.length && !/^```/.test(L[i]); i++) b.push(L[i]);
-      o.push("<pre><code>" + esc(b.join("\n")) + "</code></pre>");
+      if (language === "mermaid")
+        o.push(
+          '<pre class="mermaid-source"><code>' + esc(b.join("\n")) + "</code></pre>",
+        );
+      else
+        o.push(
+          `<pre><code${language ? ` class="language-${esc(language)}"` : ""}>` +
+            esc(b.join("\n")) +
+            "</code></pre>",
+        );
+      continue;
+    }
+    if (/^\s*<(style|div|section|table|figure|blockquote)\b/i.test(l)) {
+      fl();
+      const tag = l.trim().match(/^<([a-z]+)/i)?.[1].toLowerCase();
+      const block = [l];
+      let depth = (l.match(new RegExp(`<${tag}\\b`, "gi")) || []).length -
+        (l.match(new RegExp(`</${tag}\\s*>`, "gi")) || []).length;
+      while (depth > 0 && i + 1 < L.length) {
+        const next = L[++i];
+        block.push(next);
+        depth +=
+          (next.match(new RegExp(`<${tag}\\b`, "gi")) || []).length -
+          (next.match(new RegExp(`</${tag}\\s*>`, "gi")) || []).length;
+      }
+      o.push('<div class="reference-html-block">' + block.join("\n") + "</div>");
       continue;
     }
     if (
@@ -1381,6 +1791,76 @@ async function pageReader(root, arg) {
   if (!refs.length) return root.append(empty("No reference files configured."));
   const cur = refs.find((r) => r.id === arg) || refs[0],
     body = h("article", { class: "md" }, "Loading…");
+  const searchInput = h("input", {
+      type: "search",
+      class: "reference-search-input",
+      placeholder: "Find in this reference",
+      "aria-label": "Find in this reference",
+      autocomplete: "off",
+      spellcheck: false,
+    }),
+    searchCount = h("span", {
+      class: "reference-search-count",
+      role: "status",
+      "aria-live": "polite",
+    }),
+    searchPanel = h(
+      "div",
+      { class: "reference-search-panel" },
+      h(
+        "div",
+        { class: "reference-search-field" },
+        searchInput,
+        h(
+          "button",
+          {
+            class: "reference-search-close",
+            type: "button",
+            "aria-label": "Close reference search",
+            title: "Close search",
+          },
+          "×",
+        ),
+      ),
+      h(
+        "div",
+        { class: "reference-search-controls" },
+        searchCount,
+        h(
+          "button",
+          {
+            class: "sec reference-search-prev",
+            type: "button",
+            "aria-label": "Previous mention",
+            title: "Previous mention (Shift+Enter)",
+            disabled: true,
+          },
+          "↑",
+        ),
+        h(
+          "button",
+          {
+            class: "sec reference-search-next",
+            type: "button",
+            "aria-label": "Next mention",
+            title: "Next mention (Enter)",
+            disabled: true,
+          },
+          "↓",
+        ),
+      ),
+    ),
+    searchToggle = h(
+      "button",
+      {
+        class: "reference-search-toggle",
+        type: "button",
+        "aria-label": "Search this reference",
+        "aria-expanded": "false",
+      },
+      h("span", { "aria-hidden": "true" }, "⌕"),
+      " Find",
+    );
   const tabs = h(
     "nav",
     { class: "reference-tabs", "aria-label": "Choose a reference" },
@@ -1414,15 +1894,123 @@ async function pageReader(root, arg) {
     tabs,
   );
   const tocDetails = h("details", { class: "reference-toc" });
+  const sidebar = h(
+    "aside",
+    { class: "reference-sidebar", "aria-label": "Reference navigation" },
+    searchPanel,
+    tocDetails,
+  );
   root.append(
     header,
-    h("div", { class: "reference-layout" }, tocDetails, body),
+    searchToggle,
+    h("div", { class: "reference-layout" }, sidebar, body),
   );
+  let matches = [],
+    currentMatch = -1;
+  const clearHighlights = () => {
+    body.querySelectorAll("mark.reference-search-match").forEach((mark) => {
+      mark.replaceWith(document.createTextNode(mark.textContent));
+    });
+    body.normalize();
+    matches = [];
+    currentMatch = -1;
+  };
+  const showMatch = (index) => {
+    if (!matches.length) return;
+    if (currentMatch >= 0) matches[currentMatch].classList.remove("current");
+    currentMatch = (index + matches.length) % matches.length;
+    const match = matches[currentMatch];
+    match.classList.add("current");
+    searchCount.textContent = `${currentMatch + 1} of ${matches.length}`;
+    match.scrollIntoView({ block: "center", behavior: "smooth" });
+  };
+  const updateSearch = () => {
+    clearHighlights();
+    const query = searchInput.value.trim();
+    if (!query) {
+      searchCount.textContent = "";
+      searchPanel.classList.remove("has-matches");
+      searchPanel.querySelector(".reference-search-prev").disabled = true;
+      searchPanel.querySelector(".reference-search-next").disabled = true;
+      return;
+    }
+    const escapedQuery = query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
+      expression = new RegExp(escapedQuery, "gi"),
+      walker = document.createTreeWalker(body, NodeFilter.SHOW_TEXT),
+      nodes = [];
+    while (walker.nextNode()) {
+      const node = walker.currentNode;
+      if (!node.parentElement.closest("script, style, mark")) nodes.push(node);
+    }
+    for (const node of nodes) {
+      const text = node.nodeValue,
+        ranges = [];
+      expression.lastIndex = 0;
+      let found;
+      while ((found = expression.exec(text)))
+        ranges.push([found.index, found.index + found[0].length]);
+      for (let i = ranges.length - 1; i >= 0; i--) {
+        const [start, end] = ranges[i],
+          range = document.createRange();
+        range.setStart(node, start);
+        range.setEnd(node, end);
+        const mark = document.createElement("mark");
+        mark.className = "reference-search-match";
+        range.surroundContents(mark);
+      }
+    }
+    matches = [...body.querySelectorAll("mark.reference-search-match")];
+    const hasMatches = matches.length > 0;
+    searchPanel.classList.toggle("has-matches", hasMatches);
+    searchPanel.querySelector(".reference-search-prev").disabled = !hasMatches;
+    searchPanel.querySelector(".reference-search-next").disabled = !hasMatches;
+    if (hasMatches) showMatch(0);
+    else searchCount.textContent = "No matches";
+  };
+  const closeMobileSearch = () => {
+    searchPanel.classList.remove("mobile-open");
+    searchToggle.setAttribute("aria-expanded", "false");
+    if (searchPanel.parentElement === document.body)
+      sidebar.insertBefore(searchPanel, tocDetails);
+    searchToggle.focus();
+    searchInput.value = "";
+    updateSearch();
+  };
+  searchInput.addEventListener("input", updateSearch);
+  searchInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      showMatch(currentMatch + (event.shiftKey ? -1 : 1));
+    } else if (event.key === "Escape" && searchPanel.classList.contains("mobile-open")) {
+      closeMobileSearch();
+    }
+  });
+  searchPanel
+    .querySelector(".reference-search-prev")
+    .addEventListener("click", () => showMatch(currentMatch - 1));
+  searchPanel
+    .querySelector(".reference-search-next")
+    .addEventListener("click", () => showMatch(currentMatch + 1));
+  searchPanel
+    .querySelector(".reference-search-close")
+    .addEventListener("click", closeMobileSearch);
+  searchToggle.addEventListener("click", () => {
+    if (matchMedia("(max-width: 760px)").matches)
+      document.body.append(searchPanel);
+    searchPanel.classList.add("mobile-open");
+    searchToggle.setAttribute("aria-expanded", "true");
+    searchInput.focus();
+  });
   try {
     const r = await fetch("content/" + cur.file);
     if (!r.ok) throw new Error("HTTP " + r.status);
     const { html, toc } = md(withoutContentsSection(await r.text()));
-    body.innerHTML = html;
+    appendSanitizedReferenceHtml(body, html);
+    body.querySelectorAll(".mermaid-source").forEach((source) => {
+      const diagram = renderMermaidFlowchart(source.textContent);
+      if (diagram) source.replaceWith(diagram);
+      else source.classList.add("reference-code-fallback");
+    });
     const tocNav = h(
       "nav",
       { class: "reference-toc-links", "aria-label": "Reference sections" },
@@ -1448,6 +2036,7 @@ async function pageReader(root, arg) {
       ),
       tocNav,
     );
+    if (searchInput.value) updateSearch();
     root.onclick = (e) => {
       const a = e.target.closest("[data-a]");
       if (a) {
@@ -1687,9 +2276,50 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
   root.append(flt, h("div", { class: "cols" }, list, pane));
 }
 
-async function pageExam(root) {
-  const saved = await kv.get("exam", null);
-  if (saved && !saved.submitted) return runExam(root, saved);
+async function pageExam(root, isCurrent = () => true) {
+  let saved;
+  try {
+    const [indexedDbExam, checkpoint] = await Promise.all([
+      kv.get("exam", null),
+      Promise.resolve(readExamCheckpoint()),
+    ]);
+    saved =
+      checkpoint &&
+      (!indexedDbExam ||
+        (checkpoint.savedAt || 0) > (indexedDbExam.savedAt || 0))
+        ? checkpoint
+        : indexedDbExam;
+  } catch (error) {
+    root.append(
+      empty(
+        "Could not read the saved exam.",
+        error.message,
+      ),
+    );
+    return;
+  }
+  if (!isCurrent()) return;
+  if (saved && !saved.submitted) {
+    const shouldContinue = await confirmInApp({
+      title: "Exam in progress",
+      message: "There’s an unfinished exam saved on this device. Would you like to continue where you left off?",
+      confirmLabel: "Continue exam",
+      cancelLabel: "Discard exam",
+      danger: true,
+    });
+    if (!isCurrent()) return;
+    if (shouldContinue) {
+      return runExam(root, saved);
+    }
+    try {
+      await discardExamState();
+    } catch (error) {
+      root.append(
+        empty("Could not discard the saved exam.", error.message),
+      );
+      return;
+    }
+  }
   const courses = uniq(S.exercises, (e) => e.course),
     cfg = { course: "", Easy: 5, Medium: 5, Hard: 2, Extreme: 0, mins: 60 },
     msg = h("div");
@@ -1876,7 +2506,7 @@ async function pageExam(root) {
                 startedAt: Date.now(),
                 submitted: false,
               };
-              await kv.set("exam", st);
+              await saveExamState(st);
               root.replaceChildren();
               runExam(root, st);
             },
@@ -1927,7 +2557,7 @@ async function runExam(root, st) {
           "button",
           {
             onclick: async () => {
-              await kv.del("exam");
+              await discardExamState();
               location.reload();
             },
           },
@@ -1948,7 +2578,22 @@ async function runExam(root, st) {
       .filter(([, value]) => value !== undefined),
   );
   st.ids = exs.map(keyOf);
-  const save = () => kv.set("exam", st),
+  const saveStatus = h("small", {
+    class: "exam-save-status",
+    role: "status",
+    "aria-live": "polite",
+  });
+  const save = () =>
+    saveExamState(st)
+      .then(() => {
+        saveStatus.textContent = "Progress saved locally.";
+        saveStatus.classList.remove("err");
+      })
+      .catch((error) => {
+        saveStatus.textContent = "Could not save exam progress: " + error.message;
+        saveStatus.classList.add("err");
+      });
+  const
     top = h("div", { class: "exam-topbar card" }),
     nav = h("div", { class: "exam-question-grid" }),
     body = h("div", { class: "exam-question-body" }),
@@ -1984,10 +2629,12 @@ async function runExam(root, st) {
       workspace,
     );
   let done = false;
+  let autosaveTimer;
   const submit = async () => {
-    if (done || !(await kv.get("exam", null))) return;
+    if (done || st.submitted) return;
     done = true;
     clearInterval(iv);
+    clearInterval(autosaveTimer);
     root.replaceChildren(
       h(
         "div",
@@ -2028,7 +2675,7 @@ async function runExam(root, st) {
     });
     await kv.set("examHistory", hist);
     st.submitted = true;
-    await kv.del("exam");
+    await discardExamState();
     root.replaceChildren(
       h(
         "section",
@@ -2211,6 +2858,7 @@ async function runExam(root, st) {
   const tick = () => {
     if (!top.isConnected) {
       clearInterval(iv);
+      clearInterval(autosaveTimer);
       return;
     }
     const ms = st.deadline - Date.now();
@@ -2225,6 +2873,7 @@ async function runExam(root, st) {
     timer.classList.toggle("urgent", ms <= 5 * 60_000);
   };
   const iv = setInterval(tick, 500);
+  autosaveTimer = setInterval(save, 5000);
   top.append(
     h(
       "div",
@@ -2248,12 +2897,23 @@ async function runExam(root, st) {
         summary,
         progress,
         h("small", {}, "No feedback is shown during the exam."),
+        saveStatus,
       ),
       h(
         "button",
         {
           class: "exam-submit-button",
-          onclick: () => confirm("Submit the exam now?") && submit(),
+              onclick: async () => {
+                if (
+                  await confirmInApp({
+                    title: "Submit exam?",
+                    message: "Submit your answers now? You won’t be able to change them afterward.",
+                    confirmLabel: "Submit exam",
+                    danger: true,
+                  })
+                )
+                  await submit();
+              },
         },
         "Submit exam",
       ),
@@ -2266,7 +2926,7 @@ async function runExam(root, st) {
 
 async function pageProgress(root) {
   const ex = S.exercises,
-    reset = resetLocalDataControl();
+    reset = resetLocalDataControl(root);
   const savedExamHistory = await kv.get("examHistory", []);
   const examHistory = Array.isArray(savedExamHistory) ? savedExamHistory : [];
   const xp = Object.values(S.xpRewards).reduce(
@@ -2808,7 +3468,7 @@ async function pageProgress(root) {
   );
   draw();
 }
-function resetLocalDataControl() {
+function resetLocalDataControl(root) {
   const status = h("p", { role: "status" });
   const button = h(
     "button",
@@ -2816,15 +3476,20 @@ function resetLocalDataControl() {
       class: "danger",
       onclick: async () => {
         if (
-          !confirm(
-            "Reset all data saved by this practice app on this device? This removes imported packages, exercise drafts and results, XP, achievements, saved exams, and exam history. This cannot be undone.",
-          )
+          !(await confirmInApp({
+            title: "Reset saved data?",
+            message:
+              "This removes imported packages, exercise drafts and results, XP, achievements, saved exams, and exam history from this device. This cannot be undone.",
+            confirmLabel: "Reset all data",
+            danger: true,
+          }))
         )
           return;
         button.disabled = true;
         status.textContent = "Clearing saved app data…";
         try {
           await kv.clear();
+          localStorage.removeItem(ACTIVE_EXAM_CHECKPOINT);
           location.reload();
         } catch (e) {
           button.disabled = false;
@@ -2857,6 +3522,38 @@ const pages = {
 const periodicToast = $("#periodic-toast");
 const terminalArtifact = $("#terminal-artifact");
 const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
+const themeToggle = $("#theme-toggle");
+const themeStatus = $("#theme-status");
+const systemPrefersDark = matchMedia("(prefers-color-scheme: dark)");
+function currentTheme() {
+  return (
+    document.documentElement.dataset.theme ||
+    (systemPrefersDark.matches ? "dark" : "light")
+  );
+}
+function updateThemeToggle() {
+  const dark = currentTheme() === "dark";
+  const label = dark ? "Switch to light mode" : "Switch to dark mode";
+  themeToggle.setAttribute("aria-label", label);
+  themeToggle.title = label;
+  themeToggle.firstElementChild.textContent = dark ? "☀" : "☾";
+}
+themeToggle?.addEventListener("click", () => {
+  const nextTheme = currentTheme() === "dark" ? "light" : "dark";
+  document.documentElement.dataset.theme = nextTheme;
+  updateThemeToggle();
+  try {
+    localStorage.setItem("acs-practice-theme", nextTheme);
+    themeStatus.textContent = `${nextTheme === "dark" ? "Dark" : "Light"} mode enabled.`;
+  } catch (error) {
+    themeStatus.textContent =
+      "Theme changed, but the preference could not be saved: " + error.message;
+  }
+});
+systemPrefersDark.addEventListener("change", () => {
+  if (!document.documentElement.dataset.theme) updateThemeToggle();
+});
+updateThemeToggle();
 const backToTop = $("#back-to-top");
 const updateBackToTop = () => {
   if (backToTop)
@@ -2919,10 +3616,17 @@ function schedulePeriodicToast() {
 }
 schedulePeriodicToast();
 let routeTok = 0;
+let lastRouteHash = null;
+let routePending = false;
 async function route() {
+  const routeHash = location.hash;
+  if (routeHash === lastRouteHash && routePending) return;
+  lastRouteHash = routeHash;
+  if (activeConfirmDialog?.open) activeConfirmDialog.close("cancel");
   const tok = ++routeTok,
-    [, p = "reader", arg, exerciseArg] = location.hash.split("/"),
+    [, p = "reader", arg, exerciseArg] = routeHash.split("/"),
     main = $("#main");
+  routePending = true;
   main.replaceChildren();
   document
     .querySelectorAll("#nav a")
@@ -2943,10 +3647,13 @@ async function route() {
       }
     };
     await pagePractice(view, decodeSegment(arg), decodeSegment(exerciseArg));
+  } else if (p === "exam") {
+    await pageExam(view, () => tok === routeTok);
   } else {
     await (pages[p] || pageReader)(view, arg);
   }
   if (tok !== routeTok) view.remove();
+  else routePending = false;
 }
 addEventListener("hashchange", route);
 addEventListener("popstate", route);

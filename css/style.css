@@ -15,8 +15,25 @@
   --soft: #edf2fb;
   --shadow: 0 8px 24px rgb(25 45 85 / 7%);
 }
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #111722;
+  --fg: #e8edf7;
+  --mut: #a4afc2;
+  --bd: #303b4e;
+  --ac: #8ba9ff;
+  --ac-hover: #a9bdff;
+  --ok: #6bd49a;
+  --bad: #ff8994;
+  --hint-bg: #382b16;
+  --hint-fg: #ffdf9a;
+  --hint-border: #e5a52f;
+  --card: #192231;
+  --soft: #202c40;
+  --shadow: 0 8px 24px rgb(0 0 0 / 18%);
+}
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme]) {
     color-scheme: dark;
     --bg: #111722;
     --fg: #e8edf7;
@@ -108,6 +125,45 @@ header strong {
 .maker-cursor {
   color: #60ffae;
   animation: maker-blink 1s steps(2, start) infinite;
+}
+.header-tools {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-left: auto;
+}
+.header-tools .maker-signature {
+  margin-left: 0;
+}
+.theme-toggle {
+  display: grid;
+  width: 2.45rem;
+  height: 2.45rem;
+  place-items: center;
+  margin: 0;
+  padding: 0;
+  color: var(--fg);
+  background: var(--soft);
+  border-color: var(--bd);
+  font-size: 1.3rem;
+  line-height: 1;
+}
+.theme-toggle:hover:not(:disabled) {
+  color: var(--ac);
+  background: var(--bg);
+  border-color: var(--ac);
+}
+.theme-toggle > span {
+  transform: translateY(-1px);
+}
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  clip-path: inset(50%);
 }
 @keyframes maker-blink {
   to {
@@ -211,6 +267,40 @@ button.sec:hover:not(:disabled) {
 button:disabled {
   cursor: not-allowed;
   opacity: 0.5;
+}
+.app-confirm-dialog {
+  width: min(32rem, calc(100vw - 2rem));
+  max-width: calc(100vw - 2rem);
+  padding: 0;
+  color: var(--fg);
+  background: var(--card);
+  border: 1px solid var(--bd);
+  border-radius: 14px;
+  box-shadow: 0 20px 70px rgb(0 0 0 / 28%);
+}
+.app-confirm-dialog::backdrop {
+  background: rgb(9 15 27 / 58%);
+  backdrop-filter: blur(3px);
+}
+.app-confirm-content {
+  padding: 1.4rem;
+}
+.app-confirm-content h2 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+.app-confirm-content p {
+  margin: 0.6rem 0 1.25rem;
+  color: var(--mut);
+}
+.app-confirm-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+.app-confirm-actions button {
+  margin: 0;
 }
 :focus-visible {
   outline: 3px solid color-mix(in srgb, var(--ac) 55%, transparent);
@@ -774,10 +864,13 @@ th {
     grid-column: 1 / -1;
     grid-row: 2;
   }
-  .maker-signature {
+  .header-tools {
     grid-column: 2;
     grid-row: 1;
     justify-self: end;
+    gap: 0.35rem;
+  }
+  .header-tools .maker-signature {
     margin-left: 0;
   }
   .exam-difficulty-controls {
@@ -814,6 +907,27 @@ th {
   }
 }
 @media (max-width: 480px) {
+  header {
+    column-gap: 0.35rem;
+    padding-right: 0.65rem;
+    padding-left: 0.65rem;
+  }
+  header > .brand {
+    font-size: 1rem;
+    white-space: nowrap;
+  }
+  .header-tools {
+    gap: 0.25rem;
+  }
+  .maker-signature {
+    gap: 0.25rem;
+    padding: 0.3rem 0.4rem;
+    font-size: 0.56rem;
+  }
+  .theme-toggle {
+    width: 2.2rem;
+    height: 2.2rem;
+  }
   .exam-difficulty-controls {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -912,10 +1026,72 @@ nav.reference-tabs a.reference-tab.on .reference-tab-label {
   align-items: start;
   gap: 1.25rem;
 }
-.reference-toc {
+.reference-sidebar {
   position: sticky;
-  top: 1rem;
-  max-height: calc(100vh - 2rem);
+  top: 5rem;
+  display: grid;
+  align-self: start;
+  gap: 0.75rem;
+  max-height: calc(100dvh - 6rem);
+}
+.reference-search-panel {
+  padding: 0.75rem;
+  background: var(--card);
+  border: 1px solid var(--bd);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+.reference-search-field {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+.reference-search-input {
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  padding: 0.55rem 0.65rem;
+}
+.reference-search-controls {
+  display: flex;
+  min-height: 2rem;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.35rem;
+  margin-top: 0.4rem;
+}
+.reference-search-count {
+  flex: 1;
+  color: var(--mut);
+  font-size: 0.82rem;
+}
+.reference-search-controls button,
+.reference-search-close {
+  display: grid;
+  width: 2.25rem;
+  height: 2.25rem;
+  place-items: center;
+  margin: 0;
+  padding: 0;
+  font-size: 1.05rem;
+}
+.reference-search-close,
+.reference-search-toggle {
+  display: none;
+}
+.reference-search-match {
+  color: var(--fg);
+  background: color-mix(in srgb, #f3c969 65%, var(--card));
+  border-radius: 2px;
+}
+.reference-search-match.current {
+  outline: 2px solid var(--ac);
+  outline-offset: 1px;
+  background: color-mix(in srgb, #f3c969 85%, var(--card));
+}
+.reference-toc {
+  min-height: 0;
+  max-height: 100%;
   overflow: auto;
   padding: 0.85rem;
   background: var(--card);
@@ -942,6 +1118,12 @@ nav.reference-tabs a.reference-tab.on .reference-tab-label {
 }
 .reference-toc[open] summary::after {
   content: "−";
+}
+.reference-toc:not([open]) {
+  overflow: visible;
+}
+.reference-sidebar > .reference-toc[open] {
+  max-height: calc(100dvh - 13rem);
 }
 .reference-toc summary span {
   margin-left: auto;
@@ -1019,6 +1201,71 @@ nav.reference-toc-links a.reference-toc-link:hover {
   width: max-content;
   min-width: 100%;
 }
+.reference-html-block {
+  max-width: 100%;
+  margin: 1.25rem 0;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+.md .reference-html-block > style {
+  display: none;
+}
+.reference-html-block .join-diagram {
+  min-width: 720px;
+  padding: 1rem;
+  color: var(--fg);
+  background: var(--card);
+  border: 1px solid var(--bd);
+  border-radius: 12px;
+}
+.md .mermaid-source {
+  max-width: 100%;
+  overflow-x: auto;
+}
+.reference-flowchart-scroll {
+  max-width: 100%;
+  margin: 1.5rem 0;
+  overflow-x: auto;
+  padding: 0.75rem;
+  background: var(--soft);
+  border: 1px solid var(--bd);
+  border-radius: 12px;
+}
+.reference-flowchart {
+  display: block;
+  max-width: none;
+  min-width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
+.reference-flowchart-mobile {
+  display: none;
+}
+.reference-flowchart .flow-edge {
+  fill: none;
+  stroke: var(--ac);
+  stroke-width: 2.2;
+}
+.reference-flowchart marker path {
+  fill: var(--ac);
+}
+.reference-flowchart .flow-edge-label {
+  fill: var(--fg);
+  stroke: var(--card);
+  stroke-width: 7;
+  stroke-linejoin: round;
+  paint-order: stroke;
+  font: 700 14px/1.2 system-ui, sans-serif;
+}
+.reference-flowchart .flow-node rect {
+  fill: var(--card);
+  stroke: var(--ac);
+  stroke-width: 2.5;
+}
+.reference-flowchart .flow-node text {
+  fill: var(--fg);
+  font: 700 17px/1.2 system-ui, sans-serif;
+}
 @media (prefers-reduced-motion: no-preference) {
   button,
   nav a {
@@ -1050,9 +1297,68 @@ nav.reference-toc-links a.reference-toc-link:hover {
     max-height: none;
     padding: 0.75rem;
   }
+  .reference-sidebar {
+    position: static;
+    max-height: none;
+  }
+  .reference-sidebar > .reference-toc[open] {
+    max-height: none;
+  }
+  .reference-sidebar > .reference-search-panel {
+    display: none;
+  }
+  .reference-search-panel.mobile-open {
+    position: fixed;
+    z-index: 6;
+    right: max(0.65rem, env(safe-area-inset-right));
+    bottom: max(0.65rem, env(safe-area-inset-bottom));
+    left: max(0.65rem, env(safe-area-inset-left));
+    display: block;
+    padding: 0.8rem;
+    background: var(--card);
+    border-color: var(--ac);
+    box-shadow: 0 8px 32px rgb(0 0 0 / 24%);
+  }
+  .reference-search-close {
+    display: grid;
+    flex: 0 0 auto;
+    color: var(--mut);
+    background: var(--soft);
+    border-color: var(--bd);
+    font-size: 1.35rem;
+  }
+  .reference-search-toggle {
+    position: fixed;
+    z-index: 4;
+    right: max(4.2rem, calc(env(safe-area-inset-right) + 3.2rem));
+    bottom: max(0.9rem, env(safe-area-inset-bottom));
+    display: inline-flex;
+    min-height: 2.8rem;
+    align-items: center;
+    gap: 0.3rem;
+    margin: 0;
+    padding: 0.4rem 0.8rem;
+    box-shadow: 0 3px 12px rgb(0 0 0 / 12%);
+  }
+  .reference-search-toggle[aria-expanded="true"] {
+    opacity: 0;
+    pointer-events: none;
+  }
   .md {
     padding: 1rem;
     border-radius: 10px;
+  }
+  .reference-flowchart-scroll {
+    overflow-x: hidden;
+  }
+  .reference-flowchart:not(.reference-flowchart-mobile) {
+    display: none;
+  }
+  .reference-flowchart-mobile {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    height: auto;
   }
   .md h1 {
     font-size: 1.65rem;
@@ -1386,8 +1692,7 @@ button.sql-result-toggle:hover:not(:disabled) {
   min-width: 0;
 }
 .reference-toc {
-  top: 5rem;
-  max-height: calc(100dvh - 6rem);
+  top: auto;
 }
 .reference-toc summary,
 .reference-toc-links a.reference-toc-link {
