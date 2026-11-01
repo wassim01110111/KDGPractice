@@ -1704,51 +1704,103 @@ async function pageExam(root) {
   const num = (k, l) =>
     h(
       "label",
-      {},
-      l + " ",
+      { class: "exam-count-control" },
+      h("span", {}, l),
       h("input", {
         type: "number",
         min: 0,
         value: cfg[k],
-        style: "width:5rem",
-        onchange: (e) => {
-          cfg[k] = +e.target.value;
+        oninput: (e) => {
+          cfg[k] = Math.max(0, +e.target.value || 0);
+          e.target.value = cfg[k];
+          updateExamSummary();
         },
       }),
-      " ",
     );
+  const examSummary = h("div", {
+    class: "exam-config-summary",
+    "aria-live": "polite",
+  });
+  const updateExamSummary = () => {
+    const count = cfg.Easy + cfg.Medium + cfg.Hard + cfg.Extreme;
+    examSummary.replaceChildren(
+      h("strong", {}, `${count} questions`),
+      h(
+        "span",
+        {},
+        `${cfg.course ? cfg.course.toUpperCase() : "All courses"} · ${cfg.mins} minutes`,
+      ),
+    );
+  };
+  const courseSelect = h(
+    "select",
+    {
+      onchange: (e) => {
+        cfg.course = e.target.value;
+        updateExamSummary();
+      },
+    },
+    h("option", { value: "" }, "All courses"),
+    courses.map((c) => h("option", { value: c }, c.toUpperCase())),
+  );
+  const minuteControl = h(
+    "label",
+    { class: "exam-count-control exam-minutes-control" },
+    h("span", {}, "Minutes"),
+    h("input", {
+      type: "number",
+      min: 1,
+      value: cfg.mins,
+      oninput: (e) => {
+        cfg.mins = Math.max(1, +e.target.value || 1);
+        e.target.value = cfg.mins;
+        updateExamSummary();
+      },
+    }),
+  );
+  updateExamSummary();
   root.append(
     h(
       "div",
-      { class: "card" },
-      h("h2", {}, "Start an exam"),
-      h(
-        "label",
-        {},
-        "Course ",
-        h(
-          "select",
-          {
-            onchange: (e) => {
-              cfg.course = e.target.value;
-            },
-          },
-          h("option", { value: "" }, "All"),
-          courses.map((c) => h("option", { value: c }, c.toUpperCase())),
-        ),
-      ),
-      " ",
-      num("Easy", "Easy"),
-      num("Medium", "Medium"),
-      num("Hard", "Hard"),
-      num("Extreme", "Extreme"),
-      num("mins", "Minutes"),
+      { class: "exam-setup-card card" },
       h(
         "div",
-        {},
+        { class: "exam-setup-heading" },
+        h("p", { class: "eyebrow" }, "BUILD YOUR SESSION"),
+        h("h2", {}, "Start an exam"),
+        h(
+          "p",
+          {},
+          "Choose the course, difficulty mix, and time limit for your exam.",
+        ),
+      ),
+      h(
+        "div",
+        { class: "exam-setup-controls" },
+        h(
+          "label",
+          { class: "exam-course-control" },
+          h("span", {}, "Course"),
+          courseSelect,
+        ),
+        h(
+          "div",
+          { class: "exam-difficulty-controls" },
+          num("Easy", "Easy"),
+          num("Medium", "Medium"),
+          num("Hard", "Hard"),
+          num("Extreme", "Extreme"),
+          minuteControl,
+        ),
+        examSummary,
+      ),
+      h(
+        "div",
+        { class: "exam-setup-footer" },
         h(
           "button",
           {
+            class: "exam-start-button",
             onclick: async () => {
               const r = generateExam(
                 S.exercises,
@@ -1804,8 +1856,10 @@ async function pageExam(root) {
               runExam(root, st);
             },
           },
-          "Start",
+          h("span", { "aria-hidden": "true" }, "▶"),
+          " Start exam",
         ),
+        h("small", {}, "Your answers save automatically during the exam."),
       ),
       msg,
     ),
@@ -1870,16 +1924,54 @@ async function runExam(root, st) {
   );
   st.ids = exs.map(keyOf);
   const save = () => kv.set("exam", st),
-    top = h("div", { class: "card" }),
-    nav = h("div", { class: "nav" }),
-    body = h("div"),
-    timer = h("span", { id: "timer", role: "timer" });
+    top = h("div", { class: "exam-topbar card" }),
+    nav = h("div", { class: "exam-question-grid" }),
+    body = h("div", { class: "exam-question-body" }),
+    timer = h("span", { class: "exam-timer-clock", role: "timer" }),
+    summary = h("p", { class: "exam-summary", "aria-live": "polite" }),
+    progress = h("progress", {
+      class: "exam-progress",
+      max: exs.length,
+      value: 0,
+      "aria-label": "Questions answered",
+    }),
+    workspace = h(
+      "div",
+      { class: "exam-workspace" },
+      h(
+        "aside",
+        { class: "exam-nav-panel card" },
+        h("h2", {}, "Questions"),
+        h("p", {}, "Choose a number to jump to a question."),
+        nav,
+        h(
+          "small",
+          { class: "exam-nav-legend" },
+          "Filled = answered · outlined = flagged",
+        ),
+      ),
+      h("section", { class: "exam-question-panel card" }, body),
+    ),
+    session = h(
+      "section",
+      { class: "exam-session" },
+      top,
+      workspace,
+    );
   let done = false;
   const submit = async () => {
     if (done || !(await kv.get("exam", null))) return;
     done = true;
     clearInterval(iv);
-    body.replaceChildren(h("p", {}, "Grading…"));
+    root.replaceChildren(
+      h(
+        "div",
+        { class: "exam-grading card", role: "status" },
+        h("span", { class: "exam-grading-spinner", "aria-hidden": "true" }),
+        h("h2", {}, "Grading your exam…"),
+        h("p", {}, "Your answers are being checked. This may take a moment."),
+      ),
+    );
     let score = 0,
       gradable = 0;
     const rows = [];
@@ -1912,43 +2004,77 @@ async function runExam(root, st) {
     await kv.set("examHistory", hist);
     st.submitted = true;
     await kv.del("exam");
-    nav.remove();
-    top.remove();
-    body.replaceChildren(
-      h("h2", {}, `Score: ${score} / ${gradable}`),
-      gradable < exs.length
-        ? h("small", {}, "Self-check questions are not scored automatically.")
-        : "",
-      ...rows.map((r) =>
+    root.replaceChildren(
+      h(
+        "section",
+        { class: "exam-results" },
         h(
           "div",
-          { class: "q" },
-          h("b", {}, r.ex.title),
-          " ",
+          { class: "exam-score-card card" },
+          h("p", { class: "eyebrow" }, "EXAM COMPLETE"),
+          h("h1", {}, `Score: ${score} / ${gradable}`),
           h(
-            "span",
-            { class: r.ok ? "ok" : r.ok === false ? "bad" : "meta" },
-            r.ok
-              ? "✔ correct"
-              : r.ok === false
-                ? "✘ incorrect"
-                : "not auto-graded",
+            "p",
+            {},
+            gradable < exs.length
+              ? "Self-check questions are not included in the score."
+              : `${exs.length} questions completed`,
+          ),
+        ),
+        gradable < exs.length
+          ? h(
+              "p",
+              { class: "exam-self-check-note" },
+              "Self-check questions are not scored automatically.",
+            )
+          : "",
+      ...rows.map((r) =>
+        h(
+          "article",
+          { class: "exam-result-card card" },
+          h(
+            "div",
+            { class: "exam-result-heading" },
+            h("h2", {}, r.ex.title),
+            h(
+              "span",
+              {
+                class:
+                  "exam-result-status " +
+                  (r.ok ? "ok" : r.ok === false ? "bad" : "meta"),
+              },
+              r.ok
+                ? "Correct"
+                : r.ok === false
+                  ? "Incorrect"
+                  : "Self-check",
+            ),
           ),
           r.note ? h("pre", { class: "err" }, r.note) : "",
           h(
-            "div",
-            {},
-            h("b", {}, "Your answer:"),
-            h("pre", {}, answerText(r.ex, r.a)),
-          ),
-          h(
-            "div",
-            {},
-            h("b", {}, "Correct answer:"),
-            h("pre", {}, expectedText(r.ex)),
+            "details",
+            { class: "exam-answer-review" },
+            h("summary", {}, "Review answers"),
+            h(
+              "div",
+              { class: "exam-answer-comparison" },
+              h(
+                "div",
+                {},
+                h("h3", {}, "Your answer"),
+                h("pre", {}, answerText(r.ex, r.a)),
+              ),
+              h(
+                "div",
+                {},
+                h("h3", {}, "Expected answer"),
+                h("pre", {}, expectedText(r.ex)),
+              ),
+            ),
           ),
           r.ex.explanation ? h("p", {}, r.ex.explanation) : "",
         ),
+      ),
       ),
     );
   };
@@ -1957,7 +2083,12 @@ async function runExam(root, st) {
     st.cur = i;
     save();
     body.replaceChildren(
-      h("h3", {}, `Question ${i + 1} of ${exs.length}`),
+      h(
+        "div",
+        { class: "exam-question-kicker" },
+        h("span", {}, `QUESTION ${String(i + 1).padStart(2, "0")}`),
+        h("span", {}, `of ${exs.length}`),
+      ),
       qView(
         exs[i],
         "exam",
@@ -1965,29 +2096,34 @@ async function runExam(root, st) {
         (v) => {
           st.answers[key] = v;
           save();
+          updateQuestionStatus();
         },
       ),
       h(
         "label",
-        {},
+        { class: "exam-flag-control" },
         h("input", {
           type: "checkbox",
           checked: !!st.flags[key],
           onchange: (e) => {
             st.flags[key] = e.target.checked;
             save();
-            drawNav();
+            updateQuestionStatus();
           },
         }),
-        " Flag for review",
+        h("span", {}, "Flag for review"),
       ),
       h(
         "div",
-        {},
+        { class: "exam-question-actions" },
         h(
           "button",
-          { class: "sec", disabled: i === 0, onclick: () => show(i - 1) },
-          "← Prev",
+          {
+            class: "sec",
+            disabled: i === 0,
+            onclick: () => show(i - 1),
+          },
+          "Previous",
         ),
         h(
           "button",
@@ -1996,29 +2132,57 @@ async function runExam(root, st) {
             disabled: i === exs.length - 1,
             onclick: () => show(i + 1),
           },
-          "Next →",
+          "Next question",
         ),
       ),
     );
     drawNav();
   };
-  const drawNav = () =>
+  const updateQuestionStatus = () => {
+    let answered = 0,
+      flagged = 0;
+    exs.forEach((exercise, i) => {
+      const key = keyOf(exercise),
+        answer = st.answers[key],
+        hasAnswer = Array.isArray(answer)
+          ? answer.some((value) => String(value ?? "").trim() !== "")
+          : typeof answer === "string"
+            ? answer.trim().length > 0
+            : answer != null;
+      if (hasAnswer) answered++;
+      if (st.flags[key]) flagged++;
+      const button = nav.children[i];
+      if (button) {
+        button.classList.toggle("answered", hasAnswer);
+        button.classList.toggle("flagged", !!st.flags[key]);
+        button.classList.toggle("current", i === st.cur);
+        button.setAttribute("aria-current", i === st.cur ? "step" : "false");
+        button.setAttribute(
+          "aria-label",
+          `Question ${i + 1}${hasAnswer ? ", answered" : ", unanswered"}${st.flags[key] ? ", flagged for review" : ""}`,
+        );
+      }
+    });
+    progress.value = answered;
+    summary.textContent = `${answered} of ${exs.length} answered · ${flagged} flagged for review`;
+  };
+  const drawNav = () => {
     nav.replaceChildren(
       ...exs.map((e, i) =>
         h(
           "button",
           {
-            class:
-              "sec" +
-              (st.flags[keyOf(e)] ? " flag" : "") +
-              (i === st.cur ? " cur" : ""),
-            "aria-label": "Question " + (i + 1),
+            class: "exam-question-button",
+            "aria-current": i === st.cur ? "step" : "false",
+            "data-question": i + 1,
             onclick: () => show(i),
           },
-          i + 1,
+          String(i + 1).padStart(2, "0"),
         ),
       ),
     );
+    updateQuestionStatus();
+  };
   const tick = () => {
     if (!top.isConnected) {
       clearInterval(iv);
@@ -2027,24 +2191,50 @@ async function runExam(root, st) {
     const ms = st.deadline - Date.now();
     if (ms <= 0) {
       timer.textContent = "00:00";
+      timer.classList.add("urgent");
       submit();
       return;
     }
     const s = Math.ceil(ms / 1000);
     timer.textContent = `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(s % 60).padStart(2, "0")}`;
+    timer.classList.toggle("urgent", ms <= 5 * 60_000);
   };
   const iv = setInterval(tick, 500);
   top.append(
-    timer,
-    " ",
     h(
-      "button",
-      { onclick: () => confirm("Submit the exam now?") && submit() },
-      "Submit exam",
+      "div",
+      { class: "exam-heading" },
+      h("p", { class: "eyebrow" }, "EXAM IN PROGRESS"),
+      h("h1", {}, "Stay focused. You’ve got this."),
+      h("p", {}, "Your work saves automatically as you answer."),
     ),
-    h("small", {}, " No feedback is shown during the exam."),
+    h(
+      "div",
+      { class: "exam-status" },
+      h(
+        "div",
+        { class: "exam-timer-card" },
+        h("span", { class: "exam-timer-label" }, "TIME LEFT"),
+        timer,
+      ),
+      h(
+        "div",
+        { class: "exam-session-summary" },
+        summary,
+        progress,
+        h("small", {}, "No feedback is shown during the exam."),
+      ),
+      h(
+        "button",
+        {
+          class: "exam-submit-button",
+          onclick: () => confirm("Submit the exam now?") && submit(),
+        },
+        "Submit exam",
+      ),
+    ),
   );
-  root.append(top, nav, body);
+  root.replaceChildren(session);
   tick();
   if (!done) show(Math.min(st.cur || 0, exs.length - 1));
 }
@@ -2065,8 +2255,16 @@ async function pageProgress(root) {
   const solved = ex.filter((e) => unlocked.has(keyOf(e)));
   const solvedSql = solved.filter((e) => e.course === "sql").length;
   const solvedOs = solved.filter((e) => e.course === "os").length;
+  const solvedEasy = solved.filter((e) => e.difficulty === "Easy").length;
+  const solvedMedium = solved.filter((e) => e.difficulty === "Medium").length;
   const solvedHard = solved.filter((e) => e.difficulty === "Hard").length;
   const solvedExtreme = solved.filter((e) => e.difficulty === "Extreme").length;
+  const perfectExams = examHistory.filter(
+    (exam) => exam.total > 0 && exam.score === exam.total,
+  ).length;
+  const highScoreExams = examHistory.filter(
+    (exam) => exam.total > 0 && exam.score / exam.total >= 0.9,
+  ).length;
   const achievements = [
     {
       title: "First Clear",
@@ -2099,6 +2297,18 @@ async function pageProgress(root) {
       target: 50,
     },
     {
+      title: "Century Club",
+      detail: "Solve 100 exercises",
+      count: solved.length,
+      target: 100,
+    },
+    {
+      title: "The Grand Library",
+      detail: "Solve 250 exercises",
+      count: solved.length,
+      target: 250,
+    },
+    {
       title: "Query Rookie",
       detail: "Solve your first SQL exercise",
       count: solvedSql,
@@ -2115,6 +2325,18 @@ async function pageProgress(root) {
       detail: "Solve 25 SQL exercises",
       count: solvedSql,
       target: 25,
+    },
+    {
+      title: "SQL Centurion",
+      detail: "Solve 50 SQL exercises",
+      count: solvedSql,
+      target: 50,
+    },
+    {
+      title: "SQL Grandmaster",
+      detail: "Solve 100 SQL exercises",
+      count: solvedSql,
+      target: 100,
     },
     {
       title: "Shell Initiate",
@@ -2135,6 +2357,54 @@ async function pageProgress(root) {
       target: 25,
     },
     {
+      title: "Command Collector",
+      detail: "Solve 50 OS exercises",
+      count: solvedOs,
+      target: 50,
+    },
+    {
+      title: "Terminal Legend",
+      detail: "Solve 100 OS exercises",
+      count: solvedOs,
+      target: 100,
+    },
+    {
+      title: "Warm-up Complete",
+      detail: "Solve 25 Easy exercises",
+      count: solvedEasy,
+      target: 25,
+    },
+    {
+      title: "Easy Does It",
+      detail: "Solve 100 Easy exercises",
+      count: solvedEasy,
+      target: 100,
+    },
+    {
+      title: "Finding Your Feet",
+      detail: "Solve your first Medium exercise",
+      count: solvedMedium,
+      target: 1,
+    },
+    {
+      title: "Steady Climber",
+      detail: "Solve 10 Medium exercises",
+      count: solvedMedium,
+      target: 10,
+    },
+    {
+      title: "Mid-Tier Master",
+      detail: "Solve 25 Medium exercises",
+      count: solvedMedium,
+      target: 25,
+    },
+    {
+      title: "No Middle Ground",
+      detail: "Solve 50 Medium exercises",
+      count: solvedMedium,
+      target: 50,
+    },
+    {
       title: "Hard Mode",
       detail: "Solve your first Hard exercise",
       count: solvedHard,
@@ -2147,10 +2417,40 @@ async function pageProgress(root) {
       target: 10,
     },
     {
+      title: "Hard Carry",
+      detail: "Solve 25 Hard exercises",
+      count: solvedHard,
+      target: 25,
+    },
+    {
+      title: "Unbreakable",
+      detail: "Solve 50 Hard exercises",
+      count: solvedHard,
+      target: 50,
+    },
+    {
       title: "Extreme Mode",
       detail: "Solve your first Extreme exercise",
       count: solvedExtreme,
       target: 1,
+    },
+    {
+      title: "Extreme Streak",
+      detail: "Solve 5 Extreme exercises",
+      count: solvedExtreme,
+      target: 5,
+    },
+    {
+      title: "Beyond Extreme",
+      detail: "Solve 10 Extreme exercises",
+      count: solvedExtreme,
+      target: 10,
+    },
+    {
+      title: "Mythic Difficulty",
+      detail: "Solve 25 Extreme exercises",
+      count: solvedExtreme,
+      target: 25,
     },
     {
       title: "Exam Ready",
@@ -2165,14 +2465,78 @@ async function pageProgress(root) {
       target: 5,
     },
     {
+      title: "Exam Regular",
+      detail: "Complete 10 exams",
+      count: examHistory.length,
+      target: 10,
+    },
+    {
+      title: "Exam Enthusiast",
+      detail: "Complete 25 exams",
+      count: examHistory.length,
+      target: 25,
+    },
+    {
+      title: "Exam Institution",
+      detail: "Complete 50 exams",
+      count: examHistory.length,
+      target: 50,
+    },
+    {
       title: "Perfect Score",
       detail: "Get a perfect score on an exam",
-      count: examHistory.some(
-        (exam) => exam.total > 0 && exam.score === exam.total,
-      )
-        ? 1
-        : 0,
+      count: perfectExams,
       target: 1,
+    },
+    {
+      title: "Perfectionist",
+      detail: "Get 3 perfect exam scores",
+      count: perfectExams,
+      target: 3,
+    },
+    {
+      title: "Flawless Record",
+      detail: "Get 10 perfect exam scores",
+      count: perfectExams,
+      target: 10,
+    },
+    {
+      title: "Ace Student",
+      detail: "Score at least 90% on an exam",
+      count: highScoreExams,
+      target: 1,
+    },
+    {
+      title: "Consistent Ace",
+      detail: "Score at least 90% on 5 exams",
+      count: highScoreExams,
+      target: 5,
+    },
+    {
+      title: "Difficulty Diplomat",
+      detail: "Solve an exercise at every difficulty",
+      count: [solvedEasy, solvedMedium, solvedHard, solvedExtreme].filter(
+        (count) => count > 0,
+      ).length,
+      target: 4,
+    },
+    {
+      title: "XP Hoarder",
+      detail: "Earn 1,000 XP",
+      count: xp,
+      target: 1000,
+    },
+    {
+      title: "Power Level",
+      detail: "Earn 2,500 XP",
+      count: xp,
+      target: 2500,
+    },
+    {
+      title: "Five Thousand Club",
+      detail: "Earn 5,000 XP",
+      count: xp,
+      target: 5000,
     },
   ];
   const hero = h(
@@ -2468,6 +2832,21 @@ const pages = {
 const periodicToast = $("#periodic-toast");
 const terminalArtifact = $("#terminal-artifact");
 const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
+const backToTop = $("#back-to-top");
+const updateBackToTop = () => {
+  if (backToTop)
+    backToTop.hidden =
+      !matchMedia("(max-width: 760px)").matches || window.scrollY < 320;
+};
+backToTop?.addEventListener("click", () =>
+  window.scrollTo({
+    top: 0,
+    behavior: reducedMotion.matches ? "auto" : "smooth",
+  }),
+);
+addEventListener("scroll", updateBackToTop, { passive: true });
+addEventListener("resize", updateBackToTop);
+updateBackToTop();
 if (terminalArtifact && !reducedMotion.matches) {
   const alphabet = "0123456789ABCDEF<>[]{}|_-=+/*;:.";
   terminalArtifact.hidden = true;
