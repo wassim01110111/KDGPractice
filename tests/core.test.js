@@ -55,6 +55,12 @@ t('SQL-course multiple-choice exercises validate without query fields', () => {
   assert.deepStrictEqual(C.validatePackage(pkg, 'sql-fixture.json', { seenIds: new Set(), datasetIds: new Set(), schemaVersion: 1 }), []);
   assert.strictEqual(C.gradeOS(ex, [1]), true);
 });
+t('manifest courses and compatible string schema versions are accepted', () => {
+  const ex = { id: 'programming-1', course: 'Programming Fundamentals Java', category: 'Theory', title: 'Choose', instructions: 'Select one.', difficulty: 'Easy', type: 'mcq-single', examEligible: true, provenance: { sourceFile: 'slides.pdf' }, contentVersion: '1.0.0', options: ['A', 'B'], expected: [0] };
+  const pkg = { schemaVersion: '1.0', packageId: 'programming-theory', version: '1', datasets: [], exercises: [ex] };
+  assert.deepStrictEqual(C.validatePackage(pkg, 'programming.json', { seenIds: new Set(), datasetIds: new Set(), schemaVersion: 1 }), []);
+  assert(C.gradeOS(ex, [0]));
+});
 t('mcq-multiple validates, renders as multi-select, and grades all expected choices', () => {
   const ex = { id: 'sql-multi-alias', course: 'sql', category: 'theory', title: 'Choose all', instructions: 'Select all correct answers.', difficulty: 'Easy', type: 'mcq-multiple', examEligible: true, provenance: 'fixture', contentVersion: 1, options: ['A', 'B', 'C'], expected: [0, 2] };
   const pkg = { schemaVersion: 1, packageId: 'sql-multi-alias-package', version: '1', datasets: [], exercises: [ex] };

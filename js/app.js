@@ -26,6 +26,8 @@ const empty = (a, b) =>
   h("div", { class: "empty" }, h("strong", {}, a), h("div", {}, b || ""));
 const uniq = (arr, f) =>
   [...new Set(arr.map(f).filter((x) => x !== undefined && x !== ""))].sort();
+const courseLabel = (course) =>
+  course === "sql" ? "SQL" : course === "os" ? "OS" : course;
 let activeConfirmDialog = null;
 let confirmDialogId = 0;
 function confirmInApp({
@@ -901,7 +903,7 @@ function qView(ex, mode, get, set, onAttempt = () => {}) {
       "div",
       { class: "meta" },
       [
-        ex.course.toUpperCase(),
+        courseLabel(ex.course),
         ex.packageId,
         ex.category,
         ex.difficulty,
@@ -2163,7 +2165,7 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
       },
       h("option", { value: "" }, "All"),
       uniq(S.exercises, (e) => e.course).map((v) =>
-        h("option", { value: v }, v.toUpperCase()),
+        h("option", { value: v }, courseLabel(v)),
       ),
     ),
     categorySelect = h("select", {
@@ -2237,7 +2239,7 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
         h(
           "option",
           { value: JSON.stringify([e.course, e.category]) },
-          `${categoryLabel(e.category)}${courseCounts.get(e.category) > 1 ? ` (${e.course.toUpperCase()})` : ""}`,
+          `${categoryLabel(e.category)}${courseCounts.get(e.category) > 1 ? ` (${courseLabel(e.course)})` : ""}`,
         ),
       ),
     );
@@ -2408,7 +2410,7 @@ async function pageExam(root, isCurrent = () => true) {
       h(
         "span",
         {},
-        `${cfg.course ? cfg.course.toUpperCase() : "All courses"} · ${cfg.mins} minutes`,
+        `${cfg.course ? courseLabel(cfg.course) : "All courses"} · ${cfg.mins} minutes`,
       ),
     );
   };
@@ -2422,7 +2424,7 @@ async function pageExam(root, isCurrent = () => true) {
       },
     },
     h("option", { value: "" }, "All courses"),
-    courses.map((c) => h("option", { value: c }, c.toUpperCase())),
+    courses.map((c) => h("option", { value: c }, courseLabel(c))),
   );
   const minuteControl = h(
     "label",
@@ -2979,9 +2981,15 @@ async function pageProgress(root) {
   const solvedMedium = solved.filter((e) => e.difficulty === "Medium").length;
   const solvedHard = solved.filter((e) => e.difficulty === "Hard").length;
   const solvedExtreme = solved.filter((e) => e.difficulty === "Extreme").length;
-  const sqlExercises = ex.filter((e) => e.course === "sql"),
-    osExercises = ex.filter((e) => e.course === "os"),
-    solvedMcq = solved.filter((e) =>
+  const courseStats = uniq(ex, (exercise) => exercise.course).map((course) => {
+    const exercises = ex.filter((exercise) => exercise.course === course);
+    return {
+      course,
+      exercises,
+      solved: solved.filter((exercise) => exercise.course === course).length,
+    };
+  });
+  const solvedMcq = solved.filter((e) =>
       ["mcq-single", "mcq-multi", "mcq-multiple"].includes(e.type),
     ).length,
     solvedSqlQueries = solved.filter((e) => e.type === "sql-query").length,
@@ -2995,7 +3003,7 @@ async function pageProgress(root) {
     latestAccuracy = attemptedLatest.length
       ? latestCorrect / attemptedLatest.length
       : 0;
-  const courseCount = [solvedSql, solvedOs].filter((count) => count > 0).length;
+  const courseCount = courseStats.filter((stat) => stat.solved > 0).length;
   const perfectExams = examHistory.filter(
     (exam) => exam.total > 0 && exam.score === exam.total,
   ).length;
@@ -3317,7 +3325,7 @@ async function pageProgress(root) {
     },
     {
       title: "Interdisciplinary Learner",
-      detail: "Solve exercises in both SQL and operating systems",
+      detail: "Solve exercises in at least two courses",
       count: courseCount,
       target: 2,
     },
@@ -3381,6 +3389,26 @@ async function pageProgress(root) {
       count: level,
       target: 20,
     },
+    ...courseStats.flatMap(({ course, exercises, solved: solvedCount }) => [
+      {
+        title: `${courseLabel(course)} Explorer`,
+        detail: `Solve your first ${courseLabel(course)} exercise`,
+        count: solvedCount,
+        target: 1,
+      },
+      {
+        title: `${courseLabel(course)} Specialist`,
+        detail: `Solve 25 ${courseLabel(course)} exercises`,
+        count: solvedCount,
+        target: 25,
+      },
+      {
+        title: `${courseLabel(course)} Curriculum Complete`,
+        detail: `Solve every available ${courseLabel(course)} exercise`,
+        count: solvedCount,
+        target: Math.max(1, exercises.length),
+      },
+    ]),
   ];
   const academicRank =
     level >= 20
@@ -3411,12 +3439,11 @@ async function pageProgress(root) {
     h(
       "div",
       { class: "curriculum-tracks", "aria-label": "Course completion" },
-      ...[
-        ["SQL", solvedSql, sqlExercises.length],
-        ["Operating systems", solvedOs, osExercises.length],
-      ].map(([label, count, total]) => {
-        const completed = Math.min(count, total);
-        const percentage = total ? Math.round((completed / total) * 100) : 0;
+      ...courseStats.map(({ course, exercises, solved: count }) => {
+        const label = courseLabel(course),
+          total = exercises.length,
+          completed = Math.min(count, total),
+          percentage = total ? Math.round((completed / total) * 100) : 0;
         return h(
           "div",
           { class: "curriculum-track" },
@@ -3581,7 +3608,7 @@ async function pageProgress(root) {
                     h(
                       "small",
                       {},
-                      `${exercise.course.toUpperCase()} · ${exercise.difficulty} · ${new Date(attempt.t).toLocaleDateString()}`,
+                      `${courseLabel(exercise.course)} · ${exercise.difficulty} · ${new Date(attempt.t).toLocaleDateString()}`,
                     ),
                   ),
                   h(
@@ -3598,7 +3625,7 @@ async function pageProgress(root) {
             "div",
             { class: "empty" },
             course
-              ? `No ${course.toUpperCase()} activity yet.`
+              ? `No ${courseLabel(course)} activity yet.`
               : "No activity yet. Pick an exercise and start earning XP.",
           ),
     );
@@ -3610,8 +3637,10 @@ async function pageProgress(root) {
   };
   for (const [value, label] of [
     ["", "All courses"],
-    ["sql", "SQL"],
-    ["os", "OS"],
+    ...uniq(ex, (exercise) => exercise.course).map((course) => [
+      course,
+      courseLabel(course),
+    ]),
   ]) {
     let filterButton;
     filterButton = h(

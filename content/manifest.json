@@ -21,6 +21,11 @@
       "id": "os",
       "title": "Linux / OS summary",
       "file": "reference/linux-summary.md"
+    },
+    {
+      "id": "programming fundamentals",
+      "title": "Programming Fundamentals theory",
+      "file": "reference/prog-summary.md"
     }
   ]
 }

@@ -1,17 +1,21 @@
 # Course content format (schemaVersion 1)
 
-Course content is maintained directly in two bundled JSON files:
+Course content is maintained in JSON packages listed in the manifest:
 
 - `content/os-course.json` contains the OS exercises.
 - `content/sql-course.json` contains the SQL exercises and their datasets.
+- Other manifest-listed packages may add exercises for additional courses.
 
 Each file is a complete package with `schemaVersion`, `packageId`, `version`,
 `datasets`, and `exercises`. Edit the relevant file to add or change course
 content; do not create a separate package for an individual exercise. Keep the
 file valid JSON and preserve the package metadata and top-level structure.
 
-Both files are loaded by `content/manifest.json`. If you rename or add a course
-file, update the `packages` list there so the app loads it.
+If you rename or add a course file, update the `packages` list in
+`content/manifest.json` so the app loads it. Practice, exams, and progress
+discover course names from those packages; `course` can be any non-empty name.
+Schema version `1` accepts numeric and zero-suffixed string forms such as
+`"1.0"`.
 
 ## Current package layout
 
@@ -34,7 +38,8 @@ version whenever its schema or data changes.
 Every exercise requires:
 
 - `id`
-- `course` (`"sql"` or `"os"`)
+- `course` (a non-empty course name; courses in manifest-listed packages are
+  available in Practice, exams, and progress)
 - `category`
 - `title`
 - `instructions`

@@ -3,6 +3,11 @@
 const NUM = new Set([20, 21, 23, 26, 700, 701, 1700]), FLT = new Set([700, 701]);
 const DIFF = ['Easy', 'Medium', 'Hard', 'Extreme'];
 const SQL_TYPES = ['sql-query'], MCQ_TYPES = ['mcq-single', 'mcq-multi', 'mcq-multiple'], OS_TYPES = [...MCQ_TYPES, 'command-text', 'fill-blank', 'short-answer-self-check'];
+const NON_SQL_TYPES = OS_TYPES;
+function compatibleSchemaVersion(version, supported) {
+  const match = String(version).match(/^(\d+)(?:\.0+)*$/);
+  return Boolean(match && Number(match[1]) === supported);
+}
 
 function normNum(v) { let s = String(v).trim();
   if (/^-?\d+(\.\d+)?$/.test(s)) { if (s.includes('.')) s = s.replace(/0+$/, '').replace(/\.$/, ''); if (s === '-0') s = '0'; }
@@ -56,7 +61,7 @@ function generateExam(pool, cfg, lastAttempt = {}, rnd = Math.random) {
 function validatePackage(pkg, file, ctx) { // ctx: { seenIds:Set, datasetIds:Set, schemaVersion }
   const errs = [], E = (id, field, msg) => errs.push({ file, id: id || '(package)', field, msg });
   if (!pkg || typeof pkg !== 'object') { E(null, '$', 'Not a JSON object'); return errs; }
-  if (pkg.schemaVersion !== ctx.schemaVersion) E(null, 'schemaVersion', `Incompatible schema version ${pkg.schemaVersion}; supported: ${ctx.schemaVersion}`);
+  if (!compatibleSchemaVersion(pkg.schemaVersion, ctx.schemaVersion)) E(null, 'schemaVersion', `Incompatible schema version ${pkg.schemaVersion}; supported: ${ctx.schemaVersion}`);
   for (const f of ['packageId', 'version']) if (!pkg[f]) E(null, f, 'Missing required field');
   const dsIds = new Set(ctx.datasetIds);
   (pkg.datasets || []).forEach(d => { if (!d.id || !d.version || !d.sql) E(d.id, 'datasets[]', 'Dataset needs id, version, sql'); else if (dsIds.has(d.id)) E(d.id, 'id', 'Duplicate dataset ID'); else dsIds.add(d.id); });
@@ -65,15 +70,14 @@ function validatePackage(pkg, file, ctx) { // ctx: { seenIds:Set, datasetIds:Set
     req.forEach(f => { if (ex[f] === undefined || ex[f] === '') E(id, f, 'Missing required field'); });
     if (id) { const key = exerciseKey(ex, pkg.packageId); if (ctx.seenIds.has(key)) E(id, 'id', 'Duplicate exercise ID within this package'); ctx.seenIds.add(key); }
     if (ex.difficulty && !DIFF.includes(ex.difficulty)) E(id, 'difficulty', `Must be one of ${DIFF.join(', ')}`);
-    if (ex.course && !['sql', 'os'].includes(ex.course)) E(id, 'course', 'Must be sql or os');
+    if (typeof ex.course !== 'string' || !ex.course.trim()) E(id, 'course', 'Must be a non-empty course name');
     if (ex.type === 'sql-query') {
       if (ex.course !== 'sql') E(id, 'type', 'sql-query exercises must use course sql');
       if (!ex.datasetId) E(id, 'datasetId', 'Missing datasetId'); else if (!dsIds.has(ex.datasetId)) E(id, 'datasetId', `Unknown dataset "${ex.datasetId}"`);
       if (!ex.referenceSolution) E(id, 'referenceSolution', 'Missing reference solution');
       ['orderMatters', 'compareColumnNames', 'columnOrderMatters'].forEach(f => { if (typeof ex[f] !== 'boolean') E(id, f, 'Must be true or false'); });
     } else {
-      const allowedTypes = ex.course === 'sql' ? MCQ_TYPES : OS_TYPES;
-      if (!allowedTypes.includes(ex.type)) E(id, 'type', `${ex.course.toUpperCase()} type must be one of ${allowedTypes.join(', ')}`);
+      if (!NON_SQL_TYPES.includes(ex.type)) E(id, 'type', `${String(ex.course || 'Course')} type must be one of ${NON_SQL_TYPES.join(', ')}`);
       ['datasetId', 'referenceSolution', 'orderMatters', 'compareColumnNames', 'columnOrderMatters', 'numericTolerance', 'allowedStatementKinds'].forEach(f => { if (ex[f] !== undefined) E(id, f, 'SQL-query-only field on a non-query exercise'); });
       const x = ex.expected;
       if (x === undefined) E(id, 'expected', 'Missing expected');
