@@ -3893,7 +3893,7 @@ function triggerWassimSignal() {
   setTimeout(() => {
     periodicToast.replaceChildren(
       h("span", { class: "periodic-toast-prefix" }, "[ SYS//MONITOR ]"),
-      h("strong", { class: "periodic-toast-message" }, "> WASSIM SEES YOU"),
+      h("strong", { class: "periodic-toast-message" }, "> WASSIM IS WATCHING YOU"),
       h("span", { class: "periodic-toast-footer" }, "[ SESSION WATCHED ]"),
     );
 
