@@ -889,7 +889,14 @@ async function plantumlEncode(source) {
 }
 
 // Question view. mode 'practice' shows Run/Submit/feedback; 'exam' shows Run only, no feedback.
-function qView(ex, mode, get, set, onAttempt = () => {}) {
+function qView(
+  ex,
+  mode,
+  get,
+  set,
+  onAttempt = () => {},
+  onNextExercise = null,
+) {
   const q = h("div", { class: "q" }),
     out = h("div"),
     fb = h("div");
@@ -927,7 +934,21 @@ function qView(ex, mode, get, set, onAttempt = () => {}) {
     h("div", { class: "stmt" }, ex.instructions),
   );
   const btns = h("div");
-  let readAns, resetFn, submitButton;
+  let readAns, resetFn, submitButton, nextExerciseButton;
+
+  let exerciseCorrect = false;
+
+  const updateNextExercise = () => {
+    if (nextExerciseButton) {
+      nextExerciseButton.hidden = !exerciseCorrect;
+    }
+  };
+
+  const markExerciseCorrect = () => {
+    exerciseCorrect = true;
+    updateNextExercise();
+  };
+  const focusNextExercise = () => nextExerciseButton?.focus();
   if (ex.type === "sql-query") {
     const ta = h("textarea", {
       class: "editor",
@@ -990,6 +1011,9 @@ function qView(ex, mode, get, set, onAttempt = () => {}) {
             if (g.correct !== null)
               await rec(ex, g.correct, "practice", onAttempt);
             if (currentGrading !== gradingId || !q.isConnected) return;
+            if (g.correct === true) {
+              markExerciseCorrect();
+            }
             fb.replaceChildren(
               g.error
                 ? h("pre", { class: "err" }, g.error)
@@ -1009,6 +1033,7 @@ function qView(ex, mode, get, set, onAttempt = () => {}) {
                 : "",
             );
             scrollToFeedback();
+            focusNextExercise();
           },
         },
         "Submit (Ctrl + Shift + Enter)",
@@ -1084,6 +1109,17 @@ function qView(ex, mode, get, set, onAttempt = () => {}) {
         spellcheck: "false",
         "aria-label": "Answer",
         oninput: (e) => updateAnswer(e.target.value),
+        onkeydown: (e) => {
+          if (
+            mode === "practice" &&
+            ex.type === "command-text" &&
+            e.key === "Enter"
+          ) {
+            e.preventDefault();
+            e.stopPropagation();
+            submitButton?.click();
+          }
+        },
       });
       inp.value = cur;
       readAns = () => inp.value;
@@ -1120,7 +1156,11 @@ function qView(ex, mode, get, set, onAttempt = () => {}) {
                     {
                       onclick: async () => {
                         await rec(ex, true, "practice", onAttempt);
+
+                        markExerciseCorrect();
+
                         fb.append(h("p", { class: "ok" }, "Saved as correct"));
+                        focusNextExercise();
                       },
                     },
                     "I was right",
@@ -1134,6 +1174,7 @@ function qView(ex, mode, get, set, onAttempt = () => {}) {
                         fb.append(
                           h("p", { class: "bad" }, "Saved as incorrect"),
                         );
+                        focusNextExercise();
                       },
                     },
                     "I was wrong",
@@ -1144,6 +1185,10 @@ function qView(ex, mode, get, set, onAttempt = () => {}) {
               return;
             }
             await rec(ex, g, "practice", onAttempt);
+
+            if (g === true) {
+              markExerciseCorrect();
+            }
             fb.replaceChildren(
               h(
                 "p",
@@ -1162,9 +1207,12 @@ function qView(ex, mode, get, set, onAttempt = () => {}) {
                 : "",
             );
             scrollToFeedback();
+            focusNextExercise();
           },
         },
-        "Submit (Ctrl + Shift + Enter)",
+        ex.type === "command-text"
+          ? "Submit (Enter)"
+          : "Submit (Ctrl + Shift + Enter)",
       );
       btns.append(submitButton);
     }
@@ -1183,6 +1231,22 @@ function qView(ex, mode, get, set, onAttempt = () => {}) {
     }
   });
   if (mode === "practice") {
+    if (onNextExercise) {
+      nextExerciseButton = h(
+        "button",
+        {
+          onclick: () => {
+            if (!exerciseCorrect) return;
+            onNextExercise();
+          },
+          "aria-keyshortcuts": "Enter",
+          hidden: true,
+        },
+        "Next exercise",
+      );
+
+      btns.append(nextExerciseButton);
+    }
     btns.append(
       h(
         "button",
@@ -1191,6 +1255,10 @@ function qView(ex, mode, get, set, onAttempt = () => {}) {
           onclick: () => {
             runId++;
             gradingId++;
+
+            exerciseCorrect = false;
+            updateNextExercise();
+
             resetFn();
             out.replaceChildren();
             fb.replaceChildren();
@@ -2146,6 +2214,7 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
   const answers = S.drafts;
   let showCompleted = false;
   let selectedKey = "";
+  let items = [];
   const categoryLabel = (category) =>
     category
       .replace(/-/g, " ")
@@ -2282,7 +2351,7 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
               .includes(query),
           )),
     );
-    const items = filtered.filter(
+    items = filtered.filter(
       (e) =>
         showCompleted || keyOf(e) === selectedKey || !S.xpRewards[keyOf(e)],
     );
@@ -2326,6 +2395,8 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
   };
   function selectExercise(exercise, addHistoryEntry) {
     selectedKey = keyOf(exercise);
+    draw();
+    const currentIndex = items.findIndex((item) => keyOf(item) === selectedKey);
     pane.replaceChildren(
       qView(
         exercise,
@@ -2333,13 +2404,21 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
         () => answers[keyOf(exercise)],
         (v) => saveDraft(keyOf(exercise), v),
         () => draw(),
+        currentIndex >= 0 && items[currentIndex + 1]
+          ? () => {
+              const nextIndex = items.findIndex(
+                (item) => keyOf(item) === selectedKey,
+              );
+              const nextExercise = items[nextIndex + 1];
+              if (nextExercise) selectExercise(nextExercise, true);
+            }
+          : null,
       ),
     );
     if (addHistoryEntry) {
       const url = `#/practice/${encodeURIComponent(exercise.packageId)}/${encodeURIComponent(exercise.id)}`;
       if (location.hash !== url) history.pushState(null, "", url);
     }
-    draw();
   }
   draw();
   const routeExercise = S.exercises.find(
@@ -2389,7 +2468,14 @@ async function pageExam(root, isCurrent = () => true) {
     }
   }
   const courses = uniq(S.exercises, (e) => e.course),
-    cfg = { courses: [...courses], Easy: 5, Medium: 5, Hard: 2, Extreme: 0, mins: 60 },
+    cfg = {
+      courses: [...courses],
+      Easy: 5,
+      Medium: 5,
+      Hard: 2,
+      Extreme: 0,
+      mins: 60,
+    },
     msg = h("div");
   const difficultyInputs = {};
   const courseInputs = new Map();
@@ -2429,11 +2515,7 @@ async function pageExam(root, isCurrent = () => true) {
           : "No courses selected";
     examSummary.replaceChildren(
       h("strong", {}, `${count} questions`),
-      h(
-        "span",
-        {},
-        `${selectedCourses} · ${cfg.mins} minutes`,
-      ),
+      h("span", {}, `${selectedCourses} · ${cfg.mins} minutes`),
     );
   };
   const courseOptions = h(
@@ -2444,7 +2526,9 @@ async function pageExam(root, isCurrent = () => true) {
         type: "checkbox",
         checked: true,
         onchange: () => {
-          cfg.courses = courses.filter((name) => courseInputs.get(name).checked);
+          cfg.courses = courses.filter(
+            (name) => courseInputs.get(name).checked,
+          );
           updateDifficultyLimits();
           updateExamSummary();
         },
@@ -3893,7 +3977,11 @@ function triggerWassimSignal() {
   setTimeout(() => {
     periodicToast.replaceChildren(
       h("span", { class: "periodic-toast-prefix" }, "[ SYS//MONITOR ]"),
-      h("strong", { class: "periodic-toast-message" }, "> WASSIM IS WATCHING YOU"),
+      h(
+        "strong",
+        { class: "periodic-toast-message" },
+        "> WASSIM IS WATCHING YOU",
+      ),
       h("span", { class: "periodic-toast-footer" }, "[ SESSION WATCHED ]"),
     );
 
