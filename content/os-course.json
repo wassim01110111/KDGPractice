@@ -1,0 +1,6238 @@
+{
+  "schemaVersion": 1,
+  "packageId": "os-course",
+  "version": "1.0.0",
+  "datasets": [],
+  "exercises": [
+    {
+      "id": "os-fundamentals-001",
+      "course": "os",
+      "category": "Fundamentals",
+
+      "title": "Print Working Directory (Wassim's pick)",
+      "instructions": "Write the command to print your current working directory.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "pwd"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Three letters."
+      ],
+      "explanation": "`pwd` prints the path of the current working directory."
+    },
+    {
+      "id": "os-fundamentals-002",
+      "course": "os",
+      "category": "Fundamentals",
+
+      "title": "Identify Current User",
+      "instructions": "Write the command to display the username of the currently logged-in user.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "whoami"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Starts with 'who'."
+      ],
+      "explanation": "`whoami` prints the effective username."
+    },
+    {
+      "id": "os-fundamentals-003",
+      "course": "os",
+      "category": "Fundamentals",
+
+      "title": "Show Date and Time",
+      "instructions": "Write the command to display the current date and time.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "date"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Simple 4-letter command."
+      ],
+      "explanation": "`date` displays the system date and time."
+    },
+    {
+      "id": "os-fundamentals-004",
+      "course": "os",
+      "category": "Fundamentals",
+
+      "title": "View Command History",
+      "instructions": "Write the command to show a numbered list of previously executed commands.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "history"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Related to past actions."
+      ],
+      "explanation": "`history` displays the command history list."
+    },
+    {
+      "id": "os-fundamentals-005",
+      "course": "os",
+      "category": "Fundamentals",
+
+      "title": "Manual Page Access",
+      "instructions": "Write the command to open the manual page for the `ls` command.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "man ls"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Use `man` followed by the command name."
+      ],
+      "explanation": "`man` displays manual pages for commands."
+    },
+    {
+      "id": "os-fundamentals-006",
+      "course": "os",
+      "category": "Fundamentals",
+
+      "title": "Absolute Path Concept",
+      "instructions": "What type of path starts explicitly with the root slash `/`?",
+      "difficulty": "Easy",
+      "type": "mcq-single",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "options": [
+        "Absolute path",
+        "Relative path",
+        "Inode path",
+        "Shell path"
+      ],
+      "expected": [
+        0
+      ],
+      "hints": [
+        "It gives the full path from root."
+      ],
+      "explanation": "An absolute path starts from the root directory `/`."
+    },
+    {
+      "id": "os-fundamentals-007",
+      "course": "os",
+      "category": "Fundamentals",
+
+      "title": "Inode Metadata",
+      "instructions": "Write the command to list files along with their inode numbers in the current directory.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "ls -i",
+          "ls -li"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Use the `-i` option with `ls`."
+      ],
+      "explanation": "`ls -i` displays the inode number of each file."
+    },
+    {
+      "id": "os-fundamentals-008",
+      "course": "os",
+      "category": "Fundamentals",
+
+      "title": "Parent Directory Reference",
+      "instructions": "In relative pathing, what symbol represents the parent directory?",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          ".."
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Two dots."
+      ],
+      "explanation": "`..` refers to the parent directory."
+    },
+    {
+      "id": "os-fundamentals-009",
+      "course": "os",
+      "category": "Fundamentals",
+
+      "title": "Current Directory Reference",
+      "instructions": "What symbol represents the current directory in relative paths?",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "."
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "A single dot."
+      ],
+      "explanation": "`.` represents the current working directory."
+    },
+    {
+      "id": "os-fundamentals-010",
+      "course": "os",
+      "category": "Fundamentals",
+
+      "title": "List Inode Numbers Explicitly",
+      "instructions": "Write the command to list file names with their inode numbers in long format.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "ls -li"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Combine `-l` and `-i`."
+      ],
+      "explanation": "`ls -li` combines long listing with inode numbers."
+    },
+    {
+      "id": "os-fundamentals-011",
+      "course": "os",
+      "category": "Fundamentals",
+
+      "title": "Display Current User ID",
+      "instructions": "Write the command to print your user ID and group IDs.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "id"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Two letter command."
+      ],
+      "explanation": "`id` prints user and group IDs."
+    },
+    {
+      "id": "os-shell-basics-012",
+      "course": "os",
+      "category": "Shell Syntax",
+
+      "title": "Combine Short Options",
+      "instructions": "Write a command to list all files (including hidden ones) in long format for the `/etc` directory by combining `-l` and `-a` into a single combined option string.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "ls -la /etc",
+          "ls -al /etc"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Combine flags after a single dash."
+      ],
+      "explanation": "Short options can be combined after a single dash like `-la`."
+    },
+    {
+      "id": "os-shell-basics-013",
+      "course": "os",
+      "category": "Shell Syntax",
+
+      "title": "Repeat Last Command",
+      "instructions": "Write the shell shorthand symbol used to repeat the immediately preceding command.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "!!"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Two exclamation marks."
+      ],
+      "explanation": "`!!` repeats the last command."
+    },
+    {
+      "id": "os-shell-basics-014",
+      "course": "os",
+      "category": "Shell Syntax",
+
+      "title": "Line Continuation",
+      "instructions": "Which symbol is used at the very end of a line to continue a command onto the next line?",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "\\"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Backslash."
+      ],
+      "explanation": "A backslash `\\` at the end of a line continues the command on the next line."
+    },
+    {
+      "id": "os-shell-basics-015",
+      "course": "os",
+      "category": "Shell Syntax",
+
+      "title": "Command Separator",
+      "instructions": "Write a single-line command sequence using a semicolon to change directory to `/tmp` and then list its contents.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "cd /tmp; ls"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Use `;` between commands."
+      ],
+      "explanation": "Semicolon `;` runs multiple commands sequentially on one line."
+    },
+    {
+      "id": "os-shell-basics-016",
+      "course": "os",
+      "category": "Shell Syntax",
+
+      "title": "Brace Expansion Creation",
+      "instructions": "Write a brace expansion expression with `touch` to create three files named `log1.txt`, `log2.txt`, and `log3.txt` in one command.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "touch log{1..3}.txt"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Use `{1..3}` inside the filename."
+      ],
+      "explanation": "Brace expansion `{1..3}` generates sequential strings `log1.txt log2.txt log3.txt`."
+    },
+    {
+      "id": "os-shell-basics-017",
+      "course": "os",
+      "category": "Shell Syntax",
+
+      "title": "Directory Tree Brace Expansion",
+      "instructions": "Write a command using `mkdir -p` and brace expansion to create a directory structure `project/src`, `project/docs`, and `project/tests` all at once.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "mkdir -p project/{src,docs,tests}"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Use comma-separated items inside braces."
+      ],
+      "explanation": "`mkdir -p project/{src,docs,tests}` creates the base directory and three subdirectories simultaneously."
+    },
+    {
+      "id": "os-shell-basics-018",
+      "course": "os",
+      "category": "Shell Syntax",
+
+      "title": "Comment Symbol",
+      "instructions": "Which symbol starts a comment in a shell script or command line, ignoring the rest of the line?",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "#"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Hash or pound sign."
+      ],
+      "explanation": "`#` starts a comment; everything after it on the line is ignored."
+    },
+    {
+      "id": "os-shell-basics-019",
+      "course": "os",
+      "category": "Shell Syntax",
+
+      "title": "Conditional Success Operator",
+      "instructions": "Which operator runs the next command only if the previous command succeeded?",
+      "difficulty": "Medium",
+      "type": "mcq-single",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "options": [
+        ";",
+        "&&",
+        "||",
+        "|"
+      ],
+      "expected": [
+        1
+      ],
+      "hints": [
+        "Two ampersands."
+      ],
+      "explanation": "`&&` runs the subsequent command only upon success of the preceding one."
+    },
+    {
+      "id": "os-shell-basics-020",
+      "course": "os",
+      "category": "Shell Syntax",
+
+      "title": "Exit Shell",
+      "instructions": "Write the command or shortcut key sequence to exit the current shell session.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "exit",
+          "Ctrl+D"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "`exit` or `Ctrl+D`."
+      ],
+      "explanation": "Typing `exit` or pressing `Ctrl+D` exits the shell."
+    },
+    {
+      "id": "os-shell-basics-021",
+      "course": "os",
+      "category": "Shell Syntax",
+
+      "title": "History Number Execution",
+      "instructions": "Write the command to re-run history command number 25.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "!25"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Exclamation mark followed by the number."
+      ],
+      "explanation": "`!n` executes command number `n` from history."
+    },
+    {
+      "id": "os-shell-basics-022",
+      "course": "os",
+      "category": "Shell Syntax",
+
+      "title": "Echo Variable",
+      "instructions": "Write an `echo` command to print the value of a shell variable `USER`.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "echo $USER"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Precede variable with `$`."
+      ],
+      "explanation": "`echo $USER` prints the value of `USER`."
+    },
+    {
+      "id": "os-shell-basics-023",
+      "course": "os",
+      "category": "Shell Syntax",
+
+      "title": "Long Options Prefix",
+      "instructions": "Write the standard prefix formatting (number of dashes) for long options in Linux commands.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "--"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Two dashes."
+      ],
+      "explanation": "Long option names start with two dashes (`--`)."
+    },
+    {
+      "id": "os-shell-basics-024",
+      "course": "os",
+      "category": "Shell Syntax",
+
+      "title": "Repeat with Sudo",
+      "instructions": "Write a shortcut command to re-run the previous command prefixed with `sudo`.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "sudo !!"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Combine `sudo` with the repeat last command shortcut."
+      ],
+      "explanation": "`sudo !!` re-runs the last command with root privileges."
+    },
+    {
+      "id": "os-shell-basics-025",
+      "course": "os",
+      "category": "Shell Syntax",
+
+      "title": "Brace Expansion Letters",
+      "instructions": "Write a brace expansion expression to echo letters `a`, `b`, and `c` separated by spaces.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "echo {a..c}"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Use `{a..c}` inside echo."
+      ],
+      "explanation": "`echo {a..c}` prints `a b c` via brace expansion."
+    },
+    {
+      "id": "os-shell-basics-026",
+      "course": "os",
+      "category": "Shell Syntax",
+
+      "title": "Alternative Conditional Operator",
+      "instructions": "Which operator runs the next command only if the previous command failed?",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "||"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Two pipe characters."
+      ],
+      "explanation": "`||` executes the right-hand command only if the left-hand command fails."
+    },
+    {
+      "id": "os-wildcards-027",
+      "course": "os",
+      "category": "Wildcards",
+
+      "title": "Match Any Characters",
+      "instructions": "Write a wildcard pattern to match any filename ending in `.txt`.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "*.txt"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Use `*` for any number of characters."
+      ],
+      "explanation": "`*` matches any number of characters, including none."
+    },
+    {
+      "id": "os-wildcards-028",
+      "course": "os",
+      "category": "Wildcards",
+
+      "title": "Match Single Character",
+      "instructions": "Write a wildcard pattern to match `file1.txt`, `file2.txt`, etc., where exactly one single character replaces the question mark in `file?.txt`.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "file?.txt"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "`?` matches exactly one character."
+      ],
+      "explanation": "`?` matches any single character."
+    },
+    {
+      "id": "os-wildcards-029",
+      "course": "os",
+      "category": "Wildcards",
+
+      "title": "Character List Bracket",
+      "instructions": "Write a wildcard pattern using brackets to match files starting with `a`, `b`, or `c` followed by anything.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "[abc]*"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Enclosed characters in brackets."
+      ],
+      "explanation": "`[abc]*` matches names starting with `a`, `b`, or `c` followed by any characters."
+    },
+    {
+      "id": "os-wildcards-030",
+      "course": "os",
+      "category": "Wildcards",
+
+      "title": "Negated Bracket Wildcard",
+      "instructions": "Write a wildcard pattern to match any filename starting with any character except digits 0 through 9.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "[!0-9]*",
+          "[^0-9]*"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Use `!` or `^` inside brackets for negation."
+      ],
+      "explanation": "`[!0-9]*` or `[^0-9]*` matches files not starting with a digit."
+    },
+    {
+      "id": "os-wildcards-031",
+      "course": "os",
+      "category": "Wildcards",
+
+      "title": "Digit Range Wildcard",
+      "instructions": "Write a wildcard pattern to match `log3.txt` using a digit range `[0-9]` inside brackets.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "log[0-9].txt"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Range `[0-9]` matches a single digit."
+      ],
+      "explanation": "`log[0-9].txt` matches log files with a single digit number."
+    },
+    {
+      "id": "os-wildcards-032",
+      "course": "os",
+      "category": "Wildcards",
+
+      "title": "Hidden Files Globbing",
+      "instructions": "True or False: Standard wildcards like `*` match leading dots, so they automatically match hidden files without explicit notation.",
+      "difficulty": "Easy",
+      "type": "mcq-single",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "options": [
+        "False",
+        "True"
+      ],
+      "expected": [
+        1
+      ],
+      "hints": [
+        "Hidden files start with a dot '.' which is ignored by standard `*`."
+      ],
+      "explanation": "`*` and `?` do not match a leading dot; hidden files require explicit dot notation."
+    },
+    {
+      "id": "os-wildcards-033",
+      "course": "os",
+      "category": "Wildcards",
+
+      "title": "Zero-Padded Brace Expansion",
+      "instructions": "Write a brace expansion expression to generate `01`, `02`, and `03`.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "{01..03}"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Zero-padded sequential numbers."
+      ],
+      "explanation": "`{01..03}` generates zero-padded numbers."
+    },
+    {
+      "id": "os-wildcards-034",
+      "course": "os",
+      "category": "Wildcards",
+
+      "title": "Letter Range Brace Expansion",
+      "instructions": "Write a brace expansion expression to generate letters `a` through `c`.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "{a..c}"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Sequential letters inside braces."
+      ],
+      "explanation": "`{a..c}` expands to `a b c`."
+    },
+    {
+      "id": "os-wildcards-035",
+      "course": "os",
+      "category": "Wildcards",
+
+      "title": "Comma Brace Expansion",
+      "instructions": "Write a brace expansion expression to generate `file1.txt` and `file2.txt`.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "file{1,2}.txt"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Comma-separated items inside braces."
+      ],
+      "explanation": "`file{1,2}.txt` generates `file1.txt file2.txt`."
+    },
+    {
+      "id": "os-wildcards-036",
+      "course": "os",
+      "category": "Wildcards",
+
+      "title": "List Log Files Glob",
+      "instructions": "Write a `ls` command using a wildcard to list all `.log` files in the current directory.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "ls *.log"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "`ls *.log`"
+      ],
+      "explanation": "`ls *.log` lists all files ending in `.log`."
+    },
+    {
+      "id": "os-wildcards-037",
+      "course": "os",
+      "category": "Wildcards",
+
+      "title": "Match Specific Range",
+      "instructions": "Write a wildcard pattern matching any single lowercase letter from `a` to `z` followed by `.txt`.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "[a-z].txt"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Use range `[a-z]`."
+      ],
+      "explanation": "`[a-z].txt` matches a single lowercase letter filename ending in `.txt`."
+    },
+    {
+      "id": "os-wildcards-038",
+      "course": "os",
+      "category": "Wildcards",
+
+      "title": "Touch Brace Log Files",
+      "instructions": "Write a `touch` command using brace expansion to create `log1.txt`, `log2.txt`, and `log3.txt`.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "touch log{1..3}.txt"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "`touch log{1..3}.txt`"
+      ],
+      "explanation": "Creates three files using brace expansion."
+    },
+    {
+      "id": "os-wildcards-039",
+      "course": "os",
+      "category": "Wildcards",
+
+      "title": "List Files Starting with Letter",
+      "instructions": "Write an `ls` command using a wildcard to list files starting with `a`.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "ls a*"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "`ls a*`"
+      ],
+      "explanation": "`ls a*` lists files starting with `a`."
+    },
+    {
+      "id": "os-wildcards-040",
+      "course": "os",
+      "category": "Wildcards",
+
+      "title": "List Single Character Extension",
+      "instructions": "Write an `ls` command using `?` to list files named `fileX.txt` where `X` is any single character.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "ls file?.txt"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "`ls file?.txt`"
+      ],
+      "explanation": "`ls file?.txt` matches a single character position."
+    },
+    {
+      "id": "os-wildcards-041",
+      "course": "os",
+      "category": "Wildcards",
+
+      "title": "Match Zero or More",
+      "instructions": "Which wildcard symbol matches any number of characters, including zero characters?",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "*"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Asterisk."
+      ],
+      "explanation": "`*` matches zero or more characters."
+    },
+    {
+      "id": "os-navigation-042",
+      "course": "os",
+      "category": "Navigation",
+
+      "title": "Change Directory Home",
+      "instructions": "Write the command to change your current directory to your home directory.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "cd",
+          "cd ~"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "`cd` with no arguments or with `~`."
+      ],
+      "explanation": "`cd` or `cd ~` navigates to the user's home directory."
+    },
+    {
+      "id": "os-navigation-043",
+      "course": "os",
+      "category": "Navigation",
+
+      "title": "Go Back Previous Directory",
+      "instructions": "Write the command to return to the previous directory you were in.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "cd -"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Use a hyphen `-`."
+      ],
+      "explanation": "`cd -` switches back to the previous working directory."
+    },
+    {
+      "id": "os-navigation-044",
+      "course": "os",
+      "category": "Navigation",
+
+      "title": "Go Up Parent Directory",
+      "instructions": "Write the command to move up one directory level.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "cd .."
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Use `..`."
+      ],
+      "explanation": "`cd ..` moves to the parent directory."
+    },
+    {
+      "id": "os-navigation-045",
+      "course": "os",
+      "category": "Navigation",
+
+      "title": "List Long Format",
+      "instructions": "Write the `ls` command to list directory contents in long format.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "ls -l"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Use the `-l` option."
+      ],
+      "explanation": "`ls -l` shows permissions, link counts, owners, sizes, and timestamps."
+    },
+    {
+      "id": "os-navigation-046",
+      "course": "os",
+      "category": "Navigation",
+
+      "title": "List Hidden Files",
+      "instructions": "Write the `ls` command to show all files including hidden files starting with a dot.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "ls -a",
+          "ls -A"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Use `-a` or `-A`."
+      ],
+      "explanation": "`ls -a` shows all files including hidden ones and `.` / `..`."
+    },
+    {
+      "id": "os-navigation-047",
+      "course": "os",
+      "category": "Navigation",
+
+      "title": "List Directory Itself",
+      "instructions": "Write the command to list the attributes and details of the `/etc` directory itself rather than its contents.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "ls -ld /etc"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Combine `-l` and `-d`."
+      ],
+      "explanation": "`ls -d` lists the directory itself rather than its contents."
+    },
+    {
+      "id": "os-navigation-048",
+      "course": "os",
+      "category": "Navigation",
+
+      "title": "Recursive Listing",
+      "instructions": "Write the `ls` option that recursively lists all contents of subdirectories.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "-R"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Capital R."
+      ],
+      "explanation": "`ls -R` lists subdirectory contents recursively."
+    },
+    {
+      "id": "os-navigation-049",
+      "course": "os",
+      "category": "Navigation",
+
+      "title": "Human Readable Sizes",
+      "instructions": "Write the `ls` option that displays file sizes in human-readable format (e.g., 4.0K, 2.3M).",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "-h"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Starts with 'h'."
+      ],
+      "explanation": "`-h` makes file sizes human-readable when used with `-l`."
+    },
+    {
+      "id": "os-navigation-050",
+      "course": "os",
+      "category": "Navigation",
+
+      "title": "Sort by Time",
+      "instructions": "Write the `ls` option to sort files by modification time, newest first.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "-t"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Starts with 't'."
+      ],
+      "explanation": "`-t` sorts the `ls` output by modification time."
+    },
+    {
+      "id": "os-navigation-051",
+      "course": "os",
+      "category": "Navigation",
+
+      "title": "Print Date Format",
+      "instructions": "Write the `date` command option to format output as `YYYY-MM-DD` (using `%F`).",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "date +%F"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Use `+%F` format string."
+      ],
+      "explanation": "`date +%F` prints the date in ISO format (`YYYY-MM-DD`)."
+    },
+    {
+      "id": "os-navigation-052",
+      "course": "os",
+      "category": "Navigation",
+
+      "title": "Quit Manual Page",
+      "instructions": "What key do you press to quit out of a `man` manual page view?",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "q"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "First letter of 'quit'."
+      ],
+      "explanation": "Pressing `q` quits the `man` page viewer."
+    },
+    {
+      "id": "os-navigation-053",
+      "course": "os",
+      "category": "Navigation",
+
+      "title": "Search in Man Page",
+      "instructions": "Which symbol/character do you type inside `man` to start searching for text?",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "/"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Forward slash."
+      ],
+      "explanation": "Typing `/` followed by search terms allows searching inside `man` and `less`."
+    },
+    {
+      "id": "os-navigation-054",
+      "course": "os",
+      "category": "Navigation",
+
+      "title": "Root Directory Path",
+      "instructions": "Write the command to change your directory to the topmost root directory `/`.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "cd /"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Slash `/` represents root."
+      ],
+      "explanation": "`cd /` navigates to the root directory."
+    },
+    {
+      "id": "os-navigation-055",
+      "course": "os",
+      "category": "Navigation",
+
+      "title": "Combined Listing Options",
+      "instructions": "Write an `ls` command that combines long format, hidden files, and human-readable sizes.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "ls -lah",
+          "ls -lAh",
+          "ls -alh"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Combine `-l`, `-a` (or `-A`), and `-h`."
+      ],
+      "explanation": "`ls -lah` combines long format, all hidden files, and human-readable sizes."
+    },
+    {
+      "id": "os-navigation-056",
+      "course": "os",
+      "category": "Navigation",
+
+      "title": "List One Per Line",
+      "instructions": "Write the `ls` option to output exactly one entry per line.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "-1"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "The number one."
+      ],
+      "explanation": "`-1` forces single-column output in `ls`."
+    },
+    {
+      "id": "os-navigation-057",
+      "course": "os",
+      "category": "Navigation",
+
+      "title": "List Reverse Order",
+      "instructions": "Write the `ls` option to reverse the sorting order.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "-r"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Lowercase r."
+      ],
+      "explanation": "`-r` reverses the sort order."
+    },
+    {
+      "id": "os-navigation-058",
+      "course": "os",
+      "category": "Navigation",
+
+      "title": "Show Disk Allocation",
+      "instructions": "Write the `ls` option to show the disk space allocated to each file in blocks.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "-s"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Lowercase s."
+      ],
+      "explanation": "`-s` displays file size allocation in blocks."
+    },
+    {
+      "id": "os-navigation-059",
+      "course": "os",
+      "category": "Navigation",
+
+      "title": "Navigation MCQ Concept",
+      "instructions": "Which command prints the absolute path of the current working directory?",
+      "difficulty": "Easy",
+      "type": "mcq-single",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "options": [
+        "pwd",
+        "cwd",
+        "dir",
+        "path"
+      ],
+      "expected": [
+        0
+      ],
+      "hints": [
+        "Print working directory."
+      ],
+      "explanation": "`pwd` prints the full path of the current directory."
+    },
+    {
+      "id": "os-navigation-060",
+      "course": "os",
+      "category": "Navigation",
+
+      "title": "List Specific Path",
+      "instructions": "Write an `ls` command to list the contents of `/var/log` in long format.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "ls -l /var/log"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "`ls -l /var/log`"
+      ],
+      "explanation": "`ls -l` lists specified directory paths."
+    },
+    {
+      "id": "os-navigation-061",
+      "course": "os",
+      "category": "Navigation",
+
+      "title": "Sort by Time Reverse",
+      "instructions": "Write an `ls` command combining long format and sorting by modification time newest first.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "ls -lt"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Combine `-l` and `-t`."
+      ],
+      "explanation": "`ls -lt` lists files in long format sorted by modification time."
+    },
+    {
+      "id": "os-file-inspection-062",
+      "course": "os",
+      "category": "File Inspection",
+
+      "title": "Check File Type",
+      "instructions": "Write the command to determine the type of a file named `document.pdf`.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "file document.pdf"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Uses the `file` command."
+      ],
+      "explanation": "`file` reports the classification and type of a file."
+    },
+    {
+      "id": "os-file-inspection-063",
+      "course": "os",
+      "category": "File Inspection",
+
+      "title": "View Metadata Stat",
+      "instructions": "Write the command to display detailed metadata (size, inode, permissions, timestamps) for `notes.txt`.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "stat notes.txt"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Short for 'status'."
+      ],
+      "explanation": "`stat` displays detailed low-level file metadata and timestamps."
+    },
+    {
+      "id": "os-file-inspection-064",
+      "course": "os",
+      "category": "File Inspection",
+
+      "title": "Print Entire File",
+      "instructions": "Write the command to print the entire contents of `notes.txt` to the terminal screen.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "cat notes.txt"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Short for 'concatenate'."
+      ],
+      "explanation": "`cat` outputs the complete contents of files."
+    },
+    {
+      "id": "os-file-inspection-065",
+      "course": "os",
+      "category": "File Inspection",
+
+      "title": "View First Lines",
+      "instructions": "Write the command to display the first 5 lines of `notes.txt`.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "head -n 5 notes.txt"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Use `head` with `-n 5`."
+      ],
+      "explanation": "`head -n 5` prints the first 5 lines of a file."
+    },
+    {
+      "id": "os-file-inspection-066",
+      "course": "os",
+      "category": "File Inspection",
+
+      "title": "View Last Lines",
+      "instructions": "Write the command to display the last 20 lines of `logfile.txt`.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "tail -n 20 logfile.txt"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Use `tail` with `-n 20`."
+      ],
+      "explanation": "`tail -n 20` prints the final 20 lines of a file."
+    },
+    {
+      "id": "os-file-inspection-067",
+      "course": "os",
+      "category": "File Inspection",
+
+      "title": "Follow Log File",
+      "instructions": "Write the `tail` command option that continuously follows and outputs new lines appended to a growing log file.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "tail -f",
+          "-f"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Stands for 'follow'."
+      ],
+      "explanation": "`tail -f` keeps the stream open and outputs new lines as they are appended."
+    },
+    {
+      "id": "os-file-inspection-068",
+      "course": "os",
+      "category": "File Inspection",
+
+      "title": "Page by Page Viewer",
+      "instructions": "Write the command to inspect a large file page by page with bi-directional scrolling and search capability.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "less filename",
+          "less"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Opposite of `more`."
+      ],
+      "explanation": "`less` is a pager allowing backward and forward navigation through files."
+    },
+    {
+      "id": "os-file-inspection-069",
+      "course": "os",
+      "category": "File Inspection",
+
+      "title": "Count Lines Words Bytes",
+      "instructions": "Write the command to count the number of lines, words, and bytes in `notes.txt`.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "wc notes.txt"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Word count command."
+      ],
+      "explanation": "`wc` reports newline, word, and byte counts."
+    },
+    {
+      "id": "os-file-inspection-070",
+      "course": "os",
+      "category": "File Inspection",
+
+      "title": "Count Lines Only",
+      "instructions": "Write the command to count strictly the number of lines in `notes.txt`.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "wc -l notes.txt"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Use `-l` flag with `wc`."
+      ],
+      "explanation": "`wc -l` outputs only the line count."
+    },
+    {
+      "id": "os-file-inspection-071",
+      "course": "os",
+      "category": "File Inspection",
+
+      "title": "Byte vs Character Count",
+      "instructions": "Which `wc` option counts bytes, and which option counts characters for non-ASCII text?",
+      "difficulty": "Hard",
+      "type": "mcq-single",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "options": [
+        "-c for bytes, -m for characters",
+        "-m for bytes, -c for characters",
+        "-b for bytes, -c for characters",
+        "-l for bytes, -w for characters"
+      ],
+      "expected": [
+        0
+      ],
+      "hints": [
+        "`-c` counts bytes, `-m` counts characters."
+      ],
+      "explanation": "`wc -c` counts bytes while `wc -m` counts characters."
+    },
+    {
+      "id": "os-file-inspection-072",
+      "course": "os",
+      "category": "File Inspection",
+
+      "title": "Join Multiple Files",
+      "instructions": "Write a `cat` command that combines and prints the contents of `a.txt` and `b.txt` together.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "cat a.txt b.txt"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Pass multiple filenames to `cat`."
+      ],
+      "explanation": "`cat` can concatenate and print multiple files sequentially."
+    },
+    {
+      "id": "os-file-inspection-073",
+      "course": "os",
+      "category": "File Inspection",
+
+      "title": "Head First Ten",
+      "instructions": "Write a `head` command to print the first 10 lines of `data.txt` explicitly.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "head -n 10 data.txt",
+          "head data.txt"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "`head -n 10 data.txt`"
+      ],
+      "explanation": "`head` prints the first lines of files."
+    },
+    {
+      "id": "os-file-inspection-074",
+      "course": "os",
+      "category": "File Inspection",
+
+      "title": "Quit Less Pager",
+      "instructions": "Write the key pressed inside `less` or `man` to quit the view.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "q"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Press `q`."
+      ],
+      "explanation": "`q` quits `less`."
+    },
+    {
+      "id": "os-file-inspection-075",
+      "course": "os",
+      "category": "File Inspection",
+
+      "title": "Tail Last Ten",
+      "instructions": "Write a `tail` command to print the last 10 lines of `data.txt` explicitly.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "tail -n 10 data.txt",
+          "tail data.txt"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "`tail -n 10 data.txt`"
+      ],
+      "explanation": "`tail` prints the final lines of files."
+    },
+    {
+      "id": "os-file-inspection-076",
+      "course": "os",
+      "category": "File Inspection",
+
+      "title": "Command Comparison",
+      "instructions": "Which inspection command allows scrolling both forward and backward through a file?",
+      "difficulty": "Medium",
+      "type": "mcq-single",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "options": [
+        "cat",
+        "more",
+        "less",
+        "head"
+      ],
+      "expected": [
+        2
+      ],
+      "hints": [
+        "Name implies it's more versatile than `more`."
+      ],
+      "explanation": "`less` allows bidirectional navigation whereas `more` is mainly forward-only."
+    },
+    {
+      "id": "os-file-management-077",
+      "course": "os",
+      "category": "File Management",
+
+      "title": "Create Directory",
+      "instructions": "Write the command to create a new directory named `archive`.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "mkdir archive"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Make directory."
+      ],
+      "explanation": "`mkdir` creates new directories."
+    },
+    {
+      "id": "os-file-management-078",
+      "course": "os",
+      "category": "File Management",
+
+      "title": "Create Parent Directories",
+      "instructions": "Write the `mkdir` command option that creates missing parent directories automatically without failing if they exist.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "-p"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Stands for 'parents'."
+      ],
+      "explanation": "`mkdir -p` creates parent directories as needed and suppresses errors if they exist."
+    },
+    {
+      "id": "os-file-management-079",
+      "course": "os",
+      "category": "File Management",
+
+      "title": "Create Empty File",
+      "instructions": "Write the command to create an empty file named `empty.txt` or update its timestamp.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "touch empty.txt"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "The `touch` command."
+      ],
+      "explanation": "`touch` creates an empty file or updates timestamps of existing files."
+    },
+    {
+      "id": "os-file-management-080",
+      "course": "os",
+      "category": "File Management",
+
+      "title": "Copy File",
+      "instructions": "Write the command to copy `source.txt` to `backup.txt`.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "cp source.txt backup.txt"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "The `cp` command."
+      ],
+      "explanation": "`cp` copies files from source to destination."
+    },
+    {
+      "id": "os-file-management-081",
+      "course": "os",
+      "category": "File Management",
+
+      "title": "Copy Directory Recursively",
+      "instructions": "Write the `cp` command option required to copy an entire directory recursively.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "-r",
+          "-R"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Recursive flag."
+      ],
+      "explanation": "`cp -r` copies directories recursively."
+    },
+    {
+      "id": "os-file-management-082",
+      "course": "os",
+      "category": "File Management",
+
+      "title": "Interactive Copy Prompt",
+      "instructions": "Write the `cp` command option that prompts the user before overwriting an existing file.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "-i"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Stands for 'interactive'."
+      ],
+      "explanation": "`cp -i` prompts before overwriting existing files."
+    },
+    {
+      "id": "os-file-management-083",
+      "course": "os",
+      "category": "File Management",
+
+      "title": "Move or Rename File",
+      "instructions": "Write the command to rename `old.txt` to `new.txt`.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "mv old.txt new.txt"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "The `mv` command."
+      ],
+      "explanation": "`mv` moves or renames files and directories."
+    },
+    {
+      "id": "os-file-management-084",
+      "course": "os",
+      "category": "File Management",
+
+      "title": "Interactive Move Prompt",
+      "instructions": "Write the `mv` command option to prompt before overwriting files.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "-i"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Interactive flag."
+      ],
+      "explanation": "`mv -i` prompts before overwriting."
+    },
+    {
+      "id": "os-file-management-085",
+      "course": "os",
+      "category": "File Management",
+
+      "title": "Remove File",
+      "instructions": "Write the command to delete a file named `temp.txt`.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "rm temp.txt"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Remove command."
+      ],
+      "explanation": "`rm` deletes files permanently."
+    },
+    {
+      "id": "os-file-management-086",
+      "course": "os",
+      "category": "File Management",
+
+      "title": "Remove Directory Recursively",
+      "instructions": "Write the command with options to delete a directory named `old_dir` and all its contents recursively.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "rm -r old_dir",
+          "rm -rf old_dir"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Combine `rm` with `-r`."
+      ],
+      "explanation": "`rm -r` deletes directories and their contents recursively."
+    },
+    {
+      "id": "os-file-management-087",
+      "course": "os",
+      "category": "File Management",
+
+      "title": "Force Remove",
+      "instructions": "Write the `rm` command option to force removal without prompting or error messages.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "-f"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Stands for 'force'."
+      ],
+      "explanation": "`rm -f` forces deletion without prompting."
+    },
+    {
+      "id": "os-file-management-088",
+      "course": "os",
+      "category": "File Management",
+
+      "title": "Remove Empty Directory",
+      "instructions": "Write the command specifically used to remove an **empty** directory.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "rmdir empty_dir"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "`rmdir` command."
+      ],
+      "explanation": "`rmdir` removes empty directories only."
+    },
+    {
+      "id": "os-file-management-089",
+      "course": "os",
+      "category": "File Management",
+
+      "title": "Copy Multiple into Dir",
+      "instructions": "Write a `cp` command to copy `a.txt` and `b.txt` into an existing directory `backup/`.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "cp a.txt b.txt backup/"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "List sources followed by target directory."
+      ],
+      "explanation": "`cp` places multiple source files into the specified destination directory."
+    },
+    {
+      "id": "os-file-management-090",
+      "course": "os",
+      "category": "File Management",
+
+      "title": "Move into Directory",
+      "instructions": "Write a `mv` command to move `report.txt` into the `docs/` directory.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "mv report.txt docs/"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Destination directory at the end."
+      ],
+      "explanation": "`mv` moves the file into the target directory."
+    },
+    {
+      "id": "os-file-management-091",
+      "course": "os",
+      "category": "File Management",
+
+      "title": "Recycle Bin Warning",
+      "instructions": "True or False: Linux command-line deletion via `rm` moves deleted files to a temporary desktop recycle bin.",
+      "difficulty": "Easy",
+      "type": "mcq-single",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "options": [
+        "False",
+        "True"
+      ],
+      "expected": [
+        1
+      ],
+      "hints": [
+        "Deletion is permanent."
+      ],
+      "explanation": "Linux command-line `rm` permanently unlinks files; there is no recycle bin."
+    },
+    {
+      "id": "os-file-management-092",
+      "course": "os",
+      "category": "File Management",
+
+      "title": "Create Multiple Empty",
+      "instructions": "Write a `touch` command to create two empty files `one.txt` and `two.txt` simultaneously.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "touch one.txt two.txt"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Pass multiple filenames to `touch`."
+      ],
+      "explanation": "`touch` accepts multiple filenames to create or update them."
+    },
+    {
+      "id": "os-file-management-093",
+      "course": "os",
+      "category": "File Management",
+
+      "title": "Nested Mkdir",
+      "instructions": "Write a `mkdir` command to create `project/src/core` in a single command.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "mkdir -p project/src/core"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Use `-p` option."
+      ],
+      "explanation": "`mkdir -p` builds nested directory trees in one go."
+    },
+    {
+      "id": "os-file-management-094",
+      "course": "os",
+      "category": "File Management",
+
+      "title": "Copy Directory Command",
+      "instructions": "Write the complete command to copy directory `dir1` to `dir2` recursively.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "cp -r dir1 dir2",
+          "cp -R dir1 dir2"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Use `cp -r`."
+      ],
+      "explanation": "`cp -r` copies directory trees recursively."
+    },
+    {
+      "id": "os-file-management-095",
+      "course": "os",
+      "category": "File Management",
+
+      "title": "Interactive Rm",
+      "instructions": "Write the `rm` command option that asks for confirmation before deleting each file.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "-i"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Interactive flag."
+      ],
+      "explanation": "`rm -i` prompts the user before removing files."
+    },
+    {
+      "id": "os-file-management-096",
+      "course": "os",
+      "category": "File Management",
+
+      "title": "Touch Update Timestamp",
+      "instructions": "Write a `touch` command to update the modification timestamp of `existing.txt` without changing its contents.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "touch existing.txt"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "`touch` updates timestamps."
+      ],
+      "explanation": "`touch` updates access and modification timestamps."
+    },
+    {
+      "id": "os-text-utilities-097",
+      "course": "os",
+      "category": "Text Utilities",
+
+      "title": "Echo Text",
+      "instructions": "Write the `echo` command to print `Hello World` to standard output.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "echo \"Hello World\"",
+          "echo Hello World"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Use `echo` followed by the text."
+      ],
+      "explanation": "`echo` prints text to standard output."
+    },
+    {
+      "id": "os-text-utilities-098",
+      "course": "os",
+      "category": "Text Utilities",
+
+      "title": "Echo Escape Sequences",
+      "instructions": "Write the `echo` option that enables interpretation of backslash escape sequences like `\\n` (newline).",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "-e"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Stands for 'escape'."
+      ],
+      "explanation": "`echo -e` interprets backslash escapes like newlines and tabs."
+    },
+    {
+      "id": "os-text-utilities-099",
+      "course": "os",
+      "category": "Text Utilities",
+
+      "title": "Cut Fields Column",
+      "instructions": "Write a `cut` command to extract the first column/field from `/etc/passwd` using `:` as the delimiter.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "cut -d: -f1 /etc/passwd"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Use `-d:` for delimiter and `-f1` for field 1."
+      ],
+      "explanation": "`cut -d: -f1` extracts field 1 using colon delimiter."
+    },
+    {
+      "id": "os-text-utilities-100",
+      "course": "os",
+      "category": "Text Utilities",
+
+      "title": "Sort Numerically",
+      "instructions": "Write the `sort` command option to sort numbers in numerical order rather than alphabetical order.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "-n"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Stands for 'numeric'."
+      ],
+      "explanation": "`sort -n` sorts numerically so 9 comes before 10."
+    },
+    {
+      "id": "os-text-utilities-101",
+      "course": "os",
+      "category": "Text Utilities",
+
+      "title": "Sort Reverse",
+      "instructions": "Write the `sort` command option to reverse the sort order.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "-r"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Stands for 'reverse'."
+      ],
+      "explanation": "`sort -r` reverses the sorting order."
+    },
+    {
+      "id": "os-text-utilities-102",
+      "course": "os",
+      "category": "Text Utilities",
+
+      "title": "Uniq Count Occurrences",
+      "instructions": "Write the `uniq` command option to prefix each unique line with its count of occurrences.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "-c"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Stands for 'count'."
+      ],
+      "explanation": "`uniq -c` prefixes lines with their repetition count (requires sorted input)."
+    },
+    {
+      "id": "os-text-utilities-103",
+      "course": "os",
+      "category": "Text Utilities",
+
+      "title": "Uniq Duplicate Lines",
+      "instructions": "Write the `uniq` command option to output only lines that are duplicated.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "-d"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Stands for 'duplicate'."
+      ],
+      "explanation": "`uniq -d` outputs only repeated lines."
+    },
+    {
+      "id": "os-text-utilities-104",
+      "course": "os",
+      "category": "Text Utilities",
+
+      "title": "Tr Translate Lower Upper",
+      "instructions": "Write a `tr` command to translate all lowercase letters to uppercase from standard input.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "tr \"a-z\" \"A-Z\"",
+          "tr a-z A-Z"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "`tr 'a-z' 'A-Z'`"
+      ],
+      "explanation": "`tr` translates characters from set1 to set2."
+    },
+    {
+      "id": "os-text-utilities-105",
+      "course": "os",
+      "category": "Text Utilities",
+
+      "title": "Tr Delete Characters",
+      "instructions": "Write the `tr` command option to delete given characters from input.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "-d"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Stands for 'delete'."
+      ],
+      "explanation": "`tr -d` deletes specified characters."
+    },
+    {
+      "id": "os-text-utilities-106",
+      "course": "os",
+      "category": "Text Utilities",
+
+      "title": "Tee Command Save",
+      "instructions": "Write a command using `tee` to save standard output to `output.txt` while also displaying it on screen.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "tee output.txt"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Pass filename to `tee`."
+      ],
+      "explanation": "`tee` copies stdin to stdout and files simultaneously."
+    },
+    {
+      "id": "os-text-utilities-107",
+      "course": "os",
+      "category": "Text Utilities",
+
+      "title": "Tee Append Option",
+      "instructions": "Write the `tee` command option to append to the file instead of overwriting it.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "-a"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Stands for 'append'."
+      ],
+      "explanation": "`tee -a` appends output to the target file."
+    },
+    {
+      "id": "os-text-utilities-108",
+      "course": "os",
+      "category": "Text Utilities",
+
+      "title": "Sort Requirement for Uniq",
+      "instructions": "True or False: `uniq` only collapses **consecutive** duplicate lines, so sorting the input first is typically required.",
+      "difficulty": "Medium",
+      "type": "mcq-single",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "options": [
+        "True",
+        "False"
+      ],
+      "expected": [
+        0
+      ],
+      "hints": [
+        "`uniq` checks adjacent lines."
+      ],
+      "explanation": "`uniq` only detects adjacent duplicate lines, requiring `sort` beforehand."
+    },
+    {
+      "id": "os-text-utilities-109",
+      "course": "os",
+      "category": "Text Utilities",
+
+      "title": "Process Status Ps",
+      "instructions": "Write the `ps` command with `aux` options to list all running processes in user-oriented format.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "ps aux"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "`ps aux` (no dash for BSD format)."
+      ],
+      "explanation": "`ps aux` displays all running processes across all users."
+    },
+    {
+      "id": "os-text-utilities-110",
+      "course": "os",
+      "category": "Text Utilities",
+
+      "title": "Sed Simple Substitution",
+      "instructions": "Write a `sed` command to replace the first occurrence of `foo` with `bar` in `file.txt` (without editing in place).",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "sed 's/foo/bar/' file.txt"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Use `s/old/new/` syntax."
+      ],
+      "explanation": "`sed 's/foo/bar/'` substitutes the first match per line."
+    },
+    {
+      "id": "os-text-utilities-111",
+      "course": "os",
+      "category": "Text Utilities",
+
+      "title": "Sed Global Substitution",
+      "instructions": "Write a `sed` command to replace **all** occurrences of `foo` with `bar` on every line of `file.txt` using the global flag.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "sed 's/foo/bar/g' file.txt"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Add `g` flag at the end."
+      ],
+      "explanation": "`sed 's/foo/bar/g'` replaces all occurrences on each line."
+    },
+    {
+      "id": "os-text-utilities-112",
+      "course": "os",
+      "category": "Text Utilities",
+
+      "title": "Sed In-Place Editing",
+      "instructions": "Write the `sed` command option for editing a file **in place** on GNU/Linux.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "-i"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Stands for 'in-place'."
+      ],
+      "explanation": "`sed -i` modifies files directly in place."
+    },
+    {
+      "id": "os-text-utilities-113",
+      "course": "os",
+      "category": "Text Utilities",
+
+      "title": "Sort Unique Option",
+      "instructions": "Write the `sort` command option to output only unique lines (removing duplicates).",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "-u"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Stands for 'unique'."
+      ],
+      "explanation": "`sort -u` sorts and removes duplicate lines."
+    },
+    {
+      "id": "os-text-utilities-114",
+      "course": "os",
+      "category": "Text Utilities",
+
+      "title": "Sort Numeric Flag",
+      "instructions": "Write a `sort` command to sort `numbers.txt` in numeric order.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "sort -n numbers.txt"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Use `sort -n`."
+      ],
+      "explanation": "`sort -n` sorts numerically."
+    },
+    {
+      "id": "os-text-utilities-115",
+      "course": "os",
+      "category": "Text Utilities",
+
+      "title": "Tr Squeeze Option",
+      "instructions": "Write the `tr` command option to squeeze repeated character sequences into a single occurrence.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "-s"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Stands for 'squeeze'."
+      ],
+      "explanation": "`tr -s` squeezes sequences of repeated characters."
+    },
+    {
+      "id": "os-text-utilities-116",
+      "course": "os",
+      "category": "Text Utilities",
+
+      "title": "Sed Print Lines",
+      "instructions": "Write a `sed` command using `-n` and `p` to print only lines 5 through 10 of `file.txt`.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "sed -n '5,10p' file.txt"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "`sed -n '5,10p'`"
+      ],
+      "explanation": "`sed -n '5,10p'` suppresses default printing and prints lines 5 to 10."
+    },
+    {
+      "id": "os-redirection-117",
+      "course": "os",
+      "category": "Redirection",
+
+      "title": "Stdout Overwrite",
+      "instructions": "Write a command to redirect standard output of `ls` into `list.txt`, overwriting the file.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "ls > list.txt"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Use `>` operator."
+      ],
+      "explanation": "`>` redirects stdout, overwriting the destination file."
+    },
+    {
+      "id": "os-redirection-118",
+      "course": "os",
+      "category": "Redirection",
+
+      "title": "Stdout Append",
+      "instructions": "Write a command to append the output of `date` to `log.txt` without overwriting existing content.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "date >> log.txt"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Use `>>` operator."
+      ],
+      "explanation": "`>>` appends stdout to the destination file."
+    },
+    {
+      "id": "os-redirection-119",
+      "course": "os",
+      "category": "Redirection",
+
+      "title": "Stderr Redirection",
+      "instructions": "Write a command to redirect standard error of a command `/nonexistent` into `error.txt`.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "/nonexistent 2> error.txt"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Use `2>` for file descriptor 2."
+      ],
+      "explanation": "`2>` redirects standard error (file descriptor 2)."
+    },
+    {
+      "id": "os-redirection-120",
+      "course": "os",
+      "category": "Redirection",
+
+      "title": "Discard Errors",
+      "instructions": "Write a redirection syntax to discard all standard error messages by sending them to `/dev/null`.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "2>/dev/null"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Send fd 2 to `/dev/null`."
+      ],
+      "explanation": "`2>/dev/null` discards error output."
+    },
+    {
+      "id": "os-redirection-121",
+      "course": "os",
+      "category": "Redirection",
+
+      "title": "Redirect Both Stdout Stderr",
+      "instructions": "Write a Bash shorthand command to redirect both standard output and standard error of `make` into `build.log`.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "make &> build.log"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Use `&>` operator."
+      ],
+      "explanation": "`&>` redirects both stdout and stderr to a file in Bash."
+    },
+    {
+      "id": "os-redirection-122",
+      "course": "os",
+      "category": "Redirection",
+
+      "title": "Stdin Redirection",
+      "instructions": "Write a command using `<` to sort contents of `unsorted.txt` and save to `sorted.txt`.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "sort < unsorted.txt > sorted.txt"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Use `<` for input redirection."
+      ],
+      "explanation": "`<` redirects a file into standard input of a command."
+    },
+    {
+      "id": "os-redirection-123",
+      "course": "os",
+      "category": "Redirection",
+
+      "title": "Pipe Connector",
+      "instructions": "Write a command using a pipe to count the number of entries listed by `ls`.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "ls | wc -l"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Pipe symbol `|` connects stdout to stdin."
+      ],
+      "explanation": "`ls | wc -l` pipes stdout of `ls` into `wc -l` to count lines."
+    },
+    {
+      "id": "os-redirection-124",
+      "course": "os",
+      "category": "Redirection",
+
+      "title": "Stream Descriptors",
+      "instructions": "What is the numeric file descriptor number for standard error?",
+      "difficulty": "Easy",
+      "type": "mcq-single",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "options": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ],
+      "expected": [
+        1
+      ],
+      "hints": [
+        "Stdin is 0, stdout is 1, ..."
+      ],
+      "explanation": "Standard error is file descriptor 2."
+    },
+    {
+      "id": "os-redirection-125",
+      "course": "os",
+      "category": "Redirection",
+
+      "title": "Dev Null Purpose",
+      "instructions": "What special file acts as a bit bucket that discards everything written to it?",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "/dev/null"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "`/dev/null`"
+      ],
+      "explanation": "`/dev/null` discards all output written to it."
+    },
+    {
+      "id": "os-redirection-126",
+      "course": "os",
+      "category": "Redirection",
+
+      "title": "Stderr to Stdout Syntax",
+      "instructions": "Write the standard syntax fragment `2>&1` meaning what?",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "2>&1"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "`2>&1`"
+      ],
+      "explanation": "`2>&1` merges standard error into standard output."
+    },
+    {
+      "id": "os-redirection-127",
+      "course": "os",
+      "category": "Redirection",
+
+      "title": "Pipe vs Redirection",
+      "instructions": "True or False: A pipe (`|`) connects the stdout of one command to the stdin of another command, whereas redirection connects a command to a file.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "True"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "True"
+      ],
+      "explanation": "Pipes connect commands; redirection connects files."
+    },
+    {
+      "id": "os-redirection-128",
+      "course": "os",
+      "category": "Redirection",
+
+      "title": "Combine Stderr and Stdout Portable",
+      "instructions": "Write the portable command syntax to send both stdout and stderr of `cmd` to `out.txt` without using `&>`.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "cmd > out.txt 2>&1"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "`> out.txt 2>&1`"
+      ],
+      "explanation": "`cmd > out.txt 2>&1` is the standard portable way to redirect both streams."
+    },
+    {
+      "id": "os-redirection-129",
+      "course": "os",
+      "category": "Redirection",
+
+      "title": "Stdin Descriptor",
+      "instructions": "What is the numeric file descriptor number for standard input?",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "0"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "0"
+      ],
+      "explanation": "Standard input is 0."
+    },
+    {
+      "id": "os-redirection-130",
+      "course": "os",
+      "category": "Redirection",
+
+      "title": "Stdout Descriptor",
+      "instructions": "What is the numeric file descriptor number for standard output?",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "1"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "1"
+      ],
+      "explanation": "Standard output is 1."
+    },
+    {
+      "id": "os-redirection-131",
+      "course": "os",
+      "category": "Redirection",
+
+      "title": "Overwrite Warning",
+      "instructions": "True or False: Using `>` empties the target file before the command runs.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "True"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "True"
+      ],
+      "explanation": "`>` truncates the file."
+    },
+    {
+      "id": "os-links-132",
+      "course": "os",
+      "category": "Links",
+
+      "title": "Create Symbolic Link",
+      "instructions": "Write the command to create a symbolic (soft) link named `soft.txt` pointing to `target.txt`.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "ln -s target.txt soft.txt"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Use `ln -s`."
+      ],
+      "explanation": "`ln -s` creates a symbolic link."
+    },
+    {
+      "id": "os-links-133",
+      "course": "os",
+      "category": "Links",
+
+      "title": "Create Hard Link",
+      "instructions": "Write the command to create a hard link named `hard.txt` pointing to `target.txt`.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "ln target.txt hard.txt"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Use `ln` without `-s`."
+      ],
+      "explanation": "`ln` creates a hard link sharing the same inode."
+    },
+    {
+      "id": "os-links-134",
+      "course": "os",
+      "category": "Links",
+
+      "title": "Inode Sharing Concept",
+      "instructions": "True or False: A hard link shares the exact same inode number as the original file.",
+      "difficulty": "Easy",
+      "type": "mcq-single",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "options": [
+        "True",
+        "False"
+      ],
+      "expected": [
+        0
+      ],
+      "hints": [
+        "Hard links point directly to the inode."
+      ],
+      "explanation": "Hard links point directly to the underlying inode and data."
+    },
+    {
+      "id": "os-links-135",
+      "course": "os",
+      "category": "Links",
+
+      "title": "Symbolic Link Target Type",
+      "instructions": "True or False: A symbolic link stores a path (text) pointing to the target, whereas a hard link points directly to an inode.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "True"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "True"
+      ],
+      "explanation": "Symlinks store paths."
+    },
+    {
+      "id": "os-links-136",
+      "course": "os",
+      "category": "Links",
+
+      "title": "Cross Filesystem Hard Link",
+      "instructions": "True or False: Hard links can span across different disk partitions and file systems.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "False"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "False"
+      ],
+      "explanation": "Hard links cannot cross filesystems."
+    },
+    {
+      "id": "os-links-137",
+      "course": "os",
+      "category": "Links",
+
+      "title": "Directory Hard Link Restriction",
+      "instructions": "True or False: Standard users can create hard links to directories.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "False"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "False"
+      ],
+      "explanation": "Users cannot hard-link directories."
+    },
+    {
+      "id": "os-links-138",
+      "course": "os",
+      "category": "Links",
+
+      "title": "Original Deleted Soft Link",
+      "instructions": "What happens to a symbolic link if its original target file is deleted?",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "It becomes a broken link",
+          "Dangling link"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Becomes broken/dangling."
+      ],
+      "explanation": "Deleting the target breaks the symbolic link."
+    },
+    {
+      "id": "os-links-139",
+      "course": "os",
+      "category": "Links",
+
+      "title": "Original Deleted Hard Link",
+      "instructions": "What happens to a hard link if its original filename is deleted?",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "The data remains accessible",
+          "Data remains accessible"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Data remains."
+      ],
+      "explanation": "The data remains accessible via the hard link."
+    },
+    {
+      "id": "os-links-140",
+      "course": "os",
+      "category": "Links",
+
+      "title": "Symlink Directory Creation",
+      "instructions": "Write a command using `ln -s` and `-t` (GNU) to create a symbolic link inside `/tmp/links` pointing to `/etc/hosts`.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "ln -s -t /tmp/links /etc/hosts"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "`ln -s -t target_dir source`"
+      ],
+      "explanation": "`ln -s -t dir target` creates a symlink inside `dir`."
+    },
+    {
+      "id": "os-links-141",
+      "course": "os",
+      "category": "Links",
+
+      "title": "List Inode Command",
+      "instructions": "Which `ls` option displays inode numbers alongside files to inspect hard links?",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "-i"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Lowercase i."
+      ],
+      "explanation": "`ls -i` displays inode numbers."
+    },
+    {
+      "id": "os-links-142",
+      "course": "os",
+      "category": "Links",
+
+      "title": "Link Indicator in Ls",
+      "instructions": "When listing files with `ls -l`, what letter starts the permissions string for a symbolic link?",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "l"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Letter l."
+      ],
+      "explanation": "Symbolic links start with `l`."
+    },
+    {
+      "id": "os-links-143",
+      "course": "os",
+      "category": "Links",
+
+      "title": "Link Definition",
+      "instructions": "What does an inode store?",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "metadata",
+          "file metadata"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Metadata."
+      ],
+      "explanation": "An inode stores file metadata."
+    },
+    {
+      "id": "os-quoting-144",
+      "course": "os",
+      "category": "Quoting",
+
+      "title": "Single Quote Behavior",
+      "instructions": "True or False: Single quotes `' '` prevent all shell expansions, including variable expansion and wildcards.",
+      "difficulty": "Easy",
+      "type": "mcq-single",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "options": [
+        "True",
+        "False"
+      ],
+      "expected": [
+        0
+      ],
+      "hints": [
+        "Single quotes preserve literal values strictly."
+      ],
+      "explanation": "Single quotes disable variable expansion and wildcard interpretation entirely."
+    },
+    {
+      "id": "os-quoting-145",
+      "course": "os",
+      "category": "Quoting",
+
+      "title": "Double Quote Behavior",
+      "instructions": "True or False: Double quotes `\" \"` allow variable expansion and command substitution while preventing wildcard expansion.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "True"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "True"
+      ],
+      "explanation": "Double quotes permit variables."
+    },
+    {
+      "id": "os-quoting-146",
+      "course": "os",
+      "category": "Quoting",
+
+      "title": "Variable in Double Quotes",
+      "instructions": "Given `name=\"Alice\"`, what does `echo \"Hello $name\"` output?",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "Hello Alice"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Variables expand inside double quotes."
+      ],
+      "explanation": "Double quotes evaluate `$name` to `Alice`."
+    },
+    {
+      "id": "os-quoting-147",
+      "course": "os",
+      "category": "Quoting",
+
+      "title": "Variable in Single Quotes",
+      "instructions": "Given `name=\"Alice\"`, what does `echo 'Hello $name'` output?",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "Hello $name"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Single quotes prevent variable expansion."
+      ],
+      "explanation": "Single quotes treat `$name` literally."
+    },
+    {
+      "id": "os-quoting-148",
+      "course": "os",
+      "category": "Quoting",
+
+      "title": "Filename with Spaces",
+      "instructions": "Write a command to create a single file named `my file.txt` with a space using quotes.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "touch \"my file.txt\"",
+          "touch 'my file.txt'"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Enclose the filename in quotes."
+      ],
+      "explanation": "Quotes allow filenames containing spaces to be treated as a single argument."
+    },
+    {
+      "id": "os-quoting-149",
+      "course": "os",
+      "category": "Quoting",
+
+      "title": "Prevent Wildcard Expansion",
+      "instructions": "Write a command using quotes around `*` so `echo` literally prints an asterisk `*` instead of expanding filenames.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "echo \"*\"",
+          "echo '*'"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Quote the asterisk."
+      ],
+      "explanation": "Quoting `*` prevents the shell from expanding it as a glob."
+    },
+    {
+      "id": "os-quoting-150",
+      "course": "os",
+      "category": "Quoting",
+
+      "title": "Single Quote Escaping",
+      "instructions": "True or False: A single-quoted string can contain a literal single quote inside it if you just use standard typing.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "False"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "False"
+      ],
+      "explanation": "Cannot embed single quotes directly."
+    },
+    {
+      "id": "os-quoting-151",
+      "course": "os",
+      "category": "Quoting",
+
+      "title": "Backslash Escape Single",
+      "instructions": "Write how to escape a single quote inside single quotes or use backslash outside quotes to print `it's`.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "echo it\\'s",
+          "echo 'it'''s'"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Close quotes, insert escaped quote, reopen."
+      ],
+      "explanation": "Requires quote concatenation."
+    },
+    {
+      "id": "os-quoting-152",
+      "course": "os",
+      "category": "Quoting",
+
+      "title": "Command Substitution Quoting",
+      "instructions": "True or False: Command substitution `$(cmd)` is evaluated inside double quotes but not inside single quotes.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "True"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "True"
+      ],
+      "explanation": "Evaluated inside double quotes."
+    },
+    {
+      "id": "os-quoting-153",
+      "course": "os",
+      "category": "Quoting",
+
+      "title": "Best Quote for Regex",
+      "instructions": "Which quotation type is best for regex patterns and `sed`/`awk` scripts to prevent shell interference?",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "Single quotes",
+          "'"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Single quotes."
+      ],
+      "explanation": "Single quotes prevent shell expansion."
+    },
+    {
+      "id": "os-quoting-154",
+      "course": "os",
+      "category": "Quoting",
+
+      "title": "Wildcard Globbing Quote",
+      "instructions": "Why must pattern arguments in commands like `find -name \"*.txt\"` be quoted?",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "To prevent shell expansion",
+          "prevent shell expansion"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Prevent shell glob expansion."
+      ],
+      "explanation": "Quoting prevents shell expansion."
+    },
+    {
+      "id": "os-quoting-155",
+      "course": "os",
+      "category": "Quoting",
+
+      "title": "Quote Purpose Summary",
+      "instructions": "What is the primary purpose of quoting in the shell?",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "Control shell expansions",
+          "control expansions"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Controlling expansions."
+      ],
+      "explanation": "Controls shell expansions."
+    },
+    {
+      "id": "os-users-groups-156",
+      "course": "os",
+      "category": "Users and Groups",
+
+      "title": "Switch User",
+      "instructions": "Write the command to switch user account to `bob` starting a full login shell.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "su - bob"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Use `su -`."
+      ],
+      "explanation": "`su - bob` switches to user bob with a login shell environment."
+    },
+    {
+      "id": "os-users-groups-157",
+      "course": "os",
+      "category": "Users and Groups",
+
+      "title": "Sudo Switch User",
+      "instructions": "Write a `sudo` command to start a login shell as `bob` using your own sudo rights.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "sudo -i -u bob"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Use `sudo -i -u`."
+      ],
+      "explanation": "`sudo -i -u bob` starts a login shell as bob using sudo."
+    },
+    {
+      "id": "os-users-groups-158",
+      "course": "os",
+      "category": "Users and Groups",
+
+      "title": "Create User Home",
+      "instructions": "Write the `useradd` command option to automatically create the user's home directory.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "-m"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Stands for 'make home'."
+      ],
+      "explanation": "`useradd -m` creates the user's home directory."
+    },
+    {
+      "id": "os-users-groups-159",
+      "course": "os",
+      "category": "Users and Groups",
+
+      "title": "Delete User Home",
+      "instructions": "Write the `userdel` command option to remove the user's home directory and mail spool.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "-r"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Stands for 'remove'."
+      ],
+      "explanation": "`userdel -r` deletes the user account and home directory."
+    },
+    {
+      "id": "os-users-groups-160",
+      "course": "os",
+      "category": "Users and Groups",
+
+      "title": "Add User to Group",
+      "instructions": "Write the `usermod` command option to **add** a user to supplementary groups while keeping existing ones.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "-aG"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Combine `-a` (append) and `-G` (groups)."
+      ],
+      "explanation": "`usermod -aG group user` appends supplementary groups safely."
+    },
+    {
+      "id": "os-users-groups-161",
+      "course": "os",
+      "category": "Users and Groups",
+
+      "title": "Create Group",
+      "instructions": "Write the command to create a new group named `developers`.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "sudo groupadd developers",
+          "groupadd developers"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Group add command."
+      ],
+      "explanation": "`groupadd` creates a new system group."
+    },
+    {
+      "id": "os-users-groups-162",
+      "course": "os",
+      "category": "Users and Groups",
+
+      "title": "Show User Groups",
+      "instructions": "Write the command to display the groups to which the current user belongs.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "groups"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Simple `groups` command."
+      ],
+      "explanation": "`groups` prints group memberships."
+    },
+    {
+      "id": "os-users-groups-163",
+      "course": "os",
+      "category": "Users and Groups",
+
+      "title": "Show User ID",
+      "instructions": "Write the command to show UID, primary GID, and all group memberships for a user.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "id"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "The `id` command."
+      ],
+      "explanation": "`id` displays user and group IDs."
+    },
+    {
+      "id": "os-users-groups-164",
+      "course": "os",
+      "category": "Users and Groups",
+
+      "title": "Change Password",
+      "instructions": "Write the command to change your own password.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "passwd"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Password command."
+      ],
+      "explanation": "`passwd` updates user authentication passwords."
+    },
+    {
+      "id": "os-users-groups-165",
+      "course": "os",
+      "category": "Users and Groups",
+
+      "title": "Passwd File Path",
+      "instructions": "Which file stores basic account and user information, one line per user?",
+      "difficulty": "Easy",
+      "type": "mcq-single",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "options": [
+        "/etc/passwd",
+        "/etc/shadow",
+        "/etc/group",
+        "/etc/login.defs"
+      ],
+      "expected": [
+        0
+      ],
+      "hints": [
+        "Passwd file."
+      ],
+      "explanation": "`/etc/passwd` stores account info readable by everyone."
+    },
+    {
+      "id": "os-users-groups-166",
+      "course": "os",
+      "category": "Users and Groups",
+
+      "title": "Shadow File Path",
+      "instructions": "Which file stores encrypted password hashes and aging data, readable only by root?",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "/etc/shadow"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "`/etc/shadow`"
+      ],
+      "explanation": "`/etc/shadow` holds hashes."
+    },
+    {
+      "id": "os-users-groups-167",
+      "course": "os",
+      "category": "Users and Groups",
+
+      "title": "Sudoers Editor",
+      "instructions": "What is the mandatory safe tool used to edit `/etc/sudoers` configuration files?",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "visudo"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "`visudo`"
+      ],
+      "explanation": "`visudo` edits sudoers safely."
+    },
+    {
+      "id": "os-users-groups-168",
+      "course": "os",
+      "category": "Users and Groups",
+
+      "title": "Lock Password",
+      "instructions": "Write the `usermod` option to lock a user's password.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "-L"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "`-L`"
+      ],
+      "explanation": "`usermod -L` locks passwords."
+    },
+    {
+      "id": "os-users-groups-169",
+      "course": "os",
+      "category": "Users and Groups",
+
+      "title": "Unlock Password",
+      "instructions": "Write the `usermod` option to unlock a user's password.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "-U"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "`-U`"
+      ],
+      "explanation": "`usermod -U` unlocks passwords."
+    },
+    {
+      "id": "os-users-groups-170",
+      "course": "os",
+      "category": "Users and Groups",
+
+      "title": "Password Aging Chage",
+      "instructions": "Write the `chage` command option to display password aging and expiration info for a user.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "chage -l"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "`chage -l`"
+      ],
+      "explanation": "Lists aging info."
+    },
+    {
+      "id": "os-users-groups-171",
+      "course": "os",
+      "category": "Users and Groups",
+
+      "title": "Force Password Change",
+      "instructions": "Write a `chage` command to force a user to change their password at next login by setting last change date to 0.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "chage -d 0 alice"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "`chage -d 0 alice`"
+      ],
+      "explanation": "Forces password change."
+    },
+    {
+      "id": "os-users-groups-172",
+      "course": "os",
+      "category": "Users and Groups",
+
+      "title": "Noninteractive Chpasswd",
+      "instructions": "Write a command using `chpasswd` to set a user password non-interactively via pipe.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "echo \"alice:Pass123\" | sudo chpasswd"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Pipe into `chpasswd`."
+      ],
+      "explanation": "Updates password non-interactively."
+    },
+    {
+      "id": "os-users-groups-173",
+      "course": "os",
+      "category": "Users and Groups",
+
+      "title": "Root UID Number",
+      "instructions": "What is the numeric User ID (UID) of the root superuser account?",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "0"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "0"
+      ],
+      "explanation": "Root UID is 0."
+    },
+    {
+      "id": "os-users-groups-174",
+      "course": "os",
+      "category": "Users and Groups",
+
+      "title": "Group File Path",
+      "instructions": "Which file stores group definitions and member lists?",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "/etc/group"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "`/etc/group`"
+      ],
+      "explanation": "Group file path."
+    },
+    {
+      "id": "os-users-groups-175",
+      "course": "os",
+      "category": "Users and Groups",
+
+      "title": "Newgrp Command",
+      "instructions": "What does the `newgrp` command do?",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "Starts a new shell with new primary group",
+          "newgrp"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "`newgrp`"
+      ],
+      "explanation": "Switches primary group in a new shell."
+    },
+    {
+      "id": "os-permissions-176",
+      "course": "os",
+      "category": "Permissions",
+
+      "title": "Chmod Numeric 755",
+      "instructions": "Write a `chmod` command using octal notation to set permissions `755` on `script.sh`.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "chmod 755 script.sh"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "`7` for rwx, `5` for r-x."
+      ],
+      "explanation": "`chmod 755` sets owner rwx, group r-x, and others r-x."
+    },
+    {
+      "id": "os-permissions-177",
+      "course": "os",
+      "category": "Permissions",
+
+      "title": "Chmod Symbolic Add Execute",
+      "instructions": "Write a `chmod` command using symbolic notation to add execute permission for the owner on `script.sh`.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "chmod u+x script.sh"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "`u+x`"
+      ],
+      "explanation": "`chmod u+x` adds execute permission for the user owner."
+    },
+    {
+      "id": "os-permissions-178",
+      "course": "os",
+      "category": "Permissions",
+
+      "title": "Chmod Remove Group Write",
+      "instructions": "Write a `chmod` command using symbolic notation to remove write permission from the group on `file.txt`.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "chmod g-w file.txt"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "`g-w`"
+      ],
+      "explanation": "`chmod g-w` removes write permission from the group."
+    },
+    {
+      "id": "os-permissions-179",
+      "course": "os",
+      "category": "Permissions",
+
+      "title": "Numeric Octal Values",
+      "instructions": "In octal permission values, what numerical value represents read (`r`)?",
+      "difficulty": "Easy",
+      "type": "mcq-single",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "options": [
+        "4",
+        "2",
+        "1",
+        "0"
+      ],
+      "expected": [
+        0
+      ],
+      "hints": [
+        "Binary 100 is 4."
+      ],
+      "explanation": "Read `r` equals 4, write `w` equals 2, execute `x` equals 1."
+    },
+    {
+      "id": "os-permissions-180",
+      "course": "os",
+      "category": "Permissions",
+
+      "title": "Numeric Write Value",
+      "instructions": "In octal permissions, what numerical value represents write (`w`)?",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "2"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "2"
+      ],
+      "explanation": "Write is 2."
+    },
+    {
+      "id": "os-permissions-181",
+      "course": "os",
+      "category": "Permissions",
+
+      "title": "Numeric Execute Value",
+      "instructions": "In octal permissions, what numerical value represents execute (`x`)?",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "1"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "1"
+      ],
+      "explanation": "Execute is 1."
+    },
+    {
+      "id": "os-permissions-182",
+      "course": "os",
+      "category": "Permissions",
+
+      "title": "Chown Command Owner",
+      "instructions": "Write the command to change the owner of `file.txt` to `alice`.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "sudo chown alice file.txt",
+          "chown alice file.txt"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "The `chown` command."
+      ],
+      "explanation": "`chown` changes file ownership."
+    },
+    {
+      "id": "os-permissions-183",
+      "course": "os",
+      "category": "Permissions",
+
+      "title": "Chown Owner and Group",
+      "instructions": "Write the command to change the owner of `file.txt` to `alice` and group to `developers` simultaneously.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "sudo chown alice:developers file.txt",
+          "chown alice:developers file.txt"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Use `user:group` syntax."
+      ],
+      "explanation": "`chown user:group` updates both owner and group at once."
+    },
+    {
+      "id": "os-permissions-184",
+      "course": "os",
+      "category": "Permissions",
+
+      "title": "Chgrp Command",
+      "instructions": "Write the command to change only the group ownership of `file.txt` to `developers`.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "chgrp developers file.txt",
+          "sudo chgrp developers file.txt"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "The `chgrp` command."
+      ],
+      "explanation": "`chgrp` changes group ownership."
+    },
+    {
+      "id": "os-permissions-185",
+      "course": "os",
+      "category": "Permissions",
+
+      "title": "Umask Display",
+      "instructions": "Write the command to display the current umask value.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "umask"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Simple `umask` command."
+      ],
+      "explanation": "`umask` displays permission mask bits subtracted from defaults."
+    },
+    {
+      "id": "os-permissions-186",
+      "course": "os",
+      "category": "Permissions",
+
+      "title": "Directory Execute Meaning",
+      "instructions": "Write the meaning of execute (`x`) permission on a directory.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "Permission to enter and access items inside",
+          "enter directory"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Traversal access."
+      ],
+      "explanation": "Execute on a directory permits entering (`cd`) and traversing it."
+    },
+    {
+      "id": "os-permissions-187",
+      "course": "os",
+      "category": "Permissions",
+
+      "title": "Sticky Bit Purpose",
+      "instructions": "What is the primary purpose of the sticky bit on a shared directory like `/tmp`?",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "Prevents users from deleting files they do not own",
+          "prevent deletion of others files"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Prevents users from deleting each other's files."
+      ],
+      "explanation": "The sticky bit prevents users from deleting files they do not own."
+    },
+    {
+      "id": "os-permissions-188",
+      "course": "os",
+      "category": "Permissions",
+
+      "title": "SUID Bit Meaning",
+      "instructions": "What does SUID do when set on an executable file?",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "Runs with file owner privileges",
+          "file owner privileges"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Runs as file owner."
+      ],
+      "explanation": "SUID executes the program with the privileges of the file's owner."
+    },
+    {
+      "id": "os-permissions-189",
+      "course": "os",
+      "category": "Permissions",
+
+      "title": "SGID Directory Meaning",
+      "instructions": "What does SGID do when set on a directory?",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "New files inherit directory group",
+          "inherit directory group"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Inherits group."
+      ],
+      "explanation": "New files inherit the directory's group owner."
+    },
+    {
+      "id": "os-permissions-190",
+      "course": "os",
+      "category": "Permissions",
+
+      "title": "Sticky Bit Octal",
+      "instructions": "What leading octal digit represents the sticky bit when setting permissions with `chmod` (e.g., `1777`)?",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "1"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Value 1."
+      ],
+      "explanation": "Sticky bit is `1`."
+    },
+    {
+      "id": "os-permissions-191",
+      "course": "os",
+      "category": "Permissions",
+
+      "title": "SUID Bit Octal",
+      "instructions": "What leading octal digit represents the SUID bit?",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "4"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Value 4."
+      ],
+      "explanation": "SUID is `4`."
+    },
+    {
+      "id": "os-permissions-192",
+      "course": "os",
+      "category": "Permissions",
+
+      "title": "SGID Bit Octal",
+      "instructions": "What leading octal digit represents the SGID bit?",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "2"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Value 2."
+      ],
+      "explanation": "SGID is `2`."
+    },
+    {
+      "id": "os-permissions-193",
+      "course": "os",
+      "category": "Permissions",
+
+      "title": "Recursive Chmod",
+      "instructions": "Write a `chmod` command to set permissions `750` recursively on `myfolder/`.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "chmod -R 750 myfolder/"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Use `-R` for recursive."
+      ],
+      "explanation": "`chmod -R` applies permission changes recursively."
+    },
+    {
+      "id": "os-permissions-194",
+      "course": "os",
+      "category": "Permissions",
+
+      "title": "Private File Octal",
+      "instructions": "What octal permission mode `NNN` is typically used for private files like SSH private keys (`rw-------`)?",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "600"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "`600`"
+      ],
+      "explanation": "`600` for private files."
+    },
+    {
+      "id": "os-permissions-195",
+      "course": "os",
+      "category": "Permissions",
+
+      "title": "Private Directory Octal",
+      "instructions": "What octal permission mode `NNN` is typically used for private directories (`rwx------`)?",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "700"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "`700`"
+      ],
+      "explanation": "`700` for private directories."
+    },
+    {
+      "id": "os-permissions-196",
+      "course": "os",
+      "category": "Permissions",
+
+      "title": "Default File Umask 022",
+      "instructions": "If the umask is `022`, what default permission do new regular files receive?",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "644"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "`644`"
+      ],
+      "explanation": "New files receive `644`."
+    },
+    {
+      "id": "os-permissions-197",
+      "course": "os",
+      "category": "Permissions",
+
+      "title": "Default Dir Umask 022",
+      "instructions": "If the umask is `022`, what default permission do new directories receive?",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "755"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "`755`"
+      ],
+      "explanation": "New directories receive `755`."
+    },
+    {
+      "id": "os-permissions-198",
+      "course": "os",
+      "category": "Permissions",
+
+      "title": "Delete File Requirement",
+      "instructions": "To delete a file within a directory, what permission do you need on the **parent directory**?",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "Write and execute",
+          "w and x"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Write and execute on parent."
+      ],
+      "explanation": "Requires write and execute on parent directory."
+    },
+    {
+      "id": "os-permissions-199",
+      "course": "os",
+      "category": "Permissions",
+
+      "title": "Set Umask Value",
+      "instructions": "Write the command to set the umask to `027` for the current shell session.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "umask 027"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "`umask 027`"
+      ],
+      "explanation": "Sets umask."
+    },
+    {
+      "id": "os-permissions-200",
+      "course": "os",
+      "category": "Permissions",
+
+      "title": "Chgrp Alternative",
+      "instructions": "Write a `chown` command syntax to change only the group owner of `file.txt` to `staff` using a colon prefix.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "chown :staff file.txt",
+          "sudo chown :staff file.txt"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "`chown :group`"
+      ],
+      "explanation": "Changes group only."
+    },
+    {
+      "id": "os-find-201",
+      "course": "os",
+      "category": "Find",
+
+      "title": "Find by Name",
+      "instructions": "Write a `find` command to search your home directory `~` for files named `*.txt` (ensure pattern is quoted).",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "find ~ -name \"*.txt\"",
+          "find ~ -name '*.txt'"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "`find ~ -name \"*.txt\"`"
+      ],
+      "explanation": "`find ~ -name \"*.txt\"` searches home directory for matching names."
+    },
+    {
+      "id": "os-find-202",
+      "course": "os",
+      "category": "Find",
+
+      "title": "Find by Type Directory",
+      "instructions": "Write a `find` command to search the current directory `.` for directories only (`-type d`).",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "find . -type d"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Use `-type d`."
+      ],
+      "explanation": "`find . -type d` locates directories."
+    },
+    {
+      "id": "os-find-203",
+      "course": "os",
+      "category": "Find",
+
+      "title": "Find by Type File",
+      "instructions": "Write a `find` command to search `/var` for regular files only (`-type f`).",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "find /var -type f"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Use `-type f`."
+      ],
+      "explanation": "`find /var -type f` locates regular files."
+    },
+    {
+      "id": "os-find-204",
+      "course": "os",
+      "category": "Find",
+
+      "title": "Find by Owner",
+      "instructions": "Write a `find` command to search root `/` for files owned by user `alice` (suppressing permission errors).",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "find / -user alice 2>/dev/null"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Combine `-user alice` with `2>/dev/null`."
+      ],
+      "explanation": "`find / -user alice 2>/dev/null` searches files owned by alice."
+    },
+    {
+      "id": "os-find-205",
+      "course": "os",
+      "category": "Find",
+
+      "title": "Find Modified Days Ago",
+      "instructions": "Write a `find` command to search your home directory for files modified more than 7 days ago (`-mtime +7`).",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "find ~ -mtime +7"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Use `-mtime +7`."
+      ],
+      "explanation": "`find ~ -mtime +7` finds files modified over 7 days ago."
+    },
+    {
+      "id": "os-find-206",
+      "course": "os",
+      "category": "Find",
+
+      "title": "Find Modified Minutes Ago",
+      "instructions": "Write a `find` command to search your home directory for files modified within the last 10 minutes (`-mmin -10`).",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "find ~ -mmin -10"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Use `-mmin -10`."
+      ],
+      "explanation": "`find ~ -mmin -10` finds files modified in the last 10 minutes."
+    },
+    {
+      "id": "os-find-207",
+      "course": "os",
+      "category": "Find",
+
+      "title": "Find Size Greater Than",
+      "instructions": "Write a `find` command to search `/` for files larger than 100 MiB (`-size +100M`, hiding errors).",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "find / -size +100M 2>/dev/null"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Use `-size +100M`."
+      ],
+      "explanation": "`find / -size +100M 2>/dev/null` finds large files exceeding 100 MiB."
+    },
+    {
+      "id": "os-find-208",
+      "course": "os",
+      "category": "Find",
+
+      "title": "Find Exact Permissions",
+      "instructions": "Write a `find` command to search your home directory for regular files with exact permissions `644`.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "find ~ -type f -perm 644"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Combine `-type f` and `-perm 644`."
+      ],
+      "explanation": "`find ~ -type f -perm 644` locates files matching exact permissions."
+    },
+    {
+      "id": "os-find-209",
+      "course": "os",
+      "category": "Find",
+
+      "title": "Find Max Depth Option",
+      "instructions": "Write a `find` command option to limit search depth to a maximum of 1 directory level.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "-maxdepth 1"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "`-maxdepth 1`"
+      ],
+      "explanation": "`-maxdepth 1` restricts search to the immediate directory level."
+    },
+    {
+      "id": "os-find-210",
+      "course": "os",
+      "category": "Find",
+
+      "title": "Find Exec Action",
+      "instructions": "Write a `find` command snippet using `-exec` to execute `rm` on every found `.tmp` file.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "find . -name \"*.tmp\" -exec rm {} \\;"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "`-exec rm {} \\;`"
+      ],
+      "explanation": "`-exec cmd {} \\;` runs the given command on each search result."
+    },
+    {
+      "id": "os-find-211",
+      "course": "os",
+      "category": "Find",
+
+      "title": "Numeric Argument Plus Meaning",
+      "instructions": "In `find` numeric arguments, what does `+n` mean (e.g., `-mtime +7`)?",
+      "difficulty": "Medium",
+      "type": "mcq-single",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "options": [
+        "More than n",
+        "Less than n",
+        "Exactly n",
+        "At least n minus 1"
+      ],
+      "expected": [
+        0
+      ],
+      "hints": [
+        "Plus means greater than."
+      ],
+      "explanation": "`+n` means strictly greater than `n`."
+    },
+    {
+      "id": "os-find-212",
+      "course": "os",
+      "category": "Find",
+
+      "title": "Numeric Argument Minus Meaning",
+      "instructions": "In `find` numeric arguments, what does `-n` mean (e.g., `-mmin -10`)?",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "Less than n",
+          "less than"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Minus means less than."
+      ],
+      "explanation": "`-n` means strictly less than `n`."
+    },
+    {
+      "id": "os-find-213",
+      "course": "os",
+      "category": "Find",
+
+      "title": "Find Type Code File",
+      "instructions": "What single-letter type code represents a regular file in `find -type t`?",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "f"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Stands for 'file'."
+      ],
+      "explanation": "`-type f` specifies regular files."
+    },
+    {
+      "id": "os-find-214",
+      "course": "os",
+      "category": "Find",
+
+      "title": "Find Type Code Directory",
+      "instructions": "What single-letter type code represents a directory in `find -type t`?",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "d"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Stands for 'directory'."
+      ],
+      "explanation": "`-type d` specifies directories."
+    },
+    {
+      "id": "os-find-215",
+      "course": "os",
+      "category": "Find",
+
+      "title": "Find Wildcard Quoting",
+      "instructions": "Why must `-name` wildcard patterns like `\"*.txt\"` be quoted when using `find`?",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "To prevent shell expansion",
+          "prevent shell expansion"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Prevent shell glob expansion."
+      ],
+      "explanation": "Quoting prevents shell expansion."
+    },
+    {
+      "id": "os-archives-216",
+      "course": "os",
+      "category": "Archives",
+
+      "title": "Tar Create Gzip",
+      "instructions": "Write a `tar` command to create a compressed gzip archive named `backup.tar.gz` from `myfolder/`.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "tar -czf backup.tar.gz myfolder/"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Use `-czf` options."
+      ],
+      "explanation": "`tar -czf` creates a gzip-compressed tar archive."
+    },
+    {
+      "id": "os-archives-217",
+      "course": "os",
+      "category": "Archives",
+
+      "title": "Tar Extract Gzip",
+      "instructions": "Write a `tar` command to extract a gzip tar archive named `backup.tar.gz` in the current directory.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "tar -xzf backup.tar.gz",
+          "tar -xf backup.tar.gz"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Use `-xzf` options."
+      ],
+      "explanation": "`tar -xzf` extracts a gzipped tar archive."
+    },
+    {
+      "id": "os-archives-218",
+      "course": "os",
+      "category": "Archives",
+
+      "title": "Tar List Contents",
+      "instructions": "Write a `tar` command to list the contents of `backup.tar.gz` without extracting it.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "tar -tf backup.tar.gz"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Use `-tf` options."
+      ],
+      "explanation": "`tar -tf` lists archive contents."
+    },
+    {
+      "id": "os-archives-219",
+      "course": "os",
+      "category": "Archives",
+
+      "title": "Tar Extract to Directory",
+      "instructions": "Write a `tar` command option (`-C dir`) to extract an archive into a specific target directory `/tmp/restore`.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "-C /tmp/restore"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Use `-C` followed by directory path."
+      ],
+      "explanation": "`-C dir` changes directory before extracting files."
+    },
+    {
+      "id": "os-archives-220",
+      "course": "os",
+      "category": "Archives",
+
+      "title": "Tar Compression Flags",
+      "instructions": "Which `tar` option specifies gzip compression?",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "-z"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Stands for 'gzip'."
+      ],
+      "explanation": "`-z` compresses or decompresses using gzip."
+    },
+    {
+      "id": "os-archives-221",
+      "course": "os",
+      "category": "Archives",
+
+      "title": "Tar Bzip2 Flag",
+      "instructions": "Which `tar` option specifies bzip2 compression?",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "-j"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Stands for 'bzip2'."
+      ],
+      "explanation": "`-j` uses bzip2 compression."
+    },
+    {
+      "id": "os-archives-222",
+      "course": "os",
+      "category": "Archives",
+
+      "title": "Tar Xz Flag",
+      "instructions": "Which `tar` option specifies xz high compression?",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "-J"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Capital J for xz."
+      ],
+      "explanation": "`-J` uses xz compression."
+    },
+    {
+      "id": "os-archives-223",
+      "course": "os",
+      "category": "Archives",
+
+      "title": "Scp Remote Copy",
+      "instructions": "Write an `scp` command to copy a local file `report.txt` to a remote user `alice` at host `192.168.1.10` into `/home/alice/`.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "scp report.txt alice@192.168.1.10:/home/alice/"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "`user@host:path` syntax."
+      ],
+      "explanation": "`scp` copies files securely over SSH using `user@host:path` notation."
+    },
+    {
+      "id": "os-archives-224",
+      "course": "os",
+      "category": "Archives",
+
+      "title": "Scp Recursive Directory",
+      "instructions": "Write the `scp` command option required to copy an entire directory remotely.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "-r"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Recursive flag `-r`."
+      ],
+      "explanation": "`scp -r` copies directories recursively."
+    },
+    {
+      "id": "os-archives-225",
+      "course": "os",
+      "category": "Archives",
+
+      "title": "Tar Create Flag",
+      "instructions": "Which `tar` operation flag specifies creating a new archive?",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "-c"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Stands for 'create'."
+      ],
+      "explanation": "`-c` creates a new tar archive."
+    },
+    {
+      "id": "os-archives-226",
+      "course": "os",
+      "category": "Archives",
+
+      "title": "Tar Extract Flag",
+      "instructions": "Which `tar` operation flag specifies extracting an archive?",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "-x"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Stands for 'extract'."
+      ],
+      "explanation": "`-x` extracts files from an archive."
+    },
+    {
+      "id": "os-archives-227",
+      "course": "os",
+      "category": "Archives",
+
+      "title": "Scp Remote Source",
+      "instructions": "Write an `scp` command to copy a remote file `/home/alice/report.txt` from `alice@192.168.1.10` to the current local directory `.`.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "scp alice@192.168.1.10:/home/alice/report.txt ."
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Remote source followed by local destination `.`."
+      ],
+      "explanation": "`scp` supports copying from remote to local by specifying remote source first."
+    },
+    {
+      "id": "os-archives-228",
+      "course": "os",
+      "category": "Archives",
+
+      "title": "Tar File Flag Placement",
+      "instructions": "True or False: In `tar`, the `-f` flag must be placed last among option clusters, directly followed by the archive filename.",
+      "difficulty": "Medium",
+      "type": "mcq-single",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "options": [
+        "True",
+        "False"
+      ],
+      "expected": [
+        0
+      ],
+      "hints": [
+        "`-f` requires the filename argument immediately after."
+      ],
+      "explanation": "`-f` must immediately precede the archive filename argument."
+    },
+    {
+      "id": "os-archives-229",
+      "course": "os",
+      "category": "Archives",
+
+      "title": "Tar Uncompressed Create",
+      "instructions": "Write a `tar` command to create an uncompressed archive named `archive.tar` from `folder/`.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "tar -cf archive.tar folder/"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Use `-cf`."
+      ],
+      "explanation": "`tar -cf` creates an uncompressed tar archive."
+    },
+    {
+      "id": "os-archives-230",
+      "course": "os",
+      "category": "Archives",
+
+      "title": "Scp Port Option",
+      "instructions": "What capital option letter is used in `scp` to specify a non-default SSH port?",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "-P"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Capital P."
+      ],
+      "explanation": "`-P` specifies a custom remote SSH port in `scp`."
+    },
+    {
+      "id": "os-directories-231",
+      "course": "os",
+      "category": "Directories",
+
+      "title": "Config Directory Path",
+      "instructions": "Which standard top-level directory stores system-wide configuration files?",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "/etc"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Starts with 'e'."
+      ],
+      "explanation": "`/etc` holds system configuration files."
+    },
+    {
+      "id": "os-directories-232",
+      "course": "os",
+      "category": "Directories",
+
+      "title": "Temporary Directory Path",
+      "instructions": "Which standard directory stores temporary files and is world-writable with the sticky bit?",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "/tmp"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Three letter temp directory."
+      ],
+      "explanation": "`/tmp` stores temporary files."
+    },
+    {
+      "id": "os-directories-233",
+      "course": "os",
+      "category": "Directories",
+
+      "title": "Variable Logs Directory",
+      "instructions": "Which standard directory stores variable data including system logs in `/var/log`?",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "/var"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Variable data directory."
+      ],
+      "explanation": "`/var` stores variable data such as logs, databases, and mail spools."
+    },
+    {
+      "id": "os-directories-234",
+      "course": "os",
+      "category": "Directories",
+
+      "title": "Home Directory Path",
+      "instructions": "Which standard directory contains user home directories?",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "/home"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Home directory parent."
+      ],
+      "explanation": "`/home` contains individual user home directories."
+    },
+    {
+      "id": "os-directories-235",
+      "course": "os",
+      "category": "Directories",
+
+      "title": "Root Home Directory",
+      "instructions": "What is the home directory path for the `root` superuser?",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "/root"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Root's home."
+      ],
+      "explanation": "`/root` is the superuser's home directory."
+    },
+    {
+      "id": "os-directories-236",
+      "course": "os",
+      "category": "Directories",
+
+      "title": "Binaries Directory",
+      "instructions": "Which standard directory stores standard user executable commands (often a link to `/usr/bin`)?",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "/bin",
+          "/usr/bin"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Binaries."
+      ],
+      "explanation": "`/bin` and `/usr/bin` store standard user commands."
+    },
+    {
+      "id": "os-directories-237",
+      "course": "os",
+      "category": "Directories",
+
+      "title": "Device Files Directory",
+      "instructions": "Which standard directory contains device files representing hardware and special files like `/dev/null`?",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "/dev"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Device directory."
+      ],
+      "explanation": "`/dev` contains device files representing hardware and virtual streams."
+    },
+    {
+      "id": "os-directories-238",
+      "course": "os",
+      "category": "Directories",
+
+      "title": "Boot Files Directory",
+      "instructions": "Which standard directory stores Linux kernel and boot loader files?",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "/boot"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Boot directory."
+      ],
+      "explanation": "`/boot` stores bootloader and kernel image files."
+    },
+    {
+      "id": "os-directories-239",
+      "course": "os",
+      "category": "Directories",
+
+      "title": "Runtime State Directory",
+      "instructions": "Which directory stores runtime state information since boot (PID files, sockets)?",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "/run"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Runtime directory."
+      ],
+      "explanation": "`/run` holds volatile runtime state data since system boot."
+    },
+    {
+      "id": "os-directories-240",
+      "course": "os",
+      "category": "Directories",
+
+      "title": "Etc Passwd Purpose",
+      "instructions": "What specific file inside `/etc` stores basic user account records?",
+      "difficulty": "Easy",
+      "type": "mcq-single",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "options": [
+        "/etc/passwd",
+        "/etc/shadow",
+        "/etc/group",
+        "/etc/sudoers"
+      ],
+      "expected": [
+        0
+      ],
+      "hints": [
+        "Passwd file."
+      ],
+      "explanation": "`/etc/passwd` holds user account records."
+    },
+    {
+      "id": "os-directories-241",
+      "course": "os",
+      "category": "Directories",
+
+      "title": "Root Filesystem Purpose",
+      "instructions": "What does the root slash `/` represent in the Linux filesystem hierarchy?",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "Top of entire filesystem tree",
+          "topmost root"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Topmost directory."
+      ],
+      "explanation": "`/` is the root directory."
+    },
+    {
+      "id": "os-directories-242",
+      "course": "os",
+      "category": "Directories",
+
+      "title": "Log Files Location",
+      "instructions": "Where are system log files typically located within `/var`?",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "/var/log"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "`/var/log`"
+      ],
+      "explanation": "`/var/log` is the log directory."
+    },
+    {
+      "id": "os-environment-243",
+      "course": "os",
+      "category": "Environment",
+
+      "title": "Create Local Variable",
+      "instructions": "Write the shell syntax to create a local shell variable named `GREETING` with value `hello` (no spaces around `=`).",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "GREETING=hello"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "`NAME=value`"
+      ],
+      "explanation": "`NAME=value` assigns a local shell variable."
+    },
+    {
+      "id": "os-environment-244",
+      "course": "os",
+      "category": "Environment",
+
+      "title": "Export Environment Variable",
+      "instructions": "Write the command to export a shell variable `GREETING` so it becomes available to child processes.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "export GREETING=hello",
+          "export GREETING"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Use `export` command."
+      ],
+      "explanation": "`export` makes variables available to child processes as environment variables."
+    },
+    {
+      "id": "os-environment-245",
+      "course": "os",
+      "category": "Environment",
+
+      "title": "Print Environment Variables",
+      "instructions": "Write the command to display all current environment variables.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "env",
+          "printenv"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "`env` or `printenv`."
+      ],
+      "explanation": "`env` and `printenv` list environment variables."
+    },
+    {
+      "id": "os-environment-246",
+      "course": "os",
+      "category": "Environment",
+
+      "title": "Path Variable Purpose",
+      "instructions": "What environment variable defines the colon-separated list of directories searched for executable commands?",
+      "difficulty": "Medium",
+      "type": "mcq-single",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "options": [
+        "PATH",
+        "HOME",
+        "SHELL",
+        "USER"
+      ],
+      "expected": [
+        0
+      ],
+      "hints": [
+        "Command search path."
+      ],
+      "explanation": "`PATH` specifies directories searched when executing commands."
+    },
+    {
+      "id": "os-environment-247",
+      "course": "os",
+      "category": "Environment",
+
+      "title": "Create Command Alias",
+      "instructions": "Write a command to create an alias named `ll` that shortcuts to `ls -la`.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "alias ll='ls -la'"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "`alias name='command'`"
+      ],
+      "explanation": "`alias` creates shortcut commands."
+    },
+    {
+      "id": "os-environment-248",
+      "course": "os",
+      "category": "Environment",
+
+      "title": "Remove Alias",
+      "instructions": "Write the command to remove an alias named `ll`.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "unalias ll"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "`unalias` command."
+      ],
+      "explanation": "`unalias` removes defined command aliases."
+    },
+    {
+      "id": "os-environment-249",
+      "course": "os",
+      "category": "Environment",
+
+      "title": "Bashrc File Path",
+      "instructions": "What is the name of the per-user Bash configuration file located in the home directory?",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "~/.bashrc",
+          ".bashrc"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Dot file in home."
+      ],
+      "explanation": "`~/.bashrc` is the standard per-user interactive Bash config file."
+    },
+    {
+      "id": "os-environment-250",
+      "course": "os",
+      "category": "Environment",
+
+      "title": "Source Bashrc",
+      "instructions": "Write the command to reload your `~/.bashrc` configuration file in the current shell session without restarting.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "source ~/.bashrc",
+          ". ~/.bashrc"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Use `source` or `.`."
+      ],
+      "explanation": "`source ~/.bashrc` re-reads and applies configuration changes immediately."
+    },
+    {
+      "id": "os-environment-251",
+      "course": "os",
+      "category": "Environment",
+
+      "title": "Path Append Syntax",
+      "instructions": "Write a command to append a directory `~/bin` to the existing `PATH` variable correctly.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "export PATH=\"$PATH:$HOME/bin\""
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "`export PATH=\"$PATH:$HOME/bin\"`"
+      ],
+      "explanation": "`export PATH=\"$PATH:$HOME/bin\"` appends a directory to search paths."
+    },
+    {
+      "id": "os-environment-252",
+      "course": "os",
+      "category": "Environment",
+
+      "title": "Show Path Variable",
+      "instructions": "Write an `echo` command to print the contents of the `PATH` environment variable.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "echo $PATH"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "`echo $PATH`"
+      ],
+      "explanation": "Prints search paths."
+    },
+    {
+      "id": "os-vim-253",
+      "course": "os",
+      "category": "Vim",
+
+      "title": "Enter Insert Mode",
+      "instructions": "Which key pressed in Normal mode enters Insert mode so you can type text in Vim?",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "i"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Stands for 'insert'."
+      ],
+      "explanation": "Pressing `i` enters Insert mode in Vim."
+    },
+    {
+      "id": "os-vim-254",
+      "course": "os",
+      "category": "Vim",
+
+      "title": "Return to Normal Mode",
+      "instructions": "Which key do you press to return to Normal mode from Insert mode in Vim?",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "Esc"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Escape key."
+      ],
+      "explanation": "Pressing `Esc` returns to Normal mode."
+    },
+    {
+      "id": "os-vim-255",
+      "course": "os",
+      "category": "Vim",
+
+      "title": "Save and Quit Command",
+      "instructions": "What command-line mode command saves changes and quits Vim simultaneously?",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          ":wq",
+          "ZZ"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Colon followed by w and q."
+      ],
+      "explanation": "`:wq` saves and quits Vim (or `ZZ` in Normal mode)."
+    },
+    {
+      "id": "os-vim-256",
+      "course": "os",
+      "category": "Vim",
+
+      "title": "Quit Discard Changes",
+      "instructions": "What command-line mode command quits Vim immediately discarding any unsaved changes?",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          ":q!"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Colon followed by q and exclamation mark."
+      ],
+      "explanation": "`:q!` forces quitting without saving changes."
+    },
+    {
+      "id": "os-vim-257",
+      "course": "os",
+      "category": "Vim",
+
+      "title": "Delete Line Command",
+      "instructions": "What two-letter Normal mode command deletes (cuts) the current line in Vim?",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "dd"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Double d."
+      ],
+      "explanation": "`dd` deletes the current line in Normal mode."
+    },
+    {
+      "id": "os-vim-258",
+      "course": "os",
+      "category": "Vim",
+
+      "title": "Yank Line Command",
+      "instructions": "What two-letter Normal mode command yanks (copies) the current line in Vim?",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "yy"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Double y."
+      ],
+      "explanation": "`yy` copies (yanks) the current line."
+    },
+    {
+      "id": "os-vim-259",
+      "course": "os",
+      "category": "Vim",
+
+      "title": "Paste Command",
+      "instructions": "What key in Normal mode pastes previously yanked or deleted text after the cursor?",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "p"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Stands for 'paste'."
+      ],
+      "explanation": "`p` pastes text after the cursor or on the line below."
+    },
+    {
+      "id": "os-vim-260",
+      "course": "os",
+      "category": "Vim",
+
+      "title": "Undo Command",
+      "instructions": "What single key in Normal mode undoes the last change in Vim?",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "u"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Stands for 'undo'."
+      ],
+      "explanation": "`u` undoes the previous edit."
+    },
+    {
+      "id": "os-vim-261",
+      "course": "os",
+      "category": "Vim",
+
+      "title": "Go to First Line",
+      "instructions": "What two-letter Normal mode command jumps to the very first line of the file?",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "gg"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Double g."
+      ],
+      "explanation": "`gg` jumps to the first line of the file."
+    },
+    {
+      "id": "os-vim-262",
+      "course": "os",
+      "category": "Vim",
+
+      "title": "Go to Last Line",
+      "instructions": "What single Normal mode command key jumps to the very last line of the file?",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "G"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Shift+g or capital G."
+      ],
+      "explanation": "`G` jumps to the last line of the file."
+    },
+    {
+      "id": "os-vim-263",
+      "course": "os",
+      "category": "Vim",
+
+      "title": "Search Forward",
+      "instructions": "What symbol typed in Normal mode starts searching forward for text in Vim?",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "/"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Forward slash."
+      ],
+      "explanation": "`/` initiates forward text searching in Vim."
+    },
+    {
+      "id": "os-vim-264",
+      "course": "os",
+      "category": "Vim",
+
+      "title": "Vim Modal Nature",
+      "instructions": "True or False: Vim is a modal editor, meaning keys perform different functions depending on whether you are in Normal mode or Insert mode.",
+      "difficulty": "Easy",
+      "type": "mcq-single",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "options": [
+        "True",
+        "False"
+      ],
+      "expected": [
+        0
+      ],
+      "hints": [
+        "Modes change key behavior."
+      ],
+      "explanation": "Vim operates using distinct modes (Normal, Insert, Command)."
+    },
+    {
+      "id": "os-vim-265",
+      "course": "os",
+      "category": "Vim",
+
+      "title": "Redo Command",
+      "instructions": "What key combination (`Ctrl + key`) redoes an undone change in Vim?",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "Ctrl+r",
+          "ctrl+r"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Control + r."
+      ],
+      "explanation": "`Ctrl+r` performs redo in Vim."
+    },
+    {
+      "id": "os-vim-266",
+      "course": "os",
+      "category": "Vim",
+
+      "title": "Save Only Command",
+      "instructions": "What command-line mode command saves (writes) changes without exiting Vim?",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          ":w"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Colon followed by w."
+      ],
+      "explanation": "`:w` saves the file."
+    },
+    {
+      "id": "os-vim-267",
+      "course": "os",
+      "category": "Vim",
+
+      "title": "Open Line Below",
+      "instructions": "What single Normal mode key opens a new line directly below the current line and enters Insert mode?",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [
+          "o"
+        ],
+        "patterns": []
+      },
+      "hints": [
+        "Lowercase o."
+      ],
+      "explanation": "`o` opens a new line below and switches to Insert mode."
+    }
+  ]
+}

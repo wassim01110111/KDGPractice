@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "packages": [
+    { "id": "os1", "version": "0.0.1", "files": ["os-course.json"] },
+    { "id": "sql1", "version": "0.0.1", "files": ["sql-course.json"] },
+    { "id": "os2", "version": "0.0.1", "files": ["os-course2.json"] }
+  ],
+  "referenceFiles": [
+    {
+      "id": "sql",
+      "title": "SQL cheat sheet",
+      "file": "reference/sql-cheat-sheet.md"
+    },
+    {
+      "id": "os",
+      "title": "Linux / OS summary",
+      "file": "reference/linux-summary.md"
+    }
+  ]
+}
