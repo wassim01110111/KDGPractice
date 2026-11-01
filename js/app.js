@@ -1693,6 +1693,7 @@ async function pageExam(root) {
   const courses = uniq(S.exercises, (e) => e.course),
     cfg = { course: "", Easy: 5, Medium: 5, Hard: 2, Extreme: 0, mins: 60 },
     msg = h("div");
+  const difficultyInputs = {};
   if (!S.exercises.some((e) => e.examEligible))
     return root.append(
       empty(
@@ -1701,22 +1702,28 @@ async function pageExam(root) {
       ),
       await historyView(),
     );
-  const num = (k, l) =>
-    h(
-      "label",
-      { class: "exam-count-control" },
-      h("span", {}, l),
-      h("input", {
+  const num = (k, l) => {
+    const input = h("input", {
         type: "number",
         min: 0,
         value: cfg[k],
         oninput: (e) => {
-          cfg[k] = Math.max(0, +e.target.value || 0);
+          cfg[k] = Math.min(
+            +e.target.max,
+            Math.max(0, +e.target.value || 0),
+          );
           e.target.value = cfg[k];
           updateExamSummary();
         },
-      }),
+      });
+    difficultyInputs[k] = input;
+    return h(
+      "label",
+      { class: "exam-count-control" },
+      h("span", {}, l),
+      input,
     );
+  };
   const examSummary = h("div", {
     class: "exam-config-summary",
     "aria-live": "polite",
@@ -1737,6 +1744,7 @@ async function pageExam(root) {
     {
       onchange: (e) => {
         cfg.course = e.target.value;
+        updateDifficultyLimits();
         updateExamSummary();
       },
     },
@@ -1758,6 +1766,31 @@ async function pageExam(root) {
       },
     }),
   );
+  const updateDifficultyLimits = () => {
+    DIFF.forEach((difficulty) => {
+      const available = S.exercises.filter(
+        (exercise) =>
+          Core.eligible(exercise) &&
+          (!cfg.course || exercise.course === cfg.course) &&
+          exercise.difficulty === difficulty,
+      ).length;
+      const input = difficultyInputs[difficulty];
+      input.max = available;
+      input.disabled = available === 0;
+      cfg[difficulty] = Math.min(cfg[difficulty], available);
+      input.value = cfg[difficulty];
+    });
+  };
+  const difficultyControls = h(
+    "div",
+    { class: "exam-difficulty-controls" },
+    num("Easy", "Easy"),
+    num("Medium", "Medium"),
+    num("Hard", "Hard"),
+    num("Extreme", "Extreme"),
+    minuteControl,
+  );
+  updateDifficultyLimits();
   updateExamSummary();
   root.append(
     h(
@@ -1783,15 +1816,7 @@ async function pageExam(root) {
           h("span", {}, "Course"),
           courseSelect,
         ),
-        h(
-          "div",
-          { class: "exam-difficulty-controls" },
-          num("Easy", "Easy"),
-          num("Medium", "Medium"),
-          num("Hard", "Hard"),
-          num("Extreme", "Extreme"),
-          minuteControl,
-        ),
+        difficultyControls,
         examSummary,
       ),
       h(
