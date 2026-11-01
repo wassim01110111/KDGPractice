@@ -22,6 +22,18 @@ const h = (t, a = {}, ...k) => {
   );
   return e;
 };
+function plantUmlImageUrl(encoded) {
+  const format = currentTheme() === "dark" ? "dsvg" : "svg";
+  return `https://www.plantuml.com/plantuml/${format}/${encoded}`;
+}
+function updatePlantUmlImageTheme() {
+  document
+    .querySelectorAll(".plantuml-preview img[data-plantuml-encoded]")
+    .forEach((image) => {
+      const url = plantUmlImageUrl(image.dataset.plantumlEncoded);
+      if (image.src !== url) image.src = url;
+    });
+}
 const empty = (a, b) =>
   h("div", { class: "empty" }, h("strong", {}, a), h("div", {}, b || ""));
 const uniq = (arr, f) =>
@@ -839,8 +851,8 @@ function schemaView(ex) {
     );
     try {
       const encoded = await plantumlEncode(uml.join("\n"));
-      const imageUrl = `https://www.plantuml.com/plantuml/dsvg/${encoded}`;
-      diagramImage.src = imageUrl;
+      diagramImage.dataset.plantumlEncoded = encoded;
+      diagramImage.src = plantUmlImageUrl(encoded);
     } catch (e) {
       diagramViewer.replaceChildren(
         h(
@@ -3767,6 +3779,7 @@ function updateThemeToggle() {
   themeToggle.setAttribute("aria-label", label);
   themeToggle.title = label;
   themeToggle.firstElementChild.textContent = dark ? "☀" : "☾";
+  updatePlantUmlImageTheme();
 }
 themeToggle?.addEventListener("click", () => {
   const nextTheme = currentTheme() === "dark" ? "light" : "dark";

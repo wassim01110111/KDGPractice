@@ -28,7 +28,7 @@
   --hint-bg: #382b16;
   --hint-fg: #ffdf9a;
   --hint-border: #e5a52f;
-  --card: #192231;
+  --card: #1b1b1b;
   --soft: #202c40;
   --shadow: 0 8px 24px rgb(0 0 0 / 18%);
 }
@@ -98,8 +98,8 @@ body {
   background: var(--bg);
   color: var(--fg);
   transition:
-    background-color 1.8s ease,
-    color 1.8s ease;
+    background-color 0.7s ease,
+    color 0.7s ease;
   font:
     16px/1.55 system-ui,
     -apple-system,
@@ -119,13 +119,13 @@ header {
   border-bottom: 1px solid var(--bd);
   box-shadow: var(--shadow);
   transition:
-    background-color 1.8s ease,
-    border-color 1.8s ease,
-    color 1.8s ease,
-    box-shadow 1.8s ease;
+    background-color 0.7s ease,
+    border-color 0.7s ease,
+    color 0.7s ease,
+    box-shadow 0.7s ease;
 }
 main {
-  transition: color 1.8s ease;
+  transition: color 0.7s ease;
 }
 .card,
 .q,
@@ -137,10 +137,10 @@ textarea,
 select,
 button {
   transition:
-    background-color 1.8s ease,
-    border-color 1.8s ease,
-    color 1.8s ease,
-    box-shadow 1.8s ease;
+    background-color 0.7s ease,
+    border-color 0.7s ease,
+    color 0.7s ease,
+    box-shadow 0.7s ease;
 }
 header strong {
   font-size: 1.05rem;
@@ -1628,7 +1628,7 @@ button.schema-view-toggle.on {
   display: block;
   max-width: 100%;
   overflow: auto;
-  background: #1b1b1b;
+  background: var(--card);
   border: 1px solid var(--bd);
   border-radius: 8px;
   text-align: center;
@@ -2039,7 +2039,7 @@ button.sql-result-toggle:hover:not(:disabled) {
       rgb(0 0 0 / 15%) 3px 4px
     ),
     radial-gradient(ellipse at center, rgb(8 19 18 / 15%), rgb(0 0 0 / 68%));
-  transition: opacity 1.8s ease;
+  transition: opacity 0.7s ease;
 }
 .terminal-artifact::before {
   position: absolute;
