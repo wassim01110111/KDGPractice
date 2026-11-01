@@ -641,6 +641,28 @@ button.schema-view-toggle.on {
   margin: 0 auto;
   object-fit: contain;
 }
+.plantuml-controls-hint {
+  display: block;
+  margin-top: -0.35rem;
+  color: var(--mut);
+  font-size: 0.75rem;
+}
+@media (min-width: 901px) and (hover: hover) and (pointer: fine) {
+  .plantuml-preview {
+    max-height: 65vh;
+    overflow: hidden;
+    cursor: grab;
+    user-select: none;
+  }
+  .plantuml-preview.is-dragging {
+    cursor: grabbing;
+  }
+  .plantuml-preview img {
+    transform-origin: center;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+}
 .schema[open] > summary {
   color: var(--ac);
 }

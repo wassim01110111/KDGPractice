@@ -542,18 +542,18 @@ function schemaView(ex) {
         `${aliases.get(rel.from)} }o--|| ${aliases.get(rel.to)} : ${umlText(rel.column)} -> ${umlText(rel.targetColumn)}`,
       );
     uml.push("@enduml");
-    const diagramLink = h("a", {
+    const diagramViewer = h("div", {
       class: "plantuml-preview",
-      target: "_blank",
-      rel: "noopener noreferrer",
-      "aria-label": "Open the PlantUML diagram image in a new tab",
+      "aria-label":
+        "PlantUML diagram. On desktop, scroll to zoom and drag to pan.",
     });
     const diagramImage = h("img", {
       alt: `PlantUML entity relationship diagram for ${ex.datasetId}`,
       loading: "lazy",
+      draggable: "false",
     });
     diagramImage.addEventListener("error", () => {
-      diagramLink.replaceChildren(
+      diagramViewer.replaceChildren(
         h(
           "span",
           { class: "err" },
@@ -561,7 +561,48 @@ function schemaView(ex) {
         ),
       );
     });
-    diagramLink.append(diagramImage);
+    diagramViewer.append(diagramImage);
+    let zoom = 1,
+      panX = 0,
+      panY = 0,
+      dragStart;
+    const desktopZoom = matchMedia(
+      "(min-width: 901px) and (hover: hover) and (pointer: fine)",
+    );
+    const updateDiagramTransform = () => {
+      diagramImage.style.transform = `translate(${panX}px, ${panY}px) scale(${zoom})`;
+    };
+    diagramViewer.addEventListener(
+      "wheel",
+      (event) => {
+        if (!desktopZoom.matches) return;
+        event.preventDefault();
+        zoom = Math.min(
+          4,
+          Math.max(0.5, zoom * (event.deltaY < 0 ? 1.15 : 1 / 1.15)),
+        );
+        updateDiagramTransform();
+      },
+      { passive: false },
+    );
+    diagramViewer.addEventListener("pointerdown", (event) => {
+      if (!desktopZoom.matches || event.button !== 0) return;
+      dragStart = { x: event.clientX - panX, y: event.clientY - panY };
+      diagramViewer.setPointerCapture(event.pointerId);
+      diagramViewer.classList.add("is-dragging");
+    });
+    diagramViewer.addEventListener("pointermove", (event) => {
+      if (!dragStart) return;
+      panX = event.clientX - dragStart.x;
+      panY = event.clientY - dragStart.y;
+      updateDiagramTransform();
+    });
+    const endDiagramDrag = () => {
+      dragStart = undefined;
+      diagramViewer.classList.remove("is-dragging");
+    };
+    diagramViewer.addEventListener("pointerup", endDiagramDrag);
+    diagramViewer.addEventListener("pointercancel", endDiagramDrag);
     const source = h(
       "details",
       { class: "plantuml-source" },
@@ -572,12 +613,12 @@ function schemaView(ex) {
       "div",
       { class: "schema-visual diagram-view" },
       h("strong", {}, "PlantUML ER diagram"),
+      diagramViewer,
       h(
         "small",
-        {},
-        "Rendered by PlantUML from this dataset schema. The diagram image is hosted by plantuml.com.",
+        { class: "plantuml-controls-hint" },
+        "On desktop: scroll over the diagram to zoom; click and drag to move it.",
       ),
-      diagramLink,
       source,
     );
     const tableCards = [...tables].map(([name, cols]) => {
@@ -589,9 +630,15 @@ function schemaView(ex) {
             {},
             h("code", {}, col.name),
             h("span", { class: "schema-column-type" }, col.type),
-            col.primary ? h("span", { class: "schema-key schema-pk" }, "PK") : "",
-            col.foreign ? h("span", { class: "schema-key schema-fk" }, "FK") : "",
-            col.nullable ? "" : h("span", { class: "schema-not-null" }, "NOT NULL"),
+            col.primary
+              ? h("span", { class: "schema-key schema-pk" }, "PK")
+              : "",
+            col.foreign
+              ? h("span", { class: "schema-key schema-fk" }, "FK")
+              : "",
+            col.nullable
+              ? ""
+              : h("span", { class: "schema-not-null" }, "NOT NULL"),
           );
       return h(
         "section",
@@ -625,7 +672,14 @@ function schemaView(ex) {
                   "li",
                   {},
                   h("code", {}, `${rel.from}.${rel.column}`),
-                  h("span", { class: "schema-relation-arrow", "aria-label": "references" }, " → "),
+                  h(
+                    "span",
+                    {
+                      class: "schema-relation-arrow",
+                      "aria-label": "references",
+                    },
+                    " → ",
+                  ),
                   h("code", {}, `${rel.to}.${rel.targetColumn}`),
                 ),
               ),
@@ -665,7 +719,11 @@ function schemaView(ex) {
     content.replaceChildren(
       h(
         "div",
-        { class: "schema-view-controls", role: "group", "aria-label": "Dataset schema view" },
+        {
+          class: "schema-view-controls",
+          role: "group",
+          "aria-label": "Dataset schema view",
+        },
         diagramToggle,
         tablesToggle,
       ),
@@ -675,10 +733,9 @@ function schemaView(ex) {
     try {
       const encoded = await plantumlEncode(uml.join("\n"));
       const imageUrl = `https://www.plantuml.com/plantuml/svg/${encoded}`;
-      diagramLink.href = imageUrl;
       diagramImage.src = imageUrl;
     } catch (e) {
-      diagramLink.replaceChildren(
+      diagramViewer.replaceChildren(
         h(
           "span",
           { class: "err" },
@@ -1023,14 +1080,11 @@ function qView(ex, mode, get, set, onAttempt = () => {}) {
       btns.append(hb);
     }
     if (ex.type === "sql-query" && ex.referenceSolution) {
-      const snippet = h(
-        "div",
-        {
-          id: `sql-result-snippet-${ex.id}`,
-          class: "sql-result-panel",
-          hidden: true,
-        },
-      );
+      const snippet = h("div", {
+        id: `sql-result-snippet-${ex.id}`,
+        class: "sql-result-panel",
+        hidden: true,
+      });
       const toggle = h(
         "button",
         {
@@ -1057,7 +1111,11 @@ function qView(ex, mode, get, set, onAttempt = () => {}) {
               const { res } = await runStudent(ex, ex.referenceSolution);
               snippet.replaceChildren(
                 h("strong", {}, "Expected result preview"),
-                h("small", {}, "A preview of rows returned by the reference query."),
+                h(
+                  "small",
+                  {},
+                  "A preview of rows returned by the reference query.",
+                ),
                 table(res, 5),
               );
               snippet.dataset.loaded = "true";
