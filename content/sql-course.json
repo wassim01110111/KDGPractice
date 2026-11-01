@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "packageId": "sql-term-1",
+  "packageId": "sql-course",
   "version": "1.0.0",
   "datasets": [
     {
@@ -700,7 +700,7 @@
 
       "title": "Employee email domains",
       "instructions": "Show employee names and email addresses for addresses ending in example.com.",
-      "difficulty": "Medium",
+      "difficulty": "Easy",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -720,7 +720,7 @@
 
       "title": "Consultant surnames with an internal sequence",
       "instructions": "Find consultant names whose surname contains the letters ore in that exact case.",
-      "difficulty": "Medium",
+      "difficulty": "Easy",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -782,7 +782,7 @@
 
       "title": "Students missing email addresses",
       "instructions": "Return the IDs and names of students whose email address is unknown.",
-      "difficulty": "Medium",
+      "difficulty": "Easy",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -822,7 +822,7 @@
 
       "title": "Project names with a fixed prefix",
       "instructions": "Display project IDs and names for projects whose name begins with Mobile or Research.",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -984,7 +984,7 @@
 
       "title": "Birth date with missing values first",
       "instructions": "Display employee names and birth dates, with missing birth dates before known dates and known dates from oldest to newest.",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -1064,7 +1064,7 @@
 
       "title": "Next six employees by hire date",
       "instructions": "Display employee IDs, names and hire dates for employees 6 through 11 when ordered from newest hire to oldest.",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -1084,7 +1084,7 @@
 
       "title": "Paged products within one category",
       "instructions": "For category 2, list the product names and stock quantities ordered alphabetically, skipping the first two and returning the next three.",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -1104,7 +1104,7 @@
 
       "title": "Employee directory for selected conditions",
       "instructions": "Show employees in departments 10, 20 or 30 whose salary is above 60000, sorted by department and surname.",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -1124,7 +1124,7 @@
 
       "title": "SKU pattern with one fixed character",
       "instructions": "Find products whose SKU has two characters, a hyphen, and exactly four further characters.",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -1144,7 +1144,7 @@
 
       "title": "Project completion date availability",
       "instructions": "Show project names and statuses for projects with no recorded end date, ordered by their start dates.",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -1164,7 +1164,7 @@
 
       "title": "Retail orders in multiple statuses and dates",
       "instructions": "Display order IDs and dates for delivered or shipped orders placed during May or June 2025.",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -1186,7 +1186,7 @@
 
       "title": "Rank customers by credit with NULLs last",
       "instructions": "List customer names and credit limits, with the largest known limit first and missing limits at the end.",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -1208,7 +1208,7 @@
 
       "title": "Top three consultant rates after excluding low rates",
       "instructions": "Return the second, third and fourth highest consultant hourly rates, with consultant names.",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -1270,7 +1270,7 @@
 
       "title": "Meaning of percent wildcard",
       "instructions": "In a LIKE pattern, what does % represent?",
-      "difficulty": "Medium",
+      "difficulty": "Easy",
       "type": "mcq-single",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -1291,7 +1291,7 @@
 
       "title": "Correct NULL test",
       "instructions": "Which condition correctly finds rows where email is missing?",
-      "difficulty": "Medium",
+      "difficulty": "Easy",
       "type": "mcq-single",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -1312,7 +1312,7 @@
 
       "title": "Default ORDER BY direction",
       "instructions": "What is the default sort direction when ASC or DESC is omitted?",
-      "difficulty": "Hard",
+      "difficulty": "Easy",
       "type": "mcq-single",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -1328,7 +1328,7 @@
 
       "title": "Purpose of OFFSET",
       "instructions": "What does OFFSET 10 do in a query result?",
-      "difficulty": "Hard",
+      "difficulty": "Easy",
       "type": "mcq-single",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -1349,7 +1349,7 @@
 
       "title": "Uppercase employee surnames",
       "instructions": "Create one employee display row containing the surname in uppercase, the first name in lowercase, and the original surname length.",
-      "difficulty": "Hard",
+      "difficulty": "Easy",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -1369,7 +1369,7 @@
 
       "title": "Lowercase customer cities",
       "instructions": "For each customer, display the city in lowercase, the customer ID as a five-character code padded with leading zeroes, and the length of the original city.",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -1389,7 +1389,7 @@
 
       "title": "Formatted student names",
       "instructions": "Display each student name in title case as one full-name value, together with the email address in lowercase.",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -1409,7 +1409,7 @@
 
       "title": "Employee surname lengths",
       "instructions": "Display each surname in uppercase and its character count as a two-character text value padded with a leading zero when needed.",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -1489,7 +1489,7 @@
 
       "title": "Standardize consultant specialties",
       "instructions": "Display each specialty in uppercase, replace any spaces with hyphens, and pad the result on the left to 16 characters using dots.",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -1509,7 +1509,7 @@
 
       "title": "Clean customer names",
       "instructions": "Return each customer’s full name as one value, removing leading and trailing spaces from both name parts and capitalizing each word.",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -1529,7 +1529,7 @@
 
       "title": "Remove leading z characters",
       "instructions": "Show employee street values after removing all leading lowercase z characters.",
-      "difficulty": "Easy",
+      "difficulty": "Medium",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -1653,7 +1653,7 @@
 
       "title": "Replace spaces in product names",
       "instructions": "Show product names with every space replaced by an underscore.",
-      "difficulty": "Medium",
+      "difficulty": "Easy",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -1673,7 +1673,7 @@
 
       "title": "Locate the at-sign in customer emails",
       "instructions": "Display each non-missing customer email and the position of its @ character.",
-      "difficulty": "Medium",
+      "difficulty": "Easy",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -1695,7 +1695,7 @@
 
       "title": "Extract project code fragments",
       "instructions": "Show each project name and the first four characters of that name, starting at position 1.",
-      "difficulty": "Medium",
+      "difficulty": "Easy",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -1779,7 +1779,7 @@
 
       "title": "Create fixed-width participant names",
       "instructions": "Display participant names padded on the right to 20 characters with periods.",
-      "difficulty": "Medium",
+      "difficulty": "Easy",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -1819,7 +1819,7 @@
 
       "title": "Compare text lengths in product data",
       "instructions": "Return product names and the length of their descriptions, excluding missing descriptions.",
-      "difficulty": "Medium",
+      "difficulty": "Easy",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -1861,7 +1861,7 @@
 
       "title": "Extract category code prefixes",
       "instructions": "Display category codes and the first three characters of each code.",
-      "difficulty": "Medium",
+      "difficulty": "Easy",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -2027,7 +2027,7 @@
 
       "title": "Round student tuition balances",
       "instructions": "Show each enrollment’s student ID and tuition paid rounded to the nearest whole unit.",
-      "difficulty": "Medium",
+      "difficulty": "Easy",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -2047,7 +2047,7 @@
 
       "title": "Find assignments with whole tens of hours",
       "instructions": "Display project assignment IDs and the remainder when hours worked is divided by 10.",
-      "difficulty": "Medium",
+      "difficulty": "Easy",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -2067,7 +2067,7 @@
 
       "title": "Calculate order item totals",
       "instructions": "Show order ID, product ID and total line value, using the quantity and unit price.",
-      "difficulty": "Medium",
+      "difficulty": "Easy",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -2127,7 +2127,7 @@
 
       "title": "Calculate remaining project budget percentage",
       "instructions": "Show project names and the portion of budget remaining after 35 percent has been used.",
-      "difficulty": "Hard",
+      "difficulty": "Easy",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -2147,7 +2147,7 @@
 
       "title": "Calculate rounded task costs",
       "instructions": "For each task with recorded hours, estimate its cost using a fixed rate of 85 per hour and display the amount rounded to two decimal places.",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -2429,7 +2429,7 @@
 
       "title": "Project schedule components",
       "instructions": "Show project names, start year, start month and start day as separate columns.",
-      "difficulty": "Medium",
+      "difficulty": "Easy",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -2449,7 +2449,7 @@
 
       "title": "Duration in years from consultant hiring",
       "instructions": "Display consultant names and the year component of the interval since they were hired.",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -2471,7 +2471,7 @@
 
       "title": "Project review date",
       "instructions": "For every project, display its name and a review date calculated as 90 days after the start date.",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -2573,7 +2573,7 @@
 
       "title": "Convert customer postal codes to integers",
       "instructions": "Display customer IDs and postal codes converted to integer values.",
-      "difficulty": "Medium",
+      "difficulty": "Easy",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -2633,7 +2633,7 @@
 
       "title": "Convert a numeric product price to integer",
       "instructions": "Display product names and their prices converted to integer values.",
-      "difficulty": "Medium",
+      "difficulty": "Easy",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -2653,7 +2653,7 @@
 
       "title": "Parse a year-first date string",
       "instructions": "Convert the text 2021-10-29 into a date using a year-month-day format.",
-      "difficulty": "Medium",
+      "difficulty": "Easy",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -2673,7 +2673,7 @@
 
       "title": "Display dates with abbreviated weekday",
       "instructions": "Display project start dates with a three-letter weekday followed by day, month and year.",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -2693,7 +2693,7 @@
 
       "title": "Format a date without padded month text",
       "instructions": "Display employee birth dates as day, full month and year without the extra spaces that Month can add.",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -2713,7 +2713,7 @@
 
       "title": "Format a calculated age milestone date",
       "instructions": "Display student names and the date 30 years after birth in DD-MM-YYYY text format.",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -2777,7 +2777,7 @@
 
       "title": "AGE result type",
       "instructions": "What kind of result does AGE(date) produce?",
-      "difficulty": "Medium",
+      "difficulty": "Easy",
       "type": "mcq-single",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -2798,7 +2798,7 @@
 
       "title": "Purpose of TO_DATE",
       "instructions": "What does TO_DATE(text, format) do?",
-      "difficulty": "Medium",
+      "difficulty": "Easy",
       "type": "mcq-single",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -2840,7 +2840,7 @@
 
       "title": "Meaning of EXTRACT",
       "instructions": "Which expression retrieves the month number from a date column named start_date?",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "mcq-single",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -2861,7 +2861,7 @@
 
       "title": "MOD result",
       "instructions": "What does MOD(17, 5) return?",
-      "difficulty": "Hard",
+      "difficulty": "Easy",
       "type": "mcq-single",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -3219,7 +3219,7 @@
 
       "title": "Employee task project listing",
       "instructions": "Display employee names, task names and project names for all recorded tasks.",
-      "difficulty": "Medium",
+      "difficulty": "Easy",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -3281,7 +3281,7 @@
 
       "title": "Detailed retail order lines",
       "instructions": "Display order ID, order date, customer name, product name and quantity for every order line.",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -3575,7 +3575,7 @@
 
       "title": "Reviewed project assignments",
       "instructions": "Display project names, consultant names, review dates and review notes for assignments that have a recorded review.",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -3597,7 +3597,7 @@
 
       "title": "List exact section registrations for one course",
       "instructions": "For course 301, display student IDs and section codes, ensuring each registration is linked to the correct section for that course.",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -3641,7 +3641,7 @@
 
       "title": "Assignment review history with consultant",
       "instructions": "Display project IDs, consultant names, review dates and notes for each reviewed assignment.",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -3745,7 +3745,7 @@
 
       "title": "Classify low and medium product prices",
       "instructions": "Return product names, prices and band labels for products priced at no more than 100.",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -3767,7 +3767,7 @@
 
       "title": "Compare project budgets to all fitting bands",
       "instructions": "Display project names, budget values and budget band labels for projects in the Medium or Large ranges.",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -3787,7 +3787,7 @@
 
       "title": "Price bands for high-value products",
       "instructions": "Show product names and price-band labels for products whose price is at least 150.",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -3807,7 +3807,7 @@
 
       "title": "Find projects within their assigned spend class",
       "instructions": "Display project ID, project name, budget and band name ordered from lowest budget to highest.",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -3997,7 +3997,7 @@
 
       "title": "Employees with a more highly paid colleague",
       "instructions": "Find employee pairs in the same department where one employee earns more than the other. Display both names and both salaries.",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -4057,7 +4057,7 @@
 
       "title": "Employees sharing a birth month",
       "instructions": "List all ordered employee pairs who share a birth month, allowing both pair directions to appear.",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -4079,7 +4079,7 @@
 
       "title": "Consultants with a higher rate than their manager",
       "instructions": "Display consultants whose hourly rate is greater than the rate of their direct manager, with both rates.",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -4123,7 +4123,7 @@
 
       "title": "Employees in the same department with different hire dates",
       "instructions": "Show pairs of employees in the same department where the first employee was hired before the second employee.",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -4143,7 +4143,7 @@
 
       "title": "Participants registered on the same date",
       "instructions": "List pairs of distinct participants who registered on the same date, showing both names and the date.",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -4205,7 +4205,7 @@
 
       "title": "Joining several tables",
       "instructions": "When joining three related tables, what should connect each additional table?",
-      "difficulty": "Medium",
+      "difficulty": "Easy",
       "type": "mcq-single",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -4268,7 +4268,7 @@
 
       "title": "Recognizing a non-equi join",
       "instructions": "Which condition is an example of a non-equi join?",
-      "difficulty": "Hard",
+      "difficulty": "Easy",
       "type": "mcq-single",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -4289,7 +4289,7 @@
 
       "title": "List each pair once",
       "instructions": "In a self join that finds related pairs, why might a query use e1.id < e2.id?",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "mcq-single",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -4310,7 +4310,7 @@
 
       "title": "Avoiding ambiguous columns",
       "instructions": "When two joined tables contain a column with the same name, what is the clearest way to refer to it?",
-      "difficulty": "Hard",
+      "difficulty": "Easy",
       "type": "mcq-single",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -4471,7 +4471,7 @@
 
       "title": "Count enrollments with a recorded grade",
       "instructions": "Return the number of enrollments with a non-NULL final grade.",
-      "difficulty": "Medium",
+      "difficulty": "Easy",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -4531,7 +4531,7 @@
 
       "title": "Average task hours",
       "instructions": "Calculate the average recorded task hours, ignoring tasks where hours are missing.",
-      "difficulty": "Medium",
+      "difficulty": "Easy",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -4551,7 +4551,7 @@
 
       "title": "Alphabetically first and last course titles",
       "instructions": "Return the alphabetically first and last course titles.",
-      "difficulty": "Medium",
+      "difficulty": "Easy",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -4591,7 +4591,7 @@
 
       "title": "Count products with unique category assignments",
       "instructions": "Return the number of different non-NULL category IDs represented in products.",
-      "difficulty": "Medium",
+      "difficulty": "Easy",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -4611,7 +4611,7 @@
 
       "title": "Total consultant assignment hours",
       "instructions": "Calculate the total recorded hours across all project assignments.",
-      "difficulty": "Medium",
+      "difficulty": "Easy",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -4771,7 +4771,7 @@
 
       "title": "Average consultant rate by specialty",
       "instructions": "Display each specialty and its average consultant hourly rate.",
-      "difficulty": "Medium",
+      "difficulty": "Easy",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -4791,7 +4791,7 @@
 
       "title": "Total sales quantity by product",
       "instructions": "Display each product ID and the total quantity sold across all order lines.",
-      "difficulty": "Medium",
+      "difficulty": "Easy",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -4853,7 +4853,7 @@
 
       "title": "Participant counts by training session",
       "instructions": "Show each session ID and the number of participants registered for it.",
-      "difficulty": "Medium",
+      "difficulty": "Easy",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -4893,7 +4893,7 @@
 
       "title": "Department salary range",
       "instructions": "Show department IDs with the minimum and maximum salary in each department.",
-      "difficulty": "Medium",
+      "difficulty": "Easy",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -4913,7 +4913,7 @@
 
       "title": "Course enrollment totals and grades",
       "instructions": "Display course ID, enrollment count and average grade for each course.",
-      "difficulty": "Medium",
+      "difficulty": "Easy",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -4933,7 +4933,7 @@
 
       "title": "Project budgets by client city",
       "instructions": "Display the client city and total project budget for each city.",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -4953,7 +4953,7 @@
 
       "title": "Order quantities by product and order",
       "instructions": "Display order ID, product ID and the total quantity for each order-product combination.",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -4973,7 +4973,7 @@
 
       "title": "Average project assignment hours by consultant and role",
       "instructions": "Show consultant ID, role name and average hours worked for each consultant-role combination.",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -4993,7 +4993,7 @@
 
       "title": "Training duration by trainer and date year",
       "instructions": "Display trainer ID and the year of the session date with the total duration of sessions in each combination.",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -5013,7 +5013,7 @@
 
       "title": "Total sales value by customer",
       "instructions": "Display customer ID and their total order value using order lines joined through orders.",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -5175,7 +5175,7 @@
 
       "title": "Revenue by product after quantity filter",
       "instructions": "For order lines with quantity at least two, show product IDs and total line value for products whose total exceeds 100.",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -5197,7 +5197,7 @@
 
       "title": "Course averages for students with recorded grades",
       "instructions": "For enrollments with a recorded grade, display course IDs and average grades for course groups with at least two graded records.",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -5219,7 +5219,7 @@
 
       "title": "Consultants with substantial recorded project hours",
       "instructions": "For assignments with at least 80 recorded hours, display consultant IDs and total hours for consultants whose total exceeds 150.",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -5241,7 +5241,7 @@
 
       "title": "Cities with sufficient customer records",
       "instructions": "Display cities with more than one customer, considering only customers whose credit limit is known.",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -5263,7 +5263,7 @@
 
       "title": "Projects by client with active work only",
       "instructions": "For active projects, display each client ID and total active budget where the combined budget is above 200000.",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -5305,7 +5305,7 @@
 
       "title": "Departments with high average salaries after row filter",
       "instructions": "For employees earning more than 50000, display department IDs whose average salary is above 65000.",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -5327,7 +5327,7 @@
 
       "title": "Sessions with high assessment averages",
       "instructions": "For participants with recorded assessment scores, show session IDs whose average score is at least 85.",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -5557,7 +5557,7 @@
 
       "title": "All departments and employee department references",
       "instructions": "Display department names and employee names, retaining unmatched rows from both tables.",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -5683,7 +5683,7 @@
 
       "title": "All right-side sessions and participants",
       "instructions": "Display every training session and any participant names, retaining sessions without participants. Put training_sessions on the right side of the join.",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -5705,7 +5705,7 @@
 
       "title": "All employees and all department records",
       "instructions": "Return employee IDs and department IDs so that employees with NULL or unmatched departments and departments with no employees are both represented.",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -5727,7 +5727,7 @@
 
       "title": "Total quantity sold by category",
       "instructions": "Display each product category and the total units sold for that category.",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -5835,7 +5835,7 @@
 
       "title": "Show products that have never been ordered",
       "instructions": "Display product IDs and names for products that do not appear in any order line.",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -5959,7 +5959,7 @@
 
       "title": "LEFT JOIN row preservation",
       "instructions": "Which table’s rows are all preserved by a LEFT JOIN?",
-      "difficulty": "Medium",
+      "difficulty": "Easy",
       "type": "mcq-single",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -6001,7 +6001,7 @@
 
       "title": "How AVG treats NULL",
       "instructions": "How does AVG(column) handle NULL values?",
-      "difficulty": "Medium",
+      "difficulty": "Easy",
       "type": "mcq-single",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -6022,7 +6022,7 @@
 
       "title": "Correct location for row filters",
       "instructions": "A condition such as salary > 50000 uses a plain column and should normally appear in which clause before grouping?",
-      "difficulty": "Hard",
+      "difficulty": "Easy",
       "type": "mcq-single",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -6038,7 +6038,7 @@
 
       "title": "Identify unmatched right-side rows",
       "instructions": "After a LEFT JOIN, which test is commonly used to find left-side rows with no match?",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "mcq-single",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -6059,7 +6059,7 @@
 
       "title": "SELECT columns with GROUP BY",
       "instructions": "In a grouped query, what must be true of a plain column in SELECT that is not inside an aggregate?",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "mcq-single",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -6102,7 +6102,7 @@
 
       "title": "Student registration with teacher and subject area",
       "instructions": "Display student names, course subject areas and teacher names for each enrollment.",
-      "difficulty": "Medium",
+      "difficulty": "Hard",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -6124,7 +6124,7 @@
 
       "title": "Find premium products in their price range",
       "instructions": "Display product names and band labels for products priced from 100 through 500 inclusive.",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
@@ -6146,7 +6146,7 @@
 
       "title": "Find consultant pairs with increasing rates",
       "instructions": "List consultant pairs where both consultants share a specialty and the first consultant has a lower hourly rate than the second. Display both names and rates.",
-      "difficulty": "Hard",
+      "difficulty": "Medium",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",

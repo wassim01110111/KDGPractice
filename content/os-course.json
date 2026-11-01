@@ -5077,7 +5077,7 @@
       "explanation": "`o` opens a new line below and switches to Insert mode."
     },
     {
-      "id": "os-fundamentals-001",
+      "id": "os-linux-fundamentals-001",
       "course": "os",
       "category": "Linux",
 
@@ -5094,7 +5094,7 @@
       "explanation": "The command `kernel` uses the documented syntax and options to perform the requested task."
     },
     {
-      "id": "os-fundamentals-002",
+      "id": "os-linux-fundamentals-002",
       "course": "os",
       "category": "Linux",
 
@@ -5111,7 +5111,7 @@
       "explanation": "The command `root` uses the documented syntax and options to perform the requested task."
     },
     {
-      "id": "os-fundamentals-003",
+      "id": "os-linux-fundamentals-003",
       "course": "os",
       "category": "Linux",
 
@@ -5128,7 +5128,7 @@
       "explanation": "The command `metadata, not the filename` uses the documented syntax and options to perform the requested task."
     },
     {
-      "id": "os-fundamentals-004",
+      "id": "os-linux-fundamentals-004",
       "course": "os",
       "category": "Linux",
 
@@ -5145,7 +5145,7 @@
       "explanation": "The command `kernel` uses the documented syntax and options to perform the requested task."
     },
     {
-      "id": "os-fundamentals-005",
+      "id": "os-linux-fundamentals-005",
       "course": "os",
       "category": "Linux",
 
@@ -5162,7 +5162,7 @@
       "explanation": "The command `root` uses the documented syntax and options to perform the requested task."
     },
     {
-      "id": "os-fundamentals-006",
+      "id": "os-linux-fundamentals-006",
       "course": "os",
       "category": "Linux",
 
@@ -5179,7 +5179,7 @@
       "explanation": "The command `metadata, not the filename` uses the documented syntax and options to perform the requested task."
     },
     {
-      "id": "os-fundamentals-007",
+      "id": "os-linux-fundamentals-007",
       "course": "os",
       "category": "Linux",
 
@@ -5196,7 +5196,7 @@
       "explanation": "The command `kernel` uses the documented syntax and options to perform the requested task."
     },
     {
-      "id": "os-fundamentals-008",
+      "id": "os-linux-fundamentals-008",
       "course": "os",
       "category": "Linux",
 
@@ -5213,7 +5213,7 @@
       "explanation": "The command `root` uses the documented syntax and options to perform the requested task."
     },
     {
-      "id": "os-fundamentals-009",
+      "id": "os-linux-fundamentals-009",
       "course": "os",
       "category": "Linux",
 
@@ -5230,7 +5230,7 @@
       "explanation": "The command `metadata, not the filename` uses the documented syntax and options to perform the requested task."
     },
     {
-      "id": "os-fundamentals-010",
+      "id": "os-linux-fundamentals-010",
       "course": "os",
       "category": "Linux",
 
@@ -5438,7 +5438,7 @@
       "explanation": "The command `pwd; ls` uses the documented syntax and options to perform the requested task."
     },
     {
-      "id": "os-shell-basics-012",
+      "id": "os-linux-shell-basics-012",
       "course": "os",
       "category": "Linux",
 
@@ -5455,7 +5455,7 @@
       "explanation": "The command `ls # list current directory` uses the documented syntax and options to perform the requested task."
     },
     {
-      "id": "os-shell-basics-013",
+      "id": "os-linux-shell-basics-013",
       "course": "os",
       "category": "Linux",
 
@@ -5472,7 +5472,7 @@
       "explanation": "The command `!!` uses the documented syntax and options to perform the requested task."
     },
     {
-      "id": "os-shell-basics-014",
+      "id": "os-linux-shell-basics-014",
       "course": "os",
       "category": "Linux",
 
@@ -5489,7 +5489,7 @@
       "explanation": "The command `pwd; ls` uses the documented syntax and options to perform the requested task."
     },
     {
-      "id": "os-shell-basics-015",
+      "id": "os-linux-shell-basics-015",
       "course": "os",
       "category": "Linux",
 

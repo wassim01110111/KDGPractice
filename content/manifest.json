@@ -2,8 +2,7 @@
   "schemaVersion": 1,
   "packages": [
     { "id": "os1", "version": "0.0.1", "files": ["os-course.json"] },
-    { "id": "sql1", "version": "0.0.1", "files": ["sql-course.json"] },
-    { "id": "os2", "version": "0.0.1", "files": ["os-course2.json"] }
+    { "id": "sql1", "version": "0.0.1", "files": ["sql-course.json"] }
   ],
   "referenceFiles": [
     {

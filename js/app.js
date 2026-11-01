@@ -449,8 +449,8 @@ function schemaView(ex) {
   );
   const box = h(
     "details",
-    { class: "schema", open: true },
-    h("summary", {}, "Dataset tables"),
+    { class: "schema schema-workspace", open: true },
+    h("summary", {}, "Dataset schema"),
     content,
   );
   box.addEventListener("toggle", async () => {
@@ -568,7 +568,9 @@ function schemaView(ex) {
       h("summary", {}, "PlantUML source"),
       h("pre", {}, uml.join("\n")),
     );
-    content.replaceChildren(
+    const diagramView = h(
+      "div",
+      { class: "schema-visual diagram-view" },
       h("strong", {}, "PlantUML ER diagram"),
       h(
         "small",
@@ -577,6 +579,98 @@ function schemaView(ex) {
       ),
       diagramLink,
       source,
+    );
+    const tableCards = [...tables].map(([name, cols]) => {
+      const primaryCols = cols.filter((col) => col.primary),
+        attributeCols = cols.filter((col) => !col.primary),
+        columnItem = (col) =>
+          h(
+            "li",
+            {},
+            h("code", {}, col.name),
+            h("span", { class: "schema-column-type" }, col.type),
+            col.primary ? h("span", { class: "schema-key schema-pk" }, "PK") : "",
+            col.foreign ? h("span", { class: "schema-key schema-fk" }, "FK") : "",
+            col.nullable ? "" : h("span", { class: "schema-not-null" }, "NOT NULL"),
+          );
+      return h(
+        "section",
+        { class: "schema-table", "aria-label": `${name} table` },
+        h("h4", {}, name),
+        h(
+          "ul",
+          {},
+          ...primaryCols.map(columnItem),
+          primaryCols.length && attributeCols.length
+            ? h("li", { class: "schema-key-divider" }, "Attributes")
+            : "",
+          ...attributeCols.map(columnItem),
+        ),
+      );
+    });
+    const tableView = h(
+      "div",
+      { class: "schema-visual schema-tables", hidden: true },
+      h("div", { class: "schema-table-grid" }, tableCards),
+      h(
+        "section",
+        { class: "schema-relations" },
+        h("h4", {}, "Relationships"),
+        relations.length
+          ? h(
+              "ul",
+              {},
+              relations.map((rel) =>
+                h(
+                  "li",
+                  {},
+                  h("code", {}, `${rel.from}.${rel.column}`),
+                  h("span", { class: "schema-relation-arrow", "aria-label": "references" }, " → "),
+                  h("code", {}, `${rel.to}.${rel.targetColumn}`),
+                ),
+              ),
+            )
+          : h("p", {}, "No foreign-key relationships."),
+      ),
+    );
+    const diagramToggle = h(
+      "button",
+      {
+        type: "button",
+        class: "schema-view-toggle on",
+        "aria-pressed": "true",
+        onclick: () => setSchemaView("diagram"),
+      },
+      "PlantUML",
+    );
+    const tablesToggle = h(
+      "button",
+      {
+        type: "button",
+        class: "schema-view-toggle",
+        "aria-pressed": "false",
+        onclick: () => setSchemaView("tables"),
+      },
+      "Tables & relationships",
+    );
+    function setSchemaView(view) {
+      const showDiagram = view === "diagram";
+      diagramView.hidden = !showDiagram;
+      tableView.hidden = showDiagram;
+      diagramToggle.classList.toggle("on", showDiagram);
+      diagramToggle.setAttribute("aria-pressed", String(showDiagram));
+      tablesToggle.classList.toggle("on", !showDiagram);
+      tablesToggle.setAttribute("aria-pressed", String(!showDiagram));
+    }
+    content.replaceChildren(
+      h(
+        "div",
+        { class: "schema-view-controls", role: "group", "aria-label": "Dataset schema view" },
+        diagramToggle,
+        tablesToggle,
+      ),
+      diagramView,
+      tableView,
     );
     try {
       const encoded = await plantumlEncode(uml.join("\n"));
@@ -623,6 +717,7 @@ function qView(ex, mode, get, set, onAttempt = () => {}) {
   const q = h("div", { class: "q" }),
     out = h("div"),
     fb = h("div");
+  let schemaPanel;
   let hint = 0;
   const draftStatus = h(
     "small",
@@ -700,7 +795,8 @@ function qView(ex, mode, get, set, onAttempt = () => {}) {
         run.click();
       }
     };
-    q.append(schemaView(ex), ta);
+    schemaPanel = schemaView(ex);
+    q.append(ta);
     btns.append(run);
     readAns = () => ta.value;
     resetFn = () => {
@@ -926,6 +1022,60 @@ function qView(ex, mode, get, set, onAttempt = () => {}) {
       );
       btns.append(hb);
     }
+    if (ex.type === "sql-query" && ex.referenceSolution) {
+      const snippet = h(
+        "div",
+        {
+          id: `sql-result-snippet-${ex.id}`,
+          class: "sql-result-panel",
+          hidden: true,
+        },
+      );
+      const toggle = h(
+        "button",
+        {
+          class: "sql-result-toggle",
+          "aria-expanded": "false",
+          "aria-controls": snippet.id,
+          onclick: async () => {
+            if (!snippet.hidden) {
+              snippet.hidden = true;
+              toggle.textContent = "Show result snippet";
+              toggle.setAttribute("aria-expanded", "false");
+              return;
+            }
+            snippet.hidden = false;
+            toggle.textContent = "Hide result snippet";
+            toggle.setAttribute("aria-expanded", "true");
+            if (snippet.dataset.loaded) return;
+            toggle.disabled = true;
+            snippet.replaceChildren(
+              h("strong", {}, "Expected result preview"),
+              h("small", {}, "Loading the first five result rows…"),
+            );
+            try {
+              const { res } = await runStudent(ex, ex.referenceSolution);
+              snippet.replaceChildren(
+                h("strong", {}, "Expected result preview"),
+                h("small", {}, "A preview of rows returned by the reference query."),
+                table(res, 5),
+              );
+              snippet.dataset.loaded = "true";
+            } catch (e) {
+              snippet.replaceChildren(
+                h("strong", {}, "Could not load result preview"),
+                h("pre", { class: "err" }, e.message),
+              );
+            } finally {
+              toggle.disabled = false;
+            }
+          },
+        },
+        "Show result snippet",
+      );
+      btns.append(toggle);
+      q.append(snippet);
+    }
     const hasSol = ex.type === "sql-query" ? !!ex.referenceSolution : true;
     if (hasSol && ex.type !== "short-answer-self-check") {
       const solution = h(
@@ -955,7 +1105,9 @@ function qView(ex, mode, get, set, onAttempt = () => {}) {
   }
   q.append(btns, out, fb);
   if (mode === "practice") q.append(draftStatus);
-  return q;
+  return schemaPanel
+    ? h("div", { class: "sql-exercise-layout" }, schemaPanel, q)
+    : q;
 }
 
 // ---------- markdown (small, for the supplied reference files) ----------
@@ -1249,7 +1401,7 @@ async function pagePractice(root) {
       },
       h("option", { value: "" }, "All"),
       uniq(S.exercises, (e) => e.course).map((v) =>
-        h("option", { value: v }, v),
+        h("option", { value: v }, v.toUpperCase()),
       ),
     ),
     categorySelect = h("select", {
