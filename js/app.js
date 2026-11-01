@@ -896,6 +896,7 @@ function qView(
   set,
   onAttempt = () => {},
   onNextExercise = null,
+  hasNextExercise = () => true,
 ) {
   const q = h("div", { class: "q" }),
     out = h("div"),
@@ -940,10 +941,9 @@ function qView(
 
   const updateNextExercise = () => {
     if (nextExerciseButton) {
-      nextExerciseButton.hidden = !exerciseCorrect;
+      nextExerciseButton.hidden = !(exerciseCorrect && hasNextExercise());
     }
   };
-
   const markExerciseCorrect = () => {
     exerciseCorrect = true;
     updateNextExercise();
@@ -1236,7 +1236,7 @@ function qView(
         "button",
         {
           onclick: () => {
-            if (!exerciseCorrect) return;
+            if (!exerciseCorrect || !hasNextExercise()) return;
             onNextExercise();
           },
           "aria-keyshortcuts": "Enter",
@@ -1244,7 +1244,6 @@ function qView(
         },
         "Next exercise",
       );
-
       btns.append(nextExerciseButton);
     }
     btns.append(
@@ -1396,9 +1395,11 @@ function qView(
     }
   }
   q.append(btns, out, fb);
-  return schemaPanel
+  const view = schemaPanel
     ? h("div", { class: "sql-exercise-layout" }, schemaPanel, q)
     : q;
+  view.refreshNextExercise = updateNextExercise;
+  return view;
 }
 
 // ---------- markdown (small, for the supplied reference files) ----------
@@ -2359,12 +2360,6 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
     S.attempts.forEach((a) => {
       la[a.key] = a.correct;
     });
-    items = filtered.filter(
-      (e) =>
-        showCompleted || keyOf(e) === selectedKey || !S.xpRewards[keyOf(e)],
-    );
-
-    // Keep the active exercise available while filters change.
     if (selectedKey && !items.some((e) => keyOf(e) === selectedKey)) {
       const currentExercise = S.exercises.find((e) => keyOf(e) === selectedKey);
       if (currentExercise) items.unshift(currentExercise);
@@ -2398,11 +2393,15 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
         ),
       );
     list.replaceChildren(...buttons);
+    pane.firstElementChild?.refreshNextExercise?.();
   };
   function selectExercise(exercise, addHistoryEntry) {
     selectedKey = keyOf(exercise);
     draw();
-    const currentIndex = items.findIndex((item) => keyOf(item) === selectedKey);
+    const nextExerciseAfter = () => {
+      const index = items.findIndex((item) => keyOf(item) === keyOf(exercise));
+      return index >= 0 ? items[index + 1] : undefined;
+    };
     pane.replaceChildren(
       qView(
         exercise,
@@ -2410,15 +2409,11 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
         () => answers[keyOf(exercise)],
         (v) => saveDraft(keyOf(exercise), v),
         () => draw(),
-        currentIndex >= 0 && items[currentIndex + 1]
-          ? () => {
-              const nextIndex = items.findIndex(
-                (item) => keyOf(item) === selectedKey,
-              );
-              const nextExercise = items[nextIndex + 1];
-              if (nextExercise) selectExercise(nextExercise, true);
-            }
-          : null,
+        () => {
+          const next = nextExerciseAfter();
+          if (next) selectExercise(next, true);
+        },
+        () => !!nextExerciseAfter(),
       ),
     );
     if (addHistoryEntry) {
