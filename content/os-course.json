@@ -129,7 +129,7 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": ["ls -i", "ls -li"],
+        "accepted": ["ls -i", "ls -li", "ls -il"],
         "patterns": []
       },
       "hints": ["Use the `-i` option with `ls`."],
