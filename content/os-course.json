@@ -9,7 +9,7 @@
       "course": "os",
       "category": "Fundamentals",
 
-      "title": "Print Working Directory (Wassim's pick)",
+      "title": "Print Working Directory",
       "instructions": "Write the command to print your current working directory.",
       "difficulty": "Easy",
       "type": "command-text",
@@ -17,14 +17,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "pwd"
-        ],
+        "accepted": ["pwd"],
         "patterns": []
       },
-      "hints": [
-        "Three letters."
-      ],
+      "hints": ["Three letters."],
       "explanation": "`pwd` prints the path of the current working directory."
     },
     {
@@ -40,14 +36,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "whoami"
-        ],
+        "accepted": ["whoami"],
         "patterns": []
       },
-      "hints": [
-        "Starts with 'who'."
-      ],
+      "hints": ["Starts with 'who'."],
       "explanation": "`whoami` prints the effective username."
     },
     {
@@ -63,14 +55,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "date"
-        ],
+        "accepted": ["date"],
         "patterns": []
       },
-      "hints": [
-        "Simple 4-letter command."
-      ],
+      "hints": ["Simple 4-letter command."],
       "explanation": "`date` displays the system date and time."
     },
     {
@@ -86,14 +74,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "history"
-        ],
+        "accepted": ["history"],
         "patterns": []
       },
-      "hints": [
-        "Related to past actions."
-      ],
+      "hints": ["Related to past actions."],
       "explanation": "`history` displays the command history list."
     },
     {
@@ -109,14 +93,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "man ls"
-        ],
+        "accepted": ["man ls"],
         "patterns": []
       },
-      "hints": [
-        "Use `man` followed by the command name."
-      ],
+      "hints": ["Use `man` followed by the command name."],
       "explanation": "`man` displays manual pages for commands."
     },
     {
@@ -131,18 +111,9 @@
       "examEligible": true,
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
-      "options": [
-        "Absolute path",
-        "Relative path",
-        "Inode path",
-        "Shell path"
-      ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "It gives the full path from root."
-      ],
+      "options": ["Absolute path", "Relative path", "Inode path", "Shell path"],
+      "expected": [0],
+      "hints": ["It gives the full path from root."],
       "explanation": "An absolute path starts from the root directory `/`."
     },
     {
@@ -158,15 +129,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "ls -i",
-          "ls -li"
-        ],
+        "accepted": ["ls -i", "ls -li"],
         "patterns": []
       },
-      "hints": [
-        "Use the `-i` option with `ls`."
-      ],
+      "hints": ["Use the `-i` option with `ls`."],
       "explanation": "`ls -i` displays the inode number of each file."
     },
     {
@@ -182,14 +148,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          ".."
-        ],
+        "accepted": [".."],
         "patterns": []
       },
-      "hints": [
-        "Two dots."
-      ],
+      "hints": ["Two dots."],
       "explanation": "`..` refers to the parent directory."
     },
     {
@@ -205,14 +167,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "."
-        ],
+        "accepted": ["."],
         "patterns": []
       },
-      "hints": [
-        "A single dot."
-      ],
+      "hints": ["A single dot."],
       "explanation": "`.` represents the current working directory."
     },
     {
@@ -228,14 +186,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "ls -li"
-        ],
+        "accepted": ["ls -li"],
         "patterns": []
       },
-      "hints": [
-        "Combine `-l` and `-i`."
-      ],
+      "hints": ["Combine `-l` and `-i`."],
       "explanation": "`ls -li` combines long listing with inode numbers."
     },
     {
@@ -251,14 +205,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "id"
-        ],
+        "accepted": ["id"],
         "patterns": []
       },
-      "hints": [
-        "Two letter command."
-      ],
+      "hints": ["Two letter command."],
       "explanation": "`id` prints user and group IDs."
     },
     {
@@ -274,15 +224,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "ls -la /etc",
-          "ls -al /etc"
-        ],
+        "accepted": ["ls -la /etc", "ls -al /etc"],
         "patterns": []
       },
-      "hints": [
-        "Combine flags after a single dash."
-      ],
+      "hints": ["Combine flags after a single dash."],
       "explanation": "Short options can be combined after a single dash like `-la`."
     },
     {
@@ -298,14 +243,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "!!"
-        ],
+        "accepted": ["!!"],
         "patterns": []
       },
-      "hints": [
-        "Two exclamation marks."
-      ],
+      "hints": ["Two exclamation marks."],
       "explanation": "`!!` repeats the last command."
     },
     {
@@ -321,14 +262,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "\\"
-        ],
+        "accepted": ["\\"],
         "patterns": []
       },
-      "hints": [
-        "Backslash."
-      ],
+      "hints": ["Backslash."],
       "explanation": "A backslash `\\` at the end of a line continues the command on the next line."
     },
     {
@@ -344,14 +281,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "cd /tmp; ls"
-        ],
+        "accepted": ["cd /tmp; ls"],
         "patterns": []
       },
-      "hints": [
-        "Use `;` between commands."
-      ],
+      "hints": ["Use `;` between commands."],
       "explanation": "Semicolon `;` runs multiple commands sequentially on one line."
     },
     {
@@ -367,14 +300,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "touch log{1..3}.txt"
-        ],
+        "accepted": ["touch log{1..3}.txt"],
         "patterns": []
       },
-      "hints": [
-        "Use `{1..3}` inside the filename."
-      ],
+      "hints": ["Use `{1..3}` inside the filename."],
       "explanation": "Brace expansion `{1..3}` generates sequential strings `log1.txt log2.txt log3.txt`."
     },
     {
@@ -390,14 +319,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "mkdir -p project/{src,docs,tests}"
-        ],
+        "accepted": ["mkdir -p project/{src,docs,tests}"],
         "patterns": []
       },
-      "hints": [
-        "Use comma-separated items inside braces."
-      ],
+      "hints": ["Use comma-separated items inside braces."],
       "explanation": "`mkdir -p project/{src,docs,tests}` creates the base directory and three subdirectories simultaneously."
     },
     {
@@ -413,14 +338,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "#"
-        ],
+        "accepted": ["#"],
         "patterns": []
       },
-      "hints": [
-        "Hash or pound sign."
-      ],
+      "hints": ["Hash or pound sign."],
       "explanation": "`#` starts a comment; everything after it on the line is ignored."
     },
     {
@@ -435,18 +356,9 @@
       "examEligible": true,
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
-      "options": [
-        ";",
-        "&&",
-        "||",
-        "|"
-      ],
-      "expected": [
-        1
-      ],
-      "hints": [
-        "Two ampersands."
-      ],
+      "options": [";", "&&", "||", "|"],
+      "expected": [1],
+      "hints": ["Two ampersands."],
       "explanation": "`&&` runs the subsequent command only upon success of the preceding one."
     },
     {
@@ -462,15 +374,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "exit",
-          "Ctrl+D"
-        ],
+        "accepted": ["exit", "Ctrl+D"],
         "patterns": []
       },
-      "hints": [
-        "`exit` or `Ctrl+D`."
-      ],
+      "hints": ["`exit` or `Ctrl+D`."],
       "explanation": "Typing `exit` or pressing `Ctrl+D` exits the shell."
     },
     {
@@ -486,14 +393,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "!25"
-        ],
+        "accepted": ["!25"],
         "patterns": []
       },
-      "hints": [
-        "Exclamation mark followed by the number."
-      ],
+      "hints": ["Exclamation mark followed by the number."],
       "explanation": "`!n` executes command number `n` from history."
     },
     {
@@ -509,14 +412,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "echo $USER"
-        ],
+        "accepted": ["echo $USER"],
         "patterns": []
       },
-      "hints": [
-        "Precede variable with `$`."
-      ],
+      "hints": ["Precede variable with `$`."],
       "explanation": "`echo $USER` prints the value of `USER`."
     },
     {
@@ -532,14 +431,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "--"
-        ],
+        "accepted": ["--"],
         "patterns": []
       },
-      "hints": [
-        "Two dashes."
-      ],
+      "hints": ["Two dashes."],
       "explanation": "Long option names start with two dashes (`--`)."
     },
     {
@@ -555,14 +450,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "sudo !!"
-        ],
+        "accepted": ["sudo !!"],
         "patterns": []
       },
-      "hints": [
-        "Combine `sudo` with the repeat last command shortcut."
-      ],
+      "hints": ["Combine `sudo` with the repeat last command shortcut."],
       "explanation": "`sudo !!` re-runs the last command with root privileges."
     },
     {
@@ -578,14 +469,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "echo {a..c}"
-        ],
+        "accepted": ["echo {a..c}"],
         "patterns": []
       },
-      "hints": [
-        "Use `{a..c}` inside echo."
-      ],
+      "hints": ["Use `{a..c}` inside echo."],
       "explanation": "`echo {a..c}` prints `a b c` via brace expansion."
     },
     {
@@ -601,14 +488,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "||"
-        ],
+        "accepted": ["||"],
         "patterns": []
       },
-      "hints": [
-        "Two pipe characters."
-      ],
+      "hints": ["Two pipe characters."],
       "explanation": "`||` executes the right-hand command only if the left-hand command fails."
     },
     {
@@ -624,14 +507,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "*.txt"
-        ],
+        "accepted": ["*.txt"],
         "patterns": []
       },
-      "hints": [
-        "Use `*` for any number of characters."
-      ],
+      "hints": ["Use `*` for any number of characters."],
       "explanation": "`*` matches any number of characters, including none."
     },
     {
@@ -647,14 +526,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "file?.txt"
-        ],
+        "accepted": ["file?.txt"],
         "patterns": []
       },
-      "hints": [
-        "`?` matches exactly one character."
-      ],
+      "hints": ["`?` matches exactly one character."],
       "explanation": "`?` matches any single character."
     },
     {
@@ -670,14 +545,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "[abc]*"
-        ],
+        "accepted": ["[abc]*"],
         "patterns": []
       },
-      "hints": [
-        "Enclosed characters in brackets."
-      ],
+      "hints": ["Enclosed characters in brackets."],
       "explanation": "`[abc]*` matches names starting with `a`, `b`, or `c` followed by any characters."
     },
     {
@@ -693,15 +564,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "[!0-9]*",
-          "[^0-9]*"
-        ],
+        "accepted": ["[!0-9]*", "[^0-9]*"],
         "patterns": []
       },
-      "hints": [
-        "Use `!` or `^` inside brackets for negation."
-      ],
+      "hints": ["Use `!` or `^` inside brackets for negation."],
       "explanation": "`[!0-9]*` or `[^0-9]*` matches files not starting with a digit."
     },
     {
@@ -717,14 +583,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "log[0-9].txt"
-        ],
+        "accepted": ["log[0-9].txt"],
         "patterns": []
       },
-      "hints": [
-        "Range `[0-9]` matches a single digit."
-      ],
+      "hints": ["Range `[0-9]` matches a single digit."],
       "explanation": "`log[0-9].txt` matches log files with a single digit number."
     },
     {
@@ -739,13 +601,8 @@
       "examEligible": true,
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
-      "options": [
-        "False",
-        "True"
-      ],
-      "expected": [
-        1
-      ],
+      "options": ["False", "True"],
+      "expected": [1],
       "hints": [
         "Hidden files start with a dot '.' which is ignored by standard `*`."
       ],
@@ -764,14 +621,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "{01..03}"
-        ],
+        "accepted": ["{01..03}"],
         "patterns": []
       },
-      "hints": [
-        "Zero-padded sequential numbers."
-      ],
+      "hints": ["Zero-padded sequential numbers."],
       "explanation": "`{01..03}` generates zero-padded numbers."
     },
     {
@@ -787,14 +640,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "{a..c}"
-        ],
+        "accepted": ["{a..c}"],
         "patterns": []
       },
-      "hints": [
-        "Sequential letters inside braces."
-      ],
+      "hints": ["Sequential letters inside braces."],
       "explanation": "`{a..c}` expands to `a b c`."
     },
     {
@@ -810,14 +659,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "file{1,2}.txt"
-        ],
+        "accepted": ["file{1,2}.txt"],
         "patterns": []
       },
-      "hints": [
-        "Comma-separated items inside braces."
-      ],
+      "hints": ["Comma-separated items inside braces."],
       "explanation": "`file{1,2}.txt` generates `file1.txt file2.txt`."
     },
     {
@@ -833,14 +678,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "ls *.log"
-        ],
+        "accepted": ["ls *.log"],
         "patterns": []
       },
-      "hints": [
-        "`ls *.log`"
-      ],
+      "hints": ["`ls *.log`"],
       "explanation": "`ls *.log` lists all files ending in `.log`."
     },
     {
@@ -856,14 +697,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "[a-z].txt"
-        ],
+        "accepted": ["[a-z].txt"],
         "patterns": []
       },
-      "hints": [
-        "Use range `[a-z]`."
-      ],
+      "hints": ["Use range `[a-z]`."],
       "explanation": "`[a-z].txt` matches a single lowercase letter filename ending in `.txt`."
     },
     {
@@ -879,14 +716,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "touch log{1..3}.txt"
-        ],
+        "accepted": ["touch log{1..3}.txt"],
         "patterns": []
       },
-      "hints": [
-        "`touch log{1..3}.txt`"
-      ],
+      "hints": ["`touch log{1..3}.txt`"],
       "explanation": "Creates three files using brace expansion."
     },
     {
@@ -902,14 +735,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "ls a*"
-        ],
+        "accepted": ["ls a*"],
         "patterns": []
       },
-      "hints": [
-        "`ls a*`"
-      ],
+      "hints": ["`ls a*`"],
       "explanation": "`ls a*` lists files starting with `a`."
     },
     {
@@ -925,14 +754,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "ls file?.txt"
-        ],
+        "accepted": ["ls file?.txt"],
         "patterns": []
       },
-      "hints": [
-        "`ls file?.txt`"
-      ],
+      "hints": ["`ls file?.txt`"],
       "explanation": "`ls file?.txt` matches a single character position."
     },
     {
@@ -948,14 +773,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "*"
-        ],
+        "accepted": ["*"],
         "patterns": []
       },
-      "hints": [
-        "Asterisk."
-      ],
+      "hints": ["Asterisk."],
       "explanation": "`*` matches zero or more characters."
     },
     {
@@ -971,15 +792,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "cd",
-          "cd ~"
-        ],
+        "accepted": ["cd", "cd ~"],
         "patterns": []
       },
-      "hints": [
-        "`cd` with no arguments or with `~`."
-      ],
+      "hints": ["`cd` with no arguments or with `~`."],
       "explanation": "`cd` or `cd ~` navigates to the user's home directory."
     },
     {
@@ -995,14 +811,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "cd -"
-        ],
+        "accepted": ["cd -"],
         "patterns": []
       },
-      "hints": [
-        "Use a hyphen `-`."
-      ],
+      "hints": ["Use a hyphen `-`."],
       "explanation": "`cd -` switches back to the previous working directory."
     },
     {
@@ -1018,14 +830,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "cd .."
-        ],
+        "accepted": ["cd .."],
         "patterns": []
       },
-      "hints": [
-        "Use `..`."
-      ],
+      "hints": ["Use `..`."],
       "explanation": "`cd ..` moves to the parent directory."
     },
     {
@@ -1041,14 +849,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "ls -l"
-        ],
+        "accepted": ["ls -l"],
         "patterns": []
       },
-      "hints": [
-        "Use the `-l` option."
-      ],
+      "hints": ["Use the `-l` option."],
       "explanation": "`ls -l` shows permissions, link counts, owners, sizes, and timestamps."
     },
     {
@@ -1064,15 +868,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "ls -a",
-          "ls -A"
-        ],
+        "accepted": ["ls -a", "ls -A"],
         "patterns": []
       },
-      "hints": [
-        "Use `-a` or `-A`."
-      ],
+      "hints": ["Use `-a` or `-A`."],
       "explanation": "`ls -a` shows all files including hidden ones and `.` / `..`."
     },
     {
@@ -1088,14 +887,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "ls -ld /etc"
-        ],
+        "accepted": ["ls -ld /etc"],
         "patterns": []
       },
-      "hints": [
-        "Combine `-l` and `-d`."
-      ],
+      "hints": ["Combine `-l` and `-d`."],
       "explanation": "`ls -d` lists the directory itself rather than its contents."
     },
     {
@@ -1111,14 +906,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "-R"
-        ],
+        "accepted": ["-R"],
         "patterns": []
       },
-      "hints": [
-        "Capital R."
-      ],
+      "hints": ["Capital R."],
       "explanation": "`ls -R` lists subdirectory contents recursively."
     },
     {
@@ -1134,14 +925,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "-h"
-        ],
+        "accepted": ["-h"],
         "patterns": []
       },
-      "hints": [
-        "Starts with 'h'."
-      ],
+      "hints": ["Starts with 'h'."],
       "explanation": "`-h` makes file sizes human-readable when used with `-l`."
     },
     {
@@ -1157,14 +944,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "-t"
-        ],
+        "accepted": ["-t"],
         "patterns": []
       },
-      "hints": [
-        "Starts with 't'."
-      ],
+      "hints": ["Starts with 't'."],
       "explanation": "`-t` sorts the `ls` output by modification time."
     },
     {
@@ -1180,14 +963,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "date +%F"
-        ],
+        "accepted": ["date +%F"],
         "patterns": []
       },
-      "hints": [
-        "Use `+%F` format string."
-      ],
+      "hints": ["Use `+%F` format string."],
       "explanation": "`date +%F` prints the date in ISO format (`YYYY-MM-DD`)."
     },
     {
@@ -1203,14 +982,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "q"
-        ],
+        "accepted": ["q"],
         "patterns": []
       },
-      "hints": [
-        "First letter of 'quit'."
-      ],
+      "hints": ["First letter of 'quit'."],
       "explanation": "Pressing `q` quits the `man` page viewer."
     },
     {
@@ -1226,14 +1001,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "/"
-        ],
+        "accepted": ["/"],
         "patterns": []
       },
-      "hints": [
-        "Forward slash."
-      ],
+      "hints": ["Forward slash."],
       "explanation": "Typing `/` followed by search terms allows searching inside `man` and `less`."
     },
     {
@@ -1249,14 +1020,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "cd /"
-        ],
+        "accepted": ["cd /"],
         "patterns": []
       },
-      "hints": [
-        "Slash `/` represents root."
-      ],
+      "hints": ["Slash `/` represents root."],
       "explanation": "`cd /` navigates to the root directory."
     },
     {
@@ -1272,16 +1039,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "ls -lah",
-          "ls -lAh",
-          "ls -alh"
-        ],
+        "accepted": ["ls -lah", "ls -lAh", "ls -alh"],
         "patterns": []
       },
-      "hints": [
-        "Combine `-l`, `-a` (or `-A`), and `-h`."
-      ],
+      "hints": ["Combine `-l`, `-a` (or `-A`), and `-h`."],
       "explanation": "`ls -lah` combines long format, all hidden files, and human-readable sizes."
     },
     {
@@ -1297,14 +1058,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "-1"
-        ],
+        "accepted": ["-1"],
         "patterns": []
       },
-      "hints": [
-        "The number one."
-      ],
+      "hints": ["The number one."],
       "explanation": "`-1` forces single-column output in `ls`."
     },
     {
@@ -1320,14 +1077,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "-r"
-        ],
+        "accepted": ["-r"],
         "patterns": []
       },
-      "hints": [
-        "Lowercase r."
-      ],
+      "hints": ["Lowercase r."],
       "explanation": "`-r` reverses the sort order."
     },
     {
@@ -1343,14 +1096,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "-s"
-        ],
+        "accepted": ["-s"],
         "patterns": []
       },
-      "hints": [
-        "Lowercase s."
-      ],
+      "hints": ["Lowercase s."],
       "explanation": "`-s` displays file size allocation in blocks."
     },
     {
@@ -1365,18 +1114,9 @@
       "examEligible": true,
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
-      "options": [
-        "pwd",
-        "cwd",
-        "dir",
-        "path"
-      ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "Print working directory."
-      ],
+      "options": ["pwd", "cwd", "dir", "path"],
+      "expected": [0],
+      "hints": ["Print working directory."],
       "explanation": "`pwd` prints the full path of the current directory."
     },
     {
@@ -1392,14 +1132,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "ls -l /var/log"
-        ],
+        "accepted": ["ls -l /var/log"],
         "patterns": []
       },
-      "hints": [
-        "`ls -l /var/log`"
-      ],
+      "hints": ["`ls -l /var/log`"],
       "explanation": "`ls -l` lists specified directory paths."
     },
     {
@@ -1415,14 +1151,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "ls -lt"
-        ],
+        "accepted": ["ls -lt"],
         "patterns": []
       },
-      "hints": [
-        "Combine `-l` and `-t`."
-      ],
+      "hints": ["Combine `-l` and `-t`."],
       "explanation": "`ls -lt` lists files in long format sorted by modification time."
     },
     {
@@ -1438,14 +1170,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "file document.pdf"
-        ],
+        "accepted": ["file document.pdf"],
         "patterns": []
       },
-      "hints": [
-        "Uses the `file` command."
-      ],
+      "hints": ["Uses the `file` command."],
       "explanation": "`file` reports the classification and type of a file."
     },
     {
@@ -1461,14 +1189,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "stat notes.txt"
-        ],
+        "accepted": ["stat notes.txt"],
         "patterns": []
       },
-      "hints": [
-        "Short for 'status'."
-      ],
+      "hints": ["Short for 'status'."],
       "explanation": "`stat` displays detailed low-level file metadata and timestamps."
     },
     {
@@ -1484,14 +1208,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "cat notes.txt"
-        ],
+        "accepted": ["cat notes.txt"],
         "patterns": []
       },
-      "hints": [
-        "Short for 'concatenate'."
-      ],
+      "hints": ["Short for 'concatenate'."],
       "explanation": "`cat` outputs the complete contents of files."
     },
     {
@@ -1507,14 +1227,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "head -n 5 notes.txt"
-        ],
+        "accepted": ["head -n 5 notes.txt"],
         "patterns": []
       },
-      "hints": [
-        "Use `head` with `-n 5`."
-      ],
+      "hints": ["Use `head` with `-n 5`."],
       "explanation": "`head -n 5` prints the first 5 lines of a file."
     },
     {
@@ -1530,14 +1246,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "tail -n 20 logfile.txt"
-        ],
+        "accepted": ["tail -n 20 logfile.txt"],
         "patterns": []
       },
-      "hints": [
-        "Use `tail` with `-n 20`."
-      ],
+      "hints": ["Use `tail` with `-n 20`."],
       "explanation": "`tail -n 20` prints the final 20 lines of a file."
     },
     {
@@ -1553,15 +1265,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "tail -f",
-          "-f"
-        ],
+        "accepted": ["tail -f", "-f"],
         "patterns": []
       },
-      "hints": [
-        "Stands for 'follow'."
-      ],
+      "hints": ["Stands for 'follow'."],
       "explanation": "`tail -f` keeps the stream open and outputs new lines as they are appended."
     },
     {
@@ -1577,15 +1284,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "less filename",
-          "less"
-        ],
+        "accepted": ["less filename", "less"],
         "patterns": []
       },
-      "hints": [
-        "Opposite of `more`."
-      ],
+      "hints": ["Opposite of `more`."],
       "explanation": "`less` is a pager allowing backward and forward navigation through files."
     },
     {
@@ -1601,14 +1303,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "wc notes.txt"
-        ],
+        "accepted": ["wc notes.txt"],
         "patterns": []
       },
-      "hints": [
-        "Word count command."
-      ],
+      "hints": ["Word count command."],
       "explanation": "`wc` reports newline, word, and byte counts."
     },
     {
@@ -1624,14 +1322,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "wc -l notes.txt"
-        ],
+        "accepted": ["wc -l notes.txt"],
         "patterns": []
       },
-      "hints": [
-        "Use `-l` flag with `wc`."
-      ],
+      "hints": ["Use `-l` flag with `wc`."],
       "explanation": "`wc -l` outputs only the line count."
     },
     {
@@ -1652,12 +1346,8 @@
         "-b for bytes, -c for characters",
         "-l for bytes, -w for characters"
       ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "`-c` counts bytes, `-m` counts characters."
-      ],
+      "expected": [0],
+      "hints": ["`-c` counts bytes, `-m` counts characters."],
       "explanation": "`wc -c` counts bytes while `wc -m` counts characters."
     },
     {
@@ -1673,14 +1363,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "cat a.txt b.txt"
-        ],
+        "accepted": ["cat a.txt b.txt"],
         "patterns": []
       },
-      "hints": [
-        "Pass multiple filenames to `cat`."
-      ],
+      "hints": ["Pass multiple filenames to `cat`."],
       "explanation": "`cat` can concatenate and print multiple files sequentially."
     },
     {
@@ -1696,15 +1382,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "head -n 10 data.txt",
-          "head data.txt"
-        ],
+        "accepted": ["head -n 10 data.txt", "head data.txt"],
         "patterns": []
       },
-      "hints": [
-        "`head -n 10 data.txt`"
-      ],
+      "hints": ["`head -n 10 data.txt`"],
       "explanation": "`head` prints the first lines of files."
     },
     {
@@ -1720,14 +1401,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "q"
-        ],
+        "accepted": ["q"],
         "patterns": []
       },
-      "hints": [
-        "Press `q`."
-      ],
+      "hints": ["Press `q`."],
       "explanation": "`q` quits `less`."
     },
     {
@@ -1743,15 +1420,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "tail -n 10 data.txt",
-          "tail data.txt"
-        ],
+        "accepted": ["tail -n 10 data.txt", "tail data.txt"],
         "patterns": []
       },
-      "hints": [
-        "`tail -n 10 data.txt`"
-      ],
+      "hints": ["`tail -n 10 data.txt`"],
       "explanation": "`tail` prints the final lines of files."
     },
     {
@@ -1766,18 +1438,9 @@
       "examEligible": true,
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
-      "options": [
-        "cat",
-        "more",
-        "less",
-        "head"
-      ],
-      "expected": [
-        2
-      ],
-      "hints": [
-        "Name implies it's more versatile than `more`."
-      ],
+      "options": ["cat", "more", "less", "head"],
+      "expected": [2],
+      "hints": ["Name implies it's more versatile than `more`."],
       "explanation": "`less` allows bidirectional navigation whereas `more` is mainly forward-only."
     },
     {
@@ -1793,14 +1456,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "mkdir archive"
-        ],
+        "accepted": ["mkdir archive"],
         "patterns": []
       },
-      "hints": [
-        "Make directory."
-      ],
+      "hints": ["Make directory."],
       "explanation": "`mkdir` creates new directories."
     },
     {
@@ -1816,14 +1475,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "-p"
-        ],
+        "accepted": ["-p"],
         "patterns": []
       },
-      "hints": [
-        "Stands for 'parents'."
-      ],
+      "hints": ["Stands for 'parents'."],
       "explanation": "`mkdir -p` creates parent directories as needed and suppresses errors if they exist."
     },
     {
@@ -1839,14 +1494,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "touch empty.txt"
-        ],
+        "accepted": ["touch empty.txt"],
         "patterns": []
       },
-      "hints": [
-        "The `touch` command."
-      ],
+      "hints": ["The `touch` command."],
       "explanation": "`touch` creates an empty file or updates timestamps of existing files."
     },
     {
@@ -1862,14 +1513,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "cp source.txt backup.txt"
-        ],
+        "accepted": ["cp source.txt backup.txt"],
         "patterns": []
       },
-      "hints": [
-        "The `cp` command."
-      ],
+      "hints": ["The `cp` command."],
       "explanation": "`cp` copies files from source to destination."
     },
     {
@@ -1885,15 +1532,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "-r",
-          "-R"
-        ],
+        "accepted": ["-r", "-R"],
         "patterns": []
       },
-      "hints": [
-        "Recursive flag."
-      ],
+      "hints": ["Recursive flag."],
       "explanation": "`cp -r` copies directories recursively."
     },
     {
@@ -1909,14 +1551,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "-i"
-        ],
+        "accepted": ["-i"],
         "patterns": []
       },
-      "hints": [
-        "Stands for 'interactive'."
-      ],
+      "hints": ["Stands for 'interactive'."],
       "explanation": "`cp -i` prompts before overwriting existing files."
     },
     {
@@ -1932,14 +1570,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "mv old.txt new.txt"
-        ],
+        "accepted": ["mv old.txt new.txt"],
         "patterns": []
       },
-      "hints": [
-        "The `mv` command."
-      ],
+      "hints": ["The `mv` command."],
       "explanation": "`mv` moves or renames files and directories."
     },
     {
@@ -1955,14 +1589,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "-i"
-        ],
+        "accepted": ["-i"],
         "patterns": []
       },
-      "hints": [
-        "Interactive flag."
-      ],
+      "hints": ["Interactive flag."],
       "explanation": "`mv -i` prompts before overwriting."
     },
     {
@@ -1978,14 +1608,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "rm temp.txt"
-        ],
+        "accepted": ["rm temp.txt"],
         "patterns": []
       },
-      "hints": [
-        "Remove command."
-      ],
+      "hints": ["Remove command."],
       "explanation": "`rm` deletes files permanently."
     },
     {
@@ -2001,15 +1627,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "rm -r old_dir",
-          "rm -rf old_dir"
-        ],
+        "accepted": ["rm -r old_dir", "rm -rf old_dir"],
         "patterns": []
       },
-      "hints": [
-        "Combine `rm` with `-r`."
-      ],
+      "hints": ["Combine `rm` with `-r`."],
       "explanation": "`rm -r` deletes directories and their contents recursively."
     },
     {
@@ -2025,14 +1646,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "-f"
-        ],
+        "accepted": ["-f"],
         "patterns": []
       },
-      "hints": [
-        "Stands for 'force'."
-      ],
+      "hints": ["Stands for 'force'."],
       "explanation": "`rm -f` forces deletion without prompting."
     },
     {
@@ -2048,14 +1665,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "rmdir empty_dir"
-        ],
+        "accepted": ["rmdir empty_dir"],
         "patterns": []
       },
-      "hints": [
-        "`rmdir` command."
-      ],
+      "hints": ["`rmdir` command."],
       "explanation": "`rmdir` removes empty directories only."
     },
     {
@@ -2071,14 +1684,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "cp a.txt b.txt backup/"
-        ],
+        "accepted": ["cp a.txt b.txt backup/"],
         "patterns": []
       },
-      "hints": [
-        "List sources followed by target directory."
-      ],
+      "hints": ["List sources followed by target directory."],
       "explanation": "`cp` places multiple source files into the specified destination directory."
     },
     {
@@ -2094,14 +1703,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "mv report.txt docs/"
-        ],
+        "accepted": ["mv report.txt docs/"],
         "patterns": []
       },
-      "hints": [
-        "Destination directory at the end."
-      ],
+      "hints": ["Destination directory at the end."],
       "explanation": "`mv` moves the file into the target directory."
     },
     {
@@ -2116,16 +1721,9 @@
       "examEligible": true,
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
-      "options": [
-        "False",
-        "True"
-      ],
-      "expected": [
-        1
-      ],
-      "hints": [
-        "Deletion is permanent."
-      ],
+      "options": ["False", "True"],
+      "expected": [1],
+      "hints": ["Deletion is permanent."],
       "explanation": "Linux command-line `rm` permanently unlinks files; there is no recycle bin."
     },
     {
@@ -2141,14 +1739,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "touch one.txt two.txt"
-        ],
+        "accepted": ["touch one.txt two.txt"],
         "patterns": []
       },
-      "hints": [
-        "Pass multiple filenames to `touch`."
-      ],
+      "hints": ["Pass multiple filenames to `touch`."],
       "explanation": "`touch` accepts multiple filenames to create or update them."
     },
     {
@@ -2164,14 +1758,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "mkdir -p project/src/core"
-        ],
+        "accepted": ["mkdir -p project/src/core"],
         "patterns": []
       },
-      "hints": [
-        "Use `-p` option."
-      ],
+      "hints": ["Use `-p` option."],
       "explanation": "`mkdir -p` builds nested directory trees in one go."
     },
     {
@@ -2187,15 +1777,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "cp -r dir1 dir2",
-          "cp -R dir1 dir2"
-        ],
+        "accepted": ["cp -r dir1 dir2", "cp -R dir1 dir2"],
         "patterns": []
       },
-      "hints": [
-        "Use `cp -r`."
-      ],
+      "hints": ["Use `cp -r`."],
       "explanation": "`cp -r` copies directory trees recursively."
     },
     {
@@ -2211,14 +1796,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "-i"
-        ],
+        "accepted": ["-i"],
         "patterns": []
       },
-      "hints": [
-        "Interactive flag."
-      ],
+      "hints": ["Interactive flag."],
       "explanation": "`rm -i` prompts the user before removing files."
     },
     {
@@ -2234,14 +1815,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "touch existing.txt"
-        ],
+        "accepted": ["touch existing.txt"],
         "patterns": []
       },
-      "hints": [
-        "`touch` updates timestamps."
-      ],
+      "hints": ["`touch` updates timestamps."],
       "explanation": "`touch` updates access and modification timestamps."
     },
     {
@@ -2257,15 +1834,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "echo \"Hello World\"",
-          "echo Hello World"
-        ],
+        "accepted": ["echo \"Hello World\"", "echo Hello World"],
         "patterns": []
       },
-      "hints": [
-        "Use `echo` followed by the text."
-      ],
+      "hints": ["Use `echo` followed by the text."],
       "explanation": "`echo` prints text to standard output."
     },
     {
@@ -2281,14 +1853,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "-e"
-        ],
+        "accepted": ["-e"],
         "patterns": []
       },
-      "hints": [
-        "Stands for 'escape'."
-      ],
+      "hints": ["Stands for 'escape'."],
       "explanation": "`echo -e` interprets backslash escapes like newlines and tabs."
     },
     {
@@ -2304,14 +1872,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "cut -d: -f1 /etc/passwd"
-        ],
+        "accepted": ["cut -d: -f1 /etc/passwd"],
         "patterns": []
       },
-      "hints": [
-        "Use `-d:` for delimiter and `-f1` for field 1."
-      ],
+      "hints": ["Use `-d:` for delimiter and `-f1` for field 1."],
       "explanation": "`cut -d: -f1` extracts field 1 using colon delimiter."
     },
     {
@@ -2327,14 +1891,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "-n"
-        ],
+        "accepted": ["-n"],
         "patterns": []
       },
-      "hints": [
-        "Stands for 'numeric'."
-      ],
+      "hints": ["Stands for 'numeric'."],
       "explanation": "`sort -n` sorts numerically so 9 comes before 10."
     },
     {
@@ -2350,14 +1910,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "-r"
-        ],
+        "accepted": ["-r"],
         "patterns": []
       },
-      "hints": [
-        "Stands for 'reverse'."
-      ],
+      "hints": ["Stands for 'reverse'."],
       "explanation": "`sort -r` reverses the sorting order."
     },
     {
@@ -2373,14 +1929,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "-c"
-        ],
+        "accepted": ["-c"],
         "patterns": []
       },
-      "hints": [
-        "Stands for 'count'."
-      ],
+      "hints": ["Stands for 'count'."],
       "explanation": "`uniq -c` prefixes lines with their repetition count (requires sorted input)."
     },
     {
@@ -2396,14 +1948,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "-d"
-        ],
+        "accepted": ["-d"],
         "patterns": []
       },
-      "hints": [
-        "Stands for 'duplicate'."
-      ],
+      "hints": ["Stands for 'duplicate'."],
       "explanation": "`uniq -d` outputs only repeated lines."
     },
     {
@@ -2419,15 +1967,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "tr \"a-z\" \"A-Z\"",
-          "tr a-z A-Z"
-        ],
+        "accepted": ["tr \"a-z\" \"A-Z\"", "tr a-z A-Z"],
         "patterns": []
       },
-      "hints": [
-        "`tr 'a-z' 'A-Z'`"
-      ],
+      "hints": ["`tr 'a-z' 'A-Z'`"],
       "explanation": "`tr` translates characters from set1 to set2."
     },
     {
@@ -2443,14 +1986,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "-d"
-        ],
+        "accepted": ["-d"],
         "patterns": []
       },
-      "hints": [
-        "Stands for 'delete'."
-      ],
+      "hints": ["Stands for 'delete'."],
       "explanation": "`tr -d` deletes specified characters."
     },
     {
@@ -2466,14 +2005,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "tee output.txt"
-        ],
+        "accepted": ["tee output.txt"],
         "patterns": []
       },
-      "hints": [
-        "Pass filename to `tee`."
-      ],
+      "hints": ["Pass filename to `tee`."],
       "explanation": "`tee` copies stdin to stdout and files simultaneously."
     },
     {
@@ -2489,14 +2024,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "-a"
-        ],
+        "accepted": ["-a"],
         "patterns": []
       },
-      "hints": [
-        "Stands for 'append'."
-      ],
+      "hints": ["Stands for 'append'."],
       "explanation": "`tee -a` appends output to the target file."
     },
     {
@@ -2511,16 +2042,9 @@
       "examEligible": true,
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
-      "options": [
-        "True",
-        "False"
-      ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "`uniq` checks adjacent lines."
-      ],
+      "options": ["True", "False"],
+      "expected": [0],
+      "hints": ["`uniq` checks adjacent lines."],
       "explanation": "`uniq` only detects adjacent duplicate lines, requiring `sort` beforehand."
     },
     {
@@ -2536,14 +2060,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "ps aux"
-        ],
+        "accepted": ["ps aux"],
         "patterns": []
       },
-      "hints": [
-        "`ps aux` (no dash for BSD format)."
-      ],
+      "hints": ["`ps aux` (no dash for BSD format)."],
       "explanation": "`ps aux` displays all running processes across all users."
     },
     {
@@ -2559,14 +2079,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "sed 's/foo/bar/' file.txt"
-        ],
+        "accepted": ["sed 's/foo/bar/' file.txt"],
         "patterns": []
       },
-      "hints": [
-        "Use `s/old/new/` syntax."
-      ],
+      "hints": ["Use `s/old/new/` syntax."],
       "explanation": "`sed 's/foo/bar/'` substitutes the first match per line."
     },
     {
@@ -2582,14 +2098,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "sed 's/foo/bar/g' file.txt"
-        ],
+        "accepted": ["sed 's/foo/bar/g' file.txt"],
         "patterns": []
       },
-      "hints": [
-        "Add `g` flag at the end."
-      ],
+      "hints": ["Add `g` flag at the end."],
       "explanation": "`sed 's/foo/bar/g'` replaces all occurrences on each line."
     },
     {
@@ -2605,14 +2117,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "-i"
-        ],
+        "accepted": ["-i"],
         "patterns": []
       },
-      "hints": [
-        "Stands for 'in-place'."
-      ],
+      "hints": ["Stands for 'in-place'."],
       "explanation": "`sed -i` modifies files directly in place."
     },
     {
@@ -2628,14 +2136,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "-u"
-        ],
+        "accepted": ["-u"],
         "patterns": []
       },
-      "hints": [
-        "Stands for 'unique'."
-      ],
+      "hints": ["Stands for 'unique'."],
       "explanation": "`sort -u` sorts and removes duplicate lines."
     },
     {
@@ -2651,14 +2155,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "sort -n numbers.txt"
-        ],
+        "accepted": ["sort -n numbers.txt"],
         "patterns": []
       },
-      "hints": [
-        "Use `sort -n`."
-      ],
+      "hints": ["Use `sort -n`."],
       "explanation": "`sort -n` sorts numerically."
     },
     {
@@ -2674,14 +2174,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "-s"
-        ],
+        "accepted": ["-s"],
         "patterns": []
       },
-      "hints": [
-        "Stands for 'squeeze'."
-      ],
+      "hints": ["Stands for 'squeeze'."],
       "explanation": "`tr -s` squeezes sequences of repeated characters."
     },
     {
@@ -2697,14 +2193,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "sed -n '5,10p' file.txt"
-        ],
+        "accepted": ["sed -n '5,10p' file.txt"],
         "patterns": []
       },
-      "hints": [
-        "`sed -n '5,10p'`"
-      ],
+      "hints": ["`sed -n '5,10p'`"],
       "explanation": "`sed -n '5,10p'` suppresses default printing and prints lines 5 to 10."
     },
     {
@@ -2720,14 +2212,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "ls > list.txt"
-        ],
+        "accepted": ["ls > list.txt"],
         "patterns": []
       },
-      "hints": [
-        "Use `>` operator."
-      ],
+      "hints": ["Use `>` operator."],
       "explanation": "`>` redirects stdout, overwriting the destination file."
     },
     {
@@ -2743,14 +2231,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "date >> log.txt"
-        ],
+        "accepted": ["date >> log.txt"],
         "patterns": []
       },
-      "hints": [
-        "Use `>>` operator."
-      ],
+      "hints": ["Use `>>` operator."],
       "explanation": "`>>` appends stdout to the destination file."
     },
     {
@@ -2766,14 +2250,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "/nonexistent 2> error.txt"
-        ],
+        "accepted": ["/nonexistent 2> error.txt"],
         "patterns": []
       },
-      "hints": [
-        "Use `2>` for file descriptor 2."
-      ],
+      "hints": ["Use `2>` for file descriptor 2."],
       "explanation": "`2>` redirects standard error (file descriptor 2)."
     },
     {
@@ -2789,14 +2269,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "2>/dev/null"
-        ],
+        "accepted": ["2>/dev/null"],
         "patterns": []
       },
-      "hints": [
-        "Send fd 2 to `/dev/null`."
-      ],
+      "hints": ["Send fd 2 to `/dev/null`."],
       "explanation": "`2>/dev/null` discards error output."
     },
     {
@@ -2812,14 +2288,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "make &> build.log"
-        ],
+        "accepted": ["make &> build.log"],
         "patterns": []
       },
-      "hints": [
-        "Use `&>` operator."
-      ],
+      "hints": ["Use `&>` operator."],
       "explanation": "`&>` redirects both stdout and stderr to a file in Bash."
     },
     {
@@ -2835,14 +2307,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "sort < unsorted.txt > sorted.txt"
-        ],
+        "accepted": ["sort < unsorted.txt > sorted.txt"],
         "patterns": []
       },
-      "hints": [
-        "Use `<` for input redirection."
-      ],
+      "hints": ["Use `<` for input redirection."],
       "explanation": "`<` redirects a file into standard input of a command."
     },
     {
@@ -2858,14 +2326,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "ls | wc -l"
-        ],
+        "accepted": ["ls | wc -l"],
         "patterns": []
       },
-      "hints": [
-        "Pipe symbol `|` connects stdout to stdin."
-      ],
+      "hints": ["Pipe symbol `|` connects stdout to stdin."],
       "explanation": "`ls | wc -l` pipes stdout of `ls` into `wc -l` to count lines."
     },
     {
@@ -2880,18 +2344,9 @@
       "examEligible": true,
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
-      "options": [
-        "0",
-        "1",
-        "2",
-        "3"
-      ],
-      "expected": [
-        1
-      ],
-      "hints": [
-        "Stdin is 0, stdout is 1, ..."
-      ],
+      "options": ["0", "1", "2", "3"],
+      "expected": [1],
+      "hints": ["Stdin is 0, stdout is 1, ..."],
       "explanation": "Standard error is file descriptor 2."
     },
     {
@@ -2907,14 +2362,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "/dev/null"
-        ],
+        "accepted": ["/dev/null"],
         "patterns": []
       },
-      "hints": [
-        "`/dev/null`"
-      ],
+      "hints": ["`/dev/null`"],
       "explanation": "`/dev/null` discards all output written to it."
     },
     {
@@ -2930,14 +2381,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "2>&1"
-        ],
+        "accepted": ["2>&1"],
         "patterns": []
       },
-      "hints": [
-        "`2>&1`"
-      ],
+      "hints": ["`2>&1`"],
       "explanation": "`2>&1` merges standard error into standard output."
     },
     {
@@ -2953,14 +2400,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "True"
-        ],
+        "accepted": ["True"],
         "patterns": []
       },
-      "hints": [
-        "True"
-      ],
+      "hints": ["True"],
       "explanation": "Pipes connect commands; redirection connects files."
     },
     {
@@ -2976,14 +2419,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "cmd > out.txt 2>&1"
-        ],
+        "accepted": ["cmd > out.txt 2>&1"],
         "patterns": []
       },
-      "hints": [
-        "`> out.txt 2>&1`"
-      ],
+      "hints": ["`> out.txt 2>&1`"],
       "explanation": "`cmd > out.txt 2>&1` is the standard portable way to redirect both streams."
     },
     {
@@ -2999,14 +2438,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "0"
-        ],
+        "accepted": ["0"],
         "patterns": []
       },
-      "hints": [
-        "0"
-      ],
+      "hints": ["0"],
       "explanation": "Standard input is 0."
     },
     {
@@ -3022,14 +2457,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "1"
-        ],
+        "accepted": ["1"],
         "patterns": []
       },
-      "hints": [
-        "1"
-      ],
+      "hints": ["1"],
       "explanation": "Standard output is 1."
     },
     {
@@ -3045,14 +2476,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "True"
-        ],
+        "accepted": ["True"],
         "patterns": []
       },
-      "hints": [
-        "True"
-      ],
+      "hints": ["True"],
       "explanation": "`>` truncates the file."
     },
     {
@@ -3068,14 +2495,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "ln -s target.txt soft.txt"
-        ],
+        "accepted": ["ln -s target.txt soft.txt"],
         "patterns": []
       },
-      "hints": [
-        "Use `ln -s`."
-      ],
+      "hints": ["Use `ln -s`."],
       "explanation": "`ln -s` creates a symbolic link."
     },
     {
@@ -3091,14 +2514,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "ln target.txt hard.txt"
-        ],
+        "accepted": ["ln target.txt hard.txt"],
         "patterns": []
       },
-      "hints": [
-        "Use `ln` without `-s`."
-      ],
+      "hints": ["Use `ln` without `-s`."],
       "explanation": "`ln` creates a hard link sharing the same inode."
     },
     {
@@ -3113,16 +2532,9 @@
       "examEligible": true,
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
-      "options": [
-        "True",
-        "False"
-      ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "Hard links point directly to the inode."
-      ],
+      "options": ["True", "False"],
+      "expected": [0],
+      "hints": ["Hard links point directly to the inode."],
       "explanation": "Hard links point directly to the underlying inode and data."
     },
     {
@@ -3138,14 +2550,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "True"
-        ],
+        "accepted": ["True"],
         "patterns": []
       },
-      "hints": [
-        "True"
-      ],
+      "hints": ["True"],
       "explanation": "Symlinks store paths."
     },
     {
@@ -3161,14 +2569,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "False"
-        ],
+        "accepted": ["False"],
         "patterns": []
       },
-      "hints": [
-        "False"
-      ],
+      "hints": ["False"],
       "explanation": "Hard links cannot cross filesystems."
     },
     {
@@ -3184,14 +2588,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "False"
-        ],
+        "accepted": ["False"],
         "patterns": []
       },
-      "hints": [
-        "False"
-      ],
+      "hints": ["False"],
       "explanation": "Users cannot hard-link directories."
     },
     {
@@ -3207,15 +2607,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "It becomes a broken link",
-          "Dangling link"
-        ],
+        "accepted": ["It becomes a broken link", "Dangling link"],
         "patterns": []
       },
-      "hints": [
-        "Becomes broken/dangling."
-      ],
+      "hints": ["Becomes broken/dangling."],
       "explanation": "Deleting the target breaks the symbolic link."
     },
     {
@@ -3231,15 +2626,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "The data remains accessible",
-          "Data remains accessible"
-        ],
+        "accepted": ["The data remains accessible", "Data remains accessible"],
         "patterns": []
       },
-      "hints": [
-        "Data remains."
-      ],
+      "hints": ["Data remains."],
       "explanation": "The data remains accessible via the hard link."
     },
     {
@@ -3255,14 +2645,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "ln -s -t /tmp/links /etc/hosts"
-        ],
+        "accepted": ["ln -s -t /tmp/links /etc/hosts"],
         "patterns": []
       },
-      "hints": [
-        "`ln -s -t target_dir source`"
-      ],
+      "hints": ["`ln -s -t target_dir source`"],
       "explanation": "`ln -s -t dir target` creates a symlink inside `dir`."
     },
     {
@@ -3278,14 +2664,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "-i"
-        ],
+        "accepted": ["-i"],
         "patterns": []
       },
-      "hints": [
-        "Lowercase i."
-      ],
+      "hints": ["Lowercase i."],
       "explanation": "`ls -i` displays inode numbers."
     },
     {
@@ -3301,14 +2683,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "l"
-        ],
+        "accepted": ["l"],
         "patterns": []
       },
-      "hints": [
-        "Letter l."
-      ],
+      "hints": ["Letter l."],
       "explanation": "Symbolic links start with `l`."
     },
     {
@@ -3324,15 +2702,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "metadata",
-          "file metadata"
-        ],
+        "accepted": ["metadata", "file metadata"],
         "patterns": []
       },
-      "hints": [
-        "Metadata."
-      ],
+      "hints": ["Metadata."],
       "explanation": "An inode stores file metadata."
     },
     {
@@ -3347,16 +2720,9 @@
       "examEligible": true,
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
-      "options": [
-        "True",
-        "False"
-      ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "Single quotes preserve literal values strictly."
-      ],
+      "options": ["True", "False"],
+      "expected": [0],
+      "hints": ["Single quotes preserve literal values strictly."],
       "explanation": "Single quotes disable variable expansion and wildcard interpretation entirely."
     },
     {
@@ -3372,14 +2738,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "True"
-        ],
+        "accepted": ["True"],
         "patterns": []
       },
-      "hints": [
-        "True"
-      ],
+      "hints": ["True"],
       "explanation": "Double quotes permit variables."
     },
     {
@@ -3395,14 +2757,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "Hello Alice"
-        ],
+        "accepted": ["Hello Alice"],
         "patterns": []
       },
-      "hints": [
-        "Variables expand inside double quotes."
-      ],
+      "hints": ["Variables expand inside double quotes."],
       "explanation": "Double quotes evaluate `$name` to `Alice`."
     },
     {
@@ -3418,14 +2776,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "Hello $name"
-        ],
+        "accepted": ["Hello $name"],
         "patterns": []
       },
-      "hints": [
-        "Single quotes prevent variable expansion."
-      ],
+      "hints": ["Single quotes prevent variable expansion."],
       "explanation": "Single quotes treat `$name` literally."
     },
     {
@@ -3441,15 +2795,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "touch \"my file.txt\"",
-          "touch 'my file.txt'"
-        ],
+        "accepted": ["touch \"my file.txt\"", "touch 'my file.txt'"],
         "patterns": []
       },
-      "hints": [
-        "Enclose the filename in quotes."
-      ],
+      "hints": ["Enclose the filename in quotes."],
       "explanation": "Quotes allow filenames containing spaces to be treated as a single argument."
     },
     {
@@ -3465,15 +2814,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "echo \"*\"",
-          "echo '*'"
-        ],
+        "accepted": ["echo \"*\"", "echo '*'"],
         "patterns": []
       },
-      "hints": [
-        "Quote the asterisk."
-      ],
+      "hints": ["Quote the asterisk."],
       "explanation": "Quoting `*` prevents the shell from expanding it as a glob."
     },
     {
@@ -3489,14 +2833,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "False"
-        ],
+        "accepted": ["False"],
         "patterns": []
       },
-      "hints": [
-        "False"
-      ],
+      "hints": ["False"],
       "explanation": "Cannot embed single quotes directly."
     },
     {
@@ -3512,15 +2852,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "echo it\\'s",
-          "echo 'it'''s'"
-        ],
+        "accepted": ["echo it\\'s", "echo 'it'''s'"],
         "patterns": []
       },
-      "hints": [
-        "Close quotes, insert escaped quote, reopen."
-      ],
+      "hints": ["Close quotes, insert escaped quote, reopen."],
       "explanation": "Requires quote concatenation."
     },
     {
@@ -3536,14 +2871,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "True"
-        ],
+        "accepted": ["True"],
         "patterns": []
       },
-      "hints": [
-        "True"
-      ],
+      "hints": ["True"],
       "explanation": "Evaluated inside double quotes."
     },
     {
@@ -3559,15 +2890,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "Single quotes",
-          "'"
-        ],
+        "accepted": ["Single quotes", "'"],
         "patterns": []
       },
-      "hints": [
-        "Single quotes."
-      ],
+      "hints": ["Single quotes."],
       "explanation": "Single quotes prevent shell expansion."
     },
     {
@@ -3583,15 +2909,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "To prevent shell expansion",
-          "prevent shell expansion"
-        ],
+        "accepted": ["To prevent shell expansion", "prevent shell expansion"],
         "patterns": []
       },
-      "hints": [
-        "Prevent shell glob expansion."
-      ],
+      "hints": ["Prevent shell glob expansion."],
       "explanation": "Quoting prevents shell expansion."
     },
     {
@@ -3607,15 +2928,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "Control shell expansions",
-          "control expansions"
-        ],
+        "accepted": ["Control shell expansions", "control expansions"],
         "patterns": []
       },
-      "hints": [
-        "Controlling expansions."
-      ],
+      "hints": ["Controlling expansions."],
       "explanation": "Controls shell expansions."
     },
     {
@@ -3631,14 +2947,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "su - bob"
-        ],
+        "accepted": ["su - bob"],
         "patterns": []
       },
-      "hints": [
-        "Use `su -`."
-      ],
+      "hints": ["Use `su -`."],
       "explanation": "`su - bob` switches to user bob with a login shell environment."
     },
     {
@@ -3654,14 +2966,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "sudo -i -u bob"
-        ],
+        "accepted": ["sudo -i -u bob"],
         "patterns": []
       },
-      "hints": [
-        "Use `sudo -i -u`."
-      ],
+      "hints": ["Use `sudo -i -u`."],
       "explanation": "`sudo -i -u bob` starts a login shell as bob using sudo."
     },
     {
@@ -3677,14 +2985,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "-m"
-        ],
+        "accepted": ["-m"],
         "patterns": []
       },
-      "hints": [
-        "Stands for 'make home'."
-      ],
+      "hints": ["Stands for 'make home'."],
       "explanation": "`useradd -m` creates the user's home directory."
     },
     {
@@ -3700,14 +3004,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "-r"
-        ],
+        "accepted": ["-r"],
         "patterns": []
       },
-      "hints": [
-        "Stands for 'remove'."
-      ],
+      "hints": ["Stands for 'remove'."],
       "explanation": "`userdel -r` deletes the user account and home directory."
     },
     {
@@ -3723,14 +3023,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "-aG"
-        ],
+        "accepted": ["-aG"],
         "patterns": []
       },
-      "hints": [
-        "Combine `-a` (append) and `-G` (groups)."
-      ],
+      "hints": ["Combine `-a` (append) and `-G` (groups)."],
       "explanation": "`usermod -aG group user` appends supplementary groups safely."
     },
     {
@@ -3746,15 +3042,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "sudo groupadd developers",
-          "groupadd developers"
-        ],
+        "accepted": ["sudo groupadd developers", "groupadd developers"],
         "patterns": []
       },
-      "hints": [
-        "Group add command."
-      ],
+      "hints": ["Group add command."],
       "explanation": "`groupadd` creates a new system group."
     },
     {
@@ -3770,14 +3061,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "groups"
-        ],
+        "accepted": ["groups"],
         "patterns": []
       },
-      "hints": [
-        "Simple `groups` command."
-      ],
+      "hints": ["Simple `groups` command."],
       "explanation": "`groups` prints group memberships."
     },
     {
@@ -3793,14 +3080,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "id"
-        ],
+        "accepted": ["id"],
         "patterns": []
       },
-      "hints": [
-        "The `id` command."
-      ],
+      "hints": ["The `id` command."],
       "explanation": "`id` displays user and group IDs."
     },
     {
@@ -3816,14 +3099,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "passwd"
-        ],
+        "accepted": ["passwd"],
         "patterns": []
       },
-      "hints": [
-        "Password command."
-      ],
+      "hints": ["Password command."],
       "explanation": "`passwd` updates user authentication passwords."
     },
     {
@@ -3844,12 +3123,8 @@
         "/etc/group",
         "/etc/login.defs"
       ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "Passwd file."
-      ],
+      "expected": [0],
+      "hints": ["Passwd file."],
       "explanation": "`/etc/passwd` stores account info readable by everyone."
     },
     {
@@ -3865,14 +3140,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "/etc/shadow"
-        ],
+        "accepted": ["/etc/shadow"],
         "patterns": []
       },
-      "hints": [
-        "`/etc/shadow`"
-      ],
+      "hints": ["`/etc/shadow`"],
       "explanation": "`/etc/shadow` holds hashes."
     },
     {
@@ -3888,14 +3159,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "visudo"
-        ],
+        "accepted": ["visudo"],
         "patterns": []
       },
-      "hints": [
-        "`visudo`"
-      ],
+      "hints": ["`visudo`"],
       "explanation": "`visudo` edits sudoers safely."
     },
     {
@@ -3911,14 +3178,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "-L"
-        ],
+        "accepted": ["-L"],
         "patterns": []
       },
-      "hints": [
-        "`-L`"
-      ],
+      "hints": ["`-L`"],
       "explanation": "`usermod -L` locks passwords."
     },
     {
@@ -3934,14 +3197,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "-U"
-        ],
+        "accepted": ["-U"],
         "patterns": []
       },
-      "hints": [
-        "`-U`"
-      ],
+      "hints": ["`-U`"],
       "explanation": "`usermod -U` unlocks passwords."
     },
     {
@@ -3957,14 +3216,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "chage -l"
-        ],
+        "accepted": ["chage -l"],
         "patterns": []
       },
-      "hints": [
-        "`chage -l`"
-      ],
+      "hints": ["`chage -l`"],
       "explanation": "Lists aging info."
     },
     {
@@ -3980,14 +3235,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "chage -d 0 alice"
-        ],
+        "accepted": ["chage -d 0 alice"],
         "patterns": []
       },
-      "hints": [
-        "`chage -d 0 alice`"
-      ],
+      "hints": ["`chage -d 0 alice`"],
       "explanation": "Forces password change."
     },
     {
@@ -4003,14 +3254,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "echo \"alice:Pass123\" | sudo chpasswd"
-        ],
+        "accepted": ["echo \"alice:Pass123\" | sudo chpasswd"],
         "patterns": []
       },
-      "hints": [
-        "Pipe into `chpasswd`."
-      ],
+      "hints": ["Pipe into `chpasswd`."],
       "explanation": "Updates password non-interactively."
     },
     {
@@ -4026,14 +3273,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "0"
-        ],
+        "accepted": ["0"],
         "patterns": []
       },
-      "hints": [
-        "0"
-      ],
+      "hints": ["0"],
       "explanation": "Root UID is 0."
     },
     {
@@ -4049,14 +3292,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "/etc/group"
-        ],
+        "accepted": ["/etc/group"],
         "patterns": []
       },
-      "hints": [
-        "`/etc/group`"
-      ],
+      "hints": ["`/etc/group`"],
       "explanation": "Group file path."
     },
     {
@@ -4072,15 +3311,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "Starts a new shell with new primary group",
-          "newgrp"
-        ],
+        "accepted": ["Starts a new shell with new primary group", "newgrp"],
         "patterns": []
       },
-      "hints": [
-        "`newgrp`"
-      ],
+      "hints": ["`newgrp`"],
       "explanation": "Switches primary group in a new shell."
     },
     {
@@ -4096,14 +3330,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "chmod 755 script.sh"
-        ],
+        "accepted": ["chmod 755 script.sh"],
         "patterns": []
       },
-      "hints": [
-        "`7` for rwx, `5` for r-x."
-      ],
+      "hints": ["`7` for rwx, `5` for r-x."],
       "explanation": "`chmod 755` sets owner rwx, group r-x, and others r-x."
     },
     {
@@ -4119,14 +3349,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "chmod u+x script.sh"
-        ],
+        "accepted": ["chmod u+x script.sh"],
         "patterns": []
       },
-      "hints": [
-        "`u+x`"
-      ],
+      "hints": ["`u+x`"],
       "explanation": "`chmod u+x` adds execute permission for the user owner."
     },
     {
@@ -4142,14 +3368,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "chmod g-w file.txt"
-        ],
+        "accepted": ["chmod g-w file.txt"],
         "patterns": []
       },
-      "hints": [
-        "`g-w`"
-      ],
+      "hints": ["`g-w`"],
       "explanation": "`chmod g-w` removes write permission from the group."
     },
     {
@@ -4164,18 +3386,9 @@
       "examEligible": true,
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
-      "options": [
-        "4",
-        "2",
-        "1",
-        "0"
-      ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "Binary 100 is 4."
-      ],
+      "options": ["4", "2", "1", "0"],
+      "expected": [0],
+      "hints": ["Binary 100 is 4."],
       "explanation": "Read `r` equals 4, write `w` equals 2, execute `x` equals 1."
     },
     {
@@ -4191,14 +3404,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "2"
-        ],
+        "accepted": ["2"],
         "patterns": []
       },
-      "hints": [
-        "2"
-      ],
+      "hints": ["2"],
       "explanation": "Write is 2."
     },
     {
@@ -4214,14 +3423,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "1"
-        ],
+        "accepted": ["1"],
         "patterns": []
       },
-      "hints": [
-        "1"
-      ],
+      "hints": ["1"],
       "explanation": "Execute is 1."
     },
     {
@@ -4237,15 +3442,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "sudo chown alice file.txt",
-          "chown alice file.txt"
-        ],
+        "accepted": ["sudo chown alice file.txt", "chown alice file.txt"],
         "patterns": []
       },
-      "hints": [
-        "The `chown` command."
-      ],
+      "hints": ["The `chown` command."],
       "explanation": "`chown` changes file ownership."
     },
     {
@@ -4267,9 +3467,7 @@
         ],
         "patterns": []
       },
-      "hints": [
-        "Use `user:group` syntax."
-      ],
+      "hints": ["Use `user:group` syntax."],
       "explanation": "`chown user:group` updates both owner and group at once."
     },
     {
@@ -4291,9 +3489,7 @@
         ],
         "patterns": []
       },
-      "hints": [
-        "The `chgrp` command."
-      ],
+      "hints": ["The `chgrp` command."],
       "explanation": "`chgrp` changes group ownership."
     },
     {
@@ -4309,14 +3505,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "umask"
-        ],
+        "accepted": ["umask"],
         "patterns": []
       },
-      "hints": [
-        "Simple `umask` command."
-      ],
+      "hints": ["Simple `umask` command."],
       "explanation": "`umask` displays permission mask bits subtracted from defaults."
     },
     {
@@ -4338,9 +3530,7 @@
         ],
         "patterns": []
       },
-      "hints": [
-        "Traversal access."
-      ],
+      "hints": ["Traversal access."],
       "explanation": "Execute on a directory permits entering (`cd`) and traversing it."
     },
     {
@@ -4362,9 +3552,7 @@
         ],
         "patterns": []
       },
-      "hints": [
-        "Prevents users from deleting each other's files."
-      ],
+      "hints": ["Prevents users from deleting each other's files."],
       "explanation": "The sticky bit prevents users from deleting files they do not own."
     },
     {
@@ -4386,9 +3574,7 @@
         ],
         "patterns": []
       },
-      "hints": [
-        "Runs as file owner."
-      ],
+      "hints": ["Runs as file owner."],
       "explanation": "SUID executes the program with the privileges of the file's owner."
     },
     {
@@ -4410,9 +3596,7 @@
         ],
         "patterns": []
       },
-      "hints": [
-        "Inherits group."
-      ],
+      "hints": ["Inherits group."],
       "explanation": "New files inherit the directory's group owner."
     },
     {
@@ -4428,14 +3612,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "1"
-        ],
+        "accepted": ["1"],
         "patterns": []
       },
-      "hints": [
-        "Value 1."
-      ],
+      "hints": ["Value 1."],
       "explanation": "Sticky bit is `1`."
     },
     {
@@ -4451,14 +3631,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "4"
-        ],
+        "accepted": ["4"],
         "patterns": []
       },
-      "hints": [
-        "Value 4."
-      ],
+      "hints": ["Value 4."],
       "explanation": "SUID is `4`."
     },
     {
@@ -4474,14 +3650,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "2"
-        ],
+        "accepted": ["2"],
         "patterns": []
       },
-      "hints": [
-        "Value 2."
-      ],
+      "hints": ["Value 2."],
       "explanation": "SGID is `2`."
     },
     {
@@ -4497,14 +3669,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "chmod -R 750 myfolder/"
-        ],
+        "accepted": ["chmod -R 750 myfolder/"],
         "patterns": []
       },
-      "hints": [
-        "Use `-R` for recursive."
-      ],
+      "hints": ["Use `-R` for recursive."],
       "explanation": "`chmod -R` applies permission changes recursively."
     },
     {
@@ -4520,14 +3688,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "600"
-        ],
+        "accepted": ["600"],
         "patterns": []
       },
-      "hints": [
-        "`600`"
-      ],
+      "hints": ["`600`"],
       "explanation": "`600` for private files."
     },
     {
@@ -4543,14 +3707,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "700"
-        ],
+        "accepted": ["700"],
         "patterns": []
       },
-      "hints": [
-        "`700`"
-      ],
+      "hints": ["`700`"],
       "explanation": "`700` for private directories."
     },
     {
@@ -4566,14 +3726,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "644"
-        ],
+        "accepted": ["644"],
         "patterns": []
       },
-      "hints": [
-        "`644`"
-      ],
+      "hints": ["`644`"],
       "explanation": "New files receive `644`."
     },
     {
@@ -4589,14 +3745,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "755"
-        ],
+        "accepted": ["755"],
         "patterns": []
       },
-      "hints": [
-        "`755`"
-      ],
+      "hints": ["`755`"],
       "explanation": "New directories receive `755`."
     },
     {
@@ -4612,15 +3764,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "Write and execute",
-          "w and x"
-        ],
+        "accepted": ["Write and execute", "w and x"],
         "patterns": []
       },
-      "hints": [
-        "Write and execute on parent."
-      ],
+      "hints": ["Write and execute on parent."],
       "explanation": "Requires write and execute on parent directory."
     },
     {
@@ -4636,14 +3783,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "umask 027"
-        ],
+        "accepted": ["umask 027"],
         "patterns": []
       },
-      "hints": [
-        "`umask 027`"
-      ],
+      "hints": ["`umask 027`"],
       "explanation": "Sets umask."
     },
     {
@@ -4659,15 +3802,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "chown :staff file.txt",
-          "sudo chown :staff file.txt"
-        ],
+        "accepted": ["chown :staff file.txt", "sudo chown :staff file.txt"],
         "patterns": []
       },
-      "hints": [
-        "`chown :group`"
-      ],
+      "hints": ["`chown :group`"],
       "explanation": "Changes group only."
     },
     {
@@ -4683,15 +3821,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "find ~ -name \"*.txt\"",
-          "find ~ -name '*.txt'"
-        ],
+        "accepted": ["find ~ -name \"*.txt\"", "find ~ -name '*.txt'"],
         "patterns": []
       },
-      "hints": [
-        "`find ~ -name \"*.txt\"`"
-      ],
+      "hints": ["`find ~ -name \"*.txt\"`"],
       "explanation": "`find ~ -name \"*.txt\"` searches home directory for matching names."
     },
     {
@@ -4707,14 +3840,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "find . -type d"
-        ],
+        "accepted": ["find . -type d"],
         "patterns": []
       },
-      "hints": [
-        "Use `-type d`."
-      ],
+      "hints": ["Use `-type d`."],
       "explanation": "`find . -type d` locates directories."
     },
     {
@@ -4730,14 +3859,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "find /var -type f"
-        ],
+        "accepted": ["find /var -type f"],
         "patterns": []
       },
-      "hints": [
-        "Use `-type f`."
-      ],
+      "hints": ["Use `-type f`."],
       "explanation": "`find /var -type f` locates regular files."
     },
     {
@@ -4753,14 +3878,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "find / -user alice 2>/dev/null"
-        ],
+        "accepted": ["find / -user alice 2>/dev/null"],
         "patterns": []
       },
-      "hints": [
-        "Combine `-user alice` with `2>/dev/null`."
-      ],
+      "hints": ["Combine `-user alice` with `2>/dev/null`."],
       "explanation": "`find / -user alice 2>/dev/null` searches files owned by alice."
     },
     {
@@ -4776,14 +3897,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "find ~ -mtime +7"
-        ],
+        "accepted": ["find ~ -mtime +7"],
         "patterns": []
       },
-      "hints": [
-        "Use `-mtime +7`."
-      ],
+      "hints": ["Use `-mtime +7`."],
       "explanation": "`find ~ -mtime +7` finds files modified over 7 days ago."
     },
     {
@@ -4799,14 +3916,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "find ~ -mmin -10"
-        ],
+        "accepted": ["find ~ -mmin -10"],
         "patterns": []
       },
-      "hints": [
-        "Use `-mmin -10`."
-      ],
+      "hints": ["Use `-mmin -10`."],
       "explanation": "`find ~ -mmin -10` finds files modified in the last 10 minutes."
     },
     {
@@ -4822,14 +3935,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "find / -size +100M 2>/dev/null"
-        ],
+        "accepted": ["find / -size +100M 2>/dev/null"],
         "patterns": []
       },
-      "hints": [
-        "Use `-size +100M`."
-      ],
+      "hints": ["Use `-size +100M`."],
       "explanation": "`find / -size +100M 2>/dev/null` finds large files exceeding 100 MiB."
     },
     {
@@ -4845,14 +3954,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "find ~ -type f -perm 644"
-        ],
+        "accepted": ["find ~ -type f -perm 644"],
         "patterns": []
       },
-      "hints": [
-        "Combine `-type f` and `-perm 644`."
-      ],
+      "hints": ["Combine `-type f` and `-perm 644`."],
       "explanation": "`find ~ -type f -perm 644` locates files matching exact permissions."
     },
     {
@@ -4868,14 +3973,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "-maxdepth 1"
-        ],
+        "accepted": ["-maxdepth 1"],
         "patterns": []
       },
-      "hints": [
-        "`-maxdepth 1`"
-      ],
+      "hints": ["`-maxdepth 1`"],
       "explanation": "`-maxdepth 1` restricts search to the immediate directory level."
     },
     {
@@ -4891,14 +3992,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "find . -name \"*.tmp\" -exec rm {} \\;"
-        ],
+        "accepted": ["find . -name \"*.tmp\" -exec rm {} \\;"],
         "patterns": []
       },
-      "hints": [
-        "`-exec rm {} \\;`"
-      ],
+      "hints": ["`-exec rm {} \\;`"],
       "explanation": "`-exec cmd {} \\;` runs the given command on each search result."
     },
     {
@@ -4919,12 +4016,8 @@
         "Exactly n",
         "At least n minus 1"
       ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "Plus means greater than."
-      ],
+      "expected": [0],
+      "hints": ["Plus means greater than."],
       "explanation": "`+n` means strictly greater than `n`."
     },
     {
@@ -4940,15 +4033,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "Less than n",
-          "less than"
-        ],
+        "accepted": ["Less than n", "less than"],
         "patterns": []
       },
-      "hints": [
-        "Minus means less than."
-      ],
+      "hints": ["Minus means less than."],
       "explanation": "`-n` means strictly less than `n`."
     },
     {
@@ -4964,14 +4052,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "f"
-        ],
+        "accepted": ["f"],
         "patterns": []
       },
-      "hints": [
-        "Stands for 'file'."
-      ],
+      "hints": ["Stands for 'file'."],
       "explanation": "`-type f` specifies regular files."
     },
     {
@@ -4987,14 +4071,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "d"
-        ],
+        "accepted": ["d"],
         "patterns": []
       },
-      "hints": [
-        "Stands for 'directory'."
-      ],
+      "hints": ["Stands for 'directory'."],
       "explanation": "`-type d` specifies directories."
     },
     {
@@ -5010,15 +4090,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "To prevent shell expansion",
-          "prevent shell expansion"
-        ],
+        "accepted": ["To prevent shell expansion", "prevent shell expansion"],
         "patterns": []
       },
-      "hints": [
-        "Prevent shell glob expansion."
-      ],
+      "hints": ["Prevent shell glob expansion."],
       "explanation": "Quoting prevents shell expansion."
     },
     {
@@ -5034,14 +4109,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "tar -czf backup.tar.gz myfolder/"
-        ],
+        "accepted": ["tar -czf backup.tar.gz myfolder/"],
         "patterns": []
       },
-      "hints": [
-        "Use `-czf` options."
-      ],
+      "hints": ["Use `-czf` options."],
       "explanation": "`tar -czf` creates a gzip-compressed tar archive."
     },
     {
@@ -5057,15 +4128,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "tar -xzf backup.tar.gz",
-          "tar -xf backup.tar.gz"
-        ],
+        "accepted": ["tar -xzf backup.tar.gz", "tar -xf backup.tar.gz"],
         "patterns": []
       },
-      "hints": [
-        "Use `-xzf` options."
-      ],
+      "hints": ["Use `-xzf` options."],
       "explanation": "`tar -xzf` extracts a gzipped tar archive."
     },
     {
@@ -5081,14 +4147,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "tar -tf backup.tar.gz"
-        ],
+        "accepted": ["tar -tf backup.tar.gz"],
         "patterns": []
       },
-      "hints": [
-        "Use `-tf` options."
-      ],
+      "hints": ["Use `-tf` options."],
       "explanation": "`tar -tf` lists archive contents."
     },
     {
@@ -5104,14 +4166,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "-C /tmp/restore"
-        ],
+        "accepted": ["-C /tmp/restore"],
         "patterns": []
       },
-      "hints": [
-        "Use `-C` followed by directory path."
-      ],
+      "hints": ["Use `-C` followed by directory path."],
       "explanation": "`-C dir` changes directory before extracting files."
     },
     {
@@ -5127,14 +4185,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "-z"
-        ],
+        "accepted": ["-z"],
         "patterns": []
       },
-      "hints": [
-        "Stands for 'gzip'."
-      ],
+      "hints": ["Stands for 'gzip'."],
       "explanation": "`-z` compresses or decompresses using gzip."
     },
     {
@@ -5150,14 +4204,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "-j"
-        ],
+        "accepted": ["-j"],
         "patterns": []
       },
-      "hints": [
-        "Stands for 'bzip2'."
-      ],
+      "hints": ["Stands for 'bzip2'."],
       "explanation": "`-j` uses bzip2 compression."
     },
     {
@@ -5173,14 +4223,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "-J"
-        ],
+        "accepted": ["-J"],
         "patterns": []
       },
-      "hints": [
-        "Capital J for xz."
-      ],
+      "hints": ["Capital J for xz."],
       "explanation": "`-J` uses xz compression."
     },
     {
@@ -5196,14 +4242,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "scp report.txt alice@192.168.1.10:/home/alice/"
-        ],
+        "accepted": ["scp report.txt alice@192.168.1.10:/home/alice/"],
         "patterns": []
       },
-      "hints": [
-        "`user@host:path` syntax."
-      ],
+      "hints": ["`user@host:path` syntax."],
       "explanation": "`scp` copies files securely over SSH using `user@host:path` notation."
     },
     {
@@ -5219,14 +4261,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "-r"
-        ],
+        "accepted": ["-r"],
         "patterns": []
       },
-      "hints": [
-        "Recursive flag `-r`."
-      ],
+      "hints": ["Recursive flag `-r`."],
       "explanation": "`scp -r` copies directories recursively."
     },
     {
@@ -5242,14 +4280,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "-c"
-        ],
+        "accepted": ["-c"],
         "patterns": []
       },
-      "hints": [
-        "Stands for 'create'."
-      ],
+      "hints": ["Stands for 'create'."],
       "explanation": "`-c` creates a new tar archive."
     },
     {
@@ -5265,14 +4299,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "-x"
-        ],
+        "accepted": ["-x"],
         "patterns": []
       },
-      "hints": [
-        "Stands for 'extract'."
-      ],
+      "hints": ["Stands for 'extract'."],
       "explanation": "`-x` extracts files from an archive."
     },
     {
@@ -5288,14 +4318,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "scp alice@192.168.1.10:/home/alice/report.txt ."
-        ],
+        "accepted": ["scp alice@192.168.1.10:/home/alice/report.txt ."],
         "patterns": []
       },
-      "hints": [
-        "Remote source followed by local destination `.`."
-      ],
+      "hints": ["Remote source followed by local destination `.`."],
       "explanation": "`scp` supports copying from remote to local by specifying remote source first."
     },
     {
@@ -5310,16 +4336,9 @@
       "examEligible": true,
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
-      "options": [
-        "True",
-        "False"
-      ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "`-f` requires the filename argument immediately after."
-      ],
+      "options": ["True", "False"],
+      "expected": [0],
+      "hints": ["`-f` requires the filename argument immediately after."],
       "explanation": "`-f` must immediately precede the archive filename argument."
     },
     {
@@ -5335,14 +4354,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "tar -cf archive.tar folder/"
-        ],
+        "accepted": ["tar -cf archive.tar folder/"],
         "patterns": []
       },
-      "hints": [
-        "Use `-cf`."
-      ],
+      "hints": ["Use `-cf`."],
       "explanation": "`tar -cf` creates an uncompressed tar archive."
     },
     {
@@ -5358,14 +4373,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "-P"
-        ],
+        "accepted": ["-P"],
         "patterns": []
       },
-      "hints": [
-        "Capital P."
-      ],
+      "hints": ["Capital P."],
       "explanation": "`-P` specifies a custom remote SSH port in `scp`."
     },
     {
@@ -5381,14 +4392,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "/etc"
-        ],
+        "accepted": ["/etc"],
         "patterns": []
       },
-      "hints": [
-        "Starts with 'e'."
-      ],
+      "hints": ["Starts with 'e'."],
       "explanation": "`/etc` holds system configuration files."
     },
     {
@@ -5404,14 +4411,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "/tmp"
-        ],
+        "accepted": ["/tmp"],
         "patterns": []
       },
-      "hints": [
-        "Three letter temp directory."
-      ],
+      "hints": ["Three letter temp directory."],
       "explanation": "`/tmp` stores temporary files."
     },
     {
@@ -5427,14 +4430,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "/var"
-        ],
+        "accepted": ["/var"],
         "patterns": []
       },
-      "hints": [
-        "Variable data directory."
-      ],
+      "hints": ["Variable data directory."],
       "explanation": "`/var` stores variable data such as logs, databases, and mail spools."
     },
     {
@@ -5450,14 +4449,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "/home"
-        ],
+        "accepted": ["/home"],
         "patterns": []
       },
-      "hints": [
-        "Home directory parent."
-      ],
+      "hints": ["Home directory parent."],
       "explanation": "`/home` contains individual user home directories."
     },
     {
@@ -5473,14 +4468,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "/root"
-        ],
+        "accepted": ["/root"],
         "patterns": []
       },
-      "hints": [
-        "Root's home."
-      ],
+      "hints": ["Root's home."],
       "explanation": "`/root` is the superuser's home directory."
     },
     {
@@ -5496,15 +4487,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "/bin",
-          "/usr/bin"
-        ],
+        "accepted": ["/bin", "/usr/bin"],
         "patterns": []
       },
-      "hints": [
-        "Binaries."
-      ],
+      "hints": ["Binaries."],
       "explanation": "`/bin` and `/usr/bin` store standard user commands."
     },
     {
@@ -5520,14 +4506,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "/dev"
-        ],
+        "accepted": ["/dev"],
         "patterns": []
       },
-      "hints": [
-        "Device directory."
-      ],
+      "hints": ["Device directory."],
       "explanation": "`/dev` contains device files representing hardware and virtual streams."
     },
     {
@@ -5543,14 +4525,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "/boot"
-        ],
+        "accepted": ["/boot"],
         "patterns": []
       },
-      "hints": [
-        "Boot directory."
-      ],
+      "hints": ["Boot directory."],
       "explanation": "`/boot` stores bootloader and kernel image files."
     },
     {
@@ -5566,14 +4544,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "/run"
-        ],
+        "accepted": ["/run"],
         "patterns": []
       },
-      "hints": [
-        "Runtime directory."
-      ],
+      "hints": ["Runtime directory."],
       "explanation": "`/run` holds volatile runtime state data since system boot."
     },
     {
@@ -5588,18 +4562,9 @@
       "examEligible": true,
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
-      "options": [
-        "/etc/passwd",
-        "/etc/shadow",
-        "/etc/group",
-        "/etc/sudoers"
-      ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "Passwd file."
-      ],
+      "options": ["/etc/passwd", "/etc/shadow", "/etc/group", "/etc/sudoers"],
+      "expected": [0],
+      "hints": ["Passwd file."],
       "explanation": "`/etc/passwd` holds user account records."
     },
     {
@@ -5615,15 +4580,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "Top of entire filesystem tree",
-          "topmost root"
-        ],
+        "accepted": ["Top of entire filesystem tree", "topmost root"],
         "patterns": []
       },
-      "hints": [
-        "Topmost directory."
-      ],
+      "hints": ["Topmost directory."],
       "explanation": "`/` is the root directory."
     },
     {
@@ -5639,14 +4599,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "/var/log"
-        ],
+        "accepted": ["/var/log"],
         "patterns": []
       },
-      "hints": [
-        "`/var/log`"
-      ],
+      "hints": ["`/var/log`"],
       "explanation": "`/var/log` is the log directory."
     },
     {
@@ -5662,14 +4618,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "GREETING=hello"
-        ],
+        "accepted": ["GREETING=hello"],
         "patterns": []
       },
-      "hints": [
-        "`NAME=value`"
-      ],
+      "hints": ["`NAME=value`"],
       "explanation": "`NAME=value` assigns a local shell variable."
     },
     {
@@ -5685,15 +4637,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "export GREETING=hello",
-          "export GREETING"
-        ],
+        "accepted": ["export GREETING=hello", "export GREETING"],
         "patterns": []
       },
-      "hints": [
-        "Use `export` command."
-      ],
+      "hints": ["Use `export` command."],
       "explanation": "`export` makes variables available to child processes as environment variables."
     },
     {
@@ -5709,15 +4656,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "env",
-          "printenv"
-        ],
+        "accepted": ["env", "printenv"],
         "patterns": []
       },
-      "hints": [
-        "`env` or `printenv`."
-      ],
+      "hints": ["`env` or `printenv`."],
       "explanation": "`env` and `printenv` list environment variables."
     },
     {
@@ -5732,18 +4674,9 @@
       "examEligible": true,
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
-      "options": [
-        "PATH",
-        "HOME",
-        "SHELL",
-        "USER"
-      ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "Command search path."
-      ],
+      "options": ["PATH", "HOME", "SHELL", "USER"],
+      "expected": [0],
+      "hints": ["Command search path."],
       "explanation": "`PATH` specifies directories searched when executing commands."
     },
     {
@@ -5759,14 +4692,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "alias ll='ls -la'"
-        ],
+        "accepted": ["alias ll='ls -la'"],
         "patterns": []
       },
-      "hints": [
-        "`alias name='command'`"
-      ],
+      "hints": ["`alias name='command'`"],
       "explanation": "`alias` creates shortcut commands."
     },
     {
@@ -5782,14 +4711,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "unalias ll"
-        ],
+        "accepted": ["unalias ll"],
         "patterns": []
       },
-      "hints": [
-        "`unalias` command."
-      ],
+      "hints": ["`unalias` command."],
       "explanation": "`unalias` removes defined command aliases."
     },
     {
@@ -5805,15 +4730,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "~/.bashrc",
-          ".bashrc"
-        ],
+        "accepted": ["~/.bashrc", ".bashrc"],
         "patterns": []
       },
-      "hints": [
-        "Dot file in home."
-      ],
+      "hints": ["Dot file in home."],
       "explanation": "`~/.bashrc` is the standard per-user interactive Bash config file."
     },
     {
@@ -5829,15 +4749,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "source ~/.bashrc",
-          ". ~/.bashrc"
-        ],
+        "accepted": ["source ~/.bashrc", ". ~/.bashrc"],
         "patterns": []
       },
-      "hints": [
-        "Use `source` or `.`."
-      ],
+      "hints": ["Use `source` or `.`."],
       "explanation": "`source ~/.bashrc` re-reads and applies configuration changes immediately."
     },
     {
@@ -5853,14 +4768,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "export PATH=\"$PATH:$HOME/bin\""
-        ],
+        "accepted": ["export PATH=\"$PATH:$HOME/bin\""],
         "patterns": []
       },
-      "hints": [
-        "`export PATH=\"$PATH:$HOME/bin\"`"
-      ],
+      "hints": ["`export PATH=\"$PATH:$HOME/bin\"`"],
       "explanation": "`export PATH=\"$PATH:$HOME/bin\"` appends a directory to search paths."
     },
     {
@@ -5876,14 +4787,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "echo $PATH"
-        ],
+        "accepted": ["echo $PATH"],
         "patterns": []
       },
-      "hints": [
-        "`echo $PATH`"
-      ],
+      "hints": ["`echo $PATH`"],
       "explanation": "Prints search paths."
     },
     {
@@ -5899,14 +4806,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "i"
-        ],
+        "accepted": ["i"],
         "patterns": []
       },
-      "hints": [
-        "Stands for 'insert'."
-      ],
+      "hints": ["Stands for 'insert'."],
       "explanation": "Pressing `i` enters Insert mode in Vim."
     },
     {
@@ -5922,14 +4825,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "Esc"
-        ],
+        "accepted": ["Esc"],
         "patterns": []
       },
-      "hints": [
-        "Escape key."
-      ],
+      "hints": ["Escape key."],
       "explanation": "Pressing `Esc` returns to Normal mode."
     },
     {
@@ -5945,15 +4844,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          ":wq",
-          "ZZ"
-        ],
+        "accepted": [":wq", "ZZ"],
         "patterns": []
       },
-      "hints": [
-        "Colon followed by w and q."
-      ],
+      "hints": ["Colon followed by w and q."],
       "explanation": "`:wq` saves and quits Vim (or `ZZ` in Normal mode)."
     },
     {
@@ -5969,14 +4863,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          ":q!"
-        ],
+        "accepted": [":q!"],
         "patterns": []
       },
-      "hints": [
-        "Colon followed by q and exclamation mark."
-      ],
+      "hints": ["Colon followed by q and exclamation mark."],
       "explanation": "`:q!` forces quitting without saving changes."
     },
     {
@@ -5992,14 +4882,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "dd"
-        ],
+        "accepted": ["dd"],
         "patterns": []
       },
-      "hints": [
-        "Double d."
-      ],
+      "hints": ["Double d."],
       "explanation": "`dd` deletes the current line in Normal mode."
     },
     {
@@ -6015,14 +4901,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "yy"
-        ],
+        "accepted": ["yy"],
         "patterns": []
       },
-      "hints": [
-        "Double y."
-      ],
+      "hints": ["Double y."],
       "explanation": "`yy` copies (yanks) the current line."
     },
     {
@@ -6038,14 +4920,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "p"
-        ],
+        "accepted": ["p"],
         "patterns": []
       },
-      "hints": [
-        "Stands for 'paste'."
-      ],
+      "hints": ["Stands for 'paste'."],
       "explanation": "`p` pastes text after the cursor or on the line below."
     },
     {
@@ -6061,14 +4939,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "u"
-        ],
+        "accepted": ["u"],
         "patterns": []
       },
-      "hints": [
-        "Stands for 'undo'."
-      ],
+      "hints": ["Stands for 'undo'."],
       "explanation": "`u` undoes the previous edit."
     },
     {
@@ -6084,14 +4958,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "gg"
-        ],
+        "accepted": ["gg"],
         "patterns": []
       },
-      "hints": [
-        "Double g."
-      ],
+      "hints": ["Double g."],
       "explanation": "`gg` jumps to the first line of the file."
     },
     {
@@ -6107,14 +4977,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "G"
-        ],
+        "accepted": ["G"],
         "patterns": []
       },
-      "hints": [
-        "Shift+g or capital G."
-      ],
+      "hints": ["Shift+g or capital G."],
       "explanation": "`G` jumps to the last line of the file."
     },
     {
@@ -6130,14 +4996,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "/"
-        ],
+        "accepted": ["/"],
         "patterns": []
       },
-      "hints": [
-        "Forward slash."
-      ],
+      "hints": ["Forward slash."],
       "explanation": "`/` initiates forward text searching in Vim."
     },
     {
@@ -6152,16 +5014,9 @@
       "examEligible": true,
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
-      "options": [
-        "True",
-        "False"
-      ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "Modes change key behavior."
-      ],
+      "options": ["True", "False"],
+      "expected": [0],
+      "hints": ["Modes change key behavior."],
       "explanation": "Vim operates using distinct modes (Normal, Insert, Command)."
     },
     {
@@ -6177,15 +5032,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "Ctrl+r",
-          "ctrl+r"
-        ],
+        "accepted": ["Ctrl+r", "ctrl+r"],
         "patterns": []
       },
-      "hints": [
-        "Control + r."
-      ],
+      "hints": ["Control + r."],
       "explanation": "`Ctrl+r` performs redo in Vim."
     },
     {
@@ -6201,14 +5051,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          ":w"
-        ],
+        "accepted": [":w"],
         "patterns": []
       },
-      "hints": [
-        "Colon followed by w."
-      ],
+      "hints": ["Colon followed by w."],
       "explanation": "`:w` saves the file."
     },
     {
@@ -6224,14 +5070,10 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "o"
-        ],
+        "accepted": ["o"],
         "patterns": []
       },
-      "hints": [
-        "Lowercase o."
-      ],
+      "hints": ["Lowercase o."],
       "explanation": "`o` opens a new line below and switches to Insert mode."
     }
   ]

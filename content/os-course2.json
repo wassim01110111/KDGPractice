@@ -9,7 +9,7 @@
       "course": "os",
       "category": "Linux",
 
-      "title": "Linux fundamentals: practical task 1 (Wassim's pick)",
+      "title": "Linux fundamentals: practical task 1",
       "instructions": "Which concept is the core managing hardware, memory, processes and filesystems?",
       "difficulty": "Medium",
       "type": "command-text",
