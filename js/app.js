@@ -2359,9 +2359,15 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
     S.attempts.forEach((a) => {
       la[a.key] = a.correct;
     });
+    items = filtered.filter(
+      (e) =>
+        showCompleted || keyOf(e) === selectedKey || !S.xpRewards[keyOf(e)],
+    );
+
+    // Keep the active exercise available while filters change.
     if (selectedKey && !items.some((e) => keyOf(e) === selectedKey)) {
-      selectedKey = "";
-      pane.replaceChildren();
+      const currentExercise = S.exercises.find((e) => keyOf(e) === selectedKey);
+      if (currentExercise) items.unshift(currentExercise);
     }
     const buttons = items.map((e) =>
       h(
