@@ -1,13 +1,39 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SQL + OS Practice</title><link rel="stylesheet" href="css/style.css"></head>
-<body>
-<header><button id="brand" class="brand" type="button" aria-label="SQL + OS Practice">SQL + OS Practice</button>
-<nav id="nav"><a href="#/reader">Reference</a><a href="#/practice">Practice</a><a href="#/exam">Exam</a><a href="#/progress">Progress</a></nav></header>
-<main id="main"></main>
-<div id="periodic-toast" class="periodic-toast" role="status" aria-live="polite" hidden></div>
-<!-- SQL engine: PGlite (PostgreSQL in WASM), loaded via <script src>. Change the URL inside js/pglite-loader.js to self-host. -->
-<script type="module" src="js/pglite-loader.js"></script>
-<script src="js/core.js"></script>
-<script src="js/app.js"></script>
-</body></html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SQL + OS Practice</title>
+    <link rel="icon" type="image/png" href="assets/favicon.png" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header>
+      <button
+        id="brand"
+        class="brand"
+        type="button"
+        aria-label="SQL + OS Practice"
+      >
+        SQL + OS Practice
+      </button>
+      <nav id="nav">
+        <a href="#/reader">Reference</a><a href="#/practice">Practice</a
+        ><a href="#/exam">Exam</a><a href="#/progress">Progress</a>
+      </nav>
+    </header>
+    <div id="terminal-artifact" class="terminal-artifact" aria-hidden="true"></div>
+    <main id="main"></main>
+    <div
+      id="periodic-toast"
+      class="periodic-toast"
+      role="status"
+      aria-live="polite"
+      hidden
+    ></div>
+    <!-- SQL engine: PGlite (PostgreSQL in WASM), loaded via <script src>. Change the URL inside js/pglite-loader.js to self-host. -->
+    <script type="module" src="js/pglite-loader.js"></script>
+    <script src="js/core.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>

@@ -84,6 +84,8 @@ nav a.on {
   font-weight: 700;
 }
 main {
+  position: relative;
+  z-index: 1;
   max-width: 95vw;
   min-height: calc(100vh - 70px);
   margin: 0 auto;
@@ -628,7 +630,7 @@ button.schema-view-toggle.on {
   display: block;
   max-width: 100%;
   overflow: auto;
-  background: #fff;
+  background: #1b1b1b;
   border: 1px solid var(--bd);
   border-radius: 8px;
   text-align: center;
@@ -949,6 +951,54 @@ button.sql-result-toggle:hover:not(:disabled) {
   opacity: 1;
   transform: translateY(0);
 }
+.hint-panel {
+  margin: 0.6rem 0;
+  padding: 0.8rem 1rem;
+  color: var(--hint-fg);
+  background: var(--hint-bg);
+  border: 1px solid var(--hint-border);
+  border-left-width: 4px;
+  border-radius: 8px;
+}
+.hint-panel ul {
+  margin: 0.4rem 0 0;
+  padding-left: 1.25rem;
+}
+.terminal-artifact {
+  position: fixed;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  contain: strict;
+}
+.terminal-artifact span {
+  position: absolute;
+  top: -110vh;
+  color: #18ff78;
+  font:
+    600 0.85rem/1.45 ui-monospace,
+    "Cascadia Code",
+    monospace;
+  white-space: pre;
+  text-shadow: 0 0 8px rgb(24 255 120 / 70%);
+  opacity: 0.62;
+}
+.terminal-artifact.active {
+  opacity: 0.22;
+}
+.terminal-artifact.active span {
+  animation: terminal-scroll 7s linear both;
+}
+@keyframes terminal-scroll {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(220vh);
+  }
+}
 .danger-zone {
   border-color: color-mix(in srgb, var(--bad) 45%, var(--bd));
 }
@@ -1055,6 +1105,11 @@ textarea:hover {
     transition:
       opacity 0.2s ease,
       transform 0.2s ease;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .terminal-artifact {
+    display: none;
   }
 }
 @media (prefers-reduced-motion: reduce) {

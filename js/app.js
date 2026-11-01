@@ -263,6 +263,7 @@ function addPackage(f, ctx) {
 
 // ---------- SQL engine ----------
 const snaps = {};
+const snapshotLoads = {};
 async function engine() {
   await (window.pgliteReady ||
     Promise.reject(new Error("PGlite loader missing")));
@@ -270,18 +271,31 @@ async function engine() {
 }
 async function freshDb(ds) {
   const P = await engine(),
-    k = ds.id + "@" + ds.version,
-    s = snaps[k];
+    k = ds.id + "@" + ds.version;
+  let s = snaps[k];
   if (s && s !== "exec") return new P({ loadDataDir: s });
+  if (!s) {
+    snapshotLoads[k] ??= (async () => {
+      const db = new P();
+      try {
+        await db.exec(ds.sql);
+        try {
+          snaps[k] = await db.dumpDataDir();
+        } catch {
+          snaps[k] = "exec";
+        }
+      } finally {
+        db.close();
+      }
+    })().finally(() => {
+      delete snapshotLoads[k];
+    });
+    await snapshotLoads[k];
+    s = snaps[k];
+    if (s && s !== "exec") return new P({ loadDataDir: s });
+  }
   const db = new P();
   await db.exec(ds.sql);
-  if (!s) {
-    try {
-      snaps[k] = await db.dumpDataDir();
-    } catch {
-      snaps[k] = "exec";
-    }
-  }
   return db;
 }
 async function runSql(db, sql) {
@@ -732,7 +746,7 @@ function schemaView(ex) {
     );
     try {
       const encoded = await plantumlEncode(uml.join("\n"));
-      const imageUrl = `https://www.plantuml.com/plantuml/svg/${encoded}`;
+      const imageUrl = `https://www.plantuml.com/plantuml/dsvg/${encoded}`;
       diagramImage.src = imageUrl;
     } catch (e) {
       diagramViewer.replaceChildren(
@@ -774,8 +788,14 @@ function qView(ex, mode, get, set, onAttempt = () => {}) {
   const q = h("div", { class: "q" }),
     out = h("div"),
     fb = h("div");
+  const scrollToFeedback = () =>
+    fb.scrollIntoView({
+      behavior: matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? "auto"
+        : "smooth",
+      block: "center",
+    });
   let schemaPanel;
-  let hint = 0;
   const draftStatus = h(
     "small",
     { class: "draft-status", role: "status" },
@@ -887,6 +907,7 @@ function qView(ex, mode, get, set, onAttempt = () => {}) {
                 ? h("p", {}, h("b", {}, "Explanation: "), ex.explanation)
                 : "",
             );
+            scrollToFeedback();
           },
         },
         "Submit (Ctrl + Shift + Enter)",
@@ -1017,6 +1038,7 @@ function qView(ex, mode, get, set, onAttempt = () => {}) {
                   ),
                 ),
               );
+              scrollToFeedback();
               return;
             }
             await rec(ex, g, "practice", onAttempt);
@@ -1030,6 +1052,7 @@ function qView(ex, mode, get, set, onAttempt = () => {}) {
                 ? h("p", {}, h("b", {}, "Explanation: "), ex.explanation)
                 : "",
             );
+            scrollToFeedback();
           },
         },
         "Submit (Ctrl + Shift + Enter)",
@@ -1065,31 +1088,87 @@ function qView(ex, mode, get, set, onAttempt = () => {}) {
         "Reset",
       ),
     );
-    if (ex.hints && ex.hints.length) {
+    const hints = Array.isArray(ex.hints)
+      ? ex.hints
+      : typeof ex.hints === "string"
+        ? [ex.hints]
+        : [];
+    if (hints.length) {
+      const hintPanel = h("div", {
+        class: "hint-panel",
+        hidden: true,
+        "aria-live": "polite",
+      });
       const hb = h(
         "button",
         {
           class: "sec",
           onclick: () => {
-            fb.append(h("p", {}, "💡 " + ex.hints[hint++]));
-            if (hint >= ex.hints.length) hb.disabled = true;
+            const showHints = hintPanel.hidden;
+            hintPanel.hidden = !showHints;
+            hintPanel.replaceChildren(
+              ...(showHints
+                ? [
+                    h("strong", {}, "Hints"),
+                    h(
+                      "ul",
+                      {},
+                      ...hints.map((hintText) => h("li", {}, hintText)),
+                    ),
+                  ]
+                : []),
+            );
+            hb.textContent = showHints ? "Hide hints" : "Show hints";
+            hb.setAttribute("aria-expanded", String(showHints));
           },
+          "aria-expanded": "false",
         },
-        "Hint",
+        "Show hints",
       );
       btns.append(hb);
+      q.append(hintPanel);
     }
     if (ex.type === "sql-query" && ex.referenceSolution) {
       const snippet = h("div", {
         id: `sql-result-snippet-${ex.id}`,
         class: "sql-result-panel",
-        hidden: true,
       });
+      let loadingSnippet = false;
+      const loadResultSnippet = async () => {
+        if (snippet.dataset.loaded || loadingSnippet) return;
+        loadingSnippet = true;
+        toggle.disabled = true;
+        snippet.replaceChildren(
+          h("strong", {}, "Expected result preview"),
+          h("small", {}, "Loading the first five result rows…"),
+        );
+        try {
+          const { res } = await runStudent(ex, ex.referenceSolution);
+          snippet.replaceChildren(
+            h("strong", {}, "Expected result preview"),
+            h(
+              "small",
+              {},
+              "A preview of rows returned by the reference query.",
+            ),
+            table(res, 5),
+          );
+          snippet.dataset.loaded = "true";
+        } catch (e) {
+          snippet.replaceChildren(
+            h("strong", {}, "Could not load result preview"),
+            h("pre", { class: "err" }, e.message),
+          );
+        } finally {
+          loadingSnippet = false;
+          toggle.disabled = false;
+        }
+      };
       const toggle = h(
         "button",
         {
           class: "sql-result-toggle",
-          "aria-expanded": "false",
+          "aria-expanded": "true",
           "aria-controls": snippet.id,
           onclick: async () => {
             if (!snippet.hidden) {
@@ -1101,38 +1180,14 @@ function qView(ex, mode, get, set, onAttempt = () => {}) {
             snippet.hidden = false;
             toggle.textContent = "Hide result snippet";
             toggle.setAttribute("aria-expanded", "true");
-            if (snippet.dataset.loaded) return;
-            toggle.disabled = true;
-            snippet.replaceChildren(
-              h("strong", {}, "Expected result preview"),
-              h("small", {}, "Loading the first five result rows…"),
-            );
-            try {
-              const { res } = await runStudent(ex, ex.referenceSolution);
-              snippet.replaceChildren(
-                h("strong", {}, "Expected result preview"),
-                h(
-                  "small",
-                  {},
-                  "A preview of rows returned by the reference query.",
-                ),
-                table(res, 5),
-              );
-              snippet.dataset.loaded = "true";
-            } catch (e) {
-              snippet.replaceChildren(
-                h("strong", {}, "Could not load result preview"),
-                h("pre", { class: "err" }, e.message),
-              );
-            } finally {
-              toggle.disabled = false;
-            }
+            await loadResultSnippet();
           },
         },
-        "Show result snippet",
+        "Hide result snippet",
       );
       btns.append(toggle);
       q.append(snippet);
+      loadResultSnippet();
     }
     const hasSol = ex.type === "sql-query" ? !!ex.referenceSolution : true;
     if (hasSol && ex.type !== "short-answer-self-check") {
@@ -1408,7 +1463,7 @@ async function pageReader(root, arg) {
   }
 }
 
-async function pagePractice(root) {
+async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
   if (!S.exercises.length)
     return root.append(
       empty(
@@ -1424,6 +1479,7 @@ async function pagePractice(root) {
       "aria-label": "Filter exercises",
     });
   const answers = S.drafts;
+  let showCompleted = false;
   let selectedKey = "";
   const categoryLabel = (category) =>
     category
@@ -1494,6 +1550,23 @@ async function pagePractice(root) {
         h("span", { class: "filter-label" }, name),
         select,
       );
+  const completedToggle = h(
+    "button",
+    {
+      type: "button",
+      class: "sec",
+      "aria-pressed": "false",
+      onclick: () => {
+        showCompleted = !showCompleted;
+        completedToggle.textContent = showCompleted
+          ? "Hide completed"
+          : "Show all exercises";
+        completedToggle.setAttribute("aria-pressed", String(showCompleted));
+        draw();
+      },
+    },
+    "Show all exercises",
+  );
   function refreshCategories() {
     const categories = [
       ...new Map(
@@ -1530,10 +1603,11 @@ async function pagePractice(root) {
     filterControl("Course", courseSelect),
     filterControl("Category", categorySelect),
     filterControl("Difficulty", difficultySelect),
+    completedToggle,
   );
   const draw = () => {
     const query = search.value.trim().toLocaleLowerCase();
-    const items = S.exercises.filter(
+    const filtered = S.exercises.filter(
       (e) =>
         Object.entries(f).every(([k, v]) => !v || String(e[k]) === v) &&
         (!query ||
@@ -1542,6 +1616,12 @@ async function pagePractice(root) {
               .toLocaleLowerCase()
               .includes(query),
           )),
+    );
+    const items = filtered.filter(
+      (e) =>
+        showCompleted ||
+        keyOf(e) === selectedKey ||
+        !S.xpRewards[keyOf(e)],
     );
     const la = {};
     S.attempts.forEach((a) => {
@@ -1558,17 +1638,7 @@ async function pagePractice(root) {
           class: "item" + (keyOf(e) === selectedKey ? " on" : ""),
           "aria-pressed": keyOf(e) === selectedKey,
           onclick: () => {
-            selectedKey = keyOf(e);
-            pane.replaceChildren(
-              qView(
-                e,
-                "practice",
-                () => answers[keyOf(e)],
-                (v) => saveDraft(keyOf(e), v),
-                () => draw(),
-              ),
-            );
-            draw();
+            selectExercise(e, true);
           },
         },
         `${la[keyOf(e)] === undefined ? "○" : la[keyOf(e)] ? "✔" : "✘"} ${e.title}`,
@@ -1580,10 +1650,40 @@ async function pagePractice(root) {
       ),
     );
     if (!buttons.length)
-      buttons.push(h("small", {}, "No exercises match these filters."));
+      buttons.push(
+        h(
+          "small",
+          {},
+          filtered.length && !showCompleted
+            ? "All matching exercises are completed."
+            : "No exercises match these filters.",
+        ),
+      );
     list.replaceChildren(...buttons);
   };
+  function selectExercise(exercise, addHistoryEntry) {
+    selectedKey = keyOf(exercise);
+    pane.replaceChildren(
+      qView(
+        exercise,
+        "practice",
+        () => answers[keyOf(exercise)],
+        (v) => saveDraft(keyOf(exercise), v),
+        () => draw(),
+      ),
+    );
+    if (addHistoryEntry) {
+      const url = `#/practice/${encodeURIComponent(exercise.packageId)}/${encodeURIComponent(exercise.id)}`;
+      if (location.hash !== url) history.pushState(null, "", url);
+    }
+    draw();
+  }
   draw();
+  const routeExercise = S.exercises.find(
+    (exercise) =>
+      exercise.packageId === routePackageId && exercise.id === routeExerciseId,
+  );
+  if (routeExercise) selectExercise(routeExercise, false);
   root.append(flt, h("div", { class: "cols" }, list, pane));
 }
 
@@ -2357,6 +2457,38 @@ const pages = {
   progress: pageProgress,
 };
 const periodicToast = $("#periodic-toast");
+const terminalArtifact = $("#terminal-artifact");
+const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
+if (terminalArtifact && !reducedMotion.matches) {
+  const alphabet = "0123456789ABCDEF<>[]{}|_-=+/*;:.";
+  terminalArtifact.hidden = true;
+  for (let column = 0; column < 12; column++) {
+    const stream = Array.from({ length: 28 }, () =>
+      Array.from(
+        { length: 3 },
+        () => alphabet[Math.floor(Math.random() * alphabet.length)],
+      ).join(""),
+    ).join("\n");
+    terminalArtifact.append(
+      h(
+        "span",
+        {
+          style: `left:${(column / 12) * 100}%;animation-delay:${column * 0.08}s`,
+        },
+        stream,
+      ),
+    );
+  }
+  setInterval(() => {
+    if (reducedMotion.matches || document.hidden) return;
+    terminalArtifact.hidden = false;
+    terminalArtifact.classList.add("active");
+    setTimeout(() => {
+      terminalArtifact.classList.remove("active");
+      terminalArtifact.hidden = true;
+    }, 7000);
+  }, 60_000);
+}
 function schedulePeriodicToast() {
   const delay = 60_000 + Math.random() * 9 * 60_000;
   setTimeout(() => {
@@ -2376,7 +2508,7 @@ schedulePeriodicToast();
 let routeTok = 0;
 async function route() {
   const tok = ++routeTok,
-    [, p = "reader", arg] = location.hash.split("/"),
+    [, p = "reader", arg, exerciseArg] = location.hash.split("/"),
     main = $("#main");
   main.replaceChildren();
   document
@@ -2389,10 +2521,22 @@ async function route() {
     );
   const view = h("div");
   main.append(view);
-  await (pages[p] || pageReader)(view, arg);
+  if (p === "practice") {
+    const decodeSegment = (segment) => {
+      try {
+        return decodeURIComponent(segment || "");
+      } catch {
+        return "";
+      }
+    };
+    await pagePractice(view, decodeSegment(arg), decodeSegment(exerciseArg));
+  } else {
+    await (pages[p] || pageReader)(view, arg);
+  }
   if (tok !== routeTok) view.remove();
 }
 addEventListener("hashchange", route);
+addEventListener("popstate", route);
 loadContent()
   .then(route)
   .catch((e) => {
