@@ -611,10 +611,11 @@ function schemaView(ex) {
       "hide circle",
       "hide methods",
       "skinparam linetype ortho",
-      "skinparam nodesep 90",
-      "skinparam ranksep 110",
+      "skinparam nodesep 150",
+      "skinparam ranksep 170",
       "skinparam padding 16",
       "skinparam defaultFontSize 18",
+      "skinparam ArrowFontSize 14",
       "skinparam dpi 160",
       "skinparam shadowing false",
     ];
@@ -635,7 +636,7 @@ function schemaView(ex) {
     }
     for (const rel of relations)
       uml.push(
-        `${aliases.get(rel.from)} }o--|| ${aliases.get(rel.to)} : ${umlText(rel.column)} -> ${umlText(rel.targetColumn)}`,
+        `${aliases.get(rel.from)} }o--|| ${aliases.get(rel.to)} : ${umlText(rel.column)}\\n→ ${umlText(rel.targetColumn)}`,
       );
     uml.push("@enduml");
     const diagramViewer = h("div", {
@@ -877,7 +878,9 @@ function qView(ex, mode, get, set, onAttempt = () => {}) {
         : "smooth",
       block: "center",
     });
-  let schemaPanel;
+  let schemaPanel,
+    runId = 0,
+    gradingId = 0;
   const draftStatus = h(
     "small",
     { class: "draft-status", role: "status" },
@@ -930,15 +933,19 @@ function qView(ex, mode, get, set, onAttempt = () => {}) {
       "button",
       {
         onclick: async () => {
+          const currentRun = ++runId;
+          fb.replaceChildren();
           out.replaceChildren(h("small", {}, "Running…"));
           try {
             const r = await runStudent(ex, ta.value);
+            if (currentRun !== runId || !q.isConnected) return;
             out.replaceChildren(
               table(r.res),
               h("small", {}, `${r.ms} ms (fresh database)`),
             );
           } catch (e) {
-            out.replaceChildren(h("pre", { class: "err" }, e.message));
+            if (currentRun === runId && q.isConnected)
+              out.replaceChildren(h("pre", { class: "err" }, e.message));
           }
         },
       },
@@ -967,10 +974,13 @@ function qView(ex, mode, get, set, onAttempt = () => {}) {
         "button",
         {
           onclick: async () => {
+            const currentGrading = ++gradingId;
             fb.replaceChildren(h("small", {}, "Grading…"));
             const g = await gradeSql(ex, ta.value);
+            if (currentGrading !== gradingId || !q.isConnected) return;
             if (g.correct !== null)
               await rec(ex, g.correct, "practice", onAttempt);
+            if (currentGrading !== gradingId || !q.isConnected) return;
             fb.replaceChildren(
               g.error
                 ? h("pre", { class: "err" }, g.error)
@@ -1162,6 +1172,8 @@ function qView(ex, mode, get, set, onAttempt = () => {}) {
         {
           class: "sec",
           onclick: () => {
+            runId++;
+            gradingId++;
             resetFn();
             out.replaceChildren();
             fb.replaceChildren();
