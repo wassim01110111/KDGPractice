@@ -1202,7 +1202,7 @@ function qView(
                 ? h(
                     "small",
                     { class: "answer-review-note" },
-                    "Your answer may be right, but the system can't tell for sure because it only checks against listed answers.",
+                    "Your answer may be right, but the system can't tell for sure because it only checks against listed answers and certain patterns.",
                   )
                 : "",
               ex.explanation

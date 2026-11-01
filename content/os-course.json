@@ -1673,7 +1673,7 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": ["rmdir empty_dir"],
+        "accepted": ["rmdir"],
         "patterns": []
       },
       "hints": ["`rmdir` command."],
