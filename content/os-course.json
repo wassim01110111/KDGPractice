@@ -1692,7 +1692,7 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": ["cp a.txt b.txt backup/"],
+        "accepted": ["cp a.txt b.txt backup/", "cp {a,b}.txt backup/"],
         "patterns": []
       },
       "hints": ["List sources followed by target directory."],
@@ -1730,7 +1730,7 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "options": ["False", "True"],
-      "expected": [1],
+      "expected": [0],
       "hints": ["Deletion is permanent."],
       "explanation": "Linux command-line `rm` permanently unlinks files; there is no recycle bin."
     },
@@ -1747,7 +1747,7 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": ["touch one.txt two.txt"],
+        "accepted": ["touch one.txt two.txt", "touch {one,two}.txt"],
         "patterns": []
       },
       "hints": ["Pass multiple filenames to `touch`."],
@@ -1880,7 +1880,11 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": ["cut -d: -f1 /etc/passwd"],
+        "accepted": [
+          "cut -d: -f1 /etc/passwd",
+          "cut -d : -f 1 /etc/passwd",
+          "cut -d \":\" -f \"1\" /etc/passwd"
+        ],
         "patterns": []
       },
       "hints": ["Use `-d:` for delimiter and `-f1` for field 1."],
@@ -2061,7 +2065,7 @@
       "category": "Text Utilities",
 
       "title": "Process Status Ps",
-      "instructions": "Write the `ps` command with `aux` options to list all running processes in user-oriented format.",
+      "instructions": "Write the `ps` command with the options to list all running processes in user-oriented format.",
       "difficulty": "Medium",
       "type": "command-text",
       "examEligible": true,
@@ -2403,15 +2407,13 @@
       "title": "Pipe vs Redirection",
       "instructions": "True or False: A pipe (`|`) connects the stdout of one command to the stdin of another command, whereas redirection connects a command to a file.",
       "difficulty": "Easy",
-      "type": "command-text",
+      "type": "mcq-single",
       "examEligible": true,
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
-      "expected": {
-        "accepted": ["True"],
-        "patterns": []
-      },
-      "hints": ["True"],
+      "options": ["True", "False"],
+      "expected": [0],
+      "hints": ["No hint"],
       "explanation": "Pipes connect commands; redirection connects files."
     },
     {
@@ -2479,15 +2481,13 @@
       "title": "Overwrite Warning",
       "instructions": "True or False: Using `>` empties the target file before the command runs.",
       "difficulty": "Easy",
-      "type": "command-text",
+      "type": "mcq-single",
       "examEligible": true,
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
-      "expected": {
-        "accepted": ["True"],
-        "patterns": []
-      },
-      "hints": ["True"],
+      "options": ["True", "False"],
+      "expected": [0],
+      "hints": ["No hint"],
       "explanation": "`>` truncates the file."
     },
     {
@@ -2553,15 +2553,13 @@
       "title": "Symbolic Link Target Type",
       "instructions": "True or False: A symbolic link stores a path (text) pointing to the target, whereas a hard link points directly to an inode.",
       "difficulty": "Medium",
-      "type": "command-text",
+      "type": "mcq-single",
       "examEligible": true,
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
-      "expected": {
-        "accepted": ["True"],
-        "patterns": []
-      },
-      "hints": ["True"],
+      "options": ["True", "False"],
+      "expected": [0],
+      "hints": ["No hint"],
       "explanation": "Symlinks store paths."
     },
     {
@@ -2572,15 +2570,13 @@
       "title": "Cross Filesystem Hard Link",
       "instructions": "True or False: Hard links can span across different disk partitions and file systems.",
       "difficulty": "Medium",
-      "type": "command-text",
+      "type": "mcq-single",
       "examEligible": true,
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
-      "expected": {
-        "accepted": ["False"],
-        "patterns": []
-      },
-      "hints": ["False"],
+      "options": ["True", "False"],
+      "expected": [1],
+      "hints": ["No hint"],
       "explanation": "Hard links cannot cross filesystems."
     },
     {
@@ -2591,15 +2587,13 @@
       "title": "Directory Hard Link Restriction",
       "instructions": "True or False: Standard users can create hard links to directories.",
       "difficulty": "Medium",
-      "type": "command-text",
+      "type": "mcq-single",
       "examEligible": true,
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
-      "expected": {
-        "accepted": ["False"],
-        "patterns": []
-      },
-      "hints": ["False"],
+      "options": ["True", "False"],
+      "expected": [1],
+      "hints": ["No hint"],
       "explanation": "Users cannot hard-link directories."
     },
     {
@@ -2741,15 +2735,13 @@
       "title": "Double Quote Behavior",
       "instructions": "True or False: Double quotes `\" \"` allow variable expansion and command substitution while preventing wildcard expansion.",
       "difficulty": "Medium",
-      "type": "command-text",
+      "type": "mcq-single",
       "examEligible": true,
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
-      "expected": {
-        "accepted": ["True"],
-        "patterns": []
-      },
-      "hints": ["True"],
+      "options": ["True", "False"],
+      "expected": [0],
+      "hints": ["No hint"],
       "explanation": "Double quotes permit variables."
     },
     {
@@ -2836,15 +2828,13 @@
       "title": "Single Quote Escaping",
       "instructions": "True or False: A single-quoted string can contain a literal single quote inside it if you just use standard typing.",
       "difficulty": "Medium",
-      "type": "command-text",
+      "type": "mcq-single",
       "examEligible": true,
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
-      "expected": {
-        "accepted": ["False"],
-        "patterns": []
-      },
-      "hints": ["False"],
+      "options": ["True", "False"],
+      "expected": [1],
+      "hints": ["No hint"],
       "explanation": "Cannot embed single quotes directly."
     },
     {
@@ -2874,15 +2864,13 @@
       "title": "Command Substitution Quoting",
       "instructions": "True or False: Command substitution `$(cmd)` is evaluated inside double quotes but not inside single quotes.",
       "difficulty": "Medium",
-      "type": "command-text",
+      "type": "mcq-single",
       "examEligible": true,
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
-      "expected": {
-        "accepted": ["True"],
-        "patterns": []
-      },
-      "hints": ["True"],
+      "options": ["True", "False"],
+      "expected": [0],
+      "hints": ["No hint"],
       "explanation": "Evaluated inside double quotes."
     },
     {
