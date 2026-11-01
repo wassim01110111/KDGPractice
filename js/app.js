@@ -1325,7 +1325,9 @@ function renderMermaidFlowchart(source) {
       .split(/\r?\n/)
       .map((line) => line.trim())
       .filter(Boolean),
-    direction = lines[0]?.match(/^flowchart\s+(LR|RL|TB|TD|BT)\b/i)?.[1]?.toUpperCase();
+    direction = lines[0]
+      ?.match(/^flowchart\s+(LR|RL|TB|TD|BT)\b/i)?.[1]
+      ?.toUpperCase();
   if (!direction) return null;
   const nodes = new Map(),
     edges = [];
@@ -1343,27 +1345,36 @@ function renderMermaidFlowchart(source) {
     if (line.startsWith("%%")) continue;
     const match = edgePattern.exec(line);
     if (!match) continue;
-    const [, from, fromSquare, fromSingle, fromRounded, fromDiamond, label, to, toSquare, toSingle, toRounded, toDiamond] =
-      match;
+    const [
+      ,
+      from,
+      fromSquare,
+      fromSingle,
+      fromRounded,
+      fromDiamond,
+      label,
+      to,
+      toSquare,
+      toSingle,
+      toRounded,
+      toDiamond,
+    ] = match;
     register(from, fromSquare, fromSingle, fromRounded, fromDiamond);
     register(to, toSquare, toSingle, toRounded, toDiamond);
     edges.push({ from, to, label: label?.replace(/^["']|["']$/g, "") });
   }
   if (!nodes.size || !edges.length) return null;
-  const nodeOrder = new Map(
-    [...nodes.keys()].map((id, index) => [id, index]),
-  );
+  const nodeOrder = new Map([...nodes.keys()].map((id, index) => [id, index]));
   const nodeWidth = 144,
     nodeHeight = 54,
     gap = 82,
     padding = 44,
-    centerY = direction === "TB" || direction === "TD" || direction === "BT"
-      ? padding + nodeHeight / 2
-      : 150,
+    centerY =
+      direction === "TB" || direction === "TD" || direction === "BT"
+        ? padding + nodeHeight / 2
+        : 150,
     positionIndex = (index) =>
-      direction === "RL" || direction === "BT"
-        ? nodes.size - index - 1
-        : index,
+      direction === "RL" || direction === "BT" ? nodes.size - index - 1 : index,
     positions = new Map(
       [...nodes.keys()].map((id, index) => [
         id,
@@ -1396,8 +1407,7 @@ function renderMermaidFlowchart(source) {
   const reciprocalRows = [];
   for (const edge of edges) {
     const reverse = edges.findIndex(
-      (candidate) =>
-        candidate.from === edge.to && candidate.to === edge.from,
+      (candidate) => candidate.from === edge.to && candidate.to === edge.from,
     );
     if (reverse < 0) break;
     if (nodeOrder.get(edge.from) < nodeOrder.get(edge.to))
@@ -1447,41 +1457,55 @@ function renderMermaidFlowchart(source) {
   const edgeMarkup = hasOnlyReciprocalPairs
     ? reciprocalMarkup
     : edges
-    .map(({ from, to, label }, edgeIndex) => {
-      const start = positions.get(from),
-        end = positions.get(to),
-        horizontal = direction === "LR" || direction === "RL",
-        sourceFirst = horizontal ? start.x < end.x : start.y < end.y,
-        startPoint = horizontal
-          ? { x: start.x + (sourceFirst ? nodeWidth / 2 : -nodeWidth / 2), y: start.y }
-          : { x: start.x, y: start.y + (sourceFirst ? nodeHeight / 2 : -nodeHeight / 2) },
-        endPoint = horizontal
-          ? { x: end.x + (sourceFirst ? -nodeWidth / 2 : nodeWidth / 2), y: end.y }
-          : { x: end.x, y: end.y + (sourceFirst ? -nodeHeight / 2 : nodeHeight / 2) },
-        pairIndex = edges.findIndex(
-          (edge, index) =>
-            index < edgeIndex &&
-            edge.from === to &&
-            edge.to === from,
-        ),
-        curve = pairIndex < 0 ? 34 : -34 - (pairIndex % 3) * 18,
-        controlX = (startPoint.x + endPoint.x) / 2 + (horizontal ? 0 : curve),
-        controlY = (startPoint.y + endPoint.y) / 2 + (horizontal ? curve : 0),
-        labelX = (startPoint.x + 2 * controlX + endPoint.x) / 4,
-        labelY = (startPoint.y + 2 * controlY + endPoint.y) / 4;
-      return `<path class="flow-edge" d="M ${startPoint.x} ${startPoint.y} Q ${controlX} ${controlY} ${endPoint.x} ${endPoint.y}" marker-end="url(#${markerId})"/>${
-        label
-          ? `<text class="flow-edge-label" x="${labelX}" y="${labelY - 5}" text-anchor="middle">${escapeHtml(label)}</text>`
-          : ""
-      }`;
-    })
-    .join("");
+        .map(({ from, to, label }, edgeIndex) => {
+          const start = positions.get(from),
+            end = positions.get(to),
+            horizontal = direction === "LR" || direction === "RL",
+            sourceFirst = horizontal ? start.x < end.x : start.y < end.y,
+            startPoint = horizontal
+              ? {
+                  x: start.x + (sourceFirst ? nodeWidth / 2 : -nodeWidth / 2),
+                  y: start.y,
+                }
+              : {
+                  x: start.x,
+                  y: start.y + (sourceFirst ? nodeHeight / 2 : -nodeHeight / 2),
+                },
+            endPoint = horizontal
+              ? {
+                  x: end.x + (sourceFirst ? -nodeWidth / 2 : nodeWidth / 2),
+                  y: end.y,
+                }
+              : {
+                  x: end.x,
+                  y: end.y + (sourceFirst ? -nodeHeight / 2 : nodeHeight / 2),
+                },
+            pairIndex = edges.findIndex(
+              (edge, index) =>
+                index < edgeIndex && edge.from === to && edge.to === from,
+            ),
+            curve = pairIndex < 0 ? 34 : -34 - (pairIndex % 3) * 18,
+            controlX =
+              (startPoint.x + endPoint.x) / 2 + (horizontal ? 0 : curve),
+            controlY =
+              (startPoint.y + endPoint.y) / 2 + (horizontal ? curve : 0),
+            labelX = (startPoint.x + 2 * controlX + endPoint.x) / 4,
+            labelY = (startPoint.y + 2 * controlY + endPoint.y) / 4;
+          return `<path class="flow-edge" d="M ${startPoint.x} ${startPoint.y} Q ${controlX} ${controlY} ${endPoint.x} ${endPoint.y}" marker-end="url(#${markerId})"/>${
+            label
+              ? `<text class="flow-edge-label" x="${labelX}" y="${labelY - 5}" text-anchor="middle">${escapeHtml(label)}</text>`
+              : ""
+          }`;
+        })
+        .join("");
   const nodeMarkup = hasOnlyReciprocalPairs
     ? ""
-    : [...nodes].map(([id, label]) => {
-    const point = positions.get(id);
-    return `<g class="flow-node"><rect x="${point.x - nodeWidth / 2}" y="${point.y - nodeHeight / 2}" width="${nodeWidth}" height="${nodeHeight}" rx="9"/><text x="${point.x}" y="${point.y}" text-anchor="middle" dominant-baseline="middle">${escapeHtml(label)}</text></g>`;
-  }).join("");
+    : [...nodes]
+        .map(([id, label]) => {
+          const point = positions.get(id);
+          return `<g class="flow-node"><rect x="${point.x - nodeWidth / 2}" y="${point.y - nodeHeight / 2}" width="${nodeWidth}" height="${nodeHeight}" rx="9"/><text x="${point.x}" y="${point.y}" text-anchor="middle" dominant-baseline="middle">${escapeHtml(label)}</text></g>`;
+        })
+        .join("");
   const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   svg.setAttribute("class", "reference-flowchart");
   const diagramWidth = hasOnlyReciprocalPairs ? 700 : width,
@@ -1492,7 +1516,10 @@ function renderMermaidFlowchart(source) {
   svg.setAttribute("width", String(diagramWidth));
   svg.setAttribute("height", String(diagramHeight));
   svg.setAttribute("role", "img");
-  svg.setAttribute("aria-label", "Flowchart: " + [...nodes.values()].join(", "));
+  svg.setAttribute(
+    "aria-label",
+    "Flowchart: " + [...nodes.values()].join(", "),
+  );
   const markerDefinition = `<defs><marker id="${markerId}" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L8,4 L0,8 z"/></marker></defs>`;
   svg.innerHTML = markerDefinition + edgeMarkup + nodeMarkup;
   const container = document.createElement("div");
@@ -1503,8 +1530,14 @@ function renderMermaidFlowchart(source) {
       "http://www.w3.org/2000/svg",
       "svg",
     );
-    mobileSvg.setAttribute("class", "reference-flowchart reference-flowchart-mobile");
-    mobileSvg.setAttribute("viewBox", `0 0 340 ${reciprocalRows.length * 205 + 10}`);
+    mobileSvg.setAttribute(
+      "class",
+      "reference-flowchart reference-flowchart-mobile",
+    );
+    mobileSvg.setAttribute(
+      "viewBox",
+      `0 0 340 ${reciprocalRows.length * 205 + 10}`,
+    );
     mobileSvg.setAttribute("width", "340");
     mobileSvg.setAttribute("height", String(reciprocalRows.length * 205 + 10));
     mobileSvg.setAttribute("role", "img");
@@ -1545,8 +1578,9 @@ const escapeHtml = (value) =>
 
 function appendSanitizedReferenceHtml(target, source) {
   const allowedElements = new Set(
-      "a b blockquote br code div em h1 h2 h3 h4 h5 h6 hr i li ol p pre section span strong style table tbody td th thead tr ul"
-        .split(" "),
+      "a b blockquote br code div em h1 h2 h3 h4 h5 h6 hr i li ol p pre section span strong style table tbody td th thead tr ul".split(
+        " ",
+      ),
     ),
     allowedAttributes = new Set([
       "class",
@@ -1566,9 +1600,7 @@ function appendSanitizedReferenceHtml(target, source) {
       if (node.nodeType !== Node.ELEMENT_NODE) return null;
       const element = node,
         tag = element.tagName.toLowerCase();
-      if (
-        ["script", "iframe", "object", "embed", "template"].includes(tag)
-      )
+      if (["script", "iframe", "object", "embed", "template"].includes(tag))
         return null;
       if (!allowedElements.has(tag)) {
         const content = document.createDocumentFragment();
@@ -1581,15 +1613,18 @@ function appendSanitizedReferenceHtml(target, source) {
       if (tag === "style") {
         const css = element.textContent;
         if (/@|url\s*\(|expression\s*\(|javascript:/i.test(css)) return null;
-        const scopedCss = css.replace(/([^{}]+)\{([^{}]*)\}/g, (rule, selectors, declarations) => {
-          if (/url\s*\(|expression\s*\(|javascript:/i.test(declarations))
-            return "";
-          const scopedSelectors = selectors
-            .split(",")
-            .map((selector) => `.md ${selector.trim()}`)
-            .join(", ");
-          return `${scopedSelectors}{${declarations}}`;
-        });
+        const scopedCss = css.replace(
+          /([^{}]+)\{([^{}]*)\}/g,
+          (rule, selectors, declarations) => {
+            if (/url\s*\(|expression\s*\(|javascript:/i.test(declarations))
+              return "";
+            const scopedSelectors = selectors
+              .split(",")
+              .map((selector) => `.md ${selector.trim()}`)
+              .join(", ");
+            return `${scopedSelectors}{${declarations}}`;
+          },
+        );
         if (!scopedCss.trim()) return null;
         const style = document.createElement("style");
         style.textContent = scopedCss;
@@ -1602,8 +1637,7 @@ function appendSanitizedReferenceHtml(target, source) {
         if (
           name.startsWith("on") ||
           (!allowedAttributes.has(name) && !name.startsWith("aria-")) ||
-          (name === "href" &&
-            !/^(?:#|https?:\/\/)/i.test(value.trim())) ||
+          (name === "href" && !/^(?:#|https?:\/\/)/i.test(value.trim())) ||
           (name === "style" &&
             /url\s*\(|expression\s*\(|javascript:|@import/i.test(value))
         )
@@ -1697,7 +1731,9 @@ function md(src) {
       for (i++; i < L.length && !/^```/.test(L[i]); i++) b.push(L[i]);
       if (language === "mermaid")
         o.push(
-          '<pre class="mermaid-source"><code>' + esc(b.join("\n")) + "</code></pre>",
+          '<pre class="mermaid-source"><code>' +
+            esc(b.join("\n")) +
+            "</code></pre>",
         );
       else
         o.push(
@@ -1709,9 +1745,13 @@ function md(src) {
     }
     if (/^\s*<(style|div|section|table|figure|blockquote)\b/i.test(l)) {
       fl();
-      const tag = l.trim().match(/^<([a-z]+)/i)?.[1].toLowerCase();
+      const tag = l
+        .trim()
+        .match(/^<([a-z]+)/i)?.[1]
+        .toLowerCase();
       const block = [l];
-      let depth = (l.match(new RegExp(`<${tag}\\b`, "gi")) || []).length -
+      let depth =
+        (l.match(new RegExp(`<${tag}\\b`, "gi")) || []).length -
         (l.match(new RegExp(`</${tag}\\s*>`, "gi")) || []).length;
       while (depth > 0 && i + 1 < L.length) {
         const next = L[++i];
@@ -1720,7 +1760,9 @@ function md(src) {
           (next.match(new RegExp(`<${tag}\\b`, "gi")) || []).length -
           (next.match(new RegExp(`</${tag}\\s*>`, "gi")) || []).length;
       }
-      o.push('<div class="reference-html-block">' + block.join("\n") + "</div>");
+      o.push(
+        '<div class="reference-html-block">' + block.join("\n") + "</div>",
+      );
       continue;
     }
     if (
@@ -1995,7 +2037,10 @@ async function pageReader(root, arg) {
     if (event.key === "Enter") {
       event.preventDefault();
       showMatch(currentMatch + (event.shiftKey ? -1 : 1));
-    } else if (event.key === "Escape" && searchPanel.classList.contains("mobile-open")) {
+    } else if (
+      event.key === "Escape" &&
+      searchPanel.classList.contains("mobile-open")
+    ) {
       closeMobileSearch();
     }
   });
@@ -2222,9 +2267,7 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
     );
     const items = filtered.filter(
       (e) =>
-        showCompleted ||
-        keyOf(e) === selectedKey ||
-        !S.xpRewards[keyOf(e)],
+        showCompleted || keyOf(e) === selectedKey || !S.xpRewards[keyOf(e)],
     );
     const la = {};
     S.attempts.forEach((a) => {
@@ -2304,19 +2347,15 @@ async function pageExam(root, isCurrent = () => true) {
         ? checkpoint
         : indexedDbExam;
   } catch (error) {
-    root.append(
-      empty(
-        "Could not read the saved exam.",
-        error.message,
-      ),
-    );
+    root.append(empty("Could not read the saved exam.", error.message));
     return;
   }
   if (!isCurrent()) return;
   if (saved && !saved.submitted) {
     const shouldContinue = await confirmInApp({
       title: "Exam in progress",
-      message: "There’s an unfinished exam saved on this device. Would you like to continue where you left off?",
+      message:
+        "There’s an unfinished exam saved on this device. Would you like to continue where you left off?",
       confirmLabel: "Continue exam",
       cancelLabel: "Discard exam",
       danger: true,
@@ -2328,9 +2367,7 @@ async function pageExam(root, isCurrent = () => true) {
     try {
       await discardExamState();
     } catch (error) {
-      root.append(
-        empty("Could not discard the saved exam.", error.message),
-      );
+      root.append(empty("Could not discard the saved exam.", error.message));
       return;
     }
   }
@@ -2348,25 +2385,17 @@ async function pageExam(root, isCurrent = () => true) {
     );
   const num = (k, l) => {
     const input = h("input", {
-        type: "number",
-        min: 0,
-        value: cfg[k],
-        oninput: (e) => {
-          cfg[k] = Math.min(
-            +e.target.max,
-            Math.max(0, +e.target.value || 0),
-          );
-          e.target.value = cfg[k];
-          updateExamSummary();
-        },
-      });
+      type: "number",
+      min: 0,
+      value: cfg[k],
+      oninput: (e) => {
+        cfg[k] = Math.min(+e.target.max, Math.max(0, +e.target.value || 0));
+        e.target.value = cfg[k];
+        updateExamSummary();
+      },
+    });
     difficultyInputs[k] = input;
-    return h(
-      "label",
-      { class: "exam-count-control" },
-      h("span", {}, l),
-      input,
-    );
+    return h("label", { class: "exam-count-control" }, h("span", {}, l), input);
   };
   const examSummary = h("div", {
     class: "exam-config-summary",
@@ -2604,11 +2633,11 @@ async function runExam(root, st) {
         saveStatus.classList.remove("err");
       })
       .catch((error) => {
-        saveStatus.textContent = "Could not save exam progress: " + error.message;
+        saveStatus.textContent =
+          "Could not save exam progress: " + error.message;
         saveStatus.classList.add("err");
       });
-  const
-    top = h("div", { class: "exam-topbar card" }),
+  const top = h("div", { class: "exam-topbar card" }),
     nav = h("div", { class: "exam-question-grid" }),
     body = h("div", { class: "exam-question-body" }),
     timer = h("span", { class: "exam-timer-clock", role: "timer" }),
@@ -2636,12 +2665,7 @@ async function runExam(root, st) {
       ),
       h("section", { class: "exam-question-panel card" }, body),
     ),
-    session = h(
-      "section",
-      { class: "exam-session" },
-      top,
-      workspace,
-    );
+    session = h("section", { class: "exam-session" }, top, workspace);
   let done = false;
   let autosaveTimer;
   const submit = async () => {
@@ -2714,53 +2738,49 @@ async function runExam(root, st) {
               "Self-check questions are not scored automatically.",
             )
           : "",
-      ...rows.map((r) =>
-        h(
-          "article",
-          { class: "exam-result-card card" },
+        ...rows.map((r) =>
           h(
-            "div",
-            { class: "exam-result-heading" },
-            h("h2", {}, r.ex.title),
-            h(
-              "span",
-              {
-                class:
-                  "exam-result-status " +
-                  (r.ok ? "ok" : r.ok === false ? "bad" : "meta"),
-              },
-              r.ok
-                ? "Correct"
-                : r.ok === false
-                  ? "Incorrect"
-                  : "Self-check",
-            ),
-          ),
-          r.note ? h("pre", { class: "err" }, r.note) : "",
-          h(
-            "details",
-            { class: "exam-answer-review" },
-            h("summary", {}, "Review answers"),
+            "article",
+            { class: "exam-result-card card" },
             h(
               "div",
-              { class: "exam-answer-comparison" },
+              { class: "exam-result-heading" },
+              h("h2", {}, r.ex.title),
               h(
-                "div",
-                {},
-                h("h3", {}, "Your answer"),
-                h("pre", {}, answerText(r.ex, r.a)),
-              ),
-              h(
-                "div",
-                {},
-                h("h3", {}, "Expected answer"),
-                h("pre", {}, expectedText(r.ex)),
+                "span",
+                {
+                  class:
+                    "exam-result-status " +
+                    (r.ok ? "ok" : r.ok === false ? "bad" : "meta"),
+                },
+                r.ok ? "Correct" : r.ok === false ? "Incorrect" : "Self-check",
               ),
             ),
+            r.note ? h("pre", { class: "err" }, r.note) : "",
+            h(
+              "details",
+              { class: "exam-answer-review" },
+              h("summary", {}, "Review answers"),
+              h(
+                "div",
+                { class: "exam-answer-comparison" },
+                h(
+                  "div",
+                  {},
+                  h("h3", {}, "Your answer"),
+                  h("pre", {}, answerText(r.ex, r.a)),
+                ),
+                h(
+                  "div",
+                  {},
+                  h("h3", {}, "Expected answer"),
+                  h("pre", {}, expectedText(r.ex)),
+                ),
+              ),
+            ),
+            r.ex.explanation ? h("p", {}, r.ex.explanation) : "",
           ),
-          r.ex.explanation ? h("p", {}, r.ex.explanation) : "",
         ),
-      ),
       ),
     );
   };
@@ -2917,17 +2937,18 @@ async function runExam(root, st) {
         "button",
         {
           class: "exam-submit-button",
-              onclick: async () => {
-                if (
-                  await confirmInApp({
-                    title: "Submit exam?",
-                    message: "Submit your answers now? You won’t be able to change them afterward.",
-                    confirmLabel: "Submit exam",
-                    danger: true,
-                  })
-                )
-                  await submit();
-              },
+          onclick: async () => {
+            if (
+              await confirmInApp({
+                title: "Submit exam?",
+                message:
+                  "Submit your answers now? You won’t be able to change them afterward.",
+                confirmLabel: "Submit exam",
+                danger: true,
+              })
+            )
+              await submit();
+          },
         },
         "Submit exam",
       ),
@@ -2958,6 +2979,23 @@ async function pageProgress(root) {
   const solvedMedium = solved.filter((e) => e.difficulty === "Medium").length;
   const solvedHard = solved.filter((e) => e.difficulty === "Hard").length;
   const solvedExtreme = solved.filter((e) => e.difficulty === "Extreme").length;
+  const sqlExercises = ex.filter((e) => e.course === "sql"),
+    osExercises = ex.filter((e) => e.course === "os"),
+    solvedMcq = solved.filter((e) =>
+      ["mcq-single", "mcq-multi", "mcq-multiple"].includes(e.type),
+    ).length,
+    solvedSqlQueries = solved.filter((e) => e.type === "sql-query").length,
+    solvedCommands = solved.filter((e) => e.type === "command-text").length,
+    solvedBlanks = solved.filter((e) => e.type === "fill-blank").length,
+    solvedTopics = new Set(solved.map((e) => e.topic || e.category)).size,
+    attemptedLatest = ex
+      .map((exercise) => attempts.get(keyOf(exercise)))
+      .filter(Boolean),
+    latestCorrect = attemptedLatest.filter((attempt) => attempt.correct).length,
+    latestAccuracy = attemptedLatest.length
+      ? latestCorrect / attemptedLatest.length
+      : 0;
+  const courseCount = [solvedSql, solvedOs].filter((count) => count > 0).length;
   const perfectExams = examHistory.filter(
     (exam) => exam.total > 0 && exam.score === exam.total,
   ).length;
@@ -3237,7 +3275,121 @@ async function pageProgress(root) {
       count: xp,
       target: 5000,
     },
+    {
+      title: "SQL Apprentice",
+      detail: "Solve 10 SQL query exercises",
+      count: solvedSqlQueries,
+      target: 10,
+    },
+    {
+      title: "Relational Reasoner",
+      detail: "Solve 10 SQL theory questions",
+      count: solved.filter(
+        (e) =>
+          e.course === "sql" &&
+          ["mcq-single", "mcq-multi", "mcq-multiple"].includes(e.type),
+      ).length,
+      target: 10,
+    },
+    {
+      title: "Systems Foundations",
+      detail: "Solve 10 operating-systems exercises",
+      count: solvedOs,
+      target: 10,
+    },
+    {
+      title: "Terminal Operator",
+      detail: "Solve 10 command-line exercises",
+      count: solvedCommands,
+      target: 10,
+    },
+    {
+      title: "Conceptual Fluency",
+      detail: "Solve 25 multiple-choice questions",
+      count: solvedMcq,
+      target: 25,
+    },
+    {
+      title: "Blank Page Solver",
+      detail: "Solve 10 fill-in-the-blank exercises",
+      count: solvedBlanks,
+      target: 10,
+    },
+    {
+      title: "Interdisciplinary Learner",
+      detail: "Solve exercises in both SQL and operating systems",
+      count: courseCount,
+      target: 2,
+    },
+    {
+      title: "Topic Cartographer",
+      detail: "Solve exercises across 5 distinct topics",
+      count: solvedTopics,
+      target: 5,
+    },
+    {
+      title: "Academic Portfolio",
+      detail: "Solve exercises across 10 distinct topics",
+      count: solvedTopics,
+      target: 10,
+    },
+    {
+      title: "Measured Accuracy",
+      detail: "Reach 80% latest-result accuracy across 10 attempts",
+      count: attemptedLatest.length >= 10 && latestAccuracy >= 0.8 ? 1 : 0,
+      target: 1,
+    },
+    {
+      title: "Reliable Researcher",
+      detail: "Reach 90% latest-result accuracy across 20 attempts",
+      count: attemptedLatest.length >= 20 && latestAccuracy >= 0.9 ? 1 : 0,
+      target: 1,
+    },
+    {
+      title: "Quarter-Curriculum",
+      detail: "Solve at least 25% of the available curriculum",
+      count: solved.length,
+      target: Math.max(1, Math.ceil(ex.length * 0.25)),
+    },
+    {
+      title: "Halfway Scholar",
+      detail: "Solve at least 50% of the available curriculum",
+      count: solved.length,
+      target: Math.max(1, Math.ceil(ex.length * 0.5)),
+    },
+    {
+      title: "Curriculum Complete",
+      detail: "Solve every currently available exercise",
+      count: solved.length,
+      target: Math.max(1, ex.length),
+    },
+    {
+      title: "Junior Scholar",
+      detail: "Reach academic level 5",
+      count: level,
+      target: 5,
+    },
+    {
+      title: "Senior Scholar",
+      detail: "Reach academic level 10",
+      count: level,
+      target: 10,
+    },
+    {
+      title: "Distinguished Scholar",
+      detail: "Reach academic level 20",
+      count: level,
+      target: 20,
+    },
   ];
+  const academicRank =
+    level >= 20
+      ? "Distinguished Scholar"
+      : level >= 10
+        ? "Senior Scholar"
+        : level >= 5
+          ? "Junior Scholar"
+          : "Foundations";
   const hero = h(
     "section",
     { class: "level-card" },
@@ -3245,8 +3397,8 @@ async function pageProgress(root) {
     h(
       "div",
       { class: "level-info" },
-      h("p", { class: "eyebrow" }, "STUDENT PROGRESS"),
-      h("h1", {}, `Level ${level}`),
+      h("p", { class: "eyebrow" }, "ACADEMIC RECORD · XP RANK"),
+      h("h1", {}, `${academicRank} · Level ${level}`),
       h("p", {}, `${xp} XP earned · ${250 - levelXp} XP to level ${level + 1}`),
       h("progress", {
         class: "xp-progress",
@@ -3255,6 +3407,32 @@ async function pageProgress(root) {
         "aria-label": `${levelXp} of 250 XP toward level ${level + 1}`,
       }),
       h("small", {}, `${levelXp} / 250 XP`),
+    ),
+    h(
+      "div",
+      { class: "curriculum-tracks", "aria-label": "Course completion" },
+      ...[
+        ["SQL", solvedSql, sqlExercises.length],
+        ["Operating systems", solvedOs, osExercises.length],
+      ].map(([label, count, total]) => {
+        const completed = Math.min(count, total);
+        const percentage = total ? Math.round((completed / total) * 100) : 0;
+        return h(
+          "div",
+          { class: "curriculum-track" },
+          h(
+            "div",
+            {},
+            h("strong", {}, label),
+            h("small", {}, `${completed} / ${total} mastered · ${percentage}%`),
+          ),
+          h("progress", {
+            max: Math.max(1, total),
+            value: completed,
+            "aria-label": `${label}: ${completed} of ${total} exercises mastered`,
+          }),
+        );
+      }),
     ),
   );
   const filters = h("div", {
@@ -3343,6 +3521,12 @@ async function pageProgress(root) {
           { class: "achievement-progress" },
           earned ? "Unlocked" : `${Math.min(a.count, a.target)} / ${a.target}`,
         ),
+        h("progress", {
+          class: "achievement-meter",
+          max: a.target,
+          value: Math.min(a.count, a.target),
+          "aria-label": `${a.title}: ${Math.min(a.count, a.target)} of ${a.target}`,
+        }),
       );
     achievementPreview.replaceChildren(
       ...lockedAchievements.slice(0, 6).map((a) => achievementCard(a, false)),
@@ -3370,7 +3554,7 @@ async function pageProgress(root) {
       ),
     );
     recent.replaceChildren(
-      h("h2", {}, "Recent activity"),
+      h("h2", {}, "Recent submissions"),
       results.length
         ? h(
             "div",
@@ -3425,7 +3609,7 @@ async function pageProgress(root) {
     root.querySelector(".next-milestone").textContent = milestone;
   };
   for (const [value, label] of [
-    ["", "All quests"],
+    ["", "All courses"],
     ["sql", "SQL"],
     ["os", "OS"],
   ]) {
@@ -3458,7 +3642,7 @@ async function pageProgress(root) {
       h(
         "div",
         { class: "progress-section-heading" },
-        h("h2", {}, "Quest log"),
+        h("h2", {}, "Course dashboard"),
         h("span", { class: "next-milestone" }, ""),
       ),
       filters,
@@ -3470,7 +3654,7 @@ async function pageProgress(root) {
       h(
         "div",
         { class: "progress-section-heading" },
-        h("h2", {}, "Achievements"),
+        h("h2", {}, "Academic achievements"),
         h("span", {}, `${achievements.length} milestones`),
       ),
       achievementPreview,
@@ -3585,50 +3769,83 @@ addEventListener("resize", updateBackToTop);
 updateBackToTop();
 if (terminalArtifact && !reducedMotion.matches) {
   const alphabet = "0123456789ABCDEF<>[]{}|_-=+/*;:.";
+  const logs = [
+    "[SYS] integrity check ........ OK",
+    "[NET] monitoring local session",
+    "AUTH:: user_verified = true",
+    "TRACE // signal synchronized",
+    "0xAC5F 0x7E21 0x09BD 0xFF10",
+    "SELECT * FROM study_progress;",
+    "ACCESS GRANTED // welcome back",
+    "01001000 01000001 01000011 01001011",
+    "kernel: all systems nominal",
+    "ssh://localhost/session [ACTIVE]",
+    "decrypting... checksum matched",
+    "ping 127.0.0.1  time<1ms",
+  ];
   terminalArtifact.hidden = true;
-  for (let column = 0; column < 12; column++) {
+  for (let column = 0; column < 24; column++) {
     const stream = Array.from({ length: 28 }, () =>
-      Array.from(
-        { length: 3 },
-        () => alphabet[Math.floor(Math.random() * alphabet.length)],
-      ).join(""),
+      Math.random() < 0.18
+        ? logs[Math.floor(Math.random() * logs.length)]
+        : Array.from(
+            { length: 8 },
+            () => alphabet[Math.floor(Math.random() * alphabet.length)],
+          ).join(""),
     ).join("\n");
     terminalArtifact.append(
       h(
         "span",
         {
-          style: `left:${(column / 12) * 100}%;animation-delay:${column * 0.08}s`,
+          style: `left:${(column / 24) * 100}%;animation-delay:${(Math.random() * 1.8).toFixed(2)}s`,
         },
         stream,
       ),
     );
   }
-  setInterval(() => {
-    if (reducedMotion.matches || document.hidden) return;
+}
+function triggerWassimSignal() {
+  if (document.hidden) return;
+
+  if (terminalArtifact && !reducedMotion.matches) {
     terminalArtifact.hidden = false;
     terminalArtifact.classList.add("active");
+    document.documentElement.classList.add("hacking-mode");
+
     setTimeout(() => {
       terminalArtifact.classList.remove("active");
-      terminalArtifact.hidden = true;
-    }, 7000);
-  }, 60_000);
-}
-function schedulePeriodicToast() {
-  const delay = 60_000 + Math.random() * 9 * 60_000;
+      document.documentElement.classList.remove("hacking-mode");
+      setTimeout(() => {
+        terminalArtifact.hidden = true;
+      }, 1850);
+    }, 8500);
+  }
+
+  if (!periodicToast) return;
+
   setTimeout(() => {
-    periodicToast.textContent = "Wassim sees you 👀";
+    periodicToast.replaceChildren(
+      h("span", { class: "periodic-toast-prefix" }, "[ SYS//MONITOR ]"),
+      h("strong", { class: "periodic-toast-message" }, "> WASSIM SEES YOU"),
+      h("span", { class: "periodic-toast-footer" }, "[ SESSION WATCHED ]"),
+    );
+
     periodicToast.hidden = false;
+    periodicToast.classList.remove("show");
     requestAnimationFrame(() => periodicToast.classList.add("show"));
-    schedulePeriodicToast();
+
     setTimeout(() => {
       periodicToast.classList.remove("show");
       setTimeout(() => {
         periodicToast.hidden = true;
       }, 220);
     }, 4200);
-  }, delay);
+  }, 5000);
 }
-schedulePeriodicToast();
+setTimeout(function loop() {
+  triggerWassimSignal();
+  setTimeout(loop, (Math.floor(Math.random() * 13) + 3) * 60_000);
+}, 60000);
 let routeTok = 0;
 let lastRouteHash = null;
 let routePending = false;
