@@ -399,6 +399,58 @@ pre {
   border: 1px solid var(--bd);
   border-radius: 8px;
 }
+.md pre code .java-keyword {
+  color: #8251b5;
+  font-weight: 700;
+}
+.md pre code .java-literal {
+  color: #b04d8a;
+  font-weight: 650;
+}
+.md pre code .java-string {
+  color: #287a45;
+}
+.md pre code .java-comment {
+  color: #718078;
+  font-style: italic;
+}
+.md pre code .java-annotation {
+  color: #9a6816;
+}
+.md pre code .java-type {
+  color: #176f91;
+  font-weight: 600;
+}
+.md pre code .java-number {
+  color: #b75d22;
+}
+.md pre code .java-operator {
+  color: var(--mut);
+}
+.md pre code .java-punctuation {
+  color: var(--mut);
+}
+:root[data-theme="dark"] .md pre code .java-keyword {
+  color: #d4a9ff;
+}
+:root[data-theme="dark"] .md pre code .java-literal {
+  color: #ff9bd1;
+}
+:root[data-theme="dark"] .md pre code .java-string {
+  color: #9ce0a9;
+}
+:root[data-theme="dark"] .md pre code .java-comment {
+  color: #a4b4aa;
+}
+:root[data-theme="dark"] .md pre code .java-annotation {
+  color: #f0cb83;
+}
+:root[data-theme="dark"] .md pre code .java-type {
+  color: #91dafa;
+}
+:root[data-theme="dark"] .md pre code .java-number {
+  color: #ffb078;
+}
 .err {
   color: var(--bad);
   white-space: pre-wrap;

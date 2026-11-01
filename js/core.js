@@ -114,6 +114,56 @@ function hasSimilarOSAnswer(ex, answer) {
       accepted.some(expected => similarAnswer(answer[i], expected)));
   return false;
 }
+function highlightJava(source) {
+  const keywords = new Set(
+      "abstract assert boolean break byte case catch char class const continue default do double else enum extends final finally float for if implements import instanceof int interface long native new package private protected public record return short static strictfp super switch synchronized this throw throws transient try void volatile while yield var".split(" "),
+    ),
+    literals = new Set(["true", "false", "null"]),
+    tokenPattern =
+      /\/\/[^\n]*|\/\*[\s\S]*?\*\/|"""[\s\S]*?"""|"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|@[A-Za-z_$][\w$]*|\b(?:abstract|assert|boolean|break|byte|case|catch|char|class|const|continue|default|do|double|else|enum|extends|final|finally|float|for|if|implements|import|instanceof|int|interface|long|native|new|package|private|protected|public|record|return|short|static|strictfp|super|switch|synchronized|this|throw|throws|transient|try|void|volatile|while|yield|var|true|false|null)\b|\b(?:0[xX][\da-fA-F_]+(?:\.[\da-fA-F_]*)?(?:[pP][+-]?[\d_]+)?[fFdDlL]?|0[bB][01_]+[lL]?|\d[\d_]*(?:\.[\d_]*)?(?:[eE][+-]?[\d_]+)?[fFdDlL]?)\b|[A-Za-z_$][\w$]*|[{}()[\].,;]|[+\-*/%=!<>:&|^~?]+/gy;
+  const escape = (text) =>
+    text
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+  let html = "";
+  for (let index = 0; index < source.length; ) {
+    tokenPattern.lastIndex = index;
+    const match = tokenPattern.exec(source);
+    if (!match) {
+      html += escape(source[index++]);
+      continue;
+    }
+    const token = match[0],
+      className =
+        token.startsWith("//") || token.startsWith("/*")
+          ? "java-comment"
+          : token.startsWith('"') ||
+              token.startsWith("'") ||
+              token.startsWith('"""')
+            ? "java-string"
+            : token.startsWith("@")
+              ? "java-annotation"
+              : literals.has(token)
+                ? "java-literal"
+                : keywords.has(token)
+                  ? "java-keyword"
+                  : /^\d/.test(token)
+                    ? "java-number"
+                    : /^[A-Z]/.test(token)
+                      ? "java-type"
+                      : /^[{}()[\].,;]$/.test(token)
+                        ? "java-punctuation"
+                        : /^[+\-*/%=!<>:&|^~?]+$/.test(token)
+                          ? "java-operator"
+                          : "";
+    html += className
+      ? `<span class="${className}">${escape(token)}</span>`
+      : escape(token);
+    index = tokenPattern.lastIndex;
+  }
+  return html;
+}
 // returns true / false / null (null = not auto-gradable)
 function gradeOS(ex, a) {
   const x = ex.expected;
@@ -125,6 +175,6 @@ function gradeOS(ex, a) {
     default: return null;
   }
 }
-const api = { compare, generateExam, validatePackage, gradeOS, hasSimilarOSAnswer, eligible, exerciseKey, cellKey, normNum, shuffle, DIFF, SQL_TYPES, MCQ_TYPES, OS_TYPES };
+const api = { compare, generateExam, validatePackage, gradeOS, hasSimilarOSAnswer, highlightJava, eligible, exerciseKey, cellKey, normNum, shuffle, DIFF, SQL_TYPES, MCQ_TYPES, OS_TYPES };
 if (typeof module !== 'undefined') module.exports = api; else root.Core = api;
 })(typeof window !== 'undefined' ? window : globalThis);

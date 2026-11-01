@@ -1926,7 +1926,7 @@ async function pageReader(root, arg) {
       h(
         "a",
         {
-          href: "#/reader/" + r.id,
+          href: "#/reader/" + encodeURIComponent(r.id),
           class: "reference-tab" + (r === cur ? " on" : ""),
           "aria-current": r === cur ? "page" : false,
         },
@@ -2067,6 +2067,9 @@ async function pageReader(root, arg) {
     if (!r.ok) throw new Error("HTTP " + r.status);
     const { html, toc } = md(withoutContentsSection(await r.text()));
     appendSanitizedReferenceHtml(body, html);
+    body.querySelectorAll("pre code.language-java").forEach((code) => {
+      code.innerHTML = Core.highlightJava(code.textContent);
+    });
     body.querySelectorAll(".mermaid-source").forEach((source) => {
       const diagram = renderMermaidFlowchart(source.textContent);
       if (diagram) source.replaceWith(diagram);
@@ -3878,6 +3881,13 @@ setTimeout(function loop() {
 let routeTok = 0;
 let lastRouteHash = null;
 let routePending = false;
+const decodeRouteSegment = (segment) => {
+  try {
+    return decodeURIComponent(segment || "");
+  } catch {
+    return "";
+  }
+};
 async function route() {
   const routeHash = location.hash;
   if (routeHash === lastRouteHash && routePending) return;
@@ -3899,18 +3909,15 @@ async function route() {
   const view = h("div");
   main.append(view);
   if (p === "practice") {
-    const decodeSegment = (segment) => {
-      try {
-        return decodeURIComponent(segment || "");
-      } catch {
-        return "";
-      }
-    };
-    await pagePractice(view, decodeSegment(arg), decodeSegment(exerciseArg));
+    await pagePractice(
+      view,
+      decodeRouteSegment(arg),
+      decodeRouteSegment(exerciseArg),
+    );
   } else if (p === "exam") {
     await pageExam(view, () => tok === routeTok);
   } else {
-    await (pages[p] || pageReader)(view, arg);
+    await (pages[p] || pageReader)(view, decodeRouteSegment(arg));
   }
   if (tok !== routeTok) view.remove();
   else routePending = false;

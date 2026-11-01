@@ -61,6 +61,15 @@ t('manifest courses and compatible string schema versions are accepted', () => {
   assert.deepStrictEqual(C.validatePackage(pkg, 'programming.json', { seenIds: new Set(), datasetIds: new Set(), schemaVersion: 1 }), []);
   assert(C.gradeOS(ex, [0]));
 });
+t('Java syntax highlighting marks tokens and escapes source code', () => {
+  const html = C.highlightJava('public class Demo { // note\n  String text = "<tag>"; return true;\n}');
+  assert(html.includes('<span class="java-keyword">public</span>'));
+  assert(html.includes('<span class="java-type">Demo</span>'));
+  assert(html.includes('<span class="java-comment">// note</span>'));
+  assert(html.includes('<span class="java-string">"&lt;tag&gt;"</span>'));
+  assert(html.includes('<span class="java-literal">true</span>'));
+  assert(!html.includes('<tag>'));
+});
 t('mcq-multiple validates, renders as multi-select, and grades all expected choices', () => {
   const ex = { id: 'sql-multi-alias', course: 'sql', category: 'theory', title: 'Choose all', instructions: 'Select all correct answers.', difficulty: 'Easy', type: 'mcq-multiple', examEligible: true, provenance: 'fixture', contentVersion: 1, options: ['A', 'B', 'C'], expected: [0, 2] };
   const pkg = { schemaVersion: 1, packageId: 'sql-multi-alias-package', version: '1', datasets: [], exercises: [ex] };

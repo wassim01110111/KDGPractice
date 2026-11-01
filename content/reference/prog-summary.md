@@ -1,22 +1,115 @@
 # Programming Fundamentals Java — Complete Theory Summary
 
-This study guide follows the supplied **Programming Fundamentals** lecture PDF (302 pages). It consolidates the theory, terminology, rules, comparisons and examples taught in the slides. The explanations stay within the scope and level of those materials.
+## Table of contents
 
-The PDF contains five main teaching blocks:
-
-1. Basic Concepts: programming languages, the Java platform, first programs and algorithms.
-2. Flow Control: expressions, statements, blocks, decisions, loops and functions.
-3. Variables and Operators: primitive types, literals, conversions and operators.
-4. OO Programming and Objects: classes, objects, references, packages, garbage collection, `Random`, `String`, `StringBuilder` and formatting.
-5. Classes: class structure, attributes, methods, encapsulation, constructors, `toString()` and `Math`.
-
-> **Scope note:** Some constructs appear in a syntax overview or are labelled “for completeness”, “explained later”, or “see later”. This guide identifies them but does not add explanations the PDF does not provide. Course administration and exercise instructions are not included as theory.
+- [Programming Fundamentals Java — Complete Theory Summary](#programming-fundamentals-java--complete-theory-summary)
+  - [Table of contents](#table-of-contents)
+  - [1. Basic concepts: programming languages and Java](#1-basic-concepts-programming-languages-and-java)
+    - [1.1 What is a programming language?](#11-what-is-a-programming-language)
+    - [1.2 Compiled languages](#12-compiled-languages)
+    - [1.3 Interpreted languages](#13-interpreted-languages)
+    - [1.4 Java's compiled/interpreted model](#14-javas-compiledinterpreted-model)
+    - [1.5 Java characteristics and applications](#15-java-characteristics-and-applications)
+    - [1.6 JRE, JDK and IDE](#16-jre-jdk-and-ide)
+    - [1.7 Writing, compiling and running a first Java program](#17-writing-compiling-and-running-a-first-java-program)
+    - [1.8 Programming algorithms](#18-programming-algorithms)
+  - [2. Variables, types and literals](#2-variables-types-and-literals)
+    - [2.1 Variables](#21-variables)
+    - [2.2 Primitive data types](#22-primitive-data-types)
+    - [2.3 Variable names and identifiers](#23-variable-names-and-identifiers)
+    - [2.4 Literals](#24-literals)
+      - [Character escape sequences](#character-escape-sequences)
+    - [2.5 `final` variables and constants](#25-final-variables-and-constants)
+    - [2.6 Conversion between types and casting](#26-conversion-between-types-and-casting)
+  - [3. Operators](#3-operators)
+    - [3.1 Mathematical operators](#31-mathematical-operators)
+    - [3.2 Increment and decrement](#32-increment-and-decrement)
+    - [3.3 Relational operators](#33-relational-operators)
+    - [3.4 Logical operators](#34-logical-operators)
+    - [3.5 Assignment operators](#35-assignment-operators)
+    - [3.6 Other operators listed in the slides](#36-other-operators-listed-in-the-slides)
+    - [3.7 Operator precedence](#37-operator-precedence)
+  - [4. Expressions, statements, blocks and scope](#4-expressions-statements-blocks-and-scope)
+    - [4.1 Expressions](#41-expressions)
+    - [4.2 Statements](#42-statements)
+    - [4.3 Blocks](#43-blocks)
+    - [4.4 Variable scope](#44-variable-scope)
+  - [5. Conditional execution](#5-conditional-execution)
+    - [5.1 The `if` statement](#51-the-if-statement)
+    - [5.2 The `if...else` statement](#52-the-ifelse-statement)
+    - [5.3 Nested `if` and `else if`](#53-nested-if-and-else-if)
+    - [5.4 Conditional operator `?:`](#54-conditional-operator-)
+    - [5.5 Traditional `switch` statement](#55-traditional-switch-statement)
+    - [5.6 Simplified switch syntax and switch expressions](#56-simplified-switch-syntax-and-switch-expressions)
+  - [6. Loops and repeated execution](#6-loops-and-repeated-execution)
+    - [6.1 `while` loop](#61-while-loop)
+    - [6.2 `break`](#62-break)
+    - [6.3 `continue`](#63-continue)
+    - [6.4 `do...while` loop](#64-dowhile-loop)
+    - [6.5 `for` loop](#65-for-loop)
+  - [7. Functions and methods](#7-functions-and-methods)
+    - [7.1 What is a function?](#71-what-is-a-function)
+    - [7.2 Function declaration and signature](#72-function-declaration-and-signature)
+    - [7.3 Arguments and parameters](#73-arguments-and-parameters)
+    - [7.4 Return values and `void`](#74-return-values-and-void)
+  - [8. Object-oriented programming and objects](#8-object-oriented-programming-and-objects)
+    - [8.1 Objects and object-oriented programming](#81-objects-and-object-oriented-programming)
+    - [8.2 Classes and objects](#82-classes-and-objects)
+    - [8.3 Method calls as messages](#83-method-calls-as-messages)
+    - [8.4 Creating and initializing objects](#84-creating-and-initializing-objects)
+    - [8.5 Using an object](#85-using-an-object)
+    - [8.6 The `Random` class](#86-the-random-class)
+  - [9. References, memory, packages and garbage collection](#9-references-memory-packages-and-garbage-collection)
+    - [9.1 References to objects](#91-references-to-objects)
+    - [9.2 Multiple references to one object](#92-multiple-references-to-one-object)
+    - [9.3 Packages and imports](#93-packages-and-imports)
+    - [9.4 Garbage collection](#94-garbage-collection)
+  - [10. Strings and StringBuilder](#10-strings-and-stringbuilder)
+    - [10.1 `String` is a class](#101-string-is-a-class)
+    - [10.2 Creating strings](#102-creating-strings)
+    - [10.3 Text blocks](#103-text-blocks)
+    - [10.4 Reading strings with `Scanner`](#104-reading-strings-with-scanner)
+    - [10.5 Common `String` methods](#105-common-string-methods)
+    - [10.6 Comparing strings](#106-comparing-strings)
+    - [10.7 Immutability in practice](#107-immutability-in-practice)
+    - [10.8 `StringBuilder`](#108-stringbuilder)
+  - [11. Formatting output](#11-formatting-output)
+    - [11.1 Formatting to the screen or to a string](#111-formatting-to-the-screen-or-to-a-string)
+    - [11.2 Format specifiers](#112-format-specifiers)
+    - [11.3 Matching format specifiers and arguments](#113-matching-format-specifiers-and-arguments)
+  - [12. Designing classes](#12-designing-classes)
+    - [12.1 Recap: class and object](#121-recap-class-and-object)
+    - [12.2 Structure of a class](#122-structure-of-a-class)
+    - [12.3 Class declaration syntax](#123-class-declaration-syntax)
+    - [12.4 UML class diagrams](#124-uml-class-diagrams)
+    - [12.5 Attributes](#125-attributes)
+    - [12.6 Access modifiers](#126-access-modifiers)
+    - [12.7 Default attribute values](#127-default-attribute-values)
+  - [13. Methods, parameters and encapsulation in classes](#13-methods-parameters-and-encapsulation-in-classes)
+    - [13.1 Methods](#131-methods)
+    - [13.2 Attribute scope versus local-variable scope](#132-attribute-scope-versus-local-variable-scope)
+    - [13.3 Parameters and pass by value](#133-parameters-and-pass-by-value)
+    - [13.4 Setters (mutators)](#134-setters-mutators)
+    - [13.5 Returning a value from a method](#135-returning-a-value-from-a-method)
+    - [13.6 Getters (accessors)](#136-getters-accessors)
+    - [13.7 Encapsulation](#137-encapsulation)
+    - [13.8 Method overloading](#138-method-overloading)
+  - [14. Constructors](#14-constructors)
+    - [14.1 What is a constructor?](#141-what-is-a-constructor)
+    - [14.2 Constructors and object creation](#142-constructors-and-object-creation)
+    - [14.3 Default constructor](#143-default-constructor)
+    - [14.4 Constructor validation](#144-constructor-validation)
+    - [14.5 Constructor overloading and a copy constructor](#145-constructor-overloading-and-a-copy-constructor)
+    - [14.6 Calling one constructor from another with `this(...)`](#146-calling-one-constructor-from-another-with-this)
+  - [15. The `toString()` method](#15-the-tostring-method)
+  - [16. The `Math` class](#16-the-math-class)
+  - [17. High-value comparisons to remember](#17-high-value-comparisons-to-remember)
+  - [18. Coursework boundaries: items mentioned but not fully explained](#18-coursework-boundaries-items-mentioned-but-not-fully-explained)
+  - [19. Quick revision checklist](#19-quick-revision-checklist)
 
 ---
 
 ## 1. Basic concepts: programming languages and Java
-
-*Source: PDF pages 250–302.*
 
 ### 1.1 What is a programming language?
 
@@ -123,11 +216,11 @@ The course says it will initially focus on desktop applications.
 
 ### 1.6 JRE, JDK and IDE
 
-| Term | Meaning in the slides | Purpose |
-|---|---|---|
-| **JRE — Java Runtime Environment** | JVM + Java API | Needed to run Java bytecode programs. |
-| **JDK — Java Development Kit** | JRE plus development tools and extras | Includes tools such as compiling and debugging tools; API reference documentation is listed as optional. |
-| **IDE — Integrated Development Environment** | A workbench application for developers | Helps developers write, build and run programs; an IDE can support multiple programming languages. |
+| Term                                         | Meaning in the slides                  | Purpose                                                                                                  |
+| -------------------------------------------- | -------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| **JRE — Java Runtime Environment**           | JVM + Java API                         | Needed to run Java bytecode programs.                                                                    |
+| **JDK — Java Development Kit**               | JRE plus development tools and extras  | Includes tools such as compiling and debugging tools; API reference documentation is listed as optional. |
+| **IDE — Integrated Development Environment** | A workbench application for developers | Helps developers write, build and run programs; an IDE can support multiple programming languages.       |
 
 The relationship is **JDK = JRE + development extras**. An IDE is the developer's workbench; it is not the same thing as the JDK or JRE.
 
@@ -210,8 +303,6 @@ The number-guessing example adds tests: compare a guess with an answer using `<`
 
 ## 2. Variables, types and literals
 
-*Source: PDF pages 58–82.*
-
 ### 2.1 Variables
 
 A **variable** is a location in memory that can be used to store data. The slides say that a variable has:
@@ -247,16 +338,16 @@ Several variables of the same type can be declared on one line, for example `int
 
 The slides distinguish primitive types from reference types. Reference types are introduced later in the coursework; the table below reproduces the primitive types covered in the variables module.
 
-| Type | Meaning in the slides | Format / size | Range or possible values |
-|---|---|---|---|
-| `byte` | Byte value | 8-bit two's complement | −128 to 127 |
-| `short` | Short integer | 16-bit two's complement | −32,768 to 32,767 |
-| `int` | Integer | 32-bit two's complement | −2³¹ to 2³¹ − 1 |
-| `long` | Long integer | 64-bit two's complement | −2⁶³ to 2⁶³ − 1 |
-| `float` | Single-precision floating-point number | 32-bit IEEE 754 | Approximately −3.4E+38 to 3.4E+38 |
-| `double` | Double-precision floating-point number | 64-bit IEEE 754 | Approximately −1.7E+308 to 1.7E+308 |
-| `boolean` | Boolean value | 1 bit in the slide's table | `false` or `true` |
-| `char` | Character | 16-bit Unicode | `\u0000` to `\uFFFF` |
+| Type      | Meaning in the slides                  | Format / size              | Range or possible values            |
+| --------- | -------------------------------------- | -------------------------- | ----------------------------------- |
+| `byte`    | Byte value                             | 8-bit two's complement     | −128 to 127                         |
+| `short`   | Short integer                          | 16-bit two's complement    | −32,768 to 32,767                   |
+| `int`     | Integer                                | 32-bit two's complement    | −2³¹ to 2³¹ − 1                     |
+| `long`    | Long integer                           | 64-bit two's complement    | −2⁶³ to 2⁶³ − 1                     |
+| `float`   | Single-precision floating-point number | 32-bit IEEE 754            | Approximately −3.4E+38 to 3.4E+38   |
+| `double`  | Double-precision floating-point number | 64-bit IEEE 754            | Approximately −1.7E+308 to 1.7E+308 |
+| `boolean` | Boolean value                          | 1 bit in the slide's table | `false` or `true`                   |
+| `char`    | Character                              | 16-bit Unicode             | `\u0000` to `\uFFFF`                |
 
 The slides use `int` for an age, `double` for a percentage and `String` for a name in a “which data type?” example. `String` is later explained as a class rather than one of the primitive types.
 
@@ -283,15 +374,15 @@ Reserved words have a specific meaning in Java and therefore cannot be used as v
 
 A **literal** is a fixed value that appears directly in code. Each type has a format.
 
-| Type | Literal format taught in the slides | Example |
-|---|---|---|
-| `boolean` | `true` or `false` | `boolean firstTime = true;` |
-| `char` | A character enclosed in single quotes, or the corresponding ASCII code | `char letter = 'A';` or `char letter = 65;` |
-| `int` | Integer digits; underscores may separate groups for readability | `int million = 1_000_000;` |
-| `long` | Integer literal ending in `L` or `l` | `long value = 1247418127475L;` |
-| `double` | A decimal point or scientific notation | `double average = 13.25;`, `double fraction = 1.0E-8;` |
-| `float` | A decimal literal ending in `F` or `f` | `float distance = 3.25F;` |
-| `String` | Text enclosed in double quotes | `String name = "Pete";` |
+| Type      | Literal format taught in the slides                                    | Example                                                |
+| --------- | ---------------------------------------------------------------------- | ------------------------------------------------------ |
+| `boolean` | `true` or `false`                                                      | `boolean firstTime = true;`                            |
+| `char`    | A character enclosed in single quotes, or the corresponding ASCII code | `char letter = 'A';` or `char letter = 65;`            |
+| `int`     | Integer digits; underscores may separate groups for readability        | `int million = 1_000_000;`                             |
+| `long`    | Integer literal ending in `L` or `l`                                   | `long value = 1247418127475L;`                         |
+| `double`  | A decimal point or scientific notation                                 | `double average = 13.25;`, `double fraction = 1.0E-8;` |
+| `float`   | A decimal literal ending in `F` or `f`                                 | `float distance = 3.25F;`                              |
+| `String`  | Text enclosed in double quotes                                         | `String name = "Pete";`                                |
 
 The slides also note that numeric literals can use bases other than decimal, although the details of those other bases are not expanded in this section.
 
@@ -299,16 +390,16 @@ The slides also note that numeric literals can use bases other than decimal, alt
 
 Special characters can be represented in character literals using a backslash. The table in the slides lists:
 
-| Escape | Meaning |
-|---|---|
-| `\n` | Newline |
-| `\r` | Return / carriage return |
-| `\t` | Tabulator |
-| `\b` | Backspace |
-| `\f` | Form feed / new page |
-| `\'` | Single quote |
-| `\"` | Double quote |
-| `\\` | Backslash |
+| Escape | Meaning                  |
+| ------ | ------------------------ |
+| `\n`   | Newline                  |
+| `\r`   | Return / carriage return |
+| `\t`   | Tabulator                |
+| `\b`   | Backspace                |
+| `\f`   | Form feed / new page     |
+| `\'`   | Single quote             |
+| `\"`   | Double quote             |
+| `\\`   | Backslash                |
 
 The slides note that line-ending conventions differ between operating systems and that Java automatically handles the necessary conversion. They give `\n` as the Windows newline representation and note that other systems may use `\r`.
 
@@ -367,21 +458,19 @@ The key course point is that the types used in an arithmetic expression affect t
 
 ## 3. Operators
 
-*Source: PDF pages 83–105.*
-
 An **operator** is a symbol used to perform an action on values or variables. The slides introduce operators for assignment, calculation and comparison.
 
 ### 3.1 Mathematical operators
 
 The binary mathematical operators are:
 
-| Operator | Meaning |
-|---|---|
-| `+` | Sum of the two operands |
-| `-` | Difference between the operands |
-| `*` | Product of the operands |
-| `/` | First operand divided by the second |
-| `%` | Remainder after division; the slides describe the divisor using its absolute value |
+| Operator | Meaning                                                                            |
+| -------- | ---------------------------------------------------------------------------------- |
+| `+`      | Sum of the two operands                                                            |
+| `-`      | Difference between the operands                                                    |
+| `*`      | Product of the operands                                                            |
+| `/`      | First operand divided by the second                                                |
+| `%`      | Remainder after division; the slides describe the divisor using its absolute value |
 
 For example, `13 % 5` gives `3`, `15 % 5` gives `0`, and `21 % 5` gives `1`. The remainder pattern repeats as the dividend increases.
 
@@ -411,14 +500,14 @@ The slides also list unary `-op` as the negative value of an operand. Unary `+op
 
 Relational operators compare two operands and produce a boolean result:
 
-| Operator | Meaning |
-|---|---|
-| `>` | Greater than |
-| `>=` | Greater than or equal to |
-| `<` | Less than |
-| `<=` | Less than or equal to |
-| `==` | Equal to |
-| `!=` | Different from / not equal to |
+| Operator | Meaning                       |
+| -------- | ----------------------------- |
+| `>`      | Greater than                  |
+| `>=`     | Greater than or equal to      |
+| `<`      | Less than                     |
+| `<=`     | Less than or equal to         |
+| `==`     | Equal to                      |
+| `!=`     | Different from / not equal to |
 
 These comparisons are used in conditions, for example `score >= 10` or `guess == answer`.
 
@@ -432,12 +521,12 @@ Logical operators combine or invert boolean expressions.
 
 The truth table for the two binary operators is:
 
-| Operand 1 | Operand 2 | `op1 && op2` | `op1 || op2` |
-|---|---|---|---|
-| `true` | `true` | `true` | `true` |
-| `true` | `false` | `false` | `true` |
-| `false` | `true` | `false` | `true` |
-| `false` | `false` | `false` | `false` |
+| Operand 1 | Operand 2 | `op1 && op2` | `op1    |     | op2` |
+| --------- | --------- | ------------ | ------- | --- | ---- |
+| `true`    | `true`    | `true`       | `true`  |
+| `true`    | `false`   | `false`      | `true`  |
+| `false`   | `true`    | `false`      | `true`  |
+| `false`   | `false`   | `false`      | `false` |
 
 The slides use combinations such as `age >= 18 && age <= 67` to test whether an age is within an interval, and `age < 18 || age > 67` to test whether an age is outside it.
 
@@ -448,12 +537,12 @@ The assignment operator `=` assigns the value on the right to the variable on th
 Compound assignment operators combine a calculation with assignment:
 
 | Operator | Equivalent form |
-|---|---|
-| `a += b` | `a = a + b` |
-| `a -= b` | `a = a - b` |
-| `a *= b` | `a = a * b` |
-| `a /= b` | `a = a / b` |
-| `a %= b` | `a = a % b` |
+| -------- | --------------- |
+| `a += b` | `a = a + b`     |
+| `a -= b` | `a = a - b`     |
+| `a *= b` | `a = a * b`     |
+| `a /= b` | `a = a / b`     |
+| `a %= b` | `a = a % b`     |
 
 The order is: first perform the calculation, then assign the result.
 
@@ -461,14 +550,14 @@ The order is: first perform the calculation, then assign the result.
 
 The slides include these operators “for completeness”:
 
-| Operator / form | Use stated in the slides |
-|---|---|
-| `.` | Creates a qualified name, such as `object.property`. |
-| `[]` | Used to create arrays and access their elements, such as `array[x]`. |
-| `(params)` | Represents a comma-separated list of parameters. |
-| `(type)` | Explicitly converts a value to a type (casting). |
-| `new` | Creates a new object or a new array. |
-| `instanceof` | Tests whether an operand is an object of a class or one of its subclasses. |
+| Operator / form | Use stated in the slides                                                   |
+| --------------- | -------------------------------------------------------------------------- |
+| `.`             | Creates a qualified name, such as `object.property`.                       |
+| `[]`            | Used to create arrays and access their elements, such as `array[x]`.       |
+| `(params)`      | Represents a comma-separated list of parameters.                           |
+| `(type)`        | Explicitly converts a value to a type (casting).                           |
+| `new`           | Creates a new object or a new array.                                       |
+| `instanceof`    | Tests whether an operand is an object of a class or one of its subclasses. |
 
 The slides identify casting as already covered and indicate that some of the other operators will be discussed later. This guide does not expand those later topics.
 
@@ -497,8 +586,6 @@ The slides advise not to depend too much on precedence rules. Their recommended 
 ---
 
 ## 4. Expressions, statements, blocks and scope
-
-*Source: PDF pages 1–13.*
 
 ### 4.1 Expressions
 
@@ -547,8 +634,6 @@ This explains why a variable declared in an `if` block is not available after th
 ---
 
 ## 5. Conditional execution
-
-*Source: PDF pages 14–30.*
 
 Statements normally execute in sequence. **Flow-control statements** change that sequential execution. The slides group flow control into conditional execution and repeated execution.
 
@@ -709,8 +794,6 @@ The `yield` expression is the value that the switch expression returns from that
 
 ## 6. Loops and repeated execution
 
-*Source: PDF pages 31–47.*
-
 A **loop** (or **iteration**) is a code block that is executed repeatedly. The slides cover `while`, `do...while` and `for` loops.
 
 ### 6.1 `while` loop
@@ -793,8 +876,6 @@ Additional rules and recommendations in the slides:
 ---
 
 ## 7. Functions and methods
-
-*Source: PDF pages 48–57.*
 
 ### 7.1 What is a function?
 
@@ -879,8 +960,6 @@ The `return` statement ends the method after returning its value.
 ---
 
 ## 8. Object-oriented programming and objects
-
-*Source: PDF pages 106–128.*
 
 ### 8.1 Objects and object-oriented programming
 
@@ -984,12 +1063,12 @@ Two constructors are introduced:
 
 The methods covered are:
 
-| Method | Result described in the slides |
-|---|---|
-| `nextInt(int bound)` | Whole number from 0 inclusive to `bound` exclusive: `0 <= result < bound`. |
-| `nextInt(int origin, int bound)` | Whole number from `origin` inclusive to `bound` exclusive. |
-| `nextDouble()` | Number from 0 inclusive to 1 exclusive: `0 <= result < 1`. |
-| `nextBoolean()` | A random boolean value: `true` or `false`. |
+| Method                           | Result described in the slides                                             |
+| -------------------------------- | -------------------------------------------------------------------------- |
+| `nextInt(int bound)`             | Whole number from 0 inclusive to `bound` exclusive: `0 <= result < bound`. |
+| `nextInt(int origin, int bound)` | Whole number from `origin` inclusive to `bound` exclusive.                 |
+| `nextDouble()`                   | Number from 0 inclusive to 1 exclusive: `0 <= result < 1`.                 |
+| `nextBoolean()`                  | A random boolean value: `true` or `false`.                                 |
 
 Examples from the coursework:
 
@@ -1001,8 +1080,6 @@ Examples from the coursework:
 ---
 
 ## 9. References, memory, packages and garbage collection
-
-*Source: PDF pages 129–142.*
 
 ### 9.1 References to objects
 
@@ -1099,8 +1176,6 @@ Garbage collection happens automatically, but not immediately. The slides descri
 
 ## 10. Strings and StringBuilder
 
-*Source: PDF pages 143–163.*
-
 ### 10.1 `String` is a class
 
 The slides explain that `String` is a class, so each `String` in a program is an object. It belongs to `java.lang`, so no import is needed.
@@ -1159,14 +1234,14 @@ String name = keyboard.nextLine();
 
 The slides introduce these methods:
 
-| Method | Purpose |
-|---|---|
-| `length()` | Returns the number of characters in the string. |
-| `charAt(int index)` | Returns the character at the given index; the first character is at index 0. |
-| `equals(String string)` | Compares two strings and returns `true` or `false`. |
-| `equalsIgnoreCase(String string)` | Compares two strings without considering letter case. |
-| `compareTo(String other)` | Compares strings alphabetically: returns a negative value if this string comes before the other, zero if equal, and a positive value if it comes after. |
-| `isEmpty()` | Returns `true` if the string has length zero. |
+| Method                            | Purpose                                                                                                                                                 |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `length()`                        | Returns the number of characters in the string.                                                                                                         |
+| `charAt(int index)`               | Returns the character at the given index; the first character is at index 0.                                                                            |
+| `equals(String string)`           | Compares two strings and returns `true` or `false`.                                                                                                     |
+| `equalsIgnoreCase(String string)` | Compares two strings without considering letter case.                                                                                                   |
+| `compareTo(String other)`         | Compares strings alphabetically: returns a negative value if this string comes before the other, zero if equal, and a positive value if it comes after. |
+| `isEmpty()`                       | Returns `true` if the string has length zero.                                                                                                           |
 
 The slides also name `substring`, `strip`, `toUpperCase` and `toLowerCase` as other popular methods.
 
@@ -1223,13 +1298,13 @@ StringBuilder builder = new StringBuilder("stringliteral");
 
 Methods covered in the slides:
 
-| Method | Purpose |
-|---|---|
-| `append(...)` | Appends its argument to the end of the builder. |
-| `toString()` | Returns the builder's contents as a `String` object. |
-| `length()` | Returns the builder's length. |
+| Method              | Purpose                                                     |
+| ------------------- | ----------------------------------------------------------- |
+| `append(...)`       | Appends its argument to the end of the builder.             |
+| `toString()`        | Returns the builder's contents as a `String` object.        |
+| `length()`          | Returns the builder's length.                               |
 | `charAt(int index)` | Returns the character at the given index, starting at zero. |
-| `reverse()` | Reverses the builder's contents. |
+| `reverse()`         | Reverses the builder's contents.                            |
 
 Other methods named in the slides include `insert`, `setCharAt`, `deleteCharAt`, `replace`, `substring` and `indexOf`.
 
@@ -1238,8 +1313,6 @@ The **builder pattern** example uses chained calls such as `fork.append('r').app
 ---
 
 ## 11. Formatting output
-
-*Source: PDF pages 164–171.*
 
 ### 11.1 Formatting to the screen or to a string
 
@@ -1263,15 +1336,15 @@ System.out.println(str);
 
 A format specifier begins with `%` and indicates the kind of value to display.
 
-| Specifier | Data described in the slides |
-|---|---|
-| `%d` | `int` and `long` (integer number) |
-| `%f` | `float` and `double` (decimal number) |
-| `%s` | `String` |
-| `%c` | `char` |
-| `%b` | `boolean` |
-| `%n` | Newline; described as more platform-independent than `\n` |
-| `%%` | A percent character in the formatted output (shown in the VAT example). |
+| Specifier | Data described in the slides                                            |
+| --------- | ----------------------------------------------------------------------- |
+| `%d`      | `int` and `long` (integer number)                                       |
+| `%f`      | `float` and `double` (decimal number)                                   |
+| `%s`      | `String`                                                                |
+| `%c`      | `char`                                                                  |
+| `%b`      | `boolean`                                                               |
+| `%n`      | Newline; described as more platform-independent than `\n`               |
+| `%%`      | A percent character in the formatted output (shown in the VAT example). |
 
 By default, formatted values are aligned to the right.
 
@@ -1298,8 +1371,6 @@ Examples covered include:
 ---
 
 ## 12. Designing classes
-
-*Source: PDF pages 172–192.*
 
 ### 12.1 Recap: class and object
 
@@ -1370,12 +1441,12 @@ The key design guideline is: **unless an attribute is `final`, mark it `private`
 
 The slides give the following access table:
 
-| Modifier | Same class | Class in same package | Subclass | Any class |
-|---|:---:|:---:|:---:|:---:|
-| `private` | Yes | No | No | No |
-| No modifier (package access) | Yes | Yes | No | No |
-| `protected` | Yes | Yes | Yes | No |
-| `public` | Yes | Yes | Yes | Yes |
+| Modifier                     | Same class | Class in same package | Subclass | Any class |
+| ---------------------------- | :--------: | :-------------------: | :------: | :-------: |
+| `private`                    |    Yes     |          No           |    No    |    No     |
+| No modifier (package access) |    Yes     |          Yes          |    No    |    No     |
+| `protected`                  |    Yes     |          Yes          |   Yes    |    No     |
+| `public`                     |    Yes     |          Yes          |   Yes    |    Yes    |
 
 If no access modifier is written, the slides call the result **package access**. At most one of the accessibility modifiers is allowed in a declaration.
 
@@ -1383,13 +1454,13 @@ If no access modifier is written, the slides call the result **package access**.
 
 The slides state that attributes receive default values automatically when no initial value is supplied:
 
-| Attribute type | Default value shown |
-|---|---|
-| Integral number | `0` |
-| `char` | `\u0000` (Unicode zero) |
-| Floating-point number | `0.0` |
-| `boolean` | `false` |
-| Object/reference type (for example `String` or `Rectangle`) | `null` |
+| Attribute type                                              | Default value shown     |
+| ----------------------------------------------------------- | ----------------------- |
+| Integral number                                             | `0`                     |
+| `char`                                                      | `\u0000` (Unicode zero) |
+| Floating-point number                                       | `0.0`                   |
+| `boolean`                                                   | `false`                 |
+| Object/reference type (for example `String` or `Rectangle`) | `null`                  |
 
 The slides warn that using an object reference when it is still `null` results in a `NullPointerException` and can terminate the program.
 
@@ -1398,8 +1469,6 @@ This is contrasted with local variables: class attributes are automatically init
 ---
 
 ## 13. Methods, parameters and encapsulation in classes
-
-*Source: PDF pages 193–220.*
 
 ### 13.1 Methods
 
@@ -1420,12 +1489,12 @@ A method can return a value or use `void` when it does not return anything. The 
 
 The slides compare attributes and local variables:
 
-| Attribute | Local variable |
-|---|---|
-| Declared in the class (class scope). | Declared in a code block (local scope). |
-| Automatically initialized. | Not automatically initialized. |
-| Valid in the class and all its methods. | Valid only in its code block. |
-| Belongs to the object's state. | Can temporarily hold a value within a method or block. |
+| Attribute                               | Local variable                                         |
+| --------------------------------------- | ------------------------------------------------------ |
+| Declared in the class (class scope).    | Declared in a code block (local scope).                |
+| Automatically initialized.              | Not automatically initialized.                         |
+| Valid in the class and all its methods. | Valid only in its code block.                          |
+| Belongs to the object's state.          | Can temporarily hold a value within a method or block. |
 
 A method always has access to the attributes of the object on which it is called. The method does not need those attributes to be passed as parameters.
 
@@ -1561,8 +1630,6 @@ The method name plus parameter list defines the **method signature**. For exampl
 
 ## 14. Constructors
 
-*Source: PDF pages 221–235.*
-
 ### 14.1 What is a constructor?
 
 A **constructor** is a special kind of class member used to create and initialize objects. The slides state that every class needs a constructor to create and initialize its objects.
@@ -1654,8 +1721,6 @@ The no-argument constructor delegates to the constructor with two parameters. Th
 
 ## 15. The `toString()` method
 
-*Source: PDF pages 236–242.*
-
 Every object can invoke a `toString()` method, and `toString()` returns a `String`.
 
 The default implementation shown in the slides prints the class name and a hash code, for example `Dummy@190d11`. The slides describe this default output as not very useful.
@@ -1675,29 +1740,20 @@ The `Rectangle` exercise asks for a `toString()` representation that includes th
 
 ---
 
-## 16. The `Math` class
-
-*Source: PDF pages 243–248.*
-
-The `Math` class is described as a **utility class** containing methods for basic numeric operations, including elementary exponential, logarithm, square-root and trigonometric functions.
-
-The slides state that:
-
-- `Math` contains only static methods.
-- Its constants include `E`, the base of the natural logarithms, and `PI`, the ratio of a circle's circumference to its diameter.
+## 16. The `Math` class- Its constants include `E`, the base of the natural logarithms, and `PI`, the ratio of a circle's circumference to its diameter.
 - Static methods and variables are called on the class, using the class name such as `Math`.
 
 Methods explicitly listed include:
 
-| Member | Purpose stated in the slides |
-|---|---|
-| `Math.max(a, b)` | Returns the larger of two values. |
-| `Math.min(a, b)` | Returns the smaller of two values. |
-| `Math.abs(a)` | Returns the absolute (positive) value. |
-| `Math.pow(a, b)` | Calculates a power. |
-| `Math.sqrt(a)` | Calculates a square root. |
-| `Math.E` | Constant for the base of natural logarithms. |
-| `Math.PI` | Constant for the ratio of circumference to diameter. |
+| Member           | Purpose stated in the slides                         |
+| ---------------- | ---------------------------------------------------- |
+| `Math.max(a, b)` | Returns the larger of two values.                    |
+| `Math.min(a, b)` | Returns the smaller of two values.                   |
+| `Math.abs(a)`    | Returns the absolute (positive) value.               |
+| `Math.pow(a, b)` | Calculates a power.                                  |
+| `Math.sqrt(a)`   | Calculates a square root.                            |
+| `Math.E`         | Constant for the base of natural logarithms.         |
+| `Math.PI`        | Constant for the ratio of circumference to diameter. |
 
 The slides demonstrate calls such as `Math.abs(number)`, `Math.pow(number, value)`, `Math.sqrt(value)`, `Math.max(number, value)`, `Math.min(number, value)` and printing `Math.PI`.
 
@@ -1705,27 +1761,27 @@ The slides demonstrate calls such as `Math.abs(number)`, `Math.pow(number, value
 
 ## 17. High-value comparisons to remember
 
-| Concept A | Concept B | Difference taught in the coursework |
-|---|---|---|
-| Compiled language | Interpreted language | A compiled language transforms source to platform-specific binary before execution; an interpreted language uses an interpreter on the target platform to transform and execute source. |
-| Java source | Java bytecode | `.java` is the text source file; the compiler produces JVM bytecode in a `.class` file. |
-| JRE | JDK | JRE runs Java bytecode and contains the JVM plus Java API; JDK contains the JRE plus development tools and extras. |
-| Expression | Statement | An expression evaluates to one value; a statement is an instruction. |
-| Block | Scope | A block is statements enclosed in braces; scope is the region where a declared variable can be used. |
-| `if...else` | `?:` | `if...else` is a statement; the conditional operator is an expression that returns one of two values. |
-| Traditional `switch` | Simplified arrow `switch` | Traditional cases can fall through until `break`; simplified arrow cases allow multiple labels, need no `break` and do not fall through. |
-| `while` | `do...while` | `while` tests before executing and may run zero times; `do...while` tests after executing and runs at least once. |
-| `while` | `for` | Both repeat code; `for` puts initialization, condition and modification in one compact header. |
-| Pre-increment | Post-increment | Pre-increment changes the value before it is used; post-increment uses the old value and changes the variable afterwards. |
-| Primitive assignment | Reference assignment | Primitive assignment copies the value; reference assignment copies the reference, so both variables can refer to the same object. |
-| Attribute | Local variable | An attribute belongs to the class/object and is automatically initialized; a local variable belongs to a block and is not automatically initialized. |
-| Getter | Setter | A getter provides an attribute's value; a setter changes an attribute. |
-| Public attribute | Private attribute with validated setter | Direct public access permits invalid values; encapsulation allows the class to control and validate changes. |
-| Overloading | Same method repeated | Overloading uses the same name with a different number or type of parameters, giving a different signature. |
-| Constructor | Ordinary method | A constructor has the class name, no return type, and is called when an object is created to initialize it. |
-| `String` | `StringBuilder` | `String` is immutable; `StringBuilder` can be modified without creating new objects for every text change. |
-| `==` for strings | `equals()` for strings | The slides warn that `==` is not the intended content comparison; use `equals()` to compare string contents. |
-| `printf` / `format` | `String.format` | `System.out.printf` and `System.out.format` display formatted output; `String.format` produces a formatted `String`. |
+| Concept A            | Concept B                               | Difference taught in the coursework                                                                                                                                                     |
+| -------------------- | --------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Compiled language    | Interpreted language                    | A compiled language transforms source to platform-specific binary before execution; an interpreted language uses an interpreter on the target platform to transform and execute source. |
+| Java source          | Java bytecode                           | `.java` is the text source file; the compiler produces JVM bytecode in a `.class` file.                                                                                                 |
+| JRE                  | JDK                                     | JRE runs Java bytecode and contains the JVM plus Java API; JDK contains the JRE plus development tools and extras.                                                                      |
+| Expression           | Statement                               | An expression evaluates to one value; a statement is an instruction.                                                                                                                    |
+| Block                | Scope                                   | A block is statements enclosed in braces; scope is the region where a declared variable can be used.                                                                                    |
+| `if...else`          | `?:`                                    | `if...else` is a statement; the conditional operator is an expression that returns one of two values.                                                                                   |
+| Traditional `switch` | Simplified arrow `switch`               | Traditional cases can fall through until `break`; simplified arrow cases allow multiple labels, need no `break` and do not fall through.                                                |
+| `while`              | `do...while`                            | `while` tests before executing and may run zero times; `do...while` tests after executing and runs at least once.                                                                       |
+| `while`              | `for`                                   | Both repeat code; `for` puts initialization, condition and modification in one compact header.                                                                                          |
+| Pre-increment        | Post-increment                          | Pre-increment changes the value before it is used; post-increment uses the old value and changes the variable afterwards.                                                               |
+| Primitive assignment | Reference assignment                    | Primitive assignment copies the value; reference assignment copies the reference, so both variables can refer to the same object.                                                       |
+| Attribute            | Local variable                          | An attribute belongs to the class/object and is automatically initialized; a local variable belongs to a block and is not automatically initialized.                                    |
+| Getter               | Setter                                  | A getter provides an attribute's value; a setter changes an attribute.                                                                                                                  |
+| Public attribute     | Private attribute with validated setter | Direct public access permits invalid values; encapsulation allows the class to control and validate changes.                                                                            |
+| Overloading          | Same method repeated                    | Overloading uses the same name with a different number or type of parameters, giving a different signature.                                                                             |
+| Constructor          | Ordinary method                         | A constructor has the class name, no return type, and is called when an object is created to initialize it.                                                                             |
+| `String`             | `StringBuilder`                         | `String` is immutable; `StringBuilder` can be modified without creating new objects for every text change.                                                                              |
+| `==` for strings     | `equals()` for strings                  | The slides warn that `==` is not the intended content comparison; use `equals()` to compare string contents.                                                                            |
+| `printf` / `format`  | `String.format`                         | `System.out.printf` and `System.out.format` display formatted output; `String.format` produces a formatted `String`.                                                                    |
 
 ---
 
@@ -1782,7 +1838,3 @@ Use this list to check whether you can explain the central theory without lookin
 - [ ] Explain constructors, default-constructor generation, constructor validation and `this(...)`.
 - [ ] Explain the purpose of `toString()` and why an overridden version is useful.
 - [ ] Describe the `Math` class constants and methods listed in the coursework.
-
----
-
-**Source:** `programmingfundamentals(1).pdf`, supplied in this conversation (302 PDF pages). The summary follows the lecture blocks in that PDF; page references in the PDF itself are not replaced with external sources or documentation.
