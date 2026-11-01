@@ -2,7 +2,7 @@
 (function (root) {
 const NUM = new Set([20, 21, 23, 26, 700, 701, 1700]), FLT = new Set([700, 701]);
 const DIFF = ['Easy', 'Medium', 'Hard', 'Extreme'];
-const SQL_TYPES = ['sql-query'], MCQ_TYPES = ['mcq-single', 'mcq-multi'], OS_TYPES = [...MCQ_TYPES, 'command-text', 'fill-blank', 'short-answer-self-check'];
+const SQL_TYPES = ['sql-query'], MCQ_TYPES = ['mcq-single', 'mcq-multi', 'mcq-multiple'], OS_TYPES = [...MCQ_TYPES, 'command-text', 'fill-blank', 'short-answer-self-check'];
 
 function normNum(v) { let s = String(v).trim();
   if (/^-?\d+(\.\d+)?$/.test(s)) { if (s.includes('.')) s = s.replace(/0+$/, '').replace(/\.$/, ''); if (s === '-0') s = '0'; }
@@ -89,17 +89,38 @@ function validatePackage(pkg, file, ctx) { // ctx: { seenIds:Set, datasetIds:Set
 }
 
 const norm = s => String(s).trim().replace(/\s+/g, ' ');
+function similarAnswer(a, b) {
+  const left = norm(a).toLowerCase(), right = norm(b).toLowerCase();
+  if (Math.max(left.length, right.length) < 4) return false;
+  let prev = Array.from({ length: right.length + 1 }, (_, i) => i);
+  for (let i = 1; i <= left.length; i++) {
+    const curr = [i];
+    for (let j = 1; j <= right.length; j++)
+      curr[j] = Math.min(curr[j - 1] + 1, prev[j] + 1, prev[j - 1] + (left[i - 1] === right[j - 1] ? 0 : 1));
+    prev = curr;
+  }
+  return 1 - prev[right.length] / Math.max(left.length, right.length) >= 0.8;
+}
+function hasSimilarOSAnswer(ex, answer) {
+  if (ex.type === 'command-text')
+    return typeof answer === 'string' && (ex.expected.accepted || []).some(expected => similarAnswer(answer, expected));
+  if (ex.type === 'fill-blank' && Array.isArray(answer))
+    return ex.expected.blanks.some((accepted, i) =>
+      typeof answer[i] === 'string' && !accepted.some(expected => norm(answer[i]) === norm(expected)) &&
+      accepted.some(expected => similarAnswer(answer[i], expected)));
+  return false;
+}
 // returns true / false / null (null = not auto-gradable)
 function gradeOS(ex, a) {
   const x = ex.expected;
   switch (ex.type) {
-    case 'mcq-single': case 'mcq-multi': { const g = (a || []).slice().sort().join(), e = x.slice().sort().join(); return g === e; }
+    case 'mcq-single': case 'mcq-multi': case 'mcq-multiple': { const g = (a || []).slice().sort().join(), e = x.slice().sort().join(); return g === e; }
     case 'command-text': { if (!a || !norm(a)) return false; const n = norm(a);
       return (x.accepted || []).some(c => norm(c) === n) || (x.patterns || []).some(p => new RegExp(p).test(n)); }
     case 'fill-blank': return x.blanks.every((acc, i) => a && a[i] !== undefined && acc.some(c => norm(c) === norm(a[i])));
     default: return null;
   }
 }
-const api = { compare, generateExam, validatePackage, gradeOS, eligible, exerciseKey, cellKey, normNum, DIFF, SQL_TYPES, MCQ_TYPES, OS_TYPES };
+const api = { compare, generateExam, validatePackage, gradeOS, hasSimilarOSAnswer, eligible, exerciseKey, cellKey, normNum, shuffle, DIFF, SQL_TYPES, MCQ_TYPES, OS_TYPES };
 if (typeof module !== 'undefined') module.exports = api; else root.Core = api;
 })(typeof window !== 'undefined' ? window : globalThis);

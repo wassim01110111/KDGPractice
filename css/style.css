@@ -337,6 +337,11 @@ pre {
 .bad {
   color: var(--bad);
 }
+.answer-review-note {
+  display: block;
+  margin-top: 0.35rem;
+  color: var(--mut);
+}
 .meta,
 small {
   color: var(--mut);
@@ -1661,11 +1666,6 @@ button.sql-result-toggle:hover:not(:disabled) {
   color: var(--ac);
   background: color-mix(in srgb, var(--soft) 82%, var(--ac));
   border-color: var(--ac);
-}
-.draft-status {
-  display: block;
-  min-height: 1.5rem;
-  margin-top: 0.5rem;
 }
 .answer-options {
   display: grid;

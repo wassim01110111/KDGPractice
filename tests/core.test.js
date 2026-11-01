@@ -55,6 +55,15 @@ t('SQL-course multiple-choice exercises validate without query fields', () => {
   assert.deepStrictEqual(C.validatePackage(pkg, 'sql-fixture.json', { seenIds: new Set(), datasetIds: new Set(), schemaVersion: 1 }), []);
   assert.strictEqual(C.gradeOS(ex, [1]), true);
 });
+t('mcq-multiple validates, renders as multi-select, and grades all expected choices', () => {
+  const ex = { id: 'sql-multi-alias', course: 'sql', category: 'theory', title: 'Choose all', instructions: 'Select all correct answers.', difficulty: 'Easy', type: 'mcq-multiple', examEligible: true, provenance: 'fixture', contentVersion: 1, options: ['A', 'B', 'C'], expected: [0, 2] };
+  const pkg = { schemaVersion: 1, packageId: 'sql-multi-alias-package', version: '1', datasets: [], exercises: [ex] };
+  assert.deepStrictEqual(C.validatePackage(pkg, 'sql-multi-alias.json', { seenIds: new Set(), datasetIds: new Set(), schemaVersion: 1 }), []);
+  assert(C.MCQ_TYPES.includes(ex.type));
+  assert(C.gradeOS(ex, [2, 0]));
+  assert(!C.gradeOS(ex, [0]));
+  assert(!C.gradeOS(ex, [0, 1, 2]));
+});
 t('validator: dup id, bad difficulty, broken dataset, missing ref', () => {
   const base = { id: 'a', course: 'sql', category: 'c', title: 'x', instructions: 'y', difficulty: 'Easy', type: 'sql-query', examEligible: true, provenance: 'p', contentVersion: 1, datasetId: 'nope', orderMatters: false, compareColumnNames: false, columnOrderMatters: true };
   const pkg = { schemaVersion: 1, packageId: 'p', version: '1', datasets: [], exercises: [base, { ...base, difficulty: 'Hard2' }] };
@@ -62,5 +71,22 @@ t('validator: dup id, bad difficulty, broken dataset, missing ref', () => {
   assert(f('id') && f('difficulty') && f('datasetId') && f('referenceSolution') && e.every(v => v.file === 'f.json')); });
 t('OS grading', () => { assert(C.gradeOS({ type: 'command-text', expected: { accepted: ['ls  -l'], patterns: ['^cd\\s+~$'] } }, ' ls -l ')); assert(C.gradeOS({ type: 'command-text', expected: { patterns: ['^cd\\s+~$'] } }, 'cd   ~'));
   assert(!C.gradeOS({ type: 'mcq-multi', expected: [0, 2] }, [0])); assert(C.gradeOS({ type: 'mcq-multi', expected: [0, 2] }, [2, 0])); });
+t('similar OS input is flagged only when close to an accepted answer', () => {
+  const command = { type: 'command-text', expected: { accepted: ['whoami'], patterns: ['^id$'] } };
+  assert(C.hasSimilarOSAnswer(command, 'whoamii'));
+  assert(!C.hasSimilarOSAnswer(command, 'unrelated'));
+  assert(!C.hasSimilarOSAnswer(command, 'id'));
+  const blanks = { type: 'fill-blank', expected: { blanks: [['/home/student'], ['admin']] } };
+  assert(C.hasSimilarOSAnswer(blanks, ['/home/studnt', 'wrong']));
+  assert(!C.hasSimilarOSAnswer(blanks, ['/tmp', 'wrong']));
+});
+t('shuffled MCQ options retain original grading indices', () => {
+  const single = { type: 'mcq-single', expected: [0] }, multi = { type: 'mcq-multi', expected: [0, 2] };
+  const originalIndices = [0, 1, 2], shuffled = C.shuffle(originalIndices, () => 0);
+  assert.deepStrictEqual(originalIndices, [0, 1, 2]);
+  assert.deepStrictEqual(shuffled, [1, 2, 0]);
+  assert(C.gradeOS(single, [shuffled[2]]));
+  assert(C.gradeOS(multi, [shuffled[2], shuffled[1]]));
+});
 let bad = 0; for (const [n, f] of T) { try { f(); console.log('PASS', n); } catch (e) { bad++; console.log('FAIL', n, e.message); } }
 console.log(`${T.length - bad}/${T.length} passed`); process.exit(bad ? 1 : 0);

@@ -1,6 +1,14 @@
 "use strict";
-const { compare, generateExam, validatePackage, gradeOS, exerciseKey, DIFF } =
-  Core;
+const {
+  compare,
+  generateExam,
+  validatePackage,
+  gradeOS,
+  hasSimilarOSAnswer,
+  exerciseKey,
+  shuffle,
+  DIFF,
+} = Core;
 const $ = (s, r = document) => r.querySelector(s);
 const h = (t, a = {}, ...k) => {
   const e = document.createElement(t);
@@ -881,24 +889,11 @@ function qView(ex, mode, get, set, onAttempt = () => {}) {
   let schemaPanel,
     runId = 0,
     gradingId = 0;
-  const draftStatus = h(
-    "small",
-    { class: "draft-status", role: "status" },
-    "Draft saves automatically as you type.",
-  );
   const updateAnswer = (value) => {
     const saved = set(value);
-    if (mode !== "practice") return;
-    draftStatus.textContent = "Saving draft…";
-    Promise.resolve(saved)
-      .then(() => {
-        draftStatus.textContent = "Draft saved.";
-        draftStatus.className = "draft-status";
-      })
-      .catch((e) => {
-        draftStatus.textContent = "Could not save draft: " + e.message;
-        draftStatus.className = "draft-status err";
-      });
+    Promise.resolve(saved).catch((e) => {
+      console.error("Could not save answer draft:", e);
+    });
   };
   q.append(
     h("h3", {}, ex.title),
@@ -1012,11 +1007,12 @@ function qView(ex, mode, get, set, onAttempt = () => {}) {
       (ex.type === "fill-blank" ? [] : ex.type.startsWith("mcq") ? [] : "");
     let inp;
     if (ex.type.startsWith("mcq")) {
-      const multi = ex.type === "mcq-multi";
+      const multi = ex.type === "mcq-multi" || ex.type === "mcq-multiple",
+        optionOrder = shuffle(ex.options.map((_, i) => i));
       inp = h(
         "div",
         { class: "answer-options" },
-        ex.options.map((o, i) =>
+        optionOrder.map((i) =>
           h(
             "label",
             {},
@@ -1031,7 +1027,7 @@ function qView(ex, mode, get, set, onAttempt = () => {}) {
                 updateAnswer([...s]);
               },
             }),
-            " " + o,
+            " " + ex.options[i],
           ),
         ),
       );
@@ -1140,6 +1136,13 @@ function qView(ex, mode, get, set, onAttempt = () => {}) {
                 { class: g ? "ok" : "bad" },
                 g ? "✔ Correct" : "✘ Incorrect",
               ),
+              !g && hasSimilarOSAnswer(ex, readAns())
+                ? h(
+                    "small",
+                    { class: "answer-review-note" },
+                    "Your answer may be right, but the system can't tell for sure because it only checks against listed answers.",
+                  )
+                : "",
               ex.explanation
                 ? h("p", {}, h("b", {}, "Explanation: "), ex.explanation)
                 : "",
@@ -1311,7 +1314,6 @@ function qView(ex, mode, get, set, onAttempt = () => {}) {
     }
   }
   q.append(btns, out, fb);
-  if (mode === "practice") q.append(draftStatus);
   return schemaPanel
     ? h("div", { class: "sql-exercise-layout" }, schemaPanel, q)
     : q;

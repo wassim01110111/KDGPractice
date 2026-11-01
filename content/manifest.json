@@ -3,6 +3,7 @@
   "packages": [
     { "id": "os1", "version": "0.0.1", "files": ["os-course.json"] },
     { "id": "sql1", "version": "0.0.1", "files": ["sql-course.json"] },
+    { "id": "sql1t", "version": "0.0.1", "files": ["sql-theory-course.json"] },
     { "id": "sql1e", "version": "0.0.1", "files": ["sql-extreme-t1.json"] }
   ],
   "referenceFiles": [

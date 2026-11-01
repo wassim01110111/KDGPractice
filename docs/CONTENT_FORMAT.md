@@ -69,8 +69,8 @@ array. Each dataset has `id`, `version`, `title`, and `sql`; the `sql` script
 creates and populates the database. Reference solutions are checked against
 their dataset when the package is loaded. Queries must use one statement.
 
-SQL knowledge-check exercises may use `mcq-single` or `mcq-multi` instead; they
-do not need a dataset or SQL-query fields.
+SQL knowledge-check exercises may use `mcq-single`, `mcq-multi`, or
+`mcq-multiple` instead; they do not need a dataset or SQL-query fields.
 
 ## Choice and text exercises
 
@@ -80,6 +80,7 @@ These types are graded by answer matching rather than SQL execution:
 |---|---|---|
 | `mcq-single` | `options`: string array | Array containing exactly one valid option index |
 | `mcq-multi` | `options`: string array | Array of valid option indexes |
+| `mcq-multiple` | `options`: string array | Array of valid option indexes (multi-select alias) |
 | `command-text` | — | Object with `accepted` and/or `patterns` arrays; at least one must contain an entry |
 | `fill-blank` | — | Object with `blanks`: one array of accepted strings per blank |
 | `short-answer-self-check` | — | Model answer string; the student self-marks |
