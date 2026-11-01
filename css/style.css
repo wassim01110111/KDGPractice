@@ -12,6 +12,7 @@
   --hint-fg: #713f12;
   --hint-border: #d97706;
   --card: #fff;
+  --uml-bg: #fff;
   --soft: #edf2fb;
   --shadow: 0 8px 24px rgb(25 45 85 / 7%);
 }
@@ -28,7 +29,8 @@
   --hint-bg: #382b16;
   --hint-fg: #ffdf9a;
   --hint-border: #e5a52f;
-  --card: #1b1b1b;
+  --uml-bg: #1b1b1b;
+  --card: #192231;
   --soft: #202c40;
   --shadow: 0 8px 24px rgb(0 0 0 / 18%);
 }
@@ -248,9 +250,16 @@ nav {
   gap: 0.35rem;
 }
 nav a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
   color: var(--mut);
   text-decoration: none;
-  padding: 0.35rem 0.7rem;
+
+  padding: 0.45rem 0.7rem;
+  line-height: 1.2;
+
   border-radius: 999px;
 }
 nav a:hover,
@@ -1628,7 +1637,7 @@ button.schema-view-toggle.on {
   display: block;
   max-width: 100%;
   overflow: auto;
-  background: var(--card);
+  background: var(--uml-bg);
   border: 1px solid var(--bd);
   border-radius: 8px;
   text-align: center;
