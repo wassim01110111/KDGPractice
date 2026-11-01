@@ -82,7 +82,7 @@ const lastAttempt = () => {
 };
 const xpFor = (ex) =>
   ({ Easy: 25, Medium: 50, Hard: 100 })[ex.difficulty] || 25;
-async function rec(ex, correct, mode) {
+async function rec(ex, correct, mode, onRecorded = () => {}) {
   const key = keyOf(ex),
     attempt = {
       key,
@@ -92,16 +92,19 @@ async function rec(ex, correct, mode) {
       correct,
       mode,
     };
-  if (correct && !S.xpRewards[key]) {
+  const earnedReward = correct && !S.xpRewards[key];
+  if (earnedReward) {
     S.xpRewards[key] = {
       xp: xpFor(ex),
       difficulty: ex.difficulty,
       earnedAt: attempt.t,
     };
-    await kv.set("xpRewards", S.xpRewards);
   }
   S.attempts = [...S.attempts.filter((a) => a.key !== key), attempt];
-  await kv.set("attempts", S.attempts);
+  onRecorded(attempt);
+  const writes = [kv.set("attempts", S.attempts)];
+  if (earnedReward) writes.push(kv.set("xpRewards", S.xpRewards));
+  await Promise.all(writes);
 }
 const draftWrites = new Map();
 function saveDraft(id, answer) {
@@ -616,7 +619,7 @@ async function plantumlEncode(source) {
 }
 
 // Question view. mode 'practice' shows Run/Submit/feedback; 'exam' shows Run only, no feedback.
-function qView(ex, mode, get, set) {
+function qView(ex, mode, get, set, onAttempt = () => {}) {
   const q = h("div", { class: "q" }),
     out = h("div"),
     fb = h("div");
@@ -658,7 +661,7 @@ function qView(ex, mode, get, set) {
     h("div", { class: "stmt" }, ex.instructions),
   );
   const btns = h("div");
-  let readAns, resetFn;
+  let readAns, resetFn, submitButton;
   if (ex.type === "sql-query") {
     const ta = h("textarea", {
       class: "editor",
@@ -690,6 +693,10 @@ function qView(ex, mode, get, set) {
     ta.onkeydown = (e) => {
       if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
         e.preventDefault();
+        if (e.shiftKey && mode === "practice") {
+          submitButton?.click();
+          return;
+        }
         run.click();
       }
     };
@@ -700,38 +707,39 @@ function qView(ex, mode, get, set) {
       ta.value = "";
       updateAnswer("");
     };
-    if (mode === "practice")
-      btns.append(
-        h(
-          "button",
-          {
-            onclick: async () => {
-              fb.replaceChildren(h("small", {}, "Grading…"));
-              const g = await gradeSql(ex, ta.value);
-              if (g.correct !== null) await rec(ex, g.correct, "practice");
-              fb.replaceChildren(
-                g.error
-                  ? h("pre", { class: "err" }, g.error)
-                  : h(
-                      "p",
-                      { class: g.correct ? "ok" : "bad" },
-                      g.correct ? "✔ Correct" : "✘ Incorrect",
-                      h(
-                        "small",
-                        {},
-                        `  (setup ${g.setupMs} ms, total ${g.totalMs} ms)`,
-                      ),
+    if (mode === "practice") {
+      submitButton = h(
+        "button",
+        {
+          onclick: async () => {
+            fb.replaceChildren(h("small", {}, "Grading…"));
+            const g = await gradeSql(ex, ta.value);
+            if (g.correct !== null)
+              await rec(ex, g.correct, "practice", onAttempt);
+            fb.replaceChildren(
+              g.error
+                ? h("pre", { class: "err" }, g.error)
+                : h(
+                    "p",
+                    { class: g.correct ? "ok" : "bad" },
+                    g.correct ? "✔ Correct" : "✘ Incorrect",
+                    h(
+                      "small",
+                      {},
+                      `  (setup ${g.setupMs} ms, total ${g.totalMs} ms)`,
                     ),
-                g.cmp ? diffView(g.cmp) : "",
-                ex.explanation
-                  ? h("p", {}, h("b", {}, "Explanation: "), ex.explanation)
-                  : "",
-              );
-            },
+                  ),
+              g.cmp ? diffView(g.cmp) : "",
+              ex.explanation
+                ? h("p", {}, h("b", {}, "Explanation: "), ex.explanation)
+                : "",
+            );
           },
-          "Submit",
-        ),
+        },
+        "Submit (Ctrl + Shift + Enter)",
       );
+      btns.append(submitButton);
+    }
   } else {
     const cur =
       get() ||
@@ -817,67 +825,78 @@ function qView(ex, mode, get, set) {
           "Graded by text matching against accepted answers — the command is not executed.",
         ),
       );
-    if (mode === "practice")
-      btns.append(
-        h(
-          "button",
-          {
-            onclick: async () => {
-              const g = gradeOS(ex, readAns());
-              if (g === null) {
-                fb.replaceChildren(
-                  h("p", {}, h("b", {}, "Model answer:")),
-                  h("pre", {}, ex.expected),
-                  h(
-                    "div",
-                    {},
-                    "Compare with yours, then mark: ",
-                    h(
-                      "button",
-                      {
-                        onclick: async () => {
-                          await rec(ex, true, "practice");
-                          fb.append(
-                            h("p", { class: "ok" }, "Saved as correct"),
-                          );
-                        },
-                      },
-                      "I was right",
-                    ),
-                    h(
-                      "button",
-                      {
-                        class: "sec",
-                        onclick: async () => {
-                          await rec(ex, false, "practice");
-                          fb.append(
-                            h("p", { class: "bad" }, "Saved as incorrect"),
-                          );
-                        },
-                      },
-                      "I was wrong",
-                    ),
-                  ),
-                );
-                return;
-              }
-              await rec(ex, g, "practice");
+    if (mode === "practice") {
+      submitButton = h(
+        "button",
+        {
+          onclick: async () => {
+            const g = gradeOS(ex, readAns());
+            if (g === null) {
               fb.replaceChildren(
+                h("p", {}, h("b", {}, "Model answer:")),
+                h("pre", {}, ex.expected),
                 h(
-                  "p",
-                  { class: g ? "ok" : "bad" },
-                  g ? "✔ Correct" : "✘ Incorrect",
+                  "div",
+                  {},
+                  "Compare with yours, then mark: ",
+                  h(
+                    "button",
+                    {
+                      onclick: async () => {
+                        await rec(ex, true, "practice", onAttempt);
+                        fb.append(h("p", { class: "ok" }, "Saved as correct"));
+                      },
+                    },
+                    "I was right",
+                  ),
+                  h(
+                    "button",
+                    {
+                      class: "sec",
+                      onclick: async () => {
+                        await rec(ex, false, "practice", onAttempt);
+                        fb.append(
+                          h("p", { class: "bad" }, "Saved as incorrect"),
+                        );
+                      },
+                    },
+                    "I was wrong",
+                  ),
                 ),
-                ex.explanation
-                  ? h("p", {}, h("b", {}, "Explanation: "), ex.explanation)
-                  : "",
               );
-            },
+              return;
+            }
+            await rec(ex, g, "practice", onAttempt);
+            fb.replaceChildren(
+              h(
+                "p",
+                { class: g ? "ok" : "bad" },
+                g ? "✔ Correct" : "✘ Incorrect",
+              ),
+              ex.explanation
+                ? h("p", {}, h("b", {}, "Explanation: "), ex.explanation)
+                : "",
+            );
           },
-          "Submit",
-        ),
+        },
+        "Submit (Ctrl + Shift + Enter)",
       );
+      btns.append(submitButton);
+    }
   }
+  q.addEventListener("keydown", (e) => {
+    if (
+      mode === "practice" &&
+      submitButton &&
+      (e.ctrlKey || e.metaKey) &&
+      e.shiftKey &&
+      e.key === "Enter"
+    ) {
+      e.preventDefault();
+      e.stopPropagation();
+      submitButton.click();
+    }
+  });
   if (mode === "practice") {
     btns.append(
       h(
@@ -1201,6 +1220,11 @@ async function pagePractice(root) {
       .replace(/-/g, " ")
       .toLocaleLowerCase()
       .replace(/\b[a-z]/g, (letter) => letter.toLocaleUpperCase());
+  const packageLabel = (packageId) =>
+    packageId
+      .replace(/-/g, " ")
+      .toLocaleLowerCase()
+      .replace(/\b[a-z]/g, (letter) => letter.toLocaleUpperCase());
   const search = h("input", {
       type: "search",
       placeholder: "Search titles, instructions, or IDs",
@@ -1331,6 +1355,7 @@ async function pagePractice(root) {
                 "practice",
                 () => answers[keyOf(e)],
                 (v) => saveDraft(keyOf(e), v),
+                () => draw(),
               ),
             );
             draw();
@@ -1340,7 +1365,7 @@ async function pagePractice(root) {
         h(
           "small",
           {},
-          ` ${e.packageId} · ${e.difficulty}${e.examEligible ? "" : " · not on exam"}`,
+          ` ${packageLabel(e.packageId)} · ${e.difficulty}${e.examEligible ? "" : " · not on exam"}`,
         ),
       ),
     );

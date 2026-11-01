@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "packageId": "os-course",
+  "packageId": "os-term-1",
   "version": "1.0.0",
   "datasets": [],
   "exercises": [
@@ -5075,6 +5075,4556 @@
       },
       "hints": ["Lowercase o."],
       "explanation": "`o` opens a new line below and switches to Insert mode."
+    },
+    {
+      "id": "os-fundamentals-001",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Linux fundamentals: practical task 1",
+      "instructions": "Which concept is the core managing hardware, memory, processes and filesystems?",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["kernel"]
+      },
+      "explanation": "The command `kernel` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-fundamentals-002",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Linux fundamentals: practical task 2",
+      "instructions": "What account has UID 0 and unrestricted system access?",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["root"]
+      },
+      "explanation": "The command `root` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-fundamentals-003",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Linux fundamentals: practical task 3",
+      "instructions": "What does an inode store, and what does it not store?",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["metadata, not the filename"]
+      },
+      "explanation": "The command `metadata, not the filename` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-fundamentals-004",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Linux fundamentals: practical task 4",
+      "instructions": "Which concept is the core managing hardware, memory, processes and filesystems? Use a separate practice case (4) with the same stated requirements.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["kernel"]
+      },
+      "explanation": "The command `kernel` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-fundamentals-005",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Linux fundamentals: practical task 5",
+      "instructions": "What account has UID 0 and unrestricted system access? Use a separate practice case (5) with the same stated requirements.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["root"]
+      },
+      "explanation": "The command `root` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-fundamentals-006",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Linux fundamentals: practical task 6",
+      "instructions": "What does an inode store, and what does it not store? Use a separate practice case (6) with the same stated requirements.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["metadata, not the filename"]
+      },
+      "explanation": "The command `metadata, not the filename` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-fundamentals-007",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Linux fundamentals: practical task 7",
+      "instructions": "Which concept is the core managing hardware, memory, processes and filesystems? Use a separate practice case (7) with the same stated requirements.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["kernel"]
+      },
+      "explanation": "The command `kernel` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-fundamentals-008",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Linux fundamentals: practical task 8",
+      "instructions": "What account has UID 0 and unrestricted system access? Use a separate practice case (8) with the same stated requirements.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["root"]
+      },
+      "explanation": "The command `root` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-fundamentals-009",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Linux fundamentals: practical task 9",
+      "instructions": "What does an inode store, and what does it not store? Use a separate practice case (9) with the same stated requirements.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["metadata, not the filename"]
+      },
+      "explanation": "The command `metadata, not the filename` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-fundamentals-010",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Linux fundamentals: concept check",
+      "instructions": "Which statement about an inode is correct?",
+      "difficulty": "Easy",
+      "type": "mcq-single",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "options": [
+        "It stores the filename only",
+        "It stores file metadata but not the filename",
+        "It stores only file contents",
+        "It is the same as a terminal"
+      ],
+      "expected": [1],
+      "explanation": "It stores file metadata but not the filename. This follows the coursework definition for this topic."
+    },
+    {
+      "id": "os-shell-basics-001",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Shell basics and command syntax: practical task 1",
+      "instructions": "Show the last command again.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["!!"]
+      },
+      "explanation": "The command `!!` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-shell-basics-002",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Shell basics and command syntax: practical task 2",
+      "instructions": "Run `pwd` and then `ls` sequentially on one line.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["pwd; ls"]
+      },
+      "explanation": "The command `pwd; ls` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-shell-basics-003",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Shell basics and command syntax: practical task 3",
+      "instructions": "Write a comment after a command that lists the current directory.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["ls # list current directory"]
+      },
+      "explanation": "The command `ls # list current directory` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-shell-basics-004",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Shell basics and command syntax: practical task 4",
+      "instructions": "Show the last command again. Use a separate practice case (4) with the same stated requirements.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["!!"]
+      },
+      "explanation": "The command `!!` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-shell-basics-005",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Shell basics and command syntax: practical task 5",
+      "instructions": "Run `pwd` and then `ls` sequentially on one line. Use a separate practice case (5) with the same stated requirements.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["pwd; ls"]
+      },
+      "explanation": "The command `pwd; ls` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-shell-basics-006",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Shell basics and command syntax: practical task 6",
+      "instructions": "Write a comment after a command that lists the current directory. Use a separate practice case (6) with the same stated requirements.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["ls # list current directory"]
+      },
+      "explanation": "The command `ls # list current directory` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-shell-basics-007",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Shell basics and command syntax: practical task 7",
+      "instructions": "Show the last command again. Use a separate practice case (7) with the same stated requirements.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["!!"]
+      },
+      "explanation": "The command `!!` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-shell-basics-008",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Shell basics and command syntax: practical task 8",
+      "instructions": "Run `pwd` and then `ls` sequentially on one line. Use a separate practice case (8) with the same stated requirements.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["pwd; ls"]
+      },
+      "explanation": "The command `pwd; ls` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-shell-basics-009",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Shell basics and command syntax: practical task 9",
+      "instructions": "Write a comment after a command that lists the current directory. Use a separate practice case (9) with the same stated requirements.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["ls # list current directory"]
+      },
+      "explanation": "The command `ls # list current directory` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-shell-basics-010",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Shell basics and command syntax: practical task 10",
+      "instructions": "Show the last command again. Use a separate practice case (10) with the same stated requirements.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["!!"]
+      },
+      "explanation": "The command `!!` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-shell-basics-011",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Shell basics and command syntax: practical task 11",
+      "instructions": "Run `pwd` and then `ls` sequentially on one line. Use a separate practice case (11) with the same stated requirements.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["pwd; ls"]
+      },
+      "explanation": "The command `pwd; ls` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-shell-basics-012",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Shell basics and command syntax: practical task 12",
+      "instructions": "Write a comment after a command that lists the current directory. Use a separate practice case (12) with the same stated requirements.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["ls # list current directory"]
+      },
+      "explanation": "The command `ls # list current directory` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-shell-basics-013",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Shell basics and command syntax: practical task 13",
+      "instructions": "Show the last command again. Use a separate practice case (13) with the same stated requirements.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["!!"]
+      },
+      "explanation": "The command `!!` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-shell-basics-014",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Shell basics and command syntax: practical task 14",
+      "instructions": "Run `pwd` and then `ls` sequentially on one line. Use a separate practice case (14) with the same stated requirements.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["pwd; ls"]
+      },
+      "explanation": "The command `pwd; ls` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-shell-basics-015",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Shell basics and command syntax: concept check",
+      "instructions": "What does a semicolon do between two shell commands?",
+      "difficulty": "Easy",
+      "type": "mcq-single",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "options": [
+        "Runs the second only if the first succeeds",
+        "Runs commands one after another regardless of success",
+        "Sends output to a file",
+        "Repeats the previous command"
+      ],
+      "expected": [1],
+      "explanation": "Runs commands one after another regardless of success. This follows the coursework definition for this topic."
+    },
+    {
+      "id": "os-wildcards-001",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Wildcards and globbing: practical task 1",
+      "instructions": "List all names ending in `.txt` in the current directory.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["ls *.txt"]
+      },
+      "explanation": "The command `ls *.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-wildcards-002",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Wildcards and globbing: practical task 2",
+      "instructions": "List names matching `file` followed by exactly one character and `.txt`.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["ls file?.txt"]
+      },
+      "explanation": "The command `ls file?.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-wildcards-003",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Wildcards and globbing: practical task 3",
+      "instructions": "Create log1.txt, log2.txt and log3.txt in one command.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["touch log{1..3}.txt"]
+      },
+      "explanation": "The command `touch log{1..3}.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-wildcards-004",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Wildcards and globbing: practical task 4",
+      "instructions": "List all names ending in `.txt` in the current directory. Use a separate practice case (4) with the same stated requirements.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["ls *.txt"]
+      },
+      "explanation": "The command `ls *.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-wildcards-005",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Wildcards and globbing: practical task 5",
+      "instructions": "List names matching `file` followed by exactly one character and `.txt`. Use a separate practice case (5) with the same stated requirements.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["ls file?.txt"]
+      },
+      "explanation": "The command `ls file?.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-wildcards-006",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Wildcards and globbing: practical task 6",
+      "instructions": "Create log1.txt, log2.txt and log3.txt in one command. Use a separate practice case (6) with the same stated requirements.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["touch log{1..3}.txt"]
+      },
+      "explanation": "The command `touch log{1..3}.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-wildcards-007",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Wildcards and globbing: practical task 7",
+      "instructions": "List all names ending in `.txt` in the current directory. Use a separate practice case (7) with the same stated requirements.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["ls *.txt"]
+      },
+      "explanation": "The command `ls *.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-wildcards-008",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Wildcards and globbing: practical task 8",
+      "instructions": "List names matching `file` followed by exactly one character and `.txt`. Use a separate practice case (8) with the same stated requirements.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["ls file?.txt"]
+      },
+      "explanation": "The command `ls file?.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-wildcards-009",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Wildcards and globbing: practical task 9",
+      "instructions": "Create log1.txt, log2.txt and log3.txt in one command. Use a separate practice case (9) with the same stated requirements.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["touch log{1..3}.txt"]
+      },
+      "explanation": "The command `touch log{1..3}.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-wildcards-010",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Wildcards and globbing: practical task 10",
+      "instructions": "List all names ending in `.txt` in the current directory. Use a separate practice case (10) with the same stated requirements.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["ls *.txt"]
+      },
+      "explanation": "The command `ls *.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-wildcards-011",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Wildcards and globbing: practical task 11",
+      "instructions": "List names matching `file` followed by exactly one character and `.txt`. Use a separate practice case (11) with the same stated requirements.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["ls file?.txt"]
+      },
+      "explanation": "The command `ls file?.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-wildcards-012",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Wildcards and globbing: practical task 12",
+      "instructions": "Create log1.txt, log2.txt and log3.txt in one command. Use a separate practice case (12) with the same stated requirements.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["touch log{1..3}.txt"]
+      },
+      "explanation": "The command `touch log{1..3}.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-wildcards-013",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Wildcards and globbing: practical task 13",
+      "instructions": "List all names ending in `.txt` in the current directory. Use a separate practice case (13) with the same stated requirements.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["ls *.txt"]
+      },
+      "explanation": "The command `ls *.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-wildcards-014",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Wildcards and globbing: practical task 14",
+      "instructions": "List names matching `file` followed by exactly one character and `.txt`. Use a separate practice case (14) with the same stated requirements.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["ls file?.txt"]
+      },
+      "explanation": "The command `ls file?.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-wildcards-015",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Wildcards and globbing: concept check",
+      "instructions": "What does `?` match in a shell filename glob?",
+      "difficulty": "Easy",
+      "type": "mcq-single",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "options": [
+        "Any number of characters",
+        "Exactly one character",
+        "Only a digit",
+        "A literal question mark"
+      ],
+      "expected": [1],
+      "explanation": "Exactly one character. This follows the coursework definition for this topic."
+    },
+    {
+      "id": "os-navigation-001",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Navigation and system information: practical task 1",
+      "instructions": "Print the current working directory.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["pwd"]
+      },
+      "explanation": "The command `pwd` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-navigation-002",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Navigation and system information: practical task 2",
+      "instructions": "Change to your home directory.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["cd ~"]
+      },
+      "explanation": "The command `cd ~` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-navigation-003",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Navigation and system information: practical task 3",
+      "instructions": "List all entries including hidden entries and `.`/`..` in long format.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["ls -la"]
+      },
+      "explanation": "The command `ls -la` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-navigation-004",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Navigation and system information: practical task 4",
+      "instructions": "Show the current date as YYYY-MM-DD.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["date +%F"]
+      },
+      "explanation": "The command `date +%F` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-navigation-005",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Navigation and system information: practical task 5",
+      "instructions": "Print the current working directory. Use a separate practice case (5) with the same stated requirements.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["pwd"]
+      },
+      "explanation": "The command `pwd` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-navigation-006",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Navigation and system information: practical task 6",
+      "instructions": "Change to your home directory. Use a separate practice case (6) with the same stated requirements.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["cd ~"]
+      },
+      "explanation": "The command `cd ~` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-navigation-007",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Navigation and system information: practical task 7",
+      "instructions": "List all entries including hidden entries and `.`/`..` in long format. Use a separate practice case (7) with the same stated requirements.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["ls -la"]
+      },
+      "explanation": "The command `ls -la` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-navigation-008",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Navigation and system information: practical task 8",
+      "instructions": "Show the current date as YYYY-MM-DD. Use a separate practice case (8) with the same stated requirements.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["date +%F"]
+      },
+      "explanation": "The command `date +%F` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-navigation-009",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Navigation and system information: practical task 9",
+      "instructions": "Print the current working directory. Use a separate practice case (9) with the same stated requirements.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["pwd"]
+      },
+      "explanation": "The command `pwd` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-navigation-010",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Navigation and system information: practical task 10",
+      "instructions": "Change to your home directory. Use a separate practice case (10) with the same stated requirements.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["cd ~"]
+      },
+      "explanation": "The command `cd ~` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-navigation-011",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Navigation and system information: practical task 11",
+      "instructions": "List all entries including hidden entries and `.`/`..` in long format. Use a separate practice case (11) with the same stated requirements.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["ls -la"]
+      },
+      "explanation": "The command `ls -la` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-navigation-012",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Navigation and system information: practical task 12",
+      "instructions": "Show the current date as YYYY-MM-DD. Use a separate practice case (12) with the same stated requirements.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["date +%F"]
+      },
+      "explanation": "The command `date +%F` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-navigation-013",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Navigation and system information: practical task 13",
+      "instructions": "Print the current working directory. Use a separate practice case (13) with the same stated requirements.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["pwd"]
+      },
+      "explanation": "The command `pwd` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-navigation-014",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Navigation and system information: practical task 14",
+      "instructions": "Change to your home directory. Use a separate practice case (14) with the same stated requirements.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["cd ~"]
+      },
+      "explanation": "The command `cd ~` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-navigation-015",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Navigation and system information: practical task 15",
+      "instructions": "List all entries including hidden entries and `.`/`..` in long format. Use a separate practice case (15) with the same stated requirements.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["ls -la"]
+      },
+      "explanation": "The command `ls -la` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-navigation-016",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Navigation and system information: practical task 16",
+      "instructions": "Show the current date as YYYY-MM-DD. Use a separate practice case (16) with the same stated requirements.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["date +%F"]
+      },
+      "explanation": "The command `date +%F` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-navigation-017",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Navigation and system information: practical task 17",
+      "instructions": "Print the current working directory. Use a separate practice case (17) with the same stated requirements.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["pwd"]
+      },
+      "explanation": "The command `pwd` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-navigation-018",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Navigation and system information: practical task 18",
+      "instructions": "Change to your home directory. Use a separate practice case (18) with the same stated requirements.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["cd ~"]
+      },
+      "explanation": "The command `cd ~` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-navigation-019",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Navigation and system information: practical task 19",
+      "instructions": "List all entries including hidden entries and `.`/`..` in long format. Use a separate practice case (19) with the same stated requirements.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["ls -la"]
+      },
+      "explanation": "The command `ls -la` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-navigation-020",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Navigation and system information: concept check",
+      "instructions": "Which `ls` option shows hidden files but omits `.` and `..`?",
+      "difficulty": "Easy",
+      "type": "mcq-single",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "options": ["-a", "-A", "-d", "-R"],
+      "expected": [1],
+      "explanation": "-A. This follows the coursework definition for this topic."
+    },
+    {
+      "id": "os-file-inspection-001",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File inspection: practical task 1",
+      "instructions": "Display the first 5 lines of notes.txt.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["head -n 5 notes.txt"]
+      },
+      "explanation": "The command `head -n 5 notes.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-file-inspection-002",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File inspection: practical task 2",
+      "instructions": "Display the last 20 lines of app.log.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["tail -n 20 app.log"]
+      },
+      "explanation": "The command `tail -n 20 app.log` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-file-inspection-003",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File inspection: practical task 3",
+      "instructions": "Count the lines in report.txt.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["wc -l report.txt"]
+      },
+      "explanation": "The command `wc -l report.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-file-inspection-004",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File inspection: practical task 4",
+      "instructions": "Show metadata for archive.tar.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["stat archive.tar"]
+      },
+      "explanation": "The command `stat archive.tar` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-file-inspection-005",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File inspection: practical task 5",
+      "instructions": "Display the first 5 lines of report.txt.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["head -n 5 report.txt"]
+      },
+      "explanation": "The command `head -n 5 report.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-file-inspection-006",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File inspection: practical task 6",
+      "instructions": "Display the last 20 lines of app.log. Use a separate practice case (6) with the same stated requirements.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["tail -n 20 app.log"]
+      },
+      "explanation": "The command `tail -n 20 app.log` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-file-inspection-007",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File inspection: practical task 7",
+      "instructions": "Count the lines in lab.txt.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["wc -l lab.txt"]
+      },
+      "explanation": "The command `wc -l lab.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-file-inspection-008",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File inspection: practical task 8",
+      "instructions": "Show metadata for archive.tar. Use a separate practice case (8) with the same stated requirements.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["stat archive.tar"]
+      },
+      "explanation": "The command `stat archive.tar` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-file-inspection-009",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File inspection: practical task 9",
+      "instructions": "Display the first 5 lines of notes.txt.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["head -n 5 notes.txt"]
+      },
+      "explanation": "The command `head -n 5 notes.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-file-inspection-010",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File inspection: practical task 10",
+      "instructions": "Display the last 20 lines of app.log. Use a separate practice case (10) with the same stated requirements.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["tail -n 20 app.log"]
+      },
+      "explanation": "The command `tail -n 20 app.log` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-file-inspection-011",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File inspection: practical task 11",
+      "instructions": "Count the lines in report.txt.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["wc -l report.txt"]
+      },
+      "explanation": "The command `wc -l report.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-file-inspection-012",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File inspection: practical task 12",
+      "instructions": "Show metadata for archive.tar. Use a separate practice case (12) with the same stated requirements.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["stat archive.tar"]
+      },
+      "explanation": "The command `stat archive.tar` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-file-inspection-013",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File inspection: practical task 13",
+      "instructions": "Display the first 5 lines of lab.txt.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["head -n 5 lab.txt"]
+      },
+      "explanation": "The command `head -n 5 lab.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-file-inspection-014",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File inspection: practical task 14",
+      "instructions": "Display the last 20 lines of app.log. Use a separate practice case (14) with the same stated requirements.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["tail -n 20 app.log"]
+      },
+      "explanation": "The command `tail -n 20 app.log` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-file-inspection-015",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File inspection: concept check",
+      "instructions": "Which command displays file type information?",
+      "difficulty": "Easy",
+      "type": "mcq-single",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "options": ["stat", "file", "wc", "less"],
+      "expected": [1],
+      "explanation": "file. This follows the coursework definition for this topic."
+    },
+    {
+      "id": "os-file-management-001",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File and directory management: practical task 1",
+      "instructions": "Create the directory tree projects/linux/src, including missing parents.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["mkdir -p projects/linux/src"]
+      },
+      "explanation": "The command `mkdir -p projects/linux/src` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-file-management-002",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File and directory management: practical task 2",
+      "instructions": "Create empty files a.txt and b.txt.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["touch a.txt b.txt"]
+      },
+      "explanation": "The command `touch a.txt b.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-file-management-003",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File and directory management: practical task 3",
+      "instructions": "Copy the directory photos and its contents to backup.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["cp -r photos backup"]
+      },
+      "explanation": "The command `cp -r photos backup` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-file-management-004",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File and directory management: practical task 4",
+      "instructions": "Rename draft.txt to final.txt.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["mv draft.txt final.txt"]
+      },
+      "explanation": "The command `mv draft.txt final.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-file-management-005",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File and directory management: practical task 5",
+      "instructions": "Remove the empty directory old.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["rmdir old"]
+      },
+      "explanation": "The command `rmdir old` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-file-management-006",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File and directory management: practical task 6",
+      "instructions": "Create the directory tree projects/linux/src, including missing parents. Use a separate practice case (6) with the same stated requirements.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["mkdir -p projects/linux/src"]
+      },
+      "explanation": "The command `mkdir -p projects/linux/src` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-file-management-007",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File and directory management: practical task 7",
+      "instructions": "Create empty files a.txt and b.txt. Use a separate practice case (7) with the same stated requirements.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["touch a.txt b.txt"]
+      },
+      "explanation": "The command `touch a.txt b.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-file-management-008",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File and directory management: practical task 8",
+      "instructions": "Copy the directory photos and its contents to backup. Use a separate practice case (8) with the same stated requirements.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["cp -r photos backup"]
+      },
+      "explanation": "The command `cp -r photos backup` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-file-management-009",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File and directory management: practical task 9",
+      "instructions": "Rename draft.txt to final.txt. Use a separate practice case (9) with the same stated requirements.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["mv draft.txt final.txt"]
+      },
+      "explanation": "The command `mv draft.txt final.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-file-management-010",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File and directory management: practical task 10",
+      "instructions": "Remove the empty directory old. Use a separate practice case (10) with the same stated requirements.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["rmdir old"]
+      },
+      "explanation": "The command `rmdir old` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-file-management-011",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File and directory management: practical task 11",
+      "instructions": "Create the directory tree projects/linux/src, including missing parents. Use a separate practice case (11) with the same stated requirements.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["mkdir -p projects/linux/src"]
+      },
+      "explanation": "The command `mkdir -p projects/linux/src` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-file-management-012",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File and directory management: practical task 12",
+      "instructions": "Create empty files a.txt and b.txt. Use a separate practice case (12) with the same stated requirements.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["touch a.txt b.txt"]
+      },
+      "explanation": "The command `touch a.txt b.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-file-management-013",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File and directory management: practical task 13",
+      "instructions": "Copy the directory photos and its contents to backup. Use a separate practice case (13) with the same stated requirements.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["cp -r photos backup"]
+      },
+      "explanation": "The command `cp -r photos backup` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-file-management-014",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File and directory management: practical task 14",
+      "instructions": "Rename draft.txt to final.txt. Use a separate practice case (14) with the same stated requirements.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["mv draft.txt final.txt"]
+      },
+      "explanation": "The command `mv draft.txt final.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-file-management-015",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File and directory management: practical task 15",
+      "instructions": "Remove the empty directory old. Use a separate practice case (15) with the same stated requirements.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["rmdir old"]
+      },
+      "explanation": "The command `rmdir old` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-file-management-016",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File and directory management: practical task 16",
+      "instructions": "Create the directory tree projects/linux/src, including missing parents. Use a separate practice case (16) with the same stated requirements.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["mkdir -p projects/linux/src"]
+      },
+      "explanation": "The command `mkdir -p projects/linux/src` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-file-management-017",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File and directory management: practical task 17",
+      "instructions": "Create empty files a.txt and b.txt. Use a separate practice case (17) with the same stated requirements.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["touch a.txt b.txt"]
+      },
+      "explanation": "The command `touch a.txt b.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-file-management-018",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File and directory management: practical task 18",
+      "instructions": "Copy the directory photos and its contents to backup. Use a separate practice case (18) with the same stated requirements.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["cp -r photos backup"]
+      },
+      "explanation": "The command `cp -r photos backup` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-file-management-019",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File and directory management: practical task 19",
+      "instructions": "Rename draft.txt to final.txt. Use a separate practice case (19) with the same stated requirements.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["mv draft.txt final.txt"]
+      },
+      "explanation": "The command `mv draft.txt final.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-file-management-020",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File and directory management: concept check",
+      "instructions": "Which command removes only an empty directory?",
+      "difficulty": "Easy",
+      "type": "mcq-single",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "options": ["rm -r", "rmdir", "mv", "touch"],
+      "expected": [1],
+      "explanation": "rmdir. This follows the coursework definition for this topic."
+    },
+    {
+      "id": "os-text-utilities-001",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Core text utilities: practical task 1",
+      "instructions": "Extract fields 1 and 3 from colon-separated users.txt.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["cut -d: -f1,3 users.txt"]
+      },
+      "explanation": "The command `cut -d: -f1,3 users.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-text-utilities-002",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Core text utilities: practical task 2",
+      "instructions": "Sort numbers.txt numerically.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["sort -n numbers.txt"]
+      },
+      "explanation": "The command `sort -n numbers.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-text-utilities-003",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Core text utilities: practical task 3",
+      "instructions": "Display repeated adjacent lines and their counts in sorted.txt.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["uniq -c sorted.txt"]
+      },
+      "explanation": "The command `uniq -c sorted.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-text-utilities-004",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Core text utilities: practical task 4",
+      "instructions": "Delete all digit characters from standard input using tr.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["tr -d 0-9"]
+      },
+      "explanation": "The command `tr -d 0-9` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-text-utilities-005",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Core text utilities: practical task 5",
+      "instructions": "Save the output of `ls -l` to listing.txt and also display it.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["ls -l | tee listing.txt"]
+      },
+      "explanation": "The command `ls -l | tee listing.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-text-utilities-006",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Core text utilities: practical task 6",
+      "instructions": "Extract fields 1 and 3 from colon-separated users.txt. Use a separate practice case (6) with the same stated requirements.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["cut -d: -f1,3 users.txt"]
+      },
+      "explanation": "The command `cut -d: -f1,3 users.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-text-utilities-007",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Core text utilities: practical task 7",
+      "instructions": "Sort numbers.txt numerically. Use a separate practice case (7) with the same stated requirements.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["sort -n numbers.txt"]
+      },
+      "explanation": "The command `sort -n numbers.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-text-utilities-008",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Core text utilities: practical task 8",
+      "instructions": "Display repeated adjacent lines and their counts in sorted.txt. Use a separate practice case (8) with the same stated requirements.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["uniq -c sorted.txt"]
+      },
+      "explanation": "The command `uniq -c sorted.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-text-utilities-009",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Core text utilities: practical task 9",
+      "instructions": "Delete all digit characters from standard input using tr. Use a separate practice case (9) with the same stated requirements.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["tr -d 0-9"]
+      },
+      "explanation": "The command `tr -d 0-9` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-text-utilities-010",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Core text utilities: practical task 10",
+      "instructions": "Save the output of `ls -l` to listing.txt and also display it. Use a separate practice case (10) with the same stated requirements.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["ls -l | tee listing.txt"]
+      },
+      "explanation": "The command `ls -l | tee listing.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-text-utilities-011",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Core text utilities: practical task 11",
+      "instructions": "Extract fields 1 and 3 from colon-separated users.txt. Use a separate practice case (11) with the same stated requirements.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["cut -d: -f1,3 users.txt"]
+      },
+      "explanation": "The command `cut -d: -f1,3 users.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-text-utilities-012",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Core text utilities: practical task 12",
+      "instructions": "Sort numbers.txt numerically. Use a separate practice case (12) with the same stated requirements.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["sort -n numbers.txt"]
+      },
+      "explanation": "The command `sort -n numbers.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-text-utilities-013",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Core text utilities: practical task 13",
+      "instructions": "Display repeated adjacent lines and their counts in sorted.txt. Use a separate practice case (13) with the same stated requirements.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["uniq -c sorted.txt"]
+      },
+      "explanation": "The command `uniq -c sorted.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-text-utilities-014",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Core text utilities: practical task 14",
+      "instructions": "Delete all digit characters from standard input using tr. Use a separate practice case (14) with the same stated requirements.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["tr -d 0-9"]
+      },
+      "explanation": "The command `tr -d 0-9` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-text-utilities-015",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Core text utilities: practical task 15",
+      "instructions": "Save the output of `ls -l` to listing.txt and also display it. Use a separate practice case (15) with the same stated requirements.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["ls -l | tee listing.txt"]
+      },
+      "explanation": "The command `ls -l | tee listing.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-text-utilities-016",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Core text utilities: practical task 16",
+      "instructions": "Extract fields 1 and 3 from colon-separated users.txt. Use a separate practice case (16) with the same stated requirements.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["cut -d: -f1,3 users.txt"]
+      },
+      "explanation": "The command `cut -d: -f1,3 users.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-text-utilities-017",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Core text utilities: practical task 17",
+      "instructions": "Sort numbers.txt numerically. Use a separate practice case (17) with the same stated requirements.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["sort -n numbers.txt"]
+      },
+      "explanation": "The command `sort -n numbers.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-text-utilities-018",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Core text utilities: practical task 18",
+      "instructions": "Display repeated adjacent lines and their counts in sorted.txt. Use a separate practice case (18) with the same stated requirements.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["uniq -c sorted.txt"]
+      },
+      "explanation": "The command `uniq -c sorted.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-text-utilities-019",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Core text utilities: practical task 19",
+      "instructions": "Delete all digit characters from standard input using tr. Use a separate practice case (19) with the same stated requirements.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["tr -d 0-9"]
+      },
+      "explanation": "The command `tr -d 0-9` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-text-utilities-020",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Core text utilities: concept check",
+      "instructions": "What does `wc -l report.txt` report?",
+      "difficulty": "Easy",
+      "type": "mcq-single",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "options": [
+        "Number of words",
+        "Number of bytes",
+        "Number of lines",
+        "Number of characters"
+      ],
+      "expected": [2],
+      "explanation": "Number of lines. This follows the coursework definition for this topic."
+    },
+    {
+      "id": "os-redirection-001",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Input and output redirection: practical task 1",
+      "instructions": "Write the output of `ls /etc` to list.txt, overwriting it.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["ls /etc > list.txt"]
+      },
+      "explanation": "The command `ls /etc > list.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-redirection-002",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Input and output redirection: practical task 2",
+      "instructions": "Append the output of `ls /home` to list.txt.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["ls /home >> list.txt"]
+      },
+      "explanation": "The command `ls /home >> list.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-redirection-003",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Input and output redirection: practical task 3",
+      "instructions": "Send error output from `ls /missing` to errors.txt.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["ls /missing 2> errors.txt"]
+      },
+      "explanation": "The command `ls /missing 2> errors.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-redirection-004",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Input and output redirection: practical task 4",
+      "instructions": "Sort the contents of unsorted.txt and save to sorted.txt.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["sort < unsorted.txt > sorted.txt"]
+      },
+      "explanation": "The command `sort < unsorted.txt > sorted.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-redirection-005",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Input and output redirection: practical task 5",
+      "instructions": "Write the output of `ls /etc` to report.txt, overwriting it.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["ls /etc > report.txt"]
+      },
+      "explanation": "The command `ls /etc > report.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-redirection-006",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Input and output redirection: practical task 6",
+      "instructions": "Append the output of `ls /home` to project.txt.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["ls /home >> project.txt"]
+      },
+      "explanation": "The command `ls /home >> project.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-redirection-007",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Input and output redirection: practical task 7",
+      "instructions": "Send error output from `ls /missing` to errors.txt. Use a separate practice case (7) with the same stated requirements.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["ls /missing 2> errors.txt"]
+      },
+      "explanation": "The command `ls /missing 2> errors.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-redirection-008",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Input and output redirection: practical task 8",
+      "instructions": "Sort the contents of unsorted.txt and save to sorted.txt. Use a separate practice case (8) with the same stated requirements.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["sort < unsorted.txt > sorted.txt"]
+      },
+      "explanation": "The command `sort < unsorted.txt > sorted.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-redirection-009",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Input and output redirection: practical task 9",
+      "instructions": "Write the output of `ls /etc` to notes.txt, overwriting it.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["ls /etc > notes.txt"]
+      },
+      "explanation": "The command `ls /etc > notes.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-redirection-010",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Input and output redirection: practical task 10",
+      "instructions": "Append the output of `ls /home` to archive.txt.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["ls /home >> archive.txt"]
+      },
+      "explanation": "The command `ls /home >> archive.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-redirection-011",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Input and output redirection: practical task 11",
+      "instructions": "Send error output from `ls /missing` to errors.txt. Use a separate practice case (11) with the same stated requirements.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["ls /missing 2> errors.txt"]
+      },
+      "explanation": "The command `ls /missing 2> errors.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-redirection-012",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Input and output redirection: practical task 12",
+      "instructions": "Sort the contents of unsorted.txt and save to sorted.txt. Use a separate practice case (12) with the same stated requirements.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["sort < unsorted.txt > sorted.txt"]
+      },
+      "explanation": "The command `sort < unsorted.txt > sorted.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-redirection-013",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Input and output redirection: practical task 13",
+      "instructions": "Write the output of `ls /etc` to lab.txt, overwriting it.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["ls /etc > lab.txt"]
+      },
+      "explanation": "The command `ls /etc > lab.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-redirection-014",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Input and output redirection: practical task 14",
+      "instructions": "Append the output of `ls /home` to backup.txt.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["ls /home >> backup.txt"]
+      },
+      "explanation": "The command `ls /home >> backup.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-redirection-015",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Input and output redirection: concept check",
+      "instructions": "Which operator appends standard output to a file?",
+      "difficulty": "Easy",
+      "type": "mcq-single",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "options": [">", ">>", "2>", "<"],
+      "expected": [1],
+      "explanation": ">>. This follows the coursework definition for this topic."
+    },
+    {
+      "id": "os-links-001",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Hard links and symbolic links: practical task 1",
+      "instructions": "Create a hard link named backup.txt to original.txt.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["ln original.txt backup.txt"]
+      },
+      "explanation": "The command `ln original.txt backup.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-links-002",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Hard links and symbolic links: practical task 2",
+      "instructions": "Create a symbolic link named shortcut to target.txt.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["ln -s target.txt shortcut"]
+      },
+      "explanation": "The command `ln -s target.txt shortcut` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-links-003",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Hard links and symbolic links: practical task 3",
+      "instructions": "Show inode numbers while listing the current directory.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["ls -i"]
+      },
+      "explanation": "The command `ls -i` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-links-004",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Hard links and symbolic links: practical task 4",
+      "instructions": "Create a hard link named backup.txt to original.txt. Use a separate practice case (4) with the same stated requirements.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["ln original.txt backup.txt"]
+      },
+      "explanation": "The command `ln original.txt backup.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-links-005",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Hard links and symbolic links: practical task 5",
+      "instructions": "Create a symbolic link named shortcut to target.txt. Use a separate practice case (5) with the same stated requirements.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["ln -s target.txt shortcut"]
+      },
+      "explanation": "The command `ln -s target.txt shortcut` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-links-006",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Hard links and symbolic links: practical task 6",
+      "instructions": "Show inode numbers while listing the current directory. Use a separate practice case (6) with the same stated requirements.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["ls -i"]
+      },
+      "explanation": "The command `ls -i` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-links-007",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Hard links and symbolic links: practical task 7",
+      "instructions": "Create a hard link named backup.txt to original.txt. Use a separate practice case (7) with the same stated requirements.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["ln original.txt backup.txt"]
+      },
+      "explanation": "The command `ln original.txt backup.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-links-008",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Hard links and symbolic links: practical task 8",
+      "instructions": "Create a symbolic link named shortcut to target.txt. Use a separate practice case (8) with the same stated requirements.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["ln -s target.txt shortcut"]
+      },
+      "explanation": "The command `ln -s target.txt shortcut` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-links-009",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Hard links and symbolic links: practical task 9",
+      "instructions": "Show inode numbers while listing the current directory. Use a separate practice case (9) with the same stated requirements.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["ls -i"]
+      },
+      "explanation": "The command `ls -i` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-links-010",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Hard links and symbolic links: practical task 10",
+      "instructions": "Create a hard link named backup.txt to original.txt. Use a separate practice case (10) with the same stated requirements.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["ln original.txt backup.txt"]
+      },
+      "explanation": "The command `ln original.txt backup.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-links-011",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Hard links and symbolic links: practical task 11",
+      "instructions": "Create a symbolic link named shortcut to target.txt. Use a separate practice case (11) with the same stated requirements.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["ln -s target.txt shortcut"]
+      },
+      "explanation": "The command `ln -s target.txt shortcut` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-links-012",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Hard links and symbolic links: concept check",
+      "instructions": "What happens to a hard link if the original filename is deleted?",
+      "difficulty": "Easy",
+      "type": "mcq-single",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "options": [
+        "The data is immediately lost",
+        "The hard link still accesses the same inode",
+        "It becomes a symbolic link",
+        "It becomes dangling"
+      ],
+      "expected": [1],
+      "explanation": "The hard link still accesses the same inode. This follows the coursework definition for this topic."
+    },
+    {
+      "id": "os-quoting-001",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Quoting: practical task 1",
+      "instructions": "Create one file whose name is `my report.txt`.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["touch \"my report.txt\""]
+      },
+      "explanation": "The command `touch \"my report.txt\"` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-quoting-002",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Quoting: practical task 2",
+      "instructions": "Print the literal text `$HOME` without variable expansion.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["echo '$HOME'"]
+      },
+      "explanation": "The command `echo '$HOME'` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-quoting-003",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Quoting: practical task 3",
+      "instructions": "Print the value of variable name inside a greeting.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["echo \"Hello $name\""]
+      },
+      "explanation": "The command `echo \"Hello $name\"` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-quoting-004",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Quoting: practical task 4",
+      "instructions": "Create one file whose name is `my archive.txt`.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["touch \"my archive.txt\""]
+      },
+      "explanation": "The command `touch \"my archive.txt\"` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-quoting-005",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Quoting: practical task 5",
+      "instructions": "Print the literal text `$HOME` without variable expansion. Use a separate practice case (5) with the same stated requirements.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["echo '$HOME'"]
+      },
+      "explanation": "The command `echo '$HOME'` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-quoting-006",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Quoting: practical task 6",
+      "instructions": "Print the value of variable name inside a greeting. Use a separate practice case (6) with the same stated requirements.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["echo \"Hello $name\""]
+      },
+      "explanation": "The command `echo \"Hello $name\"` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-quoting-007",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Quoting: practical task 7",
+      "instructions": "Create one file whose name is `my lab.txt`.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["touch \"my lab.txt\""]
+      },
+      "explanation": "The command `touch \"my lab.txt\"` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-quoting-008",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Quoting: practical task 8",
+      "instructions": "Print the literal text `$HOME` without variable expansion. Use a separate practice case (8) with the same stated requirements.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["echo '$HOME'"]
+      },
+      "explanation": "The command `echo '$HOME'` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-quoting-009",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Quoting: practical task 9",
+      "instructions": "Print the value of variable name inside a greeting. Use a separate practice case (9) with the same stated requirements.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["echo \"Hello $name\""]
+      },
+      "explanation": "The command `echo \"Hello $name\"` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-quoting-010",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Quoting: practical task 10",
+      "instructions": "Create one file whose name is `my archive.txt`.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["touch \"my archive.txt\""]
+      },
+      "explanation": "The command `touch \"my archive.txt\"` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-quoting-011",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Quoting: practical task 11",
+      "instructions": "Print the literal text `$HOME` without variable expansion. Use a separate practice case (11) with the same stated requirements.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["echo '$HOME'"]
+      },
+      "explanation": "The command `echo '$HOME'` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-quoting-012",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Quoting: concept check",
+      "instructions": "Which quotes allow `$name` to expand while keeping spaces together?",
+      "difficulty": "Easy",
+      "type": "mcq-single",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "options": ["Single quotes", "Double quotes", "No quotes", "Backticks"],
+      "expected": [1],
+      "explanation": "Double quotes. This follows the coursework definition for this topic."
+    },
+    {
+      "id": "os-users-groups-001",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Users, groups and passwords: practical task 1",
+      "instructions": "Create user alice and ensure her home directory is created.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["sudo useradd -m alice"]
+      },
+      "explanation": "The command `sudo useradd -m alice` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-users-groups-002",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Users, groups and passwords: practical task 2",
+      "instructions": "Add alice to supplementary group developers without removing existing groups.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["sudo usermod -aG developers alice"]
+      },
+      "explanation": "The command `sudo usermod -aG developers alice` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-users-groups-003",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Users, groups and passwords: practical task 3",
+      "instructions": "Create group developers with GID 2000.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["sudo groupadd -g 2000 developers"]
+      },
+      "explanation": "The command `sudo groupadd -g 2000 developers` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-users-groups-004",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Users, groups and passwords: practical task 4",
+      "instructions": "Display UID and group information for alice.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["id alice"]
+      },
+      "explanation": "The command `id alice` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-users-groups-005",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Users, groups and passwords: practical task 5",
+      "instructions": "Show password aging information for alice.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["sudo chage -l alice"]
+      },
+      "explanation": "The command `sudo chage -l alice` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-users-groups-006",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Users, groups and passwords: practical task 6",
+      "instructions": "Create user bob and ensure her home directory is created.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["sudo useradd -m bob"]
+      },
+      "explanation": "The command `sudo useradd -m bob` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-users-groups-007",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Users, groups and passwords: practical task 7",
+      "instructions": "Add bob to supplementary group developers without removing existing groups.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["sudo usermod -aG developers bob"]
+      },
+      "explanation": "The command `sudo usermod -aG developers bob` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-users-groups-008",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Users, groups and passwords: practical task 8",
+      "instructions": "Create group developers with GID 2000. Use a separate practice case (8) with the same stated requirements.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["sudo groupadd -g 2000 developers"]
+      },
+      "explanation": "The command `sudo groupadd -g 2000 developers` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-users-groups-009",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Users, groups and passwords: practical task 9",
+      "instructions": "Display UID and group information for bob.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["id bob"]
+      },
+      "explanation": "The command `id bob` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-users-groups-010",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Users, groups and passwords: practical task 10",
+      "instructions": "Show password aging information for bob.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["sudo chage -l bob"]
+      },
+      "explanation": "The command `sudo chage -l bob` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-users-groups-011",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Users, groups and passwords: practical task 11",
+      "instructions": "Create user bob and ensure her home directory is created.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["sudo useradd -m bob"]
+      },
+      "explanation": "The command `sudo useradd -m bob` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-users-groups-012",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Users, groups and passwords: practical task 12",
+      "instructions": "Add bob to supplementary group developers without removing existing groups.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["sudo usermod -aG developers bob"]
+      },
+      "explanation": "The command `sudo usermod -aG developers bob` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-users-groups-013",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Users, groups and passwords: practical task 13",
+      "instructions": "Create group developers with GID 2000. Use a separate practice case (13) with the same stated requirements.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["sudo groupadd -g 2000 developers"]
+      },
+      "explanation": "The command `sudo groupadd -g 2000 developers` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-users-groups-014",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Users, groups and passwords: practical task 14",
+      "instructions": "Display UID and group information for bob.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["id bob"]
+      },
+      "explanation": "The command `id bob` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-users-groups-015",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Users, groups and passwords: practical task 15",
+      "instructions": "Show password aging information for bob.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["sudo chage -l bob"]
+      },
+      "explanation": "The command `sudo chage -l bob` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-users-groups-016",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Users, groups and passwords: practical task 16",
+      "instructions": "Create user bob and ensure her home directory is created.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["sudo useradd -m bob"]
+      },
+      "explanation": "The command `sudo useradd -m bob` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-users-groups-017",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Users, groups and passwords: practical task 17",
+      "instructions": "Add bob to supplementary group developers without removing existing groups.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["sudo usermod -aG developers bob"]
+      },
+      "explanation": "The command `sudo usermod -aG developers bob` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-users-groups-018",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Users, groups and passwords: practical task 18",
+      "instructions": "Create group developers with GID 2000. Use a separate practice case (18) with the same stated requirements.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["sudo groupadd -g 2000 developers"]
+      },
+      "explanation": "The command `sudo groupadd -g 2000 developers` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-users-groups-019",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Users, groups and passwords: practical task 19",
+      "instructions": "Display UID and group information for bob.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["id bob"]
+      },
+      "explanation": "The command `id bob` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-users-groups-020",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Users, groups and passwords: concept check",
+      "instructions": "Which file stores password hashes and password-aging data?",
+      "difficulty": "Easy",
+      "type": "mcq-single",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "options": [
+        "/etc/passwd",
+        "/etc/group",
+        "/etc/shadow",
+        "/etc/login.defs"
+      ],
+      "expected": [2],
+      "explanation": "/etc/shadow. This follows the coursework definition for this topic."
+    },
+    {
+      "id": "os-permissions-001",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File permissions: practical task 1",
+      "instructions": "Give the owner read/write/execute, group read/execute, others read to script.sh.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["chmod 754 script.sh"]
+      },
+      "explanation": "The command `chmod 754 script.sh` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-permissions-002",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File permissions: practical task 2",
+      "instructions": "Remove write permission for others from report.txt.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["chmod o-w report.txt"]
+      },
+      "explanation": "The command `chmod o-w report.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-permissions-003",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File permissions: practical task 3",
+      "instructions": "Change the owner of report.txt to alice.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["sudo chown alice report.txt"]
+      },
+      "explanation": "The command `sudo chown alice report.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-permissions-004",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File permissions: practical task 4",
+      "instructions": "Change the group of shared.txt to developers.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["sudo chgrp developers shared.txt"]
+      },
+      "explanation": "The command `sudo chgrp developers shared.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-permissions-005",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File permissions: practical task 5",
+      "instructions": "Set the umask to 027.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["umask 027"]
+      },
+      "explanation": "The command `umask 027` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-permissions-006",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File permissions: practical task 6",
+      "instructions": "Give the owner read/write/execute, group read/execute, others read to deploy.sh.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["chmod 754 deploy.sh"]
+      },
+      "explanation": "The command `chmod 754 deploy.sh` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-permissions-007",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File permissions: practical task 7",
+      "instructions": "Remove write permission for others from lab.txt.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["chmod o-w lab.txt"]
+      },
+      "explanation": "The command `chmod o-w lab.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-permissions-008",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File permissions: practical task 8",
+      "instructions": "Change the owner of backup.txt to alice.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["sudo chown alice backup.txt"]
+      },
+      "explanation": "The command `sudo chown alice backup.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-permissions-009",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File permissions: practical task 9",
+      "instructions": "Change the group of shared.txt to developers. Use a separate practice case (9) with the same stated requirements.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["sudo chgrp developers shared.txt"]
+      },
+      "explanation": "The command `sudo chgrp developers shared.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-permissions-010",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File permissions: practical task 10",
+      "instructions": "Set the umask to 027. Use a separate practice case (10) with the same stated requirements.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["umask 027"]
+      },
+      "explanation": "The command `umask 027` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-permissions-011",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File permissions: practical task 11",
+      "instructions": "Give the owner read/write/execute, group read/execute, others read to deploy.sh.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["chmod 754 deploy.sh"]
+      },
+      "explanation": "The command `chmod 754 deploy.sh` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-permissions-012",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File permissions: practical task 12",
+      "instructions": "Remove write permission for others from project.txt.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["chmod o-w project.txt"]
+      },
+      "explanation": "The command `chmod o-w project.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-permissions-013",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File permissions: practical task 13",
+      "instructions": "Change the owner of lab.txt to alice.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["sudo chown alice lab.txt"]
+      },
+      "explanation": "The command `sudo chown alice lab.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-permissions-014",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File permissions: practical task 14",
+      "instructions": "Change the group of shared.txt to developers. Use a separate practice case (14) with the same stated requirements.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["sudo chgrp developers shared.txt"]
+      },
+      "explanation": "The command `sudo chgrp developers shared.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-permissions-015",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File permissions: practical task 15",
+      "instructions": "Set the umask to 027. Use a separate practice case (15) with the same stated requirements.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["umask 027"]
+      },
+      "explanation": "The command `umask 027` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-permissions-016",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File permissions: practical task 16",
+      "instructions": "Give the owner read/write/execute, group read/execute, others read to deploy.sh.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["chmod 754 deploy.sh"]
+      },
+      "explanation": "The command `chmod 754 deploy.sh` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-permissions-017",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File permissions: practical task 17",
+      "instructions": "Remove write permission for others from report.txt.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["chmod o-w report.txt"]
+      },
+      "explanation": "The command `chmod o-w report.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-permissions-018",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File permissions: practical task 18",
+      "instructions": "Change the owner of project.txt to alice.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["sudo chown alice project.txt"]
+      },
+      "explanation": "The command `sudo chown alice project.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-permissions-019",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File permissions: practical task 19",
+      "instructions": "Change the group of shared.txt to developers. Use a separate practice case (19) with the same stated requirements.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["sudo chgrp developers shared.txt"]
+      },
+      "explanation": "The command `sudo chgrp developers shared.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-permissions-020",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File permissions: practical task 20",
+      "instructions": "Set the umask to 027. Use a separate practice case (20) with the same stated requirements.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["umask 027"]
+      },
+      "explanation": "The command `umask 027` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-permissions-021",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File permissions: practical task 21",
+      "instructions": "Give the owner read/write/execute, group read/execute, others read to deploy.sh.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["chmod 754 deploy.sh"]
+      },
+      "explanation": "The command `chmod 754 deploy.sh` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-permissions-022",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File permissions: practical task 22",
+      "instructions": "Remove write permission for others from archive.txt.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["chmod o-w archive.txt"]
+      },
+      "explanation": "The command `chmod o-w archive.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-permissions-023",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File permissions: practical task 23",
+      "instructions": "Change the owner of report.txt to alice.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["sudo chown alice report.txt"]
+      },
+      "explanation": "The command `sudo chown alice report.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-permissions-024",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File permissions: practical task 24",
+      "instructions": "Change the group of shared.txt to developers. Use a separate practice case (24) with the same stated requirements.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["sudo chgrp developers shared.txt"]
+      },
+      "explanation": "The command `sudo chgrp developers shared.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-permissions-025",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "File permissions: concept check",
+      "instructions": "What numeric permission represents rwxr-xr--?",
+      "difficulty": "Easy",
+      "type": "mcq-single",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "options": ["744", "754", "755", "764"],
+      "expected": [1],
+      "explanation": "754. This follows the coursework definition for this topic."
+    },
+    {
+      "id": "os-find-001",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Finding files with find: practical task 1",
+      "instructions": "Find all regular files named notes.txt under the current directory.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["find . -type f -name notes.txt"]
+      },
+      "explanation": "The command `find . -type f -name notes.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-find-002",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Finding files with find: practical task 2",
+      "instructions": "Find directories named archive under /home.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["find /home -type d -name archive"]
+      },
+      "explanation": "The command `find /home -type d -name archive` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-find-003",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Finding files with find: practical task 3",
+      "instructions": "Find files larger than 10 megabytes under /var.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["find /var -type f -size +10M"]
+      },
+      "explanation": "The command `find /var -type f -size +10M` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-find-004",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Finding files with find: practical task 4",
+      "instructions": "Find files owned by alice under /home.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["find /home -user alice"]
+      },
+      "explanation": "The command `find /home -user alice` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-find-005",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Finding files with find: practical task 5",
+      "instructions": "Find all regular files named report.txt under the current directory.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["find . -type f -name report.txt"]
+      },
+      "explanation": "The command `find . -type f -name report.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-find-006",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Finding files with find: practical task 6",
+      "instructions": "Find directories named archive under /home. Use a separate practice case (6) with the same stated requirements.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["find /home -type d -name archive"]
+      },
+      "explanation": "The command `find /home -type d -name archive` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-find-007",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Finding files with find: practical task 7",
+      "instructions": "Find files larger than 10 megabytes under /var. Use a separate practice case (7) with the same stated requirements.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["find /var -type f -size +10M"]
+      },
+      "explanation": "The command `find /var -type f -size +10M` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-find-008",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Finding files with find: practical task 8",
+      "instructions": "Find files owned by alice under /home. Use a separate practice case (8) with the same stated requirements.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["find /home -user alice"]
+      },
+      "explanation": "The command `find /home -user alice` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-find-009",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Finding files with find: practical task 9",
+      "instructions": "Find all regular files named notes.txt under the current directory.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["find . -type f -name notes.txt"]
+      },
+      "explanation": "The command `find . -type f -name notes.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-find-010",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Finding files with find: practical task 10",
+      "instructions": "Find directories named archive under /home. Use a separate practice case (10) with the same stated requirements.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["find /home -type d -name archive"]
+      },
+      "explanation": "The command `find /home -type d -name archive` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-find-011",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Finding files with find: practical task 11",
+      "instructions": "Find files larger than 10 megabytes under /var. Use a separate practice case (11) with the same stated requirements.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["find /var -type f -size +10M"]
+      },
+      "explanation": "The command `find /var -type f -size +10M` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-find-012",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Finding files with find: practical task 12",
+      "instructions": "Find files owned by alice under /home. Use a separate practice case (12) with the same stated requirements.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["find /home -user alice"]
+      },
+      "explanation": "The command `find /home -user alice` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-find-013",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Finding files with find: practical task 13",
+      "instructions": "Find all regular files named lab.txt under the current directory.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["find . -type f -name lab.txt"]
+      },
+      "explanation": "The command `find . -type f -name lab.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-find-014",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Finding files with find: practical task 14",
+      "instructions": "Find directories named archive under /home. Use a separate practice case (14) with the same stated requirements.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["find /home -type d -name archive"]
+      },
+      "explanation": "The command `find /home -type d -name archive` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-find-015",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Finding files with find: concept check",
+      "instructions": "In a `find` size test, what does `+10M` mean?",
+      "difficulty": "Easy",
+      "type": "mcq-single",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "options": [
+        "Exactly 10 MB",
+        "Smaller than 10 MB",
+        "Larger than 10 MB",
+        "At most 10 MB"
+      ],
+      "expected": [2],
+      "explanation": "Larger than 10 MB. This follows the coursework definition for this topic."
+    },
+    {
+      "id": "os-archives-001",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Archiving and copying files: practical task 1",
+      "instructions": "Create a gzip-compressed archive named backup.tar.gz from project/.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["tar -czf backup.tar.gz project/"]
+      },
+      "explanation": "The command `tar -czf backup.tar.gz project/` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-archives-002",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Archiving and copying files: practical task 2",
+      "instructions": "List the contents of backup.tar.gz.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["tar -tzf backup.tar.gz"]
+      },
+      "explanation": "The command `tar -tzf backup.tar.gz` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-archives-003",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Archiving and copying files: practical task 3",
+      "instructions": "Extract backup.tar.gz in the current directory.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["tar -xzf backup.tar.gz"]
+      },
+      "explanation": "The command `tar -xzf backup.tar.gz` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-archives-004",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Archiving and copying files: practical task 4",
+      "instructions": "Copy report.txt to alice on host server.example.com in /home/alice/.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["scp report.txt alice@server.example.com:/home/alice/"]
+      },
+      "explanation": "The command `scp report.txt alice@server.example.com:/home/alice/` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-archives-005",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Archiving and copying files: practical task 5",
+      "instructions": "Create a gzip-compressed archive named backup.tar.gz from project/. Use a separate practice case (5) with the same stated requirements.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["tar -czf backup.tar.gz project/"]
+      },
+      "explanation": "The command `tar -czf backup.tar.gz project/` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-archives-006",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Archiving and copying files: practical task 6",
+      "instructions": "List the contents of backup.tar.gz. Use a separate practice case (6) with the same stated requirements.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["tar -tzf backup.tar.gz"]
+      },
+      "explanation": "The command `tar -tzf backup.tar.gz` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-archives-007",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Archiving and copying files: practical task 7",
+      "instructions": "Extract backup.tar.gz in the current directory. Use a separate practice case (7) with the same stated requirements.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["tar -xzf backup.tar.gz"]
+      },
+      "explanation": "The command `tar -xzf backup.tar.gz` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-archives-008",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Archiving and copying files: practical task 8",
+      "instructions": "Copy backup.txt to alice on host server.example.com in /home/alice/.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["scp backup.txt alice@server.example.com:/home/alice/"]
+      },
+      "explanation": "The command `scp backup.txt alice@server.example.com:/home/alice/` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-archives-009",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Archiving and copying files: practical task 9",
+      "instructions": "Create a gzip-compressed archive named backup.tar.gz from project/. Use a separate practice case (9) with the same stated requirements.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["tar -czf backup.tar.gz project/"]
+      },
+      "explanation": "The command `tar -czf backup.tar.gz project/` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-archives-010",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Archiving and copying files: practical task 10",
+      "instructions": "List the contents of backup.tar.gz. Use a separate practice case (10) with the same stated requirements.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["tar -tzf backup.tar.gz"]
+      },
+      "explanation": "The command `tar -tzf backup.tar.gz` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-archives-011",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Archiving and copying files: practical task 11",
+      "instructions": "Extract backup.tar.gz in the current directory. Use a separate practice case (11) with the same stated requirements.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["tar -xzf backup.tar.gz"]
+      },
+      "explanation": "The command `tar -xzf backup.tar.gz` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-archives-012",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Archiving and copying files: practical task 12",
+      "instructions": "Copy project.txt to alice on host server.example.com in /home/alice/.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["scp project.txt alice@server.example.com:/home/alice/"]
+      },
+      "explanation": "The command `scp project.txt alice@server.example.com:/home/alice/` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-archives-013",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Archiving and copying files: practical task 13",
+      "instructions": "Create a gzip-compressed archive named backup.tar.gz from project/. Use a separate practice case (13) with the same stated requirements.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["tar -czf backup.tar.gz project/"]
+      },
+      "explanation": "The command `tar -czf backup.tar.gz project/` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-archives-014",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Archiving and copying files: practical task 14",
+      "instructions": "List the contents of backup.tar.gz. Use a separate practice case (14) with the same stated requirements.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["tar -tzf backup.tar.gz"]
+      },
+      "explanation": "The command `tar -tzf backup.tar.gz` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-archives-015",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Archiving and copying files: concept check",
+      "instructions": "Which tar option combination creates a gzip-compressed archive?",
+      "difficulty": "Easy",
+      "type": "mcq-single",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "options": ["-xzf", "-tzf", "-czf", "-xf"],
+      "expected": [2],
+      "explanation": "-czf. This follows the coursework definition for this topic."
+    },
+    {
+      "id": "os-directories-001",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Important Linux directories and files: practical task 1",
+      "instructions": "Which directory contains system-wide configuration files?",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["/etc"]
+      },
+      "explanation": "The command `/etc` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-directories-002",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Important Linux directories and files: practical task 2",
+      "instructions": "Which path is the superuser home directory?",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["/root"]
+      },
+      "explanation": "The command `/root` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-directories-003",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Important Linux directories and files: practical task 3",
+      "instructions": "Which special file discards anything written to it?",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["/dev/null"]
+      },
+      "explanation": "The command `/dev/null` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-directories-004",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Important Linux directories and files: practical task 4",
+      "instructions": "Which directory contains system-wide configuration files? Use a separate practice case (4) with the same stated requirements.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["/etc"]
+      },
+      "explanation": "The command `/etc` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-directories-005",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Important Linux directories and files: practical task 5",
+      "instructions": "Which path is the superuser home directory? Use a separate practice case (5) with the same stated requirements.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["/root"]
+      },
+      "explanation": "The command `/root` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-directories-006",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Important Linux directories and files: practical task 6",
+      "instructions": "Which special file discards anything written to it? Use a separate practice case (6) with the same stated requirements.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["/dev/null"]
+      },
+      "explanation": "The command `/dev/null` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-directories-007",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Important Linux directories and files: practical task 7",
+      "instructions": "Which directory contains system-wide configuration files? Use a separate practice case (7) with the same stated requirements.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["/etc"]
+      },
+      "explanation": "The command `/etc` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-directories-008",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Important Linux directories and files: practical task 8",
+      "instructions": "Which path is the superuser home directory? Use a separate practice case (8) with the same stated requirements.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["/root"]
+      },
+      "explanation": "The command `/root` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-directories-009",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Important Linux directories and files: practical task 9",
+      "instructions": "Which special file discards anything written to it? Use a separate practice case (9) with the same stated requirements.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["/dev/null"]
+      },
+      "explanation": "The command `/dev/null` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-directories-010",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Important Linux directories and files: practical task 10",
+      "instructions": "Which directory contains system-wide configuration files? Use a separate practice case (10) with the same stated requirements.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["/etc"]
+      },
+      "explanation": "The command `/etc` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-directories-011",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Important Linux directories and files: practical task 11",
+      "instructions": "Which path is the superuser home directory? Use a separate practice case (11) with the same stated requirements.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["/root"]
+      },
+      "explanation": "The command `/root` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-directories-012",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Important Linux directories and files: concept check",
+      "instructions": "Where are system-wide configuration files generally stored?",
+      "difficulty": "Easy",
+      "type": "mcq-single",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "options": ["/var", "/etc", "/tmp", "/home"],
+      "expected": [1],
+      "explanation": "/etc. This follows the coursework definition for this topic."
+    },
+    {
+      "id": "os-environment-001",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Shell environment and configuration: practical task 1",
+      "instructions": "Create a local shell variable named GREETING with value hello.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["GREETING=hello"]
+      },
+      "explanation": "The command `GREETING=hello` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-environment-002",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Shell environment and configuration: practical task 2",
+      "instructions": "Export variable GREETING with value hello.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["export GREETING=hello"]
+      },
+      "explanation": "The command `export GREETING=hello` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-environment-003",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Shell environment and configuration: practical task 3",
+      "instructions": "Display the PATH variable.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["echo $PATH"]
+      },
+      "explanation": "The command `echo $PATH` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-environment-004",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Shell environment and configuration: practical task 4",
+      "instructions": "Reload the current user Bash configuration.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["source ~/.bashrc"]
+      },
+      "explanation": "The command `source ~/.bashrc` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-environment-005",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Shell environment and configuration: practical task 5",
+      "instructions": "Create a local shell variable named GREETING with value hello. Use a separate practice case (5) with the same stated requirements.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["GREETING=hello"]
+      },
+      "explanation": "The command `GREETING=hello` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-environment-006",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Shell environment and configuration: practical task 6",
+      "instructions": "Export variable GREETING with value hello. Use a separate practice case (6) with the same stated requirements.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["export GREETING=hello"]
+      },
+      "explanation": "The command `export GREETING=hello` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-environment-007",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Shell environment and configuration: practical task 7",
+      "instructions": "Display the PATH variable. Use a separate practice case (7) with the same stated requirements.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["echo $PATH"]
+      },
+      "explanation": "The command `echo $PATH` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-environment-008",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Shell environment and configuration: practical task 8",
+      "instructions": "Reload the current user Bash configuration. Use a separate practice case (8) with the same stated requirements.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["source ~/.bashrc"]
+      },
+      "explanation": "The command `source ~/.bashrc` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-environment-009",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Shell environment and configuration: practical task 9",
+      "instructions": "Create a local shell variable named GREETING with value hello. Use a separate practice case (9) with the same stated requirements.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["GREETING=hello"]
+      },
+      "explanation": "The command `GREETING=hello` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-environment-010",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Shell environment and configuration: concept check",
+      "instructions": "What does `export NAME=value` do?",
+      "difficulty": "Easy",
+      "type": "mcq-single",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "options": [
+        "Creates only a local shell variable",
+        "Makes the variable available to child processes",
+        "Deletes the variable",
+        "Adds the value to PATH automatically"
+      ],
+      "expected": [1],
+      "explanation": "Makes the variable available to child processes. This follows the coursework definition for this topic."
+    },
+    {
+      "id": "os-vim-001",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Vim: practical task 1",
+      "instructions": "Open notes.txt in Vim.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["vim notes.txt"]
+      },
+      "explanation": "The command `vim notes.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-vim-002",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Vim: practical task 2",
+      "instructions": "From Normal mode, save and quit. ",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [":wq"]
+      },
+      "explanation": "The command `:wq` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-vim-003",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Vim: practical task 3",
+      "instructions": "Quit Vim without saving changes from Normal mode. ",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [":q!"]
+      },
+      "explanation": "The command `:q!` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-vim-004",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Vim: practical task 4",
+      "instructions": "Enter Insert mode before the cursor.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["i"]
+      },
+      "explanation": "The command `i` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-vim-005",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Vim: practical task 5",
+      "instructions": "Delete the current line in Normal mode.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["dd"]
+      },
+      "explanation": "The command `dd` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-vim-006",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Vim: practical task 6",
+      "instructions": "Open project.txt in Vim.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["vim project.txt"]
+      },
+      "explanation": "The command `vim project.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-vim-007",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Vim: practical task 7",
+      "instructions": "From Normal mode, save and quit.  Use a separate practice case (7) with the same stated requirements.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [":wq"]
+      },
+      "explanation": "The command `:wq` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-vim-008",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Vim: practical task 8",
+      "instructions": "Quit Vim without saving changes from Normal mode.  Use a separate practice case (8) with the same stated requirements.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [":q!"]
+      },
+      "explanation": "The command `:q!` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-vim-009",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Vim: practical task 9",
+      "instructions": "Enter Insert mode before the cursor. Use a separate practice case (9) with the same stated requirements.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["i"]
+      },
+      "explanation": "The command `i` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-vim-010",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Vim: practical task 10",
+      "instructions": "Delete the current line in Normal mode. Use a separate practice case (10) with the same stated requirements.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["dd"]
+      },
+      "explanation": "The command `dd` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-vim-011",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Vim: practical task 11",
+      "instructions": "Open report.txt in Vim.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["vim report.txt"]
+      },
+      "explanation": "The command `vim report.txt` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-vim-012",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Vim: practical task 12",
+      "instructions": "From Normal mode, save and quit.  Use a separate practice case (12) with the same stated requirements.",
+      "difficulty": "Easy",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [":wq"]
+      },
+      "explanation": "The command `:wq` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-vim-013",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Vim: practical task 13",
+      "instructions": "Quit Vim without saving changes from Normal mode.  Use a separate practice case (13) with the same stated requirements.",
+      "difficulty": "Medium",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": [":q!"]
+      },
+      "explanation": "The command `:q!` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-vim-014",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Vim: practical task 14",
+      "instructions": "Enter Insert mode before the cursor. Use a separate practice case (14) with the same stated requirements.",
+      "difficulty": "Hard",
+      "type": "command-text",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "expected": {
+        "accepted": ["i"]
+      },
+      "explanation": "The command `i` uses the documented syntax and options to perform the requested task."
+    },
+    {
+      "id": "os-vim-015",
+      "course": "os",
+      "category": "Linux",
+
+      "title": "Vim: concept check",
+      "instructions": "Which Vim mode is used to type text into the file?",
+      "difficulty": "Easy",
+      "type": "mcq-single",
+      "examEligible": true,
+      "provenance": "Linux_Summary.md",
+      "contentVersion": 1,
+      "options": [
+        "Normal mode",
+        "Insert mode",
+        "Visual mode",
+        "Command-line mode"
+      ],
+      "expected": [1],
+      "explanation": "Insert mode. This follows the coursework definition for this topic."
     }
   ]
 }
