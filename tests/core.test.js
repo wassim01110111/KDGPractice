@@ -13,9 +13,18 @@ t('column count', () => assert(!C.compare(R([23, 23], [[1, 2]]), R([23], [[1]]),
 t('dates compared as values', () => assert(C.compare(R([1082], [[new Date('2020-01-01T00:00:00Z')]]), R([1082], [[new Date('2020-01-01T00:00:00Z')]]), O()).ok));
 t('float tolerance', () => assert(C.compare(R([701], [[0.1 + 0.2]]), R([701], [[0.3]]), O({ numericTolerance: 1e-6 })).ok));
 const mk = (id, d, ex = true) => ({ id, difficulty: d, examEligible: ex, course: 'sql' });
-const pool = []; for (let i = 0; i < 6; i++) pool.push(mk('e' + i, 'Easy'), mk('m' + i, 'Medium')); pool.push(mk('h1', 'Hard'), mk('h2', 'Hard'));
+const pool = []; for (let i = 0; i < 6; i++) pool.push(mk('e' + i, 'Easy'), mk('m' + i, 'Medium')); pool.push(mk('h1', 'Hard'), mk('h2', 'Hard'), mk('x1', 'Extreme'), mk('x2', 'Extreme'));
 t('default 5/5/2, no duplicates', () => { const r = C.generateExam(pool, {}); assert(r.ok && r.exercises.length === 12); assert.strictEqual(new Set(r.exercises.map(e => e.id)).size, 12);
-  assert.deepStrictEqual(['Easy', 'Medium', 'Hard'].map(d => r.exercises.filter(e => e.difficulty === d).length), [5, 5, 2]); });
+  assert.deepStrictEqual(['Easy', 'Medium', 'Hard', 'Extreme'].map(d => r.exercises.filter(e => e.difficulty === d).length), [5, 5, 2, 0]); });
+t('Extreme exam questions are optional and selectable', () => {
+  const r = C.generateExam(pool, { dist: { Easy: 0, Medium: 0, Hard: 0, Extreme: 1 } });
+  assert(r.ok && r.exercises.length === 1 && r.exercises[0].difficulty === 'Extreme');
+});
+t('Extreme exam shortages are reported without substitution', () => {
+  const r = C.generateExam(pool.filter(e => e.difficulty !== 'Extreme'), { dist: { Easy: 0, Medium: 0, Hard: 0, Extreme: 1 } });
+  assert(!r.ok);
+  assert.deepStrictEqual(r.shortage, { Extreme: { need: 1, have: 0 } });
+});
 t('shortage, no substitution', () => { const r = C.generateExam(pool.filter(e => e.id !== 'h2'), {}); assert(!r.ok); assert.deepStrictEqual(r.shortage, { Hard: { need: 2, have: 1 } }); });
 t('not-exam exercise excluded (GREP)', () => { const p = [...pool, mk('g1', 'Easy', false)];
   const r = C.generateExam(p, {}); assert(r.ok && !r.exercises.some(e => e.id === 'g1')); });
@@ -34,6 +43,11 @@ t('same exercise ID is valid in separate packages, duplicate within one is rejec
   assert.strictEqual(C.validatePackage(pkg('second'), 'second.json', ctx).length, 0);
   const duplicate = C.validatePackage({ ...pkg('first'), exercises: [ex, ex] }, 'duplicate.json', ctx);
   assert(duplicate.some(e => e.field === 'id' && e.msg.includes('within this package')));
+});
+t('Extreme is a supported exercise difficulty', () => {
+  const ex = { id: 'extreme-1', course: 'os', category: 'c', title: 'x', instructions: 'y', difficulty: 'Extreme', type: 'mcq-single', examEligible: true, provenance: 'p', contentVersion: 1, options: ['a', 'b'], expected: [0] };
+  const pkg = { schemaVersion: 1, packageId: 'extreme-package', version: '1', datasets: [], exercises: [ex] };
+  assert.deepStrictEqual(C.validatePackage(pkg, 'extreme.json', { seenIds: new Set(), datasetIds: new Set(), schemaVersion: 1 }), []);
 });
 t('SQL-course multiple-choice exercises validate without query fields', () => {
   const ex = { id: 'sql-mcq-1', course: 'sql', category: 'select', title: 'What does DISTINCT do?', instructions: 'Choose the answer.', difficulty: 'Easy', type: 'mcq-single', examEligible: true, provenance: 'fixture', contentVersion: 1, options: ['Sorts rows', 'Removes duplicates'], expected: [1] };

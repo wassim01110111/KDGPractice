@@ -81,7 +81,7 @@ const lastAttempt = () => {
   return m;
 };
 const xpFor = (ex) =>
-  ({ Easy: 25, Medium: 50, Hard: 100 })[ex.difficulty] || 25;
+  ({ Easy: 25, Medium: 50, Hard: 100, Extreme: 200 })[ex.difficulty] || 25;
 async function rec(ex, correct, mode, onRecorded = () => {}) {
   const key = keyOf(ex),
     attempt = {
@@ -1691,7 +1691,7 @@ async function pageExam(root) {
   const saved = await kv.get("exam", null);
   if (saved && !saved.submitted) return runExam(root, saved);
   const courses = uniq(S.exercises, (e) => e.course),
-    cfg = { course: "", Easy: 5, Medium: 5, Hard: 2, mins: 60 },
+    cfg = { course: "", Easy: 5, Medium: 5, Hard: 2, Extreme: 0, mins: 60 },
     msg = h("div");
   if (!S.exercises.some((e) => e.examEligible))
     return root.append(
@@ -1741,6 +1741,7 @@ async function pageExam(root) {
       num("Easy", "Easy"),
       num("Medium", "Medium"),
       num("Hard", "Hard"),
+      num("Extreme", "Extreme"),
       num("mins", "Minutes"),
       h(
         "div",
@@ -1757,6 +1758,7 @@ async function pageExam(root) {
                     Easy: cfg.Easy,
                     Medium: cfg.Medium,
                     Hard: cfg.Hard,
+                    Extreme: cfg.Extreme,
                   },
                 },
                 lastAttempt(),
@@ -1782,7 +1784,7 @@ async function pageExam(root) {
                   h(
                     "small",
                     {},
-                    `Available — Easy ${avail("Easy")}, Medium ${avail("Medium")}, Hard ${avail("Hard")}. Adjust the numbers above.`,
+                    `Available — Easy ${avail("Easy")}, Medium ${avail("Medium")}, Hard ${avail("Hard")}, Extreme ${avail("Extreme")}. Adjust the numbers above.`,
                   ),
                 );
               }
@@ -2064,6 +2066,7 @@ async function pageProgress(root) {
   const solvedSql = solved.filter((e) => e.course === "sql").length;
   const solvedOs = solved.filter((e) => e.course === "os").length;
   const solvedHard = solved.filter((e) => e.difficulty === "Hard").length;
+  const solvedExtreme = solved.filter((e) => e.difficulty === "Extreme").length;
   const achievements = [
     {
       title: "First Clear",
@@ -2142,6 +2145,12 @@ async function pageProgress(root) {
       detail: "Solve 10 Hard exercises",
       count: solvedHard,
       target: 10,
+    },
+    {
+      title: "Extreme Mode",
+      detail: "Solve your first Extreme exercise",
+      count: solvedExtreme,
+      target: 1,
     },
     {
       title: "Exam Ready",

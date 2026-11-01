@@ -4,7 +4,7 @@
     "datasets": { "type": "array", "items": { "type": "object", "required": ["id", "version", "sql"], "properties": { "id": { "type": "string" }, "version": { "type": "string" }, "title": { "type": "string" }, "sql": { "type": "string" } } } },
     "exercises": { "type": "array", "items": { "type": "object",
       "required": ["id", "course", "category", "title", "instructions", "difficulty", "type", "examEligible", "provenance", "contentVersion"],
-      "properties": { "id": { "type": "string" }, "course": { "enum": ["sql", "os"] }, "difficulty": { "enum": ["Easy", "Medium", "Hard"] },
+      "properties": { "id": { "type": "string" }, "course": { "enum": ["sql", "os"] }, "difficulty": { "enum": ["Easy", "Medium", "Hard", "Extreme"] },
         "type": { "enum": ["sql-query", "mcq-single", "mcq-multi", "command-text", "fill-blank", "short-answer-self-check"] },
         "examEligible": { "type": "boolean" }, "contentVersion": { "type": "integer" }, "hints": { "type": "array", "items": { "type": "string" } },
         "options": { "type": "array", "items": { "type": "string" } }, "expected": {},

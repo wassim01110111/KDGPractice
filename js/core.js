@@ -1,7 +1,7 @@
 // Pure logic: comparator, exam generator, validator, OS grading. Works in browser (window.Core) and Node.
 (function (root) {
 const NUM = new Set([20, 21, 23, 26, 700, 701, 1700]), FLT = new Set([700, 701]);
-const DIFF = ['Easy', 'Medium', 'Hard'];
+const DIFF = ['Easy', 'Medium', 'Hard', 'Extreme'];
 const SQL_TYPES = ['sql-query'], MCQ_TYPES = ['mcq-single', 'mcq-multi'], OS_TYPES = [...MCQ_TYPES, 'command-text', 'fill-blank', 'short-answer-self-check'];
 
 function normNum(v) { let s = String(v).trim();
@@ -42,7 +42,7 @@ function exerciseKey(ex, packageId = ex.packageId) { return packageId ? JSON.str
 // lastAttempt: { exerciseKey: ms }
 function eligible(ex) { return ex.examEligible === true; }
 function generateExam(pool, cfg, lastAttempt = {}, rnd = Math.random) {
-  const dist = cfg.dist || { Easy: 5, Medium: 5, Hard: 2 };
+  const dist = cfg.dist || { Easy: 5, Medium: 5, Hard: 2, Extreme: 0 };
   const base = pool.filter(e => eligible(e) && (!cfg.course || e.course === cfg.course));
   const shortage = {}, picked = [];
   for (const d of DIFF) { const need = dist[d] || 0; if (!need) continue;
