@@ -935,7 +935,7 @@ function qView(
     h("div", { class: "stmt" }, ex.instructions),
   );
   const btns = h("div");
-  let readAns, resetFn, submitButton, nextExerciseButton;
+  let readAns, resetFn, submitButton, nextExerciseButton, focusTarget;
 
   let exerciseCorrect = false;
 
@@ -957,6 +957,7 @@ function qView(
       "aria-label": "SQL editor",
       placeholder: "Write one SQL statement",
     });
+    focusTarget = ta;
     ta.value = get() || "";
     ta.oninput = () => updateAnswer(ta.value);
     const run = h(
@@ -1070,6 +1071,7 @@ function qView(
           ),
         ),
       );
+      focusTarget = inp.querySelector("input");
       readAns = () => get() || [];
       resetFn = () => {
         updateAnswer([]);
@@ -1121,6 +1123,7 @@ function qView(
           }
         },
       });
+      focusTarget = inp;
       inp.value = cur;
       readAns = () => inp.value;
       resetFn = () => {
@@ -1212,7 +1215,9 @@ function qView(
         },
         ex.type === "command-text"
           ? "Submit (Enter)"
-          : "Submit (Ctrl + Shift + Enter)",
+          : ex.type.startsWith("mcq-")
+            ? "Submit"
+            : "Submit (Ctrl + Shift + Enter)",
       );
       btns.append(submitButton);
     }
@@ -1399,6 +1404,7 @@ function qView(
     ? h("div", { class: "sql-exercise-layout" }, schemaPanel, q)
     : q;
   view.refreshNextExercise = updateNextExercise;
+  view.focusInput = () => focusTarget?.focus({ preventScroll: true });
   return view;
 }
 
@@ -2402,20 +2408,20 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
       const index = items.findIndex((item) => keyOf(item) === keyOf(exercise));
       return index >= 0 ? items[index + 1] : undefined;
     };
-    pane.replaceChildren(
-      qView(
-        exercise,
-        "practice",
-        () => answers[keyOf(exercise)],
-        (v) => saveDraft(keyOf(exercise), v),
-        () => draw(),
-        () => {
-          const next = nextExerciseAfter();
-          if (next) selectExercise(next, true);
-        },
-        () => !!nextExerciseAfter(),
-      ),
+    const view = qView(
+      exercise,
+      "practice",
+      () => answers[keyOf(exercise)],
+      (v) => saveDraft(keyOf(exercise), v),
+      () => draw(),
+      () => {
+        const next = nextExerciseAfter();
+        if (next) selectExercise(next, true);
+      },
+      () => !!nextExerciseAfter(),
     );
+    pane.replaceChildren(view);
+    requestAnimationFrame(() => view.focusInput?.());
     if (addHistoryEntry) {
       const url = `#/practice/${encodeURIComponent(exercise.packageId)}/${encodeURIComponent(exercise.id)}`;
       if (location.hash !== url) history.pushState(null, "", url);

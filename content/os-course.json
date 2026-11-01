@@ -610,7 +610,7 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "options": ["False", "True"],
-      "expected": [1],
+      "expected": [0],
       "hints": [
         "Hidden files start with a dot '.' which is ignored by standard `*`."
       ],
@@ -629,7 +629,7 @@
       "provenance": "Linux_Summary.md",
       "contentVersion": 1,
       "expected": {
-        "accepted": ["{01..03}"],
+        "accepted": ["{01..03}", "0{1..3}", "0{1,2,3}"],
         "patterns": []
       },
       "hints": ["Zero-padded sequential numbers."],
