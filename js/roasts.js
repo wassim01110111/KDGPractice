@@ -761,4 +761,11 @@ const memes = [
     log: "You've managed to make unconditional love look like a very exclusive club.",
     verdict: "THANK GOD SOMEONE'S WILLING TO PUT UP WITH YOU.",
   },
+  {
+    title: "WHY DON'T YOU DO SOMETHING DIFFERENT WITH YOUR HAIR?",
+    subtitle: "LIKE WASH IT.",
+    kicker: "// RANK: HYGIENE HAZARD",
+    log: "Your shampoo bottle is starting to feel abandoned.",
+    verdict: "IT'S NOT A BAD HAIR DAY. IT'S A LONG-TERM SITUATION.",
+  },
 ];
