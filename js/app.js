@@ -4694,7 +4694,7 @@ loadContent()
 let wassimEggActive = false;
 let wassimEggLastStart = -Infinity;
 let rainColumnIndex = 0;
-
+let wassimUsedMemes = new Set();
 let wassimEggState = "closed";
 
 function launchWassimEasterEgg() {
@@ -4720,8 +4720,20 @@ function launchWassimEasterEgg() {
   let finished = false;
   let rainColumnIndex = 0;
 
-  const meme = memes[Math.floor(Math.random() * memes.length)];
+  if (wassimUsedMemes.size >= memes.length) {
+    wassimUsedMemes.clear();
+  }
 
+  const availableMemes = memes
+    .map((meme, index) => ({ meme, index }))
+    .filter(({ index }) => !wassimUsedMemes.has(index));
+
+  const selected =
+    availableMemes[Math.floor(Math.random() * availableMemes.length)];
+
+  wassimUsedMemes.add(selected.index);
+
+  const meme = selected.meme;
   const text = {
     kicker: String(meme.kicker ?? ""),
     title: String(meme.title ?? ""),
