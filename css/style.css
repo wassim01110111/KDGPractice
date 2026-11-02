@@ -257,7 +257,8 @@ nav a {
   color: var(--mut);
   text-decoration: none;
 
-  padding: 0.45rem 0.7rem;
+  padding: 0.45rem 0.7rem 0.6rem;
+
   line-height: 1.2;
 
   border-radius: 999px;
