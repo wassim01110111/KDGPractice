@@ -1053,12 +1053,20 @@ function qView(
       block: "nearest",
     });
   const scrollToFeedback = () =>
-    fb.scrollIntoView({
-      behavior: matchMedia("(prefers-reduced-motion: reduce)").matches
-        ? "auto"
-        : "smooth",
-      block: "center",
-    });
+    // Wait for the new feedback to be laid out, then bring it into view. If it
+    // is taller than the screen (long explanation), align its top so the
+    // correct/incorrect verdict is visible rather than centring it off-screen.
+    requestAnimationFrame(() =>
+      fb.scrollIntoView({
+        behavior: matchMedia("(prefers-reduced-motion: reduce)").matches
+          ? "auto"
+          : "smooth",
+        block:
+          fb.getBoundingClientRect().height > innerHeight * 0.7
+            ? "start"
+            : "center",
+      }),
+    );
   let schemaPanel,
     runId = 0,
     gradingId = 0;
@@ -1099,7 +1107,10 @@ function qView(
     exerciseCorrect = true;
     updateNextExercise();
   };
-  const focusNextExercise = () => nextExerciseButton?.focus();
+  // preventScroll: focusing the button must not yank the page away from the
+  // feedback we just scrolled to.
+  const focusNextExercise = () =>
+    nextExerciseButton?.focus({ preventScroll: true });
   if (ex.type === "sql-query") {
     const ta = h("textarea", {
       class: "editor",
