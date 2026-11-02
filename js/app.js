@@ -4654,7 +4654,7 @@ function hideClickme() {
 setInterval(() => {
   clickme.classList.remove("is-hiding");
   clickme.classList.add("is-visible");
-  setTimeout(hideClickme, 1000);
+  setTimeout(hideClickme, 10000);
 }, 61000);
 let routeTok = 0;
 let lastRouteHash = null;
