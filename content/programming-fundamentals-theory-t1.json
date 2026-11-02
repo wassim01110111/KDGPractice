@@ -2,6 +2,7 @@
   "schemaVersion": "1.0",
   "packageId": "programming-fundamentals-java-theory",
   "version": "1.0.0",
+  "term": 1,
   "exercises": {
     "pfj-001": {
       "course": "Programming Fundamentals",
@@ -19,9 +20,7 @@
         "Third-generation language source code",
         "Java bytecode for the JVM"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -44,12 +43,7 @@
         "3GL code is described as processor-independent.",
         "Assembly language is described as processor-independent code."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "expected": [0, 1, 2, 3],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -71,9 +65,7 @@
         "Source code interpreted directly on any platform",
         "Bytecode for the Java Virtual Machine"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -95,9 +87,7 @@
         "Intel binary instructions",
         "A processor-specific assembly instruction"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -113,16 +103,8 @@
       "examEligible": true,
       "provenance": "prog-summary.md",
       "contentVersion": 1,
-      "options": [
-        "C",
-        "C++",
-        "JavaScript",
-        "Python"
-      ],
-      "expected": [
-        0,
-        1
-      ],
+      "options": ["C", "C++", "JavaScript", "Python"],
+      "expected": [0, 1],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -148,15 +130,7 @@
         "Fast",
         "The slide lists Java as not object-oriented."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3,
-        4,
-        5,
-        6
-      ],
+      "expected": [0, 1, 2, 3, 4, 5, 6],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -172,15 +146,8 @@
       "examEligible": true,
       "provenance": "prog-summary.md",
       "contentVersion": 1,
-      "options": [
-        "Java",
-        "C++",
-        "Neither C++ nor Java",
-        "Both C++ and Java"
-      ],
-      "expected": [
-        0
-      ],
+      "options": ["Java", "C++", "Neither C++ nor Java", "Both C++ and Java"],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -202,11 +169,7 @@
         "Java syntax is based on C++.",
         "Java is marked as suitable for system programming."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -228,9 +191,7 @@
         "Java source code is converted directly to processor-specific binary code only once.",
         "Java can only run on desktop computers."
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -253,12 +214,7 @@
         "Source code is not readable at the target platform",
         "The compiled-language slide says a separate interpreter is needed on every target platform."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "expected": [0, 1, 2, 3],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -280,10 +236,7 @@
         "There are no compile-time checks.",
         "An interpreter is required on every target system."
       ],
-      "expected": [
-        0,
-        1
-      ],
+      "expected": [0, 1],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -299,15 +252,8 @@
       "examEligible": true,
       "provenance": "prog-summary.md",
       "contentVersion": 1,
-      "options": [
-        "Slow",
-        "Fast",
-        "Medium",
-        "Not stated"
-      ],
-      "expected": [
-        0
-      ],
+      "options": ["Slow", "Fast", "Medium", "Not stated"],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -329,11 +275,7 @@
         "The source code is readable on the target platform",
         "The program runs faster than compiled binary code"
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -355,9 +297,7 @@
         "The binary bytecode file",
         "An IDE workbench"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -379,9 +319,7 @@
         "Scanner and System.in",
         "Compiler and source editor"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -403,11 +341,7 @@
         "It is needed to run Java programs in bytecode.",
         "It is the full developer toolset that includes compile and debug tools."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -430,12 +364,7 @@
         "The API reference documentation is described as optional.",
         "The JDK is described as containing no development tools such as compiling or debugging."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "expected": [0, 1, 2, 3],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -457,9 +386,7 @@
         "The Java runtime environment",
         "A processor-specific assembly language"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -481,11 +408,7 @@
         "IntelliJ can assist when writing, building and running code.",
         "An IDE replaces the Java Virtual Machine."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -501,15 +424,8 @@
       "examEligible": true,
       "provenance": "prog-summary.md",
       "contentVersion": 1,
-      "options": [
-        ".java",
-        ".class",
-        "java",
-        "javac"
-      ],
-      "expected": [
-        0
-      ],
+      "options": [".java", ".class", "java", "javac"],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -525,15 +441,8 @@
       "examEligible": true,
       "provenance": "prog-summary.md",
       "contentVersion": 1,
-      "options": [
-        "javac",
-        "java",
-        "jre",
-        "jvm"
-      ],
-      "expected": [
-        0
-      ],
+      "options": ["javac", "java", "jre", "jvm"],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -549,15 +458,8 @@
       "examEligible": true,
       "provenance": "prog-summary.md",
       "contentVersion": 1,
-      "options": [
-        "java",
-        "javac",
-        "Scanner",
-        "System.out"
-      ],
-      "expected": [
-        0
-      ],
+      "options": ["java", "javac", "Scanner", "System.out"],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -579,11 +481,7 @@
         "Run the program.",
         "Run the source file before writing it."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -605,11 +503,7 @@
         "The java command executes bytecode by starting the JVM.",
         "The java command is described as the compiler."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -632,12 +526,7 @@
         "The main method is the starting point of a Java application.",
         "The slides say comment text is executed as part of the program."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "expected": [0, 1, 2, 3],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -659,9 +548,7 @@
         "A collection of binary instructions for a processor",
         "A method that must return a value"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -683,10 +570,7 @@
         "Choosing a processor-specific binary format before designing the task",
         "Writing an IDE before defining the algorithm"
       ],
-      "expected": [
-        0,
-        1
-      ],
+      "expected": [0, 1],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -710,13 +594,7 @@
         "Compute",
         "The typical algorithm actions explicitly exclude both testing and repetition."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3,
-        4
-      ],
+      "expected": [0, 1, 2, 3, 4],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -738,9 +616,7 @@
         "Only output steps need to be specified.",
         "A robot can infer missing steps from the task title."
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -762,11 +638,7 @@
         "Computing using variables",
         "A constructor for a Sum object"
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -788,9 +660,7 @@
         "It stores the text of the prompt.",
         "It determines which package is imported."
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -812,11 +682,7 @@
         "keyboard.nextInt() reads an integer from the keyboard.",
         "The assignment operator places the value on the left side into the right side."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -838,11 +704,7 @@
         "The algorithm has a start and an end.",
         "All actions are performed only once and in a fixed straight line."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -864,9 +726,7 @@
         "A group of statements enclosed in curly braces",
         "A declaration of a variable type only"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -882,15 +742,8 @@
       "examEligible": true,
       "provenance": "prog-summary.md",
       "contentVersion": 1,
-      "options": [
-        "A statement",
-        "A literal",
-        "A variable scope",
-        "A class"
-      ],
-      "expected": [
-        0
-      ],
+      "options": ["A statement", "A literal", "A variable scope", "A class"],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -913,12 +766,7 @@
         "Compound statement for flow control",
         "A declaration is not included among the statement types in the slides."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "expected": [0, 1, 2, 3],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -940,9 +788,7 @@
         "System.out.println(a);",
         "if (a < 120) { ... }"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -964,9 +810,7 @@
         "With a colon",
         "With a closing curly brace only"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -988,11 +832,7 @@
         "A block can be used anywhere a simple statement is allowed.",
         "A block can contain only one statement."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -1014,9 +854,7 @@
         "Indent only declarations.",
         "Indent only the closing brace."
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -1038,11 +876,7 @@
         "Use the IDE reformat command when desired.",
         "Remove indentation from nested blocks."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -1064,9 +898,7 @@
         "The data type of a variable",
         "The number of statements in a block"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -1089,12 +921,7 @@
         "Its scope ends at the closing curly brace of the declaring block.",
         "A variable declared inside a block remains known throughout the entire program, outside that block."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "expected": [0, 1, 2, 3],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -1116,9 +943,7 @@
         "Once regardless of the condition",
         "Only when an `else` block is present"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -1140,11 +965,7 @@
         "It provides a branch for both truth outcomes.",
         "Both blocks always execute."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -1166,9 +987,7 @@
         "Always use an else branch.",
         "Use a switch statement instead."
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -1190,9 +1009,7 @@
         "It returns a value.",
         "It eliminates conditions."
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -1214,11 +1031,7 @@
         "When an else is followed by a single if statement, the slides show that a simple statement without a block is acceptable.",
         "Always nest each else-if branch inside another pair of braces."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -1240,9 +1053,7 @@
         "if (op1) then op2 else op3",
         "op1 && op2 || op3"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -1266,13 +1077,7 @@
         "An if/else statement is described as not returning a value.",
         "The slides say the conditional operator does not return a value."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3,
-        4
-      ],
+      "expected": [0, 1, 2, 3, 4],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -1294,9 +1099,7 @@
         "To declare a variable",
         "To convert a double into an int"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -1318,10 +1121,7 @@
         "double only",
         "boolean only"
       ],
-      "expected": [
-        0,
-        1
-      ],
+      "expected": [0, 1],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -1343,9 +1143,7 @@
         "Immediately after the first statement",
         "Only at the end of the switch"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -1367,11 +1165,7 @@
         "If no case matches, default statements execute when a default is present.",
         "A default branch must always be present in every traditional switch."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -1393,9 +1187,7 @@
         "The switch returns a value from the first case.",
         "The compiler ignores all case labels."
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -1418,12 +1210,7 @@
         "There is no fall-through in the shown simplified form.",
         "The simplified switch form requires a break after every case and uses fall-through."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "expected": [0, 1, 2, 3],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -1445,9 +1232,7 @@
         "Only when a break is used",
         "Never"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -1469,11 +1254,7 @@
         "The yielded value becomes the switch expression result.",
         "Use `break` to return the value."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -1495,9 +1276,7 @@
         "A single value returned by an expression",
         "A statement that imports a class"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -1519,9 +1298,7 @@
         "Only when break is encountered",
         "Only when the loop terminates"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -1543,11 +1320,7 @@
         "If false, end the loop and continue after the block.",
         "The block always executes at least once."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -1569,9 +1342,7 @@
         "A variable is declared inside the block.",
         "The loop condition is checked before the block."
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -1593,11 +1364,7 @@
         "A while loop may control multiple statements in one block.",
         "A while loop must always omit curly braces."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -1619,9 +1386,7 @@
         "Restarts the loop without checking its condition",
         "Increments the counter"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -1644,12 +1409,7 @@
         "The slides prefer condition-based while termination as generally clearer.",
         "The slides recommend `while (true)` with `break` as clearer best practice than testing the while condition."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "expected": [0, 1, 2, 3],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -1671,9 +1431,7 @@
         "Ends the program",
         "Repeats the current statement before the condition check"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -1695,9 +1453,7 @@
         "Execute the block only if a condition is false.",
         "Execute the block only after a break."
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -1720,12 +1476,7 @@
         "If the condition is false after the first execution, the loop ends.",
         "A do-while block can execute zero times if its condition is initially false."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "expected": [0, 1, 2, 3],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -1747,9 +1498,7 @@
         "Input, output and test",
         "Class name, constructor and method"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -1771,11 +1520,7 @@
         "Modification runs after each block execution.",
         "Initialisation is repeated after every modification."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -1799,13 +1544,7 @@
         "The slides recommend keeping the header simple.",
         "The semicolons between the for-loop header parts are optional."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3,
-        4
-      ],
+      "expected": [0, 1, 2, 3, 4],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -1827,9 +1566,7 @@
         "A block that can only be called once",
         "A class that contains no methods"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -1852,12 +1589,7 @@
         "Code becomes more concise and readable.",
         "The slides say functions make code less concise and less readable."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "expected": [0, 1, 2, 3],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -1879,9 +1611,7 @@
         "Because they cannot accept arguments.",
         "Because only the main method can be called."
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -1904,12 +1634,7 @@
         "Argument list",
         "Body"
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "expected": [0, 1, 2, 3],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -1931,9 +1656,7 @@
         "All uppercase words separated by underscores",
         "A name beginning with a digit"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -1956,12 +1679,7 @@
         "The name should describe what the function does.",
         "Function names should use uppercase letters and underscores rather than lower camelCase."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "expected": [0, 1, 2, 3],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -1983,9 +1701,7 @@
         "The function has no body.",
         "The function cannot be called."
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -2007,11 +1723,7 @@
         "They are initialized with argument values passed by the function call.",
         "They are global variables shared by all functions."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -2033,9 +1745,7 @@
         "An attribute declared in the class",
         "A constant in the Java API"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -2057,11 +1767,7 @@
         "The main method calls enterAmount three times.",
         "The printResult call is shown with a returned double value."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -2083,9 +1789,7 @@
         "A group of statements enclosed in braces",
         "A method that returns a value"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -2101,18 +1805,8 @@
       "examEligible": true,
       "provenance": "prog-summary.md",
       "contentVersion": 1,
-      "options": [
-        "A name",
-        "A type",
-        "A scope",
-        "A package",
-        "A constructor"
-      ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "options": ["A name", "A type", "A scope", "A package", "A constructor"],
+      "expected": [0, 1, 2],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -2134,9 +1828,7 @@
         "type = name;",
         "new type(name);"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -2163,16 +1855,7 @@
         "char",
         "The coursework includes `String` in its table of primitive types."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7
-      ],
+      "expected": [0, 1, 2, 3, 4, 5, 6, 7],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -2188,15 +1871,8 @@
       "examEligible": true,
       "provenance": "prog-summary.md",
       "contentVersion": 1,
-      "options": [
-        "int",
-        "short",
-        "long",
-        "byte"
-      ],
-      "expected": [
-        0
-      ],
+      "options": ["int", "short", "long", "byte"],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -2212,15 +1888,8 @@
       "examEligible": true,
       "provenance": "prog-summary.md",
       "contentVersion": 1,
-      "options": [
-        "double",
-        "float",
-        "long",
-        "char"
-      ],
-      "expected": [
-        0
-      ],
+      "options": ["double", "float", "long", "char"],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -2243,12 +1912,7 @@
         "char is a 16-bit Unicode character.",
         "The table describes `char` as an 8-bit ASCII value."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "expected": [0, 1, 2, 3],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -2264,15 +1928,8 @@
       "examEligible": true,
       "provenance": "prog-summary.md",
       "contentVersion": 1,
-      "options": [
-        "false and true",
-        "0 and 1",
-        "-1 and 1",
-        "null and true"
-      ],
-      "expected": [
-        0
-      ],
+      "options": ["false and true", "0 and 1", "-1 and 1", "null and true"],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -2294,11 +1951,7 @@
         "A name cannot be a reserved Java word.",
         "A name must contain at least one underscore."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -2320,9 +1973,7 @@
         "It is a name reserved for a package only.",
         "It is automatically converted to lowercase."
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -2344,11 +1995,7 @@
         "Words after the first are indicated with a capitalized letter.",
         "Variable names are case-insensitive."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -2370,9 +2017,7 @@
         "A reserved word",
         "A variable’s initial value"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -2395,12 +2040,7 @@
         "A variable name should be unique within its scope.",
         "The slides say variable names are not case sensitive."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "expected": [0, 1, 2, 3],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -2422,9 +2062,7 @@
         "A method call that returns a value",
         "A declaration without a type"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -2447,12 +2085,7 @@
         "A long literal ends with L or l.",
         "A char literal is enclosed in double quotation marks."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "expected": [0, 1, 2, 3],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -2475,12 +2108,7 @@
         "A long literal must end in L or l.",
         "A float literal must end with `L` or `l`."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "expected": [0, 1, 2, 3],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -2502,9 +2130,7 @@
         "It is automatically private.",
         "It is initialized to null in every case."
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -2526,11 +2152,7 @@
         "Replace literal values in code with final variables.",
         "Use lowercase camelCase for every final variable name."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -2552,9 +2174,7 @@
         "The double variable is outside its scope.",
         "The assignment operator cannot assign numbers."
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -2577,12 +2197,7 @@
         "A cast is shown as a way to explicitly request conversion.",
         "The cast target type is written after the value being converted."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "expected": [0, 1, 2, 3],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -2604,9 +2219,7 @@
         "Blocks that repeat a sequence",
         "A type of Java package"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -2628,11 +2241,7 @@
         "Comparison, such as `bmi > 25`",
         "Declaring a package name"
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -2654,9 +2263,7 @@
         "The negative value of an operand",
         "The quotient rounded to an integer"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -2672,17 +2279,8 @@
       "examEligible": true,
       "provenance": "prog-summary.md",
       "contentVersion": 1,
-      "options": [
-        "13 % 5 = 3",
-        "15 % 5 = 0",
-        "18 % 5 = 3",
-        "21 % 5 = 2"
-      ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "options": ["13 % 5 = 3", "15 % 5 = 0", "18 % 5 = 3", "21 % 5 = 2"],
+      "expected": [0, 1, 2],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -2704,9 +2302,7 @@
         "The operand is decremented.",
         "The operand is converted to a String."
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -2722,15 +2318,8 @@
       "examEligible": true,
       "provenance": "prog-summary.md",
       "contentVersion": 1,
-      "options": [
-        "10",
-        "11",
-        "9",
-        "0"
-      ],
-      "expected": [
-        0
-      ],
+      "options": ["10", "11", "9", "0"],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -2752,11 +2341,7 @@
         "In both examples, i becomes 11 after the operation.",
         "Pre-increment and post-increment always assign the same immediate value to number."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -2778,9 +2363,7 @@
         "number is 11 and i is 11",
         "number is 9 and i is 10"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -2802,9 +2385,7 @@
         "Less than or equal to",
         "Not equal to"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -2829,14 +2410,7 @@
         "!=",
         "A single `=` is listed as the relational operator for equality."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3,
-        4,
-        5
-      ],
+      "expected": [0, 1, 2, 3, 4, 5],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -2858,9 +2432,7 @@
         "Only when both operands are false",
         "When the operands are different"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -2882,9 +2454,7 @@
         "Only when both operands are false",
         "When both operands are different"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -2906,11 +2476,7 @@
         "`!op` is true if op is false.",
         "`!op` is true only if op is already true."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -2932,9 +2498,7 @@
         "The scope of an operator",
         "The number of operands in an expression"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -2957,12 +2521,7 @@
         "Compound assignment operators combine a calculation with assignment.",
         "Compound assignment performs the assignment first and the calculation afterwards."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "expected": [0, 1, 2, 3],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -2984,11 +2543,7 @@
         "`op1 %= op2` is equivalent to `op1 = op1 % op2`.",
         "`op1 += op2` is equivalent to `op1 = op1 - op2`."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -3004,15 +2559,8 @@
       "examEligible": true,
       "provenance": "prog-summary.md",
       "contentVersion": 1,
-      "options": [
-        "`.`",
-        "`[]`",
-        "`new`",
-        "`instanceof`"
-      ],
-      "expected": [
-        0
-      ],
+      "options": ["`.`", "`[]`", "`new`", "`instanceof`"],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -3036,13 +2584,7 @@
         "`instanceof` tests whether an object is of a class or one of its subclasses.",
         "The dot operator is described as the operator that creates a new object or array."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3,
-        4
-      ],
+      "expected": [0, 1, 2, 3, 4],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -3064,9 +2606,7 @@
         "Ignore the evaluation order.",
         "Use only unary operators."
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -3082,15 +2622,8 @@
       "examEligible": true,
       "provenance": "prog-summary.md",
       "contentVersion": 1,
-      "options": [
-        "Objects",
-        "Operators",
-        "Algorithms",
-        "Packages"
-      ],
-      "expected": [
-        0
-      ],
+      "options": ["Objects", "Operators", "Algorithms", "Packages"],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -3112,10 +2645,7 @@
         "Its Java package name",
         "Its bytecode extension"
       ],
-      "expected": [
-        0,
-        1
-      ],
+      "expected": [0, 1],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -3137,10 +2667,7 @@
         "Properties are represented only by constructors.",
         "Behavior is represented by package names."
       ],
-      "expected": [
-        0,
-        1
-      ],
+      "expected": [0, 1],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -3162,9 +2689,7 @@
         "A reference to an object stored on the heap",
         "A method that changes an attribute"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -3186,9 +2711,7 @@
         "A Java primitive type",
         "A method list without state"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -3210,11 +2733,7 @@
         "An object is an instance of a class.",
         "Every object of a class must have identical attribute values."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -3236,9 +2755,7 @@
         "A package import",
         "A primitive-type conversion"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -3261,12 +2778,7 @@
         "The variable that stores the result",
         "The diagram labels the method name as the variable that stores the result."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "expected": [0, 1, 2, 3],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -3288,9 +2800,7 @@
         "Runs the main method",
         "Converts a primitive into a String"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -3313,12 +2823,7 @@
         "The new-expression calls a constructor.",
         "The parentheses after the class name may be omitted when the constructor has no parameters."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "expected": [0, 1, 2, 3],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -3340,9 +2845,7 @@
         "A package containing utility classes",
         "A loop that initialises a field repeatedly"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -3365,12 +2868,7 @@
         "Random is described as generating pseudo-random numbers based on a mathematical formula.",
         "Two Random instances initialized with the same seed are said to generate different sequences."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "expected": [0, 1, 2, 3],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -3393,12 +2891,7 @@
         "`nextBoolean()` returns a boolean value, true or false.",
         "`nextInt(bound)` includes `bound` as a possible returned value."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "expected": [0, 1, 2, 3],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -3420,9 +2913,7 @@
         "Use the object only inside its constructor",
         "Write the object name followed by an equals sign"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -3444,11 +2935,7 @@
         "Assigning one reference variable to another copies the reference.",
         "Assigning a primitive variable to another copies the object itself."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -3470,9 +2957,7 @@
         "The object is copied before the change.",
         "The other reference remains connected to an old copy."
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -3495,12 +2980,7 @@
         "Control access to code.",
         "The slides say packages are used to increase naming conflicts."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "expected": [0, 1, 2, 3],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -3523,12 +3003,7 @@
         "Without an import, the fully qualified name can be used.",
         "A fully qualified class name omits the package name."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "expected": [0, 1, 2, 3],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -3550,11 +3025,7 @@
         "Classes from packages imported using `*`.",
         "Any class in any package without qualification."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -3576,11 +3047,7 @@
         "`java.lang`",
         "`java.util` in its entirety"
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -3602,9 +3069,7 @@
         "A random sequence of digits",
         "A name ending with `.java`"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -3626,10 +3091,7 @@
         "When the variable is assigned a primitive value.",
         "When a method is overloaded."
       ],
-      "expected": [
-        0,
-        1
-      ],
+      "expected": [0, 1],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -3651,9 +3113,7 @@
         "It requires the programmer to call `new` again.",
         "It changes all references into primitive values."
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -3675,9 +3135,7 @@
         "A package name",
         "A numeric literal format"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -3700,12 +3158,7 @@
         "Each change to a String leads to creation of a new String object.",
         "The slides say a String object can be modified in place after it is created."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "expected": [0, 1, 2, 3],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -3727,9 +3180,7 @@
         "Printing a String variable",
         "Printing a String literal"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -3751,9 +3202,7 @@
         "Only numeric values",
         "Only escaped newline characters"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -3775,10 +3224,7 @@
         "next() reads all remaining lines in the buffer.",
         "nextLine() reads only up to the next space."
       ],
-      "expected": [
-        0,
-        1
-      ],
+      "expected": [0, 1],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -3800,9 +3246,7 @@
         "nextLine() reads only digits.",
         "String variables cannot contain names."
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -3824,9 +3268,7 @@
         "Create a new StringBuilder.",
         "Use `equals()` before reading the line."
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -3850,13 +3292,7 @@
         "isEmpty() checks whether the String has length zero.",
         "`length()` returns the number of bytes rather than the number of characters."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3,
-        4
-      ],
+      "expected": [0, 1, 2, 3, 4],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -3879,12 +3315,7 @@
         "It returns a positive value when this String comes after the other.",
         "`compareTo` returns only a boolean value."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "expected": [0, 1, 2, 3],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -3906,9 +3337,7 @@
         "Use the assignment operator.",
         "Use the modulo operator."
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -3930,11 +3359,7 @@
         "The slides show a greeting String combined with another String literal.",
         "Concatenation modifies the original String object in place."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -3956,9 +3381,7 @@
         "concat changes the String into a char array.",
         "concat can only be used on StringBuilder."
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -3981,12 +3404,7 @@
         "The sample `one.equals(three)` evaluates to true.",
         "The example shows `one == three` evaluating to true."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "expected": [0, 1, 2, 3],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -4008,9 +3426,7 @@
         "A package for formatting numbers",
         "A class whose contents can never change"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -4033,12 +3449,7 @@
         "It can reduce memory usage.",
         "The slides say StringBuilder creates a new object every time text is appended, inserted or removed."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "expected": [0, 1, 2, 3],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -4061,12 +3472,7 @@
         "The slide shows both an empty StringBuilder constructor and one with a literal argument.",
         "The slides say an empty StringBuilder cannot be created with a no-argument constructor."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "expected": [0, 1, 2, 3],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -4090,13 +3496,7 @@
         "reverse() reverses the content.",
         "`charAt(index)` returns the index number rather than the character at that index."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3,
-        4
-      ],
+      "expected": [0, 1, 2, 3, 4],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -4118,9 +3518,7 @@
         "append creates a new StringBuilder each time.",
         "append reverses the text."
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -4142,9 +3540,7 @@
         "Scanner.next() and Scanner.nextLine()",
         "Math.max() and Math.min()"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -4166,9 +3562,7 @@
         "Scanner.nextLine()",
         "Math.abs()"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -4190,11 +3584,7 @@
         "String.format returns a String object.",
         "System.out.format is described as a constructor."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -4219,14 +3609,7 @@
         "%n for a newline",
         "The slides map `%d` to String values and `%s` to integer values."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3,
-        4,
-        5
-      ],
+      "expected": [0, 1, 2, 3, 4, 5],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -4242,15 +3625,8 @@
       "examEligible": true,
       "provenance": "prog-summary.md",
       "contentVersion": 1,
-      "options": [
-        "Right-aligned",
-        "Left-aligned",
-        "Centred",
-        "Not aligned"
-      ],
-      "expected": [
-        0
-      ],
+      "options": ["Right-aligned", "Left-aligned", "Centred", "Not aligned"],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -4273,12 +3649,7 @@
         "A comma with numbers indicates a thousands separator.",
         "A minus sign between `%` and the type letter indicates right alignment."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "expected": [0, 1, 2, 3],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -4300,9 +3671,7 @@
         "A negative sign for left alignment",
         "A literal percent sign"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -4325,12 +3694,7 @@
         "A `%f` precision indicator automatically rounds to the nearest value shown.",
         "The slides say a format specifier may be used without a matching parameter."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "expected": [0, 1, 2, 3],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -4352,9 +3716,7 @@
         "Displays a number with 10 decimal places",
         "Displays a newline only"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -4376,9 +3738,7 @@
         "An integer with a thousands separator",
         "A boolean followed by a newline"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -4400,9 +3760,7 @@
         "The method body",
         "The attribute initializer"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -4424,9 +3782,7 @@
         "It must contain only one attribute.",
         "Its filename must end with .class."
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -4449,12 +3805,7 @@
         "implements Interface",
         "The class name placeholder is marked optional in the class-declaration syntax."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "expected": [0, 1, 2, 3],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -4476,9 +3827,7 @@
         "A package path ending in .java",
         "A method body"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -4494,17 +3843,8 @@
       "examEligible": true,
       "provenance": "prog-summary.md",
       "contentVersion": 1,
-      "options": [
-        "Attributes",
-        "Constructors",
-        "Methods",
-        "Import statements"
-      ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "options": ["Attributes", "Constructors", "Methods", "Import statements"],
+      "expected": [0, 1, 2],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -4526,9 +3866,7 @@
         "Omit its type.",
         "Declare it inside main."
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -4552,13 +3890,7 @@
         "final",
         "The attribute declaration syntax does not list `final` as a possible modifier."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3,
-        4
-      ],
+      "expected": [0, 1, 2, 3, 4],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -4580,9 +3912,7 @@
         "Any number",
         "None are allowed"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -4604,11 +3934,7 @@
         "A subclass",
         "Any class"
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -4630,11 +3956,7 @@
         "It allows access from a class in the same package.",
         "It allows access from any class."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -4650,15 +3972,8 @@
       "examEligible": true,
       "provenance": "prog-summary.md",
       "contentVersion": 1,
-      "options": [
-        "null",
-        "false",
-        "0",
-        "0.0"
-      ],
-      "expected": [
-        0
-      ],
+      "options": ["null", "false", "0", "0.0"],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -4682,13 +3997,7 @@
         "Object: null",
         "The default value shown for an object attribute is an empty String."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3,
-        4
-      ],
+      "expected": [0, 1, 2, 3, 4],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -4710,9 +4019,7 @@
         "It automatically creates an object.",
         "It is converted to false."
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -4734,9 +4041,7 @@
         "A package of related interfaces",
         "A literal fixed value"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -4758,9 +4063,7 @@
         "Both are declared only in the class header.",
         "A local variable is automatically initialized, but an attribute is not."
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -4783,12 +4086,7 @@
         "A method always has access to the attributes of the object on which it is called.",
         "Attributes are declared inside individual method code blocks rather than in the class."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "expected": [0, 1, 2, 3],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -4811,12 +4109,7 @@
         "They can have the same name as an attribute.",
         "Local variables are automatically initialized by the Java system."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "expected": [0, 1, 2, 3],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -4838,9 +4131,7 @@
         "Use the keyword `final` to refer to the attribute.",
         "Use a package import."
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -4863,12 +4154,7 @@
         "Parameters are separated by commas.",
         "The slides say all method parameters are declared together without individual types."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "expected": [0, 1, 2, 3],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -4890,9 +4176,7 @@
         "The method copies the entire Rectangle object.",
         "The values are returned from the method."
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -4915,12 +4199,7 @@
         "Their return type is void.",
         "A setter is described as returning the current attribute value rather than changing it."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "expected": [0, 1, 2, 3],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -4942,11 +4221,7 @@
         "Their return type matches the attribute contents.",
         "They are used to change an attribute."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -4968,9 +4243,7 @@
         "The method returns an object reference.",
         "The method returns its last parameter."
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -4993,12 +4266,7 @@
         "The method ends after executing the return statement.",
         "The slides say execution continues in the method after a return statement has executed."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "expected": [0, 1, 2, 3],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -5020,9 +4288,7 @@
         "It is not allowed to have parameters.",
         "It is only valid inside a constructor."
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -5044,11 +4310,7 @@
         "It can prevent invalid attribute values when setters validate.",
         "It means every setter must always accept every value."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -5070,9 +4332,7 @@
         "Declare them as local variables.",
         "Give each one a package name."
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -5088,19 +4348,8 @@
       "examEligible": true,
       "provenance": "prog-summary.md",
       "contentVersion": 1,
-      "options": [
-        "-20",
-        "0",
-        "50",
-        "300",
-        "50000"
-      ],
-      "expected": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "options": ["-20", "0", "50", "300", "50000"],
+      "expected": [0, 1, 2, 3],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -5122,9 +4371,7 @@
         "The access modifier only",
         "The class name and package"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -5146,10 +4393,7 @@
         "When their bodies contain different statements only.",
         "When they are declared in different packages only."
       ],
-      "expected": [
-        0,
-        1
-      ],
+      "expected": [0, 1],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -5171,9 +4415,7 @@
         "It must start with lowercase and differ from the class.",
         "It must end in `Builder`."
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -5196,12 +4438,7 @@
         "The shown constructor syntax allows access modifiers such as private, public or protected.",
         "A constructor must declare a return type before its name."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "expected": [0, 1, 2, 3],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -5223,9 +4460,7 @@
         "All uppercase",
         "A leading digit followed by lowercase"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -5247,9 +4482,7 @@
         "Only when the class has public attributes",
         "Only when a class has a main method"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -5271,11 +4504,7 @@
         "It is generated when no constructor is declared.",
         "It is still generated after another constructor is written."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -5297,9 +4526,7 @@
         "The declared constructor is ignored.",
         "All object creation is prohibited."
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -5321,11 +4548,7 @@
         "The slides show it alongside an overloaded constructor.",
         "It is automatically generated even when another constructor is declared."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -5347,9 +4570,7 @@
         "Using a method instead of a constructor",
         "Changing a constructor’s return type"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -5371,11 +4592,7 @@
         "It must be the first line of the constructor.",
         "It must be the last statement in the constructor."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -5397,9 +4614,7 @@
         "To convert the constructor to a method returning void",
         "To import the class into the current package"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -5422,12 +4637,7 @@
         "The default implementation is described as not very useful.",
         "The default `toString()` implementation is described as useful object-specific output."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "expected": [0, 1, 2, 3],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -5449,9 +4659,7 @@
         "println converts the object into a primitive.",
         "println ignores object references."
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -5473,11 +4681,7 @@
         "To control the default class-name/hashcode display.",
         "To replace the constructor."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -5499,9 +4703,7 @@
         "A class that stores user input",
         "A class containing only String methods"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -5523,10 +4725,7 @@
         "MAX, the maximum integer value",
         "MIN, the minimum integer value"
       ],
-      "expected": [
-        0,
-        1
-      ],
+      "expected": [0, 1],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -5550,13 +4749,7 @@
         "sqrt(a)",
         "The Math slide lists `sqrt(a, b)` as the square-root method."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3,
-        4
-      ],
+      "expected": [0, 1, 2, 3, 4],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -5578,9 +4771,7 @@
         "Only through a constructor",
         "Using the Scanner object"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -5602,11 +4793,7 @@
         "Mobile apps on the Android platform",
         "Only embedded controller applications"
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -5628,11 +4815,7 @@
         "The target platform uses a Java interpreter/JVM to execute the bytecode.",
         "The compiler creates a different processor-specific native binary for Intel and ARM."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -5656,13 +4839,7 @@
         "Fast speed explicitly rated above compiled binary code",
         "A virtual machine is needed to run the code"
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3,
-        5
-      ],
+      "expected": [0, 1, 2, 3, 5],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -5684,9 +4861,7 @@
         "It is the Java API reference documentation.",
         "It is the source-code file extension."
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -5709,12 +4884,7 @@
         "The package declaration is shown before the import.",
         "The Scanner class is described as part of the Java core and therefore never needing import."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "expected": [0, 1, 2, 3],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -5736,9 +4906,7 @@
         "Only the final output needs to be specified.",
         "The start and end of the task can be omitted."
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -5760,10 +4928,7 @@
         "A declaration statement is listed as a logical flow-control statement.",
         "A method call is listed as a loop statement."
       ],
-      "expected": [
-        0,
-        1
-      ],
+      "expected": [0, 1],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -5779,15 +4944,8 @@
       "examEligible": true,
       "provenance": "prog-summary.md",
       "contentVersion": 1,
-      "options": [
-        "Java 14",
-        "Java 8",
-        "Java 11",
-        "Java 17"
-      ],
-      "expected": [
-        0
-      ],
+      "options": ["Java 14", "Java 8", "Java 11", "Java 17"],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -5809,11 +4967,7 @@
         "The slides describe the for syntax as compact for repeating actions a number of times.",
         "The two examples cannot be used to count from 0 to 9."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -5835,9 +4989,7 @@
         "It increments the operand after using it.",
         "It returns the negative value of the operand."
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -5860,12 +5012,7 @@
         "Argument list",
         "The statements inside the body"
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "expected": [0, 1, 2, 3],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -5887,9 +5034,7 @@
         "-2³¹ to 2³¹−1",
         "-2⁶³ to 2⁶³−1"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -5911,11 +5056,7 @@
         "`long`: -2⁶³ to 2⁶³−1",
         "`byte`: -32768 to 32767"
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -5937,11 +5078,7 @@
         "`char` is a 16-bit Unicode character.",
         "`boolean` is listed as a 16-bit Unicode character."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -5963,9 +5100,7 @@
         "-128 to 127",
         "false to true"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -5989,13 +5124,7 @@
         "`\\f` represents form feed.",
         "`\\n` represents a tabulator."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3,
-        4
-      ],
+      "expected": [0, 1, 2, 3, 4],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -6017,11 +5146,7 @@
         "`\\\\` represents a backslash.",
         "`\\'` represents a newline."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -6043,9 +5168,7 @@
         "The value must first be converted to a String.",
         "The double variable becomes an int variable."
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -6067,9 +5190,7 @@
         "A double cannot contain a decimal part.",
         "The int variable must be declared final."
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -6091,9 +5212,7 @@
         "It decrements the operand by one.",
         "It returns the negative value of the operand."
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -6115,9 +5234,7 @@
         "Addition/subtraction, multiplication/division, unary, postfix",
         "Relational, shift, assignment, equality, postfix"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -6141,13 +5258,7 @@
         "Short-circuit logical AND and OR",
         "String formatting operators"
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3,
-        4
-      ],
+      "expected": [0, 1, 2, 3, 4],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -6169,9 +5280,7 @@
         "Both are shown only in stack memory.",
         "Both are shown only in heap memory."
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -6194,12 +5303,7 @@
         "After the reference assignment shown, both variables refer to the same object.",
         "Assigning an object reference always creates a second copy of the object."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "expected": [0, 1, 2, 3],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -6221,9 +5325,7 @@
         "The `new` operator is unnecessary when a method is called on an object.",
         "A reference variable is automatically assigned a Random object."
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -6245,11 +5347,7 @@
         "The convention is presented as helping guarantee worldwide uniqueness.",
         "They are required to end with `.java`."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -6271,9 +5369,7 @@
         "Only when the programmer calls `new`.",
         "Only when the application is closed."
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -6295,9 +5391,7 @@
         "String is a primitive type.",
         "String is part of the user-defined current package."
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -6319,11 +5413,7 @@
         "It ends with three double quotes.",
         "It cannot contain double quotes within the text."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -6346,12 +5436,7 @@
         "`toLowerCase`",
         "`reverse`"
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "expected": [0, 1, 2, 3],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -6373,9 +5458,7 @@
         "It must be placed in a file named `main.java`.",
         "The filename must match the package name."
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -6397,9 +5480,7 @@
         "The same class, same package and subclasses",
         "Any class"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -6421,9 +5502,7 @@
         "Only classes in the same package",
         "Only subclasses"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -6446,12 +5525,7 @@
         "Public access is shown for any class.",
         "Protected access is shown only for the declaring class."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "expected": [0, 1, 2, 3],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -6473,9 +5547,7 @@
         "Use the keyword `new` to refer to the attribute.",
         "Use the keyword `return` to refer to the attribute."
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -6497,11 +5569,7 @@
         "The setter uses `this.width` to refer to the attribute while `width` is the parameter.",
         "The slide says `this` is never used in methods."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -6523,9 +5591,7 @@
         "The parameter list is written after the method body.",
         "A method declaration cannot contain parameters."
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -6548,12 +5614,7 @@
         "Trigonometric functions",
         "Reading keyboard input"
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "expected": [0, 1, 2, 3],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -6569,15 +5630,8 @@
       "examEligible": true,
       "provenance": "prog-summary.md",
       "contentVersion": 1,
-      "options": [
-        "A",
-        "a",
-        "@",
-        "0"
-      ],
-      "expected": [
-        0
-      ],
+      "options": ["A", "a", "@", "0"],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -6600,12 +5654,7 @@
         "A char may be assigned the corresponding ASCII code.",
         "A char literal must always be written with double quotes."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "expected": [0, 1, 2, 3],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -6627,10 +5676,7 @@
         "float: approximately -1.7E+308 to 1.7E+308",
         "double: approximately -3.4E+38 to 3.4E+38"
       ],
-      "expected": [
-        0,
-        1
-      ],
+      "expected": [0, 1],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -6654,13 +5700,7 @@
         "`%` gives the remainder of division.",
         "`++` is listed as a binary operator."
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3,
-        4
-      ],
+      "expected": [0, 1, 2, 3, 4],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -6682,9 +5722,7 @@
         "It starts the JVM.",
         "It imports the Scanner class."
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -6706,11 +5744,7 @@
         "A void method call is not an expression because it does not result in a value.",
         "A void method call can be assigned to a variable."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],
@@ -6732,10 +5766,7 @@
         "A method can access only attributes passed in its parameter list.",
         "Attributes are local variables that disappear when a method ends."
       ],
-      "expected": [
-        0,
-        1
-      ],
+      "expected": [0, 1],
       "hints": [
         "Use the definitions, distinctions and examples stated in the coursework."
       ],

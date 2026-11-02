@@ -2,6 +2,7 @@
   "schemaVersion": 1,
   "packageId": "sql-theory-course",
   "version": "1.1.0",
+  "term": 1,
   "topics": {
     "database-fundamentals": {
       "title": "Database Fundamentals",
@@ -86,9 +87,7 @@
         "To replace the data stored by an organization.",
         "To define the organization's business strategy."
       ],
-      "expected": [
-        1
-      ],
+      "expected": [1],
       "explanation": "A DBMS is the software layer used to manage, maintain, query and secure a database."
     },
     "database-fundamentals-002": {
@@ -108,11 +107,7 @@
         "Centralized security controls can manage who accesses or modifies data.",
         "The physical order of rows determines the meaning of a relational table."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "explanation": "The database approach supports shared data, reduces unnecessary redundancy and provides centralized security monitoring. Relational table rows have no inherent order."
     },
     "relational-tables-001": {
@@ -132,11 +127,7 @@
         "Rows have no inherent order.",
         "The order of columns carries inherent meaning."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "explanation": "Relational tables have atomic attribute values, unique rows and unordered rows. Column names are unique, but column order carries no inherent meaning."
     },
     "database-fundamentals-003": {
@@ -156,11 +147,7 @@
         "An RDBMS is based on the relational model.",
         "A database contains metadata only and does not contain data."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "explanation": "The course defines a database as an integrated collection containing data and metadata, a DBMS as the management software, and an RDBMS as a DBMS based on the relational model."
     },
     "keys-and-relationships-001": {
@@ -180,9 +167,7 @@
         "To determine the order of rows.",
         "To store the description of every column."
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "explanation": "A primary key uniquely identifies rows in a table. It must contain a valid, non-NULL value."
     },
     "keys-and-relationships-002": {
@@ -202,11 +187,7 @@
         "Meaningful data may change over time, which can complicate references.",
         "A primary key is allowed to contain NULL values."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "explanation": "The course recommends a meaningless surrogate key because meaningful values may change over time and complicate references. A primary key must always contain a valid, non-NULL value."
     },
     "keys-and-relationships-003": {
@@ -226,11 +207,7 @@
         "The foreign-key population must be a subset of the referenced primary-key population.",
         "A foreign key must always contain unique values."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "explanation": "A foreign key establishes a relationship by referencing another table's primary key. The data types must match, and referential integrity requires its population to be a subset of the referenced primary-key population."
     },
     "multiplicities-001": {
@@ -250,11 +227,7 @@
         "0..* means zero or many.",
         "1..* means zero or many."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "explanation": "The course defines 1 as exactly one, 0..1 as zero or one, 0..* as zero or many, and 1..* as one or many."
     },
     "data-modeling-001": {
@@ -274,9 +247,7 @@
         "Domain Model → Physical Data Model → Wireframes and interviews → Logical Data Model",
         "Behavior Modeling → Physical Data Model → Domain Model → Wireframes and interviews"
       ],
-      "expected": [
-        1
-      ],
+      "expected": [1],
       "explanation": "The course presents the lifecycle as wireframes/interviews, Domain Model, behavior modeling, Design Model, Logical Data Model and finally Physical Data Model."
     },
     "data-modeling-002": {
@@ -296,11 +267,7 @@
         "The Physical Data Model can include database objects and indexes.",
         "The Domain Model contains foreign keys and database-specific indexes."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "explanation": "The Logical Data Model defines keys, constraints and naming standards. The Physical Data Model adds DBMS-specific data types, objects, indexes and technical constraints. The Domain Model contains business concepts without foreign keys."
     },
     "database-roles-001": {
@@ -320,11 +287,7 @@
         "The Application Developer builds applications that interface with the database.",
         "The End User is technically responsible for maintaining database performance."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "explanation": "The Data Administrator handles data governance, the DBA handles technical implementation, performance and maintenance, and the Application Developer builds applications that use the database. End Users use the database indirectly through application interfaces."
     },
     "relational-integrity-001": {
@@ -344,11 +307,7 @@
         "NULL represents a missing or unknown value.",
         "A domain is always identical to the values currently stored in the table."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "explanation": "A domain describes all values permitted for an attribute, while a population describes the concrete values currently present. NULL denotes a missing or unknown value."
     },
     "sql-language-001": {
@@ -368,9 +327,7 @@
         "SQL can only be used inside an application programming language.",
         "SQL automatically defines the organization's data standards."
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "explanation": "SQL is declarative because users state what they want to achieve, rather than specifying the exact procedural steps for achieving it."
     },
     "sql-language-002": {
@@ -390,11 +347,7 @@
         "CREATE, ALTER and DROP belong to DDL.",
         "GRANT and REVOKE belong to transaction control."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "explanation": "The course classifies SELECT as DQL, INSERT/UPDATE/DELETE as DML, CREATE/ALTER/DROP as DDL, and GRANT/REVOKE as DCL. COMMIT, ROLLBACK and SAVEPOINT are transaction-control commands."
     },
     "sql-language-003": {
@@ -414,11 +367,7 @@
         "Embedded in languages such as Java, C and C#.",
         "Only through a spreadsheet application."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "explanation": "The course describes interactive use through direct queries and embedded use within host programming languages, including Java, C and C#."
     },
     "sql-language-004": {
@@ -438,9 +387,7 @@
         "It automatically selects every table in the database.",
         "It can only return metadata about columns."
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "explanation": "The course notes that SELECT can evaluate scalar expressions, calculations and system variables without querying a table."
     },
     "sql-execution-order-001": {
@@ -460,11 +407,7 @@
         "HAVING is evaluated after GROUP BY.",
         "ORDER BY is evaluated before DISTINCT."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "explanation": "The relevant order is FROM, WHERE, GROUP BY, HAVING, SELECT, DISTINCT and ORDER BY. Therefore the first three statements are correct, while DISTINCT precedes ORDER BY."
     },
     "text-comparisons-001": {
@@ -484,9 +427,7 @@
         "They automatically convert both values to uppercase.",
         "They ignore capitalization only when values contain spaces."
       ],
-      "expected": [
-        1
-      ],
+      "expected": [1],
       "explanation": "The course states that literal text comparisons are strictly case-sensitive. UPPER() and LOWER() can be used to standardize text for uniform comparison."
     },
     "type-conversion-001": {
@@ -506,11 +447,7 @@
         "Explicit conversions can use functions such as CAST, TO_CHAR and TO_DATE.",
         "Explicit conversions rely on the active system defaults instead of specifying the conversion."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "explanation": "Implicit conversions happen automatically and can depend on configuration. Explicit conversions use functions such as TO_CHAR, TO_DATE, TO_NUMBER or CAST to make type compatibility more predictable."
     },
     "date-formatting-001": {
@@ -530,9 +467,7 @@
         "How rows are grouped by aggregate functions.",
         "How foreign-key data types are matched."
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "explanation": "PostgreSQL interprets date inputs and formats date outputs according to the active DateStyle parameter. The course recommends using explicit formatting masks rather than relying on system defaults."
     },
     "numeric-formatting-001": {
@@ -552,11 +487,7 @@
         "FM suppresses leading zeros and blank padding spaces.",
         "L represents the localized decimal separator."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "explanation": "The course defines 9 as an optional digit position, 0 as a retained digit position, and FM as Fill Mode, which suppresses leading zeros and blank padding. L represents the localized currency symbol; D and G represent localized decimal and group separators."
     },
     "numeric-functions-001": {
@@ -576,9 +507,7 @@
         "Both functions always return the same result.",
         "TRUNC only works with negative numbers."
       ],
-      "expected": [
-        1
-      ],
+      "expected": [1],
       "explanation": "ROUND() rounds a number to the specified precision. TRUNC() truncates toward zero without rounding."
     },
     "numeric-functions-002": {
@@ -598,11 +527,7 @@
         "TRUNC() truncates toward zero without rounding.",
         "TRUNC(15256, -1) returns 15260."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "explanation": "ROUND() rounds ties away from zero, and negative precision rounds tens, hundreds and other positions to the left of the decimal point. TRUNC() removes digits toward zero without rounding; the course example gives TRUNC(15256, -1) = 15250."
     },
     "numeric-functions-003": {
@@ -622,9 +547,7 @@
         "The rounded value of y multiplied by x.",
         "The difference between y and x."
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "explanation": "MOD(y, x) returns the remainder of y/x. If y is a multiple of x, the result is zero; if x is greater than y, the result is y."
     },
     "joins-001": {
@@ -644,9 +567,7 @@
         "12 combinations.",
         "3 combinations."
       ],
-      "expected": [
-        2
-      ],
+      "expected": [2],
       "explanation": "A Cartesian product pairs every row in the first table with every row in the second table. The total is 4 × 3 = 12 combinations."
     },
     "joins-002": {
@@ -666,11 +587,7 @@
         "The ambiguity occurs because both tables contain a column with the same name.",
         "The database always chooses the first table's column automatically."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "explanation": "When joined tables share a column name, an unqualified reference can be ambiguous. Qualifying the column with its table name or alias resolves the ambiguity."
     },
     "joins-003": {
@@ -690,11 +607,7 @@
         "USING explicitly specifies the common column used for the join.",
         "Table aliases can be used on the joined column specified in USING."
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "explanation": "NATURAL JOIN uses all identically named columns, which can introduce unintended join conditions. USING explicitly names the common join column, but table aliases are not permitted on that joined column. The course also notes that aliases cannot be used with NATURAL JOIN."
     },
     "aggregate-functions-001": {
@@ -714,9 +627,7 @@
         "AVG() can only be used with text values.",
         "MAX() always requires a join condition."
       ],
-      "expected": [
-        1
-      ],
+      "expected": [1],
       "explanation": "Aggregate functions operate on groups of rows to return a single result per group. Directly nesting aggregate function calls is logically invalid and PostgreSQL raises an error."
     }
   }

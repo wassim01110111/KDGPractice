@@ -2,6 +2,7 @@
   "schemaVersion": 1,
   "packageId": "sql-term-1",
   "version": "1.0.0",
+  "term": 1,
   "datasets": {
     "sql-business": {
       "version": "1",
@@ -40,9 +41,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Use the wildcard when every column is required."
-      ],
+      "hints": ["Use the wildcard when every column is required."],
       "explanation": "SELECT * returns all columns from the table, with one result row per employee."
     },
     "sql-week2-select-002": {
@@ -60,9 +59,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "List only the three requested columns."
-      ],
+      "hints": ["List only the three requested columns."],
       "explanation": "The SELECT list controls both which columns appear and their displayed order."
     },
     "sql-week2-select-003": {
@@ -80,9 +77,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Choose the descriptive and numeric columns from products."
-      ],
+      "hints": ["Choose the descriptive and numeric columns from products."],
       "explanation": "A basic SELECT can retrieve columns of different data types from one table."
     },
     "sql-week2-distinct-004": {
@@ -100,9 +95,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Use DISTINCT on the selected column."
-      ],
+      "hints": ["Use DISTINCT on the selected column."],
       "explanation": "DISTINCT removes duplicate result rows; NULL, if present, is retained as one distinct value."
     },
     "sql-week2-distinct-005": {
@@ -120,9 +113,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "The city column contains repeated values."
-      ],
+      "hints": ["The city column contains repeated values."],
       "explanation": "DISTINCT applies to the complete selected row and removes repeated city values."
     },
     "sql-week2-distinct-006": {
@@ -140,9 +131,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "DISTINCT applies to both selected columns together."
-      ],
+      "hints": ["DISTINCT applies to both selected columns together."],
       "explanation": "The result contains distinct pairs, not separate unique lists for each column."
     },
     "sql-week2-select-007": {
@@ -160,9 +149,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Use AS to assign temporary result-column names."
-      ],
+      "hints": ["Use AS to assign temporary result-column names."],
       "explanation": "AS changes the displayed column label without changing the stored table column."
     },
     "sql-week2-filtering-008": {
@@ -180,9 +167,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Filter the rows on department_id."
-      ],
+      "hints": ["Filter the rows on department_id."],
       "explanation": "WHERE keeps only rows for which the equality condition is true."
     },
     "sql-week2-filtering-009": {
@@ -200,9 +185,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Use a numeric greater-than comparison."
-      ],
+      "hints": ["Use a numeric greater-than comparison."],
       "explanation": "The comparison is applied to each product before rows are returned."
     },
     "sql-week2-filtering-010": {
@@ -220,9 +203,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Text values are written in single quotes."
-      ],
+      "hints": ["Text values are written in single quotes."],
       "explanation": "Text equality comparisons are case-sensitive in the course examples."
     },
     "sql-week2-filtering-011": {
@@ -240,9 +221,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Use the not-equal operator."
-      ],
+      "hints": ["Use the not-equal operator."],
       "explanation": "The <> operator excludes rows whose status is completed."
     },
     "sql-week2-filtering-012": {
@@ -260,9 +239,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Use a date comparison with a strict less-than operator."
-      ],
+      "hints": ["Use a date comparison with a strict less-than operator."],
       "explanation": "The strict < operator excludes the boundary date itself."
     },
     "sql-week2-filtering-013": {
@@ -280,9 +257,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Zero is a numeric value, not NULL."
-      ],
+      "hints": ["Zero is a numeric value, not NULL."],
       "explanation": "Equality to zero finds products whose stored stock quantity is exactly zero."
     },
     "sql-week2-filtering-014": {
@@ -300,9 +275,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "A comparison to zero does not match NULL values."
-      ],
+      "hints": ["A comparison to zero does not match NULL values."],
       "explanation": "Zero is a known numeric value, whereas NULL represents missing or unknown information."
     },
     "sql-week2-filtering-015": {
@@ -320,9 +293,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Use a text equality condition."
-      ],
+      "hints": ["Use a text equality condition."],
       "explanation": "WHERE returns only orders with the exact stored status text."
     },
     "sql-week2-filtering-016": {
@@ -340,9 +311,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Both conditions must be true for a row to remain."
-      ],
+      "hints": ["Both conditions must be true for a row to remain."],
       "explanation": "AND combines the department and salary tests, so both restrictions apply."
     },
     "sql-week2-filtering-017": {
@@ -360,9 +329,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "At least one of the city conditions must be true."
-      ],
+      "hints": ["At least one of the city conditions must be true."],
       "explanation": "OR includes a row that matches either city value."
     },
     "sql-week2-filtering-018": {
@@ -380,9 +347,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Combine a status test with an inclusive numeric range."
-      ],
+      "hints": ["Combine a status test with an inclusive numeric range."],
       "explanation": "AND requires the project to be active and the budget to fall inside the inclusive range."
     },
     "sql-week2-filtering-019": {
@@ -400,9 +365,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "NOT reverses the membership condition."
-      ],
+      "hints": ["NOT reverses the membership condition."],
       "explanation": "NOT applied to IN excludes all rows whose status appears in the specified list."
     },
     "sql-week2-filtering-020": {
@@ -420,9 +383,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Use OR because either condition is sufficient."
-      ],
+      "hints": ["Use OR because either condition is sufficient."],
       "explanation": "The row is included when at least one of the two conditions is true."
     },
     "sql-week2-filtering-021": {
@@ -460,9 +421,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Use NOT with IN to exclude multiple department IDs."
-      ],
+      "hints": ["Use NOT with IN to exclude multiple department IDs."],
       "explanation": "NOT IN keeps rows whose department ID does not match either listed value; NULL department IDs are not included."
     },
     "sql-week2-filtering-023": {
@@ -480,9 +439,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "BETWEEN includes both boundary values."
-      ],
+      "hints": ["BETWEEN includes both boundary values."],
       "explanation": "The inclusive BETWEEN range keeps dates equal to either endpoint as well as dates between them."
     },
     "sql-week2-filtering-024": {
@@ -500,9 +457,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "The lower value must come before the upper value."
-      ],
+      "hints": ["The lower value must come before the upper value."],
       "explanation": "BETWEEN includes both 400 and 1200; NULL values do not satisfy the range."
     },
     "sql-week2-filtering-025": {
@@ -520,9 +475,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "IN is a compact alternative to several equality tests."
-      ],
+      "hints": ["IN is a compact alternative to several equality tests."],
       "explanation": "IN matches any one of the listed category IDs."
     },
     "sql-week2-filtering-026": {
@@ -540,9 +493,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Use IN for status alternatives and AND for the budget limit."
-      ],
+      "hints": ["Use IN for status alternatives and AND for the budget limit."],
       "explanation": "The IN condition accepts either status; the separate AND condition limits the budget."
     },
     "sql-week2-filtering-027": {
@@ -560,9 +511,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Use an inclusive range condition."
-      ],
+      "hints": ["Use an inclusive range condition."],
       "explanation": "BETWEEN includes salaries exactly equal to either boundary."
     },
     "sql-week2-filtering-028": {
@@ -580,9 +529,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Combine an IN test with a numeric comparison."
-      ],
+      "hints": ["Combine an IN test with a numeric comparison."],
       "explanation": "The AND requires a matching city and a credit limit above the threshold."
     },
     "sql-week2-filtering-029": {
@@ -600,9 +547,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Combine a date comparison and a negated equality."
-      ],
+      "hints": ["Combine a date comparison and a negated equality."],
       "explanation": "The query first requires a later hire date and then excludes department 40."
     },
     "sql-week2-patterns-030": {
@@ -640,9 +585,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Place the percent wildcard before the ending text."
-      ],
+      "hints": ["Place the percent wildcard before the ending text."],
       "explanation": "%Adapter matches any prefix followed by the exact suffix Adapter."
     },
     "sql-week2-patterns-032": {
@@ -660,9 +603,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Use a percent wildcard at both ends to search within text."
-      ],
+      "hints": ["Use a percent wildcard at both ends to search within text."],
       "explanation": "The pattern matches rows with wireless anywhere in the description; matching is case-sensitive."
     },
     "sql-week2-patterns-033": {
@@ -680,9 +621,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Each underscore represents exactly one character."
-      ],
+      "hints": ["Each underscore represents exactly one character."],
       "explanation": "Four underscores match exactly four characters."
     },
     "sql-week2-patterns-034": {
@@ -700,9 +639,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Use a pattern for the domain suffix."
-      ],
+      "hints": ["Use a pattern for the domain suffix."],
       "explanation": "The pattern finds the specified domain; employees with NULL email values do not match."
     },
     "sql-week2-patterns-035": {
@@ -740,9 +677,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Use IS NULL rather than equality to NULL."
-      ],
+      "hints": ["Use IS NULL rather than equality to NULL."],
       "explanation": "IS NULL tests for a missing department reference."
     },
     "sql-week2-null-037": {
@@ -760,9 +695,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Use IS NOT NULL to require a stored value."
-      ],
+      "hints": ["Use IS NOT NULL to require a stored value."],
       "explanation": "IS NOT NULL removes customers whose credit limit is missing."
     },
     "sql-week2-null-038": {
@@ -780,9 +713,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "A missing value must be checked with IS NULL."
-      ],
+      "hints": ["A missing value must be checked with IS NULL."],
       "explanation": "NULL represents an absent or unknown value, not an empty string."
     },
     "sql-week2-null-039": {
@@ -800,9 +731,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Test the column with IS NULL."
-      ],
+      "hints": ["Test the column with IS NULL."],
       "explanation": "The query returns orders whose shipping_city is unknown."
     },
     "sql-week2-patterns-040": {
@@ -820,9 +749,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Use two LIKE conditions joined with OR."
-      ],
+      "hints": ["Use two LIKE conditions joined with OR."],
       "explanation": "Either prefix is sufficient, so the patterns are joined with OR."
     },
     "sql-week2-filtering-041": {
@@ -861,9 +788,7 @@
       "orderMatters": true,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Use descending order for the largest value first."
-      ],
+      "hints": ["Use descending order for the largest value first."],
       "explanation": "ORDER BY salary DESC sorts from the highest salary to the lowest."
     },
     "sql-week2-sorting-043": {
@@ -881,9 +806,7 @@
       "orderMatters": true,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Ascending order is the default."
-      ],
+      "hints": ["Ascending order is the default."],
       "explanation": "ORDER BY last_name sorts alphabetically in ascending order by default."
     },
     "sql-week2-sorting-044": {
@@ -901,9 +824,7 @@
       "orderMatters": true,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Each sort key can have its own direction."
-      ],
+      "hints": ["Each sort key can have its own direction."],
       "explanation": "Rows are grouped by department in ascending order, then salaries are descending within each department."
     },
     "sql-week2-sorting-045": {
@@ -921,9 +842,7 @@
       "orderMatters": true,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Use two ORDER BY expressions with separate directions."
-      ],
+      "hints": ["Use two ORDER BY expressions with separate directions."],
       "explanation": "The second key is used only when stock quantities are equal."
     },
     "sql-week2-sorting-046": {
@@ -941,9 +860,7 @@
       "orderMatters": true,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "An output alias can be used in ORDER BY."
-      ],
+      "hints": ["An output alias can be used in ORDER BY."],
       "explanation": "The alias planned_budget refers to the selected budget expression."
     },
     "sql-week2-sorting-047": {
@@ -961,9 +878,7 @@
       "orderMatters": true,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "PostgreSQL supports explicit NULLS LAST sorting."
-      ],
+      "hints": ["PostgreSQL supports explicit NULLS LAST sorting."],
       "explanation": "NULLS LAST puts rows with missing email values after non-NULL values in the ascending sort."
     },
     "sql-week2-sorting-048": {
@@ -981,9 +896,7 @@
       "orderMatters": true,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Choose ascending date order and explicitly position NULLs."
-      ],
+      "hints": ["Choose ascending date order and explicitly position NULLs."],
       "explanation": "NULLS FIRST places missing birth dates at the beginning while the remaining dates ascend."
     },
     "sql-week2-sorting-049": {
@@ -1001,9 +914,7 @@
       "orderMatters": true,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "ORDER BY can refer to the position of a selected column."
-      ],
+      "hints": ["ORDER BY can refer to the position of a selected column."],
       "explanation": "Position 2 means unit_price and position 3 means stock_quantity in the SELECT list."
     },
     "sql-week2-pagination-050": {
@@ -1021,9 +932,7 @@
       "orderMatters": true,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Use a stable order, then skip five and fetch the next five."
-      ],
+      "hints": ["Use a stable order, then skip five and fetch the next five."],
       "explanation": "The sorted result is paginated by skipping the first five rows and returning the next five."
     },
     "sql-week2-pagination-051": {
@@ -1041,9 +950,7 @@
       "orderMatters": true,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Order from earliest date first, then limit the output."
-      ],
+      "hints": ["Order from earliest date first, then limit the output."],
       "explanation": "The first four rows after ascending birth-date sorting are returned."
     },
     "sql-week2-pagination-052": {
@@ -1061,9 +968,7 @@
       "orderMatters": true,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Skip five ordered rows before fetching six."
-      ],
+      "hints": ["Skip five ordered rows before fetching six."],
       "explanation": "The query first sorts newest hires first, then returns positions 6 through 11."
     },
     "sql-week2-pagination-053": {
@@ -1081,9 +986,7 @@
       "orderMatters": true,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Filter, sort, and then apply pagination."
-      ],
+      "hints": ["Filter, sort, and then apply pagination."],
       "explanation": "WHERE defines the category subset; ORDER BY establishes the page order, then OFFSET and FETCH select the requested page."
     },
     "sql-week2-filtering-054": {
@@ -1101,9 +1004,7 @@
       "orderMatters": true,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Combine IN and a salary comparison, then sort by two keys."
-      ],
+      "hints": ["Combine IN and a salary comparison, then sort by two keys."],
       "explanation": "IN chooses eligible departments, AND applies the salary threshold, and ORDER BY organizes the resulting rows."
     },
     "sql-week2-patterns-055": {
@@ -1121,9 +1022,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Underscore represents one character each time."
-      ],
+      "hints": ["Underscore represents one character each time."],
       "explanation": "The pattern requires two characters, a hyphen, and four further characters."
     },
     "sql-week2-null-056": {
@@ -1141,9 +1040,7 @@
       "orderMatters": true,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Filter missing dates with IS NULL before sorting."
-      ],
+      "hints": ["Filter missing dates with IS NULL before sorting."],
       "explanation": "IS NULL finds uncompleted-date records, and ORDER BY arranges them chronologically."
     },
     "sql-week2-filtering-057": {
@@ -1201,9 +1098,7 @@
       "orderMatters": true,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Apply the minimum-rate filter before sorting and pagination."
-      ],
+      "hints": ["Apply the minimum-rate filter before sorting and pagination."],
       "explanation": "WHERE removes rates below 90; descending order ranks the rest, and OFFSET/FETCH returns positions two through four."
     },
     "sql-week2-distinct-060": {
@@ -1222,9 +1117,7 @@
         "Removes rows with NULL values",
         "Limits the number of returned rows"
       ],
-      "expected": [
-        1
-      ],
+      "expected": [1],
       "explanation": "DISTINCT removes duplicate result rows; it does not sort or filter by NULL status."
     },
     "sql-week2-filtering-061": {
@@ -1243,9 +1136,7 @@
         "Only after ORDER BY",
         "After FETCH"
       ],
-      "expected": [
-        1
-      ],
+      "expected": [1],
       "explanation": "WHERE filters individual rows before later grouping or sorting is applied."
     },
     "sql-week2-patterns-062": {
@@ -1264,9 +1155,7 @@
         "Only a digit",
         "A NULL value"
       ],
-      "expected": [
-        1
-      ],
+      "expected": [1],
       "explanation": "% matches any amount of characters, including zero characters."
     },
     "sql-week2-null-063": {
@@ -1285,9 +1174,7 @@
         "email IS NULL",
         "email LIKE NULL"
       ],
-      "expected": [
-        2
-      ],
+      "expected": [2],
       "explanation": "NULL must be tested with IS NULL or IS NOT NULL, not equality operators."
     },
     "sql-week2-sorting-064": {
@@ -1300,15 +1187,8 @@
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
       "contentVersion": 1,
-      "options": [
-        "Descending",
-        "Ascending",
-        "Random",
-        "NULL values only"
-      ],
-      "expected": [
-        1
-      ],
+      "options": ["Descending", "Ascending", "Random", "NULL values only"],
+      "expected": [1],
       "explanation": "Ascending order is the default when the direction is omitted."
     },
     "sql-week2-pagination-065": {
@@ -1327,9 +1207,7 @@
         "Skips the first ten rows",
         "Filters rows whose values equal ten"
       ],
-      "expected": [
-        2
-      ],
+      "expected": [2],
       "explanation": "OFFSET skips the specified number of rows in the ordered result."
     },
     "sql-week3-text-functions-001": {
@@ -1540,9 +1418,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "CONCAT combines values into one text value."
-      ],
+      "hints": ["CONCAT combines values into one text value."],
       "explanation": "CONCAT joins the first name, a space and the last name into one display value."
     },
     "sql-week3-text-functions-012": {
@@ -1560,9 +1436,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "CONCAT_WS takes the separator first."
-      ],
+      "hints": ["CONCAT_WS takes the separator first."],
       "explanation": "CONCAT_WS joins the supplied values using the separator and skips NULL arguments."
     },
     "sql-week3-text-functions-013": {
@@ -1598,9 +1472,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "RPAD adds fill characters on the right."
-      ],
+      "hints": ["RPAD adds fill characters on the right."],
       "explanation": "RPAD extends the status text to the requested width with trailing dots."
     },
     "sql-week3-text-functions-015": {
@@ -1638,9 +1510,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Use REPLACE with a single-space search value."
-      ],
+      "hints": ["Use REPLACE with a single-space search value."],
       "explanation": "REPLACE substitutes each space with an underscore in the returned text."
     },
     "sql-week3-text-functions-017": {
@@ -1678,9 +1548,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "SUBSTR starts counting from position 1."
-      ],
+      "hints": ["SUBSTR starts counting from position 1."],
       "explanation": "The function extracts a four-character prefix from each project name."
     },
     "sql-week3-text-functions-019": {
@@ -1718,9 +1586,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Apply LOWER before REPLACE."
-      ],
+      "hints": ["Apply LOWER before REPLACE."],
       "explanation": "LOWER normalizes letter case; REPLACE changes spaces into hyphens."
     },
     "sql-week3-text-functions-021": {
@@ -1758,9 +1624,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Use the target width and fill text in RPAD."
-      ],
+      "hints": ["Use the target width and fill text in RPAD."],
       "explanation": "RPAD returns the name extended with periods to the specified width."
     },
     "sql-week3-text-functions-023": {
@@ -1778,9 +1642,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Combine CONCAT with UPPER and LOWER."
-      ],
+      "hints": ["Combine CONCAT with UPPER and LOWER."],
       "explanation": "The name components are transformed independently and then combined with the comma-space separator."
     },
     "sql-week3-text-functions-024": {
@@ -1818,9 +1680,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Apply INITCAP inside LPAD."
-      ],
+      "hints": ["Apply INITCAP inside LPAD."],
       "explanation": "INITCAP formats the words first, then LPAD adds leading underscores until the width is 14."
     },
     "sql-week3-text-functions-026": {
@@ -1878,9 +1738,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "TRUNC removes digits beyond the requested decimal place."
-      ],
+      "hints": ["TRUNC removes digits beyond the requested decimal place."],
       "explanation": "TRUNC cuts off extra decimals rather than rounding the value."
     },
     "sql-week3-numeric-functions-029": {
@@ -1898,9 +1756,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "MOD returns the remainder from division."
-      ],
+      "hints": ["MOD returns the remainder from division."],
       "explanation": "A remainder of zero indicates an even stock quantity; one indicates an odd quantity."
     },
     "sql-week3-numeric-functions-030": {
@@ -1918,9 +1774,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Use arithmetic directly in the SELECT list."
-      ],
+      "hints": ["Use arithmetic directly in the SELECT list."],
       "explanation": "Multiplying the fee by 0.90 calculates the amount after a ten percent discount."
     },
     "sql-week3-numeric-functions-031": {
@@ -1938,9 +1792,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Multiply the existing amount by 1.08."
-      ],
+      "hints": ["Multiply the existing amount by 1.08."],
       "explanation": "The multiplication adds an eight percent contingency to the original budget."
     },
     "sql-week3-numeric-functions-032": {
@@ -1958,9 +1810,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Multiply quantity by unit price before rounding."
-      ],
+      "hints": ["Multiply quantity by unit price before rounding."],
       "explanation": "The arithmetic calculates the line amount and ROUND formats it to two decimal places."
     },
     "sql-week3-numeric-functions-033": {
@@ -1998,9 +1848,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Use zero decimal places for whole-unit rounding."
-      ],
+      "hints": ["Use zero decimal places for whole-unit rounding."],
       "explanation": "ROUND with precision zero returns a whole-number result for each recorded tuition amount."
     },
     "sql-week3-numeric-functions-035": {
@@ -2018,9 +1866,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Use MOD with 10 as the divisor."
-      ],
+      "hints": ["Use MOD with 10 as the divisor."],
       "explanation": "MOD reports how many hours remain after complete groups of ten hours."
     },
     "sql-week3-numeric-functions-036": {
@@ -2038,9 +1884,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Multiply the two numeric columns."
-      ],
+      "hints": ["Multiply the two numeric columns."],
       "explanation": "The product of quantity and unit price is the total value for one order line."
     },
     "sql-week3-numeric-functions-037": {
@@ -2058,9 +1902,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Apply the multiplier, then round the result."
-      ],
+      "hints": ["Apply the multiplier, then round the result."],
       "explanation": "Multiplying by 1.21 adds 21 percent; ROUND standardizes the displayed decimal precision."
     },
     "sql-week3-numeric-functions-038": {
@@ -2078,9 +1920,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Use a negative precision of two."
-      ],
+      "hints": ["Use a negative precision of two."],
       "explanation": "TRUNC with -2 removes the tens and units digits without rounding."
     },
     "sql-week3-numeric-functions-039": {
@@ -2098,9 +1938,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "The remaining portion is 1 minus the used fraction."
-      ],
+      "hints": ["The remaining portion is 1 minus the used fraction."],
       "explanation": "The expression multiplies the budget by 0.65, representing the amount left after 35 percent is spent."
     },
     "sql-week3-numeric-functions-040": {
@@ -2136,9 +1974,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "CURRENT_DATE needs no parentheses in the course syntax."
-      ],
+      "hints": ["CURRENT_DATE needs no parentheses in the course syntax."],
       "explanation": "CURRENT_DATE returns the database session’s current date."
     },
     "sql-week3-date-functions-042": {
@@ -2156,9 +1992,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Use CURRENT_TIME without a table."
-      ],
+      "hints": ["Use CURRENT_TIME without a table."],
       "explanation": "CURRENT_TIME returns the current time value."
     },
     "sql-week3-date-functions-043": {
@@ -2176,9 +2010,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "NOW() returns both date and time."
-      ],
+      "hints": ["NOW() returns both date and time."],
       "explanation": "NOW() returns the current date-time value."
     },
     "sql-week3-date-functions-044": {
@@ -2196,9 +2028,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "EXTRACT can retrieve the year component from a date."
-      ],
+      "hints": ["EXTRACT can retrieve the year component from a date."],
       "explanation": "EXTRACT(YEAR FROM hire_date) returns the year part of each hire date."
     },
     "sql-week3-date-functions-045": {
@@ -2216,9 +2046,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Use the MONTH date part."
-      ],
+      "hints": ["Use the MONTH date part."],
       "explanation": "EXTRACT returns the month number from starts_on."
     },
     "sql-week3-date-functions-046": {
@@ -2236,9 +2064,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Use EXTRACT with DAY."
-      ],
+      "hints": ["Use EXTRACT with DAY."],
       "explanation": "The result contains the day-of-month component of each order date."
     },
     "sql-week3-date-functions-047": {
@@ -2256,9 +2082,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "AGE(date) calculates the interval from that date to today."
-      ],
+      "hints": ["AGE(date) calculates the interval from that date to today."],
       "explanation": "AGE returns an interval describing the time elapsed since each student’s birth date."
     },
     "sql-week3-date-functions-048": {
@@ -2296,9 +2120,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "AGE can compare two dates; exclude rows without an end date."
-      ],
+      "hints": ["AGE can compare two dates; exclude rows without an end date."],
       "explanation": "AGE(end_date, start_date) calculates the interval between the two date values."
     },
     "sql-week3-date-functions-050": {
@@ -2316,9 +2138,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Add a year interval to each birth date."
-      ],
+      "hints": ["Add a year interval to each birth date."],
       "explanation": "The INTERVAL expression shifts each birth date forward by 65 years."
     },
     "sql-week3-date-functions-051": {
@@ -2336,9 +2156,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Subtract a date column from CURRENT_DATE."
-      ],
+      "hints": ["Subtract a date column from CURRENT_DATE."],
       "explanation": "Subtracting one date from another returns the number of days between them."
     },
     "sql-week3-date-functions-052": {
@@ -2356,9 +2174,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Compare the AGE interval with a year interval."
-      ],
+      "hints": ["Compare the AGE interval with a year interval."],
       "explanation": "AGE calculates an interval and the WHERE condition keeps intervals greater than thirty years."
     },
     "sql-week3-date-functions-053": {
@@ -2376,9 +2192,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "EXTRACT(YEAR FROM AGE(...)) gives whole years."
-      ],
+      "hints": ["EXTRACT(YEAR FROM AGE(...)) gives whole years."],
       "explanation": "AGE returns an interval; EXTRACT(YEAR) retrieves its year component."
     },
     "sql-week3-date-functions-054": {
@@ -2396,9 +2210,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Apply EXTRACT separately for each requested date component."
-      ],
+      "hints": ["Apply EXTRACT separately for each requested date component."],
       "explanation": "Each EXTRACT expression returns one component of the project start date."
     },
     "sql-week3-date-functions-055": {
@@ -2436,9 +2248,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Add an interval to a date value."
-      ],
+      "hints": ["Add an interval to a date value."],
       "explanation": "Adding a 90-day interval produces a review date for each project."
     },
     "sql-week3-conversion-057": {
@@ -2456,9 +2266,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Use CAST with the target type."
-      ],
+      "hints": ["Use CAST with the target type."],
       "explanation": "CAST converts the integer identifier into a character value for display."
     },
     "sql-week3-conversion-058": {
@@ -2476,9 +2284,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "TO_CHAR converts a date into text using the supplied format."
-      ],
+      "hints": ["TO_CHAR converts a date into text using the supplied format."],
       "explanation": "The format pattern prints a two-digit day, two-digit month and four-digit year."
     },
     "sql-week3-conversion-059": {
@@ -2516,9 +2322,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Use TO_NUMBER with a format matching the text."
-      ],
+      "hints": ["Use TO_NUMBER with a format matching the text."],
       "explanation": "TO_NUMBER parses the text and returns a numeric value."
     },
     "sql-week3-conversion-061": {
@@ -2536,9 +2340,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "PostgreSQL supports the ::type shorthand."
-      ],
+      "hints": ["PostgreSQL supports the ::type shorthand."],
       "explanation": "The shorthand casts each text postal code to an integer; leading zeroes are not preserved in the numeric result."
     },
     "sql-week3-conversion-062": {
@@ -2556,9 +2358,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "TO_CHAR accepts a numeric value and a numeric format."
-      ],
+      "hints": ["TO_CHAR accepts a numeric value and a numeric format."],
       "explanation": "The format converts the numeric budget into a text representation with two decimal places."
     },
     "sql-week3-conversion-063": {
@@ -2576,9 +2376,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "FM removes padding spaces from month names."
-      ],
+      "hints": ["FM removes padding spaces from month names."],
       "explanation": "TO_CHAR formats the date, and FM prevents the full month name from being padded with spaces."
     },
     "sql-week3-conversion-064": {
@@ -2596,9 +2394,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "CAST changes the value to the requested numeric type."
-      ],
+      "hints": ["CAST changes the value to the requested numeric type."],
       "explanation": "CAST converts the numeric price to an integer result."
     },
     "sql-week3-conversion-065": {
@@ -2616,9 +2412,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Use a format mask that follows the same order as the text."
-      ],
+      "hints": ["Use a format mask that follows the same order as the text."],
       "explanation": "TO_DATE parses the year, month and day components using YYYY-MM-DD."
     },
     "sql-week3-conversion-066": {
@@ -2636,9 +2430,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Use dy for a short weekday name."
-      ],
+      "hints": ["Use dy for a short weekday name."],
       "explanation": "TO_CHAR formats the date into the requested abbreviated weekday and numeric date components."
     },
     "sql-week3-conversion-067": {
@@ -2656,9 +2448,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Prefix Month with FM to suppress padding."
-      ],
+      "hints": ["Prefix Month with FM to suppress padding."],
       "explanation": "FM removes the padding spaces that the Month template may add."
     },
     "sql-week3-conversion-068": {
@@ -2697,9 +2487,7 @@
         "The position of the first space",
         "The text in uppercase"
       ],
-      "expected": [
-        1
-      ],
+      "expected": [1],
       "explanation": "LENGTH counts the characters in its text argument."
     },
     "sql-week3-numeric-functions-070": {
@@ -2718,9 +2506,7 @@
         "It returns a remainder",
         "It converts the number to text"
       ],
-      "expected": [
-        1
-      ],
+      "expected": [1],
       "explanation": "TRUNC cuts off extra decimal places without rounding the value."
     },
     "sql-week3-date-functions-071": {
@@ -2739,9 +2525,7 @@
         "A time interval",
         "A text-formatted date"
       ],
-      "expected": [
-        2
-      ],
+      "expected": [2],
       "explanation": "AGE returns an interval describing the elapsed time from the supplied date to today."
     },
     "sql-week3-conversion-072": {
@@ -2760,9 +2544,7 @@
         "Converts text into a number",
         "Rounds a date to the nearest month"
       ],
-      "expected": [
-        1
-      ],
+      "expected": [1],
       "explanation": "TO_DATE parses text into a date according to the supplied format pattern."
     },
     "sql-week3-text-functions-073": {
@@ -2781,9 +2563,7 @@
         "It converts all text to uppercase",
         "It returns the length of the result"
       ],
-      "expected": [
-        1
-      ],
+      "expected": [1],
       "explanation": "CONCAT_WS joins arguments using a separator and skips NULL arguments."
     },
     "sql-week3-date-functions-074": {
@@ -2802,9 +2582,7 @@
         "DATE_PART(start_date, MONTH)",
         "TO_CHAR(start_date, MONTH)"
       ],
-      "expected": [
-        1
-      ],
+      "expected": [1],
       "explanation": "EXTRACT(MONTH FROM date) returns the month component as a numeric value."
     },
     "sql-week3-numeric-functions-075": {
@@ -2817,15 +2595,8 @@
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
       "contentVersion": 1,
-      "options": [
-        "2",
-        "3",
-        "5",
-        "12"
-      ],
-      "expected": [
-        0
-      ],
+      "options": ["2", "3", "5", "12"],
+      "expected": [0],
       "explanation": "MOD returns the remainder after division; 17 divided by 5 leaves a remainder of 2."
     },
     "sql-week4-inner-joins-001": {
@@ -2863,9 +2634,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "The department table stores the location ID."
-      ],
+      "hints": ["The department table stores the location ID."],
       "explanation": "The join connects each department to its matching location record."
     },
     "sql-week4-inner-joins-003": {
@@ -2883,9 +2652,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Match a section to its course using course_id."
-      ],
+      "hints": ["Match a section to its course using course_id."],
       "explanation": "The join returns section rows with their corresponding course titles."
     },
     "sql-week4-inner-joins-004": {
@@ -2903,9 +2670,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Use the teacher identifier stored in class_sections."
-      ],
+      "hints": ["Use the teacher identifier stored in class_sections."],
       "explanation": "The INNER JOIN matches each section with its assigned teacher."
     },
     "sql-week4-inner-joins-005": {
@@ -2923,9 +2688,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Connect customers to their orders through customer_id."
-      ],
+      "hints": ["Connect customers to their orders through customer_id."],
       "explanation": "Each returned row represents a customer-order match."
     },
     "sql-week4-inner-joins-006": {
@@ -2943,9 +2706,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Use the category identifier to match the two tables."
-      ],
+      "hints": ["Use the category identifier to match the two tables."],
       "explanation": "The join retrieves the category description for each product with a category match."
     },
     "sql-week4-inner-joins-007": {
@@ -2963,9 +2724,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Match each order line to its product."
-      ],
+      "hints": ["Match each order line to its product."],
       "explanation": "The join adds the product name to each recorded order line."
     },
     "sql-week4-inner-joins-008": {
@@ -2983,9 +2742,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Projects contain the client identifier."
-      ],
+      "hints": ["Projects contain the client identifier."],
       "explanation": "The join connects each project to its client using the matching client ID."
     },
     "sql-week4-multi-table-joins-009": {
@@ -3021,9 +2778,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Match trainer_id to the consultant primary key."
-      ],
+      "hints": ["Match trainer_id to the consultant primary key."],
       "explanation": "The join enriches each session with the trainer’s name."
     },
     "sql-week4-multi-table-joins-011": {
@@ -3059,9 +2814,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Join the task rows to employees using employee_id."
-      ],
+      "hints": ["Join the task rows to employees using employee_id."],
       "explanation": "The INNER JOIN adds the employee name to each task row by matching the employee identifier."
     },
     "sql-week4-inner-joins-013": {
@@ -3079,9 +2832,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "The category code is in the related categories table."
-      ],
+      "hints": ["The category code is in the related categories table."],
       "explanation": "The join uses category_id to retrieve each product’s category code."
     },
     "sql-week4-multi-table-joins-014": {
@@ -3117,9 +2868,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "The relationship is clients to projects by client_id."
-      ],
+      "hints": ["The relationship is clients to projects by client_id."],
       "explanation": "The query returns matching client and project records."
     },
     "sql-week4-inner-joins-016": {
@@ -3137,9 +2886,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Connect the section’s teacher ID to teachers."
-      ],
+      "hints": ["Connect the section’s teacher ID to teachers."],
       "explanation": "The join retrieves the teacher email for each section with an assigned teacher."
     },
     "sql-week4-inner-joins-017": {
@@ -3157,9 +2904,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "The order table contains the matching customer ID."
-      ],
+      "hints": ["The order table contains the matching customer ID."],
       "explanation": "The INNER JOIN includes customers only when at least one order matches."
     },
     "sql-week4-multi-table-joins-018": {
@@ -3177,9 +2922,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "The task record links to an employee through employee_id."
-      ],
+      "hints": ["The task record links to an employee through employee_id."],
       "explanation": "The join adds employee identity to each task row."
     },
     "sql-week4-multi-table-joins-019": {
@@ -3217,9 +2960,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "A section links separately to a course and a teacher."
-      ],
+      "hints": ["A section links separately to a course and a teacher."],
       "explanation": "The query follows both foreign-key relationships from class_sections."
     },
     "sql-week4-multi-table-joins-021": {
@@ -3257,9 +2998,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "The product connects order_items to categories."
-      ],
+      "hints": ["The product connects order_items to categories."],
       "explanation": "The joins retrieve product and category descriptions for each order line."
     },
     "sql-week4-multi-table-joins-023": {
@@ -3297,9 +3036,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Connect participant to session, then session to trainer."
-      ],
+      "hints": ["Connect participant to session, then session to trainer."],
       "explanation": "The two joins retrieve the session and trainer associated with each participant."
     },
     "sql-week4-multi-table-joins-025": {
@@ -3357,9 +3094,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Join orders to their line items, then to products."
-      ],
+      "hints": ["Join orders to their line items, then to products."],
       "explanation": "The joins connect order headers with individual products on each line."
     },
     "sql-week4-multi-table-joins-028": {
@@ -3377,9 +3112,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "The assignments table links the two main entities."
-      ],
+      "hints": ["The assignments table links the two main entities."],
       "explanation": "The joins connect each project to its assignments and each assignment to a consultant."
     },
     "sql-week4-multi-table-joins-029": {
@@ -3397,9 +3130,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Follow customers to orders, order lines and products."
-      ],
+      "hints": ["Follow customers to orders, order lines and products."],
       "explanation": "The chain returns customer, order and product details alongside the recorded order-line price."
     },
     "sql-week4-multi-table-joins-030": {
@@ -3417,9 +3148,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "A teacher connects to sections, which connect to courses."
-      ],
+      "hints": ["A teacher connects to sections, which connect to courses."],
       "explanation": "The joins retrieve the course taught by each teacher and the teacher’s salary."
     },
     "sql-week4-composite-keys-031": {
@@ -3497,9 +3226,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Match both components of the section primary key."
-      ],
+      "hints": ["Match both components of the section primary key."],
       "explanation": "Both section_id and course_id are necessary to retrieve the right seat limit."
     },
     "sql-week4-composite-keys-035": {
@@ -3597,9 +3324,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "The price must be between the band’s lower and upper values."
-      ],
+      "hints": ["The price must be between the band’s lower and upper values."],
       "explanation": "The non-equi join uses two range comparisons to match each product to its corresponding price band."
     },
     "sql-week4-non-equi-joins-040": {
@@ -3637,9 +3362,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Use a range join and then filter the band label."
-      ],
+      "hints": ["Use a range join and then filter the band label."],
       "explanation": "The non-equi join assigns products to price ranges and WHERE keeps the Standard band."
     },
     "sql-week4-non-equi-joins-042": {
@@ -3657,9 +3380,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Join on the budget range, then filter by the band label."
-      ],
+      "hints": ["Join on the budget range, then filter by the band label."],
       "explanation": "The range comparison identifies the band and the label condition retains Large projects."
     },
     "sql-week4-non-equi-joins-043": {
@@ -3697,9 +3418,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Use the non-equi range match followed by an IN condition."
-      ],
+      "hints": ["Use the non-equi range match followed by an IN condition."],
       "explanation": "The join matches budgets to bands, and the filter keeps the two requested band labels."
     },
     "sql-week4-non-equi-joins-045": {
@@ -3717,9 +3436,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "A range join can be combined with a regular WHERE condition."
-      ],
+      "hints": ["A range join can be combined with a regular WHERE condition."],
       "explanation": "The range join finds the band for each price; WHERE then retains products at or above the threshold."
     },
     "sql-week4-non-equi-joins-046": {
@@ -3757,9 +3474,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Use employees twice with different aliases."
-      ],
+      "hints": ["Use employees twice with different aliases."],
       "explanation": "The first alias represents the employee and the second alias represents the manager."
     },
     "sql-week4-self-joins-048": {
@@ -3777,9 +3492,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Join the consultant table to itself through manager_id."
-      ],
+      "hints": ["Join the consultant table to itself through manager_id."],
       "explanation": "The second consultant alias represents the manager row referenced by the first row."
     },
     "sql-week4-self-joins-049": {
@@ -3877,9 +3590,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Compare city values and retain only one order for each pair."
-      ],
+      "hints": ["Compare city values and retain only one order for each pair."],
       "explanation": "The self join finds matching city values and the < condition lists each pair once."
     },
     "sql-week4-self-joins-054": {
@@ -3897,9 +3608,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Compare the year extracted from each hire date."
-      ],
+      "hints": ["Compare the year extracted from each hire date."],
       "explanation": "The join pairs consultants hired in the same year; the ID comparison removes repeated pairings."
     },
     "sql-week4-self-joins-055": {
@@ -3917,9 +3626,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Use one copy of the table for each side of the comparison."
-      ],
+      "hints": ["Use one copy of the table for each side of the comparison."],
       "explanation": "The join matches employees in the same department and keeps pairs where the first salary is greater than the second."
     },
     "sql-week4-self-joins-056": {
@@ -3937,9 +3644,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Use three aliases for the three levels of the hierarchy."
-      ],
+      "hints": ["Use three aliases for the three levels of the hierarchy."],
       "explanation": "The first join finds the direct manager; the second follows the manager’s own manager_id to the next level."
     },
     "sql-week4-self-joins-057": {
@@ -3957,9 +3662,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Follow manager_id twice using separate aliases."
-      ],
+      "hints": ["Follow manager_id twice using separate aliases."],
       "explanation": "The two self joins trace the consultant’s manager and then the manager’s manager."
     },
     "sql-week4-self-joins-058": {
@@ -4037,9 +3740,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Compare the hire dates while matching department IDs."
-      ],
+      "hints": ["Compare the hire dates while matching department IDs."],
       "explanation": "The join condition requires both a shared department and an earlier hire date for the first employee."
     },
     "sql-week4-self-joins-062": {
@@ -4057,9 +3758,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Use registered_on to find the same-date pairs."
-      ],
+      "hints": ["Use registered_on to find the same-date pairs."],
       "explanation": "The self join compares registrations by date and uses IDs so each pair is returned once."
     },
     "sql-week4-inner-joins-063": {
@@ -4078,9 +3777,7 @@
         "Only rows with matching join values in both tables",
         "All rows from both tables, matched or unmatched"
       ],
-      "expected": [
-        2
-      ],
+      "expected": [2],
       "explanation": "INNER JOIN returns only rows for which the join condition finds a match in both tables."
     },
     "sql-week4-inner-joins-064": {
@@ -4099,9 +3796,7 @@
         "To rename all columns",
         "To limit the final row count"
       ],
-      "expected": [
-        1
-      ],
+      "expected": [1],
       "explanation": "ON specifies the relationship condition used to match rows from the joined tables."
     },
     "sql-week4-multi-table-joins-065": {
@@ -4120,9 +3815,7 @@
         "A GROUP BY clause",
         "A FETCH clause"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "explanation": "Each additional table should be joined through the relevant key relationship using JOIN ... ON."
     },
     "sql-week4-composite-keys-066": {
@@ -4141,9 +3834,7 @@
         "Both key columns connected with AND",
         "A text concatenation of the two columns"
       ],
-      "expected": [
-        2
-      ],
+      "expected": [2],
       "explanation": "All required columns of the composite key must be matched, typically with AND."
     },
     "sql-week4-self-joins-067": {
@@ -4162,9 +3853,7 @@
         "To remove duplicate columns automatically",
         "To convert a table into a view"
       ],
-      "expected": [
-        1
-      ],
+      "expected": [1],
       "explanation": "Different aliases let the query refer to each occurrence of the same table independently."
     },
     "sql-week4-non-equi-joins-068": {
@@ -4183,9 +3872,7 @@
         "a.name = b.name",
         "a.code = b.code"
       ],
-      "expected": [
-        1
-      ],
+      "expected": [1],
       "explanation": "A range join uses comparison operators to match a value to minimum and maximum bounds."
     },
     "sql-week4-self-joins-069": {
@@ -4204,9 +3891,7 @@
         "To prevent self-pairs and duplicate reversed pairs",
         "To sort the final result"
       ],
-      "expected": [
-        2
-      ],
+      "expected": [2],
       "explanation": "A strict less-than condition selects one direction of each distinct pair and excludes pairing a row with itself."
     },
     "sql-week4-multi-table-joins-070": {
@@ -4225,9 +3910,7 @@
         "Put it in single quotes",
         "Use DISTINCT"
       ],
-      "expected": [
-        1
-      ],
+      "expected": [1],
       "explanation": "Qualifying a column with its table alias prevents ambiguity and makes the source clear."
     },
     "sql-week5-aggregates-001": {
@@ -4245,9 +3928,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "COUNT(*) includes every row."
-      ],
+      "hints": ["COUNT(*) includes every row."],
       "explanation": "COUNT(*) counts all rows regardless of whether individual columns contain NULL."
     },
     "sql-week5-aggregates-002": {
@@ -4265,9 +3946,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "COUNT(column) ignores NULL values in that column."
-      ],
+      "hints": ["COUNT(column) ignores NULL values in that column."],
       "explanation": "COUNT(email) counts only rows where email is not NULL."
     },
     "sql-week5-aggregates-003": {
@@ -4285,9 +3964,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Combine COUNT with DISTINCT on the column."
-      ],
+      "hints": ["Combine COUNT with DISTINCT on the column."],
       "explanation": "COUNT(DISTINCT city) counts each distinct non-NULL city value once."
     },
     "sql-week5-aggregates-004": {
@@ -4305,9 +3982,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Use SUM on the numeric stock column."
-      ],
+      "hints": ["Use SUM on the numeric stock column."],
       "explanation": "SUM adds all non-NULL stock quantities into one result."
     },
     "sql-week5-aggregates-005": {
@@ -4325,9 +4000,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "AVG returns the arithmetic mean of numeric values."
-      ],
+      "hints": ["AVG returns the arithmetic mean of numeric values."],
       "explanation": "AVG calculates the mean course fee across the course rows."
     },
     "sql-week5-aggregates-006": {
@@ -4345,9 +4018,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Use MIN and MAX on the same numeric column."
-      ],
+      "hints": ["Use MIN and MAX on the same numeric column."],
       "explanation": "MIN finds the smallest rate and MAX finds the largest rate."
     },
     "sql-week5-aggregates-007": {
@@ -4365,9 +4036,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "MIN and MAX also work with date values."
-      ],
+      "hints": ["MIN and MAX also work with date values."],
       "explanation": "The aggregate functions compare dates and return the earliest and latest order dates."
     },
     "sql-week5-aggregates-008": {
@@ -4385,9 +4054,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "COUNT(column) excludes missing grades."
-      ],
+      "hints": ["COUNT(column) excludes missing grades."],
       "explanation": "The aggregate counts only enrollment rows with a recorded final_grade."
     },
     "sql-week5-aggregates-009": {
@@ -4405,9 +4072,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Use COUNT(*) and COUNT(final_grade) side by side."
-      ],
+      "hints": ["Use COUNT(*) and COUNT(final_grade) side by side."],
       "explanation": "COUNT(*) counts every enrollment; COUNT(final_grade) ignores rows with a NULL grade."
     },
     "sql-week5-aggregates-010": {
@@ -4425,9 +4090,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "The aggregate can contain an arithmetic expression."
-      ],
+      "hints": ["The aggregate can contain an arithmetic expression."],
       "explanation": "The expression calculates each line value and SUM adds those values together."
     },
     "sql-week5-aggregates-011": {
@@ -4445,9 +4108,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "AVG ignores NULL values automatically."
-      ],
+      "hints": ["AVG ignores NULL values automatically."],
       "explanation": "AVG calculates the mean of known hours values and does not treat NULL as zero."
     },
     "sql-week5-aggregates-012": {
@@ -4465,9 +4126,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "MIN and MAX also compare text values alphabetically."
-      ],
+      "hints": ["MIN and MAX also compare text values alphabetically."],
       "explanation": "The aggregate functions return the first and last text values in the sort order."
     },
     "sql-week5-aggregates-013": {
@@ -4485,9 +4144,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Calculate a text length for each row before averaging."
-      ],
+      "hints": ["Calculate a text length for each row before averaging."],
       "explanation": "LENGTH produces one numeric value per surname, AVG calculates the mean and ROUND rounds it to a whole number."
     },
     "sql-week5-aggregates-014": {
@@ -4505,9 +4162,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Count distinct values rather than product rows."
-      ],
+      "hints": ["Count distinct values rather than product rows."],
       "explanation": "COUNT(DISTINCT category_id) counts each represented category once and ignores NULL category IDs."
     },
     "sql-week5-aggregates-015": {
@@ -4525,9 +4180,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "SUM adds non-NULL numeric values."
-      ],
+      "hints": ["SUM adds non-NULL numeric values."],
       "explanation": "The aggregate returns one total across the assignment table, ignoring any missing hour values."
     },
     "sql-week5-aggregates-016": {
@@ -4581,9 +4234,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Group employee rows by department before counting them."
-      ],
+      "hints": ["Group employee rows by department before counting them."],
       "explanation": "GROUP BY creates one group per department_id and COUNT(*) counts rows within each group."
     },
     "sql-week5-group-by-019": {
@@ -4601,9 +4252,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Use category_id as the grouping column."
-      ],
+      "hints": ["Use category_id as the grouping column."],
       "explanation": "Each category forms a group, and COUNT(*) returns its product count."
     },
     "sql-week5-group-by-020": {
@@ -4621,9 +4270,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Group orders by customer ID."
-      ],
+      "hints": ["Group orders by customer ID."],
       "explanation": "GROUP BY returns one row per customer represented in orders, with a count for each customer."
     },
     "sql-week5-group-by-021": {
@@ -4659,9 +4306,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "SUM calculates the stock total within each category."
-      ],
+      "hints": ["SUM calculates the stock total within each category."],
       "explanation": "Each category group is summarized by adding its product stock quantities."
     },
     "sql-week5-group-by-023": {
@@ -4679,9 +4324,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Group by the category that defines each specialty."
-      ],
+      "hints": ["Group by the category that defines each specialty."],
       "explanation": "AVG calculates a separate mean hourly rate for each specialty."
     },
     "sql-week5-group-by-024": {
@@ -4699,9 +4342,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Group line items by product ID and sum quantity."
-      ],
+      "hints": ["Group line items by product ID and sum quantity."],
       "explanation": "SUM adds the quantities for each product across all order-item rows."
     },
     "sql-week5-group-by-025": {
@@ -4739,9 +4380,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Use both employee and project name in GROUP BY."
-      ],
+      "hints": ["Use both employee and project name in GROUP BY."],
       "explanation": "The grouping forms one result per employee-project pair, and SUM adds its task hours."
     },
     "sql-week5-group-by-027": {
@@ -4759,9 +4398,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Group participants by their session ID."
-      ],
+      "hints": ["Group participants by their session ID."],
       "explanation": "Each session ID forms a group; participants with a missing session ID form a NULL group."
     },
     "sql-week5-group-by-028": {
@@ -4779,9 +4416,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Join orders to their lines, then group by shipping city."
-      ],
+      "hints": ["Join orders to their lines, then group by shipping city."],
       "explanation": "The join associates each line with its shipping city; AVG calculates the mean line value within each city."
     },
     "sql-week5-group-by-029": {
@@ -4799,9 +4434,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Use MIN and MAX after grouping by department."
-      ],
+      "hints": ["Use MIN and MAX after grouping by department."],
       "explanation": "The aggregates calculate salary bounds for each department group."
     },
     "sql-week5-group-by-030": {
@@ -4819,9 +4452,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Two aggregate functions can summarize the same group."
-      ],
+      "hints": ["Two aggregate functions can summarize the same group."],
       "explanation": "COUNT(*) includes every enrollment while AVG ignores rows whose final_grade is NULL."
     },
     "sql-week5-group-by-031": {
@@ -4839,9 +4470,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Join projects to clients before grouping by city."
-      ],
+      "hints": ["Join projects to clients before grouping by city."],
       "explanation": "The join supplies the city for each project; SUM adds budgets within each city group."
     },
     "sql-week5-group-by-032": {
@@ -4859,9 +4488,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Group using both key columns."
-      ],
+      "hints": ["Group using both key columns."],
       "explanation": "Each order-product pair is a group, and SUM totals the quantity recorded for that pair."
     },
     "sql-week5-group-by-033": {
@@ -4879,9 +4506,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Group by both consultant and role."
-      ],
+      "hints": ["Group by both consultant and role."],
       "explanation": "The grouping separates each role per consultant and AVG calculates the mean recorded hours in that group."
     },
     "sql-week5-group-by-034": {
@@ -4899,9 +4524,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "The selected date expression must also appear in GROUP BY."
-      ],
+      "hints": ["The selected date expression must also appear in GROUP BY."],
       "explanation": "The grouping combines trainer and session year; SUM totals the session duration for each group."
     },
     "sql-week5-group-by-035": {
@@ -4919,9 +4542,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Join line values to orders, then group by customer."
-      ],
+      "hints": ["Join line values to orders, then group by customer."],
       "explanation": "The join associates each order line with a customer; the SUM calculates each customer’s combined line value."
     },
     "sql-week5-having-036": {
@@ -4939,9 +4560,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "HAVING filters groups based on an aggregate."
-      ],
+      "hints": ["HAVING filters groups based on an aggregate."],
       "explanation": "The grouping creates department groups and HAVING keeps only groups with more than three employees."
     },
     "sql-week5-having-037": {
@@ -4959,9 +4578,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Use HAVING after grouping to test the group count."
-      ],
+      "hints": ["Use HAVING after grouping to test the group count."],
       "explanation": "HAVING evaluates the number of products in each category group."
     },
     "sql-week5-having-038": {
@@ -4979,9 +4596,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Filter groups using the AVG result."
-      ],
+      "hints": ["Filter groups using the AVG result."],
       "explanation": "HAVING keeps only course groups whose known grades average 85 or higher."
     },
     "sql-week5-having-039": {
@@ -4999,9 +4614,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "The aggregate condition belongs in HAVING."
-      ],
+      "hints": ["The aggregate condition belongs in HAVING."],
       "explanation": "HAVING filters the specialty groups after AVG has calculated each group’s mean rate."
     },
     "sql-week5-having-040": {
@@ -5019,9 +4632,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Use WHERE for the date restriction before grouping."
-      ],
+      "hints": ["Use WHERE for the date restriction before grouping."],
       "explanation": "WHERE removes out-of-range order rows first; GROUP BY then counts the remaining orders per status."
     },
     "sql-week5-having-041": {
@@ -5059,9 +4670,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Count assignments by project and filter the groups."
-      ],
+      "hints": ["Count assignments by project and filter the groups."],
       "explanation": "HAVING keeps projects whose assignment group contains two or more rows."
     },
     "sql-week5-having-043": {
@@ -5179,9 +4788,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Group sections by teacher, then apply a count condition."
-      ],
+      "hints": ["Group sections by teacher, then apply a count condition."],
       "explanation": "HAVING checks each teacher’s section count and excludes groups with one or fewer sections."
     },
     "sql-week5-having-049": {
@@ -5239,9 +4846,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Place departments on the left side of LEFT JOIN."
-      ],
+      "hints": ["Place departments on the left side of LEFT JOIN."],
       "explanation": "LEFT JOIN preserves every department; department rows without employees have NULL employee columns."
     },
     "sql-week5-outer-joins-052": {
@@ -5259,9 +4864,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Keep customers in the left table."
-      ],
+      "hints": ["Keep customers in the left table."],
       "explanation": "LEFT JOIN returns all customers and fills order columns with NULL where there is no order."
     },
     "sql-week5-outer-joins-053": {
@@ -5279,9 +4882,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Use courses as the left table so empty courses remain."
-      ],
+      "hints": ["Use courses as the left table so empty courses remain."],
       "explanation": "The LEFT JOIN preserves all courses and supplies NULL for student IDs when no enrollment exists."
     },
     "sql-week5-outer-joins-054": {
@@ -5299,9 +4900,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Start from projects and preserve the left-side records."
-      ],
+      "hints": ["Start from projects and preserve the left-side records."],
       "explanation": "Projects remain in the result even if no project_assignments row matches."
     },
     "sql-week5-outer-joins-055": {
@@ -5359,9 +4958,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Use LEFT JOIN and check the task primary key."
-      ],
+      "hints": ["Use LEFT JOIN and check the task primary key."],
       "explanation": "A NULL task_id indicates that the employee has no matching task row."
     },
     "sql-week5-outer-joins-058": {
@@ -5379,9 +4976,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Test a non-NULL join-key column from the right table."
-      ],
+      "hints": ["Test a non-NULL join-key column from the right table."],
       "explanation": "The consultant_id is required in a real assignment; NULL therefore identifies projects with no assignment."
     },
     "sql-week5-outer-joins-059": {
@@ -5479,9 +5074,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Use FULL JOIN to retain all rows from both tables."
-      ],
+      "hints": ["Use FULL JOIN to retain all rows from both tables."],
       "explanation": "The full join preserves unmatched clients and unmatched projects as well as matched pairs."
     },
     "sql-week5-outer-joins-063": {
@@ -5539,9 +5132,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Keep courses and count the non-NULL enrollment key."
-      ],
+      "hints": ["Keep courses and count the non-NULL enrollment key."],
       "explanation": "Every course remains in the result; COUNT(e.student_id) counts only actual enrollment matches."
     },
     "sql-week5-outer-joins-066": {
@@ -5559,9 +5150,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Count the right-side assignment key after a LEFT JOIN."
-      ],
+      "hints": ["Count the right-side assignment key after a LEFT JOIN."],
       "explanation": "COUNT(a.consultant_id) returns zero for a project without an assignment because the right-side key is NULL."
     },
     "sql-week5-outer-joins-068": {
@@ -5599,9 +5188,7 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": [
-        "Join categories to products and order lines before grouping."
-      ],
+      "hints": ["Join categories to products and order lines before grouping."],
       "explanation": "The joins connect each sold product to its category; GROUP BY creates category groups and SUM totals their quantities."
     },
     "sql-week5-having-070": {
@@ -5727,22 +5314,26 @@
     "sql-week5-outer-joins-076": {
       "course": "sql",
       "category": "outer-join",
-      "title": "Count participants for every session with capacity",
-      "instructions": "Display every session title, its maximum capacity and its number of registered participants, including sessions with none.",
+      "title": "Analyse training session registration and assessment performance",
+      "instructions": "For every training session, display its title, trainer's full name, maximum capacity, number of registered participants, number of participants with an assessment score, average assessment score rounded to 2 decimal places, and remaining capacity. Include sessions with no participants. Only include sessions where the session date is in 2025 or later. Return only sessions that either have at least 2 registered participants or have no participants. Sort by average assessment score descending, placing sessions without scores last, and then by session title alphabetically.",
       "difficulty": "Hard",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
-      "contentVersion": 1,
+      "contentVersion": 2,
       "datasetId": "sql-projects",
-      "referenceSolution": "SELECT s.session_title, s.max_participants, COUNT(p.participant_id) AS registered_count FROM training_sessions s LEFT JOIN participants p ON s.session_id = p.session_id GROUP BY s.session_id, s.session_title, s.max_participants;",
-      "orderMatters": false,
+      "referenceSolution": "SELECT s.session_title, CONCAT(c.first_name, ' ', c.last_name) AS trainer_name, s.max_participants, COUNT(p.participant_id) AS registered_count, COUNT(p.assessment_score) AS assessed_count, ROUND(AVG(p.assessment_score), 2) AS average_score, s.max_participants - COUNT(p.participant_id) AS remaining_capacity FROM training_sessions s LEFT JOIN participants p ON s.session_id = p.session_id LEFT JOIN consultants c ON s.trainer_id = c.consultant_id WHERE s.session_date >= '2025-01-01' GROUP BY s.session_id, s.session_title, c.first_name, c.last_name, s.max_participants HAVING COUNT(p.participant_id) >= 2 OR COUNT(p.participant_id) = 0 ORDER BY average_score DESC NULLS LAST, s.session_title ASC;",
+      "orderMatters": true,
       "compareColumnNames": true,
       "columnOrderMatters": true,
       "hints": [
-        "Preserve every session, count the participant primary key and group by the selected session details."
+        "Use LEFT JOIN twice: once for participants and once for trainers.",
+        "COUNT(column) ignores NULL values, while AVG ignores participants without assessment scores.",
+        "Use HAVING to filter grouped sessions based on their participant count.",
+        "A session without participants should still have a remaining capacity equal to its maximum capacity.",
+        "Use NULLS LAST to position sessions without assessment scores at the end."
       ],
-      "explanation": "LEFT JOIN keeps empty sessions; COUNT(participant_id) returns zero for unmatched sessions while the capacity remains available."
+      "explanation": "This exercise combines multiple LEFT JOINs, aggregate functions, conditional group filtering, NULL handling, calculated columns and multi-column sorting. COUNT(participant_id) counts registrations, whereas COUNT(assessment_score) counts only participants who have received an assessment score. AVG ignores NULL assessment scores. LEFT JOIN ensures sessions without participants remain in the output. HAVING filters the aggregated participant counts without removing empty sessions."
     },
     "sql-week5-aggregates-077": {
       "course": "sql",
@@ -5760,9 +5351,7 @@
         "COUNT(column) counts all rows including NULL",
         "COUNT(*) counts distinct values only"
       ],
-      "expected": [
-        1
-      ],
+      "expected": [1],
       "explanation": "COUNT(*) counts every row, while COUNT(column) ignores rows where that column is NULL."
     },
     "sql-week5-group-by-078": {
@@ -5781,9 +5370,7 @@
         "Removes all NULL values",
         "Joins two tables"
       ],
-      "expected": [
-        1
-      ],
+      "expected": [1],
       "explanation": "GROUP BY forms one group for each distinct combination of the grouping columns."
     },
     "sql-week5-having-079": {
@@ -5796,15 +5383,8 @@
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
       "contentVersion": 1,
-      "options": [
-        "WHERE",
-        "HAVING",
-        "ORDER BY",
-        "OFFSET"
-      ],
-      "expected": [
-        1
-      ],
+      "options": ["WHERE", "HAVING", "ORDER BY", "OFFSET"],
+      "expected": [1],
       "explanation": "HAVING filters groups after aggregate values have been calculated."
     },
     "sql-week5-outer-joins-080": {
@@ -5823,9 +5403,7 @@
         "Only rows with matches",
         "Both tables always"
       ],
-      "expected": [
-        1
-      ],
+      "expected": [1],
       "explanation": "LEFT JOIN preserves every row from the left table and fills unmatched right-side columns with NULL."
     },
     "sql-week5-outer-joins-081": {
@@ -5844,9 +5422,7 @@
         "All right rows but no left-only rows",
         "Matching rows plus unmatched rows from both sides"
       ],
-      "expected": [
-        3
-      ],
+      "expected": [3],
       "explanation": "FULL JOIN retains all rows from both tables, with NULLs for values on the side without a match."
     },
     "sql-week5-aggregates-082": {
@@ -5865,9 +5441,7 @@
         "Returns NULL if any row is NULL",
         "Counts NULL as one"
       ],
-      "expected": [
-        1
-      ],
+      "expected": [1],
       "explanation": "Most aggregate functions, including AVG, ignore NULL values."
     },
     "sql-week5-having-083": {
@@ -5880,15 +5454,8 @@
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
       "contentVersion": 1,
-      "options": [
-        "HAVING",
-        "WHERE",
-        "FETCH",
-        "GROUP BY"
-      ],
-      "expected": [
-        1
-      ],
+      "options": ["HAVING", "WHERE", "FETCH", "GROUP BY"],
+      "expected": [1],
       "explanation": "WHERE filters individual rows before grouping; HAVING is for conditions on groups."
     },
     "sql-week5-outer-joins-084": {
@@ -5907,9 +5474,7 @@
         "right_table.primary_key = 0",
         "COUNT(*) = 0"
       ],
-      "expected": [
-        1
-      ],
+      "expected": [1],
       "explanation": "A non-NULL key from the right table is NULL in an unmatched outer-join row."
     },
     "sql-week5-group-by-085": {
@@ -5928,9 +5493,7 @@
         "It must be nullable",
         "It must be a foreign key"
       ],
-      "expected": [
-        1
-      ],
+      "expected": [1],
       "explanation": "Every non-aggregated column in SELECT must be included in GROUP BY."
     },
     "sql-week2-filtering-066": {
