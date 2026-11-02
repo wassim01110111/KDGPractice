@@ -9,6 +9,7 @@ const {
   shuffle,
   DIFF,
 } = Core;
+const focusButton = document.querySelector("#focus-toggle");
 const $ = (s, r = document) => r.querySelector(s);
 const h = (t, a = {}, ...k) => {
   const e = document.createElement(t);
@@ -4652,11 +4653,13 @@ function hideClickme() {
   );
 }
 setTimeout(() => {
+  if (focusButton.getAttribute("aria-pressed") === "true") return;
   clickme.classList.remove("is-hiding");
   clickme.classList.add("is-visible");
   setTimeout(hideClickme, 10000);
 }, 15000);
 setInterval(() => {
+  if (focusButton.getAttribute("aria-pressed") === "true") return;
   clickme.classList.remove("is-hiding");
   clickme.classList.add("is-visible");
   setTimeout(hideClickme, 10000);
@@ -4720,6 +4723,7 @@ let wassimUsedMemes = new Set();
 let wassimEggState = "closed";
 
 function launchWassimEasterEgg() {
+  if (focusButton.getAttribute("aria-pressed") === "true") return;
   hideClickme();
   const now = performance.now();
 
@@ -5036,3 +5040,12 @@ document.addEventListener(
   },
   true,
 );
+
+focusButton.addEventListener("click", () => {
+  const isPressed = focusButton.getAttribute("aria-pressed") === "true";
+  if (!isPressed) {
+    hideClickme();
+  }
+  focusButton.title = isPressed ? "Hide distractions" : "Enable distractions";
+  focusButton.setAttribute("aria-pressed", String(!isPressed));
+});

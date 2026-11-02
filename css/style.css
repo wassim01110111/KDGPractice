@@ -4868,3 +4868,104 @@ pre:focus-within,
     padding: 0.45rem 0.5rem;
   }
 }
+/* FOCUS TOGGLE BUTTON */
+#focus-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  min-height: 36px;
+  padding: 7px 12px;
+
+  color: var(--mut);
+  background: var(--card);
+  border: 1px solid var(--bd);
+  border-radius: 8px;
+
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+
+  cursor: pointer;
+
+  transition:
+    color 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+/* Icon */
+#focus-toggle > span:first-child {
+  display: inline-grid;
+  place-items: center;
+  font-size: 1.05rem;
+  color: var(--mut);
+
+  transition:
+    color 0.2s ease,
+    transform 0.25s ease;
+}
+
+/* Hover - OFF state */
+#focus-toggle:hover:not([aria-pressed="true"]) {
+  color: var(--fg);
+  background: var(--soft);
+  border-color: var(--ac);
+  transform: translateY(-1px);
+}
+
+#focus-toggle:hover:not([aria-pressed="true"]) > span:first-child {
+  color: var(--ac);
+  transform: scale(1.12);
+}
+
+/* ACTIVE / TOGGLED ON */
+#focus-toggle[aria-pressed="true"],
+#focus-toggle[aria-pressed="true"]:hover {
+  color: var(--ac);
+  background: color-mix(in srgb, var(--ac) 18%, var(--card));
+  border: 2px solid var(--ac);
+
+  box-shadow:
+    inset 0 0 0 1px var(--ac),
+    0 0 0 3px color-mix(in srgb, var(--ac) 18%, transparent),
+    0 4px 16px color-mix(in srgb, var(--ac) 25%, transparent);
+
+  transform: translateY(-1px);
+}
+
+/* Active icon */
+#focus-toggle[aria-pressed="true"] > span:first-child,
+#focus-toggle[aria-pressed="true"]:hover > span:first-child {
+  color: var(--ac);
+  transform: rotate(45deg) scale(1.2);
+}
+
+/* Active text */
+#focus-toggle[aria-pressed="true"] > span:last-child {
+  font-weight: 800;
+  letter-spacing: 0.07em;
+}
+
+/* Keyboard focus */
+#focus-toggle:focus-visible {
+  outline: 2px solid var(--ac);
+  outline-offset: 4px;
+}
+
+/* Press feedback */
+#focus-toggle:active {
+  transform: scale(0.96);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  #focus-toggle,
+  #focus-toggle > span:first-child {
+    transition: none;
+  }
+}
