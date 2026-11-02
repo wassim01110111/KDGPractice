@@ -2,86 +2,8 @@
   "schemaVersion": "1.0",
   "packageId": "programming-fundamentals-java-theory",
   "version": "1.0.0",
-  "topics": [
-    {
-      "id": "programming_languages",
-      "title": "Programming Languages and Language Translation",
-      "examEligible": true
-    },
-    {
-      "id": "java_platform_and_first_program",
-      "title": "The Java Platform and Your First Java Program",
-      "examEligible": true
-    },
-    {
-      "id": "programming_algorithms",
-      "title": "Programming Algorithms and Flowcharts",
-      "examEligible": true
-    },
-    {
-      "id": "expressions_statements_blocks_scope",
-      "title": "Expressions, Statements, Blocks and Scope",
-      "examEligible": true
-    },
-    {
-      "id": "conditional_execution_and_switch",
-      "title": "Conditional Execution and Switch",
-      "examEligible": true
-    },
-    {
-      "id": "loops",
-      "title": "Loops: while, do-while, for, break and continue",
-      "examEligible": true
-    },
-    {
-      "id": "functions_and_methods",
-      "title": "Functions and Method Basics",
-      "examEligible": true
-    },
-    {
-      "id": "variables_types_literals_and_casting",
-      "title": "Variables, Primitive Types, Literals and Casting",
-      "examEligible": true
-    },
-    {
-      "id": "operators_and_precedence",
-      "title": "Operators and Operator Precedence",
-      "examEligible": true
-    },
-    {
-      "id": "oop_objects_references_packages_and_gc",
-      "title": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection",
-      "examEligible": true
-    },
-    {
-      "id": "strings_and_stringbuilder",
-      "title": "String and StringBuilder",
-      "examEligible": true
-    },
-    {
-      "id": "formatting",
-      "title": "Formatting Data",
-      "examEligible": true
-    },
-    {
-      "id": "class_structure_and_attributes",
-      "title": "Class Structure, Attributes and Accessibility",
-      "examEligible": true
-    },
-    {
-      "id": "methods_encapsulation_and_overloading",
-      "title": "Methods, Parameters, Encapsulation and Overloading",
-      "examEligible": true
-    },
-    {
-      "id": "constructors_tostring_and_math",
-      "title": "Constructors, toString and the Math Class",
-      "examEligible": true
-    }
-  ],
-  "exercises": [
-    {
-      "id": "pfj-001",
+  "exercises": {
+    "pfj-001": {
       "course": "Programming Fundamentals",
       "category": "Programming Languages and Language Translation",
       "title": "Programming Languages and Language Translation",
@@ -105,8 +27,7 @@
       ],
       "explanation": "The slides identify machine language (binary code) as the first generation and describe it as processor-specific."
     },
-    {
-      "id": "pfj-002",
+    "pfj-002": {
       "course": "Programming Fundamentals",
       "category": "Programming Languages and Language Translation",
       "title": "Programming Languages and Language Translation (2)",
@@ -134,8 +55,7 @@
       ],
       "explanation": "The slide labels machine language as first generation, assembly as second generation and more readable but processor-specific, and 3GL as processor-independent. The added statement is incorrect: Assembly language is described as processor-independent code."
     },
-    {
-      "id": "pfj-003",
+    "pfj-003": {
       "course": "Programming Fundamentals",
       "category": "Programming Languages and Language Translation",
       "title": "Programming Languages and Language Translation (3)",
@@ -159,8 +79,7 @@
       ],
       "explanation": "Assembly language is presented as second-generation, more readable processor-specific code."
     },
-    {
-      "id": "pfj-004",
+    "pfj-004": {
       "course": "Programming Fundamentals",
       "category": "Programming Languages and Language Translation",
       "title": "Programming Languages and Language Translation (4)",
@@ -184,8 +103,7 @@
       ],
       "explanation": "Java appears in the slide’s list of third-generation language examples."
     },
-    {
-      "id": "pfj-005",
+    "pfj-005": {
       "course": "Programming Fundamentals",
       "category": "Programming Languages and Language Translation",
       "title": "Programming Languages and Language Translation (5)",
@@ -210,8 +128,7 @@
       ],
       "explanation": "The compiled-language slide lists C and C++ as examples; JavaScript and Python appear as interpreted-language examples."
     },
-    {
-      "id": "pfj-006",
+    "pfj-006": {
       "course": "Programming Fundamentals",
       "category": "Programming Languages and Language Translation",
       "title": "Programming Languages and Language Translation (6)",
@@ -245,8 +162,7 @@
       ],
       "explanation": "The slide lists Java as object-oriented along with the other selected characteristics. The added statement is incorrect because it says Java is not object-oriented."
     },
-    {
-      "id": "pfj-007",
+    "pfj-007": {
       "course": "Programming Fundamentals",
       "category": "Programming Languages and Language Translation",
       "title": "Programming Languages and Language Translation (7)",
@@ -270,8 +186,7 @@
       ],
       "explanation": "The comparison table marks C++ as not platform independent and Java as platform independent."
     },
-    {
-      "id": "pfj-008",
+    "pfj-008": {
       "course": "Programming Fundamentals",
       "category": "Programming Languages and Language Translation",
       "title": "Programming Languages and Language Translation (8)",
@@ -297,8 +212,7 @@
       ],
       "explanation": "The table says both are object-oriented, C++ syntax is based on C, and Java syntax is based on C++; it marks C++ yes and Java no for system programming."
     },
-    {
-      "id": "pfj-009",
+    "pfj-009": {
       "course": "Programming Fundamentals",
       "category": "Programming Languages and Language Translation",
       "title": "Programming Languages and Language Translation (9)",
@@ -322,8 +236,7 @@
       ],
       "explanation": "The comparison table highlights platform independence as the distinguishing characteristic."
     },
-    {
-      "id": "pfj-010",
+    "pfj-010": {
       "course": "Programming Fundamentals",
       "category": "Programming Languages and Language Translation",
       "title": "Programming Languages and Language Translation (10)",
@@ -351,8 +264,7 @@
       ],
       "explanation": "All four are listed as compiled-language advantages on the slide. The added statement is incorrect: The compiled-language slide says a separate interpreter is needed on every target platform."
     },
-    {
-      "id": "pfj-011",
+    "pfj-011": {
       "course": "Programming Fundamentals",
       "category": "Programming Languages and Language Translation",
       "title": "Programming Languages and Language Translation (11)",
@@ -377,8 +289,7 @@
       ],
       "explanation": "The compiled-language slide lists platform dependence and the need to recompile after code changes. The other statements are listed as interpreted-language disadvantages."
     },
-    {
-      "id": "pfj-012",
+    "pfj-012": {
       "course": "Programming Fundamentals",
       "category": "Programming Languages and Language Translation",
       "title": "Programming Languages and Language Translation (12)",
@@ -402,8 +313,7 @@
       ],
       "explanation": "The interpreted-language slide lists speed as slow."
     },
-    {
-      "id": "pfj-013",
+    "pfj-013": {
       "course": "Programming Fundamentals",
       "category": "Programming Languages and Language Translation",
       "title": "Programming Languages and Language Translation (13)",
@@ -429,8 +339,7 @@
       ],
       "explanation": "The slides list no compile-time checks, the need for an interpreter on each system, and readable source code at the target platform. They describe interpreted execution as slow."
     },
-    {
-      "id": "pfj-014",
+    "pfj-014": {
       "course": "Programming Fundamentals",
       "category": "The Java Platform and Your First Java Program",
       "title": "The Java Platform and Your First Java Program",
@@ -454,8 +363,7 @@
       ],
       "explanation": "The slide expands API as Application Programming Interface and identifies it as Java libraries."
     },
-    {
-      "id": "pfj-015",
+    "pfj-015": {
       "course": "Programming Fundamentals",
       "category": "The Java Platform and Your First Java Program",
       "title": "The Java Platform and Your First Java Program (2)",
@@ -479,8 +387,7 @@
       ],
       "explanation": "The slide says the Java API and JVM hide the underlying platform, making Java programs platform independent."
     },
-    {
-      "id": "pfj-016",
+    "pfj-016": {
       "course": "Programming Fundamentals",
       "category": "The Java Platform and Your First Java Program",
       "title": "The Java Platform and Your First Java Program (3)",
@@ -506,8 +413,7 @@
       ],
       "explanation": "The JRE is defined as JVM + Java API and is needed to run bytecode programs. The JDK is the set that adds development tools."
     },
-    {
-      "id": "pfj-017",
+    "pfj-017": {
       "course": "Programming Fundamentals",
       "category": "The Java Platform and Your First Java Program",
       "title": "The Java Platform and Your First Java Program (4)",
@@ -535,8 +441,7 @@
       ],
       "explanation": "The slide lists all four statements and summarizes the JDK as the JRE plus additional tools and documentation. The added statement is incorrect: The JDK is described as containing no development tools such as compiling or debugging."
     },
-    {
-      "id": "pfj-018",
+    "pfj-018": {
       "course": "Programming Fundamentals",
       "category": "The Java Platform and Your First Java Program",
       "title": "The Java Platform and Your First Java Program (5)",
@@ -560,8 +465,7 @@
       ],
       "explanation": "The slide defines an IDE as a workbench application for developers."
     },
-    {
-      "id": "pfj-019",
+    "pfj-019": {
       "course": "Programming Fundamentals",
       "category": "The Java Platform and Your First Java Program",
       "title": "The Java Platform and Your First Java Program (6)",
@@ -587,8 +491,7 @@
       ],
       "explanation": "The slides describe IDEs as developer workbenches, often multi-language, and say IntelliJ assists with writing, building and running code. It does not replace the JVM."
     },
-    {
-      "id": "pfj-020",
+    "pfj-020": {
       "course": "Programming Fundamentals",
       "category": "The Java Platform and Your First Java Program",
       "title": "The Java Platform and Your First Java Program (7)",
@@ -612,8 +515,7 @@
       ],
       "explanation": "The first-program slide specifies the .java extension for source code files."
     },
-    {
-      "id": "pfj-021",
+    "pfj-021": {
       "course": "Programming Fundamentals",
       "category": "The Java Platform and Your First Java Program",
       "title": "The Java Platform and Your First Java Program (8)",
@@ -637,8 +539,7 @@
       ],
       "explanation": "The compile slide states that javac is the command-line compiler bundled with the JDK."
     },
-    {
-      "id": "pfj-022",
+    "pfj-022": {
       "course": "Programming Fundamentals",
       "category": "The Java Platform and Your First Java Program",
       "title": "The Java Platform and Your First Java Program (9)",
@@ -662,8 +563,7 @@
       ],
       "explanation": "The run slide explains that java is the JDK or JRE command that starts the JVM and executes bytecode."
     },
-    {
-      "id": "pfj-023",
+    "pfj-023": {
       "course": "Programming Fundamentals",
       "category": "The Java Platform and Your First Java Program",
       "title": "The Java Platform and Your First Java Program (10)",
@@ -689,8 +589,7 @@
       ],
       "explanation": "The slide presents the sequence write source code, compile, and run."
     },
-    {
-      "id": "pfj-024",
+    "pfj-024": {
       "course": "Programming Fundamentals",
       "category": "The Java Platform and Your First Java Program",
       "title": "The Java Platform and Your First Java Program (11)",
@@ -716,8 +615,7 @@
       ],
       "explanation": "The slides distinguish javac for compiling from java for starting the JVM and executing bytecode."
     },
-    {
-      "id": "pfj-025",
+    "pfj-025": {
       "course": "Programming Fundamentals",
       "category": "The Java Platform and Your First Java Program",
       "title": "The Java Platform and Your First Java Program (12)",
@@ -745,8 +643,7 @@
       ],
       "explanation": "The code walkthrough explicitly describes both comment forms and identifies main as the application starting point. The added statement is incorrect: The slides say comment text is executed as part of the program."
     },
-    {
-      "id": "pfj-026",
+    "pfj-026": {
       "course": "Programming Fundamentals",
       "category": "Programming Algorithms and Flowcharts",
       "title": "Programming Algorithms and Flowcharts",
@@ -770,8 +667,7 @@
       ],
       "explanation": "The coursework defines an algorithm as steps to perform a task."
     },
-    {
-      "id": "pfj-027",
+    "pfj-027": {
       "course": "Programming Fundamentals",
       "category": "Programming Algorithms and Flowcharts",
       "title": "Programming Algorithms and Flowcharts (2)",
@@ -796,8 +692,7 @@
       ],
       "explanation": "The slide says programming is designing an algorithm and encoding it in a programming language for the computer."
     },
-    {
-      "id": "pfj-028",
+    "pfj-028": {
       "course": "Programming Fundamentals",
       "category": "Programming Algorithms and Flowcharts",
       "title": "Programming Algorithms and Flowcharts (3)",
@@ -827,8 +722,7 @@
       ],
       "explanation": "The robot-algorithm conclusion lists asking input, producing output, testing, repeating and computing. The added statement is incorrect: The typical algorithm actions explicitly exclude both testing and repetition."
     },
-    {
-      "id": "pfj-029",
+    "pfj-029": {
       "course": "Programming Fundamentals",
       "category": "Programming Algorithms and Flowcharts",
       "title": "Programming Algorithms and Flowcharts (4)",
@@ -852,8 +746,7 @@
       ],
       "explanation": "The slide emphasizes elaborating actions to the level understood by the robot."
     },
-    {
-      "id": "pfj-030",
+    "pfj-030": {
       "course": "Programming Fundamentals",
       "category": "Programming Algorithms and Flowcharts",
       "title": "Programming Algorithms and Flowcharts (5)",
@@ -879,8 +772,7 @@
       ],
       "explanation": "The sum algorithm slide labels input/output, intermediate values in variables and computation using variables."
     },
-    {
-      "id": "pfj-031",
+    "pfj-031": {
       "course": "Programming Fundamentals",
       "category": "Programming Algorithms and Flowcharts",
       "title": "Programming Algorithms and Flowcharts (6)",
@@ -904,8 +796,7 @@
       ],
       "explanation": "The algorithm reads two numbers, computes their sum using variables and displays that intermediate result."
     },
-    {
-      "id": "pfj-032",
+    "pfj-032": {
       "course": "Programming Fundamentals",
       "category": "Programming Algorithms and Flowcharts",
       "title": "Programming Algorithms and Flowcharts (7)",
@@ -931,8 +822,7 @@
       ],
       "explanation": "The slides state that each step becomes a semicolon-terminated Java statement, show System.out.print for output and keyboard.nextInt for input, and explain assignment as copying the right-hand value to the left-hand variable."
     },
-    {
-      "id": "pfj-033",
+    "pfj-033": {
       "course": "Programming Fundamentals",
       "category": "Programming Algorithms and Flowcharts",
       "title": "Programming Algorithms and Flowcharts (8)",
@@ -958,8 +848,7 @@
       ],
       "explanation": "The flowchart annotations identify a repeated sequence as a loop, branching as a test, and the start/end of the process."
     },
-    {
-      "id": "pfj-034",
+    "pfj-034": {
       "course": "Programming Fundamentals",
       "category": "Expressions, Statements, Blocks and Scope",
       "title": "Expressions, Statements, Blocks and Scope",
@@ -983,8 +872,7 @@
       ],
       "explanation": "The slide defines an expression as a construct of literals, variables, operators and/or method calls that evaluates to a single value."
     },
-    {
-      "id": "pfj-035",
+    "pfj-035": {
       "course": "Programming Fundamentals",
       "category": "Expressions, Statements, Blocks and Scope",
       "title": "Expressions, Statements, Blocks and Scope (2)",
@@ -1008,8 +896,7 @@
       ],
       "explanation": "The statement slide labels a statement as a basic instruction."
     },
-    {
-      "id": "pfj-036",
+    "pfj-036": {
       "course": "Programming Fundamentals",
       "category": "Expressions, Statements, Blocks and Scope",
       "title": "Expressions, Statements, Blocks and Scope (3)",
@@ -1037,8 +924,7 @@
       ],
       "explanation": "The statement-types slide lists declaration, assignment, method call and compound statements. The added statement is incorrect: A declaration is not included among the statement types in the slides."
     },
-    {
-      "id": "pfj-037",
+    "pfj-037": {
       "course": "Programming Fundamentals",
       "category": "Expressions, Statements, Blocks and Scope",
       "title": "Expressions, Statements, Blocks and Scope (4)",
@@ -1062,8 +948,7 @@
       ],
       "explanation": "The slide labels `double a;` as a declaration statement."
     },
-    {
-      "id": "pfj-038",
+    "pfj-038": {
       "course": "Programming Fundamentals",
       "category": "Expressions, Statements, Blocks and Scope",
       "title": "Expressions, Statements, Blocks and Scope (5)",
@@ -1087,8 +972,7 @@
       ],
       "explanation": "The statement slide explicitly says single statements are terminated with a semicolon."
     },
-    {
-      "id": "pfj-039",
+    "pfj-039": {
       "course": "Programming Fundamentals",
       "category": "Expressions, Statements, Blocks and Scope",
       "title": "Expressions, Statements, Blocks and Scope (6)",
@@ -1114,8 +998,7 @@
       ],
       "explanation": "The block slide defines a block as grouped statements enclosed in curly braces and says it can be used wherever a simple statement is allowed."
     },
-    {
-      "id": "pfj-040",
+    "pfj-040": {
       "course": "Programming Fundamentals",
       "category": "Expressions, Statements, Blocks and Scope",
       "title": "Expressions, Statements, Blocks and Scope (7)",
@@ -1139,8 +1022,7 @@
       ],
       "explanation": "The code convention slide says to indent statements an extra level within each new code block."
     },
-    {
-      "id": "pfj-041",
+    "pfj-041": {
       "course": "Programming Fundamentals",
       "category": "Expressions, Statements, Blocks and Scope",
       "title": "Expressions, Statements, Blocks and Scope (8)",
@@ -1166,8 +1048,7 @@
       ],
       "explanation": "The slides give both indentation recommendations and show Code > Reformat Code with Ctrl-Alt-L."
     },
-    {
-      "id": "pfj-042",
+    "pfj-042": {
       "course": "Programming Fundamentals",
       "category": "Expressions, Statements, Blocks and Scope",
       "title": "Expressions, Statements, Blocks and Scope (9)",
@@ -1191,8 +1072,7 @@
       ],
       "explanation": "The slide defines scope as the program region where a variable is known and usable."
     },
-    {
-      "id": "pfj-043",
+    "pfj-043": {
       "course": "Programming Fundamentals",
       "category": "Expressions, Statements, Blocks and Scope",
       "title": "Expressions, Statements, Blocks and Scope (10)",
@@ -1220,8 +1100,7 @@
       ],
       "explanation": "All four details appear on the variable-scope slide. The added statement is incorrect: A variable declared inside a block remains known throughout the entire program, outside that block."
     },
-    {
-      "id": "pfj-044",
+    "pfj-044": {
       "course": "Programming Fundamentals",
       "category": "Conditional Execution and Switch",
       "title": "Conditional Execution and Switch",
@@ -1245,8 +1124,7 @@
       ],
       "explanation": "The if slide says the block is executed only when the logical expression is true."
     },
-    {
-      "id": "pfj-045",
+    "pfj-045": {
       "course": "Programming Fundamentals",
       "category": "Conditional Execution and Switch",
       "title": "Conditional Execution and Switch (2)",
@@ -1272,8 +1150,7 @@
       ],
       "explanation": "The slides say the if-block is used for true and the else-block for false; they are alternative branches."
     },
-    {
-      "id": "pfj-046",
+    "pfj-046": {
       "course": "Programming Fundamentals",
       "category": "Conditional Execution and Switch",
       "title": "Conditional Execution and Switch (3)",
@@ -1297,8 +1174,7 @@
       ],
       "explanation": "The if-syntax slide explicitly recommends always using a code block after an if."
     },
-    {
-      "id": "pfj-047",
+    "pfj-047": {
       "course": "Programming Fundamentals",
       "category": "Conditional Execution and Switch",
       "title": "Conditional Execution and Switch (4)",
@@ -1322,8 +1198,7 @@
       ],
       "explanation": "The slides contrast complex deep nesting with the simpler if-else-if structure."
     },
-    {
-      "id": "pfj-048",
+    "pfj-048": {
       "course": "Programming Fundamentals",
       "category": "Conditional Execution and Switch",
       "title": "Conditional Execution and Switch (5)",
@@ -1349,8 +1224,7 @@
       ],
       "explanation": "The slides recommend blocks after if and else, while identifying a single if after else as a case where a simple statement (no extra block) is best practice."
     },
-    {
-      "id": "pfj-049",
+    "pfj-049": {
       "course": "Programming Fundamentals",
       "category": "Conditional Execution and Switch",
       "title": "Conditional Execution and Switch (6)",
@@ -1374,8 +1248,7 @@
       ],
       "explanation": "The conditional operator table gives the usage `op1 ? op2 : op3`."
     },
-    {
-      "id": "pfj-050",
+    "pfj-050": {
       "course": "Programming Fundamentals",
       "category": "Conditional Execution and Switch",
       "title": "Conditional Execution and Switch (7)",
@@ -1405,8 +1278,7 @@
       ],
       "explanation": "All five statements are stated on the conditional-operator slide. The added statement is incorrect: The slides say the conditional operator does not return a value."
     },
-    {
-      "id": "pfj-051",
+    "pfj-051": {
       "course": "Programming Fundamentals",
       "category": "Conditional Execution and Switch",
       "title": "Conditional Execution and Switch (8)",
@@ -1430,8 +1302,7 @@
       ],
       "explanation": "The switch slide describes it as a way to test equality against multiple values."
     },
-    {
-      "id": "pfj-052",
+    "pfj-052": {
       "course": "Programming Fundamentals",
       "category": "Conditional Execution and Switch",
       "title": "Conditional Execution and Switch (9)",
@@ -1456,8 +1327,7 @@
       ],
       "explanation": "The slide labels the switch value as an integral type (int, long...) or String."
     },
-    {
-      "id": "pfj-053",
+    "pfj-053": {
       "course": "Programming Fundamentals",
       "category": "Conditional Execution and Switch",
       "title": "Conditional Execution and Switch (10)",
@@ -1481,8 +1351,7 @@
       ],
       "explanation": "The syntax slide says statements execute until the next break; without a break, following case statements execute too."
     },
-    {
-      "id": "pfj-054",
+    "pfj-054": {
       "course": "Programming Fundamentals",
       "category": "Conditional Execution and Switch",
       "title": "Conditional Execution and Switch (11)",
@@ -1508,8 +1377,7 @@
       ],
       "explanation": "The slide explains fall-through, the optional default label, and execution of default if no case matches."
     },
-    {
-      "id": "pfj-055",
+    "pfj-055": {
       "course": "Programming Fundamentals",
       "category": "Conditional Execution and Switch",
       "title": "Conditional Execution and Switch (12)",
@@ -1533,8 +1401,7 @@
       ],
       "explanation": "The slides explicitly label the behavior as fall through until a break."
     },
-    {
-      "id": "pfj-056",
+    "pfj-056": {
       "course": "Programming Fundamentals",
       "category": "Conditional Execution and Switch",
       "title": "Conditional Execution and Switch (13)",
@@ -1562,8 +1429,7 @@
       ],
       "explanation": "The slide labels the simplified switch as supporting multiple values per case and says no break and no fall-through are needed. The added statement is incorrect: The simplified switch form requires a break after every case and uses fall-through."
     },
-    {
-      "id": "pfj-057",
+    "pfj-057": {
       "course": "Programming Fundamentals",
       "category": "Conditional Execution and Switch",
       "title": "Conditional Execution and Switch (14)",
@@ -1587,8 +1453,7 @@
       ],
       "explanation": "The slide says a default branch is mandatory for a switch expression if not all possible cases are covered."
     },
-    {
-      "id": "pfj-058",
+    "pfj-058": {
       "course": "Programming Fundamentals",
       "category": "Conditional Execution and Switch",
       "title": "Conditional Execution and Switch (15)",
@@ -1614,8 +1479,7 @@
       ],
       "explanation": "The slide says that when using a block with multiple statements, precede the value to be returned with `yield`."
     },
-    {
-      "id": "pfj-059",
+    "pfj-059": {
       "course": "Programming Fundamentals",
       "category": "Loops: while, do-while, for, break and continue",
       "title": "Loops: while, do-while, for, break and continue",
@@ -1639,8 +1503,7 @@
       ],
       "explanation": "The while-loop slide says a code block executed repeatedly is called a loop or iteration."
     },
-    {
-      "id": "pfj-060",
+    "pfj-060": {
       "course": "Programming Fundamentals",
       "category": "Loops: while, do-while, for, break and continue",
       "title": "Loops: while, do-while, for, break and continue (2)",
@@ -1664,8 +1527,7 @@
       ],
       "explanation": "The while processing steps begin by checking the condition and repeat that check after each block execution."
     },
-    {
-      "id": "pfj-061",
+    "pfj-061": {
       "course": "Programming Fundamentals",
       "category": "Loops: while, do-while, for, break and continue",
       "title": "Loops: while, do-while, for, break and continue (3)",
@@ -1691,8 +1553,7 @@
       ],
       "explanation": "The while loop checks first, repeats while true and exits when false; unlike do-while it does not guarantee an initial execution."
     },
-    {
-      "id": "pfj-062",
+    "pfj-062": {
       "course": "Programming Fundamentals",
       "category": "Loops: while, do-while, for, break and continue",
       "title": "Loops: while, do-while, for, break and continue (4)",
@@ -1716,8 +1577,7 @@
       ],
       "explanation": "The example increments no counter inside the loop, so `counter < 100` remains true."
     },
-    {
-      "id": "pfj-063",
+    "pfj-063": {
       "course": "Programming Fundamentals",
       "category": "Loops: while, do-while, for, break and continue",
       "title": "Loops: while, do-while, for, break and continue (5)",
@@ -1743,8 +1603,7 @@
       ],
       "explanation": "The slide says braces may be omitted for one statement but recommends using a block for clarity."
     },
-    {
-      "id": "pfj-064",
+    "pfj-064": {
       "course": "Programming Fundamentals",
       "category": "Loops: while, do-while, for, break and continue",
       "title": "Loops: while, do-while, for, break and continue (6)",
@@ -1768,8 +1627,7 @@
       ],
       "explanation": "The break slide states that break can be used to exit a loop."
     },
-    {
-      "id": "pfj-065",
+    "pfj-065": {
       "course": "Programming Fundamentals",
       "category": "Loops: while, do-while, for, break and continue",
       "title": "Loops: while, do-while, for, break and continue (7)",
@@ -1797,8 +1655,7 @@
       ],
       "explanation": "The slide demonstrates break in an if block, labels the `while(true)` example bad practice, and recommends testing the while condition to end a loop. The added statement is incorrect: The slides recommend `while (true)` with `break` as clearer best practice than testing the while condition."
     },
-    {
-      "id": "pfj-066",
+    "pfj-066": {
       "course": "Programming Fundamentals",
       "category": "Loops: while, do-while, for, break and continue",
       "title": "Loops: while, do-while, for, break and continue (8)",
@@ -1822,8 +1679,7 @@
       ],
       "explanation": "The continue slide defines it as stopping the current iteration and continuing with the next while iteration."
     },
-    {
-      "id": "pfj-067",
+    "pfj-067": {
       "course": "Programming Fundamentals",
       "category": "Loops: while, do-while, for, break and continue",
       "title": "Loops: while, do-while, for, break and continue (9)",
@@ -1847,8 +1703,7 @@
       ],
       "explanation": "The do-while processing list first executes the code block and then checks the condition."
     },
-    {
-      "id": "pfj-068",
+    "pfj-068": {
       "course": "Programming Fundamentals",
       "category": "Loops: while, do-while, for, break and continue",
       "title": "Loops: while, do-while, for, break and continue (10)",
@@ -1876,8 +1731,7 @@
       ],
       "explanation": "All four details follow directly from the definition and processing steps on the do-while slides. The added statement is incorrect: A do-while block can execute zero times if its condition is initially false."
     },
-    {
-      "id": "pfj-069",
+    "pfj-069": {
       "course": "Programming Fundamentals",
       "category": "Loops: while, do-while, for, break and continue",
       "title": "Loops: while, do-while, for, break and continue (11)",
@@ -1901,8 +1755,7 @@
       ],
       "explanation": "The for-loop syntax is `for (initialisation; condition; modification)`."
     },
-    {
-      "id": "pfj-070",
+    "pfj-070": {
       "course": "Programming Fundamentals",
       "category": "Loops: while, do-while, for, break and continue",
       "title": "Loops: while, do-while, for, break and continue (12)",
@@ -1928,8 +1781,7 @@
       ],
       "explanation": "The slides explain that initialisation runs once, condition is checked before the block, and modification runs after each block execution."
     },
-    {
-      "id": "pfj-071",
+    "pfj-071": {
       "course": "Programming Fundamentals",
       "category": "Loops: while, do-while, for, break and continue",
       "title": "Loops: while, do-while, for, break and continue (13)",
@@ -1959,8 +1811,7 @@
       ],
       "explanation": "All five remarks are listed on the for-loop remarks slide. The added statement is incorrect: The semicolons between the for-loop header parts are optional."
     },
-    {
-      "id": "pfj-072",
+    "pfj-072": {
       "course": "Programming Fundamentals",
       "category": "Functions and Method Basics",
       "title": "Functions and Method Basics",
@@ -1984,8 +1835,7 @@
       ],
       "explanation": "The functions slide defines a function as a named callable code block."
     },
-    {
-      "id": "pfj-073",
+    "pfj-073": {
       "course": "Programming Fundamentals",
       "category": "Functions and Method Basics",
       "title": "Functions and Method Basics (2)",
@@ -2013,8 +1863,7 @@
       ],
       "explanation": "The slide lists algorithm reuse, arguments and return results, and says functions make code more concise and readable. The added statement is incorrect: The slides say functions make code less concise and less readable."
     },
-    {
-      "id": "pfj-074",
+    "pfj-074": {
       "course": "Programming Fundamentals",
       "category": "Functions and Method Basics",
       "title": "Functions and Method Basics (3)",
@@ -2038,8 +1887,7 @@
       ],
       "explanation": "The slide states that the main method is also a function and that Java calls all functions methods because they are always declared inside a class."
     },
-    {
-      "id": "pfj-075",
+    "pfj-075": {
       "course": "Programming Fundamentals",
       "category": "Functions and Method Basics",
       "title": "Functions and Method Basics (4)",
@@ -2067,8 +1915,7 @@
       ],
       "explanation": "The diagram labels the access modifiers, return type, name and argument list as the signature; the body is shown separately."
     },
-    {
-      "id": "pfj-076",
+    "pfj-076": {
       "course": "Programming Fundamentals",
       "category": "Functions and Method Basics",
       "title": "Functions and Method Basics (5)",
@@ -2092,8 +1939,7 @@
       ],
       "explanation": "The function slide says names use camelCase and start with a lowercase character."
     },
-    {
-      "id": "pfj-077",
+    "pfj-077": {
       "course": "Programming Fundamentals",
       "category": "Functions and Method Basics",
       "title": "Functions and Method Basics (6)",
@@ -2121,8 +1967,7 @@
       ],
       "explanation": "All four rules and conventions are explicitly stated on the function declaration slide. The added statement is incorrect: Function names should use uppercase letters and underscores rather than lower camelCase."
     },
-    {
-      "id": "pfj-078",
+    "pfj-078": {
       "course": "Programming Fundamentals",
       "category": "Functions and Method Basics",
       "title": "Functions and Method Basics (7)",
@@ -2146,8 +1991,7 @@
       ],
       "explanation": "The printResult slide states that void indicates that the function has no result to return."
     },
-    {
-      "id": "pfj-079",
+    "pfj-079": {
       "course": "Programming Fundamentals",
       "category": "Functions and Method Basics",
       "title": "Functions and Method Basics (8)",
@@ -2173,8 +2017,7 @@
       ],
       "explanation": "The slide explicitly describes the three parameters as formal parameters, similar to local variables, initialized from the passed argument values."
     },
-    {
-      "id": "pfj-080",
+    "pfj-080": {
       "course": "Programming Fundamentals",
       "category": "Functions and Method Basics",
       "title": "Functions and Method Basics (9)",
@@ -2198,8 +2041,7 @@
       ],
       "explanation": "The slide labels `result` a local variable because it is declared inside the function body."
     },
-    {
-      "id": "pfj-081",
+    "pfj-081": {
       "course": "Programming Fundamentals",
       "category": "Functions and Method Basics",
       "title": "Functions and Method Basics (10)",
@@ -2225,8 +2067,7 @@
       ],
       "explanation": "The slides explain arguments and returned values, and the rewritten main calls enterAmount three times. printResult has void return type."
     },
-    {
-      "id": "pfj-082",
+    "pfj-082": {
       "course": "Programming Fundamentals",
       "category": "Variables, Primitive Types, Literals and Casting",
       "title": "Variables, Primitive Types, Literals and Casting",
@@ -2250,8 +2091,7 @@
       ],
       "explanation": "The variables slide gives this definition verbatim."
     },
-    {
-      "id": "pfj-083",
+    "pfj-083": {
       "course": "Programming Fundamentals",
       "category": "Variables, Primitive Types, Literals and Casting",
       "title": "Variables, Primitive Types, Literals and Casting (2)",
@@ -2278,8 +2118,7 @@
       ],
       "explanation": "The slide lists a variable’s name, type and scope."
     },
-    {
-      "id": "pfj-084",
+    "pfj-084": {
       "course": "Programming Fundamentals",
       "category": "Variables, Primitive Types, Literals and Casting",
       "title": "Variables, Primitive Types, Literals and Casting (3)",
@@ -2303,8 +2142,7 @@
       ],
       "explanation": "The declaration slide gives the format `type name;`."
     },
-    {
-      "id": "pfj-085",
+    "pfj-085": {
       "course": "Programming Fundamentals",
       "category": "Variables, Primitive Types, Literals and Casting",
       "title": "Variables, Primitive Types, Literals and Casting (4)",
@@ -2340,8 +2178,7 @@
       ],
       "explanation": "The primitive-type table lists byte, short, int, long, float, double, boolean and char. The added statement is incorrect: The coursework includes `String` in its table of primitive types."
     },
-    {
-      "id": "pfj-086",
+    "pfj-086": {
       "course": "Programming Fundamentals",
       "category": "Variables, Primitive Types, Literals and Casting",
       "title": "Variables, Primitive Types, Literals and Casting (5)",
@@ -2365,8 +2202,7 @@
       ],
       "explanation": "The type table identifies int as a 32-bit two’s-complement integer."
     },
-    {
-      "id": "pfj-087",
+    "pfj-087": {
       "course": "Programming Fundamentals",
       "category": "Variables, Primitive Types, Literals and Casting",
       "title": "Variables, Primitive Types, Literals and Casting (6)",
@@ -2390,8 +2226,7 @@
       ],
       "explanation": "The type table describes double as 64-bit double-precision floating point."
     },
-    {
-      "id": "pfj-088",
+    "pfj-088": {
       "course": "Programming Fundamentals",
       "category": "Variables, Primitive Types, Literals and Casting",
       "title": "Variables, Primitive Types, Literals and Casting (7)",
@@ -2419,8 +2254,7 @@
       ],
       "explanation": "These widths and descriptions appear in the primitive-type table. The added statement is incorrect: The table describes `char` as an 8-bit ASCII value."
     },
-    {
-      "id": "pfj-089",
+    "pfj-089": {
       "course": "Programming Fundamentals",
       "category": "Variables, Primitive Types, Literals and Casting",
       "title": "Variables, Primitive Types, Literals and Casting (8)",
@@ -2444,8 +2278,7 @@
       ],
       "explanation": "The primitive-type table lists false and true as the boolean values."
     },
-    {
-      "id": "pfj-090",
+    "pfj-090": {
       "course": "Programming Fundamentals",
       "category": "Variables, Primitive Types, Literals and Casting",
       "title": "Variables, Primitive Types, Literals and Casting (9)",
@@ -2471,8 +2304,7 @@
       ],
       "explanation": "The slide lists letters, digits, underscore and dollar sign as allowed, prohibits a leading digit and prohibits reserved words."
     },
-    {
-      "id": "pfj-091",
+    "pfj-091": {
       "course": "Programming Fundamentals",
       "category": "Variables, Primitive Types, Literals and Casting",
       "title": "Variables, Primitive Types, Literals and Casting (10)",
@@ -2496,8 +2328,7 @@
       ],
       "explanation": "The reserved-words slide says reserved words have a specific meaning in Java and therefore cannot name a variable."
     },
-    {
-      "id": "pfj-092",
+    "pfj-092": {
       "course": "Programming Fundamentals",
       "category": "Variables, Primitive Types, Literals and Casting",
       "title": "Variables, Primitive Types, Literals and Casting (11)",
@@ -2523,8 +2354,7 @@
       ],
       "explanation": "The code-convention slide gives lowercase initial letters and camelCase; the variable-declaration slide says names are case-sensitive."
     },
-    {
-      "id": "pfj-093",
+    "pfj-093": {
       "course": "Programming Fundamentals",
       "category": "Variables, Primitive Types, Literals and Casting",
       "title": "Variables, Primitive Types, Literals and Casting (12)",
@@ -2548,8 +2378,7 @@
       ],
       "explanation": "The slide says a variable name unique within its scope is also called an identifier."
     },
-    {
-      "id": "pfj-094",
+    "pfj-094": {
       "course": "Programming Fundamentals",
       "category": "Variables, Primitive Types, Literals and Casting",
       "title": "Variables, Primitive Types, Literals and Casting (13)",
@@ -2577,8 +2406,7 @@
       ],
       "explanation": "All four points appear on the variable-declarations slide. The added statement is incorrect: The slides say variable names are not case sensitive."
     },
-    {
-      "id": "pfj-095",
+    "pfj-095": {
       "course": "Programming Fundamentals",
       "category": "Variables, Primitive Types, Literals and Casting",
       "title": "Variables, Primitive Types, Literals and Casting (14)",
@@ -2602,8 +2430,7 @@
       ],
       "explanation": "The literal slide defines a literal as a fixed value that appears in code."
     },
-    {
-      "id": "pfj-096",
+    "pfj-096": {
       "course": "Programming Fundamentals",
       "category": "Variables, Primitive Types, Literals and Casting",
       "title": "Variables, Primitive Types, Literals and Casting (15)",
@@ -2631,8 +2458,7 @@
       ],
       "explanation": "The slides provide these literal formats on the boolean, char, String and numeric literal pages. The added statement is incorrect: A char literal is enclosed in double quotation marks."
     },
-    {
-      "id": "pfj-097",
+    "pfj-097": {
       "course": "Programming Fundamentals",
       "category": "Variables, Primitive Types, Literals and Casting",
       "title": "Variables, Primitive Types, Literals and Casting (16)",
@@ -2660,8 +2486,7 @@
       ],
       "explanation": "All four rules appear on the numeric literal slides. The added statement is incorrect: A float literal must end with `L` or `l`."
     },
-    {
-      "id": "pfj-098",
+    "pfj-098": {
       "course": "Programming Fundamentals",
       "category": "Variables, Primitive Types, Literals and Casting",
       "title": "Variables, Primitive Types, Literals and Casting (17)",
@@ -2685,8 +2510,7 @@
       ],
       "explanation": "The slide defines final variables as variables that cannot be modified after initialization and also calls them constants."
     },
-    {
-      "id": "pfj-099",
+    "pfj-099": {
       "course": "Programming Fundamentals",
       "category": "Variables, Primitive Types, Literals and Casting",
       "title": "Variables, Primitive Types, Literals and Casting (18)",
@@ -2712,8 +2536,7 @@
       ],
       "explanation": "The slide recommends uppercase names with underscores and replacing literal values by final variables."
     },
-    {
-      "id": "pfj-100",
+    "pfj-100": {
       "course": "Programming Fundamentals",
       "category": "Variables, Primitive Types, Literals and Casting",
       "title": "Variables, Primitive Types, Literals and Casting (19)",
@@ -2737,8 +2560,7 @@
       ],
       "explanation": "The slide explains that converting double to int can lose data or precision and is therefore not accepted without an explicit cast."
     },
-    {
-      "id": "pfj-101",
+    "pfj-101": {
       "course": "Programming Fundamentals",
       "category": "Variables, Primitive Types, Literals and Casting",
       "title": "Variables, Primitive Types, Literals and Casting (20)",
@@ -2766,8 +2588,7 @@
       ],
       "explanation": "The type-casting slide shows the target type in parentheses before the value and describes the practice as type casting. The added statement is incorrect: The cast target type is written after the value being converted."
     },
-    {
-      "id": "pfj-102",
+    "pfj-102": {
       "course": "Programming Fundamentals",
       "category": "Operators and Operator Precedence",
       "title": "Operators and Operator Precedence",
@@ -2791,8 +2612,7 @@
       ],
       "explanation": "The slides say symbols such as =, < and + are called operators and are used for assignment, calculations and comparisons."
     },
-    {
-      "id": "pfj-103",
+    "pfj-103": {
       "course": "Programming Fundamentals",
       "category": "Operators and Operator Precedence",
       "title": "Operators and Operator Precedence (2)",
@@ -2818,8 +2638,7 @@
       ],
       "explanation": "The operator-introduction slide illustrates assignment, calculation and comparison."
     },
-    {
-      "id": "pfj-104",
+    "pfj-104": {
       "course": "Programming Fundamentals",
       "category": "Operators and Operator Precedence",
       "title": "Operators and Operator Precedence (3)",
@@ -2843,8 +2662,7 @@
       ],
       "explanation": "The modulo slide defines % as the remainder of division."
     },
-    {
-      "id": "pfj-105",
+    "pfj-105": {
       "course": "Programming Fundamentals",
       "category": "Operators and Operator Precedence",
       "title": "Operators and Operator Precedence (4)",
@@ -2870,8 +2688,7 @@
       ],
       "explanation": "The examples show remainders 3, 0 and 3 respectively; 21 % 5 is shown as 1."
     },
-    {
-      "id": "pfj-106",
+    "pfj-106": {
       "course": "Programming Fundamentals",
       "category": "Operators and Operator Precedence",
       "title": "Operators and Operator Precedence (5)",
@@ -2895,8 +2712,7 @@
       ],
       "explanation": "The mathematical-operators table describes pre-increment as incrementing first and then using the new value."
     },
-    {
-      "id": "pfj-107",
+    "pfj-107": {
       "course": "Programming Fundamentals",
       "category": "Operators and Operator Precedence",
       "title": "Operators and Operator Precedence (6)",
@@ -2920,8 +2736,7 @@
       ],
       "explanation": "The post-increment example first assigns the original value 10 to number and then increments i to 11."
     },
-    {
-      "id": "pfj-108",
+    "pfj-108": {
       "course": "Programming Fundamentals",
       "category": "Operators and Operator Precedence",
       "title": "Operators and Operator Precedence (7)",
@@ -2947,8 +2762,7 @@
       ],
       "explanation": "The slides show both examples with i ending at 11 but different values assigned to number."
     },
-    {
-      "id": "pfj-109",
+    "pfj-109": {
       "course": "Programming Fundamentals",
       "category": "Operators and Operator Precedence",
       "title": "Operators and Operator Precedence (8)",
@@ -2972,8 +2786,7 @@
       ],
       "explanation": "Pre-decrement first reduces i to 9 and then assigns that value to number."
     },
-    {
-      "id": "pfj-110",
+    "pfj-110": {
       "course": "Programming Fundamentals",
       "category": "Operators and Operator Precedence",
       "title": "Operators and Operator Precedence (9)",
@@ -2997,8 +2810,7 @@
       ],
       "explanation": "The relational-operator table defines >= as true when the first operand is greater than or equal to the second."
     },
-    {
-      "id": "pfj-111",
+    "pfj-111": {
       "course": "Programming Fundamentals",
       "category": "Operators and Operator Precedence",
       "title": "Operators and Operator Precedence (10)",
@@ -3030,8 +2842,7 @@
       ],
       "explanation": "The relational-operator table lists all six operators. The added statement is incorrect: A single `=` is listed as the relational operator for equality."
     },
-    {
-      "id": "pfj-112",
+    "pfj-112": {
       "course": "Programming Fundamentals",
       "category": "Operators and Operator Precedence",
       "title": "Operators and Operator Precedence (11)",
@@ -3055,8 +2866,7 @@
       ],
       "explanation": "The logical-operator slide defines && as true only if both operands are true."
     },
-    {
-      "id": "pfj-113",
+    "pfj-113": {
       "course": "Programming Fundamentals",
       "category": "Operators and Operator Precedence",
       "title": "Operators and Operator Precedence (12)",
@@ -3080,8 +2890,7 @@
       ],
       "explanation": "The slide defines || as true if at least one operand is true."
     },
-    {
-      "id": "pfj-114",
+    "pfj-114": {
       "course": "Programming Fundamentals",
       "category": "Operators and Operator Precedence",
       "title": "Operators and Operator Precedence (13)",
@@ -3107,8 +2916,7 @@
       ],
       "explanation": "The table defines binary AND and OR and unary NOT; NOT yields true if the operand is false."
     },
-    {
-      "id": "pfj-115",
+    "pfj-115": {
       "course": "Programming Fundamentals",
       "category": "Operators and Operator Precedence",
       "title": "Operators and Operator Precedence (14)",
@@ -3132,8 +2940,7 @@
       ],
       "explanation": "The slides define operator precedence as the order in which operations are evaluated."
     },
-    {
-      "id": "pfj-116",
+    "pfj-116": {
       "course": "Programming Fundamentals",
       "category": "Operators and Operator Precedence",
       "title": "Operators and Operator Precedence (15)",
@@ -3161,8 +2968,7 @@
       ],
       "explanation": "The assignment-operator table and note explain the assignment direction and the equivalences of compound operators. The added statement is incorrect: Compound assignment performs the assignment first and the calculation afterwards."
     },
-    {
-      "id": "pfj-117",
+    "pfj-117": {
       "course": "Programming Fundamentals",
       "category": "Operators and Operator Precedence",
       "title": "Operators and Operator Precedence (16)",
@@ -3188,8 +2994,7 @@
       ],
       "explanation": "The table gives *=, /= and %= with those equivalences; += uses addition, not subtraction."
     },
-    {
-      "id": "pfj-118",
+    "pfj-118": {
       "course": "Programming Fundamentals",
       "category": "Operators and Operator Precedence",
       "title": "Operators and Operator Precedence (17)",
@@ -3213,8 +3018,7 @@
       ],
       "explanation": "The other-operators table says the dot operator is used to create a qualified name."
     },
-    {
-      "id": "pfj-119",
+    "pfj-119": {
       "course": "Programming Fundamentals",
       "category": "Operators and Operator Precedence",
       "title": "Operators and Operator Precedence (18)",
@@ -3244,8 +3048,7 @@
       ],
       "explanation": "All five descriptions are shown in the other-operators table. The slides note that several will be discussed later. The added statement is incorrect: The dot operator is described as the operator that creates a new object or array."
     },
-    {
-      "id": "pfj-120",
+    "pfj-120": {
       "course": "Programming Fundamentals",
       "category": "Operators and Operator Precedence",
       "title": "Operators and Operator Precedence (19)",
@@ -3269,8 +3072,7 @@
       ],
       "explanation": "The precedence slide recommends not depending too much on the rules and using rounded brackets to be sure."
     },
-    {
-      "id": "pfj-121",
+    "pfj-121": {
       "course": "Programming Fundamentals",
       "category": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection",
       "title": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection",
@@ -3294,8 +3096,7 @@
       ],
       "explanation": "The objects slide labels the object as the foundation of OOP."
     },
-    {
-      "id": "pfj-122",
+    "pfj-122": {
       "course": "Programming Fundamentals",
       "category": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection",
       "title": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection (2)",
@@ -3320,8 +3121,7 @@
       ],
       "explanation": "The slide says everyday objects have properties that make up state and display behavior."
     },
-    {
-      "id": "pfj-123",
+    "pfj-123": {
       "course": "Programming Fundamentals",
       "category": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection",
       "title": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection (3)",
@@ -3346,8 +3146,7 @@
       ],
       "explanation": "The object slide maps properties to attributes/fields/class properties and behavior to methods."
     },
-    {
-      "id": "pfj-124",
+    "pfj-124": {
       "course": "Programming Fundamentals",
       "category": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection",
       "title": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection (4)",
@@ -3371,8 +3170,7 @@
       ],
       "explanation": "The classes-and-objects slide defines a class as a blueprint for properties and methods of objects of a certain type."
     },
-    {
-      "id": "pfj-125",
+    "pfj-125": {
       "course": "Programming Fundamentals",
       "category": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection",
       "title": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection (5)",
@@ -3396,8 +3194,7 @@
       ],
       "explanation": "The slides define an object as a unique instance of a class."
     },
-    {
-      "id": "pfj-126",
+    "pfj-126": {
       "course": "Programming Fundamentals",
       "category": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection",
       "title": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection (6)",
@@ -3423,8 +3220,7 @@
       ],
       "explanation": "The slides state that a class determines the object type and defines its properties and methods; each object is an instance, while examples show different per-object values."
     },
-    {
-      "id": "pfj-127",
+    "pfj-127": {
       "course": "Programming Fundamentals",
       "category": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection",
       "title": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection (7)",
@@ -3448,8 +3244,7 @@
       ],
       "explanation": "The slide labels method calls as messages in the context of object interaction."
     },
-    {
-      "id": "pfj-128",
+    "pfj-128": {
       "course": "Programming Fundamentals",
       "category": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection",
       "title": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection (8)",
@@ -3477,8 +3272,7 @@
       ],
       "explanation": "The method-call diagram labels object, method, parameter(s), and the result variable. The added statement is incorrect: The diagram labels the method name as the variable that stores the result."
     },
-    {
-      "id": "pfj-129",
+    "pfj-129": {
       "course": "Programming Fundamentals",
       "category": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection",
       "title": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection (9)",
@@ -3502,8 +3296,7 @@
       ],
       "explanation": "The object-creation slide lists allocation of memory and return of a reference as the two effects of new."
     },
-    {
-      "id": "pfj-130",
+    "pfj-130": {
       "course": "Programming Fundamentals",
       "category": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection",
       "title": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection (10)",
@@ -3531,8 +3324,7 @@
       ],
       "explanation": "The slides state that a class is needed, show `new` plus class name and parentheses, say parentheses are mandatory, and explain that a constructor is called. The added statement is incorrect: The parentheses after the class name may be omitted when the constructor has no parameters."
     },
-    {
-      "id": "pfj-131",
+    "pfj-131": {
       "course": "Programming Fundamentals",
       "category": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection",
       "title": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection (11)",
@@ -3556,8 +3348,7 @@
       ],
       "explanation": "The slide describes a constructor as a special kind of method called by the new-expression."
     },
-    {
-      "id": "pfj-132",
+    "pfj-132": {
       "course": "Programming Fundamentals",
       "category": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection",
       "title": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection (12)",
@@ -3585,8 +3376,7 @@
       ],
       "explanation": "All four statements are presented on the Random constructor slide. The added statement is incorrect: Two Random instances initialized with the same seed are said to generate different sequences."
     },
-    {
-      "id": "pfj-133",
+    "pfj-133": {
       "course": "Programming Fundamentals",
       "category": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection",
       "title": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection (13)",
@@ -3614,8 +3404,7 @@
       ],
       "explanation": "The Random methods slide gives these ranges and return descriptions. The added statement is incorrect: `nextInt(bound)` includes `bound` as a possible returned value."
     },
-    {
-      "id": "pfj-134",
+    "pfj-134": {
       "course": "Programming Fundamentals",
       "category": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection",
       "title": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection (14)",
@@ -3639,8 +3428,7 @@
       ],
       "explanation": "The slide describes object access using object name, dot, then public method or property name."
     },
-    {
-      "id": "pfj-135",
+    "pfj-135": {
       "course": "Programming Fundamentals",
       "category": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection",
       "title": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection (15)",
@@ -3666,8 +3454,7 @@
       ],
       "explanation": "The slides show references being assigned to variables and multiple variables referring to the same object; primitive assignment copies the primitive value."
     },
-    {
-      "id": "pfj-136",
+    "pfj-136": {
       "course": "Programming Fundamentals",
       "category": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection",
       "title": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection (16)",
@@ -3691,8 +3478,7 @@
       ],
       "explanation": "The reference slide says changes made through player1 can be observed through player2 and vice versa when both refer to the same object."
     },
-    {
-      "id": "pfj-137",
+    "pfj-137": {
       "course": "Programming Fundamentals",
       "category": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection",
       "title": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection (17)",
@@ -3720,8 +3506,7 @@
       ],
       "explanation": "The package slide lists each of these organizational benefits. The added statement is incorrect: The slides say packages are used to increase naming conflicts."
     },
-    {
-      "id": "pfj-138",
+    "pfj-138": {
       "course": "Programming Fundamentals",
       "category": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection",
       "title": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection (18)",
@@ -3749,8 +3534,7 @@
       ],
       "explanation": "The package/import slides show java.util.Random as a fully qualified name and explain both imported and fully qualified usage. The added statement is incorrect: A fully qualified class name omits the package name."
     },
-    {
-      "id": "pfj-139",
+    "pfj-139": {
       "course": "Programming Fundamentals",
       "category": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection",
       "title": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection (19)",
@@ -3776,8 +3560,7 @@
       ],
       "explanation": "The slide lists explicit imports first, then classes in the current package, then classes from wildcard-imported packages."
     },
-    {
-      "id": "pfj-140",
+    "pfj-140": {
       "course": "Programming Fundamentals",
       "category": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection",
       "title": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection (20)",
@@ -3803,8 +3586,7 @@
       ],
       "explanation": "The slide lists the default package, the current package and java.lang as automatic imports; it does not say java.util is imported in its entirety."
     },
-    {
-      "id": "pfj-141",
+    "pfj-141": {
       "course": "Programming Fundamentals",
       "category": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection",
       "title": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection (21)",
@@ -3828,8 +3610,7 @@
       ],
       "explanation": "The slide gives reverse.domain.of.company.project.internal and says names are all lowercase to guarantee worldwide uniqueness."
     },
-    {
-      "id": "pfj-142",
+    "pfj-142": {
       "course": "Programming Fundamentals",
       "category": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection",
       "title": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection (22)",
@@ -3854,8 +3635,7 @@
       ],
       "explanation": "The garbage-collection slide names out-of-scope references and assigning null as ways a reference disappears."
     },
-    {
-      "id": "pfj-143",
+    "pfj-143": {
       "course": "Programming Fundamentals",
       "category": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection",
       "title": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection (23)",
@@ -3879,8 +3659,7 @@
       ],
       "explanation": "The slide says garbage collection frees memory no variable refers to, occurs automatically, and does not happen immediately."
     },
-    {
-      "id": "pfj-144",
+    "pfj-144": {
       "course": "Programming Fundamentals",
       "category": "String and StringBuilder",
       "title": "String and StringBuilder",
@@ -3904,8 +3683,7 @@
       ],
       "explanation": "The String slide says String is actually a class and each String in the program is an object."
     },
-    {
-      "id": "pfj-145",
+    "pfj-145": {
       "course": "Programming Fundamentals",
       "category": "String and StringBuilder",
       "title": "String and StringBuilder (2)",
@@ -3933,8 +3711,7 @@
       ],
       "explanation": "The slide identifies java.lang, no required import and String immutability. The added statement is incorrect: The slides say a String object can be modified in place after it is created."
     },
-    {
-      "id": "pfj-146",
+    "pfj-146": {
       "course": "Programming Fundamentals",
       "category": "String and StringBuilder",
       "title": "String and StringBuilder (3)",
@@ -3958,8 +3735,7 @@
       ],
       "explanation": "The slide says a String literal is already an object and highlights explicitly creating a new String in the example as bad practice."
     },
-    {
-      "id": "pfj-147",
+    "pfj-147": {
       "course": "Programming Fundamentals",
       "category": "String and StringBuilder",
       "title": "String and StringBuilder (4)",
@@ -3983,8 +3759,7 @@
       ],
       "explanation": "The text-block slide says text blocks can contain multiple lines and double quotes."
     },
-    {
-      "id": "pfj-148",
+    "pfj-148": {
       "course": "Programming Fundamentals",
       "category": "String and StringBuilder",
       "title": "String and StringBuilder (5)",
@@ -4009,8 +3784,7 @@
       ],
       "explanation": "The reading-a-String slide gives those exact stopping points."
     },
-    {
-      "id": "pfj-149",
+    "pfj-149": {
       "course": "Programming Fundamentals",
       "category": "String and StringBuilder",
       "title": "String and StringBuilder (6)",
@@ -4034,8 +3808,7 @@
       ],
       "explanation": "The heads-up slide says the leftover Enter is consumed by nextLine(), resulting in an empty String, and recommends clearing it first."
     },
-    {
-      "id": "pfj-150",
+    "pfj-150": {
       "course": "Programming Fundamentals",
       "category": "String and StringBuilder",
       "title": "String and StringBuilder (7)",
@@ -4059,8 +3832,7 @@
       ],
       "explanation": "The slide shows an extra nextLine() call to clear the leftover Enter before reading the name."
     },
-    {
-      "id": "pfj-151",
+    "pfj-151": {
       "course": "Programming Fundamentals",
       "category": "String and StringBuilder",
       "title": "String and StringBuilder (8)",
@@ -4090,8 +3862,7 @@
       ],
       "explanation": "These methods and descriptions are explicitly listed on the String methods slide. The added statement is incorrect: `length()` returns the number of bytes rather than the number of characters."
     },
-    {
-      "id": "pfj-152",
+    "pfj-152": {
       "course": "Programming Fundamentals",
       "category": "String and StringBuilder",
       "title": "String and StringBuilder (9)",
@@ -4119,8 +3890,7 @@
       ],
       "explanation": "The method description explains the negative, zero and positive results in alphabetical comparison. The added statement is incorrect: `compareTo` returns only a boolean value."
     },
-    {
-      "id": "pfj-153",
+    "pfj-153": {
       "course": "Programming Fundamentals",
       "category": "String and StringBuilder",
       "title": "String and StringBuilder (10)",
@@ -4144,8 +3914,7 @@
       ],
       "explanation": "The summary slide explicitly warns never to compare Strings using == and recommends equals()."
     },
-    {
-      "id": "pfj-154",
+    "pfj-154": {
       "course": "Programming Fundamentals",
       "category": "String and StringBuilder",
       "title": "String and StringBuilder (11)",
@@ -4171,8 +3940,7 @@
       ],
       "explanation": "The slides show method calls on a String literal and concatenation using +. String is immutable, so concatenation does not modify the original object in place."
     },
-    {
-      "id": "pfj-155",
+    "pfj-155": {
       "course": "Programming Fundamentals",
       "category": "String and StringBuilder",
       "title": "String and StringBuilder (12)",
@@ -4196,8 +3964,7 @@
       ],
       "explanation": "The example prints the original String unchanged after calling concat, while assigning the result to another variable stores the new String."
     },
-    {
-      "id": "pfj-156",
+    "pfj-156": {
       "course": "Programming Fundamentals",
       "category": "String and StringBuilder",
       "title": "String and StringBuilder (13)",
@@ -4225,8 +3992,7 @@
       ],
       "explanation": "The memory diagram shows one shared literal object for one and two, a separate object for three; the comparison examples show == true for the literals and equals true for all three. The added statement is incorrect: The example shows `one == three` evaluating to true."
     },
-    {
-      "id": "pfj-157",
+    "pfj-157": {
       "course": "Programming Fundamentals",
       "category": "String and StringBuilder",
       "title": "String and StringBuilder (14)",
@@ -4250,8 +4016,7 @@
       ],
       "explanation": "The StringBuilder slide describes it as an alternative to String with modifiable contents."
     },
-    {
-      "id": "pfj-158",
+    "pfj-158": {
       "course": "Programming Fundamentals",
       "category": "String and StringBuilder",
       "title": "String and StringBuilder (15)",
@@ -4279,8 +4044,7 @@
       ],
       "explanation": "The slide identifies mutability, avoiding repeated object creation, improved performance and reduced memory usage. The added statement is incorrect: The slides say StringBuilder creates a new object every time text is appended, inserted or removed."
     },
-    {
-      "id": "pfj-159",
+    "pfj-159": {
       "course": "Programming Fundamentals",
       "category": "String and StringBuilder",
       "title": "String and StringBuilder (16)",
@@ -4308,8 +4072,7 @@
       ],
       "explanation": "The creation slide presents the two String forms and two StringBuilder constructor forms. The added statement is incorrect: The slides say an empty StringBuilder cannot be created with a no-argument constructor."
     },
-    {
-      "id": "pfj-160",
+    "pfj-160": {
       "course": "Programming Fundamentals",
       "category": "String and StringBuilder",
       "title": "String and StringBuilder (17)",
@@ -4339,8 +4102,7 @@
       ],
       "explanation": "All five methods and their roles are described on the StringBuilder methods slide. The added statement is incorrect: `charAt(index)` returns the index number rather than the character at that index."
     },
-    {
-      "id": "pfj-161",
+    "pfj-161": {
       "course": "Programming Fundamentals",
       "category": "String and StringBuilder",
       "title": "String and StringBuilder (18)",
@@ -4364,8 +4126,7 @@
       ],
       "explanation": "The example annotation explicitly says append returns the modified StringBuilder."
     },
-    {
-      "id": "pfj-162",
+    "pfj-162": {
       "course": "Programming Fundamentals",
       "category": "Formatting Data",
       "title": "Formatting Data",
@@ -4389,8 +4150,7 @@
       ],
       "explanation": "The formatting slide gives System.out.printf and System.out.format for screen output."
     },
-    {
-      "id": "pfj-163",
+    "pfj-163": {
       "course": "Programming Fundamentals",
       "category": "Formatting Data",
       "title": "Formatting Data (2)",
@@ -4414,8 +4174,7 @@
       ],
       "explanation": "The slide says to use String.format when the result is needed in a String object."
     },
-    {
-      "id": "pfj-164",
+    "pfj-164": {
       "course": "Programming Fundamentals",
       "category": "Formatting Data",
       "title": "Formatting Data (3)",
@@ -4441,8 +4200,7 @@
       ],
       "explanation": "The slide describes printf/format as identical apart from the name and separately shows String.format to produce a String."
     },
-    {
-      "id": "pfj-165",
+    "pfj-165": {
       "course": "Programming Fundamentals",
       "category": "Formatting Data",
       "title": "Formatting Data (4)",
@@ -4474,8 +4232,7 @@
       ],
       "explanation": "The format-specifier slide lists all six mappings. The added statement is incorrect: The slides map `%d` to String values and `%s` to integer values."
     },
-    {
-      "id": "pfj-166",
+    "pfj-166": {
       "course": "Programming Fundamentals",
       "category": "Formatting Data",
       "title": "Formatting Data (5)",
@@ -4499,8 +4256,7 @@
       ],
       "explanation": "The slide says format specifiers are by default aligned to the right."
     },
-    {
-      "id": "pfj-167",
+    "pfj-167": {
       "course": "Programming Fundamentals",
       "category": "Formatting Data",
       "title": "Formatting Data (6)",
@@ -4528,8 +4284,7 @@
       ],
       "explanation": "The slide explains each indicator and gives examples such as %20s, %-20s, %6.2f and %,d. The added statement is incorrect: A minus sign between `%` and the type letter indicates right alignment."
     },
-    {
-      "id": "pfj-168",
+    "pfj-168": {
       "course": "Programming Fundamentals",
       "category": "Formatting Data",
       "title": "Formatting Data (7)",
@@ -4553,8 +4308,7 @@
       ],
       "explanation": "The table identifies %n as a newline and notes it is more platform independent than \n."
     },
-    {
-      "id": "pfj-169",
+    "pfj-169": {
       "course": "Programming Fundamentals",
       "category": "Formatting Data",
       "title": "Formatting Data (8)",
@@ -4582,8 +4336,7 @@
       ],
       "explanation": "The formatting slides explicitly state matching parameters/types, show %% for a percent character, and note automatic rounding for %f precision. The added statement is incorrect: The slides say a format specifier may be used without a matching parameter."
     },
-    {
-      "id": "pfj-170",
+    "pfj-170": {
       "course": "Programming Fundamentals",
       "category": "Formatting Data",
       "title": "Formatting Data (9)",
@@ -4607,8 +4360,7 @@
       ],
       "explanation": "The minus sign indicates left alignment, while 10 specifies a minimum number of positions."
     },
-    {
-      "id": "pfj-171",
+    "pfj-171": {
       "course": "Programming Fundamentals",
       "category": "Formatting Data",
       "title": "Formatting Data (10)",
@@ -4632,8 +4384,7 @@
       ],
       "explanation": "The slides use %.2f for two decimal places and show automatic rounding."
     },
-    {
-      "id": "pfj-172",
+    "pfj-172": {
       "course": "Programming Fundamentals",
       "category": "Class Structure, Attributes and Accessibility",
       "title": "Class Structure, Attributes and Accessibility",
@@ -4657,8 +4408,7 @@
       ],
       "explanation": "The class-structure slides label the class declaration as the class header."
     },
-    {
-      "id": "pfj-173",
+    "pfj-173": {
       "course": "Programming Fundamentals",
       "category": "Class Structure, Attributes and Accessibility",
       "title": "Class Structure, Attributes and Accessibility (2)",
@@ -4682,8 +4432,7 @@
       ],
       "explanation": "The defining-class exercise note says a public class must be declared in a .java file with the same name."
     },
-    {
-      "id": "pfj-174",
+    "pfj-174": {
       "course": "Programming Fundamentals",
       "category": "Class Structure, Attributes and Accessibility",
       "title": "Class Structure, Attributes and Accessibility (3)",
@@ -4711,8 +4460,7 @@
       ],
       "explanation": "The class declaration template brackets each of these elements to mark them as optional. The added statement is incorrect: The class name placeholder is marked optional in the class-declaration syntax."
     },
-    {
-      "id": "pfj-175",
+    "pfj-175": {
       "course": "Programming Fundamentals",
       "category": "Class Structure, Attributes and Accessibility",
       "title": "Class Structure, Attributes and Accessibility (4)",
@@ -4736,8 +4484,7 @@
       ],
       "explanation": "The slide says words in italics must be replaced by an identifier and gives Rectangle as an example."
     },
-    {
-      "id": "pfj-176",
+    "pfj-176": {
       "course": "Programming Fundamentals",
       "category": "Class Structure, Attributes and Accessibility",
       "title": "Class Structure, Attributes and Accessibility (5)",
@@ -4763,8 +4510,7 @@
       ],
       "explanation": "The class-body diagrams label attributes, constructors and methods as class contents; package and import statements are outside the class body."
     },
-    {
-      "id": "pfj-177",
+    "pfj-177": {
       "course": "Programming Fundamentals",
       "category": "Class Structure, Attributes and Accessibility",
       "title": "Class Structure, Attributes and Accessibility (6)",
@@ -4788,8 +4534,7 @@
       ],
       "explanation": "The attributes slide states: unless attributes are final, mark them private."
     },
-    {
-      "id": "pfj-178",
+    "pfj-178": {
       "course": "Programming Fundamentals",
       "category": "Class Structure, Attributes and Accessibility",
       "title": "Class Structure, Attributes and Accessibility (7)",
@@ -4819,8 +4564,7 @@
       ],
       "explanation": "The attribute syntax lists private/public/protected as access options and static/final as other optional declaration elements. The added statement is incorrect: The attribute declaration syntax does not list `final` as a possible modifier."
     },
-    {
-      "id": "pfj-179",
+    "pfj-179": {
       "course": "Programming Fundamentals",
       "category": "Class Structure, Attributes and Accessibility",
       "title": "Class Structure, Attributes and Accessibility (8)",
@@ -4844,8 +4588,7 @@
       ],
       "explanation": "The slide explicitly says at most one accessibility modifier is allowed."
     },
-    {
-      "id": "pfj-180",
+    "pfj-180": {
       "course": "Programming Fundamentals",
       "category": "Class Structure, Attributes and Accessibility",
       "title": "Class Structure, Attributes and Accessibility (9)",
@@ -4871,8 +4614,7 @@
       ],
       "explanation": "The access table marks same class, same package and subclass for protected, but not any class."
     },
-    {
-      "id": "pfj-181",
+    "pfj-181": {
       "course": "Programming Fundamentals",
       "category": "Class Structure, Attributes and Accessibility",
       "title": "Class Structure, Attributes and Accessibility (10)",
@@ -4898,8 +4640,7 @@
       ],
       "explanation": "The table labels no keyword as package access and shows access from the same class and same package only."
     },
-    {
-      "id": "pfj-182",
+    "pfj-182": {
       "course": "Programming Fundamentals",
       "category": "Class Structure, Attributes and Accessibility",
       "title": "Class Structure, Attributes and Accessibility (11)",
@@ -4923,8 +4664,7 @@
       ],
       "explanation": "The default-value table gives null for object attributes."
     },
-    {
-      "id": "pfj-183",
+    "pfj-183": {
       "course": "Programming Fundamentals",
       "category": "Class Structure, Attributes and Accessibility",
       "title": "Class Structure, Attributes and Accessibility (12)",
@@ -4954,8 +4694,7 @@
       ],
       "explanation": "The default-value table lists each of these values. The added statement is incorrect: The default value shown for an object attribute is an empty String."
     },
-    {
-      "id": "pfj-184",
+    "pfj-184": {
       "course": "Programming Fundamentals",
       "category": "Class Structure, Attributes and Accessibility",
       "title": "Class Structure, Attributes and Accessibility (13)",
@@ -4979,8 +4718,7 @@
       ],
       "explanation": "The default-value slide warns that using a null object attribute without initialization causes a NullPointerException."
     },
-    {
-      "id": "pfj-185",
+    "pfj-185": {
       "course": "Programming Fundamentals",
       "category": "Methods, Parameters, Encapsulation and Overloading",
       "title": "Methods, Parameters, Encapsulation and Overloading",
@@ -5004,8 +4742,7 @@
       ],
       "explanation": "The methods slide defines a method as code associated to the object."
     },
-    {
-      "id": "pfj-186",
+    "pfj-186": {
       "course": "Programming Fundamentals",
       "category": "Methods, Parameters, Encapsulation and Overloading",
       "title": "Methods, Parameters, Encapsulation and Overloading (2)",
@@ -5029,8 +4766,7 @@
       ],
       "explanation": "The scope slide states that attributes are declared in the class, while local variables are declared in a code block."
     },
-    {
-      "id": "pfj-187",
+    "pfj-187": {
       "course": "Programming Fundamentals",
       "category": "Methods, Parameters, Encapsulation and Overloading",
       "title": "Methods, Parameters, Encapsulation and Overloading (3)",
@@ -5058,8 +4794,7 @@
       ],
       "explanation": "The slide lists all four points and notes that attribute data need not be passed as parameters to the object’s own methods. The added statement is incorrect: Attributes are declared inside individual method code blocks rather than in the class."
     },
-    {
-      "id": "pfj-188",
+    "pfj-188": {
       "course": "Programming Fundamentals",
       "category": "Methods, Parameters, Encapsulation and Overloading",
       "title": "Methods, Parameters, Encapsulation and Overloading (4)",
@@ -5087,8 +4822,7 @@
       ],
       "explanation": "The local-variable column lists these features. The added statement is incorrect: Local variables are automatically initialized by the Java system."
     },
-    {
-      "id": "pfj-189",
+    "pfj-189": {
       "course": "Programming Fundamentals",
       "category": "Methods, Parameters, Encapsulation and Overloading",
       "title": "Methods, Parameters, Encapsulation and Overloading (5)",
@@ -5112,8 +4846,7 @@
       ],
       "explanation": "The variable-scope slide says to use `this`, also called the this-reference, to distinguish the attribute."
     },
-    {
-      "id": "pfj-190",
+    "pfj-190": {
       "course": "Programming Fundamentals",
       "category": "Methods, Parameters, Encapsulation and Overloading",
       "title": "Methods, Parameters, Encapsulation and Overloading (6)",
@@ -5141,8 +4874,7 @@
       ],
       "explanation": "The parameters slide gives all these properties. The added statement is incorrect: The slides say all method parameters are declared together without individual types."
     },
-    {
-      "id": "pfj-191",
+    "pfj-191": {
       "course": "Programming Fundamentals",
       "category": "Methods, Parameters, Encapsulation and Overloading",
       "title": "Methods, Parameters, Encapsulation and Overloading (7)",
@@ -5166,8 +4898,7 @@
       ],
       "explanation": "The slide says the values 7 and 9 are assigned to parameters x and y, equivalent to x=7 and y=9."
     },
-    {
-      "id": "pfj-192",
+    "pfj-192": {
       "course": "Programming Fundamentals",
       "category": "Methods, Parameters, Encapsulation and Overloading",
       "title": "Methods, Parameters, Encapsulation and Overloading (8)",
@@ -5195,8 +4926,7 @@
       ],
       "explanation": "All four characteristics are listed on the setters slide. The added statement is incorrect: A setter is described as returning the current attribute value rather than changing it."
     },
-    {
-      "id": "pfj-193",
+    "pfj-193": {
       "course": "Programming Fundamentals",
       "category": "Methods, Parameters, Encapsulation and Overloading",
       "title": "Methods, Parameters, Encapsulation and Overloading (9)",
@@ -5222,8 +4952,7 @@
       ],
       "explanation": "The getters slide states that they provide information, generally have no parameters and return a type matching the attribute; changing is the role of setters."
     },
-    {
-      "id": "pfj-194",
+    "pfj-194": {
       "course": "Programming Fundamentals",
       "category": "Methods, Parameters, Encapsulation and Overloading",
       "title": "Methods, Parameters, Encapsulation and Overloading (10)",
@@ -5247,8 +4976,7 @@
       ],
       "explanation": "The method-declaration and return slides use void to indicate that nothing is returned."
     },
-    {
-      "id": "pfj-195",
+    "pfj-195": {
       "course": "Programming Fundamentals",
       "category": "Methods, Parameters, Encapsulation and Overloading",
       "title": "Methods, Parameters, Encapsulation and Overloading (11)",
@@ -5276,8 +5004,7 @@
       ],
       "explanation": "The return slide explains all four steps. The added statement is incorrect: The slides say execution continues in the method after a return statement has executed."
     },
-    {
-      "id": "pfj-196",
+    "pfj-196": {
       "course": "Programming Fundamentals",
       "category": "Methods, Parameters, Encapsulation and Overloading",
       "title": "Methods, Parameters, Encapsulation and Overloading (12)",
@@ -5301,8 +5028,7 @@
       ],
       "explanation": "The slide says a void method call is not an expression and has no result to assign or print."
     },
-    {
-      "id": "pfj-197",
+    "pfj-197": {
       "course": "Programming Fundamentals",
       "category": "Methods, Parameters, Encapsulation and Overloading",
       "title": "Methods, Parameters, Encapsulation and Overloading (13)",
@@ -5328,8 +5054,7 @@
       ],
       "explanation": "The slides show that direct public access allows invalid values, while private attributes and validating setters let the class control validity."
     },
-    {
-      "id": "pfj-198",
+    "pfj-198": {
       "course": "Programming Fundamentals",
       "category": "Methods, Parameters, Encapsulation and Overloading",
       "title": "Methods, Parameters, Encapsulation and Overloading (14)",
@@ -5353,8 +5078,7 @@
       ],
       "explanation": "The encapsulation conclusion says non-final attributes should always be private."
     },
-    {
-      "id": "pfj-199",
+    "pfj-199": {
       "course": "Programming Fundamentals",
       "category": "Methods, Parameters, Encapsulation and Overloading",
       "title": "Methods, Parameters, Encapsulation and Overloading (15)",
@@ -5382,8 +5106,7 @@
       ],
       "explanation": "The sample setter accepts values between MIN_SPEED -20 and MAX_SPEED 300 inclusive; 50000 is rejected."
     },
-    {
-      "id": "pfj-200",
+    "pfj-200": {
       "course": "Programming Fundamentals",
       "category": "Methods, Parameters, Encapsulation and Overloading",
       "title": "Methods, Parameters, Encapsulation and Overloading (16)",
@@ -5407,8 +5130,7 @@
       ],
       "explanation": "The slide says the name and parameter list define the method signature."
     },
-    {
-      "id": "pfj-201",
+    "pfj-201": {
       "course": "Programming Fundamentals",
       "category": "Methods, Parameters, Encapsulation and Overloading",
       "title": "Methods, Parameters, Encapsulation and Overloading (17)",
@@ -5433,8 +5155,7 @@
       ],
       "explanation": "The coursework defines overloading using different parameter types or a different number of parameters."
     },
-    {
-      "id": "pfj-202",
+    "pfj-202": {
       "course": "Programming Fundamentals",
       "category": "Constructors, toString and the Math Class",
       "title": "Constructors, toString and the Math Class",
@@ -5458,8 +5179,7 @@
       ],
       "explanation": "The constructors slide says the constructor name equals the class name."
     },
-    {
-      "id": "pfj-203",
+    "pfj-203": {
       "course": "Programming Fundamentals",
       "category": "Constructors, toString and the Math Class",
       "title": "Constructors, toString and the Math Class (2)",
@@ -5487,8 +5207,7 @@
       ],
       "explanation": "The constructor slide lists all of these properties and access choices. The added statement is incorrect: A constructor must declare a return type before its name."
     },
-    {
-      "id": "pfj-204",
+    "pfj-204": {
       "course": "Programming Fundamentals",
       "category": "Constructors, toString and the Math Class",
       "title": "Constructors, toString and the Math Class (3)",
@@ -5512,8 +5231,7 @@
       ],
       "explanation": "The constructor slide says to use the variable-name convention but start with a capital letter."
     },
-    {
-      "id": "pfj-205",
+    "pfj-205": {
       "course": "Programming Fundamentals",
       "category": "Constructors, toString and the Math Class",
       "title": "Constructors, toString and the Math Class (4)",
@@ -5537,8 +5255,7 @@
       ],
       "explanation": "The default-constructor slide says Java generates one if no constructor is added."
     },
-    {
-      "id": "pfj-206",
+    "pfj-206": {
       "course": "Programming Fundamentals",
       "category": "Constructors, toString and the Math Class",
       "title": "Constructors, toString and the Math Class (5)",
@@ -5564,8 +5281,7 @@
       ],
       "explanation": "The slide says it has no parameters and an empty body and is not generated once any constructor is written."
     },
-    {
-      "id": "pfj-207",
+    "pfj-207": {
       "course": "Programming Fundamentals",
       "category": "Constructors, toString and the Math Class",
       "title": "Constructors, toString and the Math Class (6)",
@@ -5589,8 +5305,7 @@
       ],
       "explanation": "The slides explicitly warn that if any constructor is written, the default constructor is not generated anymore."
     },
-    {
-      "id": "pfj-208",
+    "pfj-208": {
       "course": "Programming Fundamentals",
       "category": "Constructors, toString and the Math Class",
       "title": "Constructors, toString and the Math Class (7)",
@@ -5616,8 +5331,7 @@
       ],
       "explanation": "The example shows a manually written no-argument Point constructor alongside a two-parameter constructor; the last statement conflicts with the default-constructor rule."
     },
-    {
-      "id": "pfj-209",
+    "pfj-209": {
       "course": "Programming Fundamentals",
       "category": "Constructors, toString and the Math Class",
       "title": "Constructors, toString and the Math Class (8)",
@@ -5641,8 +5355,7 @@
       ],
       "explanation": "The slides show a no-argument constructor and a constructor with two parameters, and refer to constructor overloading."
     },
-    {
-      "id": "pfj-210",
+    "pfj-210": {
       "course": "Programming Fundamentals",
       "category": "Constructors, toString and the Math Class",
       "title": "Constructors, toString and the Math Class (9)",
@@ -5668,8 +5381,7 @@
       ],
       "explanation": "The slides explain that this(parameters) calls another constructor for code reuse and must appear on the first line."
     },
-    {
-      "id": "pfj-211",
+    "pfj-211": {
       "course": "Programming Fundamentals",
       "category": "Constructors, toString and the Math Class",
       "title": "Constructors, toString and the Math Class (10)",
@@ -5693,8 +5405,7 @@
       ],
       "explanation": "The Car example contrasts a non-validating constructor that accepts -1000 with a constructor that calls the validating setter and preserves a valid state."
     },
-    {
-      "id": "pfj-212",
+    "pfj-212": {
       "course": "Programming Fundamentals",
       "category": "Constructors, toString and the Math Class",
       "title": "Constructors, toString and the Math Class (11)",
@@ -5722,8 +5433,7 @@
       ],
       "explanation": "The toString slide lists all four facts. The added statement is incorrect: The default `toString()` implementation is described as useful object-specific output."
     },
-    {
-      "id": "pfj-213",
+    "pfj-213": {
       "course": "Programming Fundamentals",
       "category": "Constructors, toString and the Math Class",
       "title": "Constructors, toString and the Math Class (12)",
@@ -5747,8 +5457,7 @@
       ],
       "explanation": "The slide explicitly notes that println internally calls toString, so both forms produce the same result."
     },
-    {
-      "id": "pfj-214",
+    "pfj-214": {
       "course": "Programming Fundamentals",
       "category": "Constructors, toString and the Math Class",
       "title": "Constructors, toString and the Math Class (13)",
@@ -5774,8 +5483,7 @@
       ],
       "explanation": "The slides recommend redefining toString for useful output and demonstrate formatting object attributes into a String."
     },
-    {
-      "id": "pfj-215",
+    "pfj-215": {
       "course": "Programming Fundamentals",
       "category": "Constructors, toString and the Math Class",
       "title": "Constructors, toString and the Math Class (14)",
@@ -5799,8 +5507,7 @@
       ],
       "explanation": "The Math slide describes it as a utility class containing only static methods."
     },
-    {
-      "id": "pfj-216",
+    "pfj-216": {
       "course": "Programming Fundamentals",
       "category": "Constructors, toString and the Math Class",
       "title": "Constructors, toString and the Math Class (15)",
@@ -5825,8 +5532,7 @@
       ],
       "explanation": "The Math constants slide lists E and PI with those descriptions."
     },
-    {
-      "id": "pfj-217",
+    "pfj-217": {
       "course": "Programming Fundamentals",
       "category": "Constructors, toString and the Math Class",
       "title": "Constructors, toString and the Math Class (16)",
@@ -5856,8 +5562,7 @@
       ],
       "explanation": "The slide lists these five static methods, with descriptions for absolute value, power and square root. The added statement is incorrect: The Math slide lists `sqrt(a, b)` as the square-root method."
     },
-    {
-      "id": "pfj-218",
+    "pfj-218": {
       "course": "Programming Fundamentals",
       "category": "Constructors, toString and the Math Class",
       "title": "Constructors, toString and the Math Class (17)",
@@ -5881,8 +5586,7 @@
       ],
       "explanation": "The quiz note says static methods and variables are called on the class, prefixed by the class name Math."
     },
-    {
-      "id": "pfj-219",
+    "pfj-219": {
       "course": "Programming Fundamentals",
       "category": "Programming Languages and Language Translation",
       "title": "Programming Languages and Language Translation (14)",
@@ -5908,8 +5612,7 @@
       ],
       "explanation": "The slides list desktop applications, server applications and mobile apps on the Android platform; the fourth option is not one of the listed areas."
     },
-    {
-      "id": "pfj-220",
+    "pfj-220": {
       "course": "Programming Fundamentals",
       "category": "Programming Languages and Language Translation",
       "title": "Programming Languages and Language Translation (15)",
@@ -5935,8 +5638,7 @@
       ],
       "explanation": "The Java diagram shows source code compiled to JVM bytecode and then executed through the Java platform on target systems. Processor-specific binaries are shown for the conventional compiled-language comparison, not the Java bytecode flow."
     },
-    {
-      "id": "pfj-221",
+    "pfj-221": {
       "course": "Programming Fundamentals",
       "category": "Programming Languages and Language Translation",
       "title": "Programming Languages and Language Translation (16)",
@@ -5966,8 +5668,7 @@
       ],
       "explanation": "The Java comparison lists compile-time checks, portable source, platform independence when Java is installed, medium speed and the need for a virtual machine. It identifies the speed as medium, not fast."
     },
-    {
-      "id": "pfj-222",
+    "pfj-222": {
       "course": "Programming Fundamentals",
       "category": "The Java Platform and Your First Java Program",
       "title": "The Java Platform and Your First Java Program (13)",
@@ -5991,8 +5692,7 @@
       ],
       "explanation": "The walkthrough identifies the main method as the place where code is put to execute and as the starting point of the application."
     },
-    {
-      "id": "pfj-223",
+    "pfj-223": {
       "course": "Programming Fundamentals",
       "category": "The Java Platform and Your First Java Program",
       "title": "The Java Platform and Your First Java Program (14)",
@@ -6020,8 +5720,7 @@
       ],
       "explanation": "The complete example shows a package declaration, an import for `java.util.Scanner`, a class and a main method. The slide explicitly says Scanner is not part of the Java core and must be imported."
     },
-    {
-      "id": "pfj-224",
+    "pfj-224": {
       "course": "Programming Fundamentals",
       "category": "Programming Algorithms and Flowcharts",
       "title": "Programming Algorithms and Flowcharts (9)",
@@ -6045,8 +5744,7 @@
       ],
       "explanation": "The robot example emphasizes elaborating actions until they are understandable to the robot."
     },
-    {
-      "id": "pfj-225",
+    "pfj-225": {
       "course": "Programming Fundamentals",
       "category": "Expressions, Statements, Blocks and Scope",
       "title": "Expressions, Statements, Blocks and Scope (11)",
@@ -6071,8 +5769,7 @@
       ],
       "explanation": "The slide groups logical compound statements as if and switch, and loop statements as while and for. Declaration and method-call statements are separate statement types."
     },
-    {
-      "id": "pfj-226",
+    "pfj-226": {
       "course": "Programming Fundamentals",
       "category": "Conditional Execution and Switch",
       "title": "Conditional Execution and Switch (16)",
@@ -6096,8 +5793,7 @@
       ],
       "explanation": "The simplified switch slide explicitly says “since Java 14”."
     },
-    {
-      "id": "pfj-227",
+    "pfj-227": {
       "course": "Programming Fundamentals",
       "category": "Loops: while, do-while, for, break and continue",
       "title": "Loops: while, do-while, for, break and continue (14)",
@@ -6123,8 +5819,7 @@
       ],
       "explanation": "The comparison shows the same counting pattern with the for-loop components in its header and with initialisation and increment placed around/inside a while loop."
     },
-    {
-      "id": "pfj-228",
+    "pfj-228": {
       "course": "Programming Fundamentals",
       "category": "Loops: while, do-while, for, break and continue",
       "title": "Loops: while, do-while, for, break and continue (15)",
@@ -6148,8 +5843,7 @@
       ],
       "explanation": "The post-decrement description says the current value is used first and the operand is decremented afterwards."
     },
-    {
-      "id": "pfj-229",
+    "pfj-229": {
       "course": "Programming Fundamentals",
       "category": "Functions and Method Basics",
       "title": "Functions and Method Basics (11)",
@@ -6177,8 +5871,7 @@
       ],
       "explanation": "The diagram labels the access modifiers, return type, name and argument list as declaration/signature components, with the body shown separately."
     },
-    {
-      "id": "pfj-230",
+    "pfj-230": {
       "course": "Programming Fundamentals",
       "category": "Variables, Primitive Types, Literals and Casting",
       "title": "Variables, Primitive Types, Literals and Casting (21)",
@@ -6202,8 +5895,7 @@
       ],
       "explanation": "The primitive-type table gives byte as an 8-bit two’s-complement value ranging from -128 to 127."
     },
-    {
-      "id": "pfj-231",
+    "pfj-231": {
       "course": "Programming Fundamentals",
       "category": "Variables, Primitive Types, Literals and Casting",
       "title": "Variables, Primitive Types, Literals and Casting (22)",
@@ -6229,8 +5921,7 @@
       ],
       "explanation": "The slide gives the stated ranges for short, int and long; the byte range is -128 to 127, not the range in the last option."
     },
-    {
-      "id": "pfj-232",
+    "pfj-232": {
       "course": "Programming Fundamentals",
       "category": "Variables, Primitive Types, Literals and Casting",
       "title": "Variables, Primitive Types, Literals and Casting (23)",
@@ -6256,8 +5947,7 @@
       ],
       "explanation": "The table labels float as 32-bit single precision, double as 64-bit double precision, and char as a 16-bit Unicode character. Boolean is listed separately as a 1-bit boolean value."
     },
-    {
-      "id": "pfj-233",
+    "pfj-233": {
       "course": "Programming Fundamentals",
       "category": "Variables, Primitive Types, Literals and Casting",
       "title": "Variables, Primitive Types, Literals and Casting (24)",
@@ -6281,8 +5971,7 @@
       ],
       "explanation": "The primitive-type table gives the Unicode range from \\u0000 through \\uFFFF."
     },
-    {
-      "id": "pfj-234",
+    "pfj-234": {
       "course": "Programming Fundamentals",
       "category": "Variables, Primitive Types, Literals and Casting",
       "title": "Variables, Primitive Types, Literals and Casting (25)",
@@ -6312,8 +6001,7 @@
       ],
       "explanation": "The escape-code table maps newline, carriage return, tabulator, backspace and form feed as listed. It does not map `\\n` to a tabulator."
     },
-    {
-      "id": "pfj-235",
+    "pfj-235": {
       "course": "Programming Fundamentals",
       "category": "Variables, Primitive Types, Literals and Casting",
       "title": "Variables, Primitive Types, Literals and Casting (26)",
@@ -6339,8 +6027,7 @@
       ],
       "explanation": "The table lists the escaped single quote, double quote and backslash; newline is represented by `\\n`."
     },
-    {
-      "id": "pfj-236",
+    "pfj-236": {
       "course": "Programming Fundamentals",
       "category": "Variables, Primitive Types, Literals and Casting",
       "title": "Variables, Primitive Types, Literals and Casting (27)",
@@ -6364,8 +6051,7 @@
       ],
       "explanation": "The conversion slide shows an int assigned to a double as allowed, in contrast to the reverse assignment."
     },
-    {
-      "id": "pfj-237",
+    "pfj-237": {
       "course": "Programming Fundamentals",
       "category": "Variables, Primitive Types, Literals and Casting",
       "title": "Variables, Primitive Types, Literals and Casting (28)",
@@ -6389,8 +6075,7 @@
       ],
       "explanation": "The slide states that conversion from double to int is not allowed implicitly because it could cause loss of data or precision."
     },
-    {
-      "id": "pfj-238",
+    "pfj-238": {
       "course": "Programming Fundamentals",
       "category": "Operators and Operator Precedence",
       "title": "Operators and Operator Precedence (20)",
@@ -6414,8 +6099,7 @@
       ],
       "explanation": "The unary-operator table states that +op promotes byte, short or char to int."
     },
-    {
-      "id": "pfj-239",
+    "pfj-239": {
       "course": "Programming Fundamentals",
       "category": "Operators and Operator Precedence",
       "title": "Operators and Operator Precedence (21)",
@@ -6439,8 +6123,7 @@
       ],
       "explanation": "The precedence table places postfix above unary, then creation/type conversion, multiplication/division and addition/subtraction."
     },
-    {
-      "id": "pfj-240",
+    "pfj-240": {
       "course": "Programming Fundamentals",
       "category": "Operators and Operator Precedence",
       "title": "Operators and Operator Precedence (22)",
@@ -6470,8 +6153,7 @@
       ],
       "explanation": "The precedence table includes shifts, relational/equality, bitwise operations, and short-circuit logical AND/OR. String formatting operators are not part of the table."
     },
-    {
-      "id": "pfj-241",
+    "pfj-241": {
       "course": "Programming Fundamentals",
       "category": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection",
       "title": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection (24)",
@@ -6495,8 +6177,7 @@
       ],
       "explanation": "The diagram labels the variable/reference in stack memory and the created object in heap memory."
     },
-    {
-      "id": "pfj-242",
+    "pfj-242": {
       "course": "Programming Fundamentals",
       "category": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection",
       "title": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection (25)",
@@ -6524,8 +6205,7 @@
       ],
       "explanation": "The slides contrast copying primitive content with copying a reference: the latter makes both variables refer to the same object, so changes through one reference can be observed through the other."
     },
-    {
-      "id": "pfj-243",
+    "pfj-243": {
       "course": "Programming Fundamentals",
       "category": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection",
       "title": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection (26)",
@@ -6549,8 +6229,7 @@
       ],
       "explanation": "The slide marks use of an uninitialized local reference as a compile error and shows initialization with `new Random()` as the working version."
     },
-    {
-      "id": "pfj-244",
+    "pfj-244": {
       "course": "Programming Fundamentals",
       "category": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection",
       "title": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection (27)",
@@ -6576,8 +6255,7 @@
       ],
       "explanation": "The slide shows reverse.domain.of.company.project.internal, says names are all lowercase, and says this guarantees worldwide uniqueness."
     },
-    {
-      "id": "pfj-245",
+    "pfj-245": {
       "course": "Programming Fundamentals",
       "category": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection",
       "title": "Object-Oriented Programming, Objects, References, Packages and Garbage Collection (28)",
@@ -6601,8 +6279,7 @@
       ],
       "explanation": "The garbage-collection slide says it happens automatically but never immediately, on a separate thread with low priority."
     },
-    {
-      "id": "pfj-246",
+    "pfj-246": {
       "course": "Programming Fundamentals",
       "category": "String and StringBuilder",
       "title": "String and StringBuilder (19)",
@@ -6626,8 +6303,7 @@
       ],
       "explanation": "The slide states that String is in java.lang and therefore no import is needed."
     },
-    {
-      "id": "pfj-247",
+    "pfj-247": {
       "course": "Programming Fundamentals",
       "category": "String and StringBuilder",
       "title": "String and StringBuilder (20)",
@@ -6653,8 +6329,7 @@
       ],
       "explanation": "The slide shows text blocks beginning with three double quotes and a newline, allowing multiple lines and embedded double quotes, and ending with three double quotes."
     },
-    {
-      "id": "pfj-248",
+    "pfj-248": {
       "course": "Programming Fundamentals",
       "category": "String and StringBuilder",
       "title": "String and StringBuilder (21)",
@@ -6682,8 +6357,7 @@
       ],
       "explanation": "The String methods slide lists substring, strip, toUpperCase and toLowerCase as other popular methods. reverse is listed later for StringBuilder."
     },
-    {
-      "id": "pfj-249",
+    "pfj-249": {
       "course": "Programming Fundamentals",
       "category": "Class Structure, Attributes and Accessibility",
       "title": "Class Structure, Attributes and Accessibility (14)",
@@ -6707,8 +6381,7 @@
       ],
       "explanation": "The slide explicitly says that a public class must be declared in a .java file with the same name."
     },
-    {
-      "id": "pfj-250",
+    "pfj-250": {
       "course": "Programming Fundamentals",
       "category": "Class Structure, Attributes and Accessibility",
       "title": "Class Structure, Attributes and Accessibility (15)",
@@ -6732,8 +6405,7 @@
       ],
       "explanation": "The access table marks private as accessible from the same class only."
     },
-    {
-      "id": "pfj-251",
+    "pfj-251": {
       "course": "Programming Fundamentals",
       "category": "Class Structure, Attributes and Accessibility",
       "title": "Class Structure, Attributes and Accessibility (16)",
@@ -6757,8 +6429,7 @@
       ],
       "explanation": "The access table marks public as accessible from the same class, same package, subclasses and any class."
     },
-    {
-      "id": "pfj-252",
+    "pfj-252": {
       "course": "Programming Fundamentals",
       "category": "Class Structure, Attributes and Accessibility",
       "title": "Class Structure, Attributes and Accessibility (17)",
@@ -6786,8 +6457,7 @@
       ],
       "explanation": "The table gives the access levels exactly as stated in the first four options; the final option describes private, not protected, access."
     },
-    {
-      "id": "pfj-253",
+    "pfj-253": {
       "course": "Programming Fundamentals",
       "category": "Methods, Parameters, Encapsulation and Overloading",
       "title": "Methods, Parameters, Encapsulation and Overloading (18)",
@@ -6811,8 +6481,7 @@
       ],
       "explanation": "The slide says to use the this-reference to distinguish an attribute from a local variable with the same name."
     },
-    {
-      "id": "pfj-254",
+    "pfj-254": {
       "course": "Programming Fundamentals",
       "category": "Methods, Parameters, Encapsulation and Overloading",
       "title": "Methods, Parameters, Encapsulation and Overloading (19)",
@@ -6838,8 +6507,7 @@
       ],
       "explanation": "The examples contrast a local variable with the attribute and use this to refer explicitly to the object attribute when a parameter shares its name."
     },
-    {
-      "id": "pfj-255",
+    "pfj-255": {
       "course": "Programming Fundamentals",
       "category": "Methods, Parameters, Encapsulation and Overloading",
       "title": "Methods, Parameters, Encapsulation and Overloading (20)",
@@ -6863,8 +6531,7 @@
       ],
       "explanation": "The syntax slide places the parameters in parentheses immediately after the method name."
     },
-    {
-      "id": "pfj-256",
+    "pfj-256": {
       "course": "Programming Fundamentals",
       "category": "Constructors, toString and the Math Class",
       "title": "Constructors, toString and the Math Class (18)",
@@ -6892,8 +6559,7 @@
       ],
       "explanation": "The Math overview lists basic numeric operations such as elementary exponential, logarithm, square root and trigonometric functions; keyboard input belongs to Scanner examples."
     },
-    {
-      "id": "pfj-257",
+    "pfj-257": {
       "course": "Programming Fundamentals",
       "category": "Variables, Primitive Types, Literals and Casting",
       "title": "Variables, Primitive Types, Literals and Casting (29)",
@@ -6917,8 +6583,7 @@
       ],
       "explanation": "The ASCII table in the slide shows decimal 65 as the uppercase letter A."
     },
-    {
-      "id": "pfj-258",
+    "pfj-258": {
       "course": "Programming Fundamentals",
       "category": "Variables, Primitive Types, Literals and Casting",
       "title": "Variables, Primitive Types, Literals and Casting (30)",
@@ -6946,8 +6611,7 @@
       ],
       "explanation": "The slides show integer digits, numeric separators, literals in bases other than decimal, and a character assigned by its ASCII code. Character literals are shown in single quotes, not double quotes."
     },
-    {
-      "id": "pfj-259",
+    "pfj-259": {
       "course": "Programming Fundamentals",
       "category": "Variables, Primitive Types, Literals and Casting",
       "title": "Variables, Primitive Types, Literals and Casting (31)",
@@ -6972,8 +6636,7 @@
       ],
       "explanation": "The table gives float limits of -3.4E+38 and 3.4E+38, and double limits of -1.7E+308 and 1.7E+308."
     },
-    {
-      "id": "pfj-260",
+    "pfj-260": {
       "course": "Programming Fundamentals",
       "category": "Operators and Operator Precedence",
       "title": "Operators and Operator Precedence (23)",
@@ -7003,8 +6666,7 @@
       ],
       "explanation": "The table lists +, -, *, / and % as binary operators with the stated meanings; ++ is listed among the unary operators."
     },
-    {
-      "id": "pfj-261",
+    "pfj-261": {
       "course": "Programming Fundamentals",
       "category": "The Java Platform and Your First Java Program",
       "title": "The Java Platform and Your First Java Program (15)",
@@ -7028,8 +6690,7 @@
       ],
       "explanation": "The code example annotates `keyboard.close()` with “Release system resources”."
     },
-    {
-      "id": "pfj-262",
+    "pfj-262": {
       "course": "Programming Fundamentals",
       "category": "Methods, Parameters, Encapsulation and Overloading",
       "title": "Methods, Parameters, Encapsulation and Overloading (21)",
@@ -7055,8 +6716,7 @@
       ],
       "explanation": "The return-value slide distinguishes non-void calls, which produce a value and are expressions, from void calls, which produce no value and cannot be used as part of another statement."
     },
-    {
-      "id": "pfj-263",
+    "pfj-263": {
       "course": "Programming Fundamentals",
       "category": "Methods, Parameters, Encapsulation and Overloading",
       "title": "Methods, Parameters, Encapsulation and Overloading (22)",
@@ -7081,5 +6741,5 @@
       ],
       "explanation": "The slide explicitly says a method always has access to the attributes of the object on which it is called and that these data never need to be passed as parameters."
     }
-  ]
+  }
 }

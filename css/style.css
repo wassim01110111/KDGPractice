@@ -2241,8 +2241,7 @@ textarea:hover {
   .maker-signature:hover strong::after {
     animation: maker-signal-b 5s steps(2, end) infinite;
   }
-  .card:hover,
-  .q:hover {
+  .card:hover {
     box-shadow: 0 14px 32px rgb(25 45 85 / 11%);
   }
   .reference-tab:hover {
@@ -2716,5 +2715,1039 @@ textarea:hover {
 @media (prefers-reduced-motion: reduce) {
   .level-emblem {
     animation: none;
+  }
+}
+
+/* ============================================================
+   INTERACTIVE DEVELOPER-STYLE POLISH
+   Additive layer: keeps the existing light/dark palettes and
+   .hacking-mode theme variables in control of the colour system.
+   ============================================================ */
+
+/* A very quiet grid gives the app a technical feel without
+   changing its overall colour palette or reducing readability. */
+body::before {
+  position: fixed;
+  z-index: 0;
+  inset: 0;
+  background-image:
+    linear-gradient(
+      to right,
+      color-mix(in srgb, var(--ac) 5%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--ac) 5%, transparent) 1px,
+      transparent 1px
+    );
+  background-size: 36px 36px;
+  content: "";
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+/* Keep the page content above the decorative background layer. */
+header,
+main {
+  isolation: isolate;
+}
+
+/* Slightly more responsive-feeling surfaces.  All colours remain
+   theme-token based so explicit and system dark mode still work. */
+.card,
+.q,
+.side,
+.md,
+.reference-search-panel,
+.reference-toc,
+.practice-filters,
+.exam-setup-card,
+.exam-topbar,
+.exam-nav-panel,
+.exam-question-panel,
+.exam-score-card,
+.progress-stat,
+.achievement,
+.quest-row,
+.schema,
+.schema-table,
+.schema-relations {
+  box-shadow: var(--shadow);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.24s ease,
+    transform 0.24s cubic-bezier(0.2, 0.8, 0.2, 1),
+    background-color 0.2s ease;
+}
+
+/* A subtle accent edge makes panels feel like contained interface
+   modules rather than flat blocks. */
+.card,
+.q,
+.exam-question-panel,
+.exam-topbar,
+.exam-score-card {
+  border-color: color-mix(in srgb, var(--bd) 84%, var(--ac));
+}
+
+.card:focus-within,
+.q:focus-within,
+.md:focus-within,
+.exam-question-panel:focus-within,
+.reference-search-panel:focus-within {
+  border-color: color-mix(in srgb, var(--ac) 58%, var(--bd));
+  box-shadow:
+    var(--shadow),
+    0 0 0 2px color-mix(in srgb, var(--ac) 10%, transparent);
+}
+
+/* Sharper, more deliberate input states. */
+input,
+textarea,
+select,
+button {
+  transition:
+    color 0.16s ease,
+    background-color 0.16s ease,
+    border-color 0.16s ease,
+    box-shadow 0.18s ease,
+    transform 0.18s ease;
+}
+
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  border-color: var(--ac);
+  outline: 2px solid color-mix(in srgb, var(--ac) 22%, transparent);
+  outline-offset: 1px;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ac) 9%, transparent);
+}
+
+button:focus-visible,
+a:focus-visible,
+summary:focus-visible,
+.item:focus-visible {
+  outline: 2px solid var(--ac);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--ac) 12%, transparent);
+}
+
+button:disabled {
+  filter: saturate(0.65);
+}
+
+/* Active and selected navigation states stay understated. */
+header nav a {
+  position: relative;
+  transition:
+    color 0.16s ease,
+    background-color 0.16s ease,
+    transform 0.16s ease;
+}
+
+header nav a.on {
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ac) 18%, transparent);
+}
+
+/* More tactile selection controls and reference navigation. */
+.exam-course-checkbox,
+.exam-session .answer-options label,
+.exam-flag-control,
+.achievement-group > summary,
+.schema > summary {
+  transition:
+    border-color 0.18s ease,
+    background-color 0.18s ease,
+    color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.18s ease;
+}
+
+.exam-course-checkbox:focus-within,
+.exam-session .answer-options label:focus-within,
+.exam-flag-control:focus-within {
+  border-color: var(--ac);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ac) 11%, transparent);
+}
+
+.exam-session .answer-options label:has(input:checked) {
+  box-shadow: inset 3px 0 0 var(--ac);
+}
+
+.exam-question-button {
+  transition:
+    color 0.16s ease,
+    background-color 0.16s ease,
+    border-color 0.16s ease,
+    box-shadow 0.16s ease,
+    transform 0.16s ease;
+}
+
+.exam-question-button:focus-visible {
+  z-index: 1;
+}
+
+/* More legible, consistent progress tracks across browsers. */
+.exam-progress,
+.xp-progress,
+.curriculum-track progress,
+.achievement-meter {
+  overflow: hidden;
+  border: 0;
+  border-radius: 999px;
+  background: var(--soft);
+  accent-color: var(--ac);
+}
+
+.exam-progress::-webkit-progress-bar,
+.xp-progress::-webkit-progress-bar,
+.curriculum-track progress::-webkit-progress-bar,
+.achievement-meter::-webkit-progress-bar {
+  background: var(--soft);
+  border-radius: 999px;
+}
+
+.exam-progress::-webkit-progress-value {
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--ok) 76%, var(--ac)),
+    var(--ok)
+  );
+  border-radius: 999px;
+  transition: width 0.35s ease;
+}
+
+.exam-progress::-moz-progress-bar {
+  background: var(--ok);
+  border-radius: 999px;
+}
+
+.xp-progress::-webkit-progress-value,
+.curriculum-track progress::-webkit-progress-value {
+  border-radius: 999px;
+}
+
+/* Code and data areas get a clearer workstation-like frame. */
+pre,
+.schema,
+.schema-table,
+.schema-relations,
+.solution-panel,
+.sql-result-panel,
+.reference-flowchart-scroll {
+  border-radius: 10px;
+}
+
+pre,
+.md pre,
+.plantuml-source pre {
+  tab-size: 2;
+  scrollbar-width: thin;
+  scrollbar-color: var(--mut) var(--soft);
+}
+
+code {
+  font-variant-ligatures: none;
+}
+
+/* Small hover responses are restricted to devices that actually
+   support hover, so touch layouts do not get sticky hover states. */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .card:hover,
+  .progress-stat:hover,
+  .achievement.earned:hover,
+  .quest-row:hover,
+  .reference-search-panel:hover,
+  .reference-toc:hover,
+  .schema-table:hover,
+  .schema-relations:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--ac) 38%, var(--bd));
+    box-shadow:
+      var(--shadow),
+      0 8px 22px color-mix(in srgb, var(--ac) 8%, transparent);
+  }
+
+  .exam-course-checkbox:hover,
+  .exam-session .answer-options label:hover,
+  .exam-flag-control:hover,
+  .achievement-group > summary:hover,
+  .schema > summary:hover {
+    border-color: color-mix(in srgb, var(--ac) 60%, var(--bd));
+    background-color: color-mix(in srgb, var(--soft) 76%, var(--card));
+  }
+
+  .exam-question-button:hover:not(:disabled) {
+    transform: translateY(-1px);
+    border-color: var(--ac);
+  }
+
+  .item:hover:not(:disabled) {
+    padding-left: 0.9rem;
+  }
+
+  .theme-toggle:hover:not(:disabled) {
+    transform: rotate(8deg);
+  }
+}
+
+/* Hacking mode gets a slightly more visible grid and a quiet
+   terminal-style edge treatment, while retaining its own palette. */
+:root.hacking-mode body::before {
+  background-size: 28px 28px;
+  background-image:
+    linear-gradient(
+      to right,
+      color-mix(in srgb, var(--ac) 10%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--ac) 10%, transparent) 1px,
+      transparent 1px
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0 3px,
+      color-mix(in srgb, var(--fg) 2%, transparent) 3px 4px
+    );
+  opacity: 0.72;
+}
+
+:root.hacking-mode .card,
+:root.hacking-mode .q,
+:root.hacking-mode .exam-question-panel,
+:root.hacking-mode .exam-topbar,
+:root.hacking-mode .progress-stat,
+:root.hacking-mode .quest-row {
+  border-radius: 8px;
+  box-shadow:
+    var(--shadow),
+    inset 0 1px 0 color-mix(in srgb, var(--ac) 10%, transparent);
+}
+
+:root.hacking-mode button:focus-visible,
+:root.hacking-mode input:focus-visible,
+:root.hacking-mode textarea:focus-visible,
+:root.hacking-mode select:focus-visible {
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--ac) 28%, transparent),
+    0 0 15px color-mix(in srgb, var(--ac) 12%, transparent);
+}
+
+/* Respect user motion preferences and keep decorative motion quiet. */
+@media (prefers-reduced-motion: reduce) {
+  body::before {
+    display: none;
+  }
+
+  .card,
+  .q,
+  .side,
+  .md,
+  .reference-search-panel,
+  .reference-toc,
+  .practice-filters,
+  .exam-setup-card,
+  .exam-topbar,
+  .exam-nav-panel,
+  .exam-question-panel,
+  .exam-score-card,
+  .progress-stat,
+  .achievement,
+  .quest-row,
+  .schema,
+  .schema-table,
+  .schema-relations,
+  .exam-question-button,
+  .exam-course-checkbox,
+  .exam-session .answer-options label,
+  .exam-flag-control,
+  .achievement-group > summary,
+  .schema > summary {
+    transform: none !important;
+  }
+}
+
+/* ============================================================
+   INTERACTION BOOST — stronger feedback, same theme system
+   Appended to the existing stylesheet. No HTML/JS changes needed
+   for these visual states; the existing controls supply the states.
+   ============================================================ */
+
+:root {
+  --ui-fast: 150ms;
+  --ui-mid: 230ms;
+  --ui-slow: 380ms;
+  --ui-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ui-glow: 0 0 0 3px color-mix(in srgb, var(--ac) 13%, transparent);
+  --ui-raised: 0 14px 34px color-mix(in srgb, var(--fg) 11%, transparent);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
+}
+
+::selection {
+  color: var(--fg);
+  background: color-mix(in srgb, var(--ac) 28%, transparent);
+}
+
+/* A more responsive-feeling top bar and navigation. */
+header {
+  box-shadow:
+    var(--shadow),
+    inset 0 -1px 0 color-mix(in srgb, var(--ac) 12%, transparent);
+  backdrop-filter: saturate(1.12) blur(12px);
+  -webkit-backdrop-filter: saturate(1.12) blur(12px);
+}
+
+nav a:not(.reference-tab) {
+  position: relative;
+  isolation: isolate;
+  transition:
+    color var(--ui-fast) ease,
+    background-color var(--ui-fast) ease,
+    transform var(--ui-fast) var(--ui-ease),
+    box-shadow var(--ui-fast) ease;
+}
+
+nav a:not(.reference-tab)::after {
+  position: absolute;
+  right: 0.75rem;
+  bottom: 0.22rem;
+  left: 0.75rem;
+  height: 2px;
+  border-radius: 9px;
+  background: currentColor;
+  content: "";
+  opacity: 0.8;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform var(--ui-mid) var(--ui-ease);
+}
+
+nav a:not(.reference-tab):hover::after,
+nav a:not(.reference-tab).on::after,
+nav a:not(.reference-tab):focus-visible::after {
+  transform: scaleX(1);
+}
+
+nav a:not(.reference-tab).on {
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ac) 24%, transparent);
+}
+
+/* Buttons get a quick light sweep, clear press depth and strong focus. */
+button:not(:disabled) {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  transform: translateZ(0);
+  transition:
+    color var(--ui-fast) ease,
+    background-color var(--ui-fast) ease,
+    border-color var(--ui-fast) ease,
+    box-shadow var(--ui-fast) ease,
+    filter var(--ui-fast) ease,
+    transform var(--ui-fast) var(--ui-ease);
+}
+
+button:not(:disabled)::after {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    112deg,
+    transparent 0 32%,
+    rgb(255 255 255 / 17%) 48%,
+    transparent 64% 100%
+  );
+  content: "";
+  opacity: 0;
+  transform: translateX(-115%);
+  transition:
+    opacity var(--ui-fast) ease,
+    transform 520ms var(--ui-ease);
+  pointer-events: none;
+}
+
+button:not(:disabled):active {
+  transform: translateY(1px) scale(0.965);
+  filter: saturate(1.12);
+  box-shadow: inset 0 2px 5px color-mix(in srgb, var(--fg) 16%, transparent);
+}
+
+button:not(:disabled):focus-visible {
+  outline: 2px solid var(--ac);
+  outline-offset: 3px;
+  box-shadow:
+    var(--ui-glow),
+    0 0 0 6px color-mix(in srgb, var(--ac) 7%, transparent);
+}
+
+button.sec:not(:disabled):hover {
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ac) 32%, transparent);
+}
+
+button.danger:not(:disabled):hover {
+  box-shadow: 0 7px 18px color-mix(in srgb, var(--bad) 24%, transparent);
+}
+
+/* Surfaces react when hovered or when a control inside gets focus. */
+.card,
+.q,
+.progress-stat,
+.achievement,
+.quest-row,
+.schema-table,
+.schema-relations,
+.exam-question-panel,
+.exam-result-card {
+  position: relative;
+  transition:
+    background-color var(--ui-mid) ease,
+    border-color var(--ui-mid) ease,
+    box-shadow var(--ui-mid) var(--ui-ease),
+    transform var(--ui-mid) var(--ui-ease);
+}
+
+.card:focus-within,
+.q:focus-within,
+.progress-stat:focus-within,
+.achievement:focus-within,
+.quest-row:focus-within,
+.schema-table:focus-within,
+.schema-relations:focus-within,
+.exam-question-panel:focus-within,
+.exam-result-card:focus-within {
+  border-color: color-mix(in srgb, var(--ac) 65%, var(--bd));
+  box-shadow: var(--shadow), var(--ui-glow);
+}
+
+/* Decorative edge glint appears only during an intentional hover. */
+.card::after,
+.q::after,
+.progress-stat::after,
+.achievement::after,
+.quest-row::after,
+.exam-question-panel::after,
+.exam-result-card::after {
+  position: absolute;
+  inset: 0;
+  border: 1px solid transparent;
+  border-radius: inherit;
+  background: linear-gradient(
+    125deg,
+    color-mix(in srgb, var(--ac) 14%, transparent),
+    transparent 34% 72%,
+    color-mix(in srgb, var(--ac) 8%, transparent)
+  );
+  content: "";
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--ui-mid) ease;
+}
+
+/* Selection controls visibly respond to checked/selected states. */
+input[type="checkbox"],
+input[type="radio"] {
+  accent-color: var(--ac);
+  cursor: pointer;
+  transition:
+    filter var(--ui-fast) ease,
+    transform var(--ui-fast) var(--ui-ease);
+}
+
+input[type="checkbox"]:checked,
+input[type="radio"]:checked {
+  filter: drop-shadow(0 0 4px color-mix(in srgb, var(--ac) 28%, transparent));
+}
+
+input[type="checkbox"]:active,
+input[type="radio"]:active {
+  transform: scale(0.88);
+}
+
+.answer-options label,
+.answer-blanks label,
+.exam-session .answer-options label,
+.exam-course-checkbox,
+.exam-flag-control {
+  transition:
+    background-color var(--ui-fast) ease,
+    border-color var(--ui-fast) ease,
+    box-shadow var(--ui-fast) ease,
+    transform var(--ui-fast) var(--ui-ease);
+}
+
+.answer-options label {
+  padding: 0.65rem 0.8rem;
+  border: 1px solid var(--bd);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--soft) 48%, var(--card));
+  cursor: pointer;
+}
+
+.answer-options label:has(input:checked),
+.answer-blanks label:has(input:checked),
+.exam-course-checkbox:has(input:checked) {
+  border-color: var(--ac);
+  background: color-mix(in srgb, var(--ac) 10%, var(--card));
+  box-shadow:
+    inset 3px 0 0 var(--ac),
+    0 0 0 1px color-mix(in srgb, var(--ac) 10%, transparent);
+}
+
+.exam-session .answer-options label:has(input:checked) {
+  transform: translateX(3px);
+}
+
+.exam-course-checkbox:has(input:checked) {
+  color: var(--fg);
+}
+
+/* Search and filter fields gain a clear active state. */
+input:not([type="checkbox"]):not([type="radio"]),
+textarea,
+select {
+  transition:
+    background-color var(--ui-fast) ease,
+    color var(--ui-fast) ease,
+    border-color var(--ui-fast) ease,
+    box-shadow var(--ui-fast) ease,
+    transform var(--ui-fast) var(--ui-ease);
+}
+
+input:not([type="checkbox"]):not([type="radio"]):focus,
+textarea:focus,
+select:focus {
+  border-color: var(--ac);
+  box-shadow: var(--ui-glow);
+}
+
+.filter-control:focus-within .filter-label,
+.exam-course-control:focus-within > span,
+.exam-count-control:focus-within > span {
+  color: var(--ac);
+}
+
+/* Progress filters and tabs make the chosen view unmistakable. */
+.progress-filter {
+  position: relative;
+  overflow: hidden;
+  transition:
+    color var(--ui-fast) ease,
+    background-color var(--ui-fast) ease,
+    border-color var(--ui-fast) ease,
+    box-shadow var(--ui-fast) ease,
+    transform var(--ui-fast) var(--ui-ease);
+}
+
+.progress-filter.active {
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--ac) 16%, transparent),
+    0 7px 18px color-mix(in srgb, var(--ac) 17%, transparent);
+}
+
+nav.reference-tabs a.reference-tab {
+  transition:
+    color var(--ui-mid) ease,
+    background-color var(--ui-mid) ease,
+    border-color var(--ui-mid) ease,
+    box-shadow var(--ui-mid) ease,
+    transform var(--ui-mid) var(--ui-ease);
+}
+
+nav.reference-tabs a.reference-tab.on {
+  box-shadow:
+    0 8px 22px color-mix(in srgb, var(--ac) 20%, transparent),
+    inset 0 1px 0 rgb(255 255 255 / 20%);
+}
+
+.reference-toc-links a.on,
+.reference-toc-links a[aria-current="location"],
+nav.reference-toc-links a[aria-current="page"] {
+  color: var(--ac);
+  background: color-mix(in srgb, var(--ac) 9%, var(--card));
+  box-shadow: inset 3px 0 0 var(--ac);
+  padding-left: 0.8rem;
+}
+
+/* Exam mode: the question navigator feels like a live control deck. */
+.exam-question-button {
+  transition:
+    color var(--ui-fast) ease,
+    background-color var(--ui-fast) ease,
+    border-color var(--ui-fast) ease,
+    box-shadow var(--ui-fast) ease,
+    transform var(--ui-fast) var(--ui-ease);
+}
+
+.exam-question-button.current {
+  box-shadow:
+    0 0 0 2px color-mix(in srgb, var(--ac) 22%, transparent),
+    0 0 16px color-mix(in srgb, var(--ac) 18%, transparent);
+}
+
+.exam-question-button.answered:not(.current) {
+  box-shadow: inset 0 -2px 0 color-mix(in srgb, var(--ok) 60%, transparent);
+}
+
+.exam-question-button.flagged:not(.current)::after {
+  position: absolute;
+  top: 0.22rem;
+  right: 0.22rem;
+  width: 0.38rem;
+  height: 0.38rem;
+  border-radius: 50%;
+  background: #e69b25;
+  content: "";
+  box-shadow: 0 0 0 2px var(--card);
+}
+
+.exam-timer-card {
+  transition:
+    border-color var(--ui-mid) ease,
+    box-shadow var(--ui-mid) ease,
+    background-color var(--ui-mid) ease;
+}
+
+.exam-timer-clock.urgent {
+  text-shadow: 0 0 14px color-mix(in srgb, var(--bad) 28%, transparent);
+}
+
+/* Expandable sections show their open/closed state more clearly. */
+.schema > summary,
+.achievement-group > summary,
+.plantuml-source > summary,
+.exam-answer-review > summary,
+.reference-toc > summary {
+  transition:
+    color var(--ui-fast) ease,
+    background-color var(--ui-fast) ease,
+    border-color var(--ui-fast) ease;
+}
+
+.schema > summary::marker,
+.achievement-group > summary::marker,
+.plantuml-source > summary::marker,
+.exam-answer-review > summary::marker {
+  color: var(--ac);
+}
+
+.schema[open] > summary,
+.achievement-group[open] > summary,
+.plantuml-source[open] > summary,
+.exam-answer-review[open] > summary {
+  color: var(--ac);
+}
+
+.schema-content,
+.solution-panel,
+.sql-result-panel,
+.exam-answer-comparison {
+  animation: ui-panel-arrive 260ms var(--ui-ease) both;
+}
+
+/* Code/schema workspaces get tactile controls without changing their palette. */
+.schema-view-controls button.schema-view-toggle {
+  min-height: 2.6rem;
+}
+
+button.schema-view-toggle.on,
+button.sql-result-toggle[aria-expanded="true"] {
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--ac) 24%, transparent),
+    0 3px 12px color-mix(in srgb, var(--ac) 10%, transparent);
+}
+
+pre,
+.schema-table,
+.schema-relations,
+.plantuml-preview,
+.reference-flowchart-scroll {
+  transition:
+    border-color var(--ui-mid) ease,
+    box-shadow var(--ui-mid) ease,
+    background-color var(--ui-mid) ease;
+}
+
+pre:focus-within,
+.schema-table:focus-within,
+.schema-relations:focus-within,
+.plantuml-preview:focus-within {
+  border-color: color-mix(in srgb, var(--ac) 55%, var(--bd));
+  box-shadow: var(--ui-glow);
+}
+
+/* Progress tracks animate changes and get a subtle moving highlight. */
+.exam-progress::-webkit-progress-value,
+.xp-progress::-webkit-progress-value,
+.curriculum-track progress::-webkit-progress-value,
+.achievement-meter::-webkit-progress-value {
+  background-size: 200% 100%;
+  animation: ui-progress-sheen 4s linear infinite;
+}
+
+.exam-progress::-moz-progress-bar,
+.xp-progress::-moz-progress-bar,
+.curriculum-track progress::-moz-progress-bar,
+.achievement-meter::-moz-progress-bar {
+  background-size: 200% 100%;
+}
+
+/* Level and achievement feedback is more noticeable on interaction. */
+.level-card {
+  transition:
+    transform var(--ui-mid) var(--ui-ease),
+    box-shadow var(--ui-mid) ease;
+}
+
+.level-emblem {
+  transition:
+    transform var(--ui-mid) var(--ui-ease),
+    filter var(--ui-mid) ease;
+}
+
+.achievement.earned .achievement-mark {
+  transition:
+    transform var(--ui-mid) var(--ui-ease),
+    box-shadow var(--ui-mid) ease;
+}
+
+.quest-result {
+  transition:
+    transform var(--ui-mid) var(--ui-ease),
+    background-color var(--ui-mid) ease,
+    box-shadow var(--ui-mid) ease;
+}
+
+/* Dialogs and toast feedback enter more cleanly. */
+.app-confirm-dialog[open] {
+  animation: ui-dialog-in 220ms var(--ui-ease) both;
+}
+
+.app-confirm-dialog[open]::backdrop {
+  animation: ui-backdrop-in 180ms ease both;
+}
+
+.periodic-toast.show {
+  box-shadow:
+    0 12px 34px color-mix(in srgb, var(--fg) 18%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--ac) 24%, transparent);
+}
+
+/* Hacking mode: an animated scan beam and slightly more alive edges.
+   Every effect uses --ac/--fg, so its existing light/dark palette wins. */
+:root.hacking-mode body::after {
+  position: fixed;
+  z-index: 0;
+  inset: -35% 0 auto;
+  display: block;
+  height: 28vh;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    color-mix(in srgb, var(--ac) 7%, transparent) 48%,
+    color-mix(in srgb, var(--ac) 3%, transparent),
+    transparent
+  );
+  content: "";
+  opacity: 0.55;
+  pointer-events: none;
+  animation: ui-hack-scan 13s linear infinite;
+}
+
+:root.hacking-mode .card,
+:root.hacking-mode .q,
+:root.hacking-mode .exam-question-panel,
+:root.hacking-mode .progress-stat,
+:root.hacking-mode .achievement,
+:root.hacking-mode .quest-row,
+:root.hacking-mode .schema,
+:root.hacking-mode .reference-search-panel,
+:root.hacking-mode .reference-toc {
+  box-shadow:
+    var(--shadow),
+    inset 0 0 0 1px color-mix(in srgb, var(--ac) 5%, transparent);
+}
+
+:root.hacking-mode button:not(:disabled):hover {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--ac) 35%, transparent),
+    0 0 17px color-mix(in srgb, var(--ac) 17%, transparent);
+}
+
+:root.hacking-mode .maker-signature {
+  box-shadow:
+    inset 0 0 16px color-mix(in srgb, var(--ac) 12%, transparent),
+    0 0 18px color-mix(in srgb, var(--ac) 9%, transparent);
+}
+
+@keyframes ui-panel-arrive {
+  from {
+    opacity: 0.7;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes ui-progress-sheen {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: -100% 0;
+  }
+}
+
+@keyframes ui-dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(9px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes ui-backdrop-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes ui-hack-scan {
+  from {
+    transform: translateY(-20vh);
+  }
+  to {
+    transform: translateY(145vh);
+  }
+}
+
+/* Hover-only motion: touch users get press/focus feedback instead. */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  button:not(:disabled):hover::after {
+    opacity: 1;
+    transform: translateX(115%);
+  }
+
+  nav a:not(.reference-tab):hover {
+    transform: translateY(-2px);
+  }
+
+  .card:hover,
+  .progress-stat:hover,
+  .achievement.earned:hover,
+  .quest-row:hover,
+  .exam-question-panel:hover,
+  .exam-result-card:hover {
+    transform: translateY(-5px) perspective(900px) rotateX(0.35deg);
+    border-color: color-mix(in srgb, var(--ac) 48%, var(--bd));
+    box-shadow:
+      var(--ui-raised),
+      0 0 0 1px color-mix(in srgb, var(--ac) 10%, transparent);
+  }
+
+  .card:hover::after,
+  ::after,
+  .progress-stat:hover::after,
+  .achievement.earned:hover::after,
+  .quest-row:hover::after,
+  .exam-question-panel:hover::after,
+  .exam-result-card:hover::after {
+    opacity: 1;
+  }
+
+  .exam-course-checkbox:hover,
+  .answer-options label:hover,
+  .exam-session .answer-options label:hover,
+  .exam-flag-control:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--ac) 65%, var(--bd));
+    box-shadow: 0 5px 14px color-mix(in srgb, var(--ac) 10%, transparent);
+  }
+
+  .progress-filter:not(.active):hover,
+  button.schema-view-toggle:not(.on):hover {
+    transform: translateY(-2px);
+    border-color: var(--ac);
+    color: var(--ac);
+  }
+
+  nav.reference-tabs a.reference-tab:hover {
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: 0 12px 26px color-mix(in srgb, var(--ac) 15%, transparent);
+  }
+
+  .level-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 20px 44px color-mix(in srgb, var(--fg) 18%, transparent);
+  }
+
+  .level-card:hover .level-emblem {
+    transform: rotate(9deg) scale(1.06);
+    filter: saturate(1.12);
+  }
+
+  .achievement.earned:hover .achievement-mark {
+    transform: rotate(-9deg) scale(1.12);
+    box-shadow: 0 0 0 5px color-mix(in srgb, #f3bb55 14%, transparent);
+  }
+
+  .quest-row:hover .quest-result {
+    transform: rotate(-8deg) scale(1.1);
+    background: color-mix(in srgb, var(--ac) 12%, var(--soft));
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--ac) 8%, transparent);
+  }
+
+  .reference-toc-links a:hover {
+    padding-left: 0.9rem;
+  }
+}
+
+/* Reduced motion: retain clear state changes, remove continuous movement. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  :root.hacking-mode body::after {
+    display: none;
+    animation: none;
+  }
+
+  .schema-content,
+  .solution-panel,
+  .sql-result-panel,
+  .exam-answer-comparison,
+  .app-confirm-dialog[open],
+  .app-confirm-dialog[open]::backdrop,
+  .exam-progress::-webkit-progress-value,
+  .xp-progress::-webkit-progress-value,
+  .curriculum-track progress::-webkit-progress-value,
+  .achievement-meter::-webkit-progress-value {
+    animation: none !important;
+  }
+
+  .card:hover,
+  .progress-stat:hover,
+  .achievement.earned:hover,
+  .quest-row:hover,
+  .exam-question-panel:hover,
+  .exam-result-card:hover,
+  .level-card:hover,
+  nav a:not(.reference-tab):hover {
+    transform: none !important;
   }
 }

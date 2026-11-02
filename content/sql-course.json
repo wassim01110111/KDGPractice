@@ -2,35 +2,30 @@
   "schemaVersion": 1,
   "packageId": "sql-term-1",
   "version": "1.0.0",
-  "datasets": [
-    {
-      "id": "sql-business",
+  "datasets": {
+    "sql-business": {
       "version": "1",
       "title": "Business and employee management",
       "sql": "CREATE TABLE locations (\n    location_id INTEGER PRIMARY KEY,\n    city VARCHAR(50) NOT NULL,\n    country VARCHAR(50) NOT NULL,\n    postal_code VARCHAR(12)\n);\nCREATE TABLE departments (\n    department_id INTEGER PRIMARY KEY,\n    department_name VARCHAR(60) NOT NULL,\n    location_id INTEGER REFERENCES locations(location_id)\n);\nCREATE TABLE employees (\n    employee_id INTEGER PRIMARY KEY,\n    first_name VARCHAR(40) NOT NULL,\n    last_name VARCHAR(50) NOT NULL,\n    email VARCHAR(100),\n    department_id INTEGER REFERENCES departments(department_id),\n    manager_id INTEGER REFERENCES employees(employee_id),\n    salary NUMERIC(10,2) NOT NULL,\n    hire_date DATE NOT NULL,\n    birth_date DATE,\n    street VARCHAR(100),\n    zip_code VARCHAR(10)\n);\nCREATE TABLE tasks (\n    task_id INTEGER PRIMARY KEY,\n    employee_id INTEGER REFERENCES employees(employee_id),\n    task_name VARCHAR(80) NOT NULL,\n    project_name VARCHAR(80) NOT NULL,\n    hours NUMERIC(6,2),\n    task_date DATE NOT NULL\n);\n\nINSERT INTO locations (location_id, city, country, postal_code) VALUES\n(1, 'Amsterdam', 'Netherlands', '1011AA'),\n(2, 'Antwerp', 'Belgium', '2000'),\n(3, 'Brussels', 'Belgium', '1000'),\n(4, 'Berlin', 'Germany', '10115'),\n(5, 'Rotterdam', 'Netherlands', '3011AA');\n\nINSERT INTO departments (department_id, department_name, location_id) VALUES\n(10, 'Sales', 2),\n(20, 'IT', 1),\n(30, 'Finance', 3),\n(40, 'Operations', 4),\n(50, 'Research', 2),\n(60, 'Legal', 3),\n(70, 'Customer Support', 1);\n\nINSERT INTO employees (employee_id, first_name, last_name, email, department_id, manager_id, salary, hire_date, birth_date, street, zip_code) VALUES\n(101, 'Alice', 'Martin', 'alice.martin@example.com', 20, NULL, 82000, '2016-03-14', '1984-05-12', 'ZzGroenplaatz 4', '2000'),\n(102, 'Ben', 'Carter', 'ben.carter@example.com', 10, 101, 59000, '2019-06-03', '1990-11-08', 'Oak Street 17', '2018'),\n(103, 'Chloe', 'Nguyen', 'chloe.nguyen@example.com', 20, 101, 73500, '2018-09-24', '1988-02-19', 'River Lane 8', '1011'),\n(104, 'Diego', 'Rossi', 'diego.rossi@example.com', 30, 101, 68000, '2020-01-13', '1986-07-03', 'Rue Verte 22', '1000'),\n(105, 'Emma', 'Wilson', 'emma.wilson@example.com', 10, 102, 48500, '2022-04-18', '1995-04-27', 'Market Road 9', '2000'),\n(106, 'Farah', 'Khan', 'farah.khan@example.com', 40, 101, 71500, '2017-11-06', '1983-10-31', 'Parkallee 31', '10115'),\n(107, 'Hugo', 'Janssen', 'hugo.janssen@example.com', 20, 103, 56000, '2021-02-15', '1992-01-17', 'Canal Street 3', '1012'),\n(108, 'Iris', 'De Smet', 'iris.desmet@example.com', NULL, 102, 44500, '2023-05-02', '1997-08-09', 'Lange Kievit 12', '2018'),\n(109, 'Jamal', 'Brooks', 'jamal.brooks@example.com', 30, 104, 62500, '2019-10-21', '1989-03-22', 'Avenue Louise 45', '1050'),\n(110, 'Kira', 'Vermeer', 'kira.vermeer@example.com', 40, 106, 53000, '2022-08-29', '1994-12-02', 'Westend 6', '10117'),\n(111, 'Liam', 'O''Neil', 'liam.oneil@example.com', 10, 102, 51000, '2020-07-07', '1991-06-14', 'Harbor Way 11', '2000'),\n(112, 'Maya', 'Patel', 'maya.patel@example.com', 20, 103, 78000, '2015-12-01', '1982-09-26', 'Zuidstraat 5', '1013'),\n(113, 'Noah', 'Fischer', 'noah.fischer@example.com', 40, 106, 60500, '2018-04-09', '1987-04-10', 'Birkenweg 2', '10119'),\n(114, 'Olivia', 'Chen', 'olivia.chen@example.com', 30, 104, 69500, '2016-08-17', '1985-05-30', 'Rue du Midi 19', '1000'),\n(115, 'Pieter', 'Vos', NULL, 10, 102, 47000, '2024-01-08', '1998-02-04', 'Meir 101', '2000'),\n(116, 'Quinn', 'James', 'quinn.james@example.com', NULL, 101, 64000, '2021-09-13', '1993-09-16', 'Forest Road 1', '1050'),\n(117, 'Rosa', 'Silva', 'rosa.silva@example.com', 20, 103, 66000, '2023-02-20', '1996-03-11', 'Spui 14', '1012'),\n(118, 'Sam', 'Taylor', 'sam.taylor@example.com', 10, 102, 55500, '2017-05-16', '1988-12-21', 'Stationstraat 7', '2000');\n\nINSERT INTO tasks (task_id, employee_id, task_name, project_name, hours, task_date) VALUES\n(1, 101, 'Annual planning', 'Atlas', 12.5, '2025-01-12'),\n(2, 102, 'Client review', 'Beacon', 6, '2025-01-15'),\n(3, 103, 'Database migration', 'Atlas', 18, '2025-02-02'),\n(4, 104, 'Budget forecast', 'Cedar', 9.5, '2025-02-10'),\n(5, 105, 'Sales report', 'Beacon', 7, '2025-02-12'),\n(6, 106, 'Warehouse audit', 'Delta', 14, '2025-03-01'),\n(7, 107, 'API testing', 'Atlas', 11, '2025-03-06'),\n(8, 109, 'Cost analysis', 'Cedar', 8, '2025-03-09'),\n(9, 110, 'Shift planning', 'Delta', 5.5, '2025-03-12'),\n(10, 111, 'Customer visit', 'Beacon', 4, '2025-04-04'),\n(11, 112, 'Server upgrade', 'Atlas', 20, '2025-04-11'),\n(12, 113, 'Inventory review', 'Delta', 10, '2025-04-16'),\n(13, 114, 'Quarter close', 'Cedar', 15, '2025-04-22'),\n(14, 101, 'Policy review', 'Cedar', NULL, '2025-05-02'),\n(15, 117, 'Security check', 'Atlas', 13.25, '2025-05-05'),\n(16, 118, 'Account renewal', 'Beacon', 3.5, '2025-05-14'),\n(17, 102, 'Pipeline update', 'Beacon', 8, '2025-05-18'),\n(18, 106, 'Process mapping', 'Delta', 17.75, '2025-06-01'),\n(19, 103, 'Documentation', 'Atlas', 2.25, '2025-06-04'),\n(20, 115, 'Lead follow-up', 'Beacon', 6.5, '2025-06-11');\n"
     },
-    {
-      "id": "sql-education",
+    "sql-education": {
       "version": "1",
       "title": "Education and student administration",
       "sql": "CREATE TABLE teachers (\n    teacher_id INTEGER PRIMARY KEY,\n    first_name VARCHAR(40) NOT NULL,\n    last_name VARCHAR(50) NOT NULL,\n    email VARCHAR(100),\n    office_city VARCHAR(50),\n    annual_salary NUMERIC(10,2)\n);\nCREATE TABLE students (\n    student_id INTEGER PRIMARY KEY,\n    first_name VARCHAR(40) NOT NULL,\n    last_name VARCHAR(50) NOT NULL,\n    email VARCHAR(100),\n    birth_date DATE,\n    city VARCHAR(50),\n    postal_code VARCHAR(10),\n    scholarship_amount NUMERIC(8,2)\n);\nCREATE TABLE courses (\n    course_id INTEGER PRIMARY KEY,\n    course_code VARCHAR(12) NOT NULL,\n    course_title VARCHAR(100) NOT NULL,\n    subject_area VARCHAR(50),\n    fee NUMERIC(8,2) NOT NULL,\n    credits INTEGER NOT NULL\n);\nCREATE TABLE class_sections (\n    section_id INTEGER NOT NULL,\n    course_id INTEGER NOT NULL REFERENCES courses(course_id),\n    section_code VARCHAR(12) NOT NULL,\n    teacher_id INTEGER REFERENCES teachers(teacher_id),\n    starts_on DATE NOT NULL,\n    seat_limit INTEGER NOT NULL,\n    PRIMARY KEY (section_id, course_id)\n);\nCREATE TABLE section_rooms (\n    section_id INTEGER NOT NULL,\n    course_id INTEGER NOT NULL,\n    room_code VARCHAR(20) NOT NULL,\n    building VARCHAR(50) NOT NULL,\n    PRIMARY KEY (section_id, course_id),\n    FOREIGN KEY (section_id, course_id) REFERENCES class_sections(section_id, course_id)\n);\nCREATE TABLE enrollments (\n    student_id INTEGER NOT NULL REFERENCES students(student_id),\n    section_id INTEGER NOT NULL,\n    course_id INTEGER NOT NULL,\n    registered_on DATE NOT NULL,\n    final_grade NUMERIC(5,2),\n    tuition_paid NUMERIC(8,2),\n    PRIMARY KEY (student_id, section_id, course_id),\n    FOREIGN KEY (section_id, course_id) REFERENCES class_sections(section_id, course_id)\n);\n\nINSERT INTO teachers (teacher_id, first_name, last_name, email, office_city, annual_salary) VALUES\n(1, 'Nora', 'Bakker', 'nora.bakker@campus.example', 'Antwerp', 62000),\n(2, 'Omar', 'Haddad', 'omar.haddad@campus.example', 'Brussels', 64500),\n(3, 'Petra', 'Klein', 'petra.klein@campus.example', 'Ghent', 59000),\n(4, 'Ravi', 'Shah', 'ravi.shah@campus.example', 'Antwerp', 71000),\n(5, 'Sofia', 'Meyer', 'sofia.meyer@campus.example', 'Leuven', 67500),\n(6, 'Tom', 'Peeters', NULL, 'Brussels', 60500),\n(7, 'Uma', 'Singh', 'uma.singh@campus.example', 'Ghent', 73000),\n(8, 'Victor', 'Noor', 'victor.noor@campus.example', 'Leuven', 65500);\n\nINSERT INTO students (student_id, first_name, last_name, email, birth_date, city, postal_code, scholarship_amount) VALUES\n(201, 'Amina', 'Diallo', 'amina.diallo@student.example', '2002-03-15', 'Antwerp', '2000', 1200),\n(202, 'Boris', 'Ivanov', 'boris.ivanov@student.example', '2001-11-02', 'Ghent', '9000', NULL),\n(203, 'Camila', 'Costa', 'camila.costa@student.example', '2003-06-24', 'Brussels', '1000', 500),\n(204, 'Daan', 'Willems', 'daan.willems@student.example', '1999-09-18', 'Leuven', '3000', 0),\n(205, 'Elena', 'Garcia', 'elena.garcia@student.example', '2002-01-07', 'Antwerp', '2018', 850),\n(206, 'Finn', 'Murphy', 'finn.murphy@student.example', '2000-12-30', 'Mechelen', '2800', NULL),\n(207, 'Grace', 'Kim', 'grace.kim@student.example', '2004-04-11', 'Ghent', '9000', 1500),\n(208, 'Hamza', 'Yilmaz', 'hamza.yilmaz@student.example', '2001-07-19', 'Brussels', '1050', 300),\n(209, 'Ines', 'Pereira', 'ines.pereira@student.example', '2003-10-03', 'Leuven', '3001', NULL),\n(210, 'Jonas', 'Larsen', 'jonas.larsen@student.example', '1998-02-14', 'Antwerp', '2000', 2000),\n(211, 'Kiara', 'Brown', 'kiara.brown@student.example', '2002-08-28', 'Bruges', '8000', 600),\n(212, 'Luca', 'Rossi', 'luca.rossi@student.example', '2000-05-05', 'Ghent', '9000', NULL),\n(213, 'Mila', 'Novak', 'mila.novak@student.example', '2004-12-09', 'Brussels', '1000', 400),\n(214, 'Nils', 'Jorgensen', 'nils.jorgensen@student.example', '2001-03-21', 'Leuven', '3000', NULL),\n(215, 'Orla', 'Kelly', 'orla.kelly@student.example', '2003-07-12', 'Antwerp', '2000', 1000),\n(216, 'Pavel', 'Horak', NULL, '1999-01-29', 'Namur', '5000', NULL),\n(217, 'Rania', 'Saleh', 'rania.saleh@student.example', '2002-09-06', 'Ghent', '9000', 750),\n(218, 'Theo', 'Martin', 'theo.martin@student.example', '2001-04-17', 'Brussels', '1000', NULL),\n(219, 'Uma', 'Berg', NULL, '2003-05-23', 'Ostend', '8400', 350);\n\nINSERT INTO courses (course_id, course_code, course_title, subject_area, fee, credits) VALUES\n(301, 'DB101', 'Database Fundamentals', 'Computing', 480, 5),\n(302, 'WEB120', 'Web Design', 'Computing', 520, 5),\n(303, 'STAT210', 'Applied Statistics', 'Mathematics', 610, 6),\n(304, 'BUS115', 'Business Communication', 'Business', 390, 4),\n(305, 'FIN205', 'Financial Reporting', 'Business', 650, 6),\n(306, 'NET130', 'Network Basics', 'Computing', 550, 5),\n(307, 'MKT220', 'Digital Marketing', 'Business', 575, 5),\n(308, 'ENG140', 'Technical English', 'Languages', 350, 3),\n(309, 'DS310', 'Data Analysis', 'Computing', 720, 6),\n(310, 'LAW100', 'Business Law', 'Law', 460, 4),\n(311, 'DES150', 'Visual Design', 'Arts', 500, 4),\n(312, 'ETH250', 'Digital Ethics', 'Humanities', 430, 3);\n\nINSERT INTO class_sections (section_id, course_id, section_code, teacher_id, starts_on, seat_limit) VALUES\n(1, 301, 'DB-A', 1, '2025-09-08', 24),\n(2, 301, 'DB-B', 4, '2025-09-08', 20),\n(1, 302, 'WEB-A', 3, '2025-09-09', 22),\n(1, 303, 'STAT-A', 7, '2025-09-10', 18),\n(2, 303, 'STAT-B', 5, '2025-09-10', 18),\n(1, 304, 'BUS-A', 2, '2025-09-11', 25),\n(1, 305, 'FIN-A', 6, '2025-09-12', 20),\n(1, 306, 'NET-A', 8, '2025-09-12', 20),\n(1, 307, 'MKT-A', 2, '2025-09-15', 22),\n(1, 308, 'ENG-A', 5, '2025-09-16', 28),\n(1, 309, 'DS-A', 4, '2025-09-17', 16),\n(1, 310, 'LAW-A', 6, '2025-09-18', 20),\n(1, 311, 'DES-A', 3, '2025-09-19', 18),\n(3, 301, 'DB-C', 1, '2026-02-02', 24),\n(2, 302, 'WEB-B', 3, '2026-02-03', 22);\n\nINSERT INTO section_rooms (section_id, course_id, room_code, building) VALUES\n(1, 301, 'A-101', 'Main Hall'),\n(2, 301, 'A-102', 'Main Hall'),\n(1, 302, 'B-201', 'Design Wing'),\n(1, 303, 'C-110', 'Science Block'),\n(2, 303, 'C-112', 'Science Block'),\n(1, 304, 'D-204', 'Business Centre'),\n(1, 305, 'D-210', 'Business Centre'),\n(1, 306, 'N-301', 'Technology Block'),\n(1, 307, 'B-105', 'Design Wing'),\n(1, 308, 'L-020', 'Language Centre'),\n(1, 309, 'C-305', 'Science Block'),\n(1, 310, 'D-115', 'Business Centre'),\n(1, 311, 'A-005', 'Arts Hall'),\n(3, 301, 'A-103', 'Main Hall'),\n(2, 302, 'B-202', 'Design Wing');\n\nINSERT INTO enrollments (student_id, section_id, course_id, registered_on, final_grade, tuition_paid) VALUES\n(201, 1, 301, '2025-08-20', 88, 480),\n(202, 1, 301, '2025-08-21', 74, 480),\n(203, 1, 301, '2025-08-22', 92, 480),\n(204, 2, 301, '2025-08-22', 67, 480),\n(205, 1, 302, '2025-08-23', 81, 520),\n(206, 1, 302, '2025-08-23', NULL, 520),\n(207, 1, 303, '2025-08-24', 95, 610),\n(208, 1, 303, '2025-08-24', 78, 610),\n(209, 2, 303, '2025-08-25', 84, 610),\n(210, 1, 304, '2025-08-25', 72, 390),\n(211, 1, 304, '2025-08-26', 89, 390),\n(212, 1, 305, '2025-08-26', 91, 650),\n(213, 1, 305, '2025-08-27', 65, 650),\n(214, 1, 306, '2025-08-27', 77, 550),\n(215, 1, 306, '2025-08-28', 86, 550),\n(216, 1, 307, '2025-08-28', 93, 575),\n(217, 1, 307, '2025-08-29', NULL, 575),\n(218, 1, 308, '2025-08-29', 80, 350),\n(201, 1, 309, '2025-08-30', 87, 720),\n(203, 1, 309, '2025-08-30', 90, 720),\n(205, 1, 310, '2025-08-31', 73, 460),\n(207, 1, 311, '2025-09-01', 96, 500),\n(210, 1, 301, '2026-01-15', 82, 480),\n(212, 1, 302, '2026-01-16', 88, 520),\n(215, 3, 301, '2026-01-17', 79, 480),\n(217, 2, 302, '2026-01-17', 85, 520);\n"
     },
-    {
-      "id": "sql-retail",
+    "sql-retail": {
       "version": "1",
       "title": "Retail, inventory and orders",
       "sql": "CREATE TABLE categories (\n    category_id INTEGER PRIMARY KEY,\n    category_name VARCHAR(60) NOT NULL,\n    category_code VARCHAR(10) NOT NULL\n);\nCREATE TABLE customers (\n    customer_id INTEGER PRIMARY KEY,\n    first_name VARCHAR(40) NOT NULL,\n    last_name VARCHAR(50) NOT NULL,\n    email VARCHAR(100),\n    city VARCHAR(50) NOT NULL,\n    postal_code VARCHAR(10),\n    joined_on DATE NOT NULL,\n    credit_limit NUMERIC(10,2)\n);\nCREATE TABLE products (\n    product_id INTEGER PRIMARY KEY,\n    category_id INTEGER REFERENCES categories(category_id),\n    product_name VARCHAR(100) NOT NULL,\n    sku VARCHAR(20) NOT NULL,\n    description VARCHAR(200),\n    unit_price NUMERIC(10,2) NOT NULL,\n    stock_quantity INTEGER NOT NULL,\n    introduced_on DATE\n);\nCREATE TABLE orders (\n    order_id INTEGER PRIMARY KEY,\n    customer_id INTEGER REFERENCES customers(customer_id),\n    order_date DATE NOT NULL,\n    shipping_city VARCHAR(50),\n    order_status VARCHAR(20) NOT NULL\n);\nCREATE TABLE order_items (\n    order_id INTEGER NOT NULL REFERENCES orders(order_id),\n    product_id INTEGER NOT NULL REFERENCES products(product_id),\n    quantity INTEGER NOT NULL,\n    unit_price NUMERIC(10,2) NOT NULL,\n    PRIMARY KEY (order_id, product_id)\n);\nCREATE TABLE price_bands (\n    band_id INTEGER PRIMARY KEY,\n    band_label VARCHAR(30) NOT NULL,\n    min_price NUMERIC(10,2) NOT NULL,\n    max_price NUMERIC(10,2) NOT NULL\n);\n\nINSERT INTO categories (category_id, category_name, category_code) VALUES\n(1, 'Computers', 'COMP'),\n(2, 'Accessories', 'ACC'),\n(3, 'Office', 'OFF'),\n(4, 'Furniture', 'FURN'),\n(5, 'Audio', 'AUD'),\n(6, 'Outdoor', 'OUT'),\n(7, 'Clearance', 'CLR'),\n(8, 'Special Orders', 'SPEC');\n\nINSERT INTO customers (customer_id, first_name, last_name, email, city, postal_code, joined_on, credit_limit) VALUES\n(1, 'Amir', 'Hassan', 'amir.hassan@example.com', 'Antwerp', '2000', '2022-02-11', 2500),\n(2, 'Bella', 'Young', 'bella.young@example.com', 'Ghent', '9000', '2021-05-04', 1800),\n(3, 'Cem', 'Arslan', 'cem.arslan@example.com', 'Brussels', '1000', '2023-01-19', NULL),\n(4, 'Daria', 'Petrova', 'daria.petrova@example.com', 'Leuven', '3000', '2020-09-30', 3200),\n(5, 'Ethan', 'Moore', 'ethan.moore@example.com', 'Antwerp', '2018', '2024-03-08', 900),\n(6, 'Fatima', 'Ali', 'fatima.ali@example.com', 'Mechelen', '2800', '2022-11-21', 1500),\n(7, 'Gabe', 'Turner', 'gabe.turner@example.com', 'Bruges', '8000', '2019-07-15', 2100),\n(8, 'Helena', 'Costa', 'helena.costa@example.com', 'Brussels', '1050', '2023-08-02', NULL),\n(9, 'Ivan', 'Petrov', 'ivan.petrov@example.com', 'Ghent', '9000', '2021-12-12', 2700),\n(10, 'Julia', 'Reed', 'julia.reed@example.com', 'Namur', '5000', '2024-01-05', 1100),\n(11, 'Karim', 'Bello', 'karim.bello@example.com', 'Antwerp', '2000', '2020-06-17', 4500),\n(12, 'Lena', 'Frost', 'lena.frost@example.com', 'Leuven', '3001', '2022-04-25', 1300),\n(13, 'Milan', 'Novak', 'milan.novak@example.com', 'Brussels', '1000', '2018-10-10', 5000),\n(14, 'Nadia', 'Rami', 'nadia.rami@example.com', 'Ghent', '9000', '2025-01-09', 750),\n(15, 'Oscar', 'Green', 'oscar.green@example.com', 'Hasselt', '3500', '2023-06-03', NULL),\n(16, 'Priya', 'Sharma', 'priya.sharma@example.com', 'Antwerp', '2000', '2021-02-14', 2800);\n\nINSERT INTO products (product_id, category_id, product_name, sku, description, unit_price, stock_quantity, introduced_on) VALUES\n(101, 1, 'Notebook Pro', 'NB-1001', 'Portable work computer', 1299.99, 14, '2024-02-01'),\n(102, 1, 'Mini Desktop', 'PC-2002', 'Compact office computer', 799.5, 8, '2023-09-15'),\n(103, 2, 'Wireless Mouse', 'MS-3010', 'Ergonomic wireless mouse', 24.95, 120, '2022-06-10'),\n(104, 2, 'Mechanical Keyboard', 'KB-4011', 'Backlit mechanical keyboard', 89.9, 45, '2023-01-20'),\n(105, 2, 'USB Hub', 'HB-5001', 'Four port USB hub', 19.5, 0, '2021-04-02'),\n(106, 3, 'A4 Paper Pack', 'OF-6001', 'White paper pack', 6.75, 300, '2020-01-05'),\n(107, 3, 'Desk Organizer', 'OF-7002', 'Bamboo desk organizer', 32.0, 34, '2022-11-12'),\n(108, 4, 'Standing Desk', 'FU-8100', 'Adjustable standing desk', 449.0, 6, '2024-04-01'),\n(109, 4, 'Task Chair', 'FU-8200', 'Mesh office chair', 189.95, 11, '2023-03-18'),\n(110, 5, 'Studio Headphones', 'AU-9001', 'Closed back studio headphones', 159.0, 27, '2022-08-23'),\n(111, 5, 'Bluetooth Speaker', 'AU-9002', 'Portable bluetooth speaker', 74.5, 52, '2024-06-07'),\n(112, 6, 'Camping Lantern', 'OD-1010', 'Rechargeable outdoor lantern', 39.95, 39, '2021-09-09'),\n(113, 6, 'Travel Bottle', 'OD-1020', 'Insulated steel bottle', 21.0, 77, '2020-05-14'),\n(114, 7, 'Old Webcam', 'CL-1110', 'Previous generation webcam', 29.99, 3, '2019-01-01'),\n(115, 3, 'Whiteboard', 'OF-7100', 'Magnetic office whiteboard', 54.0, 12, '2024-01-13'),\n(116, 1, 'Tablet Air', 'TB-2200', 'Lightweight tablet computer', 599.0, 19, '2025-02-02'),\n(117, 2, 'USB Cable', 'CB-3300', 'Braided USB cable', 8.9, 240, '2020-12-01'),\n(118, 5, 'Desk Microphone', 'AU-9100', 'USB desk microphone', 119.0, 16, '2023-10-10'),\n(119, 4, 'Bookshelf', 'FU-8300', 'Three shelf bookcase', 129.0, 0, '2022-02-02'),\n(120, 7, 'Travel Adapter', 'CL-1200', 'Universal travel adapter', 14.5, 80, '2020-03-15');\n\nINSERT INTO orders (order_id, customer_id, order_date, shipping_city, order_status) VALUES\n(5001, 1, '2025-01-10', 'Antwerp', 'shipped'),\n(5002, 2, '2025-01-12', 'Ghent', 'delivered'),\n(5003, 1, '2025-02-02', 'Antwerp', 'delivered'),\n(5004, 3, '2025-02-14', 'Brussels', 'processing'),\n(5005, 4, '2025-02-18', 'Leuven', 'shipped'),\n(5006, 5, '2025-03-01', 'Antwerp', 'delivered'),\n(5007, 6, '2025-03-07', 'Mechelen', 'shipped'),\n(5008, 7, '2025-03-11', 'Bruges', 'delivered'),\n(5009, 8, '2025-03-16', 'Brussels', 'processing'),\n(5010, 9, '2025-04-02', 'Ghent', 'delivered'),\n(5011, 10, '2025-04-10', 'Namur', 'shipped'),\n(5012, 11, '2025-04-18', 'Antwerp', 'delivered'),\n(5013, 12, '2025-05-03', 'Leuven', 'cancelled'),\n(5014, 13, '2025-05-09', 'Brussels', 'delivered'),\n(5015, 1, '2025-05-22', 'Antwerp', 'shipped'),\n(5016, 4, '2025-06-05', 'Leuven', 'delivered'),\n(5017, 6, '2025-06-11', 'Mechelen', 'processing'),\n(5018, 9, '2025-06-20', 'Ghent', 'delivered'),\n(5019, 11, '2025-07-01', 'Antwerp', 'shipped'),\n(5020, 13, '2025-07-14', 'Brussels', 'delivered'),\n(5021, 2, '2025-08-01', NULL, 'processing');\n\nINSERT INTO order_items (order_id, product_id, quantity, unit_price) VALUES\n(5001, 101, 1, 1299.99),\n(5001, 103, 2, 24.95),\n(5002, 106, 5, 6.75),\n(5002, 104, 1, 89.9),\n(5003, 110, 1, 159.0),\n(5003, 117, 3, 8.9),\n(5004, 108, 1, 449.0),\n(5004, 109, 1, 189.95),\n(5005, 102, 1, 799.5),\n(5005, 107, 2, 32.0),\n(5006, 112, 2, 39.95),\n(5006, 113, 2, 21.0),\n(5007, 103, 1, 24.95),\n(5007, 105, 4, 19.5),\n(5008, 111, 2, 74.5),\n(5009, 118, 1, 119.0),\n(5010, 104, 1, 89.9),\n(5010, 106, 3, 6.75),\n(5011, 120, 2, 14.5),\n(5012, 101, 1, 1299.99),\n(5012, 110, 1, 159.0),\n(5014, 115, 2, 54.0),\n(5014, 107, 1, 32.0),\n(5015, 116, 1, 599.0),\n(5015, 117, 5, 8.9),\n(5016, 109, 2, 189.95),\n(5016, 106, 10, 6.75),\n(5017, 113, 3, 21.0),\n(5018, 102, 1, 799.5),\n(5018, 103, 2, 24.95),\n(5019, 108, 1, 449.0),\n(5020, 111, 1, 74.5),\n(5020, 118, 1, 119.0);\n\nINSERT INTO price_bands (band_id, band_label, min_price, max_price) VALUES\n(1, 'Budget', 0, 24.99),\n(2, 'Standard', 25, 99.99),\n(3, 'Premium', 100, 499.99),\n(4, 'High-end', 500, 2000);\n"
     },
-    {
-      "id": "sql-projects",
+    "sql-projects": {
       "version": "1",
       "title": "Consulting projects and training services",
       "sql": "CREATE TABLE clients (\n    client_id INTEGER PRIMARY KEY,\n    client_name VARCHAR(100) NOT NULL,\n    city VARCHAR(50) NOT NULL,\n    client_segment VARCHAR(30)\n);\nCREATE TABLE consultants (\n    consultant_id INTEGER PRIMARY KEY,\n    first_name VARCHAR(40) NOT NULL,\n    last_name VARCHAR(50) NOT NULL,\n    email VARCHAR(100),\n    manager_id INTEGER REFERENCES consultants(consultant_id),\n    specialty VARCHAR(50),\n    hourly_rate NUMERIC(8,2) NOT NULL,\n    hired_on DATE NOT NULL\n);\nCREATE TABLE projects (\n    project_id INTEGER PRIMARY KEY,\n    client_id INTEGER REFERENCES clients(client_id),\n    project_name VARCHAR(100) NOT NULL,\n    start_date DATE NOT NULL,\n    end_date DATE,\n    budget NUMERIC(12,2) NOT NULL,\n    project_status VARCHAR(20) NOT NULL\n);\nCREATE TABLE project_assignments (\n    project_id INTEGER NOT NULL REFERENCES projects(project_id),\n    consultant_id INTEGER NOT NULL REFERENCES consultants(consultant_id),\n    assigned_on DATE NOT NULL,\n    role_name VARCHAR(50) NOT NULL,\n    hours_worked NUMERIC(7,2),\n    PRIMARY KEY (project_id, consultant_id)\n);\nCREATE TABLE assignment_reviews (\n    project_id INTEGER NOT NULL,\n    consultant_id INTEGER NOT NULL,\n    reviewed_on DATE NOT NULL,\n    review_note VARCHAR(150),\n    PRIMARY KEY (project_id, consultant_id, reviewed_on),\n    FOREIGN KEY (project_id, consultant_id) REFERENCES project_assignments(project_id, consultant_id)\n);\nCREATE TABLE budget_bands (\n    band_id INTEGER PRIMARY KEY,\n    band_name VARCHAR(30) NOT NULL,\n    min_budget NUMERIC(12,2) NOT NULL,\n    max_budget NUMERIC(12,2) NOT NULL\n);\nCREATE TABLE training_sessions (\n    session_id INTEGER PRIMARY KEY,\n    session_title VARCHAR(100) NOT NULL,\n    session_date DATE NOT NULL,\n    duration_hours NUMERIC(5,2) NOT NULL,\n    max_participants INTEGER NOT NULL,\n    trainer_id INTEGER REFERENCES consultants(consultant_id)\n);\nCREATE TABLE participants (\n    participant_id INTEGER PRIMARY KEY,\n    session_id INTEGER REFERENCES training_sessions(session_id),\n    participant_name VARCHAR(80) NOT NULL,\n    registered_on DATE NOT NULL,\n    assessment_score NUMERIC(5,2)\n);\n\nINSERT INTO clients (client_id, client_name, city, client_segment) VALUES\n(1, 'Northwind Mobility', 'Antwerp', 'Enterprise'),\n(2, 'Blue Peak Energy', 'Brussels', 'Enterprise'),\n(3, 'Cedar Health Group', 'Ghent', 'Healthcare'),\n(4, 'Delta Foods', 'Leuven', 'Retail'),\n(5, 'Evergreen Housing', 'Mechelen', 'Public'),\n(6, 'Fjord Logistics', 'Bruges', 'Enterprise'),\n(7, 'Golden Field College', 'Antwerp', 'Education'),\n(8, 'Harbor Arts Centre', 'Brussels', 'Non-profit'),\n(9, 'Ionis Manufacturing', 'Hasselt', 'Industrial'),\n(10, 'Juniper Travel', 'Namur', 'Retail'),\n(11, 'Kite Research', 'Ghent', 'Research'),\n(12, 'Lumen Foundation', 'Leuven', 'Non-profit');\n\nINSERT INTO consultants (consultant_id, first_name, last_name, email, manager_id, specialty, hourly_rate, hired_on) VALUES\n(1, 'Adrian', 'Cole', 'adrian.cole@consult.example', NULL, 'Strategy', 145, '2014-02-03'),\n(2, 'Bianca', 'Leroy', 'bianca.leroy@consult.example', 1, 'Data', 115, '2017-05-11'),\n(3, 'Carlos', 'Mendez', 'carlos.mendez@consult.example', 1, 'Cloud', 125, '2018-09-17'),\n(4, 'Daphne', 'Vos', 'daphne.vos@consult.example', 2, 'Finance', 105, '2020-01-06'),\n(5, 'Elias', 'Ford', 'elias.ford@consult.example', 2, 'Data', 98, '2021-03-22'),\n(6, 'Freya', 'Berg', 'freya.berg@consult.example', 3, 'Security', 132, '2016-07-14'),\n(7, 'Goran', 'Petric', 'goran.petric@consult.example', 3, 'Cloud', 108, '2022-10-03'),\n(8, 'Hana', 'Ito', 'hana.ito@consult.example', 2, 'Design', 92, '2023-04-18'),\n(9, 'Ismail', 'Noor', 'ismail.noor@consult.example', 1, 'Strategy', 138, '2019-11-25'),\n(10, 'Jade', 'Price', 'jade.price@consult.example', 6, 'Security', 121, '2024-01-08'),\n(11, 'Kamil', 'Sikora', 'kamil.sikora@consult.example', 3, 'Data', 101, '2020-06-01'),\n(12, 'Lea', 'Moreau', 'lea.moreau@consult.example', 2, 'Design', 89, '2022-12-12'),\n(13, 'Mateo', 'Silva', NULL, 6, 'Finance', 112, '2015-08-30'),\n(14, 'Nina', 'Ahmed', 'nina.ahmed@consult.example', 9, 'Cloud', 117, '2025-02-10');\n\nINSERT INTO projects (project_id, client_id, project_name, start_date, end_date, budget, project_status) VALUES\n(1001, 1, 'Fleet dashboard', '2024-01-15', '2024-10-30', 185000, 'completed'),\n(1002, 2, 'Energy forecast', '2024-03-01', '2025-01-31', 420000, 'completed'),\n(1003, 3, 'Patient portal', '2024-05-20', '2025-05-15', 275000, 'completed'),\n(1004, 4, 'Warehouse redesign', '2024-08-01', NULL, 95000, 'active'),\n(1005, 5, 'Housing analysis', '2025-01-10', NULL, 68000, 'active'),\n(1006, 6, 'Route optimization', '2025-02-01', '2025-11-30', 510000, 'completed'),\n(1007, 7, 'Learning platform', '2025-03-12', NULL, 145000, 'active'),\n(1008, 8, 'Archive refresh', '2025-04-01', '2025-08-15', 42000, 'completed'),\n(1009, 9, 'Factory sensors', '2025-05-06', NULL, 325000, 'active'),\n(1010, 10, 'Booking redesign', '2025-06-18', NULL, 78000, 'paused'),\n(1011, 11, 'Research database', '2025-07-01', '2026-02-01', 235000, 'completed'),\n(1012, 12, 'Grant reporting', '2025-08-20', NULL, 56000, 'active'),\n(1013, 1, 'Mobile dispatch', '2026-01-05', NULL, 160000, 'active'),\n(1014, 2, 'Carbon reporting', '2026-02-12', NULL, 390000, 'active'),\n(1015, 4, 'Store analytics', '2026-03-01', NULL, 115000, 'planned'),\n(1016, 6, 'Cold-chain review', '2026-04-15', NULL, 285000, 'planned'),\n(1017, 9, 'Maintenance planner', '2026-05-02', NULL, 720000, 'planned'),\n(1018, 3, 'Care quality study', '2026-06-10', NULL, 128000, 'planned');\n\nINSERT INTO project_assignments (project_id, consultant_id, assigned_on, role_name, hours_worked) VALUES\n(1001, 1, '2024-01-15', 'Lead', 120),\n(1001, 2, '2024-01-18', 'Analyst', 165),\n(1002, 3, '2024-03-01', 'Cloud lead', 140),\n(1002, 6, '2024-03-04', 'Security review', 80),\n(1003, 2, '2024-05-20', 'Data lead', 190),\n(1003, 5, '2024-05-22', 'Analyst', 210),\n(1004, 4, '2024-08-01', 'Finance lead', 95),\n(1004, 8, '2024-08-03', 'Designer', 70),\n(1005, 9, '2025-01-10', 'Project lead', 110),\n(1006, 3, '2025-02-01', 'Cloud lead', 215),\n(1006, 7, '2025-02-02', 'Engineer', 185),\n(1007, 8, '2025-03-12', 'Design lead', 130),\n(1007, 12, '2025-03-15', 'Designer', 115),\n(1008, 12, '2025-04-01', 'Project lead', 65),\n(1009, 6, '2025-05-06', 'Security lead', 175),\n(1009, 10, '2025-05-07', 'Security analyst', 155),\n(1010, 4, '2025-06-18', 'Finance analyst', 88),\n(1011, 5, '2025-07-01', 'Data analyst', 150),\n(1011, 11, '2025-07-02', 'Data engineer', 190),\n(1012, 1, '2025-08-20', 'Lead', 52),\n(1013, 2, '2026-01-05', 'Data lead', 90),\n(1013, 14, '2026-01-06', 'Cloud engineer', 105),\n(1014, 3, '2026-02-12', 'Cloud lead', 130),\n(1015, 4, '2026-03-01', 'Finance lead', 75),\n(1016, 7, '2026-04-15', 'Engineer', 62),\n(1017, 6, '2026-05-02', 'Security lead', 45);\n\nINSERT INTO assignment_reviews (project_id, consultant_id, reviewed_on, review_note) VALUES\n(1001, 1, '2024-04-01', 'Delivery milestones met'),\n(1001, 2, '2024-04-02', 'Analysis draft approved'),\n(1002, 3, '2024-06-01', 'Forecast model reviewed'),\n(1003, 2, '2024-08-15', 'Data controls checked'),\n(1004, 4, '2024-10-01', 'Cost assumptions updated'),\n(1006, 7, '2025-05-10', 'Routing tests completed'),\n(1007, 8, '2025-06-10', 'Design review accepted'),\n(1009, 10, '2025-07-15', 'Security actions recorded'),\n(1011, 11, '2025-09-10', 'Data quality reviewed'),\n(1013, 14, '2026-02-01', 'Cloud setup approved'),\n(1014, 3, '2026-03-01', 'Initial analysis completed');\n\nINSERT INTO budget_bands (band_id, band_name, min_budget, max_budget) VALUES\n(1, 'Small', 0, 74999.99),\n(2, 'Medium', 75000, 174999.99),\n(3, 'Large', 175000, 399999.99),\n(4, 'Major', 400000, 1000000);\n\nINSERT INTO training_sessions (session_id, session_title, session_date, duration_hours, max_participants, trainer_id) VALUES\n(1, 'SQL Foundations', '2025-01-20', 6, 16, 2),\n(2, 'Cloud Essentials', '2025-02-12', 8, 14, 3),\n(3, 'Secure Design', '2025-03-04', 4, 12, 6),\n(4, 'Financial Modelling', '2025-04-10', 7, 18, 4),\n(5, 'Data Storytelling', '2025-05-15', 5, 20, 5),\n(6, 'Project Leadership', '2025-06-18', 6, 16, 1),\n(7, 'Design Systems', '2025-09-09', 4, 12, 8),\n(8, 'Advanced Cloud', '2026-01-22', 8, 14, 7),\n(9, 'Risk Assessment', '2026-03-17', 5, 15, 10),\n(10, 'Research Methods', '2026-05-12', 6, 18, 11);\n\nINSERT INTO participants (participant_id, session_id, participant_name, registered_on, assessment_score) VALUES\n(1, 1, 'Alex Reed', '2025-01-05', 88),\n(2, 1, 'Britt De Wilde', '2025-01-06', 92),\n(3, 1, 'Cem Yilmaz', '2025-01-06', 75),\n(4, 2, 'Dana Fox', '2025-01-20', 81),\n(5, 2, 'Eli Park', '2025-01-21', NULL),\n(6, 3, 'Faye King', '2025-02-12', 94),\n(7, 3, 'Gus Hall', '2025-02-13', 86),\n(8, 4, 'Hana Ito', '2025-03-15', 79),\n(9, 4, 'Ivo Jans', '2025-03-16', 91),\n(10, 5, 'Jules Meyer', '2025-04-20', 83),\n(11, 6, 'Kai Noor', '2025-05-20', 88),\n(12, 6, 'Lia Rose', '2025-05-21', 90),\n(13, 7, 'Milo Chen', '2025-08-15', 72),\n(14, 8, 'Nora Blake', '2025-12-20', 95),\n(15, 8, 'Omar Ali', '2025-12-21', 89),\n(16, NULL, 'Una Guest', '2026-01-02', NULL);\n"
     }
-  ],
-  "exercises": [
-    {
-      "id": "sql-week2-select-001",
+  },
+  "exercises": {
+    "sql-week2-select-001": {
       "course": "sql",
       "category": "select",
       "title": "All employee records",
@@ -50,8 +45,7 @@
       ],
       "explanation": "SELECT * returns all columns from the table, with one result row per employee."
     },
-    {
-      "id": "sql-week2-select-002",
+    "sql-week2-select-002": {
       "course": "sql",
       "category": "select",
       "title": "Student contact list",
@@ -71,8 +65,7 @@
       ],
       "explanation": "The SELECT list controls both which columns appear and their displayed order."
     },
-    {
-      "id": "sql-week2-select-003",
+    "sql-week2-select-003": {
       "course": "sql",
       "category": "select",
       "title": "Product catalogue names",
@@ -92,8 +85,7 @@
       ],
       "explanation": "A basic SELECT can retrieve columns of different data types from one table."
     },
-    {
-      "id": "sql-week2-distinct-004",
+    "sql-week2-distinct-004": {
       "course": "sql",
       "category": "distinct",
       "title": "Unique employee departments",
@@ -113,8 +105,7 @@
       ],
       "explanation": "DISTINCT removes duplicate result rows; NULL, if present, is retained as one distinct value."
     },
-    {
-      "id": "sql-week2-distinct-005",
+    "sql-week2-distinct-005": {
       "course": "sql",
       "category": "distinct",
       "title": "Different customer cities",
@@ -134,8 +125,7 @@
       ],
       "explanation": "DISTINCT applies to the complete selected row and removes repeated city values."
     },
-    {
-      "id": "sql-week2-distinct-006",
+    "sql-week2-distinct-006": {
       "course": "sql",
       "category": "distinct",
       "title": "Distinct course and subject combinations",
@@ -155,8 +145,7 @@
       ],
       "explanation": "The result contains distinct pairs, not separate unique lists for each column."
     },
-    {
-      "id": "sql-week2-select-007",
+    "sql-week2-select-007": {
       "course": "sql",
       "category": "select",
       "title": "Consultant details with aliases",
@@ -176,8 +165,7 @@
       ],
       "explanation": "AS changes the displayed column label without changing the stored table column."
     },
-    {
-      "id": "sql-week2-filtering-008",
+    "sql-week2-filtering-008": {
       "course": "sql",
       "category": "where",
       "title": "Employees in the IT department",
@@ -197,8 +185,7 @@
       ],
       "explanation": "WHERE keeps only rows for which the equality condition is true."
     },
-    {
-      "id": "sql-week2-filtering-009",
+    "sql-week2-filtering-009": {
       "course": "sql",
       "category": "where",
       "title": "High-value products",
@@ -218,8 +205,7 @@
       ],
       "explanation": "The comparison is applied to each product before rows are returned."
     },
-    {
-      "id": "sql-week2-filtering-010",
+    "sql-week2-filtering-010": {
       "course": "sql",
       "category": "where",
       "title": "Students from Ghent",
@@ -239,8 +225,7 @@
       ],
       "explanation": "Text equality comparisons are case-sensitive in the course examples."
     },
-    {
-      "id": "sql-week2-filtering-011",
+    "sql-week2-filtering-011": {
       "course": "sql",
       "category": "where",
       "title": "Projects not yet completed",
@@ -260,8 +245,7 @@
       ],
       "explanation": "The <> operator excludes rows whose status is completed."
     },
-    {
-      "id": "sql-week2-filtering-012",
+    "sql-week2-filtering-012": {
       "course": "sql",
       "category": "where",
       "title": "Customers registered before 2022",
@@ -281,8 +265,7 @@
       ],
       "explanation": "The strict < operator excludes the boundary date itself."
     },
-    {
-      "id": "sql-week2-filtering-013",
+    "sql-week2-filtering-013": {
       "course": "sql",
       "category": "where",
       "title": "Out-of-stock items",
@@ -302,8 +285,7 @@
       ],
       "explanation": "Equality to zero finds products whose stored stock quantity is exactly zero."
     },
-    {
-      "id": "sql-week2-filtering-014",
+    "sql-week2-filtering-014": {
       "course": "sql",
       "category": "where",
       "title": "Students with no scholarship balance",
@@ -323,8 +305,7 @@
       ],
       "explanation": "Zero is a known numeric value, whereas NULL represents missing or unknown information."
     },
-    {
-      "id": "sql-week2-filtering-015",
+    "sql-week2-filtering-015": {
       "course": "sql",
       "category": "where",
       "title": "Orders in processing",
@@ -344,8 +325,7 @@
       ],
       "explanation": "WHERE returns only orders with the exact stored status text."
     },
-    {
-      "id": "sql-week2-filtering-016",
+    "sql-week2-filtering-016": {
       "course": "sql",
       "category": "logical-operators",
       "title": "Sales employees above a salary threshold",
@@ -365,8 +345,7 @@
       ],
       "explanation": "AND combines the department and salary tests, so both restrictions apply."
     },
-    {
-      "id": "sql-week2-filtering-017",
+    "sql-week2-filtering-017": {
       "course": "sql",
       "category": "logical-operators",
       "title": "Customers in selected cities",
@@ -386,8 +365,7 @@
       ],
       "explanation": "OR includes a row that matches either city value."
     },
-    {
-      "id": "sql-week2-filtering-018",
+    "sql-week2-filtering-018": {
       "course": "sql",
       "category": "logical-operators",
       "title": "Open projects with a medium budget",
@@ -407,8 +385,7 @@
       ],
       "explanation": "AND requires the project to be active and the budget to fall inside the inclusive range."
     },
-    {
-      "id": "sql-week2-filtering-019",
+    "sql-week2-filtering-019": {
       "course": "sql",
       "category": "logical-operators",
       "title": "Exclude completed and cancelled orders",
@@ -428,8 +405,7 @@
       ],
       "explanation": "NOT applied to IN excludes all rows whose status appears in the specified list."
     },
-    {
-      "id": "sql-week2-filtering-020",
+    "sql-week2-filtering-020": {
       "course": "sql",
       "category": "logical-operators",
       "title": "Students meeting either criterion",
@@ -449,8 +425,7 @@
       ],
       "explanation": "The row is included when at least one of the two conditions is true."
     },
-    {
-      "id": "sql-week2-filtering-021",
+    "sql-week2-filtering-021": {
       "course": "sql",
       "category": "logical-operators",
       "title": "Consultants with two specialty constraints",
@@ -470,8 +445,7 @@
       ],
       "explanation": "The parentheses ensure the minimum rate applies to both specialties."
     },
-    {
-      "id": "sql-week2-filtering-022",
+    "sql-week2-filtering-022": {
       "course": "sql",
       "category": "logical-operators",
       "title": "Employees outside selected departments",
@@ -491,8 +465,7 @@
       ],
       "explanation": "NOT IN keeps rows whose department ID does not match either listed value; NULL department IDs are not included."
     },
-    {
-      "id": "sql-week2-filtering-023",
+    "sql-week2-filtering-023": {
       "course": "sql",
       "category": "where",
       "title": "Orders within a quarter",
@@ -512,8 +485,7 @@
       ],
       "explanation": "The inclusive BETWEEN range keeps dates equal to either endpoint as well as dates between them."
     },
-    {
-      "id": "sql-week2-filtering-024",
+    "sql-week2-filtering-024": {
       "course": "sql",
       "category": "where",
       "title": "Students with mid-range scholarship",
@@ -533,8 +505,7 @@
       ],
       "explanation": "BETWEEN includes both 400 and 1200; NULL values do not satisfy the range."
     },
-    {
-      "id": "sql-week2-filtering-025",
+    "sql-week2-filtering-025": {
       "course": "sql",
       "category": "where",
       "title": "Products in selected categories",
@@ -554,8 +525,7 @@
       ],
       "explanation": "IN matches any one of the listed category IDs."
     },
-    {
-      "id": "sql-week2-filtering-026",
+    "sql-week2-filtering-026": {
       "course": "sql",
       "category": "where",
       "title": "Projects with active or paused status",
@@ -575,8 +545,7 @@
       ],
       "explanation": "The IN condition accepts either status; the separate AND condition limits the budget."
     },
-    {
-      "id": "sql-week2-filtering-027",
+    "sql-week2-filtering-027": {
       "course": "sql",
       "category": "where",
       "title": "Employees within a salary band",
@@ -596,8 +565,7 @@
       ],
       "explanation": "BETWEEN includes salaries exactly equal to either boundary."
     },
-    {
-      "id": "sql-week2-filtering-028",
+    "sql-week2-filtering-028": {
       "course": "sql",
       "category": "logical-operators",
       "title": "Customer city and credit filter",
@@ -617,8 +585,7 @@
       ],
       "explanation": "The AND requires a matching city and a credit limit above the threshold."
     },
-    {
-      "id": "sql-week2-filtering-029",
+    "sql-week2-filtering-029": {
       "course": "sql",
       "category": "logical-operators",
       "title": "Employees hired after 2020 outside Operations",
@@ -638,8 +605,7 @@
       ],
       "explanation": "The query first requires a later hire date and then excludes department 40."
     },
-    {
-      "id": "sql-week2-patterns-030",
+    "sql-week2-patterns-030": {
       "course": "sql",
       "category": "like",
       "title": "Names beginning with M",
@@ -659,8 +625,7 @@
       ],
       "explanation": "The pattern M% matches values beginning with M, including a one-character value."
     },
-    {
-      "id": "sql-week2-patterns-031",
+    "sql-week2-patterns-031": {
       "course": "sql",
       "category": "like",
       "title": "Products ending in Adapter",
@@ -680,8 +645,7 @@
       ],
       "explanation": "%Adapter matches any prefix followed by the exact suffix Adapter."
     },
-    {
-      "id": "sql-week2-patterns-032",
+    "sql-week2-patterns-032": {
       "course": "sql",
       "category": "like",
       "title": "Descriptions containing wireless",
@@ -701,8 +665,7 @@
       ],
       "explanation": "The pattern matches rows with wireless anywhere in the description; matching is case-sensitive."
     },
-    {
-      "id": "sql-week2-patterns-033",
+    "sql-week2-patterns-033": {
       "course": "sql",
       "category": "like",
       "title": "Four-character category codes",
@@ -722,8 +685,7 @@
       ],
       "explanation": "Four underscores match exactly four characters."
     },
-    {
-      "id": "sql-week2-patterns-034",
+    "sql-week2-patterns-034": {
       "course": "sql",
       "category": "like",
       "title": "Employee email domains",
@@ -743,8 +705,7 @@
       ],
       "explanation": "The pattern finds the specified domain; employees with NULL email values do not match."
     },
-    {
-      "id": "sql-week2-patterns-035",
+    "sql-week2-patterns-035": {
       "course": "sql",
       "category": "like",
       "title": "Consultant surnames with an internal sequence",
@@ -764,8 +725,7 @@
       ],
       "explanation": "The pattern matches the lowercase sequence ore at any position."
     },
-    {
-      "id": "sql-week2-null-036",
+    "sql-week2-null-036": {
       "course": "sql",
       "category": "null",
       "title": "Employees without a department",
@@ -785,8 +745,7 @@
       ],
       "explanation": "IS NULL tests for a missing department reference."
     },
-    {
-      "id": "sql-week2-null-037",
+    "sql-week2-null-037": {
       "course": "sql",
       "category": "null",
       "title": "Customers with a known credit limit",
@@ -806,8 +765,7 @@
       ],
       "explanation": "IS NOT NULL removes customers whose credit limit is missing."
     },
-    {
-      "id": "sql-week2-null-038",
+    "sql-week2-null-038": {
       "course": "sql",
       "category": "null",
       "title": "Students missing email addresses",
@@ -827,8 +785,7 @@
       ],
       "explanation": "NULL represents an absent or unknown value, not an empty string."
     },
-    {
-      "id": "sql-week2-null-039",
+    "sql-week2-null-039": {
       "course": "sql",
       "category": "null",
       "title": "Orders without a shipping city",
@@ -848,8 +805,7 @@
       ],
       "explanation": "The query returns orders whose shipping_city is unknown."
     },
-    {
-      "id": "sql-week2-patterns-040",
+    "sql-week2-patterns-040": {
       "course": "sql",
       "category": "like",
       "title": "Project names with a fixed prefix",
@@ -869,8 +825,7 @@
       ],
       "explanation": "Either prefix is sufficient, so the patterns are joined with OR."
     },
-    {
-      "id": "sql-week2-filtering-041",
+    "sql-week2-filtering-041": {
       "course": "sql",
       "category": "combined-filter",
       "title": "Filter missing and low credit limits",
@@ -891,8 +846,7 @@
       ],
       "explanation": "The LEFT JOIN retains qualifying customers even when they have no orders. GROUP BY produces one row per customer, and COUNT(o.order_id) counts only matched orders."
     },
-    {
-      "id": "sql-week2-sorting-042",
+    "sql-week2-sorting-042": {
       "course": "sql",
       "category": "order-by",
       "title": "Highest-paid employees first",
@@ -912,8 +866,7 @@
       ],
       "explanation": "ORDER BY salary DESC sorts from the highest salary to the lowest."
     },
-    {
-      "id": "sql-week2-sorting-043",
+    "sql-week2-sorting-043": {
       "course": "sql",
       "category": "order-by",
       "title": "Alphabetical customer list",
@@ -933,8 +886,7 @@
       ],
       "explanation": "ORDER BY last_name sorts alphabetically in ascending order by default."
     },
-    {
-      "id": "sql-week2-sorting-044",
+    "sql-week2-sorting-044": {
       "course": "sql",
       "category": "order-by",
       "title": "Department then salary",
@@ -954,8 +906,7 @@
       ],
       "explanation": "Rows are grouped by department in ascending order, then salaries are descending within each department."
     },
-    {
-      "id": "sql-week2-sorting-045",
+    "sql-week2-sorting-045": {
       "course": "sql",
       "category": "order-by",
       "title": "Product stock with price tie-breaker",
@@ -975,8 +926,7 @@
       ],
       "explanation": "The second key is used only when stock quantities are equal."
     },
-    {
-      "id": "sql-week2-sorting-046",
+    "sql-week2-sorting-046": {
       "course": "sql",
       "category": "order-by",
       "title": "Sort by an alias",
@@ -996,8 +946,7 @@
       ],
       "explanation": "The alias planned_budget refers to the selected budget expression."
     },
-    {
-      "id": "sql-week2-sorting-047",
+    "sql-week2-sorting-047": {
       "course": "sql",
       "category": "order-by",
       "title": "Missing consultant emails last",
@@ -1017,8 +966,7 @@
       ],
       "explanation": "NULLS LAST puts rows with missing email values after non-NULL values in the ascending sort."
     },
-    {
-      "id": "sql-week2-sorting-048",
+    "sql-week2-sorting-048": {
       "course": "sql",
       "category": "order-by",
       "title": "Birth date with missing values first",
@@ -1038,8 +986,7 @@
       ],
       "explanation": "NULLS FIRST places missing birth dates at the beginning while the remaining dates ascend."
     },
-    {
-      "id": "sql-week2-sorting-049",
+    "sql-week2-sorting-049": {
       "course": "sql",
       "category": "order-by",
       "title": "Sort by selected position",
@@ -1059,8 +1006,7 @@
       ],
       "explanation": "Position 2 means unit_price and position 3 means stock_quantity in the SELECT list."
     },
-    {
-      "id": "sql-week2-pagination-050",
+    "sql-week2-pagination-050": {
       "course": "sql",
       "category": "fetch",
       "title": "Second page of projects",
@@ -1080,8 +1026,7 @@
       ],
       "explanation": "The sorted result is paginated by skipping the first five rows and returning the next five."
     },
-    {
-      "id": "sql-week2-pagination-051",
+    "sql-week2-pagination-051": {
       "course": "sql",
       "category": "fetch",
       "title": "First four students by birth date",
@@ -1101,8 +1046,7 @@
       ],
       "explanation": "The first four rows after ascending birth-date sorting are returned."
     },
-    {
-      "id": "sql-week2-pagination-052",
+    "sql-week2-pagination-052": {
       "course": "sql",
       "category": "fetch",
       "title": "Next six employees by hire date",
@@ -1122,8 +1066,7 @@
       ],
       "explanation": "The query first sorts newest hires first, then returns positions 6 through 11."
     },
-    {
-      "id": "sql-week2-pagination-053",
+    "sql-week2-pagination-053": {
       "course": "sql",
       "category": "fetch",
       "title": "Paged products within one category",
@@ -1143,8 +1086,7 @@
       ],
       "explanation": "WHERE defines the category subset; ORDER BY establishes the page order, then OFFSET and FETCH select the requested page."
     },
-    {
-      "id": "sql-week2-filtering-054",
+    "sql-week2-filtering-054": {
       "course": "sql",
       "category": "combined-filter",
       "title": "Employee directory for selected conditions",
@@ -1164,8 +1106,7 @@
       ],
       "explanation": "IN chooses eligible departments, AND applies the salary threshold, and ORDER BY organizes the resulting rows."
     },
-    {
-      "id": "sql-week2-patterns-055",
+    "sql-week2-patterns-055": {
       "course": "sql",
       "category": "like",
       "title": "SKU pattern with one fixed character",
@@ -1185,8 +1126,7 @@
       ],
       "explanation": "The pattern requires two characters, a hyphen, and four further characters."
     },
-    {
-      "id": "sql-week2-null-056",
+    "sql-week2-null-056": {
       "course": "sql",
       "category": "null",
       "title": "Project completion date availability",
@@ -1206,8 +1146,7 @@
       ],
       "explanation": "IS NULL finds uncompleted-date records, and ORDER BY arranges them chronologically."
     },
-    {
-      "id": "sql-week2-filtering-057",
+    "sql-week2-filtering-057": {
       "course": "sql",
       "category": "combined-filter",
       "title": "Retail orders in multiple statuses and dates",
@@ -1227,8 +1166,7 @@
       ],
       "explanation": "The two conditions restrict the status and order date, then the result is sorted by date."
     },
-    {
-      "id": "sql-week2-sorting-058",
+    "sql-week2-sorting-058": {
       "course": "sql",
       "category": "order-by",
       "title": "Rank customers by credit with NULLs last",
@@ -1248,8 +1186,7 @@
       ],
       "explanation": "The descending sort ranks high credit limits first and explicitly places NULL values last."
     },
-    {
-      "id": "sql-week2-pagination-059",
+    "sql-week2-pagination-059": {
       "course": "sql",
       "category": "fetch",
       "title": "Top three consultant rates after excluding low rates",
@@ -1269,8 +1206,7 @@
       ],
       "explanation": "WHERE removes rates below 90; descending order ranks the rest, and OFFSET/FETCH returns positions two through four."
     },
-    {
-      "id": "sql-week2-distinct-060",
+    "sql-week2-distinct-060": {
       "course": "sql",
       "category": "distinct",
       "title": "What DISTINCT removes",
@@ -1291,8 +1227,7 @@
       ],
       "explanation": "DISTINCT removes duplicate result rows; it does not sort or filter by NULL status."
     },
-    {
-      "id": "sql-week2-filtering-061",
+    "sql-week2-filtering-061": {
       "course": "sql",
       "category": "where",
       "title": "Purpose of WHERE",
@@ -1313,8 +1248,7 @@
       ],
       "explanation": "WHERE filters individual rows before later grouping or sorting is applied."
     },
-    {
-      "id": "sql-week2-patterns-062",
+    "sql-week2-patterns-062": {
       "course": "sql",
       "category": "like",
       "title": "Meaning of percent wildcard",
@@ -1335,8 +1269,7 @@
       ],
       "explanation": "% matches any amount of characters, including zero characters."
     },
-    {
-      "id": "sql-week2-null-063",
+    "sql-week2-null-063": {
       "course": "sql",
       "category": "null",
       "title": "Correct NULL test",
@@ -1357,8 +1290,7 @@
       ],
       "explanation": "NULL must be tested with IS NULL or IS NOT NULL, not equality operators."
     },
-    {
-      "id": "sql-week2-sorting-064",
+    "sql-week2-sorting-064": {
       "course": "sql",
       "category": "order-by",
       "title": "Default ORDER BY direction",
@@ -1379,8 +1311,7 @@
       ],
       "explanation": "Ascending order is the default when the direction is omitted."
     },
-    {
-      "id": "sql-week2-pagination-065",
+    "sql-week2-pagination-065": {
       "course": "sql",
       "category": "fetch",
       "title": "Purpose of OFFSET",
@@ -1401,8 +1332,7 @@
       ],
       "explanation": "OFFSET skips the specified number of rows in the ordered result."
     },
-    {
-      "id": "sql-week3-text-functions-001",
+    "sql-week3-text-functions-001": {
       "course": "sql",
       "category": "upper",
       "title": "Uppercase employee surnames",
@@ -1420,8 +1350,7 @@
       "hints": "Combine separate text transformations with a character-count result.",
       "explanation": "UPPER and LOWER standardize the two name fields independently, while LENGTH returns the character count of the surname."
     },
-    {
-      "id": "sql-week3-text-functions-002",
+    "sql-week3-text-functions-002": {
       "course": "sql",
       "category": "lower",
       "title": "Lowercase customer cities",
@@ -1439,8 +1368,7 @@
       "hints": "The numeric identifier must first become text before it can be padded.",
       "explanation": "LOWER standardizes the city, CAST makes the integer suitable for LPAD, and LENGTH measures the city text."
     },
-    {
-      "id": "sql-week3-text-functions-003",
+    "sql-week3-text-functions-003": {
       "course": "sql",
       "category": "initcap",
       "title": "Formatted student names",
@@ -1458,8 +1386,7 @@
       "hints": "Format each name component before combining them.",
       "explanation": "INITCAP formats both name parts, CONCAT joins them with a space, and LOWER standardizes the email text."
     },
-    {
-      "id": "sql-week3-text-functions-004",
+    "sql-week3-text-functions-004": {
       "course": "sql",
       "category": "length",
       "title": "Employee surname lengths",
@@ -1477,8 +1404,7 @@
       "hints": "Convert the numeric length to text before applying left padding.",
       "explanation": "LENGTH counts characters, CAST changes that count to text, LPAD formats the text width, and UPPER transforms the surname."
     },
-    {
-      "id": "sql-week3-text-functions-005",
+    "sql-week3-text-functions-005": {
       "course": "sql",
       "category": "outer-join",
       "title": "Product SKU prefixes",
@@ -1499,8 +1425,7 @@
       ],
       "explanation": "The category join supplies the product's category label. String functions normalize the prefix and numeric suffix before CONCAT combines them."
     },
-    {
-      "id": "sql-week3-text-functions-006",
+    "sql-week3-text-functions-006": {
       "course": "sql",
       "category": "substr",
       "title": "Student email usernames",
@@ -1521,30 +1446,30 @@
       ],
       "explanation": "The username is extracted and lowercased from the email. A LEFT JOIN preserves students without enrollments, while GROUP BY and COUNT provide one row and a course count per student."
     },
-    {
-      "id": "sql-week3-text-functions-007",
+    "sql-week3-text-functions-007": {
       "course": "sql",
       "category": "position",
-      "title": "Find the dash in product SKUs",
-      "instructions": "For every product, display its category name, SKU, uppercase prefix before the hyphen, and lowercase suffix after the hyphen.",
+      "title": "Find email keys shared by ordering customers",
+      "instructions": "For each email key used by customers who have placed orders, display the lowercase first letter of the customer's email address, followed by '#' and the lowercase email domain (part after the @), the number of distinct ordering customers using it, and the total number of orders placed by those customers. For example, 'John@gmail.com' becomes 'j#gmail.com'. Extract the first letter and domain from each customer email using POSITION and SUBSTR. Exclude customers with missing email addresses.",
       "difficulty": "Hard",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
       "contentVersion": 1,
       "datasetId": "sql-retail",
-      "referenceSolution": "SELECT c.category_name, p.sku, UPPER(LEFT(p.sku, POSITION('-' IN p.sku) - 1)) AS sku_prefix, LOWER(SUBSTR(p.sku, POSITION('-' IN p.sku) + 1, LENGTH(p.sku))) AS sku_suffix FROM products p JOIN categories c ON p.category_id = c.category_id;",
+      "referenceSolution": "SELECT LOWER(SUBSTR(c.email, 1, 1) || '#' || SUBSTR(c.email, POSITION('@' IN c.email) + 1, LENGTH(c.email))) AS email_key, COUNT(DISTINCT c.customer_id) AS customer_count, COUNT(o.order_id) AS order_count FROM customers c LEFT JOIN orders o ON c.customer_id = o.customer_id WHERE c.email IS NOT NULL GROUP BY LOWER(SUBSTR(c.email, 1, 1) || '#' || SUBSTR(c.email, POSITION('@' IN c.email) + 1, LENGTH(c.email)));",
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
       "hints": [
-        "Join products to categories on category_id.",
-        "Use POSITION to locate the hyphen, then apply UPPER and LOWER to the respective parts."
+        "Join customers to orders using customer_id so that only customers with orders are included.",
+        "Use SUBSTR(email, 1, 1) to extract the first letter. Use POSITION to find the @ character, then SUBSTR to extract the domain after it.",
+        "Concatenate the first letter, '#', and the domain using ||. Convert the result to lowercase using LOWER.",
+        "Group by the extracted email key. Use COUNT(DISTINCT customer_id) for the customer count and HAVING to keep email keys used by at least two customers."
       ],
-      "explanation": "The category join adds context to each product. POSITION identifies the separator, and the string functions transform the prefix and suffix as requested."
+      "explanation": "SUBSTR extracts the first character of each email address. POSITION locates the @ character, and SUBSTR extracts the domain that follows it. The || operator concatenates the first character, '#', and the domain into a single email key, while LOWER converts the result to lowercase. The join restricts the analysis to customers with orders. GROUP BY combines customers sharing an email key, COUNT(DISTINCT) counts each customer once, and HAVING filters out email keys used by fewer than two ordering customers."
     },
-    {
-      "id": "sql-week3-text-functions-008",
+    "sql-week3-text-functions-008": {
       "course": "sql",
       "category": "replace",
       "title": "Standardize consultant specialties",
@@ -1562,8 +1487,7 @@
       "hints": "Apply the case and replacement transformations before padding the final text.",
       "explanation": "UPPER standardizes the specialty, REPLACE changes spaces to hyphens, and LPAD adds leading dots to reach the requested width."
     },
-    {
-      "id": "sql-week3-text-functions-009",
+    "sql-week3-text-functions-009": {
       "course": "sql",
       "category": "trim",
       "title": "Clean customer names",
@@ -1581,8 +1505,7 @@
       "hints": "Trim each part before applying title-style capitalization and concatenating them.",
       "explanation": "TRIM cleans both name parts, INITCAP capitalizes the words, and CONCAT joins the cleaned values with one space."
     },
-    {
-      "id": "sql-week3-text-functions-010",
+    "sql-week3-text-functions-010": {
       "course": "sql",
       "category": "ltrim",
       "title": "Remove leading z characters",
@@ -1602,8 +1525,7 @@
       ],
       "explanation": "LOWER makes uppercase and lowercase letters consistent; LTRIM then removes leading z characters."
     },
-    {
-      "id": "sql-week3-text-functions-011",
+    "sql-week3-text-functions-011": {
       "course": "sql",
       "category": "concat",
       "title": "Build a consultant display name",
@@ -1623,8 +1545,7 @@
       ],
       "explanation": "CONCAT joins the first name, a space and the last name into one display value."
     },
-    {
-      "id": "sql-week3-text-functions-012",
+    "sql-week3-text-functions-012": {
       "course": "sql",
       "category": "concat",
       "title": "Create a customer location label",
@@ -1644,8 +1565,7 @@
       ],
       "explanation": "CONCAT_WS joins the supplied values using the separator and skips NULL arguments."
     },
-    {
-      "id": "sql-week3-text-functions-013",
+    "sql-week3-text-functions-013": {
       "course": "sql",
       "category": "lpad",
       "title": "Build fixed-width course labels",
@@ -1663,8 +1583,7 @@
       "hints": "Both padding functions operate on text; the numeric ID needs conversion first.",
       "explanation": "CAST converts course_id to text, LPAD and RPAD create fixed-width components, and CONCAT combines them into one label."
     },
-    {
-      "id": "sql-week3-text-functions-014",
+    "sql-week3-text-functions-014": {
       "course": "sql",
       "category": "rpad",
       "title": "Pad project status labels",
@@ -1684,8 +1603,7 @@
       ],
       "explanation": "RPAD extends the status text to the requested width with trailing dots."
     },
-    {
-      "id": "sql-week3-text-functions-015",
+    "sql-week3-text-functions-015": {
       "course": "sql",
       "category": "nested-text",
       "title": "Normalize employee street labels",
@@ -1705,8 +1623,7 @@
       ],
       "explanation": "LOWER runs first, LTRIM removes the leading z characters next, and RPAD adds trailing asterisks."
     },
-    {
-      "id": "sql-week3-text-functions-016",
+    "sql-week3-text-functions-016": {
       "course": "sql",
       "category": "replace",
       "title": "Replace spaces in product names",
@@ -1726,8 +1643,7 @@
       ],
       "explanation": "REPLACE substitutes each space with an underscore in the returned text."
     },
-    {
-      "id": "sql-week3-text-functions-017",
+    "sql-week3-text-functions-017": {
       "course": "sql",
       "category": "position",
       "title": "Locate the at-sign in customer emails",
@@ -1747,8 +1663,7 @@
       ],
       "explanation": "POSITION returns the location of @; the WHERE clause ensures an email value exists."
     },
-    {
-      "id": "sql-week3-text-functions-018",
+    "sql-week3-text-functions-018": {
       "course": "sql",
       "category": "substr",
       "title": "Extract project code fragments",
@@ -1768,8 +1683,7 @@
       ],
       "explanation": "The function extracts a four-character prefix from each project name."
     },
-    {
-      "id": "sql-week3-text-functions-019",
+    "sql-week3-text-functions-019": {
       "course": "sql",
       "category": "concat",
       "title": "Names with optional email",
@@ -1789,8 +1703,7 @@
       ],
       "explanation": "The inner CONCAT forms the full name and CONCAT_WS joins it to the email only when email is present."
     },
-    {
-      "id": "sql-week3-text-functions-020",
+    "sql-week3-text-functions-020": {
       "course": "sql",
       "category": "nested-text",
       "title": "Standardize course titles",
@@ -1810,8 +1723,7 @@
       ],
       "explanation": "LOWER normalizes letter case; REPLACE changes spaces into hyphens."
     },
-    {
-      "id": "sql-week3-text-functions-021",
+    "sql-week3-text-functions-021": {
       "course": "sql",
       "category": "ltrim",
       "title": "Remove repeated prefix characters from SKUs",
@@ -1831,8 +1743,7 @@
       ],
       "explanation": "LTRIM strips any leading characters that occur in the supplied character set CL."
     },
-    {
-      "id": "sql-week3-text-functions-022",
+    "sql-week3-text-functions-022": {
       "course": "sql",
       "category": "rpad",
       "title": "Create fixed-width participant names",
@@ -1852,8 +1763,7 @@
       ],
       "explanation": "RPAD returns the name extended with periods to the specified width."
     },
-    {
-      "id": "sql-week3-text-functions-023",
+    "sql-week3-text-functions-023": {
       "course": "sql",
       "category": "text-combination",
       "title": "Create formatted student contact strings",
@@ -1873,8 +1783,7 @@
       ],
       "explanation": "The name components are transformed independently and then combined with the comma-space separator."
     },
-    {
-      "id": "sql-week3-text-functions-024",
+    "sql-week3-text-functions-024": {
       "course": "sql",
       "category": "length",
       "title": "Compare text lengths in product data",
@@ -1894,8 +1803,7 @@
       ],
       "explanation": "LENGTH produces the character count for each known description."
     },
-    {
-      "id": "sql-week3-text-functions-025",
+    "sql-week3-text-functions-025": {
       "course": "sql",
       "category": "nested-text",
       "title": "Format consultant specialty labels",
@@ -1915,8 +1823,7 @@
       ],
       "explanation": "INITCAP formats the words first, then LPAD adds leading underscores until the width is 14."
     },
-    {
-      "id": "sql-week3-text-functions-026",
+    "sql-week3-text-functions-026": {
       "course": "sql",
       "category": "outer-join",
       "title": "Extract category code prefixes",
@@ -1936,8 +1843,7 @@
       ],
       "explanation": "LEFT with a length of three returns each category code prefix."
     },
-    {
-      "id": "sql-week3-numeric-functions-027",
+    "sql-week3-numeric-functions-027": {
       "course": "sql",
       "category": "round",
       "title": "Rounded consultant rates",
@@ -1957,8 +1863,7 @@
       ],
       "explanation": "ROUND rounds each hourly rate to one decimal place."
     },
-    {
-      "id": "sql-week3-numeric-functions-028",
+    "sql-week3-numeric-functions-028": {
       "course": "sql",
       "category": "trunc",
       "title": "Truncated product prices",
@@ -1978,8 +1883,7 @@
       ],
       "explanation": "TRUNC cuts off extra decimals rather than rounding the value."
     },
-    {
-      "id": "sql-week3-numeric-functions-029",
+    "sql-week3-numeric-functions-029": {
       "course": "sql",
       "category": "mod",
       "title": "Even and odd stock quantities",
@@ -1999,8 +1903,7 @@
       ],
       "explanation": "A remainder of zero indicates an even stock quantity; one indicates an odd quantity."
     },
-    {
-      "id": "sql-week3-numeric-functions-030",
+    "sql-week3-numeric-functions-030": {
       "course": "sql",
       "category": "arithmetic",
       "title": "Calculate discounted course fees",
@@ -2020,8 +1923,7 @@
       ],
       "explanation": "Multiplying the fee by 0.90 calculates the amount after a ten percent discount."
     },
-    {
-      "id": "sql-week3-numeric-functions-031",
+    "sql-week3-numeric-functions-031": {
       "course": "sql",
       "category": "arithmetic",
       "title": "Estimate project budget with contingency",
@@ -2041,8 +1943,7 @@
       ],
       "explanation": "The multiplication adds an eight percent contingency to the original budget."
     },
-    {
-      "id": "sql-week3-numeric-functions-032",
+    "sql-week3-numeric-functions-032": {
       "course": "sql",
       "category": "round",
       "title": "Rounded order line values",
@@ -2062,8 +1963,7 @@
       ],
       "explanation": "The arithmetic calculates the line amount and ROUND formats it to two decimal places."
     },
-    {
-      "id": "sql-week3-numeric-functions-033",
+    "sql-week3-numeric-functions-033": {
       "course": "sql",
       "category": "trunc",
       "title": "Truncate project budget to thousands",
@@ -2083,8 +1983,7 @@
       ],
       "explanation": "TRUNC with -3 cuts off the final three digits without rounding."
     },
-    {
-      "id": "sql-week3-numeric-functions-034",
+    "sql-week3-numeric-functions-034": {
       "course": "sql",
       "category": "round",
       "title": "Round student tuition balances",
@@ -2104,8 +2003,7 @@
       ],
       "explanation": "ROUND with precision zero returns a whole-number result for each recorded tuition amount."
     },
-    {
-      "id": "sql-week3-numeric-functions-035",
+    "sql-week3-numeric-functions-035": {
       "course": "sql",
       "category": "mod",
       "title": "Find assignments with whole tens of hours",
@@ -2125,8 +2023,7 @@
       ],
       "explanation": "MOD reports how many hours remain after complete groups of ten hours."
     },
-    {
-      "id": "sql-week3-numeric-functions-036",
+    "sql-week3-numeric-functions-036": {
       "course": "sql",
       "category": "arithmetic",
       "title": "Calculate order item totals",
@@ -2146,8 +2043,7 @@
       ],
       "explanation": "The product of quantity and unit price is the total value for one order line."
     },
-    {
-      "id": "sql-week3-numeric-functions-037",
+    "sql-week3-numeric-functions-037": {
       "course": "sql",
       "category": "round",
       "title": "Calculate VAT-inclusive product prices",
@@ -2167,8 +2063,7 @@
       ],
       "explanation": "Multiplying by 1.21 adds 21 percent; ROUND standardizes the displayed decimal precision."
     },
-    {
-      "id": "sql-week3-numeric-functions-038",
+    "sql-week3-numeric-functions-038": {
       "course": "sql",
       "category": "trunc",
       "title": "Truncate employee salary to hundreds",
@@ -2188,8 +2083,7 @@
       ],
       "explanation": "TRUNC with -2 removes the tens and units digits without rounding."
     },
-    {
-      "id": "sql-week3-numeric-functions-039",
+    "sql-week3-numeric-functions-039": {
       "course": "sql",
       "category": "arithmetic",
       "title": "Calculate remaining project budget percentage",
@@ -2209,8 +2103,7 @@
       ],
       "explanation": "The expression multiplies the budget by 0.65, representing the amount left after 35 percent is spent."
     },
-    {
-      "id": "sql-week3-numeric-functions-040",
+    "sql-week3-numeric-functions-040": {
       "course": "sql",
       "category": "numeric-calculations",
       "title": "Calculate rounded task costs",
@@ -2228,8 +2121,7 @@
       "hints": "Multiply the recorded hours by the stated rate, then round the result.",
       "explanation": "The arithmetic expression calculates a task cost from one row; ROUND formats it to two decimal places. No join is needed because the required values are in tasks."
     },
-    {
-      "id": "sql-week3-date-functions-041",
+    "sql-week3-date-functions-041": {
       "course": "sql",
       "category": "Time",
       "title": "Show the current date",
@@ -2249,8 +2141,7 @@
       ],
       "explanation": "CURRENT_DATE returns the database session’s current date."
     },
-    {
-      "id": "sql-week3-date-functions-042",
+    "sql-week3-date-functions-042": {
       "course": "sql",
       "category": "Time",
       "title": "Show the current time",
@@ -2270,8 +2161,7 @@
       ],
       "explanation": "CURRENT_TIME returns the current time value."
     },
-    {
-      "id": "sql-week3-date-functions-043",
+    "sql-week3-date-functions-043": {
       "course": "sql",
       "category": "now",
       "title": "Show the current timestamp",
@@ -2291,8 +2181,7 @@
       ],
       "explanation": "NOW() returns the current date-time value."
     },
-    {
-      "id": "sql-week3-date-functions-044",
+    "sql-week3-date-functions-044": {
       "course": "sql",
       "category": "extract",
       "title": "Employee hire years",
@@ -2312,8 +2201,7 @@
       ],
       "explanation": "EXTRACT(YEAR FROM hire_date) returns the year part of each hire date."
     },
-    {
-      "id": "sql-week3-date-functions-045",
+    "sql-week3-date-functions-045": {
       "course": "sql",
       "category": "extract",
       "title": "Course start months",
@@ -2333,8 +2221,7 @@
       ],
       "explanation": "EXTRACT returns the month number from starts_on."
     },
-    {
-      "id": "sql-week3-date-functions-046",
+    "sql-week3-date-functions-046": {
       "course": "sql",
       "category": "extract",
       "title": "Order day numbers",
@@ -2354,8 +2241,7 @@
       ],
       "explanation": "The result contains the day-of-month component of each order date."
     },
-    {
-      "id": "sql-week3-date-functions-047",
+    "sql-week3-date-functions-047": {
       "course": "sql",
       "category": "age",
       "title": "Student ages as intervals",
@@ -2375,8 +2261,7 @@
       ],
       "explanation": "AGE returns an interval describing the time elapsed since each student’s birth date."
     },
-    {
-      "id": "sql-week3-date-functions-048",
+    "sql-week3-date-functions-048": {
       "course": "sql",
       "category": "date-part",
       "title": "Months since a fixed date",
@@ -2396,8 +2281,7 @@
       ],
       "explanation": "TO_DATE parses the supplied date, AGE calculates the interval, and DATE_PART returns its month component."
     },
-    {
-      "id": "sql-week3-date-functions-049",
+    "sql-week3-date-functions-049": {
       "course": "sql",
       "category": "age",
       "title": "Time between project dates",
@@ -2417,8 +2301,7 @@
       ],
       "explanation": "AGE(end_date, start_date) calculates the interval between the two date values."
     },
-    {
-      "id": "sql-week3-date-functions-050",
+    "sql-week3-date-functions-050": {
       "course": "sql",
       "category": "interval",
       "title": "Retirement date estimate",
@@ -2438,8 +2321,7 @@
       ],
       "explanation": "The INTERVAL expression shifts each birth date forward by 65 years."
     },
-    {
-      "id": "sql-week3-date-functions-051",
+    "sql-week3-date-functions-051": {
       "course": "sql",
       "category": "date-difference",
       "title": "Days since customer registration",
@@ -2459,8 +2341,7 @@
       ],
       "explanation": "Subtracting one date from another returns the number of days between them."
     },
-    {
-      "id": "sql-week3-date-functions-052",
+    "sql-week3-date-functions-052": {
       "course": "sql",
       "category": "age",
       "title": "Employees older than thirty",
@@ -2480,8 +2361,7 @@
       ],
       "explanation": "AGE calculates an interval and the WHERE condition keeps intervals greater than thirty years."
     },
-    {
-      "id": "sql-week3-date-functions-053",
+    "sql-week3-date-functions-053": {
       "course": "sql",
       "category": "extract",
       "title": "Student age in whole years",
@@ -2501,8 +2381,7 @@
       ],
       "explanation": "AGE returns an interval; EXTRACT(YEAR) retrieves its year component."
     },
-    {
-      "id": "sql-week3-date-functions-054",
+    "sql-week3-date-functions-054": {
       "course": "sql",
       "category": "extract",
       "title": "Project schedule components",
@@ -2522,8 +2401,7 @@
       ],
       "explanation": "Each EXTRACT expression returns one component of the project start date."
     },
-    {
-      "id": "sql-week3-date-functions-055",
+    "sql-week3-date-functions-055": {
       "course": "sql",
       "category": "date-part",
       "title": "Duration in years from consultant hiring",
@@ -2543,8 +2421,7 @@
       ],
       "explanation": "AGE computes the time since hiring, and DATE_PART returns its year component."
     },
-    {
-      "id": "sql-week3-date-functions-056",
+    "sql-week3-date-functions-056": {
       "course": "sql",
       "category": "interval",
       "title": "Project review date",
@@ -2564,8 +2441,7 @@
       ],
       "explanation": "Adding a 90-day interval produces a review date for each project."
     },
-    {
-      "id": "sql-week3-conversion-057",
+    "sql-week3-conversion-057": {
       "course": "sql",
       "category": "cast",
       "title": "Employee ID as text",
@@ -2585,8 +2461,7 @@
       ],
       "explanation": "CAST converts the integer identifier into a character value for display."
     },
-    {
-      "id": "sql-week3-conversion-058",
+    "sql-week3-conversion-058": {
       "course": "sql",
       "category": "to-char-date",
       "title": "Format customer join dates",
@@ -2606,8 +2481,7 @@
       ],
       "explanation": "The format pattern prints a two-digit day, two-digit month and four-digit year."
     },
-    {
-      "id": "sql-week3-conversion-059",
+    "sql-week3-conversion-059": {
       "course": "sql",
       "category": "to-date",
       "title": "Parse a supplied date",
@@ -2627,8 +2501,7 @@
       ],
       "explanation": "TO_DATE interprets the supplied string as a date according to DD-MM-YYYY."
     },
-    {
-      "id": "sql-week3-conversion-060",
+    "sql-week3-conversion-060": {
       "course": "sql",
       "category": "to-number",
       "title": "Convert a text amount to a number",
@@ -2648,8 +2521,7 @@
       ],
       "explanation": "TO_NUMBER parses the text and returns a numeric value."
     },
-    {
-      "id": "sql-week3-conversion-061",
+    "sql-week3-conversion-061": {
       "course": "sql",
       "category": "cast",
       "title": "Convert customer postal codes to integers",
@@ -2669,8 +2541,7 @@
       ],
       "explanation": "The shorthand casts each text postal code to an integer; leading zeroes are not preserved in the numeric result."
     },
-    {
-      "id": "sql-week3-conversion-062",
+    "sql-week3-conversion-062": {
       "course": "sql",
       "category": "to-char-number",
       "title": "Format project budgets as text",
@@ -2690,8 +2561,7 @@
       ],
       "explanation": "The format converts the numeric budget into a text representation with two decimal places."
     },
-    {
-      "id": "sql-week3-conversion-063",
+    "sql-week3-conversion-063": {
       "course": "sql",
       "category": "to-char-date",
       "title": "Display section dates with month names",
@@ -2711,8 +2581,7 @@
       ],
       "explanation": "TO_CHAR formats the date, and FM prevents the full month name from being padded with spaces."
     },
-    {
-      "id": "sql-week3-conversion-064",
+    "sql-week3-conversion-064": {
       "course": "sql",
       "category": "cast",
       "title": "Convert a numeric product price to integer",
@@ -2732,8 +2601,7 @@
       ],
       "explanation": "CAST converts the numeric price to an integer result."
     },
-    {
-      "id": "sql-week3-conversion-065",
+    "sql-week3-conversion-065": {
       "course": "sql",
       "category": "to-date",
       "title": "Parse a year-first date string",
@@ -2753,8 +2621,7 @@
       ],
       "explanation": "TO_DATE parses the year, month and day components using YYYY-MM-DD."
     },
-    {
-      "id": "sql-week3-conversion-066",
+    "sql-week3-conversion-066": {
       "course": "sql",
       "category": "to-char-date",
       "title": "Display dates with abbreviated weekday",
@@ -2774,8 +2641,7 @@
       ],
       "explanation": "TO_CHAR formats the date into the requested abbreviated weekday and numeric date components."
     },
-    {
-      "id": "sql-week3-conversion-067",
+    "sql-week3-conversion-067": {
       "course": "sql",
       "category": "to-char-date",
       "title": "Format a date without padded month text",
@@ -2795,8 +2661,7 @@
       ],
       "explanation": "FM removes the padding spaces that the Month template may add."
     },
-    {
-      "id": "sql-week3-conversion-068",
+    "sql-week3-conversion-068": {
       "course": "sql",
       "category": "nested-conversion",
       "title": "Format a calculated age milestone date",
@@ -2816,8 +2681,7 @@
       ],
       "explanation": "The interval addition creates the milestone date, and TO_CHAR formats the calculated date."
     },
-    {
-      "id": "sql-week3-text-functions-069",
+    "sql-week3-text-functions-069": {
       "course": "sql",
       "category": "text-function",
       "title": "What LENGTH returns",
@@ -2838,8 +2702,7 @@
       ],
       "explanation": "LENGTH counts the characters in its text argument."
     },
-    {
-      "id": "sql-week3-numeric-functions-070",
+    "sql-week3-numeric-functions-070": {
       "course": "sql",
       "category": "numeric-function",
       "title": "ROUND versus TRUNC",
@@ -2860,8 +2723,7 @@
       ],
       "explanation": "TRUNC cuts off extra decimal places without rounding the value."
     },
-    {
-      "id": "sql-week3-date-functions-071",
+    "sql-week3-date-functions-071": {
       "course": "sql",
       "category": "date-function",
       "title": "AGE result type",
@@ -2882,8 +2744,7 @@
       ],
       "explanation": "AGE returns an interval describing the elapsed time from the supplied date to today."
     },
-    {
-      "id": "sql-week3-conversion-072",
+    "sql-week3-conversion-072": {
       "course": "sql",
       "category": "conversion",
       "title": "Purpose of TO_DATE",
@@ -2904,8 +2765,7 @@
       ],
       "explanation": "TO_DATE parses text into a date according to the supplied format pattern."
     },
-    {
-      "id": "sql-week3-text-functions-073",
+    "sql-week3-text-functions-073": {
       "course": "sql",
       "category": "text-function",
       "title": "Purpose of CONCAT_WS",
@@ -2926,8 +2786,7 @@
       ],
       "explanation": "CONCAT_WS joins arguments using a separator and skips NULL arguments."
     },
-    {
-      "id": "sql-week3-date-functions-074",
+    "sql-week3-date-functions-074": {
       "course": "sql",
       "category": "date-function",
       "title": "Meaning of EXTRACT",
@@ -2948,8 +2807,7 @@
       ],
       "explanation": "EXTRACT(MONTH FROM date) returns the month component as a numeric value."
     },
-    {
-      "id": "sql-week3-numeric-functions-075",
+    "sql-week3-numeric-functions-075": {
       "course": "sql",
       "category": "numeric-function",
       "title": "MOD result",
@@ -2970,8 +2828,7 @@
       ],
       "explanation": "MOD returns the remainder after division; 17 divided by 5 leaves a remainder of 2."
     },
-    {
-      "id": "sql-week4-inner-joins-001",
+    "sql-week4-inner-joins-001": {
       "course": "sql",
       "category": "inner-join",
       "title": "Employee department directory",
@@ -2991,8 +2848,7 @@
       ],
       "explanation": "The INNER JOIN returns employees whose department ID matches a department row."
     },
-    {
-      "id": "sql-week4-inner-joins-002",
+    "sql-week4-inner-joins-002": {
       "course": "sql",
       "category": "inner-join",
       "title": "Department office cities",
@@ -3012,8 +2868,7 @@
       ],
       "explanation": "The join connects each department to its matching location record."
     },
-    {
-      "id": "sql-week4-inner-joins-003",
+    "sql-week4-inner-joins-003": {
       "course": "sql",
       "category": "inner-join",
       "title": "Course section overview",
@@ -3033,8 +2888,7 @@
       ],
       "explanation": "The join returns section rows with their corresponding course titles."
     },
-    {
-      "id": "sql-week4-inner-joins-004",
+    "sql-week4-inner-joins-004": {
       "course": "sql",
       "category": "inner-join",
       "title": "Teacher section assignments",
@@ -3054,8 +2908,7 @@
       ],
       "explanation": "The INNER JOIN matches each section with its assigned teacher."
     },
-    {
-      "id": "sql-week4-inner-joins-005",
+    "sql-week4-inner-joins-005": {
       "course": "sql",
       "category": "inner-join",
       "title": "Customer order dates",
@@ -3075,8 +2928,7 @@
       ],
       "explanation": "Each returned row represents a customer-order match."
     },
-    {
-      "id": "sql-week4-inner-joins-006",
+    "sql-week4-inner-joins-006": {
       "course": "sql",
       "category": "inner-join",
       "title": "Product category labels",
@@ -3096,8 +2948,7 @@
       ],
       "explanation": "The join retrieves the category description for each product with a category match."
     },
-    {
-      "id": "sql-week4-inner-joins-007",
+    "sql-week4-inner-joins-007": {
       "course": "sql",
       "category": "inner-join",
       "title": "Order line product details",
@@ -3117,8 +2968,7 @@
       ],
       "explanation": "The join adds the product name to each recorded order line."
     },
-    {
-      "id": "sql-week4-inner-joins-008",
+    "sql-week4-inner-joins-008": {
       "course": "sql",
       "category": "inner-join",
       "title": "Project client list",
@@ -3138,8 +2988,7 @@
       ],
       "explanation": "The join connects each project to its client using the matching client ID."
     },
-    {
-      "id": "sql-week4-multi-table-joins-009",
+    "sql-week4-multi-table-joins-009": {
       "course": "sql",
       "category": "multi-table-joins",
       "title": "Consultant assignment roles",
@@ -3157,8 +3006,7 @@
       "hints": "The assignment connects a consultant to a project; the project identifies its client.",
       "explanation": "Three joins follow the foreign-key relationships from assignments to consultants and projects, then from projects to clients."
     },
-    {
-      "id": "sql-week4-inner-joins-010",
+    "sql-week4-inner-joins-010": {
       "course": "sql",
       "category": "inner-join",
       "title": "Training session leaders",
@@ -3178,8 +3026,7 @@
       ],
       "explanation": "The join enriches each session with the trainer’s name."
     },
-    {
-      "id": "sql-week4-multi-table-joins-011",
+    "sql-week4-multi-table-joins-011": {
       "course": "sql",
       "category": "multi-table-joins",
       "title": "Student enrollment dates",
@@ -3197,8 +3044,7 @@
       "hints": "Start from enrollment records and follow both parts of the section key before retrieving the course title.",
       "explanation": "The enrollment links to the student and to a section using both section_id and course_id. The section then links to its course."
     },
-    {
-      "id": "sql-week4-inner-joins-012",
+    "sql-week4-inner-joins-012": {
       "course": "sql",
       "category": "inner-join",
       "title": "Employee task assignment names",
@@ -3218,8 +3064,7 @@
       ],
       "explanation": "The INNER JOIN adds the employee name to each task row by matching the employee identifier."
     },
-    {
-      "id": "sql-week4-inner-joins-013",
+    "sql-week4-inner-joins-013": {
       "course": "sql",
       "category": "inner-join",
       "title": "Products and their category codes",
@@ -3239,8 +3084,7 @@
       ],
       "explanation": "The join uses category_id to retrieve each product’s category code."
     },
-    {
-      "id": "sql-week4-multi-table-joins-014",
+    "sql-week4-multi-table-joins-014": {
       "course": "sql",
       "category": "multi-table-joins",
       "title": "Department locations by country",
@@ -3258,8 +3102,7 @@
       "hints": "Follow the employee-to-department relationship and then the department-to-location relationship.",
       "explanation": "The first join finds each employee’s department; the second uses the department’s location_id to retrieve its country."
     },
-    {
-      "id": "sql-week4-inner-joins-015",
+    "sql-week4-inner-joins-015": {
       "course": "sql",
       "category": "inner-join",
       "title": "Clients and project statuses",
@@ -3279,8 +3122,7 @@
       ],
       "explanation": "The query returns matching client and project records."
     },
-    {
-      "id": "sql-week4-inner-joins-016",
+    "sql-week4-inner-joins-016": {
       "course": "sql",
       "category": "inner-join",
       "title": "Sections with their teacher email",
@@ -3300,8 +3142,7 @@
       ],
       "explanation": "The join retrieves the teacher email for each section with an assigned teacher."
     },
-    {
-      "id": "sql-week4-inner-joins-017",
+    "sql-week4-inner-joins-017": {
       "course": "sql",
       "category": "inner-join",
       "title": "Customers and order status",
@@ -3321,8 +3162,7 @@
       ],
       "explanation": "The INNER JOIN includes customers only when at least one order matches."
     },
-    {
-      "id": "sql-week4-multi-table-joins-018",
+    "sql-week4-multi-table-joins-018": {
       "course": "sql",
       "category": "multi-table-join",
       "title": "Employee task project listing",
@@ -3342,8 +3182,7 @@
       ],
       "explanation": "The join adds employee identity to each task row."
     },
-    {
-      "id": "sql-week4-multi-table-joins-019",
+    "sql-week4-multi-table-joins-019": {
       "course": "sql",
       "category": "multi-table-join",
       "title": "Student course enrollment report",
@@ -3363,8 +3202,7 @@
       ],
       "explanation": "Two joins retrieve the student and course details for each enrollment."
     },
-    {
-      "id": "sql-week4-multi-table-joins-020",
+    "sql-week4-multi-table-joins-020": {
       "course": "sql",
       "category": "multi-table-join",
       "title": "Section teacher and course report",
@@ -3384,8 +3222,7 @@
       ],
       "explanation": "The query follows both foreign-key relationships from class_sections."
     },
-    {
-      "id": "sql-week4-multi-table-joins-021",
+    "sql-week4-multi-table-joins-021": {
       "course": "sql",
       "category": "multi-table-join",
       "title": "Detailed retail order lines",
@@ -3405,8 +3242,7 @@
       ],
       "explanation": "The chain of INNER JOINs connects an order to a customer, order lines and products."
     },
-    {
-      "id": "sql-week4-multi-table-joins-022",
+    "sql-week4-multi-table-joins-022": {
       "course": "sql",
       "category": "multi-table-join",
       "title": "Retail product category and line quantities",
@@ -3426,8 +3262,7 @@
       ],
       "explanation": "The joins retrieve product and category descriptions for each order line."
     },
-    {
-      "id": "sql-week4-multi-table-joins-023",
+    "sql-week4-multi-table-joins-023": {
       "course": "sql",
       "category": "multi-table-join",
       "title": "Consultant project and client details",
@@ -3447,8 +3282,7 @@
       ],
       "explanation": "The joins follow both sides of the assignment and then retrieve the project’s client."
     },
-    {
-      "id": "sql-week4-multi-table-joins-024",
+    "sql-week4-multi-table-joins-024": {
       "course": "sql",
       "category": "multi-table-join",
       "title": "Training attendees and trainers",
@@ -3468,8 +3302,7 @@
       ],
       "explanation": "The two joins retrieve the session and trainer associated with each participant."
     },
-    {
-      "id": "sql-week4-multi-table-joins-025",
+    "sql-week4-multi-table-joins-025": {
       "course": "sql",
       "category": "multi-table-join",
       "title": "Employee task with department location",
@@ -3489,19 +3322,18 @@
       ],
       "explanation": "The query joins all four tables through their matching key columns."
     },
-    {
-      "id": "sql-week4-multi-table-joins-026",
+    "sql-week4-multi-table-joins-026": {
       "course": "sql",
       "category": "multi-table-join",
       "title": "Course enrollment with teacher",
-      "instructions": "Show student names, course titles, section codes and teacher names for all enrolled students.",
+      "instructions": "Show student names, course titles, section codes and teacher names for all enrolled students. Order by students' first name, teachers' last name and then the course ID.",
       "difficulty": "Hard",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
       "contentVersion": 1,
       "datasetId": "sql-education",
-      "referenceSolution": "SELECT st.first_name, st.last_name, c.course_title, s.section_code, t.first_name AS teacher_first_name, t.last_name AS teacher_last_name FROM enrollments e JOIN students st ON e.student_id = st.student_id JOIN class_sections s ON e.section_id = s.section_id AND e.course_id = s.course_id JOIN courses c ON s.course_id = c.course_id JOIN teachers t ON s.teacher_id = t.teacher_id;",
+      "referenceSolution": "SELECT st.first_name, st.last_name, c.course_title, s.section_code, t.first_name AS teacher_first_name, t.last_name AS teacher_last_name FROM enrollments e JOIN students st ON e.student_id = st.student_id JOIN class_sections s ON e.section_id = s.section_id AND e.course_id = s.course_id JOIN courses c ON s.course_id = c.course_id JOIN teachers t ON s.teacher_id = t.teacher_id order by st.first_name, t.last_name, c.course_id;",
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
@@ -3510,8 +3342,7 @@
       ],
       "explanation": "The query uses the section relationship and retrieves the course and teacher details for each enrollment."
     },
-    {
-      "id": "sql-week4-multi-table-joins-027",
+    "sql-week4-multi-table-joins-027": {
       "course": "sql",
       "category": "multi-table-join",
       "title": "Order shipping location and product details",
@@ -3531,8 +3362,7 @@
       ],
       "explanation": "The joins connect order headers with individual products on each line."
     },
-    {
-      "id": "sql-week4-multi-table-joins-028",
+    "sql-week4-multi-table-joins-028": {
       "course": "sql",
       "category": "multi-table-join",
       "title": "Project staffing with consultant specialty",
@@ -3552,8 +3382,7 @@
       ],
       "explanation": "The joins connect each project to its assignments and each assignment to a consultant."
     },
-    {
-      "id": "sql-week4-multi-table-joins-029",
+    "sql-week4-multi-table-joins-029": {
       "course": "sql",
       "category": "multi-table-join",
       "title": "Product price by order and customer",
@@ -3573,8 +3402,7 @@
       ],
       "explanation": "The chain returns customer, order and product details alongside the recorded order-line price."
     },
-    {
-      "id": "sql-week4-multi-table-joins-030",
+    "sql-week4-multi-table-joins-030": {
       "course": "sql",
       "category": "multi-table-join",
       "title": "Teacher salary and enrolled course",
@@ -3594,8 +3422,7 @@
       ],
       "explanation": "The joins retrieve the course taught by each teacher and the teacher’s salary."
     },
-    {
-      "id": "sql-week4-composite-keys-031",
+    "sql-week4-composite-keys-031": {
       "course": "sql",
       "category": "composite-key",
       "title": "Match enrollments to exact class sections",
@@ -3615,8 +3442,7 @@
       ],
       "explanation": "Both key columns are required to match the correct class section because section_id can repeat across courses."
     },
-    {
-      "id": "sql-week4-composite-keys-032",
+    "sql-week4-composite-keys-032": {
       "course": "sql",
       "category": "composite-key",
       "title": "Student grades with section start dates",
@@ -3636,8 +3462,7 @@
       ],
       "explanation": "The two-column join ensures that each enrollment is associated with the correct section-course combination."
     },
-    {
-      "id": "sql-week4-composite-keys-033",
+    "sql-week4-composite-keys-033": {
       "course": "sql",
       "category": "composite-key",
       "title": "Class section room assignments",
@@ -3657,8 +3482,7 @@
       ],
       "explanation": "Both section_id and course_id are required in the ON condition so the room is matched to the exact section-course pair."
     },
-    {
-      "id": "sql-week4-composite-keys-034",
+    "sql-week4-composite-keys-034": {
       "course": "sql",
       "category": "composite-key",
       "title": "Enrollment and section capacity",
@@ -3678,8 +3502,7 @@
       ],
       "explanation": "Both section_id and course_id are necessary to retrieve the right seat limit."
     },
-    {
-      "id": "sql-week4-composite-keys-035",
+    "sql-week4-composite-keys-035": {
       "course": "sql",
       "category": "composite-key",
       "title": "Reviewed project assignments",
@@ -3699,8 +3522,7 @@
       ],
       "explanation": "The assignment and review tables share the composite assignment key; both columns must match before the project and consultant details are retrieved."
     },
-    {
-      "id": "sql-week4-composite-keys-036",
+    "sql-week4-composite-keys-036": {
       "course": "sql",
       "category": "composite-key",
       "title": "List exact section registrations for one course",
@@ -3720,8 +3542,7 @@
       ],
       "explanation": "The composite join matches both section ID and course ID before the course-specific filter is applied."
     },
-    {
-      "id": "sql-week4-composite-keys-037",
+    "sql-week4-composite-keys-037": {
       "course": "sql",
       "category": "composite-key",
       "title": "Enrollment room lookup",
@@ -3741,8 +3562,7 @@
       ],
       "explanation": "The composite join associates each enrollment with the room belonging to its exact section-course pair."
     },
-    {
-      "id": "sql-week4-composite-keys-038",
+    "sql-week4-composite-keys-038": {
       "course": "sql",
       "category": "composite-key",
       "title": "Assignment review history with consultant",
@@ -3762,8 +3582,7 @@
       ],
       "explanation": "The two key columns match each review to its assignment before the consultant details are returned."
     },
-    {
-      "id": "sql-week4-non-equi-joins-039",
+    "sql-week4-non-equi-joins-039": {
       "course": "sql",
       "category": "non-equi-join",
       "title": "Classify products by price band",
@@ -3783,8 +3602,7 @@
       ],
       "explanation": "The non-equi join uses two range comparisons to match each product to its corresponding price band."
     },
-    {
-      "id": "sql-week4-non-equi-joins-040",
+    "sql-week4-non-equi-joins-040": {
       "course": "sql",
       "category": "non-equi-join",
       "title": "Assign budget categories to projects",
@@ -3804,8 +3622,7 @@
       ],
       "explanation": "The two comparison conditions define the budget interval that contains each project."
     },
-    {
-      "id": "sql-week4-non-equi-joins-041",
+    "sql-week4-non-equi-joins-041": {
       "course": "sql",
       "category": "non-equi-join",
       "title": "Find products in the standard band",
@@ -3825,8 +3642,7 @@
       ],
       "explanation": "The non-equi join assigns products to price ranges and WHERE keeps the Standard band."
     },
-    {
-      "id": "sql-week4-non-equi-joins-042",
+    "sql-week4-non-equi-joins-042": {
       "course": "sql",
       "category": "non-equi-join",
       "title": "Find projects with large budgets",
@@ -3846,8 +3662,7 @@
       ],
       "explanation": "The range comparison identifies the band and the label condition retains Large projects."
     },
-    {
-      "id": "sql-week4-non-equi-joins-043",
+    "sql-week4-non-equi-joins-043": {
       "course": "sql",
       "category": "non-equi-join",
       "title": "Classify low and medium product prices",
@@ -3867,8 +3682,7 @@
       ],
       "explanation": "The join maps each product to a range; WHERE limits the result to products costing at most 100."
     },
-    {
-      "id": "sql-week4-non-equi-joins-044",
+    "sql-week4-non-equi-joins-044": {
       "course": "sql",
       "category": "non-equi-join",
       "title": "Compare project budgets to all fitting bands",
@@ -3888,8 +3702,7 @@
       ],
       "explanation": "The join matches budgets to bands, and the filter keeps the two requested band labels."
     },
-    {
-      "id": "sql-week4-non-equi-joins-045",
+    "sql-week4-non-equi-joins-045": {
       "course": "sql",
       "category": "non-equi-join",
       "title": "Price bands for high-value products",
@@ -3909,8 +3722,7 @@
       ],
       "explanation": "The range join finds the band for each price; WHERE then retains products at or above the threshold."
     },
-    {
-      "id": "sql-week4-non-equi-joins-046",
+    "sql-week4-non-equi-joins-046": {
       "course": "sql",
       "category": "non-equi-join",
       "title": "Find projects within their assigned spend class",
@@ -3930,8 +3742,7 @@
       ],
       "explanation": "The range join classifies every project budget; ORDER BY sorts the matched projects from low to high."
     },
-    {
-      "id": "sql-week4-self-joins-047",
+    "sql-week4-self-joins-047": {
       "course": "sql",
       "category": "self-join",
       "title": "Employee and direct manager names",
@@ -3951,8 +3762,7 @@
       ],
       "explanation": "The first alias represents the employee and the second alias represents the manager."
     },
-    {
-      "id": "sql-week4-self-joins-048",
+    "sql-week4-self-joins-048": {
       "course": "sql",
       "category": "self-join",
       "title": "Consultant and manager specialties",
@@ -3972,8 +3782,7 @@
       ],
       "explanation": "The second consultant alias represents the manager row referenced by the first row."
     },
-    {
-      "id": "sql-week4-self-joins-049",
+    "sql-week4-self-joins-049": {
       "course": "sql",
       "category": "self-join",
       "title": "Employees hired in the same month",
@@ -3993,19 +3802,18 @@
       ],
       "explanation": "The self join matches equal hire months; the < condition prevents self-pairs and duplicate reversed pairs."
     },
-    {
-      "id": "sql-week4-self-joins-050",
+    "sql-week4-self-joins-050": {
       "course": "sql",
       "category": "self-join",
       "title": "Consultants with the same specialty",
-      "instructions": "Find pairs of distinct consultants who share the same specialty. Display both names and the specialty.",
+      "instructions": "Find pairs of distinct consultants who share the same specialty. Display both names and the specialty. Order by specialty.",
       "difficulty": "Medium",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
       "contentVersion": 1,
       "datasetId": "sql-projects",
-      "referenceSolution": "SELECT c1.first_name, c1.last_name, c2.first_name AS colleague_first_name, c2.last_name AS colleague_last_name, c1.specialty FROM consultants c1 JOIN consultants c2 ON c1.specialty = c2.specialty AND c1.consultant_id < c2.consultant_id;",
+      "referenceSolution": "SELECT c1.first_name, c1.last_name, c2.first_name AS colleague_first_name, c2.last_name AS colleague_last_name, c1.specialty FROM consultants c1 JOIN consultants c2 ON c1.specialty = c2.specialty AND c1.consultant_id < c2.consultant_id ORDER BY c1.specialty;",
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
@@ -4014,8 +3822,7 @@
       ],
       "explanation": "The specialty condition finds related rows and the ID comparison avoids repeated pair orderings."
     },
-    {
-      "id": "sql-week4-self-joins-051",
+    "sql-week4-self-joins-051": {
       "course": "sql",
       "category": "self-join",
       "title": "Employees who share a department",
@@ -4035,8 +3842,7 @@
       ],
       "explanation": "The self join pairs employees in the same department and retains each pair once."
     },
-    {
-      "id": "sql-week4-self-joins-052",
+    "sql-week4-self-joins-052": {
       "course": "sql",
       "category": "self-join",
       "title": "Projects for the same client",
@@ -4056,8 +3862,7 @@
       ],
       "explanation": "Projects are related when they have the same client; the ID comparison removes self-pairs and duplicate pair directions."
     },
-    {
-      "id": "sql-week4-self-joins-053",
+    "sql-week4-self-joins-053": {
       "course": "sql",
       "category": "self-join",
       "title": "Students living in the same city",
@@ -4077,8 +3882,7 @@
       ],
       "explanation": "The self join finds matching city values and the < condition lists each pair once."
     },
-    {
-      "id": "sql-week4-self-joins-054",
+    "sql-week4-self-joins-054": {
       "course": "sql",
       "category": "self-join",
       "title": "Consultants hired in the same year",
@@ -4098,8 +3902,7 @@
       ],
       "explanation": "The join pairs consultants hired in the same year; the ID comparison removes repeated pairings."
     },
-    {
-      "id": "sql-week4-self-joins-055",
+    "sql-week4-self-joins-055": {
       "course": "sql",
       "category": "self-join",
       "title": "Employees with a more highly paid colleague",
@@ -4119,8 +3922,7 @@
       ],
       "explanation": "The join matches employees in the same department and keeps pairs where the first salary is greater than the second."
     },
-    {
-      "id": "sql-week4-self-joins-056",
+    "sql-week4-self-joins-056": {
       "course": "sql",
       "category": "self-join",
       "title": "Employee, manager and manager’s manager",
@@ -4140,8 +3942,7 @@
       ],
       "explanation": "The first join finds the direct manager; the second follows the manager’s own manager_id to the next level."
     },
-    {
-      "id": "sql-week4-self-joins-057",
+    "sql-week4-self-joins-057": {
       "course": "sql",
       "category": "self-join",
       "title": "Consultant hierarchy two levels deep",
@@ -4161,8 +3962,7 @@
       ],
       "explanation": "The two self joins trace the consultant’s manager and then the manager’s manager."
     },
-    {
-      "id": "sql-week4-self-joins-058",
+    "sql-week4-self-joins-058": {
       "course": "sql",
       "category": "self-join",
       "title": "Employees sharing a birth month",
@@ -4182,8 +3982,7 @@
       ],
       "explanation": "The join matches the birth month and excludes pairing a row with itself; <> allows each pair to appear in both directions."
     },
-    {
-      "id": "sql-week4-self-joins-059",
+    "sql-week4-self-joins-059": {
       "course": "sql",
       "category": "self-join",
       "title": "Consultants with a higher rate than their manager",
@@ -4203,19 +4002,18 @@
       ],
       "explanation": "The self join retrieves the direct manager’s rate; WHERE keeps consultants whose rate exceeds it."
     },
-    {
-      "id": "sql-week4-self-joins-060",
+    "sql-week4-self-joins-060": {
       "course": "sql",
       "category": "self-join",
       "title": "Projects sharing a start month and client",
-      "instructions": "Find pairs of different projects for the same client that started in the same month.",
+      "instructions": "Find pairs of different projects for the same client that started in the same month. Ordered by project_name.",
       "difficulty": "Hard",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
       "contentVersion": 1,
       "datasetId": "sql-projects",
-      "referenceSolution": "SELECT p1.project_name, p2.project_name AS related_project, p1.client_id, EXTRACT(MONTH FROM p1.start_date) AS start_month FROM projects p1 JOIN projects p2 ON p1.client_id = p2.client_id AND EXTRACT(MONTH FROM p1.start_date) = EXTRACT(MONTH FROM p2.start_date) AND p1.project_id < p2.project_id;",
+      "referenceSolution": "SELECT p1.project_name, p2.project_name AS related_project, p1.client_id, EXTRACT(MONTH FROM p1.start_date) AS start_month FROM projects p1 JOIN projects p2 ON p1.client_id = p2.client_id AND EXTRACT(MONTH FROM p1.start_date) = EXTRACT(MONTH FROM p2.start_date) AND p1.project_id < p2.project_id ORDER BY p1.project_name;",
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
@@ -4224,8 +4022,7 @@
       ],
       "explanation": "All three ON conditions must hold: same client, same start month and different project IDs in a consistent order."
     },
-    {
-      "id": "sql-week4-self-joins-061",
+    "sql-week4-self-joins-061": {
       "course": "sql",
       "category": "self-join",
       "title": "Employees in the same department with different hire dates",
@@ -4245,8 +4042,7 @@
       ],
       "explanation": "The join condition requires both a shared department and an earlier hire date for the first employee."
     },
-    {
-      "id": "sql-week4-self-joins-062",
+    "sql-week4-self-joins-062": {
       "course": "sql",
       "category": "self-join",
       "title": "Participants registered on the same date",
@@ -4266,8 +4062,7 @@
       ],
       "explanation": "The self join compares registrations by date and uses IDs so each pair is returned once."
     },
-    {
-      "id": "sql-week4-inner-joins-063",
+    "sql-week4-inner-joins-063": {
       "course": "sql",
       "category": "join",
       "title": "What INNER JOIN keeps",
@@ -4288,8 +4083,7 @@
       ],
       "explanation": "INNER JOIN returns only rows for which the join condition finds a match in both tables."
     },
-    {
-      "id": "sql-week4-inner-joins-064",
+    "sql-week4-inner-joins-064": {
       "course": "sql",
       "category": "join",
       "title": "Purpose of ON",
@@ -4310,8 +4104,7 @@
       ],
       "explanation": "ON specifies the relationship condition used to match rows from the joined tables."
     },
-    {
-      "id": "sql-week4-multi-table-joins-065",
+    "sql-week4-multi-table-joins-065": {
       "course": "sql",
       "category": "multi-table-join",
       "title": "Joining several tables",
@@ -4332,8 +4125,7 @@
       ],
       "explanation": "Each additional table should be joined through the relevant key relationship using JOIN ... ON."
     },
-    {
-      "id": "sql-week4-composite-keys-066",
+    "sql-week4-composite-keys-066": {
       "course": "sql",
       "category": "composite-key",
       "title": "Composite key matching",
@@ -4354,8 +4146,7 @@
       ],
       "explanation": "All required columns of the composite key must be matched, typically with AND."
     },
-    {
-      "id": "sql-week4-self-joins-067",
+    "sql-week4-self-joins-067": {
       "course": "sql",
       "category": "self-join",
       "title": "Why aliases in a self join",
@@ -4376,8 +4167,7 @@
       ],
       "explanation": "Different aliases let the query refer to each occurrence of the same table independently."
     },
-    {
-      "id": "sql-week4-non-equi-joins-068",
+    "sql-week4-non-equi-joins-068": {
       "course": "sql",
       "category": "non-equi-join",
       "title": "Recognizing a non-equi join",
@@ -4398,8 +4188,7 @@
       ],
       "explanation": "A range join uses comparison operators to match a value to minimum and maximum bounds."
     },
-    {
-      "id": "sql-week4-self-joins-069",
+    "sql-week4-self-joins-069": {
       "course": "sql",
       "category": "self-join",
       "title": "List each pair once",
@@ -4420,8 +4209,7 @@
       ],
       "explanation": "A strict less-than condition selects one direction of each distinct pair and excludes pairing a row with itself."
     },
-    {
-      "id": "sql-week4-multi-table-joins-070",
+    "sql-week4-multi-table-joins-070": {
       "course": "sql",
       "category": "join",
       "title": "Avoiding ambiguous columns",
@@ -4442,8 +4230,7 @@
       ],
       "explanation": "Qualifying a column with its table alias prevents ambiguity and makes the source clear."
     },
-    {
-      "id": "sql-week5-aggregates-001",
+    "sql-week5-aggregates-001": {
       "course": "sql",
       "category": "count",
       "title": "Count all employees",
@@ -4463,8 +4250,7 @@
       ],
       "explanation": "COUNT(*) counts all rows regardless of whether individual columns contain NULL."
     },
-    {
-      "id": "sql-week5-aggregates-002",
+    "sql-week5-aggregates-002": {
       "course": "sql",
       "category": "count",
       "title": "Count employees with email addresses",
@@ -4484,8 +4270,7 @@
       ],
       "explanation": "COUNT(email) counts only rows where email is not NULL."
     },
-    {
-      "id": "sql-week5-aggregates-003",
+    "sql-week5-aggregates-003": {
       "course": "sql",
       "category": "count",
       "title": "Count distinct customer cities",
@@ -4505,8 +4290,7 @@
       ],
       "explanation": "COUNT(DISTINCT city) counts each distinct non-NULL city value once."
     },
-    {
-      "id": "sql-week5-aggregates-004",
+    "sql-week5-aggregates-004": {
       "course": "sql",
       "category": "sum",
       "title": "Total retail stock",
@@ -4526,8 +4310,7 @@
       ],
       "explanation": "SUM adds all non-NULL stock quantities into one result."
     },
-    {
-      "id": "sql-week5-aggregates-005",
+    "sql-week5-aggregates-005": {
       "course": "sql",
       "category": "average",
       "title": "Average course fee",
@@ -4547,8 +4330,7 @@
       ],
       "explanation": "AVG calculates the mean course fee across the course rows."
     },
-    {
-      "id": "sql-week5-aggregates-006",
+    "sql-week5-aggregates-006": {
       "course": "sql",
       "category": "minimum-maximum",
       "title": "Lowest and highest consultant rates",
@@ -4568,8 +4350,7 @@
       ],
       "explanation": "MIN finds the smallest rate and MAX finds the largest rate."
     },
-    {
-      "id": "sql-week5-aggregates-007",
+    "sql-week5-aggregates-007": {
       "course": "sql",
       "category": "minimum-maximum",
       "title": "Oldest and newest order dates",
@@ -4589,8 +4370,7 @@
       ],
       "explanation": "The aggregate functions compare dates and return the earliest and latest order dates."
     },
-    {
-      "id": "sql-week5-aggregates-008",
+    "sql-week5-aggregates-008": {
       "course": "sql",
       "category": "count",
       "title": "Count enrollments with a recorded grade",
@@ -4610,8 +4390,7 @@
       ],
       "explanation": "The aggregate counts only enrollment rows with a recorded final_grade."
     },
-    {
-      "id": "sql-week5-aggregates-009",
+    "sql-week5-aggregates-009": {
       "course": "sql",
       "category": "count",
       "title": "Compare all enrollments with graded enrollments",
@@ -4631,8 +4410,7 @@
       ],
       "explanation": "COUNT(*) counts every enrollment; COUNT(final_grade) ignores rows with a NULL grade."
     },
-    {
-      "id": "sql-week5-aggregates-010",
+    "sql-week5-aggregates-010": {
       "course": "sql",
       "category": "sum",
       "title": "Total value of all order lines",
@@ -4652,8 +4430,7 @@
       ],
       "explanation": "The expression calculates each line value and SUM adds those values together."
     },
-    {
-      "id": "sql-week5-aggregates-011",
+    "sql-week5-aggregates-011": {
       "course": "sql",
       "category": "average",
       "title": "Average task hours",
@@ -4673,8 +4450,7 @@
       ],
       "explanation": "AVG calculates the mean of known hours values and does not treat NULL as zero."
     },
-    {
-      "id": "sql-week5-aggregates-012",
+    "sql-week5-aggregates-012": {
       "course": "sql",
       "category": "min-max-text",
       "title": "Alphabetically first and last course titles",
@@ -4694,8 +4470,7 @@
       ],
       "explanation": "The aggregate functions return the first and last text values in the sort order."
     },
-    {
-      "id": "sql-week5-aggregates-013",
+    "sql-week5-aggregates-013": {
       "course": "sql",
       "category": "nested-aggregate",
       "title": "Average surname length",
@@ -4715,8 +4490,7 @@
       ],
       "explanation": "LENGTH produces one numeric value per surname, AVG calculates the mean and ROUND rounds it to a whole number."
     },
-    {
-      "id": "sql-week5-aggregates-014",
+    "sql-week5-aggregates-014": {
       "course": "sql",
       "category": "count",
       "title": "Count products with unique category assignments",
@@ -4736,8 +4510,7 @@
       ],
       "explanation": "COUNT(DISTINCT category_id) counts each represented category once and ignores NULL category IDs."
     },
-    {
-      "id": "sql-week5-aggregates-015",
+    "sql-week5-aggregates-015": {
       "course": "sql",
       "category": "sum",
       "title": "Total consultant assignment hours",
@@ -4757,8 +4530,7 @@
       ],
       "explanation": "The aggregate returns one total across the assignment table, ignoring any missing hour values."
     },
-    {
-      "id": "sql-week5-aggregates-016",
+    "sql-week5-aggregates-016": {
       "course": "sql",
       "category": "minimum-maximum",
       "title": "Training duration range",
@@ -4776,8 +4548,7 @@
       "hints": "Filter the session rows before calculating the two aggregate values.",
       "explanation": "WHERE limits the rows to sessions on or after the date; MIN and MAX then return the duration boundaries for that subset."
     },
-    {
-      "id": "sql-week5-aggregates-017",
+    "sql-week5-aggregates-017": {
       "course": "sql",
       "category": "count",
       "title": "Count orders placed by all customers combined",
@@ -4795,8 +4566,7 @@
       "hints": "Filter the order rows to the two requested status values before counting.",
       "explanation": "IN keeps orders whose status matches either listed value; COUNT(*) counts all qualifying order rows."
     },
-    {
-      "id": "sql-week5-group-by-018",
+    "sql-week5-group-by-018": {
       "course": "sql",
       "category": "group-by",
       "title": "Employees per department",
@@ -4816,8 +4586,7 @@
       ],
       "explanation": "GROUP BY creates one group per department_id and COUNT(*) counts rows within each group."
     },
-    {
-      "id": "sql-week5-group-by-019",
+    "sql-week5-group-by-019": {
       "course": "sql",
       "category": "group-by",
       "title": "Products per category",
@@ -4837,8 +4606,7 @@
       ],
       "explanation": "Each category forms a group, and COUNT(*) returns its product count."
     },
-    {
-      "id": "sql-week5-group-by-020",
+    "sql-week5-group-by-020": {
       "course": "sql",
       "category": "group-by",
       "title": "Orders per customer",
@@ -4858,8 +4626,7 @@
       ],
       "explanation": "GROUP BY returns one row per customer represented in orders, with a count for each customer."
     },
-    {
-      "id": "sql-week5-group-by-021",
+    "sql-week5-group-by-021": {
       "course": "sql",
       "category": "group-by",
       "title": "Average grade per course",
@@ -4877,8 +4644,7 @@
       "hints": "Join the course information to enrollments, then group by the course fields shown in the result.",
       "explanation": "The join associates enrollment rows with course titles. GROUP BY creates one course group; COUNT counts enrollment records and AVG ignores NULL grades."
     },
-    {
-      "id": "sql-week5-group-by-022",
+    "sql-week5-group-by-022": {
       "course": "sql",
       "category": "group-by",
       "title": "Total stock by category",
@@ -4898,8 +4664,7 @@
       ],
       "explanation": "Each category group is summarized by adding its product stock quantities."
     },
-    {
-      "id": "sql-week5-group-by-023",
+    "sql-week5-group-by-023": {
       "course": "sql",
       "category": "group-by",
       "title": "Average consultant rate by specialty",
@@ -4919,8 +4684,7 @@
       ],
       "explanation": "AVG calculates a separate mean hourly rate for each specialty."
     },
-    {
-      "id": "sql-week5-group-by-024",
+    "sql-week5-group-by-024": {
       "course": "sql",
       "category": "group-by",
       "title": "Total sales quantity by product",
@@ -4940,8 +4704,7 @@
       ],
       "explanation": "SUM adds the quantities for each product across all order-item rows."
     },
-    {
-      "id": "sql-week5-group-by-025",
+    "sql-week5-group-by-025": {
       "course": "sql",
       "category": "group-by",
       "title": "Project count by client and status",
@@ -4961,8 +4724,7 @@
       ],
       "explanation": "The two grouping columns form distinct client-status groups, and COUNT returns the number of projects in each group."
     },
-    {
-      "id": "sql-week5-group-by-026",
+    "sql-week5-group-by-026": {
       "course": "sql",
       "category": "group-by",
       "title": "Task hours by employee and project",
@@ -4982,8 +4744,7 @@
       ],
       "explanation": "The grouping forms one result per employee-project pair, and SUM adds its task hours."
     },
-    {
-      "id": "sql-week5-group-by-027",
+    "sql-week5-group-by-027": {
       "course": "sql",
       "category": "group-by",
       "title": "Participant counts by training session",
@@ -5003,8 +4764,7 @@
       ],
       "explanation": "Each session ID forms a group; participants with a missing session ID form a NULL group."
     },
-    {
-      "id": "sql-week5-group-by-028",
+    "sql-week5-group-by-028": {
       "course": "sql",
       "category": "group-by",
       "title": "Average order value by shipping city",
@@ -5024,8 +4784,7 @@
       ],
       "explanation": "The join associates each line with its shipping city; AVG calculates the mean line value within each city."
     },
-    {
-      "id": "sql-week5-group-by-029",
+    "sql-week5-group-by-029": {
       "course": "sql",
       "category": "group-by",
       "title": "Department salary range",
@@ -5045,8 +4804,7 @@
       ],
       "explanation": "The aggregates calculate salary bounds for each department group."
     },
-    {
-      "id": "sql-week5-group-by-030",
+    "sql-week5-group-by-030": {
       "course": "sql",
       "category": "group-by",
       "title": "Course enrollment totals and grades",
@@ -5066,8 +4824,7 @@
       ],
       "explanation": "COUNT(*) includes every enrollment while AVG ignores rows whose final_grade is NULL."
     },
-    {
-      "id": "sql-week5-group-by-031",
+    "sql-week5-group-by-031": {
       "course": "sql",
       "category": "group-by",
       "title": "Project budgets by client city",
@@ -5087,8 +4844,7 @@
       ],
       "explanation": "The join supplies the city for each project; SUM adds budgets within each city group."
     },
-    {
-      "id": "sql-week5-group-by-032",
+    "sql-week5-group-by-032": {
       "course": "sql",
       "category": "group-by",
       "title": "Order quantities by product and order",
@@ -5108,8 +4864,7 @@
       ],
       "explanation": "Each order-product pair is a group, and SUM totals the quantity recorded for that pair."
     },
-    {
-      "id": "sql-week5-group-by-033",
+    "sql-week5-group-by-033": {
       "course": "sql",
       "category": "group-by",
       "title": "Average project assignment hours by consultant and role",
@@ -5129,8 +4884,7 @@
       ],
       "explanation": "The grouping separates each role per consultant and AVG calculates the mean recorded hours in that group."
     },
-    {
-      "id": "sql-week5-group-by-034",
+    "sql-week5-group-by-034": {
       "course": "sql",
       "category": "group-by",
       "title": "Training duration by trainer and date year",
@@ -5150,8 +4904,7 @@
       ],
       "explanation": "The grouping combines trainer and session year; SUM totals the session duration for each group."
     },
-    {
-      "id": "sql-week5-group-by-035",
+    "sql-week5-group-by-035": {
       "course": "sql",
       "category": "group-by",
       "title": "Total sales value by customer",
@@ -5171,8 +4924,7 @@
       ],
       "explanation": "The join associates each order line with a customer; the SUM calculates each customer’s combined line value."
     },
-    {
-      "id": "sql-week5-having-036",
+    "sql-week5-having-036": {
       "course": "sql",
       "category": "where-having",
       "title": "Departments with many employees",
@@ -5192,8 +4944,7 @@
       ],
       "explanation": "The grouping creates department groups and HAVING keeps only groups with more than three employees."
     },
-    {
-      "id": "sql-week5-having-037",
+    "sql-week5-having-037": {
       "course": "sql",
       "category": "where-having",
       "title": "Product categories with a large catalogue",
@@ -5213,8 +4964,7 @@
       ],
       "explanation": "HAVING evaluates the number of products in each category group."
     },
-    {
-      "id": "sql-week5-having-038",
+    "sql-week5-having-038": {
       "course": "sql",
       "category": "where-having",
       "title": "Courses with a high average grade",
@@ -5234,8 +4984,7 @@
       ],
       "explanation": "HAVING keeps only course groups whose known grades average 85 or higher."
     },
-    {
-      "id": "sql-week5-having-039",
+    "sql-week5-having-039": {
       "course": "sql",
       "category": "where-having",
       "title": "Consultant specialties with average rate above 110",
@@ -5255,8 +5004,7 @@
       ],
       "explanation": "HAVING filters the specialty groups after AVG has calculated each group’s mean rate."
     },
-    {
-      "id": "sql-week5-having-040",
+    "sql-week5-having-040": {
       "course": "sql",
       "category": "where-having",
       "title": "Filter orders before counting by status",
@@ -5276,8 +5024,7 @@
       ],
       "explanation": "WHERE removes out-of-range order rows first; GROUP BY then counts the remaining orders per status."
     },
-    {
-      "id": "sql-week5-having-041",
+    "sql-week5-having-041": {
       "course": "sql",
       "category": "where-having",
       "title": "Task hours per employee for named projects",
@@ -5297,8 +5044,7 @@
       ],
       "explanation": "WHERE limits the tasks to two projects; HAVING keeps employees whose summed hours exceed 15."
     },
-    {
-      "id": "sql-week5-having-042",
+    "sql-week5-having-042": {
       "course": "sql",
       "category": "where-having",
       "title": "Projects with multiple assignments",
@@ -5318,8 +5064,7 @@
       ],
       "explanation": "HAVING keeps projects whose assignment group contains two or more rows."
     },
-    {
-      "id": "sql-week5-having-043",
+    "sql-week5-having-043": {
       "course": "sql",
       "category": "where-having",
       "title": "Revenue by product after quantity filter",
@@ -5339,8 +5084,7 @@
       ],
       "explanation": "The query removes small-quantity lines first, then totals qualifying line values by product and keeps totals above 100."
     },
-    {
-      "id": "sql-week5-having-044",
+    "sql-week5-having-044": {
       "course": "sql",
       "category": "where-having",
       "title": "Course averages for students with recorded grades",
@@ -5360,8 +5104,7 @@
       ],
       "explanation": "WHERE ensures only known grades enter the groups; HAVING requires at least two such records per course."
     },
-    {
-      "id": "sql-week5-having-045",
+    "sql-week5-having-045": {
       "course": "sql",
       "category": "where-having",
       "title": "Consultants with substantial recorded project hours",
@@ -5381,8 +5124,7 @@
       ],
       "explanation": "The query filters assignment rows first and then keeps consultant groups with more than 150 qualifying hours."
     },
-    {
-      "id": "sql-week5-having-046",
+    "sql-week5-having-046": {
       "course": "sql",
       "category": "where-having",
       "title": "Cities with sufficient customer records",
@@ -5402,8 +5144,7 @@
       ],
       "explanation": "Only customers with a recorded credit limit enter the groups; HAVING retains cities with multiple qualifying customers."
     },
-    {
-      "id": "sql-week5-having-047",
+    "sql-week5-having-047": {
       "course": "sql",
       "category": "where-having",
       "title": "Projects by client with active work only",
@@ -5423,8 +5164,7 @@
       ],
       "explanation": "WHERE limits the source rows to active projects; HAVING filters client totals after summing their budgets."
     },
-    {
-      "id": "sql-week5-having-048",
+    "sql-week5-having-048": {
       "course": "sql",
       "category": "where-having",
       "title": "Teachers with multiple assigned sections",
@@ -5444,8 +5184,7 @@
       ],
       "explanation": "HAVING checks each teacher’s section count and excludes groups with one or fewer sections."
     },
-    {
-      "id": "sql-week5-having-049",
+    "sql-week5-having-049": {
       "course": "sql",
       "category": "where-having",
       "title": "Departments with high average salaries after row filter",
@@ -5465,8 +5204,7 @@
       ],
       "explanation": "Only qualifying employees are grouped; HAVING then tests the average in each department."
     },
-    {
-      "id": "sql-week5-having-050",
+    "sql-week5-having-050": {
       "course": "sql",
       "category": "where-having",
       "title": "Sessions with high assessment averages",
@@ -5486,8 +5224,7 @@
       ],
       "explanation": "WHERE removes NULL assessments; HAVING keeps session groups with an average of at least 85."
     },
-    {
-      "id": "sql-week5-outer-joins-051",
+    "sql-week5-outer-joins-051": {
       "course": "sql",
       "category": "outer-join",
       "title": "All departments and any employees",
@@ -5507,8 +5244,7 @@
       ],
       "explanation": "LEFT JOIN preserves every department; department rows without employees have NULL employee columns."
     },
-    {
-      "id": "sql-week5-outer-joins-052",
+    "sql-week5-outer-joins-052": {
       "course": "sql",
       "category": "outer-join",
       "title": "All customers and their orders",
@@ -5528,8 +5264,7 @@
       ],
       "explanation": "LEFT JOIN returns all customers and fills order columns with NULL where there is no order."
     },
-    {
-      "id": "sql-week5-outer-joins-053",
+    "sql-week5-outer-joins-053": {
       "course": "sql",
       "category": "outer-join",
       "title": "All courses and enrolled student IDs",
@@ -5549,8 +5284,7 @@
       ],
       "explanation": "The LEFT JOIN preserves all courses and supplies NULL for student IDs when no enrollment exists."
     },
-    {
-      "id": "sql-week5-outer-joins-054",
+    "sql-week5-outer-joins-054": {
       "course": "sql",
       "category": "outer-join",
       "title": "All projects and staffing records",
@@ -5570,8 +5304,7 @@
       ],
       "explanation": "Projects remain in the result even if no project_assignments row matches."
     },
-    {
-      "id": "sql-week5-outer-joins-055",
+    "sql-week5-outer-joins-055": {
       "course": "sql",
       "category": "outer-join",
       "title": "Find customers without orders",
@@ -5591,8 +5324,7 @@
       ],
       "explanation": "A missing order_id identifies customers for whom the join found no matching order."
     },
-    {
-      "id": "sql-week5-outer-joins-056",
+    "sql-week5-outer-joins-056": {
       "course": "sql",
       "category": "outer-join",
       "title": "Find courses without enrollments",
@@ -5612,8 +5344,7 @@
       ],
       "explanation": "The enrollment student_id is non-NULL in every real enrollment, so NULL identifies an unmatched course row."
     },
-    {
-      "id": "sql-week5-outer-joins-057",
+    "sql-week5-outer-joins-057": {
       "course": "sql",
       "category": "outer-join",
       "title": "Find employees without tasks",
@@ -5633,8 +5364,7 @@
       ],
       "explanation": "A NULL task_id indicates that the employee has no matching task row."
     },
-    {
-      "id": "sql-week5-outer-joins-058",
+    "sql-week5-outer-joins-058": {
       "course": "sql",
       "category": "outer-join",
       "title": "Find projects without assigned consultants",
@@ -5654,8 +5384,7 @@
       ],
       "explanation": "The consultant_id is required in a real assignment; NULL therefore identifies projects with no assignment."
     },
-    {
-      "id": "sql-week5-outer-joins-059",
+    "sql-week5-outer-joins-059": {
       "course": "sql",
       "category": "outer-join",
       "title": "Preserve every location",
@@ -5675,8 +5404,7 @@
       ],
       "explanation": "LEFT JOIN keeps every location and returns NULL department columns for locations without an assigned department."
     },
-    {
-      "id": "sql-week5-outer-joins-060",
+    "sql-week5-outer-joins-060": {
       "course": "sql",
       "category": "outer-join",
       "title": "Preserve every category",
@@ -5696,8 +5424,7 @@
       ],
       "explanation": "LEFT JOIN keeps every category and returns NULL product details when no product matches."
     },
-    {
-      "id": "sql-week5-outer-joins-067",
+    "sql-week5-outer-joins-067": {
       "course": "sql",
       "category": "outer-join",
       "title": "All sessions and participants",
@@ -5717,8 +5444,7 @@
       ],
       "explanation": "LEFT JOIN preserves every training session and supplies NULL participant names for sessions without registrations."
     },
-    {
-      "id": "sql-week5-outer-joins-061",
+    "sql-week5-outer-joins-061": {
       "course": "sql",
       "category": "full-join",
       "title": "All departments and employee department references",
@@ -5738,8 +5464,7 @@
       ],
       "explanation": "Departments without employees and employees without a matching department are both preserved; absent-side columns are NULL."
     },
-    {
-      "id": "sql-week5-outer-joins-062",
+    "sql-week5-outer-joins-062": {
       "course": "sql",
       "category": "full-join",
       "title": "All clients and project client references",
@@ -5759,8 +5484,7 @@
       ],
       "explanation": "The full join preserves unmatched clients and unmatched projects as well as matched pairs."
     },
-    {
-      "id": "sql-week5-outer-joins-063",
+    "sql-week5-outer-joins-063": {
       "course": "sql",
       "category": "outer-join",
       "title": "Count tasks for every employee",
@@ -5780,8 +5504,7 @@
       ],
       "explanation": "COUNT(t.task_id) counts only real matching task rows; COUNT(*) would count the preserved employee row even when no task matched."
     },
-    {
-      "id": "sql-week5-outer-joins-064",
+    "sql-week5-outer-joins-064": {
       "course": "sql",
       "category": "outer-join",
       "title": "Count orders for every customer",
@@ -5801,8 +5524,7 @@
       ],
       "explanation": "The LEFT JOIN retains customers with no orders; COUNT(o.order_id) returns zero for their unmatched row."
     },
-    {
-      "id": "sql-week5-outer-joins-065",
+    "sql-week5-outer-joins-065": {
       "course": "sql",
       "category": "outer-join",
       "title": "Count students per course including empty courses",
@@ -5822,8 +5544,7 @@
       ],
       "explanation": "Every course remains in the result; COUNT(e.student_id) counts only actual enrollment matches."
     },
-    {
-      "id": "sql-week5-outer-joins-066",
+    "sql-week5-outer-joins-066": {
       "course": "sql",
       "category": "outer-join",
       "title": "Count consultants per project including unstaffed work",
@@ -5843,8 +5564,7 @@
       ],
       "explanation": "COUNT(a.consultant_id) returns zero for a project without an assignment because the right-side key is NULL."
     },
-    {
-      "id": "sql-week5-outer-joins-068",
+    "sql-week5-outer-joins-068": {
       "course": "sql",
       "category": "full-join",
       "title": "All employees and all department records",
@@ -5864,8 +5584,7 @@
       ],
       "explanation": "The full join preserves every employee and every department, showing NULL columns for whichever side has no match."
     },
-    {
-      "id": "sql-week5-having-069",
+    "sql-week5-having-069": {
       "course": "sql",
       "category": "aggregate",
       "title": "Total quantity sold by category",
@@ -5885,8 +5604,7 @@
       ],
       "explanation": "The joins connect each sold product to its category; GROUP BY creates category groups and SUM totals their quantities."
     },
-    {
-      "id": "sql-week5-having-070",
+    "sql-week5-having-070": {
       "course": "sql",
       "category": "aggregate",
       "title": "Average assignment hours by client",
@@ -5906,8 +5624,7 @@
       ],
       "explanation": "The joins attribute each assignment to a client; AVG calculates each client’s mean recorded assignment hours."
     },
-    {
-      "id": "sql-week5-outer-joins-071",
+    "sql-week5-outer-joins-071": {
       "course": "sql",
       "category": "outer-join",
       "title": "Departments with at least one employee",
@@ -5927,8 +5644,7 @@
       ],
       "explanation": "The LEFT JOIN preserves departments; COUNT(e.employee_id) counts only actual matches and HAVING removes departments with zero employees."
     },
-    {
-      "id": "sql-week5-outer-joins-072",
+    "sql-week5-outer-joins-072": {
       "course": "sql",
       "category": "outer-join",
       "title": "Customers with two or more orders",
@@ -5948,8 +5664,7 @@
       ],
       "explanation": "COUNT(o.order_id) measures actual orders, and HAVING retains customers with at least two matching orders."
     },
-    {
-      "id": "sql-week5-having-073",
+    "sql-week5-having-073": {
       "course": "sql",
       "category": "aggregate",
       "title": "Average grade by teacher",
@@ -5969,8 +5684,7 @@
       ],
       "explanation": "The joins connect grades to the teacher responsible for the section; AVG calculates each teacher’s mean recorded grade."
     },
-    {
-      "id": "sql-week5-outer-joins-074",
+    "sql-week5-outer-joins-074": {
       "course": "sql",
       "category": "outer-join",
       "title": "Show products that have never been ordered",
@@ -5990,8 +5704,7 @@
       ],
       "explanation": "An order_id is always present for a real order line, so NULL identifies products with no matching order item."
     },
-    {
-      "id": "sql-week5-having-075",
+    "sql-week5-having-075": {
       "course": "sql",
       "category": "aggregate",
       "title": "Total spending by customer above threshold",
@@ -6011,8 +5724,7 @@
       ],
       "explanation": "SUM calculates the value of the customer’s line items; HAVING keeps customers whose total exceeds 1000."
     },
-    {
-      "id": "sql-week5-outer-joins-076",
+    "sql-week5-outer-joins-076": {
       "course": "sql",
       "category": "outer-join",
       "title": "Count participants for every session with capacity",
@@ -6032,8 +5744,7 @@
       ],
       "explanation": "LEFT JOIN keeps empty sessions; COUNT(participant_id) returns zero for unmatched sessions while the capacity remains available."
     },
-    {
-      "id": "sql-week5-aggregates-077",
+    "sql-week5-aggregates-077": {
       "course": "sql",
       "category": "aggregate",
       "title": "COUNT star compared with COUNT column",
@@ -6054,8 +5765,7 @@
       ],
       "explanation": "COUNT(*) counts every row, while COUNT(column) ignores rows where that column is NULL."
     },
-    {
-      "id": "sql-week5-group-by-078",
+    "sql-week5-group-by-078": {
       "course": "sql",
       "category": "group-by",
       "title": "Purpose of GROUP BY",
@@ -6076,8 +5786,7 @@
       ],
       "explanation": "GROUP BY forms one group for each distinct combination of the grouping columns."
     },
-    {
-      "id": "sql-week5-having-079",
+    "sql-week5-having-079": {
       "course": "sql",
       "category": "where-having",
       "title": "WHERE or HAVING",
@@ -6098,8 +5807,7 @@
       ],
       "explanation": "HAVING filters groups after aggregate values have been calculated."
     },
-    {
-      "id": "sql-week5-outer-joins-080",
+    "sql-week5-outer-joins-080": {
       "course": "sql",
       "category": "outer-join",
       "title": "LEFT JOIN row preservation",
@@ -6120,8 +5828,7 @@
       ],
       "explanation": "LEFT JOIN preserves every row from the left table and fills unmatched right-side columns with NULL."
     },
-    {
-      "id": "sql-week5-outer-joins-081",
+    "sql-week5-outer-joins-081": {
       "course": "sql",
       "category": "outer-join",
       "title": "FULL JOIN behavior",
@@ -6142,8 +5849,7 @@
       ],
       "explanation": "FULL JOIN retains all rows from both tables, with NULLs for values on the side without a match."
     },
-    {
-      "id": "sql-week5-aggregates-082",
+    "sql-week5-aggregates-082": {
       "course": "sql",
       "category": "aggregate",
       "title": "How AVG treats NULL",
@@ -6164,8 +5870,7 @@
       ],
       "explanation": "Most aggregate functions, including AVG, ignore NULL values."
     },
-    {
-      "id": "sql-week5-having-083",
+    "sql-week5-having-083": {
       "course": "sql",
       "category": "where-having",
       "title": "Correct location for row filters",
@@ -6186,8 +5891,7 @@
       ],
       "explanation": "WHERE filters individual rows before grouping; HAVING is for conditions on groups."
     },
-    {
-      "id": "sql-week5-outer-joins-084",
+    "sql-week5-outer-joins-084": {
       "course": "sql",
       "category": "outer-join",
       "title": "Identify unmatched right-side rows",
@@ -6208,8 +5912,7 @@
       ],
       "explanation": "A non-NULL key from the right table is NULL in an unmatched outer-join row."
     },
-    {
-      "id": "sql-week5-group-by-085",
+    "sql-week5-group-by-085": {
       "course": "sql",
       "category": "group-by",
       "title": "SELECT columns with GROUP BY",
@@ -6230,8 +5933,7 @@
       ],
       "explanation": "Every non-aggregated column in SELECT must be included in GROUP BY."
     },
-    {
-      "id": "sql-week2-filtering-066",
+    "sql-week2-filtering-066": {
       "course": "sql",
       "category": "combined-filter",
       "title": "Priority customers with missing or substantial credit",
@@ -6252,8 +5954,7 @@
       ],
       "explanation": "The WHERE clause applies the location and credit criteria. The LEFT JOIN retains customers without orders; grouping and COUNT calculate each customer's order total. The final sort is by city and surname."
     },
-    {
-      "id": "sql-week4-multi-table-joins-071",
+    "sql-week4-multi-table-joins-071": {
       "course": "sql",
       "category": "multi-table-join",
       "title": "Student registration with teacher and subject area",
@@ -6273,8 +5974,7 @@
       ],
       "explanation": "The joins trace the enrollment relationships to retrieve the student, course subject and teacher details."
     },
-    {
-      "id": "sql-week4-non-equi-joins-072",
+    "sql-week4-non-equi-joins-072": {
       "course": "sql",
       "category": "non-equi-join",
       "title": "Find premium products in their price range",
@@ -6294,8 +5994,7 @@
       ],
       "explanation": "The non-equi join assigns a band based on its bounds; BETWEEN restricts the displayed products to the requested inclusive price range."
     },
-    {
-      "id": "sql-week4-self-joins-073",
+    "sql-week4-self-joins-073": {
       "course": "sql",
       "category": "self-join",
       "title": "Find consultant pairs with increasing rates",
@@ -6315,8 +6014,7 @@
       ],
       "explanation": "The self join matches consultants in the same specialty and retains pair directions where the first rate is lower."
     },
-    {
-      "id": "sql-week5-having-086",
+    "sql-week5-having-086": {
       "course": "sql",
       "category": "aggregate",
       "title": "Highest sales total per shipping city threshold",
@@ -6336,5 +6034,5 @@
       ],
       "explanation": "The date condition restricts the rows before grouping; SUM calculates city sales, and HAVING keeps cities whose total exceeds 700."
     }
-  ]
+  }
 }

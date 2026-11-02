@@ -193,15 +193,22 @@
       );
     for (const f of ["packageId", "version"])
       if (!pkg[f]) E(null, f, "Missing required field");
+    const isMap = (v) => v && typeof v === "object" && !Array.isArray(v);
+    for (const f of ["datasets", "exercises"])
+      if (pkg[f] !== undefined && !isMap(pkg[f]))
+        E(null, f, `Must be an object keyed by ${f.slice(0, -1)} ID`);
+    const datasets = isMap(pkg.datasets) ? pkg.datasets : {},
+      exercises = isMap(pkg.exercises) ? pkg.exercises : {};
     const dsIds = new Set(ctx.datasetIds);
-    (pkg.datasets || []).forEach((d) => {
-      if (!d.id || !d.version || !d.sql)
-        E(d.id, "datasets[]", "Dataset needs id, version, sql");
-      else if (dsIds.has(d.id)) E(d.id, "id", "Duplicate dataset ID");
-      else dsIds.add(d.id);
-    });
+    for (const [id, d] of Object.entries(datasets)) {
+      if (!isMap(d) || !d.version || !d.sql)
+        E(id, "datasets", "Dataset needs version and sql");
+      else if (d.id !== undefined && d.id !== id)
+        E(id, "id", `Dataset id "${d.id}" does not match its key`);
+      else if (dsIds.has(id)) E(id, "id", "Duplicate dataset ID");
+      else dsIds.add(id);
+    }
     const req = [
-      "id",
       "course",
       "category",
       "title",
@@ -212,18 +219,22 @@
       "provenance",
       "contentVersion",
     ];
-    for (const ex of pkg.exercises || []) {
-      const id = ex.id;
+    for (const [id, value] of Object.entries(exercises)) {
+      if (!isMap(value)) {
+        E(id, "$", "Exercise must be an object");
+        continue;
+      }
+      if (value.id !== undefined && value.id !== id)
+        E(id, "id", `Exercise id "${value.id}" does not match its key`);
+      const ex = { ...value, id };
       req.forEach((f) => {
         if (ex[f] === undefined || ex[f] === "")
           E(id, f, "Missing required field");
       });
-      if (id) {
-        const key = exerciseKey(ex, pkg.packageId);
-        if (ctx.seenIds.has(key))
-          E(id, "id", "Duplicate exercise ID within this package");
-        ctx.seenIds.add(key);
-      }
+      const key = exerciseKey(ex, pkg.packageId);
+      if (ctx.seenIds.has(key))
+        E(id, "id", "Duplicate exercise ID within this package");
+      ctx.seenIds.add(key);
       if (ex.difficulty && !DIFF.includes(ex.difficulty))
         E(id, "difficulty", `Must be one of ${DIFF.join(", ")}`);
       if (typeof ex.course !== "string" || !ex.course.trim())
@@ -413,6 +424,7 @@
     generateExam,
     validatePackage,
     gradeOS,
+    compatibleSchemaVersion,
     hasSimilarOSAnswer,
     highlightJava,
     eligible,

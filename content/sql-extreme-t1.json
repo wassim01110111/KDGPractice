@@ -5,23 +5,20 @@
   "title": "Weeks 2–5 Integrated PostgreSQL Examination — Extreme",
   "description": "Forty extreme SQL-writing exercises integrating query construction, filtering, functions, conversions, joins, self-joins, composite keys, grouping, aggregates, outer joins and NULL handling. The supplied course cheat sheet is the authority for SQL scope.",
   "sqlDialect": "PostgreSQL",
-  "datasets": [
-    {
-      "id": "sql-enterprise-graph",
+  "datasets": {
+    "sql-enterprise-graph": {
       "version": "1",
       "title": "Enterprise delivery, reporting and staff hierarchy",
       "sql": "CREATE TABLE regions (\n region_id INTEGER PRIMARY KEY, region_name VARCHAR(40) NOT NULL, country VARCHAR(40) NOT NULL\n);\nCREATE TABLE departments (\n department_id INTEGER PRIMARY KEY, department_name VARCHAR(60) NOT NULL,\n region_id INTEGER REFERENCES regions(region_id), annual_budget NUMERIC(12,2) NOT NULL\n);\nCREATE TABLE employees (\n employee_id INTEGER PRIMARY KEY, first_name VARCHAR(40) NOT NULL, last_name VARCHAR(50) NOT NULL,\n department_id INTEGER REFERENCES departments(department_id),\n manager_id INTEGER REFERENCES employees(employee_id), salary NUMERIC(10,2) NOT NULL,\n hired_on DATE NOT NULL, birth_date DATE, email VARCHAR(100), office_code VARCHAR(12)\n);\nCREATE TABLE clients (\n client_id INTEGER PRIMARY KEY, client_name VARCHAR(80) NOT NULL, region_id INTEGER REFERENCES regions(region_id),\n segment VARCHAR(30), account_code VARCHAR(12)\n);\nCREATE TABLE projects (\n project_id INTEGER PRIMARY KEY, client_id INTEGER REFERENCES clients(client_id),\n department_id INTEGER REFERENCES departments(department_id), project_name VARCHAR(80) NOT NULL,\n start_date DATE NOT NULL, end_date DATE, budget NUMERIC(12,2) NOT NULL, status VARCHAR(20) NOT NULL\n);\nCREATE TABLE assignments (\n project_id INTEGER REFERENCES projects(project_id), employee_id INTEGER REFERENCES employees(employee_id),\n assigned_on DATE NOT NULL, role_name VARCHAR(40) NOT NULL, hours_worked NUMERIC(7,2),\n PRIMARY KEY(project_id, employee_id)\n);\nCREATE TABLE work_logs (\n log_id INTEGER PRIMARY KEY, project_id INTEGER NOT NULL, employee_id INTEGER NOT NULL,\n log_date DATE NOT NULL, hours NUMERIC(6,2), billable CHAR(1),\n FOREIGN KEY(project_id, employee_id) REFERENCES assignments(project_id, employee_id)\n);\nCREATE TABLE budget_bands (\n band_id INTEGER PRIMARY KEY, band_name VARCHAR(30) NOT NULL,\n min_budget NUMERIC(12,2) NOT NULL, max_budget NUMERIC(12,2) NOT NULL\n);\nINSERT INTO regions VALUES\n(1,'Benelux','Belgium'),(2,'DACH','Germany'),(3,'Nordics','Sweden'),(4,'Iberia','Spain');\nINSERT INTO departments VALUES\n(10,'Analytics',1,500000),(20,'Delivery',1,720000),(30,'Finance',2,310000),\n(40,'Research',3,640000),(50,'Legal',2,180000),(60,'Unstaffed Unit',4,90000);\nINSERT INTO employees VALUES\n(1,'Ava','Morgan',10,NULL,98000,'2014-02-03','1982-05-12','ava@corp.test','A-01'),\n(2,'Noah','Bennett',10,1,76000,'2017-05-11','1988-11-08','noah@corp.test','A-02'),\n(3,'Mia','Chen',20,1,84000,'2018-09-17','1990-02-19','mia@corp.test','B-01'),\n(4,'Liam','Patel',30,2,69000,'2020-01-06','1986-07-03','liam@corp.test','C-01'),\n(5,'Emma','Garcia',20,3,61000,'2021-03-22','1995-04-27',NULL,'B-02'),\n(6,'Oliver','Klein',40,3,91000,'2016-07-14','1983-10-31','oliver@corp.test','D-01'),\n(7,'Sofia','Reed',40,6,64000,'2022-10-03','1992-01-17','sofia@corp.test','D-02'),\n(8,'Ethan','Noor',10,2,72000,'2023-04-18',NULL,'ethan@corp.test','A-03'),\n(9,'Isla','Price',30,1,88000,'2019-11-25','1989-03-22','isla@corp.test','C-02'),\n(10,'Lucas','Silva',20,3,59000,'2024-01-08','1998-12-02','lucas@corp.test','B-03'),\n(11,'Amir','Ford',40,6,79000,'2020-06-01','1987-04-10',NULL,'D-03'),\n(12,'Zoe','Ahmed',50,2,67000,'2022-12-12','1996-03-11','zoe@corp.test',NULL),\n(13,'Maya','Cole',10,1,98000,'2015-08-30','1985-05-30','maya@corp.test','A-04'),\n(14,'Leo','Vos',NULL,1,57000,'2025-02-10','2000-02-04','leo@corp.test','X-01'),\n(15,'Nina','Berg',20,3,61000,'2019-06-20','1991-06-14','nina@corp.test','B-04'),\n(16,'Omar','Ito',30,4,69000,'2021-08-01','1989-08-09','omar@corp.test','C-03');\nINSERT INTO clients VALUES\n(101,'Northstar Mobility',1,'Enterprise','N-100'),(102,'Blue River Energy',1,'Enterprise','N-101'),\n(103,'Cedar Health',2,'Healthcare','D-200'),(104,'Delta Retail',2,'Retail','D-201'),\n(105,'Evergreen Housing',3,'Public','S-300'),(106,'Fjord Logistics',3,'Enterprise','S-301'),\n(107,'Golden Learning',1,'Education','N-102'),(108,'Harbor Arts',4,'Nonprofit',NULL),\n(109,'Ion Manufacturing',2,'Industrial','D-202'),(110,'Juniper Travel',4,'Retail','I-400');\nINSERT INTO projects VALUES\n(1001,101,10,'Fleet Insight','2024-01-15','2024-10-30',185000,'completed'),\n(1002,102,20,'Energy Forecast','2024-03-01','2025-01-31',420000,'completed'),\n(1003,103,40,'Patient Portal','2024-05-20','2025-05-15',275000,'completed'),\n(1004,104,30,'Warehouse Redesign','2024-08-01',NULL,95000,'active'),\n(1005,105,50,'Housing Analysis','2025-01-10',NULL,68000,'active'),\n(1006,106,20,'Route Optimization','2025-02-01','2025-11-30',510000,'completed'),\n(1007,107,10,'Learning Platform','2025-03-12',NULL,145000,'active'),\n(1008,108,50,'Archive Refresh','2025-04-01','2025-08-15',42000,'completed'),\n(1009,109,40,'Factory Sensors','2025-05-06',NULL,325000,'active'),\n(1010,110,30,'Booking Redesign','2025-06-18',NULL,78000,'paused'),\n(1011,101,10,'Mobile Dispatch','2026-01-05',NULL,160000,'active'),\n(1012,102,20,'Carbon Reporting','2026-02-12',NULL,390000,'active'),\n(1013,104,30,'Store Analytics','2026-03-01',NULL,115000,'planned'),\n(1014,106,40,'Cold Chain Review','2026-04-15',NULL,285000,'planned'),\n(1015,109,40,'Maintenance Planner','2026-05-02',NULL,720000,'planned'),\n(1016,103,50,'Care Quality Study','2026-06-10',NULL,128000,'planned');\nINSERT INTO assignments VALUES\n(1001,1,'2024-01-15','Lead',120),(1001,2,'2024-01-18','Analyst',165),\n(1002,3,'2024-03-01','Lead',140),(1002,6,'2024-03-04','Reviewer',80),\n(1003,2,'2024-05-20','Data Lead',190),(1003,5,'2024-05-22','Analyst',210),\n(1004,4,'2024-08-01','Finance Lead',95),(1004,8,'2024-08-03','Designer',70),\n(1005,9,'2025-01-10','Lead',110),(1006,3,'2025-02-01','Lead',215),\n(1006,7,'2025-02-02','Engineer',185),(1007,8,'2025-03-12','Lead',130),\n(1007,12,'2025-03-15','Designer',115),(1008,12,'2025-04-01','Lead',65),\n(1009,6,'2025-05-06','Lead',175),(1009,10,'2025-05-07','Analyst',155),\n(1010,4,'2025-06-18','Analyst',88),(1011,5,'2026-01-05','Analyst',90),\n(1011,14,'2026-01-06','Engineer',105),(1012,3,'2026-02-12','Lead',130),\n(1013,4,'2026-03-01','Lead',75),(1014,7,'2026-04-15','Engineer',62),\n(1015,6,'2026-05-02','Lead',45),(1016,11,'2026-06-10','Analyst',NULL);\nINSERT INTO work_logs VALUES\n(1,1001,1,'2024-02-01',8,'Y'),(2,1001,2,'2024-02-02',7.5,'Y'),\n(3,1002,3,'2024-04-01',9,'Y'),(4,1002,6,'2024-04-02',NULL,'N'),\n(5,1003,2,'2024-06-01',6,'Y'),(6,1003,5,'2024-06-02',8,'N'),\n(7,1004,4,'2024-09-01',5,'Y'),(8,1004,8,'2024-09-02',NULL,NULL),\n(9,1006,3,'2025-03-01',10,'Y'),(10,1006,7,'2025-03-02',8,'Y'),\n(11,1007,8,'2025-04-01',7,'Y'),(12,1009,6,'2025-06-01',9,'N'),\n(13,1009,10,'2025-06-02',6,'Y'),(14,1011,5,'2026-02-01',4,'Y'),\n(15,1011,14,'2026-02-02',5,'N');\nINSERT INTO budget_bands VALUES\n(1,'Micro',0,74999.99),(2,'Standard',75000,174999.99),\n(3,'Strategic',175000,399999.99),(4,'Flagship',400000,1000000);"
     },
-    {
-      "id": "sql-campus-network",
+    "sql-campus-network": {
       "version": "1",
       "title": "University faculties, teaching hierarchy and composite-key enrolments",
       "sql": "CREATE TABLE faculties (\n faculty_id INTEGER PRIMARY KEY, faculty_name VARCHAR(60) NOT NULL, campus VARCHAR(40) NOT NULL\n);\nCREATE TABLE lecturers (\n lecturer_id INTEGER PRIMARY KEY, first_name VARCHAR(40) NOT NULL, last_name VARCHAR(50) NOT NULL,\n supervisor_id INTEGER REFERENCES lecturers(lecturer_id), faculty_id INTEGER REFERENCES faculties(faculty_id),\n hired_on DATE NOT NULL, salary NUMERIC(10,2), email VARCHAR(100)\n);\nCREATE TABLE students (\n student_id INTEGER PRIMARY KEY, first_name VARCHAR(40) NOT NULL, last_name VARCHAR(50) NOT NULL,\n mentor_id INTEGER REFERENCES lecturers(lecturer_id), birth_date DATE, city VARCHAR(40), scholarship NUMERIC(8,2)\n);\nCREATE TABLE courses (\n course_id INTEGER PRIMARY KEY, course_code VARCHAR(12) NOT NULL, title VARCHAR(80) NOT NULL,\n faculty_id INTEGER REFERENCES faculties(faculty_id), fee NUMERIC(8,2) NOT NULL, credits INTEGER NOT NULL\n);\nCREATE TABLE sections (\n section_id INTEGER NOT NULL, course_id INTEGER NOT NULL REFERENCES courses(course_id),\n lecturer_id INTEGER REFERENCES lecturers(lecturer_id), starts_on DATE NOT NULL, room_code VARCHAR(12),\n PRIMARY KEY(section_id,course_id)\n);\nCREATE TABLE enrollments (\n student_id INTEGER REFERENCES students(student_id), section_id INTEGER NOT NULL, course_id INTEGER NOT NULL,\n registered_on DATE NOT NULL, grade NUMERIC(5,2), paid_amount NUMERIC(8,2),\n PRIMARY KEY(student_id,section_id,course_id),\n FOREIGN KEY(section_id,course_id) REFERENCES sections(section_id,course_id)\n);\nCREATE TABLE prerequisites (\n course_id INTEGER REFERENCES courses(course_id), prerequisite_id INTEGER REFERENCES courses(course_id),\n minimum_grade NUMERIC(5,2), PRIMARY KEY(course_id,prerequisite_id)\n);\nINSERT INTO faculties VALUES\n(1,'Computing','Antwerp'),(2,'Business','Brussels'),(3,'Science','Ghent'),(4,'Arts','Leuven'),(5,'Unassigned Faculty','Hasselt');\nINSERT INTO lecturers VALUES\n(1,'Nora','Bakker',NULL,1,'2012-02-01',72000,'nora@uni.test'),\n(2,'Omar','Haddad',1,1,'2016-05-11',68000,'omar@uni.test'),\n(3,'Petra','Klein',1,2,'2017-09-17',74000,'petra@uni.test'),\n(4,'Ravi','Shah',2,1,'2020-01-06',61000,'ravi@uni.test'),\n(5,'Sofia','Meyer',2,2,'2021-03-22',59000,NULL),\n(6,'Tom','Peeters',3,3,'2015-07-14',81000,'tom@uni.test'),\n(7,'Uma','Singh',3,3,'2022-10-03',65000,'uma@uni.test'),\n(8,'Victor','Noor',2,4,'2023-04-18',NULL,'victor@uni.test'),\n(9,'Wen','Price',1,2,'2019-11-25',76000,'wen@uni.test'),\n(10,'Yara','Silva',6,3,'2024-01-08',63000,'yara@uni.test');\nINSERT INTO students VALUES\n(101,'Alex','Reed',2,'2002-01-15','Antwerp',1200),(102,'Britt','De Wilde',4,'2001-07-21','Ghent',NULL),\n(103,'Cem','Yilmaz',3,'2003-03-09','Brussels',800),(104,'Dana','Fox',2,'2000-11-30','Antwerp',1500),\n(105,'Eli','Park',5,'2002-05-12','Leuven',0),(106,'Faye','King',6,'2001-02-18','Ghent',900),\n(107,'Gus','Hall',7,'2003-08-08','Hasselt',NULL),(108,'Hana','Ito',4,'2000-04-14','Brussels',1200),\n(109,'Ivo','Jans',9,'2002-09-22','Antwerp',600),(110,'Jules','Meyer',NULL,'2001-12-01','Leuven',NULL),\n(111,'Kai','Noor',8,'2003-06-17','Ghent',500),(112,'Lia','Rose',6,'2002-10-10','Brussels',1000);\nINSERT INTO courses VALUES\n(201,'DB301','Relational Systems',1,450,6),(202,'SQL220','Data Querying',1,390,5),\n(203,'FIN210','Financial Analysis',2,520,5),(204,'STAT310','Applied Statistics',3,480,6),\n(205,'ART110','Digital Culture',4,300,4),(206,'AI400','Applied AI',1,650,7),\n(207,'BUS330','Operations',2,410,5),(208,'BIO210','Data in Biology',3,430,5);\nINSERT INTO sections VALUES\n(1,201,1,'2025-09-01','C-101'),(2,201,2,'2026-02-02','C-102'),\n(1,202,4,'2025-09-03','C-201'),(1,203,3,'2025-09-05','B-101'),\n(1,204,6,'2025-09-06','S-101'),(1,205,8,'2025-09-08','A-101'),\n(1,206,2,'2026-02-10','C-301'),(1,207,5,'2026-02-12','B-201'),\n(1,208,10,'2026-02-14','S-201');\nINSERT INTO enrollments VALUES\n(101,1,201,'2025-08-10',88,450),(102,1,201,'2025-08-11',92,450),\n(103,1,202,'2025-08-12',75,390),(104,1,202,'2025-08-13',NULL,390),\n(105,1,203,'2025-08-14',81,520),(106,1,204,'2025-08-15',94,480),\n(107,1,204,'2025-08-16',86,NULL),(108,1,205,'2025-08-17',79,300),\n(109,1,201,'2025-08-18',91,450),(101,1,202,'2025-08-19',84,390),\n(102,1,203,'2025-08-20',NULL,520),(111,1,205,'2025-08-21',72,300);\nINSERT INTO prerequisites VALUES\n(206,201,70),(206,202,65),(201,202,60),(204,202,55),(207,203,60),(208,204,60);"
     }
-  ],
-  "exercises": [
-    {
-      "id": "sql-extreme-001",
+  },
+  "exercises": {
+    "sql-extreme-001": {
       "course": "sql",
       "category": "filtering-functions-calculations",
       "title": "Regional department workload under management chains",
@@ -42,8 +39,7 @@
       ],
       "explanation": "The department-to-region relationship supplies the reporting geography. Two employee aliases follow the reporting chain; a third alias identifies its root. Independent project, assignment and log relationships multiply rows, so entity counts are distinct. COUNT(email) excludes NULL emails, while SUM(hours) ignores NULL logged hours. The HAVING clause retains larger staffed groups and entirely project-free departments."
     },
-    {
-      "id": "sql-extreme-002",
+    "sql-extreme-002": {
       "course": "sql",
       "category": "filtering-functions-calculations",
       "title": "Employee pairs with shared project and salary gap",
@@ -64,8 +60,7 @@
       ],
       "explanation": "The employee self-join uses < to exclude self-pairs and reverse duplicates. Two assignment aliases establish a shared project. The manager joins are optional so employees without managers remain. COUNT(DISTINCT project_id) counts shared projects rather than multiplied rows. Grouping retains one row per employee pair; OFFSET and FETCH apply after deterministic sorting."
     },
-    {
-      "id": "sql-extreme-003",
+    "sql-extreme-003": {
       "course": "sql",
       "category": "filtering-functions-calculations",
       "title": "Composite-key section performance and lecturer lineage",
@@ -86,8 +81,7 @@
       ],
       "explanation": "Each section is joined to its course and faculty, while lecturer hierarchy joins are optional. The enrolment join uses both columns of the section key. COUNT(DISTINCT student_id) counts enrolments' students; COUNT(grade) excludes missing grades. The aggregate condition belongs in HAVING. For an empty section, COUNT(en.student_id) is zero; subtracting COUNT(grade) from the enrolment count yields the number with unknown grades."
     },
-    {
-      "id": "sql-extreme-004",
+    "sql-extreme-004": {
       "course": "sql",
       "category": "filtering-functions-calculations",
       "title": "Project portfolio budget bands and manager coverage",
@@ -108,8 +102,7 @@
       ],
       "explanation": "Budget bands are retained even without matching projects. The range predicate maps projects to bands. The assignment-to-employee chain supplies staffing and salary data; the lead alias is restricted to assignments whose role identifies a lead. DISTINCT project and employee counts prevent multiplication from inflating entity counts. HAVING retains the specified bands."
     },
-    {
-      "id": "sql-extreme-005",
+    "sql-extreme-005": {
       "course": "sql",
       "category": "filtering-functions-calculations",
       "title": "NULL-sensitive departmental delivery summary",
@@ -130,8 +123,7 @@
       ],
       "explanation": "The employee-to-manager join requires a manager, while the senior-manager join is optional. Department and log data are optional. The assignment join limits output to assigned employees. COUNT(log_id)-COUNT(hours) measures log rows with missing hours; SUM(hours) ignores NULL. AGE and TO_CHAR format tenure. HAVING filters groups after aggregation."
     },
-    {
-      "id": "sql-extreme-006",
+    "sql-extreme-006": {
       "course": "sql",
       "category": "multi-table-and-composite-joins",
       "title": "Composite section registration audit",
@@ -152,8 +144,7 @@
       ],
       "explanation": "The query joins faculty and course to each section, then preserves sections without enrolments. The composite key prevents enrolments from attaching to the wrong section. Lecturer and supervisor aliases expose the hierarchy. The mentor condition is part of the student join, so sections remain when no mentor matches. Aggregate functions distinguish enrolments from known grades and payments."
     },
-    {
-      "id": "sql-extreme-007",
+    "sql-extreme-007": {
       "course": "sql",
       "category": "multi-table-and-composite-joins",
       "title": "Client portfolio and team composition",
@@ -174,8 +165,7 @@
       ],
       "explanation": "The employee-to-manager join requires a manager, while the senior-manager join is optional. Department and log data are optional. The assignment join limits output to assigned employees. COUNT(log_id)-COUNT(hours) measures log rows with missing hours; SUM(hours) ignores NULL. AGE and TO_CHAR format tenure. HAVING filters groups after aggregation."
     },
-    {
-      "id": "sql-extreme-008",
+    "sql-extreme-008": {
       "course": "sql",
       "category": "multi-table-and-composite-joins",
       "title": "Faculty workload with unmatched students",
@@ -196,8 +186,7 @@
       ],
       "explanation": "The query joins faculty and course to each section, then preserves sections without enrolments. The composite key prevents enrolments from attaching to the wrong section. Lecturer and supervisor aliases expose the hierarchy. The mentor condition is part of the student join, so sections remain when no mentor matches. Aggregate functions distinguish enrolments from known grades and payments."
     },
-    {
-      "id": "sql-extreme-009",
+    "sql-extreme-009": {
       "course": "sql",
       "category": "multi-table-and-composite-joins",
       "title": "Date-sensitive consultant workload ranking",
@@ -218,8 +207,7 @@
       ],
       "explanation": "The employee-to-manager join requires a manager, while the senior-manager join is optional. Department and log data are optional. The assignment join limits output to assigned employees. COUNT(log_id)-COUNT(hours) measures log rows with missing hours; SUM(hours) ignores NULL. AGE and TO_CHAR format tenure. HAVING filters groups after aggregation."
     },
-    {
-      "id": "sql-extreme-010",
+    "sql-extreme-010": {
       "course": "sql",
       "category": "multi-table-and-composite-joins",
       "title": "Faculty enrolment and academic lineage report",
@@ -240,8 +228,7 @@
       ],
       "explanation": "The query joins faculty and course to each section, then preserves sections without enrolments. The composite key prevents enrolments from attaching to the wrong section. Lecturer and supervisor aliases expose the hierarchy. The mentor condition is part of the student join, so sections remain when no mentor matches. Aggregate functions distinguish enrolments from known grades and payments."
     },
-    {
-      "id": "sql-extreme-011",
+    "sql-extreme-011": {
       "course": "sql",
       "category": "multiple-self-joins",
       "title": "Hierarchy-aware employee and project audit",
@@ -262,8 +249,7 @@
       ],
       "explanation": "The employee-to-manager join requires a manager, while the senior-manager join is optional. Department and log data are optional. The assignment join limits output to assigned employees. COUNT(log_id)-COUNT(hours) measures log rows with missing hours; SUM(hours) ignores NULL. AGE and TO_CHAR format tenure. HAVING filters groups after aggregation."
     },
-    {
-      "id": "sql-extreme-012",
+    "sql-extreme-012": {
       "course": "sql",
       "category": "multiple-self-joins",
       "title": "Course prerequisite comparison across cohorts",
@@ -284,8 +270,7 @@
       ],
       "explanation": "The query joins faculty and course to each section, then preserves sections without enrolments. The composite key prevents enrolments from attaching to the wrong section. Lecturer and supervisor aliases expose the hierarchy. The mentor condition is part of the student join, so sections remain when no mentor matches. Aggregate functions distinguish enrolments from known grades and payments."
     },
-    {
-      "id": "sql-extreme-013",
+    "sql-extreme-013": {
       "course": "sql",
       "category": "multiple-self-joins",
       "title": "Cross-region project staffing comparison",
@@ -306,8 +291,7 @@
       ],
       "explanation": "The employee-to-manager join requires a manager, while the senior-manager join is optional. Department and log data are optional. The assignment join limits output to assigned employees. COUNT(log_id)-COUNT(hours) measures log rows with missing hours; SUM(hours) ignores NULL. AGE and TO_CHAR format tenure. HAVING filters groups after aggregation."
     },
-    {
-      "id": "sql-extreme-014",
+    "sql-extreme-014": {
       "course": "sql",
       "category": "multiple-self-joins",
       "title": "Student mentor performance and payment analysis",
@@ -328,8 +312,7 @@
       ],
       "explanation": "The query joins faculty and course to each section, then preserves sections without enrolments. The composite key prevents enrolments from attaching to the wrong section. Lecturer and supervisor aliases expose the hierarchy. The mentor condition is part of the student join, so sections remain when no mentor matches. Aggregate functions distinguish enrolments from known grades and payments."
     },
-    {
-      "id": "sql-extreme-015",
+    "sql-extreme-015": {
       "course": "sql",
       "category": "multiple-self-joins",
       "title": "NULL-sensitive departmental delivery summary",
@@ -350,8 +333,7 @@
       ],
       "explanation": "The employee-to-manager join requires a manager, while the senior-manager join is optional. Department and log data are optional. The assignment join limits output to assigned employees. COUNT(log_id)-COUNT(hours) measures log rows with missing hours; SUM(hours) ignores NULL. AGE and TO_CHAR format tenure. HAVING filters groups after aggregation."
     },
-    {
-      "id": "sql-extreme-016",
+    "sql-extreme-016": {
       "course": "sql",
       "category": "self-joins-and-outer-joins",
       "title": "Composite section registration audit",
@@ -372,8 +354,7 @@
       ],
       "explanation": "The query joins faculty and course to each section, then preserves sections without enrolments. The composite key prevents enrolments from attaching to the wrong section. Lecturer and supervisor aliases expose the hierarchy. The mentor condition is part of the student join, so sections remain when no mentor matches. Aggregate functions distinguish enrolments from known grades and payments."
     },
-    {
-      "id": "sql-extreme-017",
+    "sql-extreme-017": {
       "course": "sql",
       "category": "self-joins-and-outer-joins",
       "title": "Client portfolio and team composition",
@@ -394,8 +375,7 @@
       ],
       "explanation": "The employee-to-manager join requires a manager, while the senior-manager join is optional. Department and log data are optional. The assignment join limits output to assigned employees. COUNT(log_id)-COUNT(hours) measures log rows with missing hours; SUM(hours) ignores NULL. AGE and TO_CHAR format tenure. HAVING filters groups after aggregation."
     },
-    {
-      "id": "sql-extreme-018",
+    "sql-extreme-018": {
       "course": "sql",
       "category": "self-joins-and-outer-joins",
       "title": "Faculty workload with unmatched students",
@@ -416,8 +396,7 @@
       ],
       "explanation": "The query joins faculty and course to each section, then preserves sections without enrolments. The composite key prevents enrolments from attaching to the wrong section. Lecturer and supervisor aliases expose the hierarchy. The mentor condition is part of the student join, so sections remain when no mentor matches. Aggregate functions distinguish enrolments from known grades and payments."
     },
-    {
-      "id": "sql-extreme-019",
+    "sql-extreme-019": {
       "course": "sql",
       "category": "self-joins-and-outer-joins",
       "title": "Date-sensitive consultant workload ranking",
@@ -438,8 +417,7 @@
       ],
       "explanation": "The employee-to-manager join requires a manager, while the senior-manager join is optional. Department and log data are optional. The assignment join limits output to assigned employees. COUNT(log_id)-COUNT(hours) measures log rows with missing hours; SUM(hours) ignores NULL. AGE and TO_CHAR format tenure. HAVING filters groups after aggregation."
     },
-    {
-      "id": "sql-extreme-020",
+    "sql-extreme-020": {
       "course": "sql",
       "category": "self-joins-and-outer-joins",
       "title": "Faculty enrolment and academic lineage report",
@@ -460,8 +438,7 @@
       ],
       "explanation": "The query joins faculty and course to each section, then preserves sections without enrolments. The composite key prevents enrolments from attaching to the wrong section. Lecturer and supervisor aliases expose the hierarchy. The mentor condition is part of the student join, so sections remain when no mentor matches. Aggregate functions distinguish enrolments from known grades and payments."
     },
-    {
-      "id": "sql-extreme-021",
+    "sql-extreme-021": {
       "course": "sql",
       "category": "aggregate",
       "title": "Hierarchy-aware employee and project audit",
@@ -482,8 +459,7 @@
       ],
       "explanation": "The employee-to-manager join requires a manager, while the senior-manager join is optional. Department and log data are optional. The assignment join limits output to assigned employees. COUNT(log_id)-COUNT(hours) measures log rows with missing hours; SUM(hours) ignores NULL. AGE and TO_CHAR format tenure. HAVING filters groups after aggregation."
     },
-    {
-      "id": "sql-extreme-022",
+    "sql-extreme-022": {
       "course": "sql",
       "category": "aggregate",
       "title": "Course prerequisite comparison across cohorts",
@@ -504,8 +480,7 @@
       ],
       "explanation": "The query joins faculty and course to each section, then preserves sections without enrolments. The composite key prevents enrolments from attaching to the wrong section. Lecturer and supervisor aliases expose the hierarchy. The mentor condition is part of the student join, so sections remain when no mentor matches. Aggregate functions distinguish enrolments from known grades and payments."
     },
-    {
-      "id": "sql-extreme-023",
+    "sql-extreme-023": {
       "course": "sql",
       "category": "aggregate",
       "title": "Cross-region project staffing comparison",
@@ -526,8 +501,7 @@
       ],
       "explanation": "The employee-to-manager join requires a manager, while the senior-manager join is optional. Department and log data are optional. The assignment join limits output to assigned employees. COUNT(log_id)-COUNT(hours) measures log rows with missing hours; SUM(hours) ignores NULL. AGE and TO_CHAR format tenure. HAVING filters groups after aggregation."
     },
-    {
-      "id": "sql-extreme-024",
+    "sql-extreme-024": {
       "course": "sql",
       "category": "aggregate",
       "title": "Student mentor performance and payment analysis",
@@ -548,8 +522,7 @@
       ],
       "explanation": "The query joins faculty and course to each section, then preserves sections without enrolments. The composite key prevents enrolments from attaching to the wrong section. Lecturer and supervisor aliases expose the hierarchy. The mentor condition is part of the student join, so sections remain when no mentor matches. Aggregate functions distinguish enrolments from known grades and payments."
     },
-    {
-      "id": "sql-extreme-025",
+    "sql-extreme-025": {
       "course": "sql",
       "category": "aggregate",
       "title": "NULL-sensitive departmental delivery summary",
@@ -570,8 +543,7 @@
       ],
       "explanation": "The employee-to-manager join requires a manager, while the senior-manager join is optional. Department and log data are optional. The assignment join limits output to assigned employees. COUNT(log_id)-COUNT(hours) measures log rows with missing hours; SUM(hours) ignores NULL. AGE and TO_CHAR format tenure. HAVING filters groups after aggregation."
     },
-    {
-      "id": "sql-extreme-026",
+    "sql-extreme-026": {
       "course": "sql",
       "category": "outer-joins-null-aggregates",
       "title": "Composite section registration audit",
@@ -592,8 +564,7 @@
       ],
       "explanation": "The query joins faculty and course to each section, then preserves sections without enrolments. The composite key prevents enrolments from attaching to the wrong section. Lecturer and supervisor aliases expose the hierarchy. The mentor condition is part of the student join, so sections remain when no mentor matches. Aggregate functions distinguish enrolments from known grades and payments."
     },
-    {
-      "id": "sql-extreme-027",
+    "sql-extreme-027": {
       "course": "sql",
       "category": "outer-joins-null-aggregates",
       "title": "Client portfolio and team composition",
@@ -614,8 +585,7 @@
       ],
       "explanation": "The employee-to-manager join requires a manager, while the senior-manager join is optional. Department and log data are optional. The assignment join limits output to assigned employees. COUNT(log_id)-COUNT(hours) measures log rows with missing hours; SUM(hours) ignores NULL. AGE and TO_CHAR format tenure. HAVING filters groups after aggregation."
     },
-    {
-      "id": "sql-extreme-028",
+    "sql-extreme-028": {
       "course": "sql",
       "category": "outer-joins-null-aggregates",
       "title": "Faculty workload with unmatched students",
@@ -636,8 +606,7 @@
       ],
       "explanation": "The query joins faculty and course to each section, then preserves sections without enrolments. The composite key prevents enrolments from attaching to the wrong section. Lecturer and supervisor aliases expose the hierarchy. The mentor condition is part of the student join, so sections remain when no mentor matches. Aggregate functions distinguish enrolments from known grades and payments."
     },
-    {
-      "id": "sql-extreme-029",
+    "sql-extreme-029": {
       "course": "sql",
       "category": "outer-joins-null-aggregates",
       "title": "Date-sensitive consultant workload ranking",
@@ -658,8 +627,7 @@
       ],
       "explanation": "The employee-to-manager join requires a manager, while the senior-manager join is optional. Department and log data are optional. The assignment join limits output to assigned employees. COUNT(log_id)-COUNT(hours) measures log rows with missing hours; SUM(hours) ignores NULL. AGE and TO_CHAR format tenure. HAVING filters groups after aggregation."
     },
-    {
-      "id": "sql-extreme-030",
+    "sql-extreme-030": {
       "course": "sql",
       "category": "outer-joins-null-aggregates",
       "title": "Faculty enrolment and academic lineage report",
@@ -680,8 +648,7 @@
       ],
       "explanation": "The query joins faculty and course to each section, then preserves sections without enrolments. The composite key prevents enrolments from attaching to the wrong section. Lecturer and supervisor aliases expose the hierarchy. The mentor condition is part of the student join, so sections remain when no mentor matches. Aggregate functions distinguish enrolments from known grades and payments."
     },
-    {
-      "id": "sql-extreme-031",
+    "sql-extreme-031": {
       "course": "sql",
       "category": "full-integration",
       "title": "Hierarchy-aware employee and project audit",
@@ -702,8 +669,7 @@
       ],
       "explanation": "The employee-to-manager join requires a manager, while the senior-manager join is optional. Department and log data are optional. The assignment join limits output to assigned employees. COUNT(log_id)-COUNT(hours) measures log rows with missing hours; SUM(hours) ignores NULL. AGE and TO_CHAR format tenure. HAVING filters groups after aggregation."
     },
-    {
-      "id": "sql-extreme-032",
+    "sql-extreme-032": {
       "course": "sql",
       "category": "full-integration",
       "title": "Course prerequisite comparison across cohorts",
@@ -724,8 +690,7 @@
       ],
       "explanation": "The query joins faculty and course to each section, then preserves sections without enrolments. The composite key prevents enrolments from attaching to the wrong section. Lecturer and supervisor aliases expose the hierarchy. The mentor condition is part of the student join, so sections remain when no mentor matches. Aggregate functions distinguish enrolments from known grades and payments."
     },
-    {
-      "id": "sql-extreme-033",
+    "sql-extreme-033": {
       "course": "sql",
       "category": "full-integration",
       "title": "Cross-region project staffing comparison",
@@ -746,8 +711,7 @@
       ],
       "explanation": "The employee-to-manager join requires a manager, while the senior-manager join is optional. Department and log data are optional. The assignment join limits output to assigned employees. COUNT(log_id)-COUNT(hours) measures log rows with missing hours; SUM(hours) ignores NULL. AGE and TO_CHAR format tenure. HAVING filters groups after aggregation."
     },
-    {
-      "id": "sql-extreme-034",
+    "sql-extreme-034": {
       "course": "sql",
       "category": "full-integration",
       "title": "Student mentor performance and payment analysis",
@@ -768,8 +732,7 @@
       ],
       "explanation": "The query joins faculty and course to each section, then preserves sections without enrolments. The composite key prevents enrolments from attaching to the wrong section. Lecturer and supervisor aliases expose the hierarchy. The mentor condition is part of the student join, so sections remain when no mentor matches. Aggregate functions distinguish enrolments from known grades and payments."
     },
-    {
-      "id": "sql-extreme-035",
+    "sql-extreme-035": {
       "course": "sql",
       "category": "full-integration",
       "title": "NULL-sensitive departmental delivery summary",
@@ -790,8 +753,7 @@
       ],
       "explanation": "The employee-to-manager join requires a manager, while the senior-manager join is optional. Department and log data are optional. The assignment join limits output to assigned employees. COUNT(log_id)-COUNT(hours) measures log rows with missing hours; SUM(hours) ignores NULL. AGE and TO_CHAR format tenure. HAVING filters groups after aggregation."
     },
-    {
-      "id": "sql-extreme-036",
+    "sql-extreme-036": {
       "course": "sql",
       "category": "extreme-integrated",
       "title": "Composite section registration audit",
@@ -812,8 +774,7 @@
       ],
       "explanation": "The query joins faculty and course to each section, then preserves sections without enrolments. The composite key prevents enrolments from attaching to the wrong section. Lecturer and supervisor aliases expose the hierarchy. The mentor condition is part of the student join, so sections remain when no mentor matches. Aggregate functions distinguish enrolments from known grades and payments."
     },
-    {
-      "id": "sql-extreme-037",
+    "sql-extreme-037": {
       "course": "sql",
       "category": "extreme-integrated",
       "title": "Client portfolio and team composition",
@@ -834,8 +795,7 @@
       ],
       "explanation": "The employee-to-manager join requires a manager, while the senior-manager join is optional. Department and log data are optional. The assignment join limits output to assigned employees. COUNT(log_id)-COUNT(hours) measures log rows with missing hours; SUM(hours) ignores NULL. AGE and TO_CHAR format tenure. HAVING filters groups after aggregation."
     },
-    {
-      "id": "sql-extreme-038",
+    "sql-extreme-038": {
       "course": "sql",
       "category": "extreme-integrated",
       "title": "Faculty workload with unmatched students",
@@ -856,8 +816,7 @@
       ],
       "explanation": "The query joins faculty and course to each section, then preserves sections without enrolments. The composite key prevents enrolments from attaching to the wrong section. Lecturer and supervisor aliases expose the hierarchy. The mentor condition is part of the student join, so sections remain when no mentor matches. Aggregate functions distinguish enrolments from known grades and payments."
     },
-    {
-      "id": "sql-extreme-039",
+    "sql-extreme-039": {
       "course": "sql",
       "category": "extreme-integrated",
       "title": "Date-sensitive consultant workload ranking",
@@ -878,8 +837,7 @@
       ],
       "explanation": "The employee-to-manager join requires a manager, while the senior-manager join is optional. Department and log data are optional. The assignment join limits output to assigned employees. COUNT(log_id)-COUNT(hours) measures log rows with missing hours; SUM(hours) ignores NULL. AGE and TO_CHAR format tenure. HAVING filters groups after aggregation."
     },
-    {
-      "id": "sql-extreme-040",
+    "sql-extreme-040": {
       "course": "sql",
       "category": "extreme-integrated",
       "title": "Faculty enrolment and academic lineage report",
@@ -900,5 +858,5 @@
       ],
       "explanation": "The query joins faculty and course to each section, then preserves sections without enrolments. The composite key prevents enrolments from attaching to the wrong section. Lecturer and supervisor aliases expose the hierarchy. The mentor condition is part of the student join, so sections remain when no mentor matches. Aggregate functions distinguish enrolments from known grades and payments."
     }
-  ]
+  }
 }

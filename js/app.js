@@ -224,24 +224,59 @@ function saveDraft(id, answer) {
 }
 
 // ---------- content loading ----------
+const compatibleManifest = (m) =>
+  Boolean(m) &&
+  typeof m === "object" &&
+  Core.compatibleSchemaVersion(m.schemaVersion, 1);
 async function loadContent() {
   S.exercises = [];
   S.datasets = {};
   S.errors = [];
   S.packages = [];
-  const ctx = { seenIds: new Set(), datasetIds: new Set(), schemaVersion: 1 },
-    files = [];
+
+  const ctx = {
+    seenIds: new Set(),
+    datasetIds: new Set(),
+    schemaVersion: 1,
+  };
+
+  const files = [];
+
   try {
-    S.manifest = await (await fetch("content/manifest.json")).json();
-    for (const p of S.manifest.packages)
-      for (const f of p.files) {
+    const manifest = await (await fetch("content/manifest.json")).json();
+
+    if (!compatibleManifest(manifest))
+      throw new Error(
+        `Incompatible manifest schema version ${manifest.schemaVersion}; supported: ${ctx.schemaVersion}`,
+      );
+
+    // packages and referenceFiles are objects keyed by ID.
+    S.manifest = {
+      ...manifest,
+      referenceFiles: Object.entries(manifest.referenceFiles || {}).map(
+        ([id, ref]) => ({ ...ref, id }),
+      ),
+    };
+
+    for (const [manifestId, entry] of Object.entries(manifest.packages || {})) {
+      for (const f of entry.files || []) {
         try {
           const r = await fetch("content/" + f);
+
           if (!r.ok) throw new Error("HTTP " + r.status);
+
+          const pkg = await r.json();
+
           files.push({
             name: "content/" + f,
             src: "bundled",
-            pkg: await r.json(),
+            // The package file's own packageId/version win; the manifest
+            // entry fills them in when the file omits them.
+            pkg: {
+              packageId: manifestId,
+              version: entry.version,
+              ...pkg,
+            },
           });
         } catch (e) {
           S.errors.push({
@@ -252,6 +287,7 @@ async function loadContent() {
           });
         }
       }
+    }
   } catch (e) {
     S.errors.push({
       file: "content/manifest.json",
@@ -259,20 +295,40 @@ async function loadContent() {
       field: "$",
       msg: e.message,
     });
-    S.manifest = { packages: [], referenceFiles: [] };
+
+    S.manifest = {
+      packages: {},
+      referenceFiles: [],
+    };
   }
-  for (const p of await kv.get("imported", []))
-    files.push({ name: p.name, src: "imported", pkg: p.pkg });
+
+  for (const p of await kv.get("imported", [])) {
+    files.push({
+      name: p.name,
+      src: "imported",
+      pkg: p.pkg,
+    });
+  }
+
   for (const f of files) addPackage(f, ctx);
+
   const storedAttempts = await kv.get("attempts", []);
+
   const exercisesById = new Map();
+
   for (const ex of S.exercises) {
-    if (!exercisesById.has(ex.id)) exercisesById.set(ex.id, []);
+    if (!exercisesById.has(ex.id)) {
+      exercisesById.set(ex.id, []);
+    }
+
     exercisesById.get(ex.id).push(ex);
   }
+
   const exercisesByKey = new Map(S.exercises.map((ex) => [keyOf(ex), ex]));
+
   const latest = new Map();
-  for (const a of storedAttempts)
+
+  for (const a of storedAttempts) {
     if (a && typeof a.id === "string") {
       const ex =
         typeof a.key === "string"
@@ -280,7 +336,9 @@ async function loadContent() {
           : exercisesById.get(a.id)?.length === 1
             ? exercisesById.get(a.id)[0]
             : null;
+
       const key = ex ? keyOf(ex) : typeof a.key === "string" ? a.key : null;
+
       if (key && (!latest.has(key) || a.t >= latest.get(key).t)) {
         latest.set(key, {
           key,
@@ -292,42 +350,65 @@ async function loadContent() {
         });
       }
     }
+  }
+
   S.attempts = [...latest.values()];
+
   const savedRewards = await kv.get("xpRewards", {});
+
   S.xpRewards =
     savedRewards &&
     typeof savedRewards === "object" &&
     !Array.isArray(savedRewards)
       ? savedRewards
       : {};
+
   let migratedRewards = false;
+
   for (const a of S.attempts) {
     const ex = exercisesByKey.get(a.key);
+
     if (a.correct && ex && !S.xpRewards[a.key]) {
       S.xpRewards[a.key] = {
         xp: xpFor(ex),
         difficulty: ex.difficulty,
         earnedAt: a.t,
       };
+
       migratedRewards = true;
     }
   }
-  if (migratedRewards) await kv.set("xpRewards", S.xpRewards);
-  if (S.attempts.length) await kv.set("attempts", S.attempts);
-  else if (storedAttempts.length) await kv.del("attempts");
+
+  if (migratedRewards) {
+    await kv.set("xpRewards", S.xpRewards);
+  }
+
+  if (S.attempts.length) {
+    await kv.set("attempts", S.attempts);
+  } else if (storedAttempts.length) {
+    await kv.del("attempts");
+  }
+
   S.drafts = {};
+
   await Promise.all(
     S.exercises.map(async (ex) => {
       const key = keyOf(ex);
+
       let answer = await kv.get("draft:" + key, undefined);
+
       if (answer === undefined && exercisesById.get(ex.id)?.length === 1) {
         answer = await kv.get("draft:" + ex.id, undefined);
+
         if (answer !== undefined) {
           await kv.set("draft:" + key, answer);
           await kv.del("draft:" + ex.id);
         }
       }
-      if (answer !== undefined) S.drafts[key] = answer;
+
+      if (answer !== undefined) {
+        S.drafts[key] = answer;
+      }
     }),
   );
 }
@@ -337,31 +418,45 @@ function addPackage(f, ctx) {
     seenIds: new Set(ctx.seenIds),
     datasetIds: new Set(ctx.datasetIds),
   };
-  const errs = validatePackage(f.pkg, f.name, c);
+
+  const pkg = f.pkg;
+
+  const errs = validatePackage(pkg, f.name, c);
+
   if (errs.length) {
     S.errors.push(...errs);
     return errs;
   }
+
   ctx.seenIds = c.seenIds;
-  (f.pkg.datasets || []).forEach((d) => {
-    S.datasets[d.id] = d;
-    ctx.datasetIds.add(d.id);
-  });
-  S.exercises.push(
-    ...(f.pkg.exercises || []).map((ex) => ({
-      ...ex,
-      packageId: f.pkg.packageId,
-      key: exerciseKey(ex, f.pkg.packageId),
-    })),
-  );
+
+  // Datasets and exercises are objects keyed by ID; the key becomes `id`.
+  for (const [id, d] of Object.entries(pkg.datasets || {})) {
+    S.datasets[id] = { ...d, id };
+    ctx.datasetIds.add(id);
+  }
+
+  const exercises = Object.entries(pkg.exercises || {}).map(([id, ex]) => ({
+    ...ex,
+    id,
+    packageId: pkg.packageId,
+    key: exerciseKey({ id }, pkg.packageId),
+  }));
+  S.exercises.push(...exercises);
+
   S.packages.push({
     name: f.name,
     src: f.src,
-    id: f.pkg.packageId,
-    version: f.pkg.version,
-    n: (f.pkg.exercises || []).length,
+    id: pkg.packageId,
+    version: pkg.version,
+    n: exercises.length,
   });
-  Object.assign(ctx, { seenIds: c.seenIds, datasetIds: c.datasetIds });
+
+  Object.assign(ctx, {
+    seenIds: c.seenIds,
+    datasetIds: c.datasetIds,
+  });
+
   return [];
 }
 
@@ -592,6 +687,15 @@ function schemaView(ex) {
     h("summary", {}, "Dataset schema"),
     content,
   );
+  // Clicking anywhere in the schema panel must not steal focus from the
+  // element being used (e.g. the SQL editor). Preventing the default
+  // mousedown action keeps focus where it was; click events, toggling the
+  // <summary>, the view buttons and diagram dragging still work.
+  box.addEventListener("mousedown", (e) => {
+    if (e.button !== 0) return;
+    if (e.target.closest("input, textarea, select, [contenteditable]")) return;
+    e.preventDefault();
+  });
   box.addEventListener("toggle", async () => {
     if (!box.open || box.dataset.loaded) return;
     box.dataset.loaded = "true";
