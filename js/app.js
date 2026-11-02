@@ -640,16 +640,170 @@ function diffView(c) {
       : "",
   );
 }
-const formatSQL = (sql) =>
-  sql
-    .replace(/\s+/g, " ")
-    .replace(
-      /\s+(FROM|JOIN|LEFT JOIN|RIGHT JOIN|INNER JOIN|ON|WHERE|GROUP BY|ORDER BY|HAVING|LIMIT)\s+/gi,
-      "\n$1 ",
-    )
-    .replace(/\s+(AND|OR)\s+/gi, "\n    $1 ")
-    .replace(/,\s*/g, ",\n    ")
-    .trim();
+
+const formatSQL = (sql) => {
+  const keywords = new Set([
+    "SELECT",
+    "FROM",
+    "JOIN",
+    "LEFT JOIN",
+    "RIGHT JOIN",
+    "FULL JOIN",
+    "INNER JOIN",
+    "CROSS JOIN",
+    "OUTER JOIN",
+    "ON",
+    "WHERE",
+    "GROUP BY",
+    "ORDER BY",
+    "HAVING",
+    "LIMIT",
+    "OFFSET",
+    "FETCH",
+    "UNION",
+    "UNION ALL",
+    "INTERSECT",
+    "EXCEPT",
+    "WITH",
+    "INSERT INTO",
+    "VALUES",
+    "UPDATE",
+    "SET",
+    "DELETE FROM",
+    "RETURNING",
+    "QUALIFY",
+  ]);
+
+  const logical = new Set(["AND", "OR"]);
+
+  // Normalize whitespace without modifying quoted strings.
+  const tokens =
+    sql.match(
+      /'(?:''|[^'])*'|"(?:[^"]|"")*"|`(?:``|[^`])*`|\[(?:[^\]])*\]|--[^\n]*|\/\*[\s\S]*?\*\/|[(),;]|[^\s(),;]+/g,
+    ) || [];
+
+  let result = "";
+  let depth = 0;
+  let indent = 0;
+  let previous = "";
+  let inCase = 0;
+
+  const add = (text) => {
+    result += text;
+  };
+
+  const newline = (level = depth) => {
+    result = result.trimEnd() + "\n" + "    ".repeat(Math.max(0, level));
+  };
+
+  const isWord = (token) => /^[a-z_][\w$]*$/i.test(token);
+
+  for (let i = 0; i < tokens.length; i++) {
+    const token = tokens[i];
+    const upper = token.toUpperCase();
+    const next = tokens[i + 1] || "";
+    const nextUpper = next.toUpperCase();
+
+    // Comments
+    if (token.startsWith("--") || token.startsWith("/*")) {
+      add(" " + token);
+      continue;
+    }
+
+    // Parentheses
+    if (token === "(") {
+      add("(");
+      depth++;
+      previous = token;
+      continue;
+    }
+
+    if (token === ")") {
+      depth = Math.max(0, depth - 1);
+      add(")");
+      previous = token;
+      continue;
+    }
+
+    // Commas
+    if (token === ",") {
+      add(",");
+      newline(depth);
+      previous = token;
+      continue;
+    }
+
+    // Semicolons
+    if (token === ";") {
+      add(";");
+      newline(0);
+      previous = token;
+      continue;
+    }
+
+    // CASE expressions
+    if (upper === "CASE") {
+      inCase++;
+    }
+
+    if (upper === "END") {
+      inCase = Math.max(0, inCase - 1);
+    }
+
+    // Multi-word SQL clauses
+    const twoWords = `${upper} ${nextUpper}`;
+    const threeWords = `${twoWords} ${(tokens[i + 2] || "").toUpperCase()}`;
+
+    let clause = null;
+    let consumed = 0;
+
+    if (keywords.has(threeWords)) {
+      clause = threeWords;
+      consumed = 2;
+    } else if (keywords.has(twoWords)) {
+      clause = twoWords;
+      consumed = 1;
+    } else if (keywords.has(upper)) {
+      clause = upper;
+    }
+
+    // Only format structural clauses at top level.
+    // This prevents EXTRACT(... FROM ...) and nested subqueries
+    // from being mistaken for outer SQL clauses.
+    if (clause && depth === 0) {
+      newline(0);
+      add(clause);
+      i += consumed;
+      add(" ");
+      previous = clause;
+      continue;
+    }
+
+    // AND / OR inside WHERE, HAVING, JOIN conditions, etc.
+    if (logical.has(upper) && depth === 0 && !inCase) {
+      newline(1);
+      add(upper + " ");
+      previous = upper;
+      continue;
+    }
+
+    // Normal tokens
+    if (
+      result &&
+      !result.endsWith(" ") &&
+      !result.endsWith("\n") &&
+      ![".", "::"].includes(token) &&
+      previous !== "("
+    ) {
+      add(" ");
+    }
+
+    add(token);
+    previous = token;
+  }
+
+  return result.replace(/\n{3,}/g, "\n\n").trim();
+};
 
 const expectedText = (ex) =>
   ex.type === "sql-query"
