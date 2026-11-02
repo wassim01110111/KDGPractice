@@ -4023,6 +4023,7 @@ function currentTheme() {
   );
 }
 function updateThemeToggle() {
+  document.documentElement.dataset.theme = currentTheme();
   const dark = currentTheme() === "dark";
   const label = dark ? "Switch to light mode" : "Switch to dark mode";
   themeToggle.setAttribute("aria-label", label);
