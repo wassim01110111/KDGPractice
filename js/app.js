@@ -561,6 +561,7 @@ async function gradeSql(ex, sql) {
     return {
       correct: cmp.ok,
       cmp,
+      res: s.value, // the student's own result set, so callers can show it
       setupMs: Math.round(t1 - t0),
       totalMs: Math.round(performance.now() - t0),
     };
@@ -1160,9 +1161,12 @@ function qView(
         {
           onclick: async () => {
             const currentGrading = ++gradingId;
+            ++runId; // a Run still in flight must not overwrite this output
             fb.replaceChildren(h("small", {}, "Grading…"));
             const g = await gradeSql(ex, ta.value);
             if (currentGrading !== gradingId || !q.isConnected) return;
+            // Show the result table of the submitted query, like Run does.
+            out.replaceChildren(g.res ? table(g.res) : "");
             if (g.correct !== null)
               await rec(ex, g.correct, "practice", onAttempt);
             if (currentGrading !== gradingId || !q.isConnected) return;
