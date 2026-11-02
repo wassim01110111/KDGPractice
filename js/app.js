@@ -4636,6 +4636,26 @@ setTimeout(function loop() {
   triggerWassimSignal();
   setTimeout(loop, (Math.floor(Math.random() * 13) + 3) * 60_000);
 }, 60000);
+const clickme = document.getElementById("clickme");
+function hideClickme() {
+  clickme.classList.remove("is-visible");
+  clickme.classList.add("is-hiding");
+
+  clickme.addEventListener(
+    "animationend",
+    (event) => {
+      if (event.animationName === "hack-exit") {
+        clickme.classList.remove("is-hiding");
+      }
+    },
+    { once: true },
+  );
+}
+setInterval(() => {
+  clickme.classList.remove("is-hiding");
+  clickme.classList.add("is-visible");
+  setTimeout(hideClickme, 1000);
+}, 61000);
 let routeTok = 0;
 let lastRouteHash = null;
 let routePending = false;
@@ -4698,6 +4718,7 @@ let wassimUsedMemes = new Set();
 let wassimEggState = "closed";
 
 function launchWassimEasterEgg() {
+  hideClickme();
   const now = performance.now();
 
   if (wassimEggActive || now - wassimEggLastStart < 650) return;
