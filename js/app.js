@@ -821,10 +821,28 @@ function schemaView(ex) {
       (event) => {
         if (!desktopZoom.matches) return;
         event.preventDefault();
-        zoom = Math.min(
-          4,
-          Math.max(0.5, zoom * (event.deltaY < 0 ? 1.15 : 1 / 1.15)),
-        );
+        // Classic mouse wheel: fixed steps, deltaMode != 0 (lines/pages) or
+        // deltaY in multiples of 120 (wheelDeltaY). Anything else is a
+        // trackpad (two-finger scroll or pinch, which sets ctrlKey).
+        const isMouseWheel =
+          !event.ctrlKey &&
+          (event.deltaMode !== 0 ||
+            (event.wheelDeltaY && event.wheelDeltaY % 120 === 0));
+        let factor;
+        if (isMouseWheel) {
+          factor = event.deltaY < 0 ? 1.15 : 1 / 1.15;
+        } else {
+          // Trackpad: smooth, proportional and much gentler zoom.
+          const TRACKPAD_ZOOM_SENSITIVITY = 0.004; // lower = less sensitive
+          const PINCH_MULTIPLIER = 2.5; // pinch events have tiny deltas
+          const delta = Math.max(-30, Math.min(30, event.deltaY));
+          factor = Math.exp(
+            -delta *
+              TRACKPAD_ZOOM_SENSITIVITY *
+              (event.ctrlKey ? PINCH_MULTIPLIER : 1),
+          );
+        }
+        zoom = Math.min(4, Math.max(0.5, zoom * factor));
         updateDiagramTransform();
       },
       { passive: false },
@@ -1536,12 +1554,112 @@ function qView(
     }
   }
   q.append(btns, out, fb);
-  const view = schemaPanel
-    ? h("div", { class: "sql-exercise-layout" }, schemaPanel, q)
-    : q;
+  const view = schemaPanel ? sqlSplitLayout(schemaPanel, q) : q;
   view.refreshNextExercise = updateNextExercise;
   view.focusInput = () => focusTarget?.focus({ preventScroll: true });
   return view;
+}
+
+// ---------- resizable split between the question and the schema/diagram ----------
+// Only used for SQL exercises (the only ones that have a schema panel).
+// Layout/visuals live in style.css (.sql-exercise-layout, .sql-split-handle);
+// here we only set --sql-schema-col (the schema column width) while dragging.
+const SQL_SPLIT_KEY = "sqlSchemaFraction";
+const SQL_SPLIT_MIN = 0.25,
+  SQL_SPLIT_MAX = 0.65;
+let sqlSchemaFraction = (() => {
+  try {
+    const v = parseFloat(localStorage.getItem(SQL_SPLIT_KEY));
+    if (v >= SQL_SPLIT_MIN && v <= SQL_SPLIT_MAX) return v;
+  } catch {}
+  return null; // null = use the stylesheet's default proportions
+})();
+function sqlSplitLayout(schemaPanel, q) {
+  const handle = h("div", {
+    class: "sql-split-handle",
+    role: "separator",
+    "aria-orientation": "vertical",
+    "aria-label": "Resize question and diagram panels",
+    tabindex: "0",
+    title: "Drag to resize (double-click to reset)",
+  });
+  const layout = h(
+    "div",
+    { class: "sql-exercise-layout" },
+    schemaPanel,
+    handle,
+    q,
+  );
+  const currentFraction = () =>
+    sqlSchemaFraction ??
+    schemaPanel.getBoundingClientRect().width /
+      (layout.getBoundingClientRect().width || 1);
+  const apply = () => {
+    if (sqlSchemaFraction == null) {
+      layout.style.removeProperty("--sql-schema-col");
+      handle.removeAttribute("aria-valuenow");
+      return;
+    }
+    layout.style.setProperty(
+      "--sql-schema-col",
+      `${(sqlSchemaFraction * 100).toFixed(2)}%`,
+    );
+    handle.setAttribute(
+      "aria-valuenow",
+      String(Math.round(sqlSchemaFraction * 100)),
+    );
+  };
+  const set = (fraction, save) => {
+    sqlSchemaFraction =
+      fraction == null
+        ? null
+        : Math.min(SQL_SPLIT_MAX, Math.max(SQL_SPLIT_MIN, fraction));
+    apply();
+    if (!save) return;
+    try {
+      if (sqlSchemaFraction == null) localStorage.removeItem(SQL_SPLIT_KEY);
+      else localStorage.setItem(SQL_SPLIT_KEY, String(sqlSchemaFraction));
+    } catch {}
+  };
+  handle.setAttribute("aria-valuemin", String(SQL_SPLIT_MIN * 100));
+  handle.setAttribute("aria-valuemax", String(SQL_SPLIT_MAX * 100));
+  apply();
+  let dragging = false;
+  handle.addEventListener("pointerdown", (e) => {
+    if (e.button !== 0) return;
+    dragging = true;
+    handle.setPointerCapture(e.pointerId);
+    handle.classList.add("is-dragging");
+    document.body.classList.add("sql-split-dragging");
+    e.preventDefault();
+  });
+  handle.addEventListener("pointermove", (e) => {
+    if (!dragging) return;
+    const rect = layout.getBoundingClientRect();
+    // Schema is the right-hand column: its width is what is left of the pointer.
+    set((rect.right - e.clientX) / rect.width, false);
+  });
+  const end = () => {
+    if (!dragging) return;
+    dragging = false;
+    handle.classList.remove("is-dragging");
+    document.body.classList.remove("sql-split-dragging");
+    set(sqlSchemaFraction, true);
+  };
+  handle.addEventListener("pointerup", end);
+  handle.addEventListener("pointercancel", end);
+  handle.addEventListener("dblclick", () => set(null, true));
+  handle.addEventListener("keydown", (e) => {
+    const step = e.shiftKey ? 0.1 : 0.02;
+    // Left arrow moves the divider left, i.e. makes the diagram wider.
+    if (e.key === "ArrowLeft") set(currentFraction() + step, true);
+    else if (e.key === "ArrowRight") set(currentFraction() - step, true);
+    else if (e.key === "Home") set(SQL_SPLIT_MAX, true);
+    else if (e.key === "End") set(SQL_SPLIT_MIN, true);
+    else return;
+    e.preventDefault();
+  });
+  return layout;
 }
 
 // ---------- markdown (small, for the supplied reference files) ----------
