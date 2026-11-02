@@ -4106,7 +4106,7 @@ pre:focus-within,
 .wassim-egg-subtitle {
   margin-top: 0.4rem;
   color: #ff3158;
-  font-size: clamp(0.62rem, 1.35vw, 0.9rem);
+  font-size: clamp(0.9rem, 2.2vw, 1.4rem);
   letter-spacing: clamp(0.1em, 0.8vw, 0.3em);
   overflow-wrap: anywhere;
   animation: wassim-egg-rise 350ms 300ms both;
