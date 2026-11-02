@@ -4651,6 +4651,11 @@ function hideClickme() {
     { once: true },
   );
 }
+setTimeout(() => {
+  clickme.classList.remove("is-hiding");
+  clickme.classList.add("is-visible");
+  setTimeout(hideClickme, 10000);
+}, 15000);
 setInterval(() => {
   clickme.classList.remove("is-hiding");
   clickme.classList.add("is-visible");
