@@ -33,7 +33,6 @@
       "id": "sql-week2-select-001",
       "course": "sql",
       "category": "select",
-
       "title": "All employee records",
       "instructions": "The HR team needs a complete view of the employee records. Return every column for every employee.",
       "difficulty": "Easy",
@@ -46,14 +45,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Use the wildcard when every column is required."],
+      "hints": [
+        "Use the wildcard when every column is required."
+      ],
       "explanation": "SELECT * returns all columns from the table, with one result row per employee."
     },
     {
       "id": "sql-week2-select-002",
       "course": "sql",
       "category": "select",
-
       "title": "Student contact list",
       "instructions": "Display each student’s first name, last name and email address, in that column order.",
       "difficulty": "Easy",
@@ -66,14 +66,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["List only the three requested columns."],
+      "hints": [
+        "List only the three requested columns."
+      ],
       "explanation": "The SELECT list controls both which columns appear and their displayed order."
     },
     {
       "id": "sql-week2-select-003",
       "course": "sql",
       "category": "select",
-
       "title": "Product catalogue names",
       "instructions": "The online catalogue needs product names and current unit prices. Display those two fields.",
       "difficulty": "Easy",
@@ -86,14 +87,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Choose the descriptive and numeric columns from products."],
+      "hints": [
+        "Choose the descriptive and numeric columns from products."
+      ],
       "explanation": "A basic SELECT can retrieve columns of different data types from one table."
     },
     {
       "id": "sql-week2-distinct-004",
       "course": "sql",
       "category": "distinct",
-
       "title": "Unique employee departments",
       "instructions": "List each department ID represented among employees once.",
       "difficulty": "Easy",
@@ -106,14 +108,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Use DISTINCT on the selected column."],
+      "hints": [
+        "Use DISTINCT on the selected column."
+      ],
       "explanation": "DISTINCT removes duplicate result rows; NULL, if present, is retained as one distinct value."
     },
     {
       "id": "sql-week2-distinct-005",
       "course": "sql",
       "category": "distinct",
-
       "title": "Different customer cities",
       "instructions": "Show the different cities in which customers are located, without duplicates.",
       "difficulty": "Easy",
@@ -126,14 +129,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["The city column contains repeated values."],
+      "hints": [
+        "The city column contains repeated values."
+      ],
       "explanation": "DISTINCT applies to the complete selected row and removes repeated city values."
     },
     {
       "id": "sql-week2-distinct-006",
       "course": "sql",
       "category": "distinct",
-
       "title": "Distinct course and subject combinations",
       "instructions": "List each unique combination of course subject area and credit value.",
       "difficulty": "Easy",
@@ -146,14 +150,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["DISTINCT applies to both selected columns together."],
+      "hints": [
+        "DISTINCT applies to both selected columns together."
+      ],
       "explanation": "The result contains distinct pairs, not separate unique lists for each column."
     },
     {
       "id": "sql-week2-select-007",
       "course": "sql",
       "category": "select",
-
       "title": "Consultant details with aliases",
       "instructions": "For a staffing sheet, show consultant first names as “given_name” and hourly rates as “rate”.",
       "difficulty": "Easy",
@@ -166,14 +171,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Use AS to assign temporary result-column names."],
+      "hints": [
+        "Use AS to assign temporary result-column names."
+      ],
       "explanation": "AS changes the displayed column label without changing the stored table column."
     },
     {
       "id": "sql-week2-filtering-008",
       "course": "sql",
       "category": "where",
-
       "title": "Employees in the IT department",
       "instructions": "Display the first and last names of employees whose department ID is 20.",
       "difficulty": "Easy",
@@ -186,14 +192,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Filter the rows on department_id."],
+      "hints": [
+        "Filter the rows on department_id."
+      ],
       "explanation": "WHERE keeps only rows for which the equality condition is true."
     },
     {
       "id": "sql-week2-filtering-009",
       "course": "sql",
       "category": "where",
-
       "title": "High-value products",
       "instructions": "List product names and prices for products costing more than 500.",
       "difficulty": "Easy",
@@ -206,14 +213,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Use a numeric greater-than comparison."],
+      "hints": [
+        "Use a numeric greater-than comparison."
+      ],
       "explanation": "The comparison is applied to each product before rows are returned."
     },
     {
       "id": "sql-week2-filtering-010",
       "course": "sql",
       "category": "where",
-
       "title": "Students from Ghent",
       "instructions": "Display the first and last names of students living in Ghent.",
       "difficulty": "Easy",
@@ -226,14 +234,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Text values are written in single quotes."],
+      "hints": [
+        "Text values are written in single quotes."
+      ],
       "explanation": "Text equality comparisons are case-sensitive in the course examples."
     },
     {
       "id": "sql-week2-filtering-011",
       "course": "sql",
       "category": "where",
-
       "title": "Projects not yet completed",
       "instructions": "Show the project names whose status is not completed.",
       "difficulty": "Easy",
@@ -246,14 +255,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Use the not-equal operator."],
+      "hints": [
+        "Use the not-equal operator."
+      ],
       "explanation": "The <> operator excludes rows whose status is completed."
     },
     {
       "id": "sql-week2-filtering-012",
       "course": "sql",
       "category": "where",
-
       "title": "Customers registered before 2022",
       "instructions": "Show customer names and registration dates for customers who joined before 1 January 2022.",
       "difficulty": "Easy",
@@ -266,14 +276,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Use a date comparison with a strict less-than operator."],
+      "hints": [
+        "Use a date comparison with a strict less-than operator."
+      ],
       "explanation": "The strict < operator excludes the boundary date itself."
     },
     {
       "id": "sql-week2-filtering-013",
       "course": "sql",
       "category": "where",
-
       "title": "Out-of-stock items",
       "instructions": "List the names and stock quantities of products with zero stock.",
       "difficulty": "Easy",
@@ -286,14 +297,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Zero is a numeric value, not NULL."],
+      "hints": [
+        "Zero is a numeric value, not NULL."
+      ],
       "explanation": "Equality to zero finds products whose stored stock quantity is exactly zero."
     },
     {
       "id": "sql-week2-filtering-014",
       "course": "sql",
       "category": "where",
-
       "title": "Students with no scholarship balance",
       "instructions": "Show students whose scholarship amount is exactly zero. Do not include missing scholarship values.",
       "difficulty": "Easy",
@@ -306,14 +318,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["A comparison to zero does not match NULL values."],
+      "hints": [
+        "A comparison to zero does not match NULL values."
+      ],
       "explanation": "Zero is a known numeric value, whereas NULL represents missing or unknown information."
     },
     {
       "id": "sql-week2-filtering-015",
       "course": "sql",
       "category": "where",
-
       "title": "Orders in processing",
       "instructions": "Display order IDs, dates and statuses for orders that are currently marked processing.",
       "difficulty": "Easy",
@@ -326,14 +339,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Use a text equality condition."],
+      "hints": [
+        "Use a text equality condition."
+      ],
       "explanation": "WHERE returns only orders with the exact stored status text."
     },
     {
       "id": "sql-week2-filtering-016",
       "course": "sql",
       "category": "logical-operators",
-
       "title": "Sales employees above a salary threshold",
       "instructions": "Show the names and salaries of employees in department 10 who earn more than 50000.",
       "difficulty": "Medium",
@@ -346,14 +360,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Both conditions must be true for a row to remain."],
+      "hints": [
+        "Both conditions must be true for a row to remain."
+      ],
       "explanation": "AND combines the department and salary tests, so both restrictions apply."
     },
     {
       "id": "sql-week2-filtering-017",
       "course": "sql",
       "category": "logical-operators",
-
       "title": "Customers in selected cities",
       "instructions": "Display customer IDs and names for customers located in either Antwerp or Brussels.",
       "difficulty": "Medium",
@@ -366,14 +381,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["At least one of the city conditions must be true."],
+      "hints": [
+        "At least one of the city conditions must be true."
+      ],
       "explanation": "OR includes a row that matches either city value."
     },
     {
       "id": "sql-week2-filtering-018",
       "course": "sql",
       "category": "logical-operators",
-
       "title": "Open projects with a medium budget",
       "instructions": "List names and budgets for projects that are active and have budgets between 60000 and 180000.",
       "difficulty": "Medium",
@@ -386,14 +402,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Combine a status test with an inclusive numeric range."],
+      "hints": [
+        "Combine a status test with an inclusive numeric range."
+      ],
       "explanation": "AND requires the project to be active and the budget to fall inside the inclusive range."
     },
     {
       "id": "sql-week2-filtering-019",
       "course": "sql",
       "category": "logical-operators",
-
       "title": "Exclude completed and cancelled orders",
       "instructions": "Display orders whose status is neither completed nor cancelled.",
       "difficulty": "Medium",
@@ -406,14 +423,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["NOT reverses the membership condition."],
+      "hints": [
+        "NOT reverses the membership condition."
+      ],
       "explanation": "NOT applied to IN excludes all rows whose status appears in the specified list."
     },
     {
       "id": "sql-week2-filtering-020",
       "course": "sql",
       "category": "logical-operators",
-
       "title": "Students meeting either criterion",
       "instructions": "Show students who live in Antwerp or have a scholarship amount greater than 1000.",
       "difficulty": "Medium",
@@ -426,14 +444,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Use OR because either condition is sufficient."],
+      "hints": [
+        "Use OR because either condition is sufficient."
+      ],
       "explanation": "The row is included when at least one of the two conditions is true."
     },
     {
       "id": "sql-week2-filtering-021",
       "course": "sql",
       "category": "logical-operators",
-
       "title": "Consultants with two specialty constraints",
       "instructions": "List consultants in Data or Cloud whose hourly rate is at least 100.",
       "difficulty": "Medium",
@@ -455,7 +474,6 @@
       "id": "sql-week2-filtering-022",
       "course": "sql",
       "category": "logical-operators",
-
       "title": "Employees outside selected departments",
       "instructions": "Return employees with a known department ID that is neither 10 nor 20.",
       "difficulty": "Medium",
@@ -468,14 +486,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Use NOT with IN to exclude multiple department IDs."],
+      "hints": [
+        "Use NOT with IN to exclude multiple department IDs."
+      ],
       "explanation": "NOT IN keeps rows whose department ID does not match either listed value; NULL department IDs are not included."
     },
     {
       "id": "sql-week2-filtering-023",
       "course": "sql",
       "category": "where",
-
       "title": "Orders within a quarter",
       "instructions": "Display order IDs and dates for orders placed from 1 April through 30 June 2025, including both endpoints.",
       "difficulty": "Medium",
@@ -488,14 +507,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["BETWEEN includes both boundary values."],
+      "hints": [
+        "BETWEEN includes both boundary values."
+      ],
       "explanation": "The inclusive BETWEEN range keeps dates equal to either endpoint as well as dates between them."
     },
     {
       "id": "sql-week2-filtering-024",
       "course": "sql",
       "category": "where",
-
       "title": "Students with mid-range scholarship",
       "instructions": "Show student names and scholarship amounts from 400 through 1200 inclusive.",
       "difficulty": "Medium",
@@ -508,14 +528,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["The lower value must come before the upper value."],
+      "hints": [
+        "The lower value must come before the upper value."
+      ],
       "explanation": "BETWEEN includes both 400 and 1200; NULL values do not satisfy the range."
     },
     {
       "id": "sql-week2-filtering-025",
       "course": "sql",
       "category": "where",
-
       "title": "Products in selected categories",
       "instructions": "List product names and category IDs for products in categories 1, 3 or 5.",
       "difficulty": "Medium",
@@ -528,14 +549,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["IN is a compact alternative to several equality tests."],
+      "hints": [
+        "IN is a compact alternative to several equality tests."
+      ],
       "explanation": "IN matches any one of the listed category IDs."
     },
     {
       "id": "sql-week2-filtering-026",
       "course": "sql",
       "category": "where",
-
       "title": "Projects with active or paused status",
       "instructions": "Return projects whose status is active or paused and whose budget is below 150000.",
       "difficulty": "Medium",
@@ -548,14 +570,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Use IN for status alternatives and AND for the budget limit."],
+      "hints": [
+        "Use IN for status alternatives and AND for the budget limit."
+      ],
       "explanation": "The IN condition accepts either status; the separate AND condition limits the budget."
     },
     {
       "id": "sql-week2-filtering-027",
       "course": "sql",
       "category": "where",
-
       "title": "Employees within a salary band",
       "instructions": "Display employee names and salaries for salaries between 50000 and 70000 inclusive.",
       "difficulty": "Medium",
@@ -568,14 +591,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Use an inclusive range condition."],
+      "hints": [
+        "Use an inclusive range condition."
+      ],
       "explanation": "BETWEEN includes salaries exactly equal to either boundary."
     },
     {
       "id": "sql-week2-filtering-028",
       "course": "sql",
       "category": "logical-operators",
-
       "title": "Customer city and credit filter",
       "instructions": "List customers from Ghent or Leuven who have a credit limit above 1500.",
       "difficulty": "Medium",
@@ -588,14 +612,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Combine an IN test with a numeric comparison."],
+      "hints": [
+        "Combine an IN test with a numeric comparison."
+      ],
       "explanation": "The AND requires a matching city and a credit limit above the threshold."
     },
     {
       "id": "sql-week2-filtering-029",
       "course": "sql",
       "category": "logical-operators",
-
       "title": "Employees hired after 2020 outside Operations",
       "instructions": "Show employee names and hire dates for employees hired after 31 December 2020 who are not in department 40.",
       "difficulty": "Medium",
@@ -608,14 +633,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Combine a date comparison and a negated equality."],
+      "hints": [
+        "Combine a date comparison and a negated equality."
+      ],
       "explanation": "The query first requires a later hire date and then excludes department 40."
     },
     {
       "id": "sql-week2-patterns-030",
       "course": "sql",
       "category": "like",
-
       "title": "Names beginning with M",
       "instructions": "Find student first and last names where the first name begins with M.",
       "difficulty": "Easy",
@@ -637,7 +663,6 @@
       "id": "sql-week2-patterns-031",
       "course": "sql",
       "category": "like",
-
       "title": "Products ending in Adapter",
       "instructions": "Find product names that end with the word Adapter.",
       "difficulty": "Easy",
@@ -650,14 +675,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Place the percent wildcard before the ending text."],
+      "hints": [
+        "Place the percent wildcard before the ending text."
+      ],
       "explanation": "%Adapter matches any prefix followed by the exact suffix Adapter."
     },
     {
       "id": "sql-week2-patterns-032",
       "course": "sql",
       "category": "like",
-
       "title": "Descriptions containing wireless",
       "instructions": "Display product names and descriptions containing the sequence wireless.",
       "difficulty": "Easy",
@@ -670,14 +696,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Use a percent wildcard at both ends to search within text."],
+      "hints": [
+        "Use a percent wildcard at both ends to search within text."
+      ],
       "explanation": "The pattern matches rows with wireless anywhere in the description; matching is case-sensitive."
     },
     {
       "id": "sql-week2-patterns-033",
       "course": "sql",
       "category": "like",
-
       "title": "Four-character category codes",
       "instructions": "List category names and codes whose code contains exactly four characters.",
       "difficulty": "Easy",
@@ -690,14 +717,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Each underscore represents exactly one character."],
+      "hints": [
+        "Each underscore represents exactly one character."
+      ],
       "explanation": "Four underscores match exactly four characters."
     },
     {
       "id": "sql-week2-patterns-034",
       "course": "sql",
       "category": "like",
-
       "title": "Employee email domains",
       "instructions": "Show employee names and email addresses for addresses ending in example.com.",
       "difficulty": "Easy",
@@ -710,14 +738,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Use a pattern for the domain suffix."],
+      "hints": [
+        "Use a pattern for the domain suffix."
+      ],
       "explanation": "The pattern finds the specified domain; employees with NULL email values do not match."
     },
     {
       "id": "sql-week2-patterns-035",
       "course": "sql",
       "category": "like",
-
       "title": "Consultant surnames with an internal sequence",
       "instructions": "Find consultant names whose surname contains the letters ore in that exact case.",
       "difficulty": "Easy",
@@ -739,7 +768,6 @@
       "id": "sql-week2-null-036",
       "course": "sql",
       "category": "null",
-
       "title": "Employees without a department",
       "instructions": "List employees whose department assignment is missing.",
       "difficulty": "Easy",
@@ -752,14 +780,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Use IS NULL rather than equality to NULL."],
+      "hints": [
+        "Use IS NULL rather than equality to NULL."
+      ],
       "explanation": "IS NULL tests for a missing department reference."
     },
     {
       "id": "sql-week2-null-037",
       "course": "sql",
       "category": "null",
-
       "title": "Customers with a known credit limit",
       "instructions": "Display customer names and credit limits only where a credit limit has been recorded.",
       "difficulty": "Easy",
@@ -772,14 +801,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Use IS NOT NULL to require a stored value."],
+      "hints": [
+        "Use IS NOT NULL to require a stored value."
+      ],
       "explanation": "IS NOT NULL removes customers whose credit limit is missing."
     },
     {
       "id": "sql-week2-null-038",
       "course": "sql",
       "category": "null",
-
       "title": "Students missing email addresses",
       "instructions": "Return the IDs and names of students whose email address is unknown.",
       "difficulty": "Easy",
@@ -792,14 +822,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["A missing value must be checked with IS NULL."],
+      "hints": [
+        "A missing value must be checked with IS NULL."
+      ],
       "explanation": "NULL represents an absent or unknown value, not an empty string."
     },
     {
       "id": "sql-week2-null-039",
       "course": "sql",
       "category": "null",
-
       "title": "Orders without a shipping city",
       "instructions": "Find orders for which the shipping city has not been supplied.",
       "difficulty": "Easy",
@@ -812,14 +843,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Test the column with IS NULL."],
+      "hints": [
+        "Test the column with IS NULL."
+      ],
       "explanation": "The query returns orders whose shipping_city is unknown."
     },
     {
       "id": "sql-week2-patterns-040",
       "course": "sql",
       "category": "like",
-
       "title": "Project names with a fixed prefix",
       "instructions": "Display project IDs and names for projects whose name begins with Mobile or Research.",
       "difficulty": "Medium",
@@ -832,36 +864,37 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Use two LIKE conditions joined with OR."],
+      "hints": [
+        "Use two LIKE conditions joined with OR."
+      ],
       "explanation": "Either prefix is sufficient, so the patterns are joined with OR."
     },
     {
       "id": "sql-week2-filtering-041",
       "course": "sql",
       "category": "combined-filter",
-
       "title": "Filter missing and low credit limits",
-      "instructions": "List customers whose credit limit is missing or whose known credit limit is below 1000, but only for customers in Antwerp or Ghent.",
+      "instructions": "List customers in Antwerp or Ghent whose credit limit is missing or below 1000. Include each customer's number of orders, including customers with no orders.",
       "difficulty": "Hard",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
       "contentVersion": 1,
       "datasetId": "sql-retail",
-      "referenceSolution": "SELECT customer_id, first_name, last_name, city, credit_limit FROM customers WHERE city IN ('Antwerp', 'Ghent') AND (credit_limit IS NULL OR credit_limit < 1000);",
+      "referenceSolution": "SELECT c.customer_id, c.first_name, c.last_name, c.city, c.credit_limit, COUNT(o.order_id) AS order_count FROM customers c LEFT JOIN orders o ON c.customer_id = o.customer_id WHERE c.city IN ('Antwerp', 'Ghent') AND (c.credit_limit IS NULL OR c.credit_limit < 1000) GROUP BY c.customer_id, c.first_name, c.last_name, c.city, c.credit_limit;",
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
       "hints": [
-        "Group the two credit conditions in parentheses before combining with city."
+        "Use a LEFT JOIN so customers with no orders remain in the result.",
+        "Filter the customer rows, then GROUP BY the selected customer fields and count matching order IDs."
       ],
-      "explanation": "The parentheses make the missing-or-low-credit rule apply only after the city condition is satisfied."
+      "explanation": "The LEFT JOIN retains qualifying customers even when they have no orders. GROUP BY produces one row per customer, and COUNT(o.order_id) counts only matched orders."
     },
     {
       "id": "sql-week2-sorting-042",
       "course": "sql",
       "category": "order-by",
-
       "title": "Highest-paid employees first",
       "instructions": "Display employee names and salaries ordered from highest salary to lowest.",
       "difficulty": "Easy",
@@ -874,14 +907,15 @@
       "orderMatters": true,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Use descending order for the largest value first."],
+      "hints": [
+        "Use descending order for the largest value first."
+      ],
       "explanation": "ORDER BY salary DESC sorts from the highest salary to the lowest."
     },
     {
       "id": "sql-week2-sorting-043",
       "course": "sql",
       "category": "order-by",
-
       "title": "Alphabetical customer list",
       "instructions": "Show customer names and cities, sorted alphabetically by last name.",
       "difficulty": "Easy",
@@ -894,14 +928,15 @@
       "orderMatters": true,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Ascending order is the default."],
+      "hints": [
+        "Ascending order is the default."
+      ],
       "explanation": "ORDER BY last_name sorts alphabetically in ascending order by default."
     },
     {
       "id": "sql-week2-sorting-044",
       "course": "sql",
       "category": "order-by",
-
       "title": "Department then salary",
       "instructions": "Display employee names, department IDs and salaries; sort by department ID ascending and salary descending within each department.",
       "difficulty": "Medium",
@@ -914,14 +949,15 @@
       "orderMatters": true,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Each sort key can have its own direction."],
+      "hints": [
+        "Each sort key can have its own direction."
+      ],
       "explanation": "Rows are grouped by department in ascending order, then salaries are descending within each department."
     },
     {
       "id": "sql-week2-sorting-045",
       "course": "sql",
       "category": "order-by",
-
       "title": "Product stock with price tie-breaker",
       "instructions": "List product names, stock quantities and prices, ordered by stock from lowest to highest, then price from highest to lowest.",
       "difficulty": "Medium",
@@ -934,14 +970,15 @@
       "orderMatters": true,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Use two ORDER BY expressions with separate directions."],
+      "hints": [
+        "Use two ORDER BY expressions with separate directions."
+      ],
       "explanation": "The second key is used only when stock quantities are equal."
     },
     {
       "id": "sql-week2-sorting-046",
       "course": "sql",
       "category": "order-by",
-
       "title": "Sort by an alias",
       "instructions": "Display project names and budgets under the alias planned_budget, sorted by that alias in descending order.",
       "difficulty": "Medium",
@@ -954,14 +991,15 @@
       "orderMatters": true,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["An output alias can be used in ORDER BY."],
+      "hints": [
+        "An output alias can be used in ORDER BY."
+      ],
       "explanation": "The alias planned_budget refers to the selected budget expression."
     },
     {
       "id": "sql-week2-sorting-047",
       "course": "sql",
       "category": "order-by",
-
       "title": "Missing consultant emails last",
       "instructions": "Show consultant IDs, names and email addresses, placing missing emails after all recorded addresses.",
       "difficulty": "Medium",
@@ -974,14 +1012,15 @@
       "orderMatters": true,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["PostgreSQL supports explicit NULLS LAST sorting."],
+      "hints": [
+        "PostgreSQL supports explicit NULLS LAST sorting."
+      ],
       "explanation": "NULLS LAST puts rows with missing email values after non-NULL values in the ascending sort."
     },
     {
       "id": "sql-week2-sorting-048",
       "course": "sql",
       "category": "order-by",
-
       "title": "Birth date with missing values first",
       "instructions": "Display employee names and birth dates, with missing birth dates before known dates and known dates from oldest to newest.",
       "difficulty": "Medium",
@@ -994,14 +1033,15 @@
       "orderMatters": true,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Choose ascending date order and explicitly position NULLs."],
+      "hints": [
+        "Choose ascending date order and explicitly position NULLs."
+      ],
       "explanation": "NULLS FIRST places missing birth dates at the beginning while the remaining dates ascend."
     },
     {
       "id": "sql-week2-sorting-049",
       "course": "sql",
       "category": "order-by",
-
       "title": "Sort by selected position",
       "instructions": "Display product name, price and stock quantity, sorting first by price descending and then by the third selected column ascending.",
       "difficulty": "Medium",
@@ -1014,14 +1054,15 @@
       "orderMatters": true,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["ORDER BY can refer to the position of a selected column."],
+      "hints": [
+        "ORDER BY can refer to the position of a selected column."
+      ],
       "explanation": "Position 2 means unit_price and position 3 means stock_quantity in the SELECT list."
     },
     {
       "id": "sql-week2-pagination-050",
       "course": "sql",
       "category": "fetch",
-
       "title": "Second page of projects",
       "instructions": "The project list is sorted by project ID. Return rows 6 through 10 of that list.",
       "difficulty": "Medium",
@@ -1034,14 +1075,15 @@
       "orderMatters": true,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Use a stable order, then skip five and fetch the next five."],
+      "hints": [
+        "Use a stable order, then skip five and fetch the next five."
+      ],
       "explanation": "The sorted result is paginated by skipping the first five rows and returning the next five."
     },
     {
       "id": "sql-week2-pagination-051",
       "course": "sql",
       "category": "fetch",
-
       "title": "First four students by birth date",
       "instructions": "Show the four students with the earliest birth dates.",
       "difficulty": "Medium",
@@ -1054,14 +1096,15 @@
       "orderMatters": true,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Order from earliest date first, then limit the output."],
+      "hints": [
+        "Order from earliest date first, then limit the output."
+      ],
       "explanation": "The first four rows after ascending birth-date sorting are returned."
     },
     {
       "id": "sql-week2-pagination-052",
       "course": "sql",
       "category": "fetch",
-
       "title": "Next six employees by hire date",
       "instructions": "Display employee IDs, names and hire dates for employees 6 through 11 when ordered from newest hire to oldest.",
       "difficulty": "Medium",
@@ -1074,14 +1117,15 @@
       "orderMatters": true,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Skip five ordered rows before fetching six."],
+      "hints": [
+        "Skip five ordered rows before fetching six."
+      ],
       "explanation": "The query first sorts newest hires first, then returns positions 6 through 11."
     },
     {
       "id": "sql-week2-pagination-053",
       "course": "sql",
       "category": "fetch",
-
       "title": "Paged products within one category",
       "instructions": "For category 2, list the product names and stock quantities ordered alphabetically, skipping the first two and returning the next three.",
       "difficulty": "Medium",
@@ -1094,14 +1138,15 @@
       "orderMatters": true,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Filter, sort, and then apply pagination."],
+      "hints": [
+        "Filter, sort, and then apply pagination."
+      ],
       "explanation": "WHERE defines the category subset; ORDER BY establishes the page order, then OFFSET and FETCH select the requested page."
     },
     {
       "id": "sql-week2-filtering-054",
       "course": "sql",
       "category": "combined-filter",
-
       "title": "Employee directory for selected conditions",
       "instructions": "Show employees in departments 10, 20 or 30 whose salary is above 60000, sorted by department and surname.",
       "difficulty": "Medium",
@@ -1114,14 +1159,15 @@
       "orderMatters": true,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Combine IN and a salary comparison, then sort by two keys."],
+      "hints": [
+        "Combine IN and a salary comparison, then sort by two keys."
+      ],
       "explanation": "IN chooses eligible departments, AND applies the salary threshold, and ORDER BY organizes the resulting rows."
     },
     {
       "id": "sql-week2-patterns-055",
       "course": "sql",
       "category": "like",
-
       "title": "SKU pattern with one fixed character",
       "instructions": "Find products whose SKU has two characters, a hyphen, and exactly four further characters.",
       "difficulty": "Medium",
@@ -1134,14 +1180,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Underscore represents one character each time."],
+      "hints": [
+        "Underscore represents one character each time."
+      ],
       "explanation": "The pattern requires two characters, a hyphen, and four further characters."
     },
     {
       "id": "sql-week2-null-056",
       "course": "sql",
       "category": "null",
-
       "title": "Project completion date availability",
       "instructions": "Show project names and statuses for projects with no recorded end date, ordered by their start dates.",
       "difficulty": "Medium",
@@ -1154,14 +1201,15 @@
       "orderMatters": true,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Filter missing dates with IS NULL before sorting."],
+      "hints": [
+        "Filter missing dates with IS NULL before sorting."
+      ],
       "explanation": "IS NULL finds uncompleted-date records, and ORDER BY arranges them chronologically."
     },
     {
       "id": "sql-week2-filtering-057",
       "course": "sql",
       "category": "combined-filter",
-
       "title": "Retail orders in multiple statuses and dates",
       "instructions": "Display order IDs and dates for delivered or shipped orders placed during May or June 2025.",
       "difficulty": "Medium",
@@ -1183,7 +1231,6 @@
       "id": "sql-week2-sorting-058",
       "course": "sql",
       "category": "order-by",
-
       "title": "Rank customers by credit with NULLs last",
       "instructions": "List customer names and credit limits, with the largest known limit first and missing limits at the end.",
       "difficulty": "Medium",
@@ -1205,7 +1252,6 @@
       "id": "sql-week2-pagination-059",
       "course": "sql",
       "category": "fetch",
-
       "title": "Top three consultant rates after excluding low rates",
       "instructions": "Return the second, third and fourth highest consultant hourly rates, with consultant names.",
       "difficulty": "Medium",
@@ -1218,14 +1264,15 @@
       "orderMatters": true,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Apply the minimum-rate filter before sorting and pagination."],
+      "hints": [
+        "Apply the minimum-rate filter before sorting and pagination."
+      ],
       "explanation": "WHERE removes rates below 90; descending order ranks the rest, and OFFSET/FETCH returns positions two through four."
     },
     {
       "id": "sql-week2-distinct-060",
       "course": "sql",
       "category": "distinct",
-
       "title": "What DISTINCT removes",
       "instructions": "What does DISTINCT do when used in a SELECT query?",
       "difficulty": "Easy",
@@ -1239,14 +1286,15 @@
         "Removes rows with NULL values",
         "Limits the number of returned rows"
       ],
-      "expected": [1],
+      "expected": [
+        1
+      ],
       "explanation": "DISTINCT removes duplicate result rows; it does not sort or filter by NULL status."
     },
     {
       "id": "sql-week2-filtering-061",
       "course": "sql",
       "category": "where",
-
       "title": "Purpose of WHERE",
       "instructions": "At what stage does WHERE filter records?",
       "difficulty": "Easy",
@@ -1260,14 +1308,15 @@
         "Only after ORDER BY",
         "After FETCH"
       ],
-      "expected": [1],
+      "expected": [
+        1
+      ],
       "explanation": "WHERE filters individual rows before later grouping or sorting is applied."
     },
     {
       "id": "sql-week2-patterns-062",
       "course": "sql",
       "category": "like",
-
       "title": "Meaning of percent wildcard",
       "instructions": "In a LIKE pattern, what does % represent?",
       "difficulty": "Easy",
@@ -1281,14 +1330,15 @@
         "Only a digit",
         "A NULL value"
       ],
-      "expected": [1],
+      "expected": [
+        1
+      ],
       "explanation": "% matches any amount of characters, including zero characters."
     },
     {
       "id": "sql-week2-null-063",
       "course": "sql",
       "category": "null",
-
       "title": "Correct NULL test",
       "instructions": "Which condition correctly finds rows where email is missing?",
       "difficulty": "Easy",
@@ -1302,14 +1352,15 @@
         "email IS NULL",
         "email LIKE NULL"
       ],
-      "expected": [2],
+      "expected": [
+        2
+      ],
       "explanation": "NULL must be tested with IS NULL or IS NOT NULL, not equality operators."
     },
     {
       "id": "sql-week2-sorting-064",
       "course": "sql",
       "category": "order-by",
-
       "title": "Default ORDER BY direction",
       "instructions": "What is the default sort direction when ASC or DESC is omitted?",
       "difficulty": "Easy",
@@ -1317,15 +1368,21 @@
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
       "contentVersion": 1,
-      "options": ["Descending", "Ascending", "Random", "NULL values only"],
-      "expected": [1],
+      "options": [
+        "Descending",
+        "Ascending",
+        "Random",
+        "NULL values only"
+      ],
+      "expected": [
+        1
+      ],
       "explanation": "Ascending order is the default when the direction is omitted."
     },
     {
       "id": "sql-week2-pagination-065",
       "course": "sql",
       "category": "fetch",
-
       "title": "Purpose of OFFSET",
       "instructions": "What does OFFSET 10 do in a query result?",
       "difficulty": "Easy",
@@ -1339,14 +1396,15 @@
         "Skips the first ten rows",
         "Filters rows whose values equal ten"
       ],
-      "expected": [2],
+      "expected": [
+        2
+      ],
       "explanation": "OFFSET skips the specified number of rows in the ordered result."
     },
     {
       "id": "sql-week3-text-functions-001",
       "course": "sql",
       "category": "upper",
-
       "title": "Uppercase employee surnames",
       "instructions": "Create one employee display row containing the surname in uppercase, the first name in lowercase, and the original surname length.",
       "difficulty": "Easy",
@@ -1366,7 +1424,6 @@
       "id": "sql-week3-text-functions-002",
       "course": "sql",
       "category": "lower",
-
       "title": "Lowercase customer cities",
       "instructions": "For each customer, display the city in lowercase, the customer ID as a five-character code padded with leading zeroes, and the length of the original city.",
       "difficulty": "Medium",
@@ -1386,7 +1443,6 @@
       "id": "sql-week3-text-functions-003",
       "course": "sql",
       "category": "initcap",
-
       "title": "Formatted student names",
       "instructions": "Display each student name in title case as one full-name value, together with the email address in lowercase.",
       "difficulty": "Medium",
@@ -1406,7 +1462,6 @@
       "id": "sql-week3-text-functions-004",
       "course": "sql",
       "category": "length",
-
       "title": "Employee surname lengths",
       "instructions": "Display each surname in uppercase and its character count as a two-character text value padded with a leading zero when needed.",
       "difficulty": "Medium",
@@ -1426,67 +1481,72 @@
       "id": "sql-week3-text-functions-005",
       "course": "sql",
       "category": "outer-join",
-
       "title": "Product SKU prefixes",
-      "instructions": "For every product, display a normalized SKU with the part before the hyphen in uppercase and the part after the hyphen in lowercase, joined by a hyphen.",
+      "instructions": "For every product, display its category name and SKU normalized by converting the prefix before the hyphen to lowercase and subtracting 100 from the numeric suffix after the hyphen. Join the normalized parts with a hyphen.",
       "difficulty": "Hard",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
       "contentVersion": 1,
       "datasetId": "sql-retail",
-      "referenceSolution": "SELECT sku, CONCAT(UPPER(LEFT(sku, POSITION('-' IN sku) - 1)), '-', LOWER(SUBSTR(sku, POSITION('-' IN sku) + 1, LENGTH(sku)))) AS normalized_sku FROM products;",
+      "referenceSolution": "SELECT c.category_name, p.sku, CONCAT(LOWER(LEFT(p.sku, POSITION('-' IN p.sku) - 1)), '-', TO_NUMBER(SUBSTR(p.sku, POSITION('-' IN p.sku) + 1, LENGTH(p.sku)), '9999') - 100) AS normalized_sku FROM products p JOIN categories c ON p.category_id = c.category_id;",
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": "Use POSITION to locate the separator, then extract the text on each side before combining the transformed parts.",
-      "explanation": "POSITION finds the hyphen; LEFT extracts the prefix, SUBSTR extracts the suffix, UPPER and LOWER standardize case, and CONCAT joins the pieces."
+      "hints": [
+        "Join products to categories using category_id.",
+        "Use string functions to split the SKU around the hyphen, then transform each part."
+      ],
+      "explanation": "The category join supplies the product's category label. String functions normalize the prefix and numeric suffix before CONCAT combines them."
     },
     {
       "id": "sql-week3-text-functions-006",
       "course": "sql",
       "category": "substr",
-
       "title": "Student email usernames",
-      "instructions": "Display each student email and the username before the @ sign in lowercase, together with the number of characters in that username.",
+      "instructions": "For each student with a recorded email, display the email, the lowercase username before the @ sign, its character length, and the number of courses the student is enrolled in. Include students with no enrollments.",
       "difficulty": "Hard",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
       "contentVersion": 1,
       "datasetId": "sql-education",
-      "referenceSolution": "SELECT email, LOWER(SUBSTR(email, 1, POSITION('@' IN email) - 1)) AS username, LENGTH(SUBSTR(email, 1, POSITION('@' IN email) - 1)) AS username_length FROM students WHERE email IS NOT NULL;",
+      "referenceSolution": "SELECT st.student_id, st.email, LOWER(SUBSTR(st.email, 1, POSITION('@' IN st.email) - 1)) AS username, LENGTH(SUBSTR(st.email, 1, POSITION('@' IN st.email) - 1)) AS username_length, COUNT(e.course_id) AS course_count FROM students st LEFT JOIN enrollments e ON st.student_id = e.student_id WHERE st.email IS NOT NULL GROUP BY st.student_id, st.email;",
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": "Find the @ position and use it to determine the substring length.",
-      "explanation": "POSITION identifies the separator, SUBSTR extracts the username, LOWER standardizes it, and LENGTH counts the extracted characters."
+      "hints": [
+        "Extract the username from the email before grouping.",
+        "Use a LEFT JOIN to retain students with no enrollment records, and COUNT(e.course_id) for their course count."
+      ],
+      "explanation": "The username is extracted and lowercased from the email. A LEFT JOIN preserves students without enrollments, while GROUP BY and COUNT provide one row and a course count per student."
     },
     {
       "id": "sql-week3-text-functions-007",
       "course": "sql",
       "category": "position",
-
       "title": "Find the dash in product SKUs",
-      "instructions": "Show each SKU, its prefix before the hyphen, and its suffix after the hyphen. Return the prefix in uppercase and the suffix in lowercase.",
+      "instructions": "For every product, display its category name, SKU, uppercase prefix before the hyphen, and lowercase suffix after the hyphen.",
       "difficulty": "Hard",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
       "contentVersion": 1,
       "datasetId": "sql-retail",
-      "referenceSolution": "SELECT sku, UPPER(LEFT(sku, POSITION('-' IN sku) - 1)) AS sku_prefix, LOWER(SUBSTR(sku, POSITION('-' IN sku) + 1, LENGTH(sku))) AS sku_suffix FROM products;",
+      "referenceSolution": "SELECT c.category_name, p.sku, UPPER(LEFT(p.sku, POSITION('-' IN p.sku) - 1)) AS sku_prefix, LOWER(SUBSTR(p.sku, POSITION('-' IN p.sku) + 1, LENGTH(p.sku))) AS sku_suffix FROM products p JOIN categories c ON p.category_id = c.category_id;",
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": "Use the separator position to calculate the start and length of each part.",
-      "explanation": "POSITION locates the hyphen; LEFT and SUBSTR extract the two parts, and UPPER and LOWER standardize their case."
+      "hints": [
+        "Join products to categories on category_id.",
+        "Use POSITION to locate the hyphen, then apply UPPER and LOWER to the respective parts."
+      ],
+      "explanation": "The category join adds context to each product. POSITION identifies the separator, and the string functions transform the prefix and suffix as requested."
     },
     {
       "id": "sql-week3-text-functions-008",
       "course": "sql",
       "category": "replace",
-
       "title": "Standardize consultant specialties",
       "instructions": "Display each specialty in uppercase, replace any spaces with hyphens, and pad the result on the left to 16 characters using dots.",
       "difficulty": "Medium",
@@ -1506,7 +1566,6 @@
       "id": "sql-week3-text-functions-009",
       "course": "sql",
       "category": "trim",
-
       "title": "Clean customer names",
       "instructions": "Return each customer’s full name as one value, removing leading and trailing spaces from both name parts and capitalizing each word.",
       "difficulty": "Medium",
@@ -1526,7 +1585,6 @@
       "id": "sql-week3-text-functions-010",
       "course": "sql",
       "category": "ltrim",
-
       "title": "Remove leading z characters",
       "instructions": "Show employee street values after removing all leading lowercase z characters.",
       "difficulty": "Medium",
@@ -1548,7 +1606,6 @@
       "id": "sql-week3-text-functions-011",
       "course": "sql",
       "category": "concat",
-
       "title": "Build a consultant display name",
       "instructions": "Combine each consultant’s first and last name with one space between them.",
       "difficulty": "Easy",
@@ -1561,14 +1618,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["CONCAT combines values into one text value."],
+      "hints": [
+        "CONCAT combines values into one text value."
+      ],
       "explanation": "CONCAT joins the first name, a space and the last name into one display value."
     },
     {
       "id": "sql-week3-text-functions-012",
       "course": "sql",
       "category": "concat",
-
       "title": "Create a customer location label",
       "instructions": "Combine customer city and postal code using a comma and a space as separator.",
       "difficulty": "Easy",
@@ -1581,14 +1639,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["CONCAT_WS takes the separator first."],
+      "hints": [
+        "CONCAT_WS takes the separator first."
+      ],
       "explanation": "CONCAT_WS joins the supplied values using the separator and skips NULL arguments."
     },
     {
       "id": "sql-week3-text-functions-013",
       "course": "sql",
       "category": "lpad",
-
       "title": "Build fixed-width course labels",
       "instructions": "For each course, create a label by converting its course ID to text and padding it to three characters with zeroes, then append a hyphen and the course code padded on the right to ten characters with dots.",
       "difficulty": "Medium",
@@ -1608,7 +1667,6 @@
       "id": "sql-week3-text-functions-014",
       "course": "sql",
       "category": "rpad",
-
       "title": "Pad project status labels",
       "instructions": "Display each project status padded on the right to a width of 12 using dots.",
       "difficulty": "Easy",
@@ -1621,14 +1679,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["RPAD adds fill characters on the right."],
+      "hints": [
+        "RPAD adds fill characters on the right."
+      ],
       "explanation": "RPAD extends the status text to the requested width with trailing dots."
     },
     {
       "id": "sql-week3-text-functions-015",
       "course": "sql",
       "category": "nested-text",
-
       "title": "Normalize employee street labels",
       "instructions": "Display each street in lowercase, remove leading z characters and pad the result on the right to 30 characters using asterisks.",
       "difficulty": "Medium",
@@ -1650,7 +1709,6 @@
       "id": "sql-week3-text-functions-016",
       "course": "sql",
       "category": "replace",
-
       "title": "Replace spaces in product names",
       "instructions": "Show product names with every space replaced by an underscore.",
       "difficulty": "Easy",
@@ -1663,14 +1721,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Use REPLACE with a single-space search value."],
+      "hints": [
+        "Use REPLACE with a single-space search value."
+      ],
       "explanation": "REPLACE substitutes each space with an underscore in the returned text."
     },
     {
       "id": "sql-week3-text-functions-017",
       "course": "sql",
       "category": "position",
-
       "title": "Locate the at-sign in customer emails",
       "instructions": "Display each non-missing customer email and the position of its @ character.",
       "difficulty": "Easy",
@@ -1692,7 +1751,6 @@
       "id": "sql-week3-text-functions-018",
       "course": "sql",
       "category": "substr",
-
       "title": "Extract project code fragments",
       "instructions": "Show each project name and the first four characters of that name, starting at position 1.",
       "difficulty": "Easy",
@@ -1705,14 +1763,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["SUBSTR starts counting from position 1."],
+      "hints": [
+        "SUBSTR starts counting from position 1."
+      ],
       "explanation": "The function extracts a four-character prefix from each project name."
     },
     {
       "id": "sql-week3-text-functions-019",
       "course": "sql",
       "category": "concat",
-
       "title": "Names with optional email",
       "instructions": "Create one label from each employee’s full name and email, separated by a pipe. Missing emails should not create an empty placeholder.",
       "difficulty": "Medium",
@@ -1734,7 +1793,6 @@
       "id": "sql-week3-text-functions-020",
       "course": "sql",
       "category": "nested-text",
-
       "title": "Standardize course titles",
       "instructions": "Display course titles in lowercase and replace every space with a hyphen.",
       "difficulty": "Medium",
@@ -1747,14 +1805,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Apply LOWER before REPLACE."],
+      "hints": [
+        "Apply LOWER before REPLACE."
+      ],
       "explanation": "LOWER normalizes letter case; REPLACE changes spaces into hyphens."
     },
     {
       "id": "sql-week3-text-functions-021",
       "course": "sql",
       "category": "ltrim",
-
       "title": "Remove repeated prefix characters from SKUs",
       "instructions": "Display each SKU after removing leading C or L characters.",
       "difficulty": "Medium",
@@ -1776,7 +1835,6 @@
       "id": "sql-week3-text-functions-022",
       "course": "sql",
       "category": "rpad",
-
       "title": "Create fixed-width participant names",
       "instructions": "Display participant names padded on the right to 20 characters with periods.",
       "difficulty": "Easy",
@@ -1789,14 +1847,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Use the target width and fill text in RPAD."],
+      "hints": [
+        "Use the target width and fill text in RPAD."
+      ],
       "explanation": "RPAD returns the name extended with periods to the specified width."
     },
     {
       "id": "sql-week3-text-functions-023",
       "course": "sql",
       "category": "text-combination",
-
       "title": "Create formatted student contact strings",
       "instructions": "Display student names as uppercase SURNAME followed by a comma and the lowercase first name.",
       "difficulty": "Medium",
@@ -1809,14 +1868,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Combine CONCAT with UPPER and LOWER."],
+      "hints": [
+        "Combine CONCAT with UPPER and LOWER."
+      ],
       "explanation": "The name components are transformed independently and then combined with the comma-space separator."
     },
     {
       "id": "sql-week3-text-functions-024",
       "course": "sql",
       "category": "length",
-
       "title": "Compare text lengths in product data",
       "instructions": "Return product names and the length of their descriptions, excluding missing descriptions.",
       "difficulty": "Easy",
@@ -1838,7 +1898,6 @@
       "id": "sql-week3-text-functions-025",
       "course": "sql",
       "category": "nested-text",
-
       "title": "Format consultant specialty labels",
       "instructions": "Display consultant specialties with initial capitals and pad them on the left to a width of 14 using underscores.",
       "difficulty": "Medium",
@@ -1851,14 +1910,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Apply INITCAP inside LPAD."],
+      "hints": [
+        "Apply INITCAP inside LPAD."
+      ],
       "explanation": "INITCAP formats the words first, then LPAD adds leading underscores until the width is 14."
     },
     {
       "id": "sql-week3-text-functions-026",
       "course": "sql",
       "category": "outer-join",
-
       "title": "Extract category code prefixes",
       "instructions": "Display category codes and the first three characters of each code.",
       "difficulty": "Easy",
@@ -1880,7 +1940,6 @@
       "id": "sql-week3-numeric-functions-027",
       "course": "sql",
       "category": "round",
-
       "title": "Rounded consultant rates",
       "instructions": "Display consultant names and hourly rates rounded to one decimal place.",
       "difficulty": "Easy",
@@ -1902,7 +1961,6 @@
       "id": "sql-week3-numeric-functions-028",
       "course": "sql",
       "category": "trunc",
-
       "title": "Truncated product prices",
       "instructions": "Show product names and prices truncated to one decimal place without rounding.",
       "difficulty": "Easy",
@@ -1915,14 +1973,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["TRUNC removes digits beyond the requested decimal place."],
+      "hints": [
+        "TRUNC removes digits beyond the requested decimal place."
+      ],
       "explanation": "TRUNC cuts off extra decimals rather than rounding the value."
     },
     {
       "id": "sql-week3-numeric-functions-029",
       "course": "sql",
       "category": "mod",
-
       "title": "Even and odd stock quantities",
       "instructions": "Display product names, stock quantities and the remainder when stock is divided by 2.",
       "difficulty": "Easy",
@@ -1935,14 +1994,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["MOD returns the remainder from division."],
+      "hints": [
+        "MOD returns the remainder from division."
+      ],
       "explanation": "A remainder of zero indicates an even stock quantity; one indicates an odd quantity."
     },
     {
       "id": "sql-week3-numeric-functions-030",
       "course": "sql",
       "category": "arithmetic",
-
       "title": "Calculate discounted course fees",
       "instructions": "Show each course title and its fee after a 10 percent discount.",
       "difficulty": "Easy",
@@ -1955,14 +2015,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Use arithmetic directly in the SELECT list."],
+      "hints": [
+        "Use arithmetic directly in the SELECT list."
+      ],
       "explanation": "Multiplying the fee by 0.90 calculates the amount after a ten percent discount."
     },
     {
       "id": "sql-week3-numeric-functions-031",
       "course": "sql",
       "category": "arithmetic",
-
       "title": "Estimate project budget with contingency",
       "instructions": "Display project names and budgets increased by 8 percent.",
       "difficulty": "Easy",
@@ -1975,14 +2036,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Multiply the existing amount by 1.08."],
+      "hints": [
+        "Multiply the existing amount by 1.08."
+      ],
       "explanation": "The multiplication adds an eight percent contingency to the original budget."
     },
     {
       "id": "sql-week3-numeric-functions-032",
       "course": "sql",
       "category": "round",
-
       "title": "Rounded order line values",
       "instructions": "For each order line, show the product ID and line amount rounded to two decimal places.",
       "difficulty": "Easy",
@@ -1995,14 +2057,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Multiply quantity by unit price before rounding."],
+      "hints": [
+        "Multiply quantity by unit price before rounding."
+      ],
       "explanation": "The arithmetic calculates the line amount and ROUND formats it to two decimal places."
     },
     {
       "id": "sql-week3-numeric-functions-033",
       "course": "sql",
       "category": "trunc",
-
       "title": "Truncate project budget to thousands",
       "instructions": "Display each project budget truncated to the nearest thousand.",
       "difficulty": "Medium",
@@ -2024,7 +2087,6 @@
       "id": "sql-week3-numeric-functions-034",
       "course": "sql",
       "category": "round",
-
       "title": "Round student tuition balances",
       "instructions": "Show each enrollment’s student ID and tuition paid rounded to the nearest whole unit.",
       "difficulty": "Easy",
@@ -2037,14 +2099,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Use zero decimal places for whole-unit rounding."],
+      "hints": [
+        "Use zero decimal places for whole-unit rounding."
+      ],
       "explanation": "ROUND with precision zero returns a whole-number result for each recorded tuition amount."
     },
     {
       "id": "sql-week3-numeric-functions-035",
       "course": "sql",
       "category": "mod",
-
       "title": "Find assignments with whole tens of hours",
       "instructions": "Display project assignment IDs and the remainder when hours worked is divided by 10.",
       "difficulty": "Easy",
@@ -2057,14 +2120,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Use MOD with 10 as the divisor."],
+      "hints": [
+        "Use MOD with 10 as the divisor."
+      ],
       "explanation": "MOD reports how many hours remain after complete groups of ten hours."
     },
     {
       "id": "sql-week3-numeric-functions-036",
       "course": "sql",
       "category": "arithmetic",
-
       "title": "Calculate order item totals",
       "instructions": "Show order ID, product ID and total line value, using the quantity and unit price.",
       "difficulty": "Easy",
@@ -2077,14 +2141,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Multiply the two numeric columns."],
+      "hints": [
+        "Multiply the two numeric columns."
+      ],
       "explanation": "The product of quantity and unit price is the total value for one order line."
     },
     {
       "id": "sql-week3-numeric-functions-037",
       "course": "sql",
       "category": "round",
-
       "title": "Calculate VAT-inclusive product prices",
       "instructions": "Display each product’s current price and a price increased by 21 percent, rounded to two decimal places.",
       "difficulty": "Medium",
@@ -2097,14 +2162,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Apply the multiplier, then round the result."],
+      "hints": [
+        "Apply the multiplier, then round the result."
+      ],
       "explanation": "Multiplying by 1.21 adds 21 percent; ROUND standardizes the displayed decimal precision."
     },
     {
       "id": "sql-week3-numeric-functions-038",
       "course": "sql",
       "category": "trunc",
-
       "title": "Truncate employee salary to hundreds",
       "instructions": "Display employee names and their salary truncated to the nearest hundred.",
       "difficulty": "Medium",
@@ -2117,14 +2183,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Use a negative precision of two."],
+      "hints": [
+        "Use a negative precision of two."
+      ],
       "explanation": "TRUNC with -2 removes the tens and units digits without rounding."
     },
     {
       "id": "sql-week3-numeric-functions-039",
       "course": "sql",
       "category": "arithmetic",
-
       "title": "Calculate remaining project budget percentage",
       "instructions": "Show project names and the portion of budget remaining after 35 percent has been used.",
       "difficulty": "Easy",
@@ -2137,14 +2204,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["The remaining portion is 1 minus the used fraction."],
+      "hints": [
+        "The remaining portion is 1 minus the used fraction."
+      ],
       "explanation": "The expression multiplies the budget by 0.65, representing the amount left after 35 percent is spent."
     },
     {
       "id": "sql-week3-numeric-functions-040",
       "course": "sql",
       "category": "numeric-calculations",
-
       "title": "Calculate rounded task costs",
       "instructions": "For each task with recorded hours, estimate its cost using a fixed rate of 85 per hour and display the amount rounded to two decimal places.",
       "difficulty": "Medium",
@@ -2164,7 +2232,6 @@
       "id": "sql-week3-date-functions-041",
       "course": "sql",
       "category": "Time",
-
       "title": "Show the current date",
       "instructions": "Return today’s date as a single result.",
       "difficulty": "Easy",
@@ -2177,14 +2244,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["CURRENT_DATE needs no parentheses in the course syntax."],
+      "hints": [
+        "CURRENT_DATE needs no parentheses in the course syntax."
+      ],
       "explanation": "CURRENT_DATE returns the database session’s current date."
     },
     {
       "id": "sql-week3-date-functions-042",
       "course": "sql",
       "category": "Time",
-
       "title": "Show the current time",
       "instructions": "Return the current time as a single result.",
       "difficulty": "Easy",
@@ -2197,14 +2265,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Use CURRENT_TIME without a table."],
+      "hints": [
+        "Use CURRENT_TIME without a table."
+      ],
       "explanation": "CURRENT_TIME returns the current time value."
     },
     {
       "id": "sql-week3-date-functions-043",
       "course": "sql",
       "category": "now",
-
       "title": "Show the current timestamp",
       "instructions": "Return the current date and time in one result column.",
       "difficulty": "Easy",
@@ -2217,14 +2286,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["NOW() returns both date and time."],
+      "hints": [
+        "NOW() returns both date and time."
+      ],
       "explanation": "NOW() returns the current date-time value."
     },
     {
       "id": "sql-week3-date-functions-044",
       "course": "sql",
       "category": "extract",
-
       "title": "Employee hire years",
       "instructions": "Display employee names and the year in which each employee was hired.",
       "difficulty": "Easy",
@@ -2237,14 +2307,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["EXTRACT can retrieve the year component from a date."],
+      "hints": [
+        "EXTRACT can retrieve the year component from a date."
+      ],
       "explanation": "EXTRACT(YEAR FROM hire_date) returns the year part of each hire date."
     },
     {
       "id": "sql-week3-date-functions-045",
       "course": "sql",
       "category": "extract",
-
       "title": "Course start months",
       "instructions": "Display each section code and the month number of its start date.",
       "difficulty": "Easy",
@@ -2257,14 +2328,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Use the MONTH date part."],
+      "hints": [
+        "Use the MONTH date part."
+      ],
       "explanation": "EXTRACT returns the month number from starts_on."
     },
     {
       "id": "sql-week3-date-functions-046",
       "course": "sql",
       "category": "extract",
-
       "title": "Order day numbers",
       "instructions": "Show each order ID and the day of the month on which it was placed.",
       "difficulty": "Easy",
@@ -2277,14 +2349,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Use EXTRACT with DAY."],
+      "hints": [
+        "Use EXTRACT with DAY."
+      ],
       "explanation": "The result contains the day-of-month component of each order date."
     },
     {
       "id": "sql-week3-date-functions-047",
       "course": "sql",
       "category": "age",
-
       "title": "Student ages as intervals",
       "instructions": "Return each student’s name and the interval between their birth date and today.",
       "difficulty": "Easy",
@@ -2297,14 +2370,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["AGE(date) calculates the interval from that date to today."],
+      "hints": [
+        "AGE(date) calculates the interval from that date to today."
+      ],
       "explanation": "AGE returns an interval describing the time elapsed since each student’s birth date."
     },
     {
       "id": "sql-week3-date-functions-048",
       "course": "sql",
       "category": "date-part",
-
       "title": "Months since a fixed date",
       "instructions": "Calculate the month component of the interval between today and 1 September 2021.",
       "difficulty": "Medium",
@@ -2326,7 +2400,6 @@
       "id": "sql-week3-date-functions-049",
       "course": "sql",
       "category": "age",
-
       "title": "Time between project dates",
       "instructions": "For projects with a recorded end date, show the project name and the interval between start and end dates.",
       "difficulty": "Medium",
@@ -2339,14 +2412,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["AGE can compare two dates; exclude rows without an end date."],
+      "hints": [
+        "AGE can compare two dates; exclude rows without an end date."
+      ],
       "explanation": "AGE(end_date, start_date) calculates the interval between the two date values."
     },
     {
       "id": "sql-week3-date-functions-050",
       "course": "sql",
       "category": "interval",
-
       "title": "Retirement date estimate",
       "instructions": "Display employee names and the date that falls 65 years after each birth date.",
       "difficulty": "Medium",
@@ -2359,14 +2433,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Add a year interval to each birth date."],
+      "hints": [
+        "Add a year interval to each birth date."
+      ],
       "explanation": "The INTERVAL expression shifts each birth date forward by 65 years."
     },
     {
       "id": "sql-week3-date-functions-051",
       "course": "sql",
       "category": "date-difference",
-
       "title": "Days since customer registration",
       "instructions": "Show each customer and the number of days between the joining date and today.",
       "difficulty": "Medium",
@@ -2379,14 +2454,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Subtract a date column from CURRENT_DATE."],
+      "hints": [
+        "Subtract a date column from CURRENT_DATE."
+      ],
       "explanation": "Subtracting one date from another returns the number of days between them."
     },
     {
       "id": "sql-week3-date-functions-052",
       "course": "sql",
       "category": "age",
-
       "title": "Employees older than thirty",
       "instructions": "Display employees whose age interval is greater than 30 years.",
       "difficulty": "Medium",
@@ -2399,14 +2475,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Compare the AGE interval with a year interval."],
+      "hints": [
+        "Compare the AGE interval with a year interval."
+      ],
       "explanation": "AGE calculates an interval and the WHERE condition keeps intervals greater than thirty years."
     },
     {
       "id": "sql-week3-date-functions-053",
       "course": "sql",
       "category": "extract",
-
       "title": "Student age in whole years",
       "instructions": "Display student names and the whole-year age extracted from each age interval.",
       "difficulty": "Medium",
@@ -2419,14 +2496,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["EXTRACT(YEAR FROM AGE(...)) gives whole years."],
+      "hints": [
+        "EXTRACT(YEAR FROM AGE(...)) gives whole years."
+      ],
       "explanation": "AGE returns an interval; EXTRACT(YEAR) retrieves its year component."
     },
     {
       "id": "sql-week3-date-functions-054",
       "course": "sql",
       "category": "extract",
-
       "title": "Project schedule components",
       "instructions": "Show project names, start year, start month and start day as separate columns.",
       "difficulty": "Easy",
@@ -2439,14 +2517,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Apply EXTRACT separately for each requested date component."],
+      "hints": [
+        "Apply EXTRACT separately for each requested date component."
+      ],
       "explanation": "Each EXTRACT expression returns one component of the project start date."
     },
     {
       "id": "sql-week3-date-functions-055",
       "course": "sql",
       "category": "date-part",
-
       "title": "Duration in years from consultant hiring",
       "instructions": "Display consultant names and the year component of the interval since they were hired.",
       "difficulty": "Medium",
@@ -2468,7 +2547,6 @@
       "id": "sql-week3-date-functions-056",
       "course": "sql",
       "category": "interval",
-
       "title": "Project review date",
       "instructions": "For every project, display its name and a review date calculated as 90 days after the start date.",
       "difficulty": "Medium",
@@ -2481,14 +2559,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Add an interval to a date value."],
+      "hints": [
+        "Add an interval to a date value."
+      ],
       "explanation": "Adding a 90-day interval produces a review date for each project."
     },
     {
       "id": "sql-week3-conversion-057",
       "course": "sql",
       "category": "cast",
-
       "title": "Employee ID as text",
       "instructions": "Display employee IDs converted to text alongside employee names.",
       "difficulty": "Easy",
@@ -2501,14 +2580,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Use CAST with the target type."],
+      "hints": [
+        "Use CAST with the target type."
+      ],
       "explanation": "CAST converts the integer identifier into a character value for display."
     },
     {
       "id": "sql-week3-conversion-058",
       "course": "sql",
       "category": "to-char-date",
-
       "title": "Format customer join dates",
       "instructions": "Display customer names and join dates in DD-MM-YYYY format.",
       "difficulty": "Easy",
@@ -2521,14 +2601,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["TO_CHAR converts a date into text using the supplied format."],
+      "hints": [
+        "TO_CHAR converts a date into text using the supplied format."
+      ],
       "explanation": "The format pattern prints a two-digit day, two-digit month and four-digit year."
     },
     {
       "id": "sql-week3-conversion-059",
       "course": "sql",
       "category": "to-date",
-
       "title": "Parse a supplied date",
       "instructions": "Convert the text 29-10-2021 into a date value using its day-month-year pattern.",
       "difficulty": "Easy",
@@ -2550,7 +2631,6 @@
       "id": "sql-week3-conversion-060",
       "course": "sql",
       "category": "to-number",
-
       "title": "Convert a text amount to a number",
       "instructions": "Convert the text value 2500 to a number using a four-digit numeric format.",
       "difficulty": "Easy",
@@ -2563,14 +2643,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Use TO_NUMBER with a format matching the text."],
+      "hints": [
+        "Use TO_NUMBER with a format matching the text."
+      ],
       "explanation": "TO_NUMBER parses the text and returns a numeric value."
     },
     {
       "id": "sql-week3-conversion-061",
       "course": "sql",
       "category": "cast",
-
       "title": "Convert customer postal codes to integers",
       "instructions": "Display customer IDs and postal codes converted to integer values.",
       "difficulty": "Easy",
@@ -2583,14 +2664,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["PostgreSQL supports the ::type shorthand."],
+      "hints": [
+        "PostgreSQL supports the ::type shorthand."
+      ],
       "explanation": "The shorthand casts each text postal code to an integer; leading zeroes are not preserved in the numeric result."
     },
     {
       "id": "sql-week3-conversion-062",
       "course": "sql",
       "category": "to-char-number",
-
       "title": "Format project budgets as text",
       "instructions": "Display project names and budgets converted to text with two decimal places.",
       "difficulty": "Medium",
@@ -2603,14 +2685,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["TO_CHAR accepts a numeric value and a numeric format."],
+      "hints": [
+        "TO_CHAR accepts a numeric value and a numeric format."
+      ],
       "explanation": "The format converts the numeric budget into a text representation with two decimal places."
     },
     {
       "id": "sql-week3-conversion-063",
       "course": "sql",
       "category": "to-char-date",
-
       "title": "Display section dates with month names",
       "instructions": "Show section codes and dates using day number, full month name and year, with month padding removed.",
       "difficulty": "Medium",
@@ -2623,14 +2706,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["FM removes padding spaces from month names."],
+      "hints": [
+        "FM removes padding spaces from month names."
+      ],
       "explanation": "TO_CHAR formats the date, and FM prevents the full month name from being padded with spaces."
     },
     {
       "id": "sql-week3-conversion-064",
       "course": "sql",
       "category": "cast",
-
       "title": "Convert a numeric product price to integer",
       "instructions": "Display product names and their prices converted to integer values.",
       "difficulty": "Easy",
@@ -2643,14 +2727,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["CAST changes the value to the requested numeric type."],
+      "hints": [
+        "CAST changes the value to the requested numeric type."
+      ],
       "explanation": "CAST converts the numeric price to an integer result."
     },
     {
       "id": "sql-week3-conversion-065",
       "course": "sql",
       "category": "to-date",
-
       "title": "Parse a year-first date string",
       "instructions": "Convert the text 2021-10-29 into a date using a year-month-day format.",
       "difficulty": "Easy",
@@ -2663,14 +2748,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Use a format mask that follows the same order as the text."],
+      "hints": [
+        "Use a format mask that follows the same order as the text."
+      ],
       "explanation": "TO_DATE parses the year, month and day components using YYYY-MM-DD."
     },
     {
       "id": "sql-week3-conversion-066",
       "course": "sql",
       "category": "to-char-date",
-
       "title": "Display dates with abbreviated weekday",
       "instructions": "Display project start dates with a three-letter weekday followed by day, month and year.",
       "difficulty": "Medium",
@@ -2683,14 +2769,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Use dy for a short weekday name."],
+      "hints": [
+        "Use dy for a short weekday name."
+      ],
       "explanation": "TO_CHAR formats the date into the requested abbreviated weekday and numeric date components."
     },
     {
       "id": "sql-week3-conversion-067",
       "course": "sql",
       "category": "to-char-date",
-
       "title": "Format a date without padded month text",
       "instructions": "Display employee birth dates as day, full month and year without the extra spaces that Month can add.",
       "difficulty": "Medium",
@@ -2703,14 +2790,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Prefix Month with FM to suppress padding."],
+      "hints": [
+        "Prefix Month with FM to suppress padding."
+      ],
       "explanation": "FM removes the padding spaces that the Month template may add."
     },
     {
       "id": "sql-week3-conversion-068",
       "course": "sql",
       "category": "nested-conversion",
-
       "title": "Format a calculated age milestone date",
       "instructions": "Display student names and the date 30 years after birth in DD-MM-YYYY text format.",
       "difficulty": "Medium",
@@ -2732,7 +2820,6 @@
       "id": "sql-week3-text-functions-069",
       "course": "sql",
       "category": "text-function",
-
       "title": "What LENGTH returns",
       "instructions": "What does LENGTH(text) return?",
       "difficulty": "Easy",
@@ -2746,14 +2833,15 @@
         "The position of the first space",
         "The text in uppercase"
       ],
-      "expected": [1],
+      "expected": [
+        1
+      ],
       "explanation": "LENGTH counts the characters in its text argument."
     },
     {
       "id": "sql-week3-numeric-functions-070",
       "course": "sql",
       "category": "numeric-function",
-
       "title": "ROUND versus TRUNC",
       "instructions": "Which statement correctly describes TRUNC(number, 2)?",
       "difficulty": "Easy",
@@ -2767,14 +2855,15 @@
         "It returns a remainder",
         "It converts the number to text"
       ],
-      "expected": [1],
+      "expected": [
+        1
+      ],
       "explanation": "TRUNC cuts off extra decimal places without rounding the value."
     },
     {
       "id": "sql-week3-date-functions-071",
       "course": "sql",
       "category": "date-function",
-
       "title": "AGE result type",
       "instructions": "What kind of result does AGE(date) produce?",
       "difficulty": "Easy",
@@ -2788,14 +2877,15 @@
         "A time interval",
         "A text-formatted date"
       ],
-      "expected": [2],
+      "expected": [
+        2
+      ],
       "explanation": "AGE returns an interval describing the elapsed time from the supplied date to today."
     },
     {
       "id": "sql-week3-conversion-072",
       "course": "sql",
       "category": "conversion",
-
       "title": "Purpose of TO_DATE",
       "instructions": "What does TO_DATE(text, format) do?",
       "difficulty": "Easy",
@@ -2809,14 +2899,15 @@
         "Converts text into a number",
         "Rounds a date to the nearest month"
       ],
-      "expected": [1],
+      "expected": [
+        1
+      ],
       "explanation": "TO_DATE parses text into a date according to the supplied format pattern."
     },
     {
       "id": "sql-week3-text-functions-073",
       "course": "sql",
       "category": "text-function",
-
       "title": "Purpose of CONCAT_WS",
       "instructions": "What is a distinguishing behavior of CONCAT_WS(separator, ...)?",
       "difficulty": "Medium",
@@ -2830,14 +2921,15 @@
         "It converts all text to uppercase",
         "It returns the length of the result"
       ],
-      "expected": [1],
+      "expected": [
+        1
+      ],
       "explanation": "CONCAT_WS joins arguments using a separator and skips NULL arguments."
     },
     {
       "id": "sql-week3-date-functions-074",
       "course": "sql",
       "category": "date-function",
-
       "title": "Meaning of EXTRACT",
       "instructions": "Which expression retrieves the month number from a date column named start_date?",
       "difficulty": "Medium",
@@ -2851,14 +2943,15 @@
         "DATE_PART(start_date, MONTH)",
         "TO_CHAR(start_date, MONTH)"
       ],
-      "expected": [1],
+      "expected": [
+        1
+      ],
       "explanation": "EXTRACT(MONTH FROM date) returns the month component as a numeric value."
     },
     {
       "id": "sql-week3-numeric-functions-075",
       "course": "sql",
       "category": "numeric-function",
-
       "title": "MOD result",
       "instructions": "What does MOD(17, 5) return?",
       "difficulty": "Easy",
@@ -2866,15 +2959,21 @@
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
       "contentVersion": 1,
-      "options": ["2", "3", "5", "12"],
-      "expected": [0],
+      "options": [
+        "2",
+        "3",
+        "5",
+        "12"
+      ],
+      "expected": [
+        0
+      ],
       "explanation": "MOD returns the remainder after division; 17 divided by 5 leaves a remainder of 2."
     },
     {
       "id": "sql-week4-inner-joins-001",
       "course": "sql",
       "category": "inner-join",
-
       "title": "Employee department directory",
       "instructions": "Display each employee’s name together with the name of the department to which the employee belongs.",
       "difficulty": "Easy",
@@ -2896,7 +2995,6 @@
       "id": "sql-week4-inner-joins-002",
       "course": "sql",
       "category": "inner-join",
-
       "title": "Department office cities",
       "instructions": "Show department names and the cities in which their offices are located.",
       "difficulty": "Easy",
@@ -2909,14 +3007,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["The department table stores the location ID."],
+      "hints": [
+        "The department table stores the location ID."
+      ],
       "explanation": "The join connects each department to its matching location record."
     },
     {
       "id": "sql-week4-inner-joins-003",
       "course": "sql",
       "category": "inner-join",
-
       "title": "Course section overview",
       "instructions": "Display each section code together with the title of its course.",
       "difficulty": "Easy",
@@ -2929,14 +3028,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Match a section to its course using course_id."],
+      "hints": [
+        "Match a section to its course using course_id."
+      ],
       "explanation": "The join returns section rows with their corresponding course titles."
     },
     {
       "id": "sql-week4-inner-joins-004",
       "course": "sql",
       "category": "inner-join",
-
       "title": "Teacher section assignments",
       "instructions": "List each teacher’s first and last name alongside the section codes they teach.",
       "difficulty": "Easy",
@@ -2949,14 +3049,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Use the teacher identifier stored in class_sections."],
+      "hints": [
+        "Use the teacher identifier stored in class_sections."
+      ],
       "explanation": "The INNER JOIN matches each section with its assigned teacher."
     },
     {
       "id": "sql-week4-inner-joins-005",
       "course": "sql",
       "category": "inner-join",
-
       "title": "Customer order dates",
       "instructions": "Show customer names and the dates of their orders.",
       "difficulty": "Easy",
@@ -2969,14 +3070,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Connect customers to their orders through customer_id."],
+      "hints": [
+        "Connect customers to their orders through customer_id."
+      ],
       "explanation": "Each returned row represents a customer-order match."
     },
     {
       "id": "sql-week4-inner-joins-006",
       "course": "sql",
       "category": "inner-join",
-
       "title": "Product category labels",
       "instructions": "Display product names and their category names.",
       "difficulty": "Easy",
@@ -2989,14 +3091,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Use the category identifier to match the two tables."],
+      "hints": [
+        "Use the category identifier to match the two tables."
+      ],
       "explanation": "The join retrieves the category description for each product with a category match."
     },
     {
       "id": "sql-week4-inner-joins-007",
       "course": "sql",
       "category": "inner-join",
-
       "title": "Order line product details",
       "instructions": "Show order IDs, product names and quantities for each order line.",
       "difficulty": "Easy",
@@ -3009,14 +3112,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Match each order line to its product."],
+      "hints": [
+        "Match each order line to its product."
+      ],
       "explanation": "The join adds the product name to each recorded order line."
     },
     {
       "id": "sql-week4-inner-joins-008",
       "course": "sql",
       "category": "inner-join",
-
       "title": "Project client list",
       "instructions": "Display project names and the names of the clients who commissioned them.",
       "difficulty": "Easy",
@@ -3029,14 +3133,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Projects contain the client identifier."],
+      "hints": [
+        "Projects contain the client identifier."
+      ],
       "explanation": "The join connects each project to its client using the matching client ID."
     },
     {
       "id": "sql-week4-multi-table-joins-009",
       "course": "sql",
       "category": "multi-table-joins",
-
       "title": "Consultant assignment roles",
       "instructions": "Display consultant names, project names, client names and the role each consultant performs on the project.",
       "difficulty": "Medium",
@@ -3056,7 +3161,6 @@
       "id": "sql-week4-inner-joins-010",
       "course": "sql",
       "category": "inner-join",
-
       "title": "Training session leaders",
       "instructions": "Display training session titles and the first and last name of each trainer.",
       "difficulty": "Easy",
@@ -3069,14 +3173,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Match trainer_id to the consultant primary key."],
+      "hints": [
+        "Match trainer_id to the consultant primary key."
+      ],
       "explanation": "The join enriches each session with the trainer’s name."
     },
     {
       "id": "sql-week4-multi-table-joins-011",
       "course": "sql",
       "category": "multi-table-joins",
-
       "title": "Student enrollment dates",
       "instructions": "Display each enrolled student’s name, the course title, the section code and the registration date.",
       "difficulty": "Medium",
@@ -3096,7 +3201,6 @@
       "id": "sql-week4-inner-joins-012",
       "course": "sql",
       "category": "inner-join",
-
       "title": "Employee task assignment names",
       "instructions": "Display employee first and last names together with the task names for tasks assigned to them.",
       "difficulty": "Easy",
@@ -3109,14 +3213,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Join the task rows to employees using employee_id."],
+      "hints": [
+        "Join the task rows to employees using employee_id."
+      ],
       "explanation": "The INNER JOIN adds the employee name to each task row by matching the employee identifier."
     },
     {
       "id": "sql-week4-inner-joins-013",
       "course": "sql",
       "category": "inner-join",
-
       "title": "Products and their category codes",
       "instructions": "Display product names, SKUs and category codes.",
       "difficulty": "Easy",
@@ -3129,14 +3234,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["The category code is in the related categories table."],
+      "hints": [
+        "The category code is in the related categories table."
+      ],
       "explanation": "The join uses category_id to retrieve each product’s category code."
     },
     {
       "id": "sql-week4-multi-table-joins-014",
       "course": "sql",
       "category": "multi-table-joins",
-
       "title": "Department locations by country",
       "instructions": "Display employee names, their department names and the country of the department’s location.",
       "difficulty": "Medium",
@@ -3156,7 +3262,6 @@
       "id": "sql-week4-inner-joins-015",
       "course": "sql",
       "category": "inner-join",
-
       "title": "Clients and project statuses",
       "instructions": "Display client names and the status of each project they have commissioned.",
       "difficulty": "Easy",
@@ -3169,14 +3274,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["The relationship is clients to projects by client_id."],
+      "hints": [
+        "The relationship is clients to projects by client_id."
+      ],
       "explanation": "The query returns matching client and project records."
     },
     {
       "id": "sql-week4-inner-joins-016",
       "course": "sql",
       "category": "inner-join",
-
       "title": "Sections with their teacher email",
       "instructions": "Display section codes and the email addresses of their assigned teachers.",
       "difficulty": "Easy",
@@ -3189,14 +3295,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Connect the section’s teacher ID to teachers."],
+      "hints": [
+        "Connect the section’s teacher ID to teachers."
+      ],
       "explanation": "The join retrieves the teacher email for each section with an assigned teacher."
     },
     {
       "id": "sql-week4-inner-joins-017",
       "course": "sql",
       "category": "inner-join",
-
       "title": "Customers and order status",
       "instructions": "Show customer names, order IDs and order statuses for every matching order.",
       "difficulty": "Easy",
@@ -3209,14 +3316,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["The order table contains the matching customer ID."],
+      "hints": [
+        "The order table contains the matching customer ID."
+      ],
       "explanation": "The INNER JOIN includes customers only when at least one order matches."
     },
     {
       "id": "sql-week4-multi-table-joins-018",
       "course": "sql",
       "category": "multi-table-join",
-
       "title": "Employee task project listing",
       "instructions": "Display employee names, task names and project names for all recorded tasks.",
       "difficulty": "Easy",
@@ -3229,14 +3337,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["The task record links to an employee through employee_id."],
+      "hints": [
+        "The task record links to an employee through employee_id."
+      ],
       "explanation": "The join adds employee identity to each task row."
     },
     {
       "id": "sql-week4-multi-table-joins-019",
       "course": "sql",
       "category": "multi-table-join",
-
       "title": "Student course enrollment report",
       "instructions": "Display student names, course titles and final grades for each enrollment.",
       "difficulty": "Medium",
@@ -3258,7 +3367,6 @@
       "id": "sql-week4-multi-table-joins-020",
       "course": "sql",
       "category": "multi-table-join",
-
       "title": "Section teacher and course report",
       "instructions": "Show section codes, course titles and teacher names.",
       "difficulty": "Medium",
@@ -3271,14 +3379,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["A section links separately to a course and a teacher."],
+      "hints": [
+        "A section links separately to a course and a teacher."
+      ],
       "explanation": "The query follows both foreign-key relationships from class_sections."
     },
     {
       "id": "sql-week4-multi-table-joins-021",
       "course": "sql",
       "category": "multi-table-join",
-
       "title": "Detailed retail order lines",
       "instructions": "Display order ID, order date, customer name, product name and quantity for every order line.",
       "difficulty": "Medium",
@@ -3300,7 +3409,6 @@
       "id": "sql-week4-multi-table-joins-022",
       "course": "sql",
       "category": "multi-table-join",
-
       "title": "Retail product category and line quantities",
       "instructions": "Show product names, category names and quantities sold on each order line.",
       "difficulty": "Medium",
@@ -3313,14 +3421,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["The product connects order_items to categories."],
+      "hints": [
+        "The product connects order_items to categories."
+      ],
       "explanation": "The joins retrieve product and category descriptions for each order line."
     },
     {
       "id": "sql-week4-multi-table-joins-023",
       "course": "sql",
       "category": "multi-table-join",
-
       "title": "Consultant project and client details",
       "instructions": "Display consultant names, project names, client names and assignment roles.",
       "difficulty": "Medium",
@@ -3342,7 +3451,6 @@
       "id": "sql-week4-multi-table-joins-024",
       "course": "sql",
       "category": "multi-table-join",
-
       "title": "Training attendees and trainers",
       "instructions": "Display participant names, session titles and trainer names for participants registered for a session.",
       "difficulty": "Medium",
@@ -3355,14 +3463,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Connect participant to session, then session to trainer."],
+      "hints": [
+        "Connect participant to session, then session to trainer."
+      ],
       "explanation": "The two joins retrieve the session and trainer associated with each participant."
     },
     {
       "id": "sql-week4-multi-table-joins-025",
       "course": "sql",
       "category": "multi-table-join",
-
       "title": "Employee task with department location",
       "instructions": "Display employee names, department names, city and task names for employees who have a department and a task.",
       "difficulty": "Medium",
@@ -3384,7 +3493,6 @@
       "id": "sql-week4-multi-table-joins-026",
       "course": "sql",
       "category": "multi-table-join",
-
       "title": "Course enrollment with teacher",
       "instructions": "Show student names, course titles, section codes and teacher names for all enrolled students.",
       "difficulty": "Hard",
@@ -3406,7 +3514,6 @@
       "id": "sql-week4-multi-table-joins-027",
       "course": "sql",
       "category": "multi-table-join",
-
       "title": "Order shipping location and product details",
       "instructions": "Display order ID, shipping city, product name and quantity for all ordered products.",
       "difficulty": "Medium",
@@ -3419,14 +3526,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Join orders to their line items, then to products."],
+      "hints": [
+        "Join orders to their line items, then to products."
+      ],
       "explanation": "The joins connect order headers with individual products on each line."
     },
     {
       "id": "sql-week4-multi-table-joins-028",
       "course": "sql",
       "category": "multi-table-join",
-
       "title": "Project staffing with consultant specialty",
       "instructions": "Display project names, consultant names and specialties for assigned consultants.",
       "difficulty": "Medium",
@@ -3439,14 +3547,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["The assignments table links the two main entities."],
+      "hints": [
+        "The assignments table links the two main entities."
+      ],
       "explanation": "The joins connect each project to its assignments and each assignment to a consultant."
     },
     {
       "id": "sql-week4-multi-table-joins-029",
       "course": "sql",
       "category": "multi-table-join",
-
       "title": "Product price by order and customer",
       "instructions": "Display customer names, order dates, product names and the unit prices charged on each order line.",
       "difficulty": "Medium",
@@ -3459,14 +3568,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Follow customers to orders, order lines and products."],
+      "hints": [
+        "Follow customers to orders, order lines and products."
+      ],
       "explanation": "The chain returns customer, order and product details alongside the recorded order-line price."
     },
     {
       "id": "sql-week4-multi-table-joins-030",
       "course": "sql",
       "category": "multi-table-join",
-
       "title": "Teacher salary and enrolled course",
       "instructions": "Display teacher names, course titles and annual salaries for courses with a section assigned to a teacher.",
       "difficulty": "Medium",
@@ -3479,14 +3589,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["A teacher connects to sections, which connect to courses."],
+      "hints": [
+        "A teacher connects to sections, which connect to courses."
+      ],
       "explanation": "The joins retrieve the course taught by each teacher and the teacher’s salary."
     },
     {
       "id": "sql-week4-composite-keys-031",
       "course": "sql",
       "category": "composite-key",
-
       "title": "Match enrollments to exact class sections",
       "instructions": "Display student IDs, section codes and course IDs for enrollment records, matching enrollments to their exact section rows.",
       "difficulty": "Medium",
@@ -3508,7 +3619,6 @@
       "id": "sql-week4-composite-keys-032",
       "course": "sql",
       "category": "composite-key",
-
       "title": "Student grades with section start dates",
       "instructions": "Show student IDs, section codes, registration dates and section start dates for each enrollment.",
       "difficulty": "Medium",
@@ -3530,7 +3640,6 @@
       "id": "sql-week4-composite-keys-033",
       "course": "sql",
       "category": "composite-key",
-
       "title": "Class section room assignments",
       "instructions": "Display each section code, course ID, room code and building by matching the section to its room record.",
       "difficulty": "Medium",
@@ -3552,7 +3661,6 @@
       "id": "sql-week4-composite-keys-034",
       "course": "sql",
       "category": "composite-key",
-
       "title": "Enrollment and section capacity",
       "instructions": "Display each student enrollment alongside the seat limit of the exact section.",
       "difficulty": "Medium",
@@ -3565,14 +3673,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Match both components of the section primary key."],
+      "hints": [
+        "Match both components of the section primary key."
+      ],
       "explanation": "Both section_id and course_id are necessary to retrieve the right seat limit."
     },
     {
       "id": "sql-week4-composite-keys-035",
       "course": "sql",
       "category": "composite-key",
-
       "title": "Reviewed project assignments",
       "instructions": "Display project names, consultant names, review dates and review notes for assignments that have a recorded review.",
       "difficulty": "Medium",
@@ -3594,7 +3703,6 @@
       "id": "sql-week4-composite-keys-036",
       "course": "sql",
       "category": "composite-key",
-
       "title": "List exact section registrations for one course",
       "instructions": "For course 301, display student IDs and section codes, ensuring each registration is linked to the correct section for that course.",
       "difficulty": "Medium",
@@ -3616,7 +3724,6 @@
       "id": "sql-week4-composite-keys-037",
       "course": "sql",
       "category": "composite-key",
-
       "title": "Enrollment room lookup",
       "instructions": "Display student IDs, room codes and buildings for enrollments matched to their exact class-section room records.",
       "difficulty": "Medium",
@@ -3638,7 +3745,6 @@
       "id": "sql-week4-composite-keys-038",
       "course": "sql",
       "category": "composite-key",
-
       "title": "Assignment review history with consultant",
       "instructions": "Display project IDs, consultant names, review dates and notes for each reviewed assignment.",
       "difficulty": "Medium",
@@ -3660,7 +3766,6 @@
       "id": "sql-week4-non-equi-joins-039",
       "course": "sql",
       "category": "non-equi-join",
-
       "title": "Classify products by price band",
       "instructions": "Display product names, prices and the label of the price band into which each product falls.",
       "difficulty": "Medium",
@@ -3673,14 +3778,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["The price must be between the band’s lower and upper values."],
+      "hints": [
+        "The price must be between the band’s lower and upper values."
+      ],
       "explanation": "The non-equi join uses two range comparisons to match each product to its corresponding price band."
     },
     {
       "id": "sql-week4-non-equi-joins-040",
       "course": "sql",
       "category": "non-equi-join",
-
       "title": "Assign budget categories to projects",
       "instructions": "Show project names, budgets and the budget-band name that covers each project budget.",
       "difficulty": "Medium",
@@ -3702,7 +3808,6 @@
       "id": "sql-week4-non-equi-joins-041",
       "course": "sql",
       "category": "non-equi-join",
-
       "title": "Find products in the standard band",
       "instructions": "Display product names and prices for products that match the Standard price band.",
       "difficulty": "Medium",
@@ -3715,14 +3820,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Use a range join and then filter the band label."],
+      "hints": [
+        "Use a range join and then filter the band label."
+      ],
       "explanation": "The non-equi join assigns products to price ranges and WHERE keeps the Standard band."
     },
     {
       "id": "sql-week4-non-equi-joins-042",
       "course": "sql",
       "category": "non-equi-join",
-
       "title": "Find projects with large budgets",
       "instructions": "Display the names and budgets of projects that fall into the Large budget band.",
       "difficulty": "Medium",
@@ -3735,14 +3841,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Join on the budget range, then filter by the band label."],
+      "hints": [
+        "Join on the budget range, then filter by the band label."
+      ],
       "explanation": "The range comparison identifies the band and the label condition retains Large projects."
     },
     {
       "id": "sql-week4-non-equi-joins-043",
       "course": "sql",
       "category": "non-equi-join",
-
       "title": "Classify low and medium product prices",
       "instructions": "Return product names, prices and band labels for products priced at no more than 100.",
       "difficulty": "Medium",
@@ -3764,7 +3871,6 @@
       "id": "sql-week4-non-equi-joins-044",
       "course": "sql",
       "category": "non-equi-join",
-
       "title": "Compare project budgets to all fitting bands",
       "instructions": "Display project names, budget values and budget band labels for projects in the Medium or Large ranges.",
       "difficulty": "Medium",
@@ -3777,14 +3883,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Use the non-equi range match followed by an IN condition."],
+      "hints": [
+        "Use the non-equi range match followed by an IN condition."
+      ],
       "explanation": "The join matches budgets to bands, and the filter keeps the two requested band labels."
     },
     {
       "id": "sql-week4-non-equi-joins-045",
       "course": "sql",
       "category": "non-equi-join",
-
       "title": "Price bands for high-value products",
       "instructions": "Show product names and price-band labels for products whose price is at least 150.",
       "difficulty": "Medium",
@@ -3797,14 +3904,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["A range join can be combined with a regular WHERE condition."],
+      "hints": [
+        "A range join can be combined with a regular WHERE condition."
+      ],
       "explanation": "The range join finds the band for each price; WHERE then retains products at or above the threshold."
     },
     {
       "id": "sql-week4-non-equi-joins-046",
       "course": "sql",
       "category": "non-equi-join",
-
       "title": "Find projects within their assigned spend class",
       "instructions": "Display project ID, project name, budget and band name ordered from lowest budget to highest.",
       "difficulty": "Medium",
@@ -3826,7 +3934,6 @@
       "id": "sql-week4-self-joins-047",
       "course": "sql",
       "category": "self-join",
-
       "title": "Employee and direct manager names",
       "instructions": "Display each employee’s surname alongside the surname of their direct manager.",
       "difficulty": "Easy",
@@ -3839,14 +3946,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Use employees twice with different aliases."],
+      "hints": [
+        "Use employees twice with different aliases."
+      ],
       "explanation": "The first alias represents the employee and the second alias represents the manager."
     },
     {
       "id": "sql-week4-self-joins-048",
       "course": "sql",
       "category": "self-join",
-
       "title": "Consultant and manager specialties",
       "instructions": "Show each consultant’s name and their manager’s specialty.",
       "difficulty": "Easy",
@@ -3859,14 +3967,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Join the consultant table to itself through manager_id."],
+      "hints": [
+        "Join the consultant table to itself through manager_id."
+      ],
       "explanation": "The second consultant alias represents the manager row referenced by the first row."
     },
     {
       "id": "sql-week4-self-joins-049",
       "course": "sql",
       "category": "self-join",
-
       "title": "Employees hired in the same month",
       "instructions": "List pairs of different employees who were hired in the same calendar month. Show both surnames and the month number.",
       "difficulty": "Medium",
@@ -3888,7 +3997,6 @@
       "id": "sql-week4-self-joins-050",
       "course": "sql",
       "category": "self-join",
-
       "title": "Consultants with the same specialty",
       "instructions": "Find pairs of distinct consultants who share the same specialty. Display both names and the specialty.",
       "difficulty": "Medium",
@@ -3910,7 +4018,6 @@
       "id": "sql-week4-self-joins-051",
       "course": "sql",
       "category": "self-join",
-
       "title": "Employees who share a department",
       "instructions": "List pairs of employees who work in the same department, displaying both employee IDs and the department ID.",
       "difficulty": "Medium",
@@ -3932,7 +4039,6 @@
       "id": "sql-week4-self-joins-052",
       "course": "sql",
       "category": "self-join",
-
       "title": "Projects for the same client",
       "instructions": "Display pairs of different projects commissioned by the same client, together with the client ID.",
       "difficulty": "Medium",
@@ -3954,7 +4060,6 @@
       "id": "sql-week4-self-joins-053",
       "course": "sql",
       "category": "self-join",
-
       "title": "Students living in the same city",
       "instructions": "List pairs of different students who live in the same city. Display both student IDs and the city.",
       "difficulty": "Medium",
@@ -3967,14 +4072,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Compare city values and retain only one order for each pair."],
+      "hints": [
+        "Compare city values and retain only one order for each pair."
+      ],
       "explanation": "The self join finds matching city values and the < condition lists each pair once."
     },
     {
       "id": "sql-week4-self-joins-054",
       "course": "sql",
       "category": "self-join",
-
       "title": "Consultants hired in the same year",
       "instructions": "Display pairs of consultants hired in the same year, including both surnames and the hiring year.",
       "difficulty": "Medium",
@@ -3987,14 +4093,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Compare the year extracted from each hire date."],
+      "hints": [
+        "Compare the year extracted from each hire date."
+      ],
       "explanation": "The join pairs consultants hired in the same year; the ID comparison removes repeated pairings."
     },
     {
       "id": "sql-week4-self-joins-055",
       "course": "sql",
       "category": "self-join",
-
       "title": "Employees with a more highly paid colleague",
       "instructions": "Find employee pairs in the same department where one employee earns more than the other. Display both names and both salaries.",
       "difficulty": "Medium",
@@ -4007,14 +4114,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Use one copy of the table for each side of the comparison."],
+      "hints": [
+        "Use one copy of the table for each side of the comparison."
+      ],
       "explanation": "The join matches employees in the same department and keeps pairs where the first salary is greater than the second."
     },
     {
       "id": "sql-week4-self-joins-056",
       "course": "sql",
       "category": "self-join",
-
       "title": "Employee, manager and manager’s manager",
       "instructions": "Display employee surnames, manager surnames and the surnames of each manager’s manager.",
       "difficulty": "Hard",
@@ -4027,14 +4135,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Use three aliases for the three levels of the hierarchy."],
+      "hints": [
+        "Use three aliases for the three levels of the hierarchy."
+      ],
       "explanation": "The first join finds the direct manager; the second follows the manager’s own manager_id to the next level."
     },
     {
       "id": "sql-week4-self-joins-057",
       "course": "sql",
       "category": "self-join",
-
       "title": "Consultant hierarchy two levels deep",
       "instructions": "Show consultant, manager and manager-of-manager names where both hierarchy links exist.",
       "difficulty": "Hard",
@@ -4047,14 +4156,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Follow manager_id twice using separate aliases."],
+      "hints": [
+        "Follow manager_id twice using separate aliases."
+      ],
       "explanation": "The two self joins trace the consultant’s manager and then the manager’s manager."
     },
     {
       "id": "sql-week4-self-joins-058",
       "course": "sql",
       "category": "self-join",
-
       "title": "Employees sharing a birth month",
       "instructions": "List all ordered employee pairs who share a birth month, allowing both pair directions to appear.",
       "difficulty": "Medium",
@@ -4076,7 +4186,6 @@
       "id": "sql-week4-self-joins-059",
       "course": "sql",
       "category": "self-join",
-
       "title": "Consultants with a higher rate than their manager",
       "instructions": "Display consultants whose hourly rate is greater than the rate of their direct manager, with both rates.",
       "difficulty": "Medium",
@@ -4098,7 +4207,6 @@
       "id": "sql-week4-self-joins-060",
       "course": "sql",
       "category": "self-join",
-
       "title": "Projects sharing a start month and client",
       "instructions": "Find pairs of different projects for the same client that started in the same month.",
       "difficulty": "Hard",
@@ -4120,7 +4228,6 @@
       "id": "sql-week4-self-joins-061",
       "course": "sql",
       "category": "self-join",
-
       "title": "Employees in the same department with different hire dates",
       "instructions": "Show pairs of employees in the same department where the first employee was hired before the second employee.",
       "difficulty": "Medium",
@@ -4133,14 +4240,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Compare the hire dates while matching department IDs."],
+      "hints": [
+        "Compare the hire dates while matching department IDs."
+      ],
       "explanation": "The join condition requires both a shared department and an earlier hire date for the first employee."
     },
     {
       "id": "sql-week4-self-joins-062",
       "course": "sql",
       "category": "self-join",
-
       "title": "Participants registered on the same date",
       "instructions": "List pairs of distinct participants who registered on the same date, showing both names and the date.",
       "difficulty": "Medium",
@@ -4153,14 +4261,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Use registered_on to find the same-date pairs."],
+      "hints": [
+        "Use registered_on to find the same-date pairs."
+      ],
       "explanation": "The self join compares registrations by date and uses IDs so each pair is returned once."
     },
     {
       "id": "sql-week4-inner-joins-063",
       "course": "sql",
       "category": "join",
-
       "title": "What INNER JOIN keeps",
       "instructions": "Which rows are returned by an INNER JOIN?",
       "difficulty": "Easy",
@@ -4174,14 +4283,15 @@
         "Only rows with matching join values in both tables",
         "All rows from both tables, matched or unmatched"
       ],
-      "expected": [2],
+      "expected": [
+        2
+      ],
       "explanation": "INNER JOIN returns only rows for which the join condition finds a match in both tables."
     },
     {
       "id": "sql-week4-inner-joins-064",
       "course": "sql",
       "category": "join",
-
       "title": "Purpose of ON",
       "instructions": "What is the purpose of the ON clause in a JOIN?",
       "difficulty": "Easy",
@@ -4195,14 +4305,15 @@
         "To rename all columns",
         "To limit the final row count"
       ],
-      "expected": [1],
+      "expected": [
+        1
+      ],
       "explanation": "ON specifies the relationship condition used to match rows from the joined tables."
     },
     {
       "id": "sql-week4-multi-table-joins-065",
       "course": "sql",
       "category": "multi-table-join",
-
       "title": "Joining several tables",
       "instructions": "When joining three related tables, what should connect each additional table?",
       "difficulty": "Easy",
@@ -4216,14 +4327,15 @@
         "A GROUP BY clause",
         "A FETCH clause"
       ],
-      "expected": [0],
+      "expected": [
+        0
+      ],
       "explanation": "Each additional table should be joined through the relevant key relationship using JOIN ... ON."
     },
     {
       "id": "sql-week4-composite-keys-066",
       "course": "sql",
       "category": "composite-key",
-
       "title": "Composite key matching",
       "instructions": "A relationship uses a two-column composite key. What should the join condition normally include?",
       "difficulty": "Medium",
@@ -4237,14 +4349,15 @@
         "Both key columns connected with AND",
         "A text concatenation of the two columns"
       ],
-      "expected": [2],
+      "expected": [
+        2
+      ],
       "explanation": "All required columns of the composite key must be matched, typically with AND."
     },
     {
       "id": "sql-week4-self-joins-067",
       "course": "sql",
       "category": "self-join",
-
       "title": "Why aliases in a self join",
       "instructions": "Why does a self join use two different table aliases?",
       "difficulty": "Medium",
@@ -4258,14 +4371,15 @@
         "To remove duplicate columns automatically",
         "To convert a table into a view"
       ],
-      "expected": [1],
+      "expected": [
+        1
+      ],
       "explanation": "Different aliases let the query refer to each occurrence of the same table independently."
     },
     {
       "id": "sql-week4-non-equi-joins-068",
       "course": "sql",
       "category": "non-equi-join",
-
       "title": "Recognizing a non-equi join",
       "instructions": "Which condition is an example of a non-equi join?",
       "difficulty": "Easy",
@@ -4279,14 +4393,15 @@
         "a.name = b.name",
         "a.code = b.code"
       ],
-      "expected": [1],
+      "expected": [
+        1
+      ],
       "explanation": "A range join uses comparison operators to match a value to minimum and maximum bounds."
     },
     {
       "id": "sql-week4-self-joins-069",
       "course": "sql",
       "category": "self-join",
-
       "title": "List each pair once",
       "instructions": "In a self join that finds related pairs, why might a query use e1.id < e2.id?",
       "difficulty": "Medium",
@@ -4300,14 +4415,15 @@
         "To prevent self-pairs and duplicate reversed pairs",
         "To sort the final result"
       ],
-      "expected": [2],
+      "expected": [
+        2
+      ],
       "explanation": "A strict less-than condition selects one direction of each distinct pair and excludes pairing a row with itself."
     },
     {
       "id": "sql-week4-multi-table-joins-070",
       "course": "sql",
       "category": "join",
-
       "title": "Avoiding ambiguous columns",
       "instructions": "When two joined tables contain a column with the same name, what is the clearest way to refer to it?",
       "difficulty": "Easy",
@@ -4321,14 +4437,15 @@
         "Put it in single quotes",
         "Use DISTINCT"
       ],
-      "expected": [1],
+      "expected": [
+        1
+      ],
       "explanation": "Qualifying a column with its table alias prevents ambiguity and makes the source clear."
     },
     {
       "id": "sql-week5-aggregates-001",
       "course": "sql",
       "category": "count",
-
       "title": "Count all employees",
       "instructions": "Return the total number of employee records.",
       "difficulty": "Easy",
@@ -4341,14 +4458,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["COUNT(*) includes every row."],
+      "hints": [
+        "COUNT(*) includes every row."
+      ],
       "explanation": "COUNT(*) counts all rows regardless of whether individual columns contain NULL."
     },
     {
       "id": "sql-week5-aggregates-002",
       "course": "sql",
       "category": "count",
-
       "title": "Count employees with email addresses",
       "instructions": "Return the number of employees whose email address is recorded.",
       "difficulty": "Easy",
@@ -4361,14 +4479,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["COUNT(column) ignores NULL values in that column."],
+      "hints": [
+        "COUNT(column) ignores NULL values in that column."
+      ],
       "explanation": "COUNT(email) counts only rows where email is not NULL."
     },
     {
       "id": "sql-week5-aggregates-003",
       "course": "sql",
       "category": "count",
-
       "title": "Count distinct customer cities",
       "instructions": "Return the number of different non-NULL cities represented in the customer table.",
       "difficulty": "Easy",
@@ -4381,14 +4500,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Combine COUNT with DISTINCT on the column."],
+      "hints": [
+        "Combine COUNT with DISTINCT on the column."
+      ],
       "explanation": "COUNT(DISTINCT city) counts each distinct non-NULL city value once."
     },
     {
       "id": "sql-week5-aggregates-004",
       "course": "sql",
       "category": "sum",
-
       "title": "Total retail stock",
       "instructions": "Calculate the total number of units currently in stock across all products.",
       "difficulty": "Easy",
@@ -4401,14 +4521,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Use SUM on the numeric stock column."],
+      "hints": [
+        "Use SUM on the numeric stock column."
+      ],
       "explanation": "SUM adds all non-NULL stock quantities into one result."
     },
     {
       "id": "sql-week5-aggregates-005",
       "course": "sql",
       "category": "average",
-
       "title": "Average course fee",
       "instructions": "Calculate the average fee across all courses.",
       "difficulty": "Easy",
@@ -4421,14 +4542,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["AVG returns the arithmetic mean of numeric values."],
+      "hints": [
+        "AVG returns the arithmetic mean of numeric values."
+      ],
       "explanation": "AVG calculates the mean course fee across the course rows."
     },
     {
       "id": "sql-week5-aggregates-006",
       "course": "sql",
       "category": "minimum-maximum",
-
       "title": "Lowest and highest consultant rates",
       "instructions": "Return the minimum and maximum hourly rates among consultants.",
       "difficulty": "Easy",
@@ -4441,14 +4563,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Use MIN and MAX on the same numeric column."],
+      "hints": [
+        "Use MIN and MAX on the same numeric column."
+      ],
       "explanation": "MIN finds the smallest rate and MAX finds the largest rate."
     },
     {
       "id": "sql-week5-aggregates-007",
       "course": "sql",
       "category": "minimum-maximum",
-
       "title": "Oldest and newest order dates",
       "instructions": "Return the earliest and latest dates recorded in the orders table.",
       "difficulty": "Easy",
@@ -4461,14 +4584,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["MIN and MAX also work with date values."],
+      "hints": [
+        "MIN and MAX also work with date values."
+      ],
       "explanation": "The aggregate functions compare dates and return the earliest and latest order dates."
     },
     {
       "id": "sql-week5-aggregates-008",
       "course": "sql",
       "category": "count",
-
       "title": "Count enrollments with a recorded grade",
       "instructions": "Return the number of enrollments with a non-NULL final grade.",
       "difficulty": "Easy",
@@ -4481,14 +4605,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["COUNT(column) excludes missing grades."],
+      "hints": [
+        "COUNT(column) excludes missing grades."
+      ],
       "explanation": "The aggregate counts only enrollment rows with a recorded final_grade."
     },
     {
       "id": "sql-week5-aggregates-009",
       "course": "sql",
       "category": "count",
-
       "title": "Compare all enrollments with graded enrollments",
       "instructions": "Return both the total number of enrollment rows and the number with a recorded final grade.",
       "difficulty": "Medium",
@@ -4501,14 +4626,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Use COUNT(*) and COUNT(final_grade) side by side."],
+      "hints": [
+        "Use COUNT(*) and COUNT(final_grade) side by side."
+      ],
       "explanation": "COUNT(*) counts every enrollment; COUNT(final_grade) ignores rows with a NULL grade."
     },
     {
       "id": "sql-week5-aggregates-010",
       "course": "sql",
       "category": "sum",
-
       "title": "Total value of all order lines",
       "instructions": "Calculate the combined value of all order lines using quantity multiplied by the charged unit price.",
       "difficulty": "Medium",
@@ -4521,14 +4647,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["The aggregate can contain an arithmetic expression."],
+      "hints": [
+        "The aggregate can contain an arithmetic expression."
+      ],
       "explanation": "The expression calculates each line value and SUM adds those values together."
     },
     {
       "id": "sql-week5-aggregates-011",
       "course": "sql",
       "category": "average",
-
       "title": "Average task hours",
       "instructions": "Calculate the average recorded task hours, ignoring tasks where hours are missing.",
       "difficulty": "Easy",
@@ -4541,14 +4668,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["AVG ignores NULL values automatically."],
+      "hints": [
+        "AVG ignores NULL values automatically."
+      ],
       "explanation": "AVG calculates the mean of known hours values and does not treat NULL as zero."
     },
     {
       "id": "sql-week5-aggregates-012",
       "course": "sql",
       "category": "min-max-text",
-
       "title": "Alphabetically first and last course titles",
       "instructions": "Return the alphabetically first and last course titles.",
       "difficulty": "Easy",
@@ -4561,14 +4689,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["MIN and MAX also compare text values alphabetically."],
+      "hints": [
+        "MIN and MAX also compare text values alphabetically."
+      ],
       "explanation": "The aggregate functions return the first and last text values in the sort order."
     },
     {
       "id": "sql-week5-aggregates-013",
       "course": "sql",
       "category": "nested-aggregate",
-
       "title": "Average surname length",
       "instructions": "Return the average number of characters in employee surnames, rounded to the nearest whole number.",
       "difficulty": "Medium",
@@ -4581,14 +4710,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Calculate a text length for each row before averaging."],
+      "hints": [
+        "Calculate a text length for each row before averaging."
+      ],
       "explanation": "LENGTH produces one numeric value per surname, AVG calculates the mean and ROUND rounds it to a whole number."
     },
     {
       "id": "sql-week5-aggregates-014",
       "course": "sql",
       "category": "count",
-
       "title": "Count products with unique category assignments",
       "instructions": "Return the number of different non-NULL category IDs represented in products.",
       "difficulty": "Easy",
@@ -4601,14 +4731,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Count distinct values rather than product rows."],
+      "hints": [
+        "Count distinct values rather than product rows."
+      ],
       "explanation": "COUNT(DISTINCT category_id) counts each represented category once and ignores NULL category IDs."
     },
     {
       "id": "sql-week5-aggregates-015",
       "course": "sql",
       "category": "sum",
-
       "title": "Total consultant assignment hours",
       "instructions": "Calculate the total recorded hours across all project assignments.",
       "difficulty": "Easy",
@@ -4621,14 +4752,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["SUM adds non-NULL numeric values."],
+      "hints": [
+        "SUM adds non-NULL numeric values."
+      ],
       "explanation": "The aggregate returns one total across the assignment table, ignoring any missing hour values."
     },
     {
       "id": "sql-week5-aggregates-016",
       "course": "sql",
       "category": "minimum-maximum",
-
       "title": "Training duration range",
       "instructions": "Among training sessions held on or after 1 January 2025, return the shortest and longest session durations.",
       "difficulty": "Medium",
@@ -4648,7 +4780,6 @@
       "id": "sql-week5-aggregates-017",
       "course": "sql",
       "category": "count",
-
       "title": "Count orders placed by all customers combined",
       "instructions": "Count the retail orders whose status is either Processing or Shipped.",
       "difficulty": "Medium",
@@ -4668,7 +4799,6 @@
       "id": "sql-week5-group-by-018",
       "course": "sql",
       "category": "group-by",
-
       "title": "Employees per department",
       "instructions": "Show each department ID and the number of employees assigned to it.",
       "difficulty": "Easy",
@@ -4681,14 +4811,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Group employee rows by department before counting them."],
+      "hints": [
+        "Group employee rows by department before counting them."
+      ],
       "explanation": "GROUP BY creates one group per department_id and COUNT(*) counts rows within each group."
     },
     {
       "id": "sql-week5-group-by-019",
       "course": "sql",
       "category": "group-by",
-
       "title": "Products per category",
       "instructions": "Display each category ID and the number of products in that category.",
       "difficulty": "Easy",
@@ -4701,14 +4832,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Use category_id as the grouping column."],
+      "hints": [
+        "Use category_id as the grouping column."
+      ],
       "explanation": "Each category forms a group, and COUNT(*) returns its product count."
     },
     {
       "id": "sql-week5-group-by-020",
       "course": "sql",
       "category": "group-by",
-
       "title": "Orders per customer",
       "instructions": "Show customer IDs and the number of orders placed by each customer who has at least one order.",
       "difficulty": "Easy",
@@ -4721,14 +4853,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Group orders by customer ID."],
+      "hints": [
+        "Group orders by customer ID."
+      ],
       "explanation": "GROUP BY returns one row per customer represented in orders, with a count for each customer."
     },
     {
       "id": "sql-week5-group-by-021",
       "course": "sql",
       "category": "group-by",
-
       "title": "Average grade per course",
       "instructions": "For every course with at least one enrollment, display its ID, title, enrollment count and average recorded grade.",
       "difficulty": "Medium",
@@ -4748,7 +4881,6 @@
       "id": "sql-week5-group-by-022",
       "course": "sql",
       "category": "group-by",
-
       "title": "Total stock by category",
       "instructions": "Show category IDs and the total stock quantity of products in each category.",
       "difficulty": "Easy",
@@ -4761,14 +4893,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["SUM calculates the stock total within each category."],
+      "hints": [
+        "SUM calculates the stock total within each category."
+      ],
       "explanation": "Each category group is summarized by adding its product stock quantities."
     },
     {
       "id": "sql-week5-group-by-023",
       "course": "sql",
       "category": "group-by",
-
       "title": "Average consultant rate by specialty",
       "instructions": "Display each specialty and its average consultant hourly rate.",
       "difficulty": "Easy",
@@ -4781,14 +4914,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Group by the category that defines each specialty."],
+      "hints": [
+        "Group by the category that defines each specialty."
+      ],
       "explanation": "AVG calculates a separate mean hourly rate for each specialty."
     },
     {
       "id": "sql-week5-group-by-024",
       "course": "sql",
       "category": "group-by",
-
       "title": "Total sales quantity by product",
       "instructions": "Display each product ID and the total quantity sold across all order lines.",
       "difficulty": "Easy",
@@ -4801,14 +4935,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Group line items by product ID and sum quantity."],
+      "hints": [
+        "Group line items by product ID and sum quantity."
+      ],
       "explanation": "SUM adds the quantities for each product across all order-item rows."
     },
     {
       "id": "sql-week5-group-by-025",
       "course": "sql",
       "category": "group-by",
-
       "title": "Project count by client and status",
       "instructions": "Show each client ID and project status combination with its project count.",
       "difficulty": "Medium",
@@ -4830,7 +4965,6 @@
       "id": "sql-week5-group-by-026",
       "course": "sql",
       "category": "group-by",
-
       "title": "Task hours by employee and project",
       "instructions": "Display employee ID, project name and total task hours for each employee-project combination.",
       "difficulty": "Medium",
@@ -4843,14 +4977,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Use both employee and project name in GROUP BY."],
+      "hints": [
+        "Use both employee and project name in GROUP BY."
+      ],
       "explanation": "The grouping forms one result per employee-project pair, and SUM adds its task hours."
     },
     {
       "id": "sql-week5-group-by-027",
       "course": "sql",
       "category": "group-by",
-
       "title": "Participant counts by training session",
       "instructions": "Show each session ID and the number of participants registered for it.",
       "difficulty": "Easy",
@@ -4863,14 +4998,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Group participants by their session ID."],
+      "hints": [
+        "Group participants by their session ID."
+      ],
       "explanation": "Each session ID forms a group; participants with a missing session ID form a NULL group."
     },
     {
       "id": "sql-week5-group-by-028",
       "course": "sql",
       "category": "group-by",
-
       "title": "Average order value by shipping city",
       "instructions": "Display each shipping city and the average order-line value for orders shipped to that city.",
       "difficulty": "Medium",
@@ -4883,14 +5019,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Join orders to their lines, then group by shipping city."],
+      "hints": [
+        "Join orders to their lines, then group by shipping city."
+      ],
       "explanation": "The join associates each line with its shipping city; AVG calculates the mean line value within each city."
     },
     {
       "id": "sql-week5-group-by-029",
       "course": "sql",
       "category": "group-by",
-
       "title": "Department salary range",
       "instructions": "Show department IDs with the minimum and maximum salary in each department.",
       "difficulty": "Easy",
@@ -4903,14 +5040,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Use MIN and MAX after grouping by department."],
+      "hints": [
+        "Use MIN and MAX after grouping by department."
+      ],
       "explanation": "The aggregates calculate salary bounds for each department group."
     },
     {
       "id": "sql-week5-group-by-030",
       "course": "sql",
       "category": "group-by",
-
       "title": "Course enrollment totals and grades",
       "instructions": "Display course ID, enrollment count and average grade for each course.",
       "difficulty": "Easy",
@@ -4923,14 +5061,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Two aggregate functions can summarize the same group."],
+      "hints": [
+        "Two aggregate functions can summarize the same group."
+      ],
       "explanation": "COUNT(*) includes every enrollment while AVG ignores rows whose final_grade is NULL."
     },
     {
       "id": "sql-week5-group-by-031",
       "course": "sql",
       "category": "group-by",
-
       "title": "Project budgets by client city",
       "instructions": "Display the client city and total project budget for each city.",
       "difficulty": "Medium",
@@ -4943,14 +5082,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Join projects to clients before grouping by city."],
+      "hints": [
+        "Join projects to clients before grouping by city."
+      ],
       "explanation": "The join supplies the city for each project; SUM adds budgets within each city group."
     },
     {
       "id": "sql-week5-group-by-032",
       "course": "sql",
       "category": "group-by",
-
       "title": "Order quantities by product and order",
       "instructions": "Display order ID, product ID and the total quantity for each order-product combination.",
       "difficulty": "Medium",
@@ -4963,14 +5103,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Group using both key columns."],
+      "hints": [
+        "Group using both key columns."
+      ],
       "explanation": "Each order-product pair is a group, and SUM totals the quantity recorded for that pair."
     },
     {
       "id": "sql-week5-group-by-033",
       "course": "sql",
       "category": "group-by",
-
       "title": "Average project assignment hours by consultant and role",
       "instructions": "Show consultant ID, role name and average hours worked for each consultant-role combination.",
       "difficulty": "Medium",
@@ -4983,14 +5124,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Group by both consultant and role."],
+      "hints": [
+        "Group by both consultant and role."
+      ],
       "explanation": "The grouping separates each role per consultant and AVG calculates the mean recorded hours in that group."
     },
     {
       "id": "sql-week5-group-by-034",
       "course": "sql",
       "category": "group-by",
-
       "title": "Training duration by trainer and date year",
       "instructions": "Display trainer ID and the year of the session date with the total duration of sessions in each combination.",
       "difficulty": "Medium",
@@ -5003,14 +5145,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["The selected date expression must also appear in GROUP BY."],
+      "hints": [
+        "The selected date expression must also appear in GROUP BY."
+      ],
       "explanation": "The grouping combines trainer and session year; SUM totals the session duration for each group."
     },
     {
       "id": "sql-week5-group-by-035",
       "course": "sql",
       "category": "group-by",
-
       "title": "Total sales value by customer",
       "instructions": "Display customer ID and their total order value using order lines joined through orders.",
       "difficulty": "Medium",
@@ -5023,14 +5166,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Join line values to orders, then group by customer."],
+      "hints": [
+        "Join line values to orders, then group by customer."
+      ],
       "explanation": "The join associates each order line with a customer; the SUM calculates each customer’s combined line value."
     },
     {
       "id": "sql-week5-having-036",
       "course": "sql",
       "category": "where-having",
-
       "title": "Departments with many employees",
       "instructions": "Show department IDs with more than three employees.",
       "difficulty": "Medium",
@@ -5043,14 +5187,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["HAVING filters groups based on an aggregate."],
+      "hints": [
+        "HAVING filters groups based on an aggregate."
+      ],
       "explanation": "The grouping creates department groups and HAVING keeps only groups with more than three employees."
     },
     {
       "id": "sql-week5-having-037",
       "course": "sql",
       "category": "where-having",
-
       "title": "Product categories with a large catalogue",
       "instructions": "Display category IDs whose product count is at least three.",
       "difficulty": "Medium",
@@ -5063,14 +5208,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Use HAVING after grouping to test the group count."],
+      "hints": [
+        "Use HAVING after grouping to test the group count."
+      ],
       "explanation": "HAVING evaluates the number of products in each category group."
     },
     {
       "id": "sql-week5-having-038",
       "course": "sql",
       "category": "where-having",
-
       "title": "Courses with a high average grade",
       "instructions": "Show course IDs whose average recorded final grade is at least 85.",
       "difficulty": "Medium",
@@ -5083,14 +5229,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Filter groups using the AVG result."],
+      "hints": [
+        "Filter groups using the AVG result."
+      ],
       "explanation": "HAVING keeps only course groups whose known grades average 85 or higher."
     },
     {
       "id": "sql-week5-having-039",
       "course": "sql",
       "category": "where-having",
-
       "title": "Consultant specialties with average rate above 110",
       "instructions": "Display specialties whose average hourly rate is greater than 110.",
       "difficulty": "Medium",
@@ -5103,14 +5250,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["The aggregate condition belongs in HAVING."],
+      "hints": [
+        "The aggregate condition belongs in HAVING."
+      ],
       "explanation": "HAVING filters the specialty groups after AVG has calculated each group’s mean rate."
     },
     {
       "id": "sql-week5-having-040",
       "course": "sql",
       "category": "where-having",
-
       "title": "Filter orders before counting by status",
       "instructions": "For orders placed from April through July 2025, display each status and its order count.",
       "difficulty": "Medium",
@@ -5123,14 +5271,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Use WHERE for the date restriction before grouping."],
+      "hints": [
+        "Use WHERE for the date restriction before grouping."
+      ],
       "explanation": "WHERE removes out-of-range order rows first; GROUP BY then counts the remaining orders per status."
     },
     {
       "id": "sql-week5-having-041",
       "course": "sql",
       "category": "where-having",
-
       "title": "Task hours per employee for named projects",
       "instructions": "For tasks on Atlas or Beacon, show employee IDs with total recorded hours above 15.",
       "difficulty": "Medium",
@@ -5152,7 +5301,6 @@
       "id": "sql-week5-having-042",
       "course": "sql",
       "category": "where-having",
-
       "title": "Projects with multiple assignments",
       "instructions": "Display project IDs with at least two assignment records.",
       "difficulty": "Medium",
@@ -5165,14 +5313,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Count assignments by project and filter the groups."],
+      "hints": [
+        "Count assignments by project and filter the groups."
+      ],
       "explanation": "HAVING keeps projects whose assignment group contains two or more rows."
     },
     {
       "id": "sql-week5-having-043",
       "course": "sql",
       "category": "where-having",
-
       "title": "Revenue by product after quantity filter",
       "instructions": "For order lines with quantity at least two, show product IDs and total line value for products whose total exceeds 100.",
       "difficulty": "Medium",
@@ -5194,7 +5343,6 @@
       "id": "sql-week5-having-044",
       "course": "sql",
       "category": "where-having",
-
       "title": "Course averages for students with recorded grades",
       "instructions": "For enrollments with a recorded grade, display course IDs and average grades for course groups with at least two graded records.",
       "difficulty": "Medium",
@@ -5216,7 +5364,6 @@
       "id": "sql-week5-having-045",
       "course": "sql",
       "category": "where-having",
-
       "title": "Consultants with substantial recorded project hours",
       "instructions": "For assignments with at least 80 recorded hours, display consultant IDs and total hours for consultants whose total exceeds 150.",
       "difficulty": "Medium",
@@ -5238,7 +5385,6 @@
       "id": "sql-week5-having-046",
       "course": "sql",
       "category": "where-having",
-
       "title": "Cities with sufficient customer records",
       "instructions": "Display cities with more than one customer, considering only customers whose credit limit is known.",
       "difficulty": "Medium",
@@ -5260,7 +5406,6 @@
       "id": "sql-week5-having-047",
       "course": "sql",
       "category": "where-having",
-
       "title": "Projects by client with active work only",
       "instructions": "For active projects, display each client ID and total active budget where the combined budget is above 200000.",
       "difficulty": "Medium",
@@ -5282,7 +5427,6 @@
       "id": "sql-week5-having-048",
       "course": "sql",
       "category": "where-having",
-
       "title": "Teachers with multiple assigned sections",
       "instructions": "Display teacher IDs with more than one section assigned.",
       "difficulty": "Medium",
@@ -5295,14 +5439,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Group sections by teacher, then apply a count condition."],
+      "hints": [
+        "Group sections by teacher, then apply a count condition."
+      ],
       "explanation": "HAVING checks each teacher’s section count and excludes groups with one or fewer sections."
     },
     {
       "id": "sql-week5-having-049",
       "course": "sql",
       "category": "where-having",
-
       "title": "Departments with high average salaries after row filter",
       "instructions": "For employees earning more than 50000, display department IDs whose average salary is above 65000.",
       "difficulty": "Medium",
@@ -5324,7 +5469,6 @@
       "id": "sql-week5-having-050",
       "course": "sql",
       "category": "where-having",
-
       "title": "Sessions with high assessment averages",
       "instructions": "For participants with recorded assessment scores, show session IDs whose average score is at least 85.",
       "difficulty": "Medium",
@@ -5346,7 +5490,6 @@
       "id": "sql-week5-outer-joins-051",
       "course": "sql",
       "category": "outer-join",
-
       "title": "All departments and any employees",
       "instructions": "Display every department name together with employee names where employees are assigned. Keep departments even when no employee matches.",
       "difficulty": "Easy",
@@ -5359,14 +5502,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Place departments on the left side of LEFT JOIN."],
+      "hints": [
+        "Place departments on the left side of LEFT JOIN."
+      ],
       "explanation": "LEFT JOIN preserves every department; department rows without employees have NULL employee columns."
     },
     {
       "id": "sql-week5-outer-joins-052",
       "course": "sql",
       "category": "outer-join",
-
       "title": "All customers and their orders",
       "instructions": "Display every customer name and any matching order ID, including customers who have never placed an order.",
       "difficulty": "Easy",
@@ -5379,14 +5523,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Keep customers in the left table."],
+      "hints": [
+        "Keep customers in the left table."
+      ],
       "explanation": "LEFT JOIN returns all customers and fills order columns with NULL where there is no order."
     },
     {
       "id": "sql-week5-outer-joins-053",
       "course": "sql",
       "category": "outer-join",
-
       "title": "All courses and enrolled student IDs",
       "instructions": "Display every course title and matching student IDs for courses with enrollments, retaining courses without any enrollment.",
       "difficulty": "Easy",
@@ -5399,14 +5544,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Use courses as the left table so empty courses remain."],
+      "hints": [
+        "Use courses as the left table so empty courses remain."
+      ],
       "explanation": "The LEFT JOIN preserves all courses and supplies NULL for student IDs when no enrollment exists."
     },
     {
       "id": "sql-week5-outer-joins-054",
       "course": "sql",
       "category": "outer-join",
-
       "title": "All projects and staffing records",
       "instructions": "Show every project name with any assigned consultant ID, including projects without assignments.",
       "difficulty": "Easy",
@@ -5419,14 +5565,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Start from projects and preserve the left-side records."],
+      "hints": [
+        "Start from projects and preserve the left-side records."
+      ],
       "explanation": "Projects remain in the result even if no project_assignments row matches."
     },
     {
       "id": "sql-week5-outer-joins-055",
       "course": "sql",
       "category": "outer-join",
-
       "title": "Find customers without orders",
       "instructions": "Return customer IDs and names for customers who have no matching order.",
       "difficulty": "Medium",
@@ -5448,7 +5595,6 @@
       "id": "sql-week5-outer-joins-056",
       "course": "sql",
       "category": "outer-join",
-
       "title": "Find courses without enrollments",
       "instructions": "Display course IDs and titles for courses with no enrollment records.",
       "difficulty": "Medium",
@@ -5470,7 +5616,6 @@
       "id": "sql-week5-outer-joins-057",
       "course": "sql",
       "category": "outer-join",
-
       "title": "Find employees without tasks",
       "instructions": "Display employee names for employees who have no matching task record.",
       "difficulty": "Medium",
@@ -5483,14 +5628,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Use LEFT JOIN and check the task primary key."],
+      "hints": [
+        "Use LEFT JOIN and check the task primary key."
+      ],
       "explanation": "A NULL task_id indicates that the employee has no matching task row."
     },
     {
       "id": "sql-week5-outer-joins-058",
       "course": "sql",
       "category": "outer-join",
-
       "title": "Find projects without assigned consultants",
       "instructions": "Return project IDs and names where no assignment row exists.",
       "difficulty": "Medium",
@@ -5503,10 +5649,11 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Test a non-NULL join-key column from the right table."],
+      "hints": [
+        "Test a non-NULL join-key column from the right table."
+      ],
       "explanation": "The consultant_id is required in a real assignment; NULL therefore identifies projects with no assignment."
     },
-
     {
       "id": "sql-week5-outer-joins-059",
       "course": "sql",
@@ -5570,12 +5717,10 @@
       ],
       "explanation": "LEFT JOIN preserves every training session and supplies NULL participant names for sessions without registrations."
     },
-
     {
       "id": "sql-week5-outer-joins-061",
       "course": "sql",
       "category": "full-join",
-
       "title": "All departments and employee department references",
       "instructions": "Display department names and employee names, retaining unmatched rows from both tables.",
       "difficulty": "Medium",
@@ -5597,7 +5742,6 @@
       "id": "sql-week5-outer-joins-062",
       "course": "sql",
       "category": "full-join",
-
       "title": "All clients and project client references",
       "instructions": "Display client names and project names, including clients without projects and any project rows with no matching client.",
       "difficulty": "Medium",
@@ -5610,14 +5754,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Use FULL JOIN to retain all rows from both tables."],
+      "hints": [
+        "Use FULL JOIN to retain all rows from both tables."
+      ],
       "explanation": "The full join preserves unmatched clients and unmatched projects as well as matched pairs."
     },
     {
       "id": "sql-week5-outer-joins-063",
       "course": "sql",
       "category": "outer-join",
-
       "title": "Count tasks for every employee",
       "instructions": "Display every employee ID and the number of matching tasks, including employees with no tasks.",
       "difficulty": "Hard",
@@ -5639,7 +5784,6 @@
       "id": "sql-week5-outer-joins-064",
       "course": "sql",
       "category": "outer-join",
-
       "title": "Count orders for every customer",
       "instructions": "Display every customer ID and their number of matching orders, including customers with zero orders.",
       "difficulty": "Hard",
@@ -5661,7 +5805,6 @@
       "id": "sql-week5-outer-joins-065",
       "course": "sql",
       "category": "outer-join",
-
       "title": "Count students per course including empty courses",
       "instructions": "Display each course ID and the number of matching enrollment records, including courses with no enrollment.",
       "difficulty": "Hard",
@@ -5674,14 +5817,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Keep courses and count the non-NULL enrollment key."],
+      "hints": [
+        "Keep courses and count the non-NULL enrollment key."
+      ],
       "explanation": "Every course remains in the result; COUNT(e.student_id) counts only actual enrollment matches."
     },
     {
       "id": "sql-week5-outer-joins-066",
       "course": "sql",
       "category": "outer-join",
-
       "title": "Count consultants per project including unstaffed work",
       "instructions": "Display every project ID and the number of consultant assignments, including projects with none.",
       "difficulty": "Hard",
@@ -5694,14 +5838,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Count the right-side assignment key after a LEFT JOIN."],
+      "hints": [
+        "Count the right-side assignment key after a LEFT JOIN."
+      ],
       "explanation": "COUNT(a.consultant_id) returns zero for a project without an assignment because the right-side key is NULL."
     },
     {
       "id": "sql-week5-outer-joins-068",
       "course": "sql",
       "category": "full-join",
-
       "title": "All employees and all department records",
       "instructions": "Return employee IDs and department IDs so that employees with NULL or unmatched departments and departments with no employees are both represented.",
       "difficulty": "Medium",
@@ -5723,7 +5868,6 @@
       "id": "sql-week5-having-069",
       "course": "sql",
       "category": "aggregate",
-
       "title": "Total quantity sold by category",
       "instructions": "Display each product category and the total units sold for that category.",
       "difficulty": "Medium",
@@ -5736,14 +5880,15 @@
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
-      "hints": ["Join categories to products and order lines before grouping."],
+      "hints": [
+        "Join categories to products and order lines before grouping."
+      ],
       "explanation": "The joins connect each sold product to its category; GROUP BY creates category groups and SUM totals their quantities."
     },
     {
       "id": "sql-week5-having-070",
       "course": "sql",
       "category": "aggregate",
-
       "title": "Average assignment hours by client",
       "instructions": "Display client names and the average project assignment hours associated with each client.",
       "difficulty": "Medium",
@@ -5765,7 +5910,6 @@
       "id": "sql-week5-outer-joins-071",
       "course": "sql",
       "category": "outer-join",
-
       "title": "Departments with at least one employee",
       "instructions": "Display all departments that have at least one employee and show the number of employees in each.",
       "difficulty": "Hard",
@@ -5787,7 +5931,6 @@
       "id": "sql-week5-outer-joins-072",
       "course": "sql",
       "category": "outer-join",
-
       "title": "Customers with two or more orders",
       "instructions": "Display customer names and their order counts for customers with at least two orders.",
       "difficulty": "Hard",
@@ -5809,7 +5952,6 @@
       "id": "sql-week5-having-073",
       "course": "sql",
       "category": "aggregate",
-
       "title": "Average grade by teacher",
       "instructions": "Display teacher names and the average final grade of enrollments in sections taught by each teacher.",
       "difficulty": "Hard",
@@ -5831,7 +5973,6 @@
       "id": "sql-week5-outer-joins-074",
       "course": "sql",
       "category": "outer-join",
-
       "title": "Show products that have never been ordered",
       "instructions": "Display product IDs and names for products that do not appear in any order line.",
       "difficulty": "Medium",
@@ -5853,7 +5994,6 @@
       "id": "sql-week5-having-075",
       "course": "sql",
       "category": "aggregate",
-
       "title": "Total spending by customer above threshold",
       "instructions": "Display customer IDs and total order value for customers whose combined order-line value exceeds 1000.",
       "difficulty": "Hard",
@@ -5875,7 +6015,6 @@
       "id": "sql-week5-outer-joins-076",
       "course": "sql",
       "category": "outer-join",
-
       "title": "Count participants for every session with capacity",
       "instructions": "Display every session title, its maximum capacity and its number of registered participants, including sessions with none.",
       "difficulty": "Hard",
@@ -5897,7 +6036,6 @@
       "id": "sql-week5-aggregates-077",
       "course": "sql",
       "category": "aggregate",
-
       "title": "COUNT star compared with COUNT column",
       "instructions": "Which statement about COUNT(*) and COUNT(column) is correct?",
       "difficulty": "Easy",
@@ -5911,14 +6049,15 @@
         "COUNT(column) counts all rows including NULL",
         "COUNT(*) counts distinct values only"
       ],
-      "expected": [1],
+      "expected": [
+        1
+      ],
       "explanation": "COUNT(*) counts every row, while COUNT(column) ignores rows where that column is NULL."
     },
     {
       "id": "sql-week5-group-by-078",
       "course": "sql",
       "category": "group-by",
-
       "title": "Purpose of GROUP BY",
       "instructions": "What does GROUP BY do in an aggregate query?",
       "difficulty": "Easy",
@@ -5932,14 +6071,15 @@
         "Removes all NULL values",
         "Joins two tables"
       ],
-      "expected": [1],
+      "expected": [
+        1
+      ],
       "explanation": "GROUP BY forms one group for each distinct combination of the grouping columns."
     },
     {
       "id": "sql-week5-having-079",
       "course": "sql",
       "category": "where-having",
-
       "title": "WHERE or HAVING",
       "instructions": "Which clause should filter groups based on AVG(salary)?",
       "difficulty": "Medium",
@@ -5947,15 +6087,21 @@
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
       "contentVersion": 1,
-      "options": ["WHERE", "HAVING", "ORDER BY", "OFFSET"],
-      "expected": [1],
+      "options": [
+        "WHERE",
+        "HAVING",
+        "ORDER BY",
+        "OFFSET"
+      ],
+      "expected": [
+        1
+      ],
       "explanation": "HAVING filters groups after aggregate values have been calculated."
     },
     {
       "id": "sql-week5-outer-joins-080",
       "course": "sql",
       "category": "outer-join",
-
       "title": "LEFT JOIN row preservation",
       "instructions": "Which table’s rows are all preserved by a LEFT JOIN?",
       "difficulty": "Easy",
@@ -5969,14 +6115,15 @@
         "Only rows with matches",
         "Both tables always"
       ],
-      "expected": [1],
+      "expected": [
+        1
+      ],
       "explanation": "LEFT JOIN preserves every row from the left table and fills unmatched right-side columns with NULL."
     },
     {
       "id": "sql-week5-outer-joins-081",
       "course": "sql",
       "category": "outer-join",
-
       "title": "FULL JOIN behavior",
       "instructions": "What does FULL JOIN return?",
       "difficulty": "Medium",
@@ -5990,14 +6137,15 @@
         "All right rows but no left-only rows",
         "Matching rows plus unmatched rows from both sides"
       ],
-      "expected": [3],
+      "expected": [
+        3
+      ],
       "explanation": "FULL JOIN retains all rows from both tables, with NULLs for values on the side without a match."
     },
     {
       "id": "sql-week5-aggregates-082",
       "course": "sql",
       "category": "aggregate",
-
       "title": "How AVG treats NULL",
       "instructions": "How does AVG(column) handle NULL values?",
       "difficulty": "Easy",
@@ -6011,14 +6159,15 @@
         "Returns NULL if any row is NULL",
         "Counts NULL as one"
       ],
-      "expected": [1],
+      "expected": [
+        1
+      ],
       "explanation": "Most aggregate functions, including AVG, ignore NULL values."
     },
     {
       "id": "sql-week5-having-083",
       "course": "sql",
       "category": "where-having",
-
       "title": "Correct location for row filters",
       "instructions": "A condition such as salary > 50000 uses a plain column and should normally appear in which clause before grouping?",
       "difficulty": "Easy",
@@ -6026,15 +6175,21 @@
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
       "contentVersion": 1,
-      "options": ["HAVING", "WHERE", "FETCH", "GROUP BY"],
-      "expected": [1],
+      "options": [
+        "HAVING",
+        "WHERE",
+        "FETCH",
+        "GROUP BY"
+      ],
+      "expected": [
+        1
+      ],
       "explanation": "WHERE filters individual rows before grouping; HAVING is for conditions on groups."
     },
     {
       "id": "sql-week5-outer-joins-084",
       "course": "sql",
       "category": "outer-join",
-
       "title": "Identify unmatched right-side rows",
       "instructions": "After a LEFT JOIN, which test is commonly used to find left-side rows with no match?",
       "difficulty": "Medium",
@@ -6048,14 +6203,15 @@
         "right_table.primary_key = 0",
         "COUNT(*) = 0"
       ],
-      "expected": [1],
+      "expected": [
+        1
+      ],
       "explanation": "A non-NULL key from the right table is NULL in an unmatched outer-join row."
     },
     {
       "id": "sql-week5-group-by-085",
       "course": "sql",
       "category": "group-by",
-
       "title": "SELECT columns with GROUP BY",
       "instructions": "In a grouped query, what must be true of a plain column in SELECT that is not inside an aggregate?",
       "difficulty": "Medium",
@@ -6069,36 +6225,37 @@
         "It must be nullable",
         "It must be a foreign key"
       ],
-      "expected": [1],
+      "expected": [
+        1
+      ],
       "explanation": "Every non-aggregated column in SELECT must be included in GROUP BY."
     },
     {
       "id": "sql-week2-filtering-066",
       "course": "sql",
       "category": "combined-filter",
-
       "title": "Priority customers with missing or substantial credit",
-      "instructions": "Display names and credit limits for customers in Antwerp, Ghent or Leuven who either have no recorded credit limit or have a limit of at least 2500. Sort the result by city and then surname.",
+      "instructions": "Display customers in Antwerp, Ghent or Leuven whose credit limit is missing or at least 2500. Include each customer's order count, including customers with no orders. Sort by city and then surname.",
       "difficulty": "Hard",
       "type": "sql-query",
       "examEligible": true,
       "provenance": "sql-cheat-sheet.md; sql.md (course scope and exercise specification)",
       "contentVersion": 1,
       "datasetId": "sql-retail",
-      "referenceSolution": "SELECT first_name, last_name, city, credit_limit FROM customers WHERE city IN ('Antwerp', 'Ghent', 'Leuven') AND (credit_limit IS NULL OR credit_limit >= 2500) ORDER BY city, last_name;",
+      "referenceSolution": "SELECT c.first_name, c.last_name, c.city, c.credit_limit, COUNT(o.order_id) AS order_count FROM customers c LEFT JOIN orders o ON c.customer_id = o.customer_id WHERE c.city IN ('Antwerp', 'Ghent', 'Leuven') AND (c.credit_limit IS NULL OR c.credit_limit >= 2500) GROUP BY c.customer_id, c.first_name, c.last_name, c.city, c.credit_limit ORDER BY c.city, c.last_name;",
       "orderMatters": true,
       "compareColumnNames": true,
       "columnOrderMatters": true,
       "hints": [
-        "Combine a city membership test with a parenthesized OR condition for credit values."
+        "Use parentheses to combine the missing-credit and high-credit conditions correctly.",
+        "LEFT JOIN orders, group by the customer fields, and count order IDs so customers with no orders are included."
       ],
-      "explanation": "The city filter is applied together with either a missing credit limit or a sufficiently high known limit; ORDER BY then sorts the matching customers."
+      "explanation": "The WHERE clause applies the location and credit criteria. The LEFT JOIN retains customers without orders; grouping and COUNT calculate each customer's order total. The final sort is by city and surname."
     },
     {
       "id": "sql-week4-multi-table-joins-071",
       "course": "sql",
       "category": "multi-table-join",
-
       "title": "Student registration with teacher and subject area",
       "instructions": "Display student names, course subject areas and teacher names for each enrollment.",
       "difficulty": "Hard",
@@ -6120,7 +6277,6 @@
       "id": "sql-week4-non-equi-joins-072",
       "course": "sql",
       "category": "non-equi-join",
-
       "title": "Find premium products in their price range",
       "instructions": "Display product names and band labels for products priced from 100 through 500 inclusive.",
       "difficulty": "Medium",
@@ -6142,7 +6298,6 @@
       "id": "sql-week4-self-joins-073",
       "course": "sql",
       "category": "self-join",
-
       "title": "Find consultant pairs with increasing rates",
       "instructions": "List consultant pairs where both consultants share a specialty and the first consultant has a lower hourly rate than the second. Display both names and rates.",
       "difficulty": "Medium",
@@ -6164,7 +6319,6 @@
       "id": "sql-week5-having-086",
       "course": "sql",
       "category": "aggregate",
-
       "title": "Highest sales total per shipping city threshold",
       "instructions": "Display shipping cities and the total order-line value for each city, considering only orders placed in 2025 and keeping cities whose total value is above 700.",
       "difficulty": "Hard",

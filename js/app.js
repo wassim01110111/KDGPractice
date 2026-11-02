@@ -402,6 +402,19 @@ async function freshDb(ds) {
   await db.exec(ds.sql);
   return db;
 }
+function describeSqlError(e, sql) {
+  let msg = e.message;
+  const pos = parseInt(e.position, 10);
+  if (Number.isFinite(pos) && pos > 0) {
+    const before = sql.slice(0, pos - 1);
+    const line = before.split("\n").length;
+    const col = pos - 1 - before.lastIndexOf("\n"); // 1-based
+    const text = sql.split("\n")[line - 1] ?? "";
+    msg += `\n\nLine ${line}, column ${col}:\n${text}\n${" ".repeat(col - 1)}^`;
+  }
+  if (e.hint) msg += `\n\nHint: ${e.hint}`;
+  return msg;
+}
 async function runSql(db, sql) {
   const r = await db.query(sql, [], { rowMode: "array" });
   return { fields: r.fields, rows: r.rows };
@@ -446,10 +459,7 @@ async function gradeSql(ex, sql) {
       runSql(b, ex.referenceSolution),
     ]);
     if (r.status === "rejected")
-      return {
-        correct: null,
-        error: "Reference solution failed (content error): " + r.reason.message,
-      };
+      return { correct: false, error: describeSqlError(s.reason, sql) };
     if (s.status === "rejected")
       return { correct: false, error: s.reason.message };
     const cmp = compare(s.value, r.value, ex);
@@ -534,9 +544,20 @@ function diffView(c) {
       : "",
   );
 }
+const formatSQL = (sql) =>
+  sql
+    .replace(/\s+/g, " ")
+    .replace(
+      /\s+(FROM|JOIN|LEFT JOIN|RIGHT JOIN|INNER JOIN|ON|WHERE|GROUP BY|ORDER BY|HAVING|LIMIT)\s+/gi,
+      "\n$1 ",
+    )
+    .replace(/\s+(AND|OR)\s+/gi, "\n    $1 ")
+    .replace(/,\s*/g, ",\n    ")
+    .trim();
+
 const expectedText = (ex) =>
   ex.type === "sql-query"
-    ? ex.referenceSolution
+    ? formatSQL(ex.referenceSolution)
     : ex.type.startsWith("mcq")
       ? ex.expected.map((i) => ex.options[i]).join("; ")
       : ex.type === "command-text"
@@ -901,6 +922,13 @@ function qView(
   const q = h("div", { class: "q" }),
     out = h("div"),
     fb = h("div");
+  const scrollToOutput = () =>
+    out.scrollIntoView({
+      behavior: matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? "auto"
+        : "smooth",
+      block: "nearest",
+    });
   const scrollToFeedback = () =>
     fb.scrollIntoView({
       behavior: matchMedia("(prefers-reduced-motion: reduce)").matches
@@ -965,19 +993,23 @@ function qView(
       {
         onclick: async () => {
           const currentRun = ++runId;
+          const sql = ta.value; // capture, in case they edit while it runs
           fb.replaceChildren();
           out.replaceChildren(h("small", {}, "Running…"));
           try {
-            const r = await runStudent(ex, ta.value);
+            const r = await runStudent(ex, sql);
             if (currentRun !== runId || !q.isConnected) return;
             out.replaceChildren(
               table(r.res),
               h("small", {}, `${r.ms} ms (fresh database)`),
             );
           } catch (e) {
-            if (currentRun === runId && q.isConnected)
-              out.replaceChildren(h("pre", { class: "err" }, e.message));
+            if (currentRun !== runId || !q.isConnected) return;
+            out.replaceChildren(
+              h("pre", { class: "err" }, describeSqlError(e, sql)),
+            );
           }
+          scrollToOutput();
         },
       },
       "Run (Ctrl+Enter)",
