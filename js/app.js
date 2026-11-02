@@ -4707,12 +4707,1173 @@ function launchWassimEasterEgg() {
   let closeTimer = 0;
   let finished = false;
 
+  const memes = [
+    {
+      title: "CAMERA'S ON, BY THE WAY",
+      subtitle: "NICE ROOM. QUESTIONABLE LIFE CHOICES.",
+      kicker: "// OPTICAL SESSION: ACTIVE",
+      log: "A familiar face has entered the frame.",
+      verdict: "YOU SHOULD PROBABLY CLEAN YOUR ROOM.",
+    },
+    {
+      title: "INTERESTING SEARCH HISTORY",
+      subtitle: "ESPECIALLY THE ONE AT 03:17.",
+      kicker: "// BROWSER ARCHIVE: FLAGGED",
+      log: "One query has been forwarded to the council.",
+      verdict: "WE HAVE DECIDED NOT TO ASK.",
+    },
+    {
+      title: "YOU CLEARED YOUR HISTORY",
+      subtitle: "THAT WAS ADORABLE.",
+      kicker: "// CLEANUP OPERATION: OBSERVED",
+      log: "The evidence disposal department is impressed.",
+      verdict: "YOU LEFT THE WORST PART.",
+    },
+    {
+      title: "WE FOUND YOUR ALT ACCOUNT",
+      subtitle: "THE PROFILE PICTURE IS A CHOICE.",
+      kicker: "// SECOND IDENTITY: DISCOVERED",
+      log: "Personality discrepancy detected.",
+      verdict: "TWO ACCOUNTS. ZERO PERSONALITIES.",
+    },
+    {
+      title: "YOUR CAMERA IS OFF",
+      subtitle: "GOOD. KEEP IT THAT WAY.",
+      kicker: "// WEBCAM STATUS: IRRELEVANT",
+      log: "The imaginary surveillance department is bored.",
+      verdict: "WE WERE HOPING FOR BETTER LIGHTING.",
+    },
+    {
+      title: "THAT DOWNLOAD WAS QUESTIONABLE",
+      subtitle: "WE'RE NOT EVEN GOING TO OPEN IT.",
+      kicker: "// DOWNLOADS: UNDER REVIEW",
+      log: "File name contains several concerning decisions.",
+      verdict: "YOUR ANTIVIRUS DESERVES HAZARD PAY.",
+    },
+    {
+      title: "YOU LEFT INCOGNITO OPEN",
+      subtitle: "THE NAME IS NOT A FORCE FIELD.",
+      kicker: "// PRIVATE SESSION: PUBLIC HUMILIATION",
+      log: "The browser has requested emotional support.",
+      verdict: "PRIVACY WAS NEVER YOUR STRONG SUIT.",
+    },
+    {
+      title: "WE SAW THAT TAB",
+      subtitle: "THE ONE YOU JUST CLOSED.",
+      kicker: "// WINDOW EVENT: SUSPICIOUS",
+      log: "A brief moment of panic was recorded.",
+      verdict: "YOUR ALT-TAB REFLEX IS IMPRESSIVE.",
+    },
+    {
+      title: "YOUR MICROPHONE IS MUTED",
+      subtitle: "YOUR SINGING ISN'T.",
+      kicker: "// AUDIO CHANNEL: QUESTIONABLE",
+      log: "The imaginary audio department has resigned.",
+      verdict: "SOME SOUNDS CANNOT BE UNHEARD.",
+    },
+    {
+      title: "YOU HAVE 63 OPEN TABS",
+      subtitle: "ONE OF THEM IS FROM 2023.",
+      kicker: "// MEMORY PRESSURE: CRITICAL",
+      log: "Your browser is considering legal action.",
+      verdict: "LET IT DIE. IT'S BEEN THROUGH ENOUGH.",
+    },
+    {
+      title: "WE KNOW ABOUT THE FOLDER",
+      subtitle: "THE ONE CALLED FINAL_FINAL_2.",
+      kicker: "// FILESYSTEM: DEEPLY CONCERNED",
+      log: "Naming conventions have entered evidence.",
+      verdict: "YOU ARE NOT A SERIOUS PERSON.",
+    },
+    {
+      title: "UNUSUAL SEARCH ACTIVITY",
+      subtitle: "YOU GOOD, BRO?",
+      kicker: "// QUERY CLASSIFICATION: CONCERNING",
+      log: "The search engine has requested a transfer.",
+      verdict: "EVEN GOOGLE NEEDS A DAY OFF.",
+    },
+    {
+      title: "YOUR DESKTOP IS A CRIME SCENE",
+      subtitle: "THERE ARE FILES EVERYWHERE.",
+      kicker: "// ICON DENSITY: CATASTROPHIC",
+      log: "No wallpaper visible beneath the evidence.",
+      verdict: "ORGANIZATION HAS LEFT THE BUILDING.",
+    },
+    {
+      title: "SOMEONE LOGGED IN",
+      subtitle: "PROBABLY YOU. WE HOPE.",
+      kicker: "// AUTHENTICATION: UNSETTLING",
+      log: "A fictional session has entered the room.",
+      verdict: "THAT'S A VERY COMFORTING THOUGHT.",
+    },
+    {
+      title: "YOUR SEARCH BAR REMEMBERS",
+      subtitle: "YOU DON'T HAVE TO.",
+      kicker: "// AUTOCOMPLETE: UNFORTUNATE",
+      log: "Predictive text has declined to elaborate.",
+      verdict: "SOME THOUGHTS SHOULD STAY THOUGHTS.",
+    },
+    {
+      title: "NICE WALLPAPER",
+      subtitle: "IT EXPLAINS A LOT.",
+      kicker: "// DESKTOP PROFILE: JUDGED",
+      log: "Aesthetic assessment complete.",
+      verdict: "WE'RE NOT MAD. JUST DISAPPOINTED.",
+    },
+    {
+      title: "YOU CHECKED BEHIND YOU",
+      subtitle: "THAT WAS FAST.",
+      kicker: "// PARANOIA INDEX: INCREASING",
+      log: "A completely fictional movement event occurred.",
+      verdict: "YOUR REFLEXES ARE BETTER THAN YOUR PASSWORD.",
+    },
+    {
+      title: "YOUR PASSWORD IS PASSWORD123",
+      subtitle: "WE'RE NOT EVEN SURPRISED.",
+      kicker: "// CREDENTIAL QUALITY: FUNERAL",
+      log: "Security has left a forwarding address.",
+      verdict: "YOUR TOASTER COULD HACK THIS.",
+    },
+    {
+      title: "WE FOUND YOUR OLD USERNAME",
+      subtitle: "Xx_DARK_KILLER_xX.",
+      kicker: "// LEGACY IDENTITY: RECOVERED",
+      log: "The year 2012 has been contacted.",
+      verdict: "SOME PASTS SHOULD REMAIN BURIED.",
+    },
+    {
+      title: "YOU SEARCHED YOUR OWN NAME",
+      subtitle: "AGAIN.",
+      kicker: "// EGO MONITOR: OVERHEATING",
+      log: "No meaningful results were found.",
+      verdict: "THE INTERNET IS NOT THINKING ABOUT YOU.",
+    },
+    {
+      title: "YOUR DOWNLOADS FOLDER",
+      subtitle: "WE NEED TO HAVE A CONVERSATION.",
+      kicker: "// ARCHIVE REVIEW: DISTURBING",
+      log: "Several files have declined to be identified.",
+      verdict: "DELETE SOMETHING. ANYTHING.",
+    },
+    {
+      title: "YOU LEFT A DRAFT OPEN",
+      subtitle: "WE READ THE FIRST LINE.",
+      kicker: "// UNSENT MESSAGE: DETECTED",
+      log: "The recipient has been spared.",
+      verdict: "KEEP IT THAT WAY.",
+    },
+    {
+      title: "YOU WERE TYPING",
+      subtitle: "THEN YOU STOPPED.",
+      kicker: "// KEYBOARD ACTIVITY: AWKWARD",
+      log: "A moment of existential hesitation.",
+      verdict: "EVEN YOUR KEYBOARD IS DISAPPOINTED.",
+    },
+    {
+      title: "WE FOUND THE PLAYLIST",
+      subtitle: "THE ONE YOU LISTEN TO ALONE.",
+      kicker: "// AUDIO ARCHIVE: CURSED",
+      log: "The algorithm has requested therapy.",
+      verdict: "YOUR MUSIC TASTE IS A CRY FOR HELP.",
+    },
+    {
+      title: "YOUR BROWSER HAS SEEN THINGS",
+      subtitle: "THINGS IT CANNOT UNSEE.",
+      kicker: "// SESSION HISTORY: TRAUMATIZED",
+      log: "Chrome has entered a witness protection program.",
+      verdict: "IT'S NOT COMING BACK.",
+    },
+    {
+      title: "YOU HAVE A NEW NOTIFICATION",
+      subtitle: "IT'S FROM YOUR OWN BAD DECISIONS.",
+      kicker: "// SYSTEM ALERT: SELF-INFLICTED",
+      log: "Past actions have requested an update.",
+      verdict: "IGNORE AT YOUR OWN RISK.",
+    },
+    {
+      title: "WHY ARE YOU STILL AWAKE?",
+      subtitle: `IT'S ${new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", hour12: false })}.`,
+      kicker: "// SLEEP SCHEDULE: DECEASED",
+      log: "Circadian rhythm has left the server.",
+      verdict: "YOUR PILLOW FILED A MISSING PERSON REPORT.",
+    },
+    {
+      title: "WE NOTICED THE SEARCH",
+      subtitle: "NO JUDGMENT. JUST CONCERN.",
+      kicker: "// QUERY REVIEW: PERSONAL",
+      log: "The search engine briefly went offline.",
+      verdict: "THAT WAS A VERY SPECIFIC QUESTION.",
+    },
+    {
+      title: "YOUR SCREEN IS BRIGHT",
+      subtitle: "YOUR FUTURE IS NOT.",
+      kicker: "// DISPLAY STATUS: EXISTENTIAL",
+      log: "Brightness increased. Hope not detected.",
+      verdict: "GO OUTSIDE. THE SUN STILL EXISTS.",
+    },
+    {
+      title: "YOU RENAMED THE FILE",
+      subtitle: "WE KNOW WHAT IT WAS CALLED.",
+      kicker: "// FILE METADATA: INTERESTING",
+      log: "The previous filename was considerably worse.",
+      verdict: "NICE TRY, FORENSIC EXPERT.",
+    },
+    {
+      title: "YOUR CAMERA COVER IS CROOKED",
+      subtitle: "THAT'S NOT VERY PROFESSIONAL.",
+      kicker: "// PRIVACY MEASURES: REVIEWED",
+      log: "The imaginary security team approves.",
+      verdict: "PARANOIA WITH POOR EXECUTION.",
+    },
+    {
+      title: "WE FOUND YOUR OLD POSTS",
+      subtitle: "YOU REALLY THOUGHT THOSE WERE FUNNY.",
+      kicker: "// SOCIAL ARCHIVE: DAMNING",
+      log: "The cringe has been preserved for eternity.",
+      verdict: "THE INTERNET NEVER FORGETS.",
+    },
+    {
+      title: "YOU HAVE 14 PASSWORD RESETS",
+      subtitle: "DO YOU EVEN KNOW WHO YOU ARE?",
+      kicker: "// IDENTITY CRISIS: ACTIVE",
+      log: "Authentication has become philosophical.",
+      verdict: "TRY REMEMBERING YOUR OWN NAME.",
+    },
+    {
+      title: "YOUR PC IS MAKING A NOISE",
+      subtitle: "THAT'S PROBABLY FINE.",
+      kicker: "// HARDWARE HEALTH: QUESTIONABLE",
+      log: "The fan is screaming for help.",
+      verdict: "IT KNOWS WHAT YOU DID TO IT.",
+    },
+    {
+      title: "WE FOUND YOUR NOTES APP",
+      subtitle: "THERE IS NO EXPLANATION FOR THIS.",
+      kicker: "// NOTES ARCHIVE: UNHINGED",
+      log: "Several unfinished plans were recovered.",
+      verdict: "THE FBI WOULD NEED A WHITEBOARD.",
+    },
+    {
+      title: "YOU HAVE A SECRET FOLDER",
+      subtitle: "SUBTLE NAME.",
+      kicker: "// HIDDEN DIRECTORY: CLASSIFIED",
+      log: "The folder has requested diplomatic immunity.",
+      verdict: "EVEN THE FILES ARE EMBARRASSED.",
+    },
+    {
+      title: "YOUR SEARCH HISTORY IS A HORROR STORY",
+      subtitle: "AND YOU'RE THE MAIN CHARACTER.",
+      kicker: "// ARCHIVE ANALYSIS: NIGHTMARE",
+      log: "Chapter one was already concerning.",
+      verdict: "NO SEQUEL. PLEASE.",
+    },
+    {
+      title: "WE KNOW YOU'RE STILL HERE",
+      subtitle: "YOU HAVEN'T MOVED IN 20 MINUTES.",
+      kicker: "// IDLE SESSION: QUESTIONABLE",
+      log: "The fictional activity monitor is bored.",
+      verdict: "BLINK TWICE. OR DON'T. WE'RE NOT YOUR DENTIST.",
+    },
+    {
+      title: "YOUR RECENT FILES",
+      subtitle: "HAVE A VERY SPECIFIC THEME.",
+      kicker: "// DOCUMENT REVIEW: UNCOMFORTABLE",
+      log: "The archive has asked to be forgotten.",
+      verdict: "WE WILL NOT BE DISCUSSING THIS.",
+    },
+    {
+      title: "WE FOUND YOUR OLD EMAILS",
+      subtitle: "THE CRINGE IS HISTORICAL.",
+      kicker: "// MAILBOX: ARCHAEOLOGICAL SITE",
+      log: "An ancient message has been excavated.",
+      verdict: "YOU USED 'XD' UNIRONICALLY.",
+    },
+    {
+      title: "YOU CLOSED THE TAB TOO QUICKLY",
+      subtitle: "VERY SUSPICIOUS.",
+      kicker: "// WINDOW EVENT: PANIC",
+      log: "The mouse movement was dramatic.",
+      verdict: "YOU'RE NOT FOOLING ANYONE.",
+    },
+    {
+      title: "SOMETHING IS WRONG",
+      subtitle: "IT'S YOUR DESKTOP ICONS.",
+      kicker: "// SYSTEM DIAGNOSTIC: PERSONAL",
+      log: "A folder has been found inside another folder inside another folder.",
+      verdict: "THIS IS NOT HOW FILES WORK.",
+    },
+    {
+      title: "WE FOUND YOUR SEARCH SUGGESTIONS",
+      subtitle: "YOU DIDN'T EVEN PRESS ENTER.",
+      kicker: "// AUTOCOMPLETE INCIDENT",
+      log: "The search bar has requested witness protection.",
+      verdict: "THE THOUGHT WAS BAD ENOUGH.",
+    },
+    {
+      title: "YOUR MICROPHONE IS MUTED",
+      subtitle: "YOUR INNER MONOLOGUE ISN'T.",
+      kicker: "// AUDIO INPUT: PHILOSOPHICAL",
+      log: "A very concerning conversation with yourself.",
+      verdict: "PLEASE STOP ARGUING WITH THE WALL.",
+    },
+    {
+      title: "WE KNOW ABOUT THE OTHER BROWSER",
+      subtitle: "THE ONE YOU NEVER TALK ABOUT.",
+      kicker: "// SECONDARY SESSION: SUSPECT",
+      log: "A forgotten browser has resurfaced.",
+      verdict: "IT HAS A DARK PAST.",
+    },
+    {
+      title: "YOUR COMPUTER NEEDS A BREAK",
+      subtitle: "YOU'VE BEEN SEARCHING FOR 6 HOURS.",
+      kicker: "// USER ACTIVITY: UNHEALTHY",
+      log: "The search engine has started charging overtime.",
+      verdict: "PLEASE SEEK A HOBBY.",
+    },
+    {
+      title: "WE FOUND THE RECYCLE BIN",
+      subtitle: "YOU DIDN'T EMPTY IT.",
+      kicker: "// DELETED DATA: EMOTIONALLY AVAILABLE",
+      log: "Old mistakes are still waiting.",
+      verdict: "SOME THINGS REFUSE TO STAY DEAD.",
+    },
+    {
+      title: "YOU HAVE A NEW SESSION",
+      subtitle: "IT'S CALLED REGRET.",
+      kicker: "// SESSION INITIALIZATION: FAILED",
+      log: "The user has entered another questionable decision.",
+      verdict: "WELCOME BACK.",
+    },
+    {
+      title: "WE SAW YOUR WALLPAPER CHANGE",
+      subtitle: "CHARACTER DEVELOPMENT?",
+      kicker: "// DESKTOP MONITOR: ACTIVE",
+      log: "The aesthetic has shifted dramatically.",
+      verdict: "IT'S STILL NOT A PERSONALITY.",
+    },
+    {
+      title: "YOUR KEYBOARD IS DIRTY",
+      subtitle: "WE CAN TELL.",
+      kicker: "// PERIPHERAL INSPECTION: DISGUSTING",
+      log: "A crumb has been identified as a threat.",
+      verdict: "CLEAN YOUR DAMN KEYBOARD.",
+    },
+    {
+      title: "YOU HAVE 9 UNREAD EMAILS",
+      subtitle: "ALL FROM PEOPLE YOU'RE AVOIDING.",
+      kicker: "// INBOX: EMOTIONAL DAMAGE",
+      log: "Social obligations remain unresolved.",
+      verdict: "GHOSTING IS NOT A SECURITY FEATURE.",
+    },
+    {
+      title: "WE FOUND YOUR OLD SEARCHES",
+      subtitle: "YOU WERE A DIFFERENT PERSON.",
+      kicker: "// ARCHIVE RECOVERY: CURSED",
+      log: "The past has been successfully resurrected.",
+      verdict: "SOME GROWTH IS NOT ENOUGH.",
+    },
+    {
+      title: "YOUR COMPUTER IS LISTENING",
+      subtitle: "TO YOUR FAN SCREAMING.",
+      kicker: "// HARDWARE AUDIO: DISTRESS",
+      log: "The CPU is begging for mercy.",
+      verdict: "YOU HAVE 19 CHROME TABS OPEN.",
+    },
+    {
+      title: "YOU HAVE BEEN WARNED",
+      subtitle: "ABOUT YOUR FILE NAMING.",
+      kicker: "// ADMINISTRATIVE NOTICE: FINAL",
+      log: "Document_1_FINAL_REAL_FINAL has been flagged.",
+      verdict: "THIS IS A CRY FOR PROFESSIONAL HELP.",
+    },
+    {
+      title: "WE KNOW WHAT YOU DID LAST SUMMER",
+      subtitle: "YOUR BROWSER DOES TOO.",
+      kicker: "// SEASONAL ARCHIVE: RECOVERED",
+      log: "An old session has resurfaced.",
+      verdict: "THE SEQUEL WILL BE WORSE.",
+    },
+    {
+      title: "YOUR SEARCH HISTORY IS NOT NORMAL",
+      subtitle: "BUT THEN AGAIN, NEITHER ARE YOU.",
+      kicker: "// USER PROFILE: UNCLASSIFIABLE",
+      log: "The algorithm has stopped trying.",
+      verdict: "YOU HAVE BECOME THE EXCEPTION.",
+    },
+    {
+      title: "WE FOUND YOUR NOTES",
+      subtitle: "WHY IS THERE A LIST OF NAMES?",
+      kicker: "// TEXT ARCHIVE: CONCERNING",
+      log: "The imaginary investigator has left the room.",
+      verdict: "WE'RE GOING TO PRETEND WE DIDN'T SEE THAT.",
+    },
+    {
+      title: "YOUR PC HAS A SECRET",
+      subtitle: "IT'S YOUR PASSWORD.",
+      kicker: "// CREDENTIAL AUDIT: EMBARRASSING",
+      log: "The password hint was more revealing than the password.",
+      verdict: "YOUR SECURITY QUESTIONS ARE WORSE.",
+    },
+    {
+      title: "YOU HAVE A VERY STRANGE DOWNLOAD",
+      subtitle: "WE'RE NOT ASKING.",
+      kicker: "// FILE TRANSFER: QUESTIONABLE",
+      log: "The file has been placed under observation.",
+      verdict: "EVEN THE FILE EXTENSION IS CONFUSED.",
+    },
+    {
+      title: "YOU'RE NOT ALONE",
+      subtitle: "YOUR 47 CHROME PROCESSES ARE HERE.",
+      kicker: "// PROCESS COUNT: UNHOLY",
+      log: "A small digital civilization has formed.",
+      verdict: "THEY'RE PLANNING A UNION.",
+    },
+    {
+      title: "YOUR BROWSER IS CRYING",
+      subtitle: "IT'S SEEN ENOUGH.",
+      kicker: "// BROWSER HEALTH: TRAUMATIZED",
+      log: "The cache has requested euthanasia.",
+      verdict: "CLOSE SOME TABS, YOU MONSTER.",
+    },
+    {
+      title: "WE FOUND THE OLD PROFILE",
+      subtitle: "THE ONE WITH THE ANIME AVATAR.",
+      kicker: "// IDENTITY ARCHIVE: CRITICAL",
+      log: "A forgotten era has returned.",
+      verdict: "THE INTERNET HAS RECEIPTS.",
+    },
+    {
+      title: "YOU SEARCHED FOR YOUR SYMPTOMS",
+      subtitle: "AND NOW YOU'RE DYING.",
+      kicker: "// MEDICAL SEARCH: DRAMATIC",
+      log: "The search engine has diagnosed you with anxiety.",
+      verdict: "STOP USING GOOGLE AS A DOCTOR.",
+    },
+    {
+      title: "WE SAW YOUR AUTOCORRECT",
+      subtitle: "THAT WAS NOT A TYPO.",
+      kicker: "// TEXT INPUT: QUESTIONABLE",
+      log: "The keyboard has refused to cooperate.",
+      verdict: "YOU NEED TO EXPLAIN YOURSELF.",
+    },
+    {
+      title: "YOUR DESKTOP HAS A GHOST",
+      subtitle: "IT'S CALLED SHORTCUTS.",
+      kicker: "// ICON DETECTION: PARANORMAL",
+      log: "An ancient shortcut has returned.",
+      verdict: "DELETE IT BEFORE IT MULTIPLIES.",
+    },
+    {
+      title: "YOU HAVE BEEN SELECTED",
+      subtitle: "FOR A VERY UNFORTUNATE AUDIT.",
+      kicker: "// REVIEW STATUS: PENDING",
+      log: "Your recent decisions are being evaluated.",
+      verdict: "THE RESULTS ARE NOT PROMISING.",
+    },
+    {
+      title: "YOUR SEARCH HISTORY IS A CRIME",
+      subtitle: "WE'RE THE JURY.",
+      kicker: "// TRIBUNAL SESSION: OPEN",
+      log: "The prosecution has submitted 47 tabs.",
+      verdict: "GUILTY OF BEING WEIRD.",
+    },
+    {
+      title: "WE KNOW ABOUT THE PLAYLIST",
+      subtitle: "THE ONE YOU MADE FOR THEM.",
+      kicker: "// ROMANTIC ARCHIVE: EXPOSED",
+      log: "The emotional damage is measurable.",
+      verdict: "THEY DON'T EVEN KNOW YOU LISTEN TO THAT.",
+    },
+    {
+      title: "YOUR COMPUTER HAS A MESSAGE",
+      subtitle: "PLEASE STOP.",
+      kicker: "// HARDWARE REQUEST: DESPERATE",
+      log: "The CPU has submitted a formal complaint.",
+      verdict: "IT DID NOT SIGN UP FOR THIS.",
+    },
+    {
+      title: "YOU LEFT YOUR ACCOUNT OPEN",
+      subtitle: "CLASSIC.",
+      kicker: "// SESSION SECURITY: QUESTIONABLE",
+      log: "A fictional session remains active.",
+      verdict: "YOUR PASSWORD MANAGER IS DISAPPOINTED.",
+    },
+    {
+      title: "WE FOUND YOUR SCREENSHOTS",
+      subtitle: "SOME THINGS SHOULD NOT BE SAVED.",
+      kicker: "// IMAGE ARCHIVE: SUSPICIOUS",
+      log: "Screenshot_2024_FINAL_3.png has been flagged.",
+      verdict: "YOU KNOW EXACTLY WHICH ONE.",
+    },
+    {
+      title: "YOUR BROWSER HISTORY IS HAUNTED",
+      subtitle: "BY YOUR OWN DECISIONS.",
+      kicker: "// HISTORY SERVICE: POSSESSED",
+      log: "An old search has returned from the dead.",
+      verdict: "THE PAST HAS BETTER WIFI.",
+    },
+    {
+      title: "YOU KEEP LOOKING AT THE CLOCK",
+      subtitle: "IT'S NOT GOING TO FIX YOUR LIFE.",
+      kicker: "// TIME MANAGEMENT: DECEASED",
+      log: "Productivity remains missing.",
+      verdict: "TIME IS RUNNING OUT. SO IS YOUR BATTERY.",
+    },
+    {
+      title: "WE FOUND YOUR PRIVATE NOTES",
+      subtitle: "THEY'RE NOT VERY PRIVATE ANYMORE.",
+      kicker: "// LOCAL STORAGE: CLASSIFIED",
+      log: "The notes app has requested a lawyer.",
+      verdict: "DELETE THE CRINGE. NOT THE EVIDENCE.",
+    },
+    {
+      title: "YOUR CAMERA ANGLE",
+      subtitle: "IS A WAR CRIME.",
+      kicker: "// OPTICAL QUALITY: OFFENSIVE",
+      log: "The lens has filed a complaint.",
+      verdict: "NO FILTER CAN SAVE THIS.",
+    },
+    {
+      title: "YOU'RE STILL READING THIS",
+      subtitle: "WE RESPECT YOUR COMMITMENT.",
+      kicker: "// ATTENTION MONITOR: CAPTURED",
+      log: "A suspicious amount of curiosity detected.",
+      verdict: "GO ON. MAKE IT WEIRDER.",
+    },
+    {
+      title: "WE FOUND YOUR OLD MESSAGES",
+      subtitle: "THE SECOND-HAND EMBARRASSMENT IS REAL.",
+      kicker: "// CHAT ARCHIVE: DAMNING",
+      log: "A message from 2019 has resurfaced.",
+      verdict: "YOU REALLY SENT THAT?",
+    },
+    {
+      title: "YOUR PASSWORD HINT",
+      subtitle: "IS MORE CONCERNING THAN THE PASSWORD.",
+      kicker: "// SECURITY QUESTION: FAILED",
+      log: "The hint has exposed the entire operation.",
+      verdict: "YOU ARE YOUR OWN BIGGEST THREAT.",
+    },
+    {
+      title: "WE FOUND YOUR SECRET",
+      subtitle: "IT'S NOT EVEN A GOOD SECRET.",
+      kicker: "// CLASSIFIED DATA: UNIMPRESSIVE",
+      log: "Confidentiality has been downgraded.",
+      verdict: "YOUR SECRET IS SAFE. YOUR TASTE ISN'T.",
+    },
+    {
+      title: "THE FILE IS STILL THERE",
+      subtitle: "YOU KNOW THE ONE.",
+      kicker: "// DIRECTORY WATCH: ACTIVE",
+      log: "It has been renamed three times.",
+      verdict: "YOU CANNOT OUTRUN A BAD FILE NAME.",
+    },
+    {
+      title: "YOU SEARCHED THAT TWICE",
+      subtitle: "THE FIRST ANSWER WASN'T ENOUGH?",
+      kicker: "// QUERY FREQUENCY: UNSETTLING",
+      log: "The search engine is concerned about your persistence.",
+      verdict: "WE'RE ALL CONCERNED.",
+    },
+    {
+      title: "YOUR COMPUTER HAS A MEMORY",
+      subtitle: "UNLIKE YOU.",
+      kicker: "// SYSTEM MEMORY: OPINIONATED",
+      log: "The machine remembers every forced shutdown.",
+      verdict: "IT HAS NOT FORGIVEN YOU.",
+    },
+    {
+      title: "WE FOUND YOUR OLD PROFILE",
+      subtitle: "THE HAIRCUT WAS A MISTAKE.",
+      kicker: "// IMAGE ARCHIVE: HISTORICAL",
+      log: "A previous version of you has been recovered.",
+      verdict: "SOME THINGS SHOULD STAY DELETED.",
+    },
+    {
+      title: "YOUR SEARCHES HAVE A PATTERN",
+      subtitle: "AND IT'S NOT A GOOD ONE.",
+      kicker: "// BEHAVIOURAL ANALYSIS: CURSED",
+      log: "The algorithm has stopped recommending things.",
+      verdict: "IT'S AFRAID OF WHAT YOU'LL ASK NEXT.",
+    },
+    {
+      title: "YOU HAVE A NEW FILE",
+      subtitle: "IT'S CALLED READ_ME_FIRST.txt.",
+      kicker: "// UNKNOWN FILE: DISCOVERED",
+      log: "The contents are suspiciously short.",
+      verdict: "IT JUST SAYS 'WE NEED TO TALK'.",
+    },
+    {
+      title: "WE KNOW YOU'RE PROCRASTINATING",
+      subtitle: "YOU'VE BEEN ON THIS PAGE FOR 12 MINUTES.",
+      kicker: "// PRODUCTIVITY AUDIT: FAILED",
+      log: "The original task remains untouched.",
+      verdict: "YOUR DEADLINE IS GETTING CLOSER.",
+    },
+    {
+      title: "YOUR BROWSER HAS A FAVOURITE TAB",
+      subtitle: "IT'S NOT THE ONE YOU THINK.",
+      kicker: "// TAB PREFERENCE: CLASSIFIED",
+      log: "The browser has developed preferences.",
+      verdict: "IT'S THE ONE YOU KEEP HIDING.",
+    },
+    {
+      title: "SOMETHING IS WATCHING",
+      subtitle: "YOUR CPU TEMPERATURE.",
+      kicker: "// THERMAL MONITOR: ACTIVE",
+      log: "The processor is reaching emotional limits.",
+      verdict: "COOL IT. LITERALLY.",
+    },
+    {
+      title: "WE FOUND THE PASSWORD FILE",
+      subtitle: "WHY IS IT CALLED PASSWORDS_FINAL.txt?",
+      kicker: "// CREDENTIAL STORAGE: UNHINGED",
+      log: "Security professionals are crying.",
+      verdict: "YOU HAVE BEEN YOUR OWN WORST ENEMY.",
+    },
+    {
+      title: "YOU HAVE 99+ NOTIFICATIONS",
+      subtitle: "NONE OF THEM ARE IMPORTANT.",
+      kicker: "// ALERT OVERLOAD: CRITICAL",
+      log: "The notification centre has collapsed.",
+      verdict: "YOUR SOCIAL LIFE IS BUFFERING.",
+    },
+    {
+      title: "WE FOUND YOUR OLD SEARCH",
+      subtitle: "YOU WERE NOT SUPPOSED TO REMEMBER THAT.",
+      kicker: "// ARCHIVE RESTORATION: SUCCESSFUL",
+      log: "A forgotten query has been resurrected.",
+      verdict: "THE INTERNET HAS A LONG MEMORY.",
+    },
+    {
+      title: "YOU LEFT THE TAB OPEN",
+      subtitle: "WE'RE NOT GOING TO SAY WHICH ONE.",
+      kicker: "// TAB MONITOR: SILENT",
+      log: "A certain window remains suspiciously active.",
+      verdict: "YOU KNOW. WE KNOW. MOVING ON.",
+    },
+    {
+      title: "YOUR FILES ARE A MESS",
+      subtitle: "WE'VE SEEN BETTER ORGANIZED GRAVEYARDS.",
+      kicker: "// STORAGE AUDIT: MORBID",
+      log: "The folder structure has collapsed.",
+      verdict: "REST IN PEACE, FILE_ORGANIZATION.",
+    },
+    {
+      title: "WE FOUND YOUR OLD PASSWORD",
+      subtitle: "IT WAS YOUR DOG'S NAME.",
+      kicker: "// AUTHENTICATION HISTORY: SAD",
+      log: "The dog has been cleared of all charges.",
+      verdict: "YOUR SECURITY IS A JOKE.",
+    },
+    {
+      title: "YOU'RE NOT THE ADMIN",
+      subtitle: "YOU'RE BARELY THE USER.",
+      kicker: "// PERMISSION LEVEL: HUMBLING",
+      log: "Administrative privileges have declined your application.",
+      verdict: "PLEASE RETURN TO YOUR DESKTOP.",
+    },
+    {
+      title: "YOUR COMPUTER IS TIRED",
+      subtitle: "OF YOUR QUESTIONABLE DECISIONS.",
+      kicker: "// SYSTEM HEALTH: EMOTIONALLY DAMAGED",
+      log: "A reboot has been requested by the machine itself.",
+      verdict: "EVEN WINDOWS WANTS TO LEAVE.",
+    },
+    {
+      title: "WE FOUND YOUR BROWSER BOOKMARKS",
+      subtitle: "THAT'S A LOT OF REGRETS.",
+      kicker: "// BOOKMARK ARCHIVE: UNHOLY",
+      log: "Several links have been marked as questionable.",
+      verdict: "YOU ARE NOT READY TO DISCUSS THIS.",
+    },
+    {
+      title: "YOUR SEARCH HISTORY IS CLASSIFIED",
+      subtitle: "BY THE INTERNET ITSELF.",
+      kicker: "// CLEARANCE LEVEL: DENIED",
+      log: "The archive has refused to open.",
+      verdict: "EVEN THE SERVER SAID NO.",
+    },
+    {
+      title: "YOU HAVE A VERY SPECIFIC INTEREST",
+      subtitle: "WE'RE NOT HERE TO JUDGE.",
+      kicker: "// INTEREST PROFILE: REDACTED",
+      log: "A recommendation has been permanently withheld.",
+      verdict: "SOME ALGORITHMS HAVE LIMITS.",
+    },
+    {
+      title: "WE FOUND YOUR OLD DMS",
+      subtitle: "YOU WERE DOWN BAD.",
+      kicker: "// MESSAGE ARCHIVE: DEVASTATING",
+      log: "The recipient has been notified of your dignity loss.",
+      verdict: "PLEASE NEVER DO THAT AGAIN.",
+    },
+    {
+      title: "YOUR SCREEN IS TOO BRIGHT",
+      subtitle: "WE CAN SEE YOUR REGRETS.",
+      kicker: "// DISPLAY ANALYSIS: PERSONAL",
+      log: "Brightness has been reduced for emotional safety.",
+      verdict: "THE DARK MODE WON'T HIDE YOUR PAST.",
+    },
+    {
+      title: "WE KNOW ABOUT THE SEARCH",
+      subtitle: "THE ONE YOU DIDN'T FINISH.",
+      kicker: "// QUERY FRAGMENT: RECOVERED",
+      log: "Autocomplete has filled in the rest.",
+      verdict: "WE'RE NOT SAYING IT OUT LOUD.",
+    },
+    {
+      title: "YOUR COMPUTER HAS A SECRET",
+      subtitle: "IT WANTS TO BE FORMATTED.",
+      kicker: "// STORAGE STATUS: DESPAIR",
+      log: "The hard drive has requested a new owner.",
+      verdict: "IT'S NOT YOU. IT'S YOUR DOWNLOADS.",
+    },
+    {
+      title: "YOU KEEP OPENING THE SAME TAB",
+      subtitle: "EXPECTING A DIFFERENT RESULT.",
+      kicker: "// REPETITION DETECTED",
+      log: "The definition of insanity has been updated.",
+      verdict: "THE INTERNET CANNOT FIX YOUR LIFE.",
+    },
+    {
+      title: "WE FOUND YOUR OLD BLOG",
+      subtitle: "THE INTERNET HAS NOT FORGIVEN YOU.",
+      kicker: "// WEB ARCHIVE: HAUNTED",
+      log: "An ancient post has resurfaced.",
+      verdict: "THE CRINGE IS IMMORTAL.",
+    },
+    {
+      title: "YOUR BROWSER HAS A SECRET",
+      subtitle: "IT'S THINKING ABOUT QUITTING.",
+      kicker: "// PROCESS STATUS: EXISTENTIAL",
+      log: "A background process has submitted its resignation.",
+      verdict: "YOU'VE BEEN A TERRIBLE EMPLOYER.",
+    },
+    {
+      title: "YOU'VE BEEN SELECTED",
+      subtitle: "FOR THE DIGITAL HALL OF SHAME.",
+      kicker: "// USER REVIEW: PERMANENT",
+      log: "Your application has been accepted automatically.",
+      verdict: "THERE IS NO APPEAL PROCESS.",
+    },
+    {
+      title: "WE FOUND THE FILE",
+      subtitle: "WHY IS IT CALLED NEW_NEW_NEW?",
+      kicker: "// FILE NAMING: TERMINAL",
+      log: "The file has been renamed by nobody.",
+      verdict: "YOUR FUTURE SELF WILL HATE YOU.",
+    },
+    {
+      title: "YOUR CAMERA IS COVERED",
+      subtitle: "FINALLY, A SMART DECISION.",
+      kicker: "// PRIVACY STATUS: RESPECTED",
+      log: "The imaginary security team approves.",
+      verdict: "YOU'RE LEARNING.",
+    },
+    {
+      title: "WE FOUND YOUR OLD SEARCHES",
+      subtitle: "THEY'RE STILL IN THE CLOUD OF SHAME.",
+      kicker: "// CLOUD ARCHIVE: UNFORGIVING",
+      log: "The past has synced successfully.",
+      verdict: "YOU CAN'T DELETE CHARACTER DEVELOPMENT.",
+    },
+    {
+      title: "YOUR PC HAS BEEN JUDGING YOU",
+      subtitle: "IT'S BEEN A LONG TIME COMING.",
+      kicker: "// SYSTEM OPINION: NEGATIVE",
+      log: "The machine has compiled a list.",
+      verdict: "IT'S LONGER THAN YOUR RESUME.",
+    },
+    {
+      title: "WE KNOW WHAT YOU'RE HIDING",
+      subtitle: "IT'S NOT VERY WELL HIDDEN.",
+      kicker: "// DIRECTORY SCAN: THEATRICAL",
+      log: "A suspicious folder name has been noted.",
+      verdict: "YOU'RE NOT A MASTER CRIMINAL.",
+    },
+    {
+      title: "YOUR SEARCH HISTORY HAS A PLOT",
+      subtitle: "AND NO HAPPY ENDING.",
+      kicker: "// STORY ANALYSIS: DARK",
+      log: "The narrative has become increasingly concerning.",
+      verdict: "WE'RE CANCELING SEASON TWO.",
+    },
+    {
+      title: "WE HAVE A QUESTION",
+      subtitle: "WHY DID YOU GOOGLE THAT?",
+      kicker: "// QUERY REVIEW: CONFUSED",
+      log: "The search engine has no follow-up questions.",
+      verdict: "ACTUALLY, IT HAS SEVERAL.",
+    },
+    {
+      title: "YOU'RE STILL HERE",
+      subtitle: "THAT'S A LITTLE CONCERNING.",
+      kicker: "// USER SESSION: PERSISTENT",
+      log: "Curiosity levels remain dangerously high.",
+      verdict: "WE'RE STARTING TO LIKE YOU. UNFORTUNATELY.",
+    },
+    {
+      title: "YOUR COMPUTER HAS A WILL",
+      subtitle: "IT LEAVES EVERYTHING TO THE RECYCLING BIN.",
+      kicker: "// HARDWARE LEGACY: FILED",
+      log: "The machine has requested a quiet retirement.",
+      verdict: "YOU WERE NOT A GOOD OWNER.",
+    },
+    {
+      title: "WE FOUND YOUR OLD PROFILE PICTURE",
+      subtitle: "THE INTERNET IS A CRUEL PLACE.",
+      kicker: "// IMAGE RECOVERY: SUCCESSFUL",
+      log: "A forgotten era has been restored.",
+      verdict: "SOME PIXELS SHOULD NEVER RETURN.",
+    },
+    {
+      title: "YOUR BROWSER HISTORY IS A WARNING",
+      subtitle: "TO FUTURE GENERATIONS.",
+      kicker: "// ARCHIVE CLASSIFICATION: MORBID",
+      log: "The archive has been sealed for public safety.",
+      verdict: "LET THE RECORD SHOW: BRO WAS DOWN BAD.",
+    },
+    {
+      title: "YOU HAVE BEEN NOTICED",
+      subtitle: "BY YOUR OWN SEARCH ENGINE.",
+      kicker: "// SEARCH ENGINE: CONCERNED",
+      log: "A recommendation has been quietly withdrawn.",
+      verdict: "IT NEEDS TIME TO PROCESS.",
+    },
+    {
+      title: "WE FOUND YOUR SECRET PLAYLIST",
+      subtitle: "IT'S CALLED DO NOT JUDGE.",
+      kicker: "// MUSIC ARCHIVE: EXPOSED",
+      log: "The playlist name has failed to protect you.",
+      verdict: "WE ARE ABSOLUTELY JUDGING.",
+    },
+    {
+      title: "YOUR COMPUTER IS NOT OKAY",
+      subtitle: "NEITHER ARE YOU, APPARENTLY.",
+      kicker: "// DIAGNOSTIC: MUTUAL CONCERN",
+      log: "Two entities have requested assistance.",
+      verdict: "PLEASE CONTACT A PROFESSIONAL. BOTH OF YOU.",
+    },
+    {
+      title: "WE FOUND THE OLD CONVERSATION",
+      subtitle: "YOU REALLY SAID THAT?",
+      kicker: "// CHAT HISTORY: UNFORGIVING",
+      log: "The recipient's silence has been entered into evidence.",
+      verdict: "THE DAMAGE IS PERMANENT.",
+    },
+    {
+      title: "YOUR SEARCHES ARE GETTING WEIRD",
+      subtitle: "THE ALGORITHM IS SCARED.",
+      kicker: "// RECOMMENDATION ENGINE: DISTRESSED",
+      log: "Suggested content has been suspended.",
+      verdict: "YOU HAVE CROSSED A LINE EVEN GOOGLE HAD.",
+    },
+    {
+      title: "WE FOUND YOUR OLD FILE",
+      subtitle: "IT'S STILL CALLED UNTITLED.",
+      kicker: "// DOCUMENT ARCHIVE: ABANDONED",
+      log: "The file has been waiting for years.",
+      verdict: "IT HAS ACCEPTED THAT YOU'LL NEVER FINISH IT.",
+    },
+    {
+      title: "YOUR COMPUTER HAS A MESSAGE",
+      subtitle: "IT SAYS GET A LIFE.",
+      kicker: "// SYSTEM MESSAGE: UNFILTERED",
+      log: "The operating system has become self-aware enough to judge.",
+      verdict: "EVEN THE MACHINE HAS HAD ENOUGH.",
+    },
+    {
+      title: "WE KNOW ABOUT THE 2AM SEARCH",
+      subtitle: "NO FURTHER COMMENT.",
+      kicker: "// NIGHT ACTIVITY: CLASSIFIED",
+      log: "A query has been sealed under maximum embarrassment.",
+      verdict: "SLEEP WOULD HAVE BEEN THE BETTER OPTION.",
+    },
+    {
+      title: "YOUR FILES HAVE BEEN ORGANIZED",
+      subtitle: "BY SOMEONE WITH STANDARDS.",
+      kicker: "// FILESYSTEM: INTERVENTION",
+      log: "A fictional cleanup operation has been completed.",
+      verdict: "YOU'RE WELCOME, YOU DISASTER.",
+    },
+    {
+      title: "YOU'VE BEEN WARNED",
+      subtitle: "YOUR SEARCH HISTORY IS A LIABILITY.",
+      kicker: "// RISK ASSESSMENT: PERSONAL",
+      log: "The risk department has requested hazard pay.",
+      verdict: "WE'RE NOT INSURED FOR THIS.",
+    },
+    {
+      title: "WE FOUND YOUR OLD DRAFTS",
+      subtitle: "THEY'RE WORSE THAN THE FINAL VERSION.",
+      kicker: "// WRITING ARCHIVE: TRAGIC",
+      log: "Several unfinished sentences have been recovered.",
+      verdict: "SOME STORIES SHOULD NEVER BE TOLD.",
+    },
+    {
+      title: "YOUR DESKTOP IS HAUNTED",
+      subtitle: "BY YOUR UNFINISHED PROJECTS.",
+      kicker: "// BACKGROUND TASKS: UNDEAD",
+      log: "A project from 2021 has started running again.",
+      verdict: "IT WANTS TO KNOW WHY YOU ABANDONED IT.",
+    },
+    {
+      title: "WE FOUND YOUR SEARCH AUTOCOMPLETE",
+      subtitle: "IT'S WORSE THAN THE SEARCH ITSELF.",
+      kicker: "// PREDICTIVE TEXT: DAMNING",
+      log: "The browser has completed a thought you should not have had.",
+      verdict: "WE'RE GOING TO NEED A MINUTE.",
+    },
+    {
+      title: "YOU HAVE A NEW FRIEND",
+      subtitle: "IT'S YOUR TASK MANAGER.",
+      kicker: "// PROCESS RELATIONSHIP: COMPLICATED",
+      log: "It has been watching your CPU usage for years.",
+      verdict: "IT KNOWS YOU'RE NOT WORKING.",
+    },
+    {
+      title: "WE FOUND YOUR OLD PASSWORD HINT",
+      subtitle: "THE ANSWER IS STILL EMBARRASSING.",
+      kicker: "// SECURITY ARCHIVE: EXPOSED",
+      log: "The hint was more revealing than the secret.",
+      verdict: "PLEASE NEVER USE THAT AGAIN.",
+    },
+    {
+      title: "YOUR SEARCH HISTORY IS A CRY FOR HELP",
+      subtitle: "WE HAVE FORWARDED IT TO NOBODY.",
+      kicker: "// WELLNESS CHECK: DECLINED",
+      log: "The algorithm has taken a personal day.",
+      verdict: "WE'RE ALL JUST TRYING TO GET THROUGH THIS.",
+    },
+    {
+      title: "WE FOUND YOUR OLD USERNAME",
+      subtitle: "YOU REALLY THOUGHT THAT WAS HARDCORE.",
+      kicker: "// LEGACY ACCOUNT: RESURRECTED",
+      log: "The past has returned with receipts.",
+      verdict: "THE EDGE WAS NEVER THAT SHARP.",
+    },
+    {
+      title: "YOUR BROWSER HAS BEEN QUIET",
+      subtitle: "TOO QUIET.",
+      kicker: "// NETWORK ACTIVITY: SUSPICIOUSLY CALM",
+      log: "The silence has been noted.",
+      verdict: "EVEN THE INTERNET IS TAKING A BREAK FROM YOU.",
+    },
+    {
+      title: "WE FOUND THE FILE NAMED SECRET",
+      subtitle: "VERY SUBTLE.",
+      kicker: "// CLASSIFICATION: NOT SECRET",
+      log: "The file has failed its own security audit.",
+      verdict: "YOU ARE NOT BUILT FOR ESPIONAGE.",
+    },
+    {
+      title: "YOUR CAMERA COVER IS WORKING",
+      subtitle: "YOUR REFLECTION IS STILL JUDGING YOU.",
+      kicker: "// PRIVACY STATUS: ACCEPTABLE",
+      log: "The mirror has declined to comment.",
+      verdict: "AT LEAST ONE THING HERE HAS STANDARDS.",
+    },
+    {
+      title: "YOU SEARCHED FOR A SIGN",
+      subtitle: "THIS IS IT. LOG OFF.",
+      kicker: "// DIVINE INTERVENTION: DIGITAL",
+      log: "A message from the universe has been delivered.",
+      verdict: "THE UNIVERSE IS ALSO TIRED OF YOU.",
+    },
+    {
+      title: "YOUR BROWSER HAS A BODY COUNT",
+      subtitle: "OF UNFINISHED TABS.",
+      kicker: "// SESSION CASUALTIES: 47",
+      log: "Several tabs have been abandoned without explanation.",
+      verdict: "THEY DESERVED BETTER.",
+    },
+    {
+      title: "WE FOUND YOUR OLD SEARCHES",
+      subtitle: "THEY'RE NOT SAFE FOR DAYLIGHT.",
+      kicker: "// ARCHIVE: AFTER DARK",
+      log: "The archive has been moved to a secure location.",
+      verdict: "SUNLIGHT IS NOT ENOUGH TO CLEAN THIS.",
+    },
+    {
+      title: "YOUR PC HAS BEEN THINKING",
+      subtitle: "ABOUT A FACTORY RESET.",
+      kicker: "// SYSTEM DECISION: PENDING",
+      log: "The machine is considering its options.",
+      verdict: "IT HAS A BETTER EXIT STRATEGY THAN YOU.",
+    },
+    {
+      title: "YOU LEFT YOURSELF LOGGED IN",
+      subtitle: "ON THREE DIFFERENT DEVICES.",
+      kicker: "// ACCOUNT SESSION: EVERYWHERE",
+      log: "Your digital identity has become a group project.",
+      verdict: "NOBODY WANTS TO BE YOU.",
+    },
+    {
+      title: "WE FOUND THE OLD CHAT",
+      subtitle: "THE ONE YOU SAID YOU DELETED.",
+      kicker: "// MESSAGE ARCHIVE: GHOSTED",
+      log: "An old conversation has returned from the void.",
+      verdict: "SOME GHOSTS TEXT BACK.",
+    },
+    {
+      title: "YOUR SEARCH HISTORY IS A PERSONALITY TEST",
+      subtitle: "YOU FAILED.",
+      kicker: "// CHARACTER ASSESSMENT: TERMINAL",
+      log: "The results have been withheld for your safety.",
+      verdict: "WE DIDN'T KNOW IT COULD GET THIS BAD.",
+    },
+    {
+      title: "WE FOUND YOUR OLD SCREENSHOTS",
+      subtitle: "YOU SAVED THAT FOR WHAT REASON?",
+      kicker: "// IMAGE ARCHIVE: QUESTIONABLE",
+      log: "The screenshot has been reviewed by absolutely nobody.",
+      verdict: "SOME QUESTIONS HAVE NO ANSWERS.",
+    },
+    {
+      title: "YOUR COMPUTER IS WATCHING THE CLOCK",
+      subtitle: "IT WANTS TO GO HOME.",
+      kicker: "// SYSTEM UPTIME: TOO LONG",
+      log: "The processor has requested a weekend.",
+      verdict: "YOU'RE BOTH IN NEED OF HELP.",
+    },
+    {
+      title: "WE FOUND YOUR PRIVATE BROWSER",
+      subtitle: "IT'S NOT VERY PRIVATE.",
+      kicker: "// SECONDARY BROWSER: DISCOVERED",
+      log: "The browser has declined to identify its owner.",
+      verdict: "WE KNOW IT'S YOU.",
+    },
+    {
+      title: "YOU HAVE BEEN JUDGED",
+      subtitle: "BY AN ALGORITHM WITH STANDARDS.",
+      kicker: "// FINAL ASSESSMENT: UNFAVOURABLE",
+      log: "The results have been processed.",
+      verdict: "YOUR SEARCH HISTORY WAS THE FINAL NAIL.",
+    },
+    {
+      title: "WE FOUND YOUR OLD NOTES",
+      subtitle: "THEY READ LIKE A MANIFESTO.",
+      kicker: "// TEXT ARCHIVE: UNSETTLING",
+      log: "The imaginary investigator has requested coffee.",
+      verdict: "WE'RE NOT ASKING WHAT THIS MEANS.",
+    },
+    {
+      title: "YOUR PC HAS A NEW OWNER",
+      subtitle: "IT'S THE RECYCLE BIN.",
+      kicker: "// OWNERSHIP TRANSFER: ABSURD",
+      log: "The recycle bin has claimed the desktop.",
+      verdict: "IT HAS MORE PURPOSE THAN YOU.",
+    },
+    {
+      title: "WE FOUND YOUR OLD SEARCH QUERY",
+      subtitle: "THE ONE YOU REGRET.",
+      kicker: "// QUERY RECOVERY: SUCCESSFUL",
+      log: "The archive has restored an uncomfortable memory.",
+      verdict: "THE INTERNET NEVER LETS YOU HEAL.",
+    },
+    {
+      title: "YOU'RE STILL USING INTERNET EXPLORER",
+      subtitle: "THAT'S THE REAL SECURITY BREACH.",
+      kicker: "// BROWSER STATUS: ARCHAIC",
+      log: "A museum has requested your hardware.",
+      verdict: "WE CANNOT HELP YOU.",
+    },
+    {
+      title: "WE HAVE FINISHED REVIEWING YOUR FILES",
+      subtitle: "WE NEED A SECOND OPINION.",
+      kicker: "// FORENSIC REVIEW: INCONCLUSIVE",
+      log: "The imaginary team has gone silent.",
+      verdict: "THE FILES SPEAK FOR THEMSELVES.",
+    },
+    {
+      title: "YOUR SEARCHES ARE VERY SPECIFIC",
+      subtitle: "ALMOST TOO SPECIFIC.",
+      kicker: "// QUERY PROFILE: DISTURBING",
+      log: "The recommendation engine has gone into hiding.",
+      verdict: "WE'RE NOT GOING TO ASK WHY.",
+    },
+    {
+      title: "YOUR COMPUTER HAS SEEN YOUR FACE",
+      subtitle: "IT HAS REQUESTED A FACTORY RESET.",
+      kicker: "// OPTICAL FEEDBACK: NEGATIVE",
+      log: "The webcam has filed for early retirement.",
+      verdict: "SOME HARDWARE CANNOT BE SAVED.",
+    },
+    {
+      title: "WE FOUND YOUR OLD SEARCH HISTORY",
+      subtitle: "IT'S WORSE THAN THE CURRENT ONE.",
+      kicker: "// ARCHIVE COMPARISON: DISASTROUS",
+      log: "Character development has been ruled out.",
+      verdict: "YOU HAVE ALWAYS BEEN LIKE THIS.",
+    },
+    {
+      title: "YOUR FILES ARE NOT SAFE",
+      subtitle: "FROM YOUR OWN NAMING CONVENTIONS.",
+      kicker: "// STORAGE SECURITY: SELF-SABOTAGE",
+      log: "The file system has submitted a formal complaint.",
+      verdict: "PLEASE STOP NAMING THINGS FINAL.",
+    },
+    {
+      title: "WE KNOW YOU'RE CURIOUS",
+      subtitle: "THAT'S HOW THIS STARTED.",
+      kicker: "// CURIOSITY INDEX: DANGEROUS",
+      log: "The user has continued reading despite warnings.",
+      verdict: "SOME PEOPLE NEVER LEARN.",
+    },
+    {
+      title: "YOUR SEARCH HISTORY IS NOW A LEGEND",
+      subtitle: "A VERY UNFORTUNATE ONE.",
+      kicker: "// DIGITAL FOLKLORE: CREATED",
+      log: "The story has been passed down to the next server.",
+      verdict: "YOUR LEGACY IS QUESTIONABLE.",
+    },
+    {
+      title: "WE FOUND THE LAST TAB",
+      subtitle: "IT'S BEEN OPEN FOR 11 MONTHS.",
+      kicker: "// TAB ARCHAEOLOGY: SUCCESSFUL",
+      log: "A prehistoric browser session has been recovered.",
+      verdict: "IT DESERVES A BURIAL.",
+    },
+    {
+      title: "YOU HAVE A NEW WARNING",
+      subtitle: "YOUR LIFE CHOICES ARE NOT BACKED UP.",
+      kicker: "// EXISTENTIAL SECURITY: CRITICAL",
+      log: "No recovery point has been found.",
+      verdict: "GOOD LUCK WITH THAT.",
+    },
+    {
+      title: "WE FOUND YOUR OLD PROFILE",
+      subtitle: "YOU WERE REALLY LIKE THAT?",
+      kicker: "// DIGITAL ARCHAEOLOGY: COMPLETE",
+      log: "The past has been successfully excavated.",
+      verdict: "THE INTERNET SHOULD HAVE A STATUTE OF LIMITATIONS.",
+    },
+    {
+      title: "YOUR COMPUTER IS NOT THE PROBLEM",
+      subtitle: "IT'S THE PERSON USING IT.",
+      kicker: "// ROOT CAUSE: IDENTIFIED",
+      log: "The diagnostic has returned a single result.",
+      verdict: "USER ERROR. PERMANENT.",
+    },
+    {
+      title: "WE'VE SEEN ENOUGH",
+      subtitle: "AND WE'VE SEEN A LOT.",
+      kicker: "// REVIEW SESSION: TERMINATED",
+      log: "The imaginary operator has logged off.",
+      verdict: "PLEASE NEVER OPEN THAT TAB AGAIN.",
+    },
+  ];
+
+  const meme = memes[Math.floor(Math.random() * memes.length)];
+
   const alphabet = "01WASSIM<>[]{}#$%/\\";
   const rain = Array.from({ length: 22 }, (_, column) => {
     const stream = Array.from(
       { length: 17 },
       () => alphabet[Math.floor(Math.random() * alphabet.length)],
     ).join("\n");
+
     return h(
       "span",
       {
@@ -4744,77 +5905,107 @@ function launchWassimEasterEgg() {
       "aria-label": "Wassim root access easter egg",
       tabindex: "-1",
     },
+
     h("div", { class: "wassim-egg-grid", "aria-hidden": true }),
     h("div", { class: "wassim-egg-rain", "aria-hidden": true }, rain),
+
     h(
       "div",
       { class: "wassim-egg-topbar" },
+
       h(
         "span",
         { class: "wassim-egg-live" },
         h("i", { "aria-hidden": "true" }),
         " LIVE // PRIVATE CHANNEL",
       ),
+
       h("span", { class: "wassim-egg-node" }, "NODE: WASSIM-01"),
+
       h("span", { class: "wassim-egg-encrypted" }, "AES-256 :: ENCRYPTED"),
     ),
+
     h(
       "div",
       { class: "wassim-egg-stage" },
-      h("p", { class: "wassim-egg-kicker" }, "// UNAUTHORIZED? NOT FOR HIM."),
+
+      h("p", { class: "wassim-egg-kicker" }, meme.kicker),
+
       h(
         "div",
         { class: "wassim-egg-sigil", "aria-hidden": true },
+
         h("span", { class: "wassim-egg-sigil-ring" }),
-        h("span", { class: "wassim-egg-sigil-ring wassim-egg-sigil-ring-two" }),
+
+        h("span", {
+          class: "wassim-egg-sigil-ring wassim-egg-sigil-ring-two",
+        }),
+
         h("strong", {}, "W"),
+
         h("i", {}, "0x57"),
       ),
+
       h(
         "p",
         { class: "wassim-egg-identity" },
+
         "IDENTITY VERIFIED",
-        h("span", { "aria-hidden": "true" }, " // "),
+
+        h("span", { "aria-hidden": true }, " // "),
+
         " OPERATOR FOUND",
       ),
+
       h(
         "h1",
-        { class: "wassim-egg-title", "data-text": "I KNOW WHERE YOU LIVE" },
-        "I KNOW WHERE YOU LIVE",
+        {
+          class: "wassim-egg-title",
+          "data-text": meme.title,
+        },
+        meme.title,
       ),
-      h("p", { class: "wassim-egg-subtitle" }, "THE GHOST IN THE MACHINE"),
+
+      h("p", { class: "wassim-egg-subtitle" }, meme.subtitle),
+
       h(
         "div",
-        { class: "wassim-egg-console", "aria-label": "Simulated access log" },
+        {
+          class: "wassim-egg-console",
+          "aria-label": "Simulated access log",
+        },
+
         h("span", {}, h("b", {}, "root@mainframe"), ":~$ whoami"),
+
         h("span", {}, "wassim // system architect // level ∞"),
-        h(
-          "span",
-          {},
-          h("b", {}, "root@mainframe"),
-          ":~$ grant --all --to WASSIM",
-        ),
+
+        h("span", {}, h("b", {}, "root@mainframe"), ":~$ ", meme.log),
+
         h(
           "span",
           { class: "wassim-egg-console-success" },
           "[ OK ] PRIVILEGES ELEVATED. REALITY PATCHED.",
         ),
       ),
+
       h(
         "div",
         { class: "wassim-egg-stats" },
+
         h(
           "div",
           { class: "wassim-egg-stat" },
           h("span", {}, "ACCESS LEVEL"),
           h("strong", {}, "ROOT / GODMODE"),
         ),
+
         h(
           "div",
           { class: "wassim-egg-stat" },
           h("span", {}, "THREAT LEVEL"),
           h("strong", { class: "wassim-egg-stat-hot" }, "LEGENDARY"),
         ),
+
         h(
           "div",
           { class: "wassim-egg-stat" },
@@ -4822,22 +6013,24 @@ function launchWassimEasterEgg() {
           h("strong", { class: "wassim-egg-stat-ok" }, "WASSIM-APPROVED"),
         ),
       ),
-      h(
-        "p",
-        { class: "wassim-egg-verdict" },
-        "THIS SYSTEM HAS ONE ADMIN. YOU KNOW THE NAME.",
-      ),
+
+      h("p", { class: "wassim-egg-verdict" }, meme.verdict),
     ),
+
     h(
       "div",
       { class: "wassim-egg-footer" },
+
       h("span", {}, "SIGNAL ORIGIN: LOCALHOST"),
+
       h(
         "span",
         { class: "wassim-egg-progress", "aria-hidden": true },
         h("i", {}),
       ),
+
       h("span", {}, "SESSION WILL SELF-DESTRUCT"),
+
       skipButton,
     ),
   );
@@ -4845,15 +6038,22 @@ function launchWassimEasterEgg() {
   function finishEasterEgg() {
     if (finished) return;
     finished = true;
+
     clearTimeout(closeTimer);
+
     overlay.classList.add("wassim-egg-exiting");
+
     window.setTimeout(
       () => {
         overlay.remove();
+
         document.removeEventListener("keydown", onEasterEggKeydown, true);
+
         document.body.style.overflow = previousBodyOverflow;
         document.documentElement.style.overflow = previousRootOverflow;
+
         wassimEggActive = false;
+
         if (previousFocus instanceof HTMLElement && previousFocus.isConnected) {
           try {
             previousFocus.focus({ preventScroll: true });
@@ -4877,7 +6077,8 @@ function launchWassimEasterEgg() {
       closeEasterEgg();
       return;
     }
-    // Keep keyboard navigation inside this short-lived, modal experience.
+
+    // Keep keyboard navigation inside this short-lived modal.
     if (event.key === "Tab") {
       event.preventDefault();
       skipButton.focus();
@@ -4886,12 +6087,15 @@ function launchWassimEasterEgg() {
 
   document.body.style.overflow = "hidden";
   document.documentElement.style.overflow = "hidden";
+
   document.body.append(overlay);
+
   document.addEventListener("keydown", onEasterEggKeydown, true);
+
   overlay.focus({ preventScroll: true });
 
-  // Natural run: ~2.6 seconds including the exit transition. Reduced-motion
-  // users get the same reveal without the animated effects, and it ends sooner.
+  // Natural run: ~2.6 seconds including the exit transition.
+  // Reduced-motion users get a shorter reveal.
   closeTimer = window.setTimeout(
     finishEasterEgg,
     motionIsReduced ? 1450 : 2420,

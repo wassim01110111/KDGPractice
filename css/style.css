@@ -3825,8 +3825,11 @@ pre:focus-within,
   height: 100dvh;
   min-height: 0;
   overflow: hidden;
-  padding: max(0.8rem, env(safe-area-inset-top)) clamp(0.8rem, 3vw, 2.5rem)
-    max(0.75rem, env(safe-area-inset-bottom));
+  box-sizing: border-box;
+  padding: max(0.8rem, env(safe-area-inset-top))
+    max(0.8rem, env(safe-area-inset-right))
+    max(0.75rem, env(safe-area-inset-bottom))
+    max(0.8rem, env(safe-area-inset-left));
   color: #e8d9df;
   background:
     radial-gradient(ellipse at 50% 42%, rgb(125 0 32 / 21%), transparent 48%),
@@ -3844,7 +3847,9 @@ pre:focus-within,
     filter 170ms ease;
 }
 
-.wassim-egg-overlay * {
+.wassim-egg-overlay *,
+.wassim-egg-overlay *::before,
+.wassim-egg-overlay *::after {
   box-sizing: border-box;
 }
 
@@ -3915,8 +3920,10 @@ pre:focus-within,
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.65rem 1rem;
+  flex-wrap: wrap;
+  gap: 0.45rem 0.75rem;
   width: min(100%, 1180px);
+  min-width: 0;
   margin-inline: auto;
   color: #936b78;
   font-size: clamp(0.56rem, 0.85vw, 0.7rem);
@@ -3940,6 +3947,7 @@ pre:focus-within,
 .wassim-egg-live i {
   width: 0.48rem;
   height: 0.48rem;
+  flex: 0 0 auto;
   border-radius: 50%;
   background: #ff1744;
   box-shadow:
@@ -3949,23 +3957,35 @@ pre:focus-within,
 }
 
 .wassim-egg-encrypted {
+  min-width: 0;
   color: #80515f;
+  overflow-wrap: anywhere;
 }
 
 .wassim-egg-stage {
   display: flex;
+  min-width: 0;
   min-height: 0;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: clamp(0.55rem, 2vh, 1.5rem) 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  padding: clamp(0.35rem, 1.5vh, 1rem) 0;
   text-align: center;
+}
+
+.wassim-egg-stage::-webkit-scrollbar {
+  display: none;
 }
 
 .wassim-egg-kicker,
 .wassim-egg-identity,
 .wassim-egg-subtitle,
 .wassim-egg-verdict {
+  max-width: 100%;
   margin: 0;
   font-weight: 700;
 }
@@ -3980,10 +4000,11 @@ pre:focus-within,
 .wassim-egg-sigil {
   position: relative;
   display: grid;
-  width: clamp(4rem, 8vw, 5.4rem);
+  flex: 0 0 auto;
+  width: clamp(3.5rem, 8vw, 5.4rem);
   aspect-ratio: 1;
   place-items: center;
-  margin: clamp(0.5rem, 1.7vh, 1.1rem) 0 0.45rem;
+  margin: clamp(0.35rem, 1.2vh, 0.8rem) 0 0.4rem;
   border: 1px solid rgb(255 45 85 / 60%);
   background: rgb(48 5 17 / 56%);
   box-shadow:
@@ -3995,7 +4016,7 @@ pre:focus-within,
 
 .wassim-egg-sigil strong {
   color: #ffe5ec;
-  font-size: clamp(2rem, 5vw, 3.1rem);
+  font-size: clamp(1.8rem, 5vw, 3.1rem);
   line-height: 1;
   text-shadow:
     0 0 9px #ff3158,
@@ -4042,12 +4063,15 @@ pre:focus-within,
 
 .wassim-egg-title {
   position: relative;
+  max-width: 100%;
   margin: 0.06em 0 0;
   color: #ffe5ec;
-  font-size: clamp(3.4rem, 12vw, 8.8rem);
+  font-size: clamp(2rem, 9vw, 5.5rem);
   font-weight: 950;
-  letter-spacing: clamp(0.04em, 1.4vw, 0.16em);
+  letter-spacing: clamp(0.02em, 0.8vw, 0.12em);
   line-height: 0.98;
+  overflow-wrap: break-word;
+  text-wrap: balance;
   text-shadow:
     0 0 9px rgb(255 45 85 / 56%),
     0 0 38px rgb(255 20 60 / 25%);
@@ -4082,7 +4106,8 @@ pre:focus-within,
   margin-top: 0.4rem;
   color: #ff3158;
   font-size: clamp(0.62rem, 1.35vw, 0.9rem);
-  letter-spacing: clamp(0.16em, 1.15vw, 0.42em);
+  letter-spacing: clamp(0.1em, 0.8vw, 0.3em);
+  overflow-wrap: anywhere;
   animation: wassim-egg-rise 350ms 300ms both;
 }
 
@@ -4090,8 +4115,9 @@ pre:focus-within,
   display: grid;
   gap: 0.18rem;
   width: min(100%, 37rem);
-  margin-top: clamp(0.65rem, 1.7vh, 1.1rem);
-  padding: 0.58rem 0.85rem;
+  min-width: 0;
+  margin-top: clamp(0.5rem, 1.4vh, 0.9rem);
+  padding: 0.55rem clamp(0.5rem, 2vw, 0.85rem);
   border: 1px solid rgb(255 45 85 / 25%);
   border-left: 2px solid #ff1744;
   background: rgb(12 2 6 / 76%);
@@ -4100,7 +4126,7 @@ pre:focus-within,
     inset 0 0 18px rgb(255 20 60 / 4%);
   color: #b47b8d;
   text-align: left;
-  font-size: clamp(0.57rem, 1vw, 0.72rem);
+  font-size: clamp(0.55rem, 1vw, 0.72rem);
 }
 
 .wassim-egg-console > span {
@@ -4137,9 +4163,10 @@ pre:focus-within,
 .wassim-egg-stats {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.45rem;
+  gap: 0.4rem;
   width: min(100%, 37rem);
-  margin-top: 0.5rem;
+  min-width: 0;
+  margin-top: 0.45rem;
   animation: wassim-egg-rise 350ms 720ms both;
 }
 
@@ -4147,7 +4174,7 @@ pre:focus-within,
   display: grid;
   gap: 0.12rem;
   min-width: 0;
-  padding: 0.4rem 0.55rem;
+  padding: 0.35rem clamp(0.25rem, 1.5vw, 0.55rem);
   border: 1px solid rgb(255 45 85 / 17%);
   background: rgb(18 3 9 / 68%);
 }
@@ -4155,8 +4182,8 @@ pre:focus-within,
 .wassim-egg-stat > span {
   overflow: hidden;
   color: #986778;
-  font-size: clamp(0.48rem, 0.75vw, 0.59rem);
-  letter-spacing: 0.12em;
+  font-size: clamp(0.45rem, 0.75vw, 0.59rem);
+  letter-spacing: 0.08em;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -4164,8 +4191,8 @@ pre:focus-within,
 .wassim-egg-stat strong {
   overflow: hidden;
   color: #f4dce4;
-  font-size: clamp(0.57rem, 0.95vw, 0.72rem);
-  letter-spacing: 0.04em;
+  font-size: clamp(0.53rem, 0.95vw, 0.72rem);
+  letter-spacing: 0.02em;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -4173,15 +4200,17 @@ pre:focus-within,
 .wassim-egg-stat-hot {
   color: #ff5278 !important;
 }
+
 .wassim-egg-stat-ok {
   color: #ff9eb5 !important;
 }
 
 .wassim-egg-verdict {
-  margin-top: clamp(0.5rem, 1.4vh, 0.85rem);
+  margin-top: clamp(0.4rem, 1vh, 0.7rem);
   color: #d4a1b1;
-  font-size: clamp(0.55rem, 0.95vw, 0.68rem);
-  letter-spacing: 0.1em;
+  font-size: clamp(0.53rem, 0.95vw, 0.68rem);
+  letter-spacing: 0.08em;
+  overflow-wrap: anywhere;
   animation: wassim-egg-rise 350ms 900ms both;
 }
 
@@ -4195,7 +4224,8 @@ pre:focus-within,
 .wassim-egg-progress {
   position: relative;
   display: block;
-  flex: 1 1 8rem;
+  flex: 1 1 5rem;
+  min-width: 2rem;
   max-width: 15rem;
   height: 3px;
   overflow: hidden;
@@ -4404,19 +4434,11 @@ pre:focus-within,
   }
 
   .wassim-egg-title {
-    font-size: clamp(3.35rem, 18vw, 6rem);
+    font-size: clamp(2rem, 9vw, 3.8rem);
   }
 
   .wassim-egg-console {
     padding: 0.52rem 0.62rem;
-  }
-
-  .wassim-egg-stats {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .wassim-egg-stat:last-child {
-    grid-column: 1 / -1;
   }
 
   .wassim-egg-footer {
@@ -4432,26 +4454,40 @@ pre:focus-within,
   }
 }
 
-@media (max-height: 650px) and (min-width: 621px) {
+@media (max-height: 750px) {
   .wassim-egg-stage {
-    padding-block: 0.2rem;
+    justify-content: flex-start;
+    padding-block: 0.3rem;
   }
+
   .wassim-egg-sigil {
     width: 3.2rem;
     margin-block: 0.1rem 0.25rem;
   }
-  .wassim-egg-subtitle {
-    margin-top: 0.12rem;
+
+  .wassim-egg-identity {
+    margin-top: 0.2rem;
   }
+
+  .wassim-egg-title {
+    font-size: clamp(2rem, 8vw, 4.2rem);
+  }
+
   .wassim-egg-console {
-    margin-top: 0.35rem;
-    padding-block: 0.32rem;
+    margin-top: 0.4rem;
+    padding-block: 0.4rem;
   }
+
   .wassim-egg-stats {
-    margin-top: 0.3rem;
+    margin-top: 0.35rem;
   }
+
+  .wassim-egg-stat {
+    padding-block: 0.25rem;
+  }
+
   .wassim-egg-verdict {
-    margin-top: 0.3rem;
+    margin-top: 0.35rem;
   }
 }
 
@@ -4459,17 +4495,29 @@ pre:focus-within,
   .wassim-egg-kicker {
     letter-spacing: 0.12em;
   }
+
   .wassim-egg-identity {
     letter-spacing: 0.1em;
   }
+
   .wassim-egg-subtitle {
-    letter-spacing: 0.16em;
+    letter-spacing: 0.08em;
   }
+
   .wassim-egg-console {
     font-size: 0.54rem;
   }
+
+  .wassim-egg-stats {
+    gap: 0.25rem;
+  }
+
   .wassim-egg-stat {
-    padding-inline: 0.42rem;
+    padding-inline: 0.2rem;
+  }
+
+  .wassim-egg-stat > span {
+    letter-spacing: 0.03em;
   }
 }
 
@@ -4494,23 +4542,23 @@ pre:focus-within,
   }
 
   .wassim-egg-sigil,
-  .wassim-egg-sigil strong {
-    transform: none;
-  }
+  .wassim-egg-sigil strong,
   .wassim-egg-sigil > i {
     transform: none;
   }
+
   .wassim-egg-console > span {
     opacity: 1;
   }
+
   .wassim-egg-progress i {
     width: 100%;
   }
+
   .wassim-egg-overlay {
     transition: none;
   }
 }
-
 /* Exam term selection and courses unavailable for the selected terms. */
 .exam-term-control {
   min-width: 0;
