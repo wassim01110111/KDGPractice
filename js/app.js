@@ -48,6 +48,7 @@ function confirmInApp({
   confirmLabel = "Continue",
   cancelLabel = "Cancel",
   danger = false,
+  reverseDanger = false,
 }) {
   if (activeConfirmDialog?.open) activeConfirmDialog.close("cancel");
   return new Promise((resolve) => {
@@ -67,7 +68,7 @@ function confirmInApp({
             "button",
             {
               type: "button",
-              class: "sec",
+              class: danger && reverseDanger ? "danger" : "sec",
               onclick: () => dialog.close("cancel"),
             },
             cancelLabel,
@@ -76,7 +77,12 @@ function confirmInApp({
             "button",
             {
               type: "button",
-              class: danger ? "danger" : "",
+              class:
+                danger && !reverseDanger
+                  ? "danger"
+                  : danger && reverseDanger
+                    ? "sec"
+                    : "",
               onclick: () => dialog.close("confirm"),
             },
             confirmLabel,
@@ -436,9 +442,13 @@ function addPackage(f, ctx) {
     ctx.datasetIds.add(id);
   }
 
+  // `term` belongs to the package, so copy it onto every exercise to make
+  // filtering cheap and consistent for bundled and imported packages.
+  const packageTerm = Number.isInteger(pkg.term) ? pkg.term : null;
   const exercises = Object.entries(pkg.exercises || {}).map(([id, ex]) => ({
     ...ex,
     id,
+    term: packageTerm,
     packageId: pkg.packageId,
     key: exerciseKey({ id }, pkg.packageId),
   }));
@@ -449,6 +459,7 @@ function addPackage(f, ctx) {
     src: f.src,
     id: pkg.packageId,
     version: pkg.version,
+    term: packageTerm,
     n: exercises.length,
   });
 
@@ -2634,7 +2645,7 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
         "Ask the site maintainer to add an exercise package.",
       ),
     );
-  const f = { course: "", category: "", difficulty: "" },
+  const f = { course: "", category: "", difficulty: "", term: "" },
     list = h("div", { class: "side" }),
     pane = h("div"),
     flt = h("div", {
@@ -2655,6 +2666,11 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
       .replace(/-/g, " ")
       .toLocaleLowerCase()
       .replace(/\b[a-z]/g, (letter) => letter.toLocaleUpperCase());
+  const terms = [
+    ...new Set(
+      S.exercises.map((exercise) => exercise.term).filter(Number.isInteger),
+    ),
+  ].sort((a, b) => a - b);
   const search = h("input", {
       type: "search",
       placeholder: "Search titles, instructions, or IDs",
@@ -2666,6 +2682,21 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
       { class: "filter-control filter-search" },
       h("span", { class: "filter-label" }, "Search questions"),
       search,
+    ),
+    termSelect = h(
+      "select",
+      {
+        onchange: (e) => {
+          f.term = e.target.value;
+          f.category = "";
+          refreshCategories();
+          draw();
+        },
+      },
+      h("option", { value: "" }, "All terms"),
+      ...terms.map((term) =>
+        h("option", { value: String(term) }, `Term ${term}`),
+      ),
     ),
     courseSelect = h(
       "select",
@@ -2735,7 +2766,11 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
     const categories = [
       ...new Map(
         S.exercises
-          .filter((e) => !f.course || e.course === f.course)
+          .filter(
+            (e) =>
+              (!f.course || e.course === f.course) &&
+              (!f.term || String(e.term) === f.term),
+          )
           .map((e) => [JSON.stringify([e.course, e.category]), e]),
       ).values(),
     ].sort(
@@ -2764,6 +2799,7 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
   refreshCategories();
   flt.append(
     searchControl,
+    filterControl("Term", termSelect),
     filterControl("Course", courseSelect),
     filterControl("Category", categorySelect),
     filterControl("Difficulty", difficultySelect),
@@ -2781,6 +2817,13 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
               .includes(query),
           )),
     );
+    // A selected exercise must not leak back into the list after a filter
+    // (especially Term) excludes it. Keep completed selections visible only
+    // while they still satisfy the active filters.
+    if (selectedKey && !filtered.some((e) => keyOf(e) === selectedKey)) {
+      selectedKey = "";
+      pane.replaceChildren();
+    }
     items = filtered.filter(
       (e) =>
         showCompleted || keyOf(e) === selectedKey || !S.xpRewards[keyOf(e)],
@@ -2790,7 +2833,7 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
       la[a.key] = a.correct;
     });
     if (selectedKey && !items.some((e) => keyOf(e) === selectedKey)) {
-      const currentExercise = S.exercises.find((e) => keyOf(e) === selectedKey);
+      const currentExercise = filtered.find((e) => keyOf(e) === selectedKey);
       if (currentExercise) items.unshift(currentExercise);
     }
     const buttons = items.map((e) =>
@@ -2807,7 +2850,7 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
         h(
           "small",
           {},
-          ` ${packageLabel(e.packageId)} · ${e.difficulty}${e.examEligible ? "" : " · not on exam"}`,
+          ` ${packageLabel(e.packageId)} · ${Number.isInteger(e.term) ? `Term ${e.term} · ` : ""}${e.difficulty}${e.examEligible ? "" : " · not on exam"}`,
         ),
       ),
     );
@@ -2885,6 +2928,7 @@ async function pageExam(root, isCurrent = () => true) {
       confirmLabel: "Continue exam",
       cancelLabel: "Discard exam",
       danger: true,
+      reverseDanger: true,
     });
     if (!isCurrent()) return;
     if (shouldContinue) {
@@ -2897,19 +2941,11 @@ async function pageExam(root, isCurrent = () => true) {
       return;
     }
   }
-  const courses = uniq(S.exercises, (e) => e.course),
-    cfg = {
-      courses: [...courses],
-      Easy: 5,
-      Medium: 5,
-      Hard: 2,
-      Extreme: 0,
-      mins: 60,
-    },
-    msg = h("div");
-  const difficultyInputs = {};
-  const courseInputs = new Map();
-  if (!S.exercises.some((e) => e.examEligible))
+
+  const eligibleExercises = S.exercises.filter((exercise) =>
+    Core.eligible(exercise),
+  );
+  if (!eligibleExercises.length)
     return root.append(
       empty(
         "No exam-eligible exercises installed yet.",
@@ -2917,61 +2953,196 @@ async function pageExam(root, isCurrent = () => true) {
       ),
       await historyView(),
     );
-  const num = (k, l) => {
+
+  const courses = uniq(S.exercises, (exercise) => exercise.course);
+  // Term options come from packages that actually contain exam-eligible questions.
+  // Sort numerically so Term 2 appears before Term 10.
+  const terms = [
+    ...new Set(
+      eligibleExercises
+        .map((exercise) => exercise.term)
+        .filter(Number.isInteger),
+    ),
+  ].sort((a, b) => a - b);
+
+  const cfg = {
+    terms: [...terms],
+    courses: [],
+    Easy: 5,
+    Medium: 5,
+    Hard: 2,
+    Extreme: 0,
+    mins: 60,
+  };
+  const msg = h("div");
+  const difficultyInputs = {};
+  const termInputs = new Map();
+  const courseInputs = new Map();
+  const courseLabels = new Map();
+  // Remember a user's course choices while a course is temporarily unavailable
+  // under the currently selected terms. It becomes selectable again when a
+  // matching term is re-enabled.
+  const preferredCourses = new Set(
+    courses.filter((course) =>
+      eligibleExercises.some(
+        (exercise) =>
+          exercise.course === course &&
+          (!terms.length || cfg.terms.includes(exercise.term)),
+      ),
+    ),
+  );
+
+  const num = (key, label) => {
     const input = h("input", {
       type: "number",
       min: 0,
-      value: cfg[k],
-      oninput: (e) => {
-        cfg[k] = Math.min(+e.target.max, Math.max(0, +e.target.value || 0));
-        e.target.value = cfg[k];
+      value: cfg[key],
+      oninput: (event) => {
+        const maximum = Number(event.target.max) || 0;
+        cfg[key] = Math.min(
+          maximum,
+          Math.max(0, Number(event.target.value) || 0),
+        );
+        event.target.value = cfg[key];
         updateExamSummary();
       },
     });
-    difficultyInputs[k] = input;
-    return h("label", { class: "exam-count-control" }, h("span", {}, l), input);
+    difficultyInputs[key] = input;
+    return h(
+      "label",
+      { class: "exam-count-control" },
+      h("span", {}, label),
+      input,
+    );
   };
+
   const examSummary = h("div", {
     class: "exam-config-summary",
     "aria-live": "polite",
   });
+
+  const courseHasSelectedTerm = (course) =>
+    eligibleExercises.some(
+      (exercise) =>
+        exercise.course === course &&
+        (!terms.length || cfg.terms.includes(exercise.term)),
+    );
+
+  const getTermFilteredExercises = () =>
+    !terms.length
+      ? S.exercises
+      : S.exercises.filter((exercise) => cfg.terms.includes(exercise.term));
+
   const updateExamSummary = () => {
     const count = cfg.Easy + cfg.Medium + cfg.Hard + cfg.Extreme;
-    const selectedCourses =
-      cfg.courses.length === courses.length
-        ? "All courses"
+    const availableCourses = courses.filter(courseHasSelectedTerm);
+    const selectedCourses = !availableCourses.length
+      ? "No courses available"
+      : cfg.courses.length === availableCourses.length
+        ? "All available courses"
         : cfg.courses.length
           ? cfg.courses.map(courseLabel).join(", ")
           : "No courses selected";
+    const selectedTerms = !terms.length
+      ? "No term metadata"
+      : cfg.terms.length === terms.length
+        ? "All terms"
+        : cfg.terms.length
+          ? cfg.terms.map((term) => `Term ${term}`).join(", ")
+          : "No terms selected";
     examSummary.replaceChildren(
       h("strong", {}, `${count} questions`),
-      h("span", {}, `${selectedCourses} · ${cfg.mins} minutes`),
+      h(
+        "span",
+        {},
+        `${selectedTerms} · ${selectedCourses} · ${cfg.mins} minutes`,
+      ),
     );
   };
+
+  const syncCourseAvailability = () => {
+    for (const course of courses) {
+      const input = courseInputs.get(course);
+      const label = courseLabels.get(course);
+      const available = courseHasSelectedTerm(course);
+      input.disabled = !available;
+      input.checked = available && preferredCourses.has(course);
+      label.classList.toggle("is-unavailable", !available);
+      if (!available) {
+        label.title = "No exam questions for the selected terms";
+      } else {
+        label.removeAttribute("title");
+      }
+    }
+    cfg.courses = courses.filter(
+      (course) =>
+        courseHasSelectedTerm(course) && courseInputs.get(course).checked,
+    );
+    updateDifficultyLimits();
+    updateExamSummary();
+  };
+
+  const termOptions = h(
+    "div",
+    {
+      class: "exam-term-checkboxes",
+      role: "group",
+      "aria-label": "Terms",
+    },
+    terms.length
+      ? terms.map((term) => {
+          const input = h("input", {
+            type: "checkbox",
+            checked: true,
+            onchange: () => {
+              cfg.terms = terms.filter(
+                (value) => termInputs.get(value).checked,
+              );
+              syncCourseAvailability();
+              msg.replaceChildren();
+            },
+          });
+          termInputs.set(term, input);
+          return h(
+            "label",
+            { class: "exam-course-checkbox exam-term-checkbox" },
+            input,
+            h("span", {}, `Term ${term}`),
+          );
+        })
+      : h("small", {}, "No term numbers found in exam-eligible packages."),
+  );
+
   const courseOptions = h(
     "div",
-    { class: "exam-course-checkboxes", role: "group", "aria-label": "Courses" },
+    {
+      class: "exam-course-checkboxes",
+      role: "group",
+      "aria-label": "Courses",
+    },
     courses.map((course) => {
       const input = h("input", {
         type: "checkbox",
-        checked: true,
+        checked: preferredCourses.has(course),
         onchange: () => {
-          cfg.courses = courses.filter(
-            (name) => courseInputs.get(name).checked,
-          );
-          updateDifficultyLimits();
-          updateExamSummary();
+          if (input.checked) preferredCourses.add(course);
+          else preferredCourses.delete(course);
+          syncCourseAvailability();
+          msg.replaceChildren();
         },
       });
-      courseInputs.set(course, input);
-      return h(
+      const label = h(
         "label",
         { class: "exam-course-checkbox" },
         input,
         h("span", {}, courseLabel(course)),
       );
+      courseInputs.set(course, input);
+      courseLabels.set(course, label);
+      return label;
     }),
   );
+
   const minuteControl = h(
     "label",
     { class: "exam-count-control exam-minutes-control" },
@@ -2980,16 +3151,18 @@ async function pageExam(root, isCurrent = () => true) {
       type: "number",
       min: 1,
       value: cfg.mins,
-      oninput: (e) => {
-        cfg.mins = Math.max(1, +e.target.value || 1);
-        e.target.value = cfg.mins;
+      oninput: (event) => {
+        cfg.mins = Math.max(1, Number(event.target.value) || 1);
+        event.target.value = cfg.mins;
         updateExamSummary();
       },
     }),
   );
+
   const updateDifficultyLimits = () => {
+    const termPool = getTermFilteredExercises();
     DIFF.forEach((difficulty) => {
-      const available = S.exercises.filter(
+      const available = termPool.filter(
         (exercise) =>
           Core.eligible(exercise) &&
           cfg.courses.includes(exercise.course) &&
@@ -3002,6 +3175,7 @@ async function pageExam(root, isCurrent = () => true) {
       input.value = cfg[difficulty];
     });
   };
+
   const difficultyControls = h(
     "div",
     { class: "exam-difficulty-controls" },
@@ -3011,7 +3185,8 @@ async function pageExam(root, isCurrent = () => true) {
     num("Extreme", "Extreme"),
     minuteControl,
   );
-  updateDifficultyLimits();
+
+  syncCourseAvailability();
   updateExamSummary();
   root.append(
     h(
@@ -3025,12 +3200,18 @@ async function pageExam(root, isCurrent = () => true) {
         h(
           "p",
           {},
-          "Choose courses, a difficulty mix, and a time limit for your exam.",
+          "Choose terms, courses, a difficulty mix, and a time limit for your exam.",
         ),
       ),
       h(
         "div",
         { class: "exam-setup-controls" },
+        h(
+          "div",
+          { class: "exam-course-control exam-term-control" },
+          h("span", {}, "Terms (select multiple)"),
+          termOptions,
+        ),
         h(
           "div",
           { class: "exam-course-control" },
@@ -3048,13 +3229,28 @@ async function pageExam(root, isCurrent = () => true) {
           {
             class: "exam-start-button",
             onclick: async () => {
-              if (!cfg.courses.length) {
+              if (terms.length && !cfg.terms.length) {
                 return msg.replaceChildren(
-                  h("p", { class: "bad" }, "Select at least one course."),
+                  h("p", { class: "bad" }, "Select at least one term."),
                 );
               }
+              if (!cfg.courses.length) {
+                return msg.replaceChildren(
+                  h(
+                    "p",
+                    { class: "bad" },
+                    "Select at least one available course.",
+                  ),
+                );
+              }
+              if (cfg.Easy + cfg.Medium + cfg.Hard + cfg.Extreme === 0) {
+                return msg.replaceChildren(
+                  h("p", { class: "bad" }, "Select at least one question."),
+                );
+              }
+              const examExercises = getTermFilteredExercises();
               const r = generateExam(
-                S.exercises,
+                examExercises,
                 {
                   courses: cfg.courses,
                   dist: {
@@ -3067,12 +3263,12 @@ async function pageExam(root, isCurrent = () => true) {
                 lastAttempt(),
               );
               if (!r.ok) {
-                const avail = (d) =>
-                  S.exercises.filter(
-                    (e) =>
-                      Core.eligible(e) &&
-                      cfg.courses.includes(e.course) &&
-                      e.difficulty === d,
+                const avail = (difficulty) =>
+                  examExercises.filter(
+                    (exercise) =>
+                      Core.eligible(exercise) &&
+                      cfg.courses.includes(exercise.course) &&
+                      exercise.difficulty === difficulty,
                   ).length;
                 return msg.replaceChildren(
                   h(
@@ -3080,24 +3276,32 @@ async function pageExam(root, isCurrent = () => true) {
                     { class: "bad" },
                     "Not enough eligible exercises — nothing was substituted. " +
                       Object.entries(r.shortage)
-                        .map(([d, s]) => `${d}: need ${s.need}, have ${s.have}`)
+                        .map(
+                          ([difficulty, shortage]) =>
+                            `${difficulty}: need ${shortage.need}, have ${shortage.have}`,
+                        )
                         .join("; ") +
                       ".",
                   ),
                   h(
                     "small",
                     {},
-                    `Available — Easy ${avail("Easy")}, Medium ${avail("Medium")}, Hard ${avail("Hard")}, Extreme ${avail("Extreme")}. Adjust the numbers above.`,
+                    `Available in selected terms — Easy ${avail("Easy")}, Medium ${avail("Medium")}, Hard ${avail("Hard")}, Extreme ${avail("Extreme")}. Adjust the numbers above.`,
                   ),
                 );
               }
+              const examConfig = {
+                ...cfg,
+                terms: [...cfg.terms],
+                courses: [...cfg.courses],
+              };
               const st = {
                 id: "x" + Date.now(),
                 ids: r.exercises.map(keyOf),
                 answers: {},
                 flags: {},
                 cur: 0,
-                cfg,
+                cfg: examConfig,
                 deadline: Date.now() + cfg.mins * 60000,
                 startedAt: Date.now(),
                 submitted: false,
@@ -4483,3 +4687,232 @@ loadContent()
   .catch((e) => {
     $("#main").textContent = "Startup error: " + e.message;
   });
+
+// ---------- Wassim's 2.6s brand easter egg ----------
+// Delegated click handling means this works even if #brand is rendered later.
+// A single active instance + a short cooldown makes rapid/repeated clicks safe.
+let wassimEggActive = false;
+let wassimEggLastStart = -Infinity;
+
+function launchWassimEasterEgg() {
+  const now = performance.now();
+  if (wassimEggActive || now - wassimEggLastStart < 650) return;
+  wassimEggActive = true;
+  wassimEggLastStart = now;
+
+  const previousFocus = document.activeElement;
+  const previousBodyOverflow = document.body.style.overflow;
+  const previousRootOverflow = document.documentElement.style.overflow;
+  const motionIsReduced = reducedMotion.matches;
+  let closeTimer = 0;
+  let finished = false;
+
+  const alphabet = "01WASSIM<>[]{}#$%/\\";
+  const rain = Array.from({ length: 22 }, (_, column) => {
+    const stream = Array.from(
+      { length: 17 },
+      () => alphabet[Math.floor(Math.random() * alphabet.length)],
+    ).join("\n");
+    return h(
+      "span",
+      {
+        class: "wassim-egg-rain-column",
+        style: `--wee-column:${column};--wee-delay:${(-Math.random() * 2.6).toFixed(2)}s;--wee-speed:${(1.35 + Math.random() * 1.9).toFixed(2)}s`,
+      },
+      stream,
+    );
+  });
+
+  const skipButton = h(
+    "button",
+    {
+      type: "button",
+      class: "wassim-egg-skip",
+      "aria-label": "Close the Wassim easter egg",
+      onclick: closeEasterEgg,
+    },
+    "SKIP",
+    h("span", { "aria-hidden": "true" }, " ESC ↗"),
+  );
+
+  const overlay = h(
+    "section",
+    {
+      class: "wassim-egg-overlay",
+      role: "dialog",
+      "aria-modal": "true",
+      "aria-label": "Wassim root access easter egg",
+      tabindex: "-1",
+    },
+    h("div", { class: "wassim-egg-grid", "aria-hidden": true }),
+    h("div", { class: "wassim-egg-rain", "aria-hidden": true }, rain),
+    h(
+      "div",
+      { class: "wassim-egg-topbar" },
+      h(
+        "span",
+        { class: "wassim-egg-live" },
+        h("i", { "aria-hidden": "true" }),
+        " LIVE // PRIVATE CHANNEL",
+      ),
+      h("span", { class: "wassim-egg-node" }, "NODE: WASSIM-01"),
+      h("span", { class: "wassim-egg-encrypted" }, "AES-256 :: ENCRYPTED"),
+    ),
+    h(
+      "div",
+      { class: "wassim-egg-stage" },
+      h("p", { class: "wassim-egg-kicker" }, "// UNAUTHORIZED? NOT FOR HIM."),
+      h(
+        "div",
+        { class: "wassim-egg-sigil", "aria-hidden": true },
+        h("span", { class: "wassim-egg-sigil-ring" }),
+        h("span", { class: "wassim-egg-sigil-ring wassim-egg-sigil-ring-two" }),
+        h("strong", {}, "W"),
+        h("i", {}, "0x57"),
+      ),
+      h(
+        "p",
+        { class: "wassim-egg-identity" },
+        "IDENTITY VERIFIED",
+        h("span", { "aria-hidden": "true" }, " // "),
+        " OPERATOR FOUND",
+      ),
+      h(
+        "h1",
+        { class: "wassim-egg-title", "data-text": "I KNOW WHERE YOU LIVE" },
+        "I KNOW WHERE YOU LIVE",
+      ),
+      h("p", { class: "wassim-egg-subtitle" }, "THE GHOST IN THE MACHINE"),
+      h(
+        "div",
+        { class: "wassim-egg-console", "aria-label": "Simulated access log" },
+        h("span", {}, h("b", {}, "root@mainframe"), ":~$ whoami"),
+        h("span", {}, "wassim // system architect // level ∞"),
+        h(
+          "span",
+          {},
+          h("b", {}, "root@mainframe"),
+          ":~$ grant --all --to WASSIM",
+        ),
+        h(
+          "span",
+          { class: "wassim-egg-console-success" },
+          "[ OK ] PRIVILEGES ELEVATED. REALITY PATCHED.",
+        ),
+      ),
+      h(
+        "div",
+        { class: "wassim-egg-stats" },
+        h(
+          "div",
+          { class: "wassim-egg-stat" },
+          h("span", {}, "ACCESS LEVEL"),
+          h("strong", {}, "ROOT / GODMODE"),
+        ),
+        h(
+          "div",
+          { class: "wassim-egg-stat" },
+          h("span", {}, "THREAT LEVEL"),
+          h("strong", { class: "wassim-egg-stat-hot" }, "LEGENDARY"),
+        ),
+        h(
+          "div",
+          { class: "wassim-egg-stat" },
+          h("span", {}, "SYSTEM STATUS"),
+          h("strong", { class: "wassim-egg-stat-ok" }, "WASSIM-APPROVED"),
+        ),
+      ),
+      h(
+        "p",
+        { class: "wassim-egg-verdict" },
+        "THIS SYSTEM HAS ONE ADMIN. YOU KNOW THE NAME.",
+      ),
+    ),
+    h(
+      "div",
+      { class: "wassim-egg-footer" },
+      h("span", {}, "SIGNAL ORIGIN: LOCALHOST"),
+      h(
+        "span",
+        { class: "wassim-egg-progress", "aria-hidden": true },
+        h("i", {}),
+      ),
+      h("span", {}, "SESSION WILL SELF-DESTRUCT"),
+      skipButton,
+    ),
+  );
+
+  function finishEasterEgg() {
+    if (finished) return;
+    finished = true;
+    clearTimeout(closeTimer);
+    overlay.classList.add("wassim-egg-exiting");
+    window.setTimeout(
+      () => {
+        overlay.remove();
+        document.removeEventListener("keydown", onEasterEggKeydown, true);
+        document.body.style.overflow = previousBodyOverflow;
+        document.documentElement.style.overflow = previousRootOverflow;
+        wassimEggActive = false;
+        if (previousFocus instanceof HTMLElement && previousFocus.isConnected) {
+          try {
+            previousFocus.focus({ preventScroll: true });
+          } catch {
+            previousFocus.focus();
+          }
+        }
+      },
+      motionIsReduced ? 30 : 170,
+    );
+  }
+
+  function closeEasterEgg() {
+    finishEasterEgg();
+  }
+
+  function onEasterEggKeydown(event) {
+    if (event.key === "Escape") {
+      event.preventDefault();
+      event.stopPropagation();
+      closeEasterEgg();
+      return;
+    }
+    // Keep keyboard navigation inside this short-lived, modal experience.
+    if (event.key === "Tab") {
+      event.preventDefault();
+      skipButton.focus();
+    }
+  }
+
+  document.body.style.overflow = "hidden";
+  document.documentElement.style.overflow = "hidden";
+  document.body.append(overlay);
+  document.addEventListener("keydown", onEasterEggKeydown, true);
+  overlay.focus({ preventScroll: true });
+
+  // Natural run: ~2.6 seconds including the exit transition. Reduced-motion
+  // users get the same reveal without the animated effects, and it ends sooner.
+  closeTimer = window.setTimeout(
+    finishEasterEgg,
+    motionIsReduced ? 1450 : 2420,
+  );
+}
+
+document.addEventListener(
+  "click",
+  (event) => {
+    const target =
+      event.target instanceof Element ? event.target.closest("#brand") : null;
+    if (!target) return;
+    if (
+      event.button !== 0 ||
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey
+    )
+      return;
+    launchWassimEasterEgg();
+  },
+  true,
+);

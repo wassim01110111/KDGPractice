@@ -3809,3 +3809,749 @@ pre:focus-within,
     transform: none !important;
   }
 }
+
+/* ============================================================
+   WASSIM // FULL-SCREEN ROOT ACCESS EASTER EGG
+   Isolated overlay styles: no persistent theme or page mutations.
+   ============================================================ */
+.wassim-egg-overlay {
+  position: fixed;
+  z-index: 2147483646;
+  inset: 0;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 0;
+  overflow: hidden;
+  padding: max(0.8rem, env(safe-area-inset-top)) clamp(0.8rem, 3vw, 2.5rem)
+    max(0.75rem, env(safe-area-inset-bottom));
+  color: #e8d9df;
+  background:
+    radial-gradient(ellipse at 50% 42%, rgb(125 0 32 / 21%), transparent 48%),
+    radial-gradient(ellipse at 50% 100%, #16050b 0, #020204 62%);
+  font-family:
+    ui-monospace, "Cascadia Code", "SFMono-Regular", Menlo, monospace;
+  isolation: isolate;
+  overscroll-behavior: contain;
+  touch-action: manipulation;
+  opacity: 1;
+  animation: wassim-egg-arrive 180ms ease-out both;
+  transition:
+    opacity 170ms ease,
+    transform 170ms ease,
+    filter 170ms ease;
+}
+
+.wassim-egg-overlay * {
+  box-sizing: border-box;
+}
+
+.wassim-egg-overlay::before,
+.wassim-egg-overlay::after {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+}
+
+.wassim-egg-overlay::before {
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0 3px,
+    rgb(255 45 85 / 4%) 3px 4px
+  );
+  opacity: 0.64;
+}
+
+.wassim-egg-overlay::after {
+  top: -25%;
+  height: 24%;
+  background: linear-gradient(transparent, rgb(255 25 70 / 10%), transparent);
+  animation: wassim-egg-scan 1.55s linear infinite;
+}
+
+.wassim-egg-grid {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  background-image:
+    linear-gradient(rgb(255 45 85 / 8%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 45 85 / 8%) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: radial-gradient(ellipse at center, #000 10%, transparent 83%);
+  opacity: 0.45;
+}
+
+.wassim-egg-rain {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0.23;
+}
+
+.wassim-egg-rain-column {
+  position: absolute;
+  top: -125%;
+  left: calc(var(--wee-column) * 4.55%);
+  color: #ff3158;
+  font-size: clamp(0.48rem, 0.85vw, 0.72rem);
+  font-weight: 700;
+  line-height: 1.55;
+  white-space: pre;
+  text-shadow: 0 0 8px rgb(255 30 70 / 75%);
+  animation: wassim-egg-rain-fall var(--wee-speed) linear var(--wee-delay)
+    infinite;
+}
+
+.wassim-egg-topbar,
+.wassim-egg-footer {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem 1rem;
+  width: min(100%, 1180px);
+  margin-inline: auto;
+  color: #936b78;
+  font-size: clamp(0.56rem, 0.85vw, 0.7rem);
+  font-weight: 700;
+  letter-spacing: 0.09em;
+}
+
+.wassim-egg-topbar {
+  min-height: 2rem;
+  padding-bottom: 0.55rem;
+  border-bottom: 1px solid rgb(255 45 85 / 21%);
+}
+
+.wassim-egg-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #ffd0dc;
+}
+
+.wassim-egg-live i {
+  width: 0.48rem;
+  height: 0.48rem;
+  border-radius: 50%;
+  background: #ff1744;
+  box-shadow:
+    0 0 8px #ff1744,
+    0 0 18px rgb(255 23 68 / 80%);
+  animation: wassim-egg-blink 680ms steps(2, end) infinite;
+}
+
+.wassim-egg-encrypted {
+  color: #80515f;
+}
+
+.wassim-egg-stage {
+  display: flex;
+  min-height: 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(0.55rem, 2vh, 1.5rem) 0;
+  text-align: center;
+}
+
+.wassim-egg-kicker,
+.wassim-egg-identity,
+.wassim-egg-subtitle,
+.wassim-egg-verdict {
+  margin: 0;
+  font-weight: 700;
+}
+
+.wassim-egg-kicker {
+  color: #ff829b;
+  font-size: clamp(0.58rem, 1.1vw, 0.75rem);
+  letter-spacing: 0.2em;
+  animation: wassim-egg-rise 320ms 80ms both;
+}
+
+.wassim-egg-sigil {
+  position: relative;
+  display: grid;
+  width: clamp(4rem, 8vw, 5.4rem);
+  aspect-ratio: 1;
+  place-items: center;
+  margin: clamp(0.5rem, 1.7vh, 1.1rem) 0 0.45rem;
+  border: 1px solid rgb(255 45 85 / 60%);
+  background: rgb(48 5 17 / 56%);
+  box-shadow:
+    0 0 22px rgb(255 20 60 / 18%),
+    inset 0 0 22px rgb(255 20 60 / 13%);
+  transform: rotate(45deg);
+  animation: wassim-egg-sigil-in 500ms 80ms cubic-bezier(0.2, 0.9, 0.2, 1) both;
+}
+
+.wassim-egg-sigil strong {
+  color: #ffe5ec;
+  font-size: clamp(2rem, 5vw, 3.1rem);
+  line-height: 1;
+  text-shadow:
+    0 0 9px #ff3158,
+    0 0 24px rgb(255 40 85 / 70%);
+  transform: rotate(-45deg);
+}
+
+.wassim-egg-sigil > i {
+  position: absolute;
+  right: -0.95rem;
+  bottom: -0.75rem;
+  color: #ff5278;
+  font-size: 0.55rem;
+  font-style: normal;
+  transform: rotate(-45deg);
+}
+
+.wassim-egg-sigil-ring {
+  position: absolute;
+  inset: -9px;
+  border: 1px dashed rgb(255 45 85 / 48%);
+  border-radius: 50%;
+  animation: wassim-egg-orbit 5s linear infinite;
+}
+
+.wassim-egg-sigil-ring-two {
+  inset: -17px;
+  border-color: rgb(153 76 255 / 27%);
+  animation-direction: reverse;
+  animation-duration: 7s;
+}
+
+.wassim-egg-identity {
+  margin-top: 0.4rem;
+  color: #c47b91;
+  font-size: clamp(0.55rem, 1vw, 0.7rem);
+  letter-spacing: 0.17em;
+  animation: wassim-egg-rise 350ms 170ms both;
+}
+
+.wassim-egg-identity span {
+  color: #ff1744;
+}
+
+.wassim-egg-title {
+  position: relative;
+  margin: 0.06em 0 0;
+  color: #ffe5ec;
+  font-size: clamp(3.4rem, 12vw, 8.8rem);
+  font-weight: 950;
+  letter-spacing: clamp(0.04em, 1.4vw, 0.16em);
+  line-height: 0.98;
+  text-shadow:
+    0 0 9px rgb(255 45 85 / 56%),
+    0 0 38px rgb(255 20 60 / 25%);
+  animation: wassim-egg-title-in 470ms 180ms cubic-bezier(0.17, 0.85, 0.2, 1)
+    both;
+}
+
+.wassim-egg-title::before,
+.wassim-egg-title::after {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  content: attr(data-text);
+  pointer-events: none;
+}
+
+.wassim-egg-title::before {
+  color: #ff1744;
+  clip-path: inset(0 0 55% 0);
+  transform: translateX(-3px);
+  animation: wassim-egg-glitch-a 1.15s 480ms steps(2, end) 2;
+}
+
+.wassim-egg-title::after {
+  color: #a855f7;
+  clip-path: inset(55% 0 0 0);
+  transform: translateX(3px);
+  animation: wassim-egg-glitch-b 1.05s 520ms steps(2, end) 2;
+}
+
+.wassim-egg-subtitle {
+  margin-top: 0.4rem;
+  color: #ff3158;
+  font-size: clamp(0.62rem, 1.35vw, 0.9rem);
+  letter-spacing: clamp(0.16em, 1.15vw, 0.42em);
+  animation: wassim-egg-rise 350ms 300ms both;
+}
+
+.wassim-egg-console {
+  display: grid;
+  gap: 0.18rem;
+  width: min(100%, 37rem);
+  margin-top: clamp(0.65rem, 1.7vh, 1.1rem);
+  padding: 0.58rem 0.85rem;
+  border: 1px solid rgb(255 45 85 / 25%);
+  border-left: 2px solid #ff1744;
+  background: rgb(12 2 6 / 76%);
+  box-shadow:
+    0 0 22px rgb(255 20 60 / 8%),
+    inset 0 0 18px rgb(255 20 60 / 4%);
+  color: #b47b8d;
+  text-align: left;
+  font-size: clamp(0.57rem, 1vw, 0.72rem);
+}
+
+.wassim-egg-console > span {
+  overflow: hidden;
+  opacity: 0;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  animation: wassim-egg-log-in 230ms ease-out forwards;
+}
+
+.wassim-egg-console > span:nth-child(1) {
+  animation-delay: 360ms;
+}
+.wassim-egg-console > span:nth-child(2) {
+  animation-delay: 570ms;
+}
+.wassim-egg-console > span:nth-child(3) {
+  animation-delay: 770ms;
+}
+.wassim-egg-console > span:nth-child(4) {
+  animation-delay: 990ms;
+}
+
+.wassim-egg-console b {
+  color: #ff3158;
+  font-weight: 800;
+}
+
+.wassim-egg-console-success {
+  color: #ffb347;
+  text-shadow: 0 0 8px rgb(255 179 71 / 40%);
+}
+
+.wassim-egg-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.45rem;
+  width: min(100%, 37rem);
+  margin-top: 0.5rem;
+  animation: wassim-egg-rise 350ms 720ms both;
+}
+
+.wassim-egg-stat {
+  display: grid;
+  gap: 0.12rem;
+  min-width: 0;
+  padding: 0.4rem 0.55rem;
+  border: 1px solid rgb(255 45 85 / 17%);
+  background: rgb(18 3 9 / 68%);
+}
+
+.wassim-egg-stat > span {
+  overflow: hidden;
+  color: #986778;
+  font-size: clamp(0.48rem, 0.75vw, 0.59rem);
+  letter-spacing: 0.12em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.wassim-egg-stat strong {
+  overflow: hidden;
+  color: #f4dce4;
+  font-size: clamp(0.57rem, 0.95vw, 0.72rem);
+  letter-spacing: 0.04em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.wassim-egg-stat-hot {
+  color: #ff5278 !important;
+}
+.wassim-egg-stat-ok {
+  color: #ff9eb5 !important;
+}
+
+.wassim-egg-verdict {
+  margin-top: clamp(0.5rem, 1.4vh, 0.85rem);
+  color: #d4a1b1;
+  font-size: clamp(0.55rem, 0.95vw, 0.68rem);
+  letter-spacing: 0.1em;
+  animation: wassim-egg-rise 350ms 900ms both;
+}
+
+.wassim-egg-footer {
+  min-height: 2.1rem;
+  padding-top: 0.55rem;
+  border-top: 1px solid rgb(255 45 85 / 21%);
+  font-size: clamp(0.49rem, 0.75vw, 0.63rem);
+}
+
+.wassim-egg-progress {
+  position: relative;
+  display: block;
+  flex: 1 1 8rem;
+  max-width: 15rem;
+  height: 3px;
+  overflow: hidden;
+  background: rgb(255 45 85 / 16%);
+}
+
+.wassim-egg-progress i {
+  display: block;
+  width: 0;
+  height: 100%;
+  background: linear-gradient(90deg, #ff1744, #ff3158, #a855f7);
+  box-shadow: 0 0 10px #ff3158;
+  animation: wassim-egg-progress 2.42s linear both;
+}
+
+.wassim-egg-skip {
+  flex: 0 0 auto;
+  min-height: 2rem;
+  margin: 0;
+  padding: 0.36rem 0.62rem;
+  border: 1px solid rgb(255 45 85 / 35%);
+  border-radius: 4px;
+  color: #ffd0dc;
+  background: rgb(35 4 13 / 92%);
+  font:
+    800 0.62rem/1 ui-monospace,
+    "Cascadia Code",
+    monospace;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition:
+    background 120ms ease,
+    border-color 120ms ease,
+    transform 120ms ease;
+}
+
+.wassim-egg-skip span {
+  color: #986778;
+  font-size: 0.55rem;
+}
+
+.wassim-egg-skip:hover,
+.wassim-egg-skip:focus-visible {
+  border-color: #ff3158;
+  background: #5c0a20;
+  box-shadow: 0 0 16px rgb(255 23 68 / 18%);
+}
+
+.wassim-egg-skip:active {
+  transform: scale(0.96);
+}
+
+.wassim-egg-exiting {
+  opacity: 0;
+  filter: brightness(2.2) saturate(1.3);
+  transform: scale(1.012);
+  pointer-events: none;
+}
+
+@keyframes wassim-egg-arrive {
+  from {
+    opacity: 0;
+    filter: brightness(2.5);
+  }
+  to {
+    opacity: 1;
+    filter: brightness(1);
+  }
+}
+
+@keyframes wassim-egg-scan {
+  from {
+    transform: translateY(-15%);
+  }
+  to {
+    transform: translateY(560%);
+  }
+}
+
+@keyframes wassim-egg-rain-fall {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(240vh);
+  }
+}
+
+@keyframes wassim-egg-blink {
+  50% {
+    opacity: 0.25;
+  }
+}
+
+@keyframes wassim-egg-orbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes wassim-egg-sigil-in {
+  from {
+    opacity: 0;
+    transform: rotate(130deg) scale(0.25);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(45deg) scale(1);
+  }
+}
+
+@keyframes wassim-egg-rise {
+  from {
+    opacity: 0;
+    transform: translateY(9px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes wassim-egg-title-in {
+  0% {
+    opacity: 0;
+    transform: translateY(12px) scale(0.92);
+    letter-spacing: 0.35em;
+  }
+  65% {
+    opacity: 1;
+    transform: translateY(-2px) scale(1.025);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes wassim-egg-glitch-a {
+  0%,
+  100% {
+    transform: translateX(-3px);
+  }
+  20% {
+    transform: translate(-7px, 1px);
+  }
+  45% {
+    transform: translate(3px, -1px);
+  }
+  70% {
+    transform: translate(-2px, 0);
+  }
+}
+
+@keyframes wassim-egg-glitch-b {
+  0%,
+  100% {
+    transform: translateX(3px);
+  }
+  25% {
+    transform: translate(7px, -1px);
+  }
+  50% {
+    transform: translate(-4px, 1px);
+  }
+  75% {
+    transform: translate(2px, 0);
+  }
+}
+
+@keyframes wassim-egg-log-in {
+  from {
+    opacity: 0;
+    transform: translateX(-7px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes wassim-egg-progress {
+  to {
+    width: 100%;
+  }
+}
+
+@media (max-width: 620px) {
+  .wassim-egg-overlay {
+    padding-inline: 0.8rem;
+  }
+
+  .wassim-egg-topbar,
+  .wassim-egg-footer {
+    gap: 0.45rem;
+    letter-spacing: 0.045em;
+  }
+
+  .wassim-egg-encrypted,
+  .wassim-egg-footer > span:first-child {
+    display: none;
+  }
+
+  .wassim-egg-node {
+    margin-left: auto;
+  }
+
+  .wassim-egg-title {
+    font-size: clamp(3.35rem, 18vw, 6rem);
+  }
+
+  .wassim-egg-console {
+    padding: 0.52rem 0.62rem;
+  }
+
+  .wassim-egg-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .wassim-egg-stat:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .wassim-egg-footer {
+    justify-content: space-between;
+  }
+
+  .wassim-egg-footer > span:last-of-type {
+    display: none;
+  }
+
+  .wassim-egg-progress {
+    max-width: none;
+  }
+}
+
+@media (max-height: 650px) and (min-width: 621px) {
+  .wassim-egg-stage {
+    padding-block: 0.2rem;
+  }
+  .wassim-egg-sigil {
+    width: 3.2rem;
+    margin-block: 0.1rem 0.25rem;
+  }
+  .wassim-egg-subtitle {
+    margin-top: 0.12rem;
+  }
+  .wassim-egg-console {
+    margin-top: 0.35rem;
+    padding-block: 0.32rem;
+  }
+  .wassim-egg-stats {
+    margin-top: 0.3rem;
+  }
+  .wassim-egg-verdict {
+    margin-top: 0.3rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .wassim-egg-kicker {
+    letter-spacing: 0.12em;
+  }
+  .wassim-egg-identity {
+    letter-spacing: 0.1em;
+  }
+  .wassim-egg-subtitle {
+    letter-spacing: 0.16em;
+  }
+  .wassim-egg-console {
+    font-size: 0.54rem;
+  }
+  .wassim-egg-stat {
+    padding-inline: 0.42rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wassim-egg-overlay,
+  .wassim-egg-overlay::after,
+  .wassim-egg-rain-column,
+  .wassim-egg-live i,
+  .wassim-egg-sigil,
+  .wassim-egg-sigil-ring,
+  .wassim-egg-kicker,
+  .wassim-egg-identity,
+  .wassim-egg-title,
+  .wassim-egg-title::before,
+  .wassim-egg-title::after,
+  .wassim-egg-subtitle,
+  .wassim-egg-console > span,
+  .wassim-egg-stats,
+  .wassim-egg-verdict,
+  .wassim-egg-progress i {
+    animation: none !important;
+  }
+
+  .wassim-egg-sigil,
+  .wassim-egg-sigil strong {
+    transform: none;
+  }
+  .wassim-egg-sigil > i {
+    transform: none;
+  }
+  .wassim-egg-console > span {
+    opacity: 1;
+  }
+  .wassim-egg-progress i {
+    width: 100%;
+  }
+  .wassim-egg-overlay {
+    transition: none;
+  }
+}
+
+/* Exam term selection and courses unavailable for the selected terms. */
+.exam-term-control {
+  min-width: 0;
+}
+
+.exam-term-checkboxes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr));
+  gap: 0.5rem;
+  padding: 0.65rem;
+  background: color-mix(in srgb, var(--soft) 72%, var(--card));
+  border: 1px solid var(--bd);
+  border-radius: 11px;
+}
+
+.exam-course-checkbox.is-unavailable {
+  color: var(--mut);
+  background: color-mix(in srgb, var(--soft) 78%, var(--card));
+  border-style: dashed;
+  cursor: not-allowed;
+  opacity: 0.42;
+  filter: grayscale(0.85);
+}
+
+.exam-course-checkbox.is-unavailable input {
+  cursor: not-allowed;
+}
+
+.exam-term-checkbox {
+  min-height: 2.65rem;
+}
+
+@media (max-width: 480px) {
+  .exam-term-checkboxes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.4rem;
+    padding: 0.5rem;
+  }
+
+  .exam-term-checkbox {
+    min-height: 2.5rem;
+    padding: 0.45rem 0.5rem;
+  }
+}
