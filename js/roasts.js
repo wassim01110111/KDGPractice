@@ -375,6 +375,43 @@ const memes = [
     verdict: "EVEN RANDOM SELECTION WOULD FIND A WAY TO SKIP YOU.",
   },
   {
+    title: "IF I WANTED TO KILL MYSELF, I'D JUMP UP TO YOUR EGO",
+    subtitle: "AND JUMP DOWN TO YOUR IQ.",
+    kicker: "// RANK: EXTREME ALTITUDE",
+    log: "Your ego is sky-high. Your intelligence is underground.",
+    verdict: "THE DISTANCE BETWEEN YOUR EGO AND IQ IS A FLIGHT RISK.",
+  },
+  {
+    title: "COMMIT TOASTER BATH",
+    subtitle: "TWO WORDS. ONE VERY DARK SUGGESTION.",
+    kicker: "// RANK: DARK HUMOR",
+    log: "No explanation. No elaboration. Just pure unfiltered hostility.",
+    verdict: "THE ROAST HAS LEFT THE BUILDING.",
+  },
+  {
+    title: "NICE TRY",
+    subtitle:
+      "NOW JUST IMAGINE HOW IT WOULD HAVE GONE IF YOUR PARENTS WEREN'T SIBLINGS.",
+    kicker: "// RANK: GENETIC DISASTER",
+    log: "Your family tree doesn't branch. It loops.",
+    verdict: "EVOLUTION FILED A FORMAL COMPLAINT.",
+  },
+  {
+    title: "YOU WOULD HAVE MADE A GREAT PILOT FOR JAPAN IN 1942",
+    subtitle: "NO FURTHER EXPLANATION REQUIRED.",
+    kicker: "// RANK: HISTORICAL DISASTER",
+    log: "Some historical references explain themselves.",
+    verdict: "YOUR CAREER PROSPECTS ARE LOOKING EXPLOSIVE.",
+  },
+  {
+    title: "I CAN'T EVEN CALL YOU AN ANIMAL",
+    subtitle: "THESE HAVE A SURVIVAL INSTINCT AT LEAST.",
+    kicker: "// RANK: BELOW EVOLUTION",
+    log: "Even the dumbest creatures know when they're in danger.",
+    verdict: "NATURE HAS STANDARDS. SOMEHOW YOU MISSED THEM.",
+  },
+
+  {
     title: "I DON'T KNOW WHAT MAKES YOU SO STUPID",
     subtitle: "BUT IT WORKS.",
     kicker: "// RANK: NATURAL DISASTER",
@@ -618,5 +655,26 @@ const memes = [
     kicker: "// RANK: EVOLUTIONARY ERROR",
     log: "Nature gave you a brain and somehow forgot to include the instructions.",
     verdict: "EVEN A BIRD WOULD CONSIDER THAT A DOWNGRADE.",
+  },
+  {
+    title: "YOUR FOREHEAD HAS ITS OWN TIME ZONE",
+    subtitle: "DAYLIGHT SAVINGS DOESN'T EVEN APPLY UP THERE.",
+    kicker: "// RANK: FIVEHEAD SUPREMACY",
+    log: "NASA detected an unexplored landmass above your eyebrows. Google Maps is still trying to render the full image.",
+    verdict: "YOUR HAIRLINE ISN'T RECEDING. IT'S RUNNING FOR ITS LIFE.",
+  },
+  {
+    title: "YOUR BIRTH CERTIFICATE IS AN APOLOGY LETTER",
+    subtitle: "FROM THE CONDOM FACTORY.",
+    kicker: "// RANK: PRODUCTION ERROR",
+    log: "Somewhere, an entire quality-control department failed its one job.",
+    verdict: "EVEN YOUR EXISTENCE CAME WITH A DISCLAIMER.",
+  },
+  {
+    title: "WELL AREN'T YOU A WASTE",
+    subtitle: "OF 2 BILLION YEARS OF EVOLUTION.",
+    kicker: "// RANK: EVOLUTIONARY SETBACK",
+    log: "Billions of years of natural selection, and somehow this is what we ended up with.",
+    verdict: "EVOLUTION DID ALL THAT WORK JUST FOR YOU TO BE THE FINAL RESULT.",
   },
 ];
