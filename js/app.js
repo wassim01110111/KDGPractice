@@ -4708,9 +4708,6 @@ loadContent()
     $("#main").textContent = "Startup error: " + e.message;
   });
 
-// ---------- Wassim's 2.6s brand easter egg ----------
-// Delegated click handling means this works even if #brand is rendered later.
-// A single active instance + a short cooldown makes rapid/repeated clicks safe.
 let wassimEggActive = false;
 let wassimEggLastStart = -Infinity;
 let rainColumnIndex = 0;
