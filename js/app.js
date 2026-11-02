@@ -5050,3 +5050,25 @@ focusButton.addEventListener("click", () => {
     isPressed ? "Hide distractions" : "Enable distractions";
   focusButton.setAttribute("aria-pressed", String(!isPressed));
 });
+
+let clickCount = 0;
+let clickTimer;
+
+const wassimSign = document.getElementById("wassim-sign");
+
+wassimSign.addEventListener("click", () => {
+  clickCount++;
+
+  clearTimeout(clickTimer);
+
+  if (clickCount >= 5) {
+    focusButton.style.display = "block";
+
+    clickCount = 0;
+    return;
+  }
+
+  clickTimer = setTimeout(() => {
+    clickCount = 0;
+  }, 3000);
+});
