@@ -13,6 +13,7 @@
   --hint-border: #d97706;
   --card: #fff;
   --uml-bg: #fff;
+  --wee-duration: 2.42s;
   --soft: #edf2fb;
   --shadow: 0 8px 24px rgb(25 45 85 / 7%);
 }
@@ -4238,7 +4239,7 @@ pre:focus-within,
   height: 100%;
   background: linear-gradient(90deg, #ff1744, #ff3158, #a855f7);
   box-shadow: 0 0 10px #ff3158;
-  animation: wassim-egg-progress 2.42s linear both;
+  animation: wassim-egg-progress var(--wee-duration) linear both;
 }
 
 .wassim-egg-skip {

@@ -4693,24 +4693,46 @@ loadContent()
 // A single active instance + a short cooldown makes rapid/repeated clicks safe.
 let wassimEggActive = false;
 let wassimEggLastStart = -Infinity;
+let rainColumnIndex = 0;
+
+let wassimEggState = "closed";
 
 function launchWassimEasterEgg() {
   const now = performance.now();
+
   if (wassimEggActive || now - wassimEggLastStart < 650) return;
+
   wassimEggActive = true;
   wassimEggLastStart = now;
+  wassimEggState = "open";
 
   const previousFocus = document.activeElement;
   const previousBodyOverflow = document.body.style.overflow;
   const previousRootOverflow = document.documentElement.style.overflow;
   const motionIsReduced = reducedMotion.matches;
+
+  // Shared animation and closing durations.
+  const closeDuration = motionIsReduced ? 1450 : 4420;
+  const exitDuration = motionIsReduced ? 30 : 200;
+
   let closeTimer = 0;
+  let exitTimer = 0;
   let finished = false;
+  let rainColumnIndex = 0;
 
   const meme = memes[Math.floor(Math.random() * memes.length)];
 
-  const alphabet = "01WASSIM<>[]{}#$%/\\";
-  const rain = Array.from({ length: 22 }, (_, column) => {
+  const text = {
+    kicker: String(meme.kicker ?? ""),
+    title: String(meme.title ?? ""),
+    subtitle: String(meme.subtitle ?? ""),
+    log: String(meme.log ?? ""),
+    verdict: String(meme.verdict ?? ""),
+  };
+
+  const alphabet = "01WASSIM<>[]{}#$/\\";
+
+  const rain = Array.from({ length: 22 }, () => {
     const stream = Array.from(
       { length: 17 },
       () => alphabet[Math.floor(Math.random() * alphabet.length)],
@@ -4720,11 +4742,35 @@ function launchWassimEasterEgg() {
       "span",
       {
         class: "wassim-egg-rain-column",
-        style: `--wee-column:${column};--wee-delay:${(-Math.random() * 2.6).toFixed(2)}s;--wee-speed:${(1.35 + Math.random() * 1.9).toFixed(2)}s`,
+        style: `--wee-column:${rainColumnIndex++};--wee-delay:${(-Math.random() * 2.6).toFixed(2)}s;--wee-speed:${(1.35 + Math.random() * 1.9).toFixed(2)}s`,
       },
       stream,
     );
   });
+
+  const kickerElement = h("p", {
+    class: "wassim-egg-kicker",
+  });
+  kickerElement.textContent = text.kicker;
+
+  const titleElement = h("h1", {
+    class: "wassim-egg-title",
+  });
+  titleElement.textContent = text.title;
+  titleElement.dataset.text = text.title;
+
+  const subtitleElement = h("p", {
+    class: "wassim-egg-subtitle",
+  });
+  subtitleElement.textContent = text.subtitle;
+
+  const logElement = h("span");
+  logElement.textContent = text.log;
+
+  const verdictElement = h("p", {
+    class: "wassim-egg-verdict",
+  });
+  verdictElement.textContent = text.verdict;
 
   const skipButton = h(
     "button",
@@ -4746,6 +4792,7 @@ function launchWassimEasterEgg() {
       "aria-modal": "true",
       "aria-label": "Wassim root access easter egg",
       tabindex: "-1",
+      style: `--wee-duration: ${closeDuration}ms`,
     },
 
     h("div", { class: "wassim-egg-grid", "aria-hidden": true }),
@@ -4771,7 +4818,7 @@ function launchWassimEasterEgg() {
       "div",
       { class: "wassim-egg-stage" },
 
-      h("p", { class: "wassim-egg-kicker" }, meme.kicker),
+      kickerElement,
 
       h(
         "div",
@@ -4791,24 +4838,13 @@ function launchWassimEasterEgg() {
       h(
         "p",
         { class: "wassim-egg-identity" },
-
         "IDENTITY VERIFIED",
-
         h("span", { "aria-hidden": true }, " // "),
-
         " OPERATOR FOUND",
       ),
 
-      h(
-        "h1",
-        {
-          class: "wassim-egg-title",
-          "data-text": meme.title,
-        },
-        meme.title,
-      ),
-
-      h("p", { class: "wassim-egg-subtitle" }, meme.subtitle),
+      titleElement,
+      subtitleElement,
 
       h(
         "div",
@@ -4821,7 +4857,7 @@ function launchWassimEasterEgg() {
 
         h("span", {}, "wassim // system architect // level ∞"),
 
-        h("span", {}, h("b", {}, "root@mainframe"), ":~$ ", meme.log),
+        h("span", {}, h("b", {}, "root@mainframe"), ":~$ ", logElement),
 
         h(
           "span",
@@ -4856,7 +4892,7 @@ function launchWassimEasterEgg() {
         ),
       ),
 
-      h("p", { class: "wassim-egg-verdict" }, meme.verdict),
+      verdictElement,
     ),
 
     h(
@@ -4877,35 +4913,40 @@ function launchWassimEasterEgg() {
     ),
   );
 
+  function cleanup() {
+    clearTimeout(closeTimer);
+    clearTimeout(exitTimer);
+
+    document.removeEventListener("keydown", onEasterEggKeydown, true);
+
+    overlay.remove();
+
+    document.body.style.overflow = previousBodyOverflow;
+    document.documentElement.style.overflow = previousRootOverflow;
+
+    wassimEggActive = false;
+    wassimEggState = "closed";
+
+    if (previousFocus instanceof HTMLElement && previousFocus.isConnected) {
+      try {
+        previousFocus.focus({ preventScroll: true });
+      } catch {
+        previousFocus.focus();
+      }
+    }
+  }
+
   function finishEasterEgg() {
     if (finished) return;
+
     finished = true;
+    wassimEggState = "closing";
 
     clearTimeout(closeTimer);
 
     overlay.classList.add("wassim-egg-exiting");
 
-    window.setTimeout(
-      () => {
-        overlay.remove();
-
-        document.removeEventListener("keydown", onEasterEggKeydown, true);
-
-        document.body.style.overflow = previousBodyOverflow;
-        document.documentElement.style.overflow = previousRootOverflow;
-
-        wassimEggActive = false;
-
-        if (previousFocus instanceof HTMLElement && previousFocus.isConnected) {
-          try {
-            previousFocus.focus({ preventScroll: true });
-          } catch {
-            previousFocus.focus();
-          }
-        }
-      },
-      motionIsReduced ? 30 : 170,
-    );
+    exitTimer = window.setTimeout(cleanup, exitDuration);
   }
 
   function closeEasterEgg() {
@@ -4920,13 +4961,13 @@ function launchWassimEasterEgg() {
       return;
     }
 
-    // Keep keyboard navigation inside this short-lived modal.
     if (event.key === "Tab") {
       event.preventDefault();
       skipButton.focus();
     }
   }
 
+  // Mount overlay.
   document.body.style.overflow = "hidden";
   document.documentElement.style.overflow = "hidden";
 
@@ -4936,13 +4977,11 @@ function launchWassimEasterEgg() {
 
   overlay.focus({ preventScroll: true });
 
-  // Natural run: ~2.6 seconds including the exit transition.
-  // Reduced-motion users get a shorter reveal.
-  closeTimer = window.setTimeout(
-    finishEasterEgg,
-    motionIsReduced ? 1450 : 2420,
-  );
+  // Automatic closing synchronized with the progress bar.
+  closeTimer = window.setTimeout(finishEasterEgg, closeDuration);
 }
+
+// Keep the rain column counter local to each launch.
 
 document.addEventListener(
   "click",
