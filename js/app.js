@@ -5043,9 +5043,10 @@ document.addEventListener(
 
 focusButton.addEventListener("click", () => {
   const isPressed = focusButton.getAttribute("aria-pressed") === "true";
-  if (!isPressed) {
+  if (!isPressed && clickme.classList.contains("is-visible")) {
     hideClickme();
   }
-  focusButton.title = isPressed ? "Hide distractions" : "Enable distractions";
+  focusButton.title = focusButton.querySelector(".focus-label").textContent =
+    isPressed ? "Hide distractions" : "Enable distractions";
   focusButton.setAttribute("aria-pressed", String(!isPressed));
 });
