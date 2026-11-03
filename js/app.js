@@ -5646,7 +5646,7 @@ function triggerWassimSignal() {
       h(
         "strong",
         { class: "periodic-toast-message" },
-        "> WASSIM IS WATCHING YOU",
+        "> WASSIMGPT IS WATCHING YOU",
       ),
       h("span", { class: "periodic-toast-footer" }, "[ SESSION WATCHED ]"),
     );
