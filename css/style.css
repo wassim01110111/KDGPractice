@@ -151,11 +151,11 @@ header strong {
 }
 .maker-signature {
   display: inline-flex;
-  align-items: center; /* Better vertical alignment for rounded/pill badges */
+  align-items: center;
   gap: 0.5rem;
   margin-left: auto;
   margin-right: 1rem;
-  padding: 0.4rem 0.9rem; /* More generous, balanced padding */
+  padding: 0.4rem 0.9rem;
 
   color: var(--ac);
 
