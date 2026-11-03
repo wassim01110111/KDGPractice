@@ -1188,6 +1188,22 @@ function highlightCode(text, lang) {
   return out + esc(text.slice(last));
 }
 
+// Render exercise instructions as Markdown, including fenced code blocks.
+// Use the same sanitizer and syntax highlighter as the Reference/Canvas pages
+// so SQL and other supported languages receive the shared light/dark palette.
+function renderExerciseInstructions(target, source) {
+  const { html } = md(String(source ?? ""));
+  appendSanitizedReferenceHtml(target, html);
+  target.querySelectorAll('pre code[class^="language-"]').forEach((code) => {
+    const language = code.className
+      .slice("language-".length)
+      .toLowerCase();
+    const highlighted = highlightCode(code.textContent, language);
+    if (highlighted !== null) code.innerHTML = highlighted;
+  });
+  return target;
+}
+
 const expectedText = (ex) =>
   ex.type === "sql-query"
     ? formatSQL(ex.referenceSolution)
@@ -1641,6 +1657,8 @@ function qView(
       console.error("Could not save answer draft:", e);
     });
   };
+  const instructions = h("div", { class: "stmt md" });
+  renderExerciseInstructions(instructions, ex.instructions);
   q.append(
     h("h3", {}, ex.title),
     h(
@@ -1656,7 +1674,7 @@ function qView(
         .filter(Boolean)
         .join(" · "),
     ),
-    h("div", { class: "stmt" }, ex.instructions),
+    instructions,
   );
   const btns = h("div");
   let readAns, resetFn, submitButton, nextExerciseButton, focusTarget;
@@ -4005,25 +4023,27 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
         Object.entries(f).every(([k, v]) => !v || String(e[k]) === v) &&
         (!query || haystack.get(e).includes(query)),
     );
-    // A selected exercise must not leak back into the list after a filter
-    // (especially Term) excludes it. Keep completed selections visible only
-    // while they still satisfy the active filters.
-    if (selectedKey && !filtered.some((e) => keyOf(e) === selectedKey)) {
-      selectedKey = "";
-      pane.replaceChildren();
-    }
+    // Keep the active exercise available while filters/search change. The
+    // current question stays pinned in the list until the learner explicitly
+    // selects another exercise; filters may narrow the other choices but must
+    // never clear the active question or its answer pane.
+    const selectedExercise = selectedKey
+      ? S.exercises.find((e) => keyOf(e) === selectedKey)
+      : null;
     items = filtered.filter(
       (e) =>
         showCompleted || keyOf(e) === selectedKey || !S.xpRewards[keyOf(e)],
     );
+    if (
+      selectedExercise &&
+      !items.some((e) => keyOf(e) === selectedKey)
+    ) {
+      items.unshift(selectedExercise);
+    }
     lastResults = {};
     S.attempts.forEach((a) => {
       lastResults[a.key] = a.correct;
     });
-    if (selectedKey && !items.some((e) => keyOf(e) === selectedKey)) {
-      const currentExercise = filtered.find((e) => keyOf(e) === selectedKey);
-      if (currentExercise) items.unshift(currentExercise);
-    }
     // Keep the list virtualized when a deep link or Next action selects an
     // exercise beyond the visible window. Show that selected row separately
     // instead of expanding the list through every preceding exercise.
