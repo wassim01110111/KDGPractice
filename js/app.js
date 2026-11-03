@@ -3709,7 +3709,7 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
   ].sort((a, b) => a - b);
   const search = h("input", {
       type: "search",
-      placeholder: "Search titles",
+      placeholder: "Search titles, instructions, or IDs",
       "aria-label": "Search questions",
       oninput: () => redraw(),
     }),
@@ -3950,7 +3950,25 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
       () => !!nextExerciseAfter(),
     );
     pane.replaceChildren(view);
-    requestAnimationFrame(() => view.focusInput?.());
+    requestAnimationFrame(() => {
+      // User-initiated selection: put the top of the exercise at the top of
+      // the viewport, below the header if it is sticky/fixed.
+      if (addHistoryEntry) {
+        const header = document.querySelector("header"),
+          pinned =
+            header &&
+            ["sticky", "fixed"].includes(getComputedStyle(header).position),
+          offset = pinned ? header.getBoundingClientRect().height : 0,
+          top = view.getBoundingClientRect().top + scrollY - offset - 8;
+        window.scrollTo({
+          top: Math.max(0, top),
+          behavior: matchMedia("(prefers-reduced-motion: reduce)").matches
+            ? "auto"
+            : "smooth",
+        });
+      }
+      view.focusInput?.();
+    });
     if (addHistoryEntry) {
       const url = `#/practice/${encodeURIComponent(exercise.packageId)}/${encodeURIComponent(exercise.id)}`;
       if (location.hash !== url) history.pushState(null, "", url);
