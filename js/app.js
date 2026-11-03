@@ -2373,7 +2373,7 @@ async function pageReader(root, arg) {
   const refs = (S.manifest && S.manifest.referenceFiles) || [];
   if (!refs.length) return root.append(empty("No reference files configured."));
   const cur = refs.find((r) => r.id === arg) || refs[0],
-    body = h("article", { class: "md" }, "Loading…");
+    body = h("article", { class: "md" });
   const searchInput = h("input", {
       type: "search",
       class: "reference-search-input",
@@ -2394,7 +2394,7 @@ async function pageReader(root, arg) {
         type: "button",
         "aria-label": "Use regular expression",
         "aria-pressed": "false",
-        title: "Regular expression",
+        title: "Regular expression: off",
       },
       ".*",
     ),
@@ -2497,10 +2497,15 @@ async function pageReader(root, arg) {
   );
   root.append(header, h("div", { class: "reference-layout" }, sidebar, body));
   document.body.appendChild(searchToggle);
+  // How long typing must pause before the page is searched.
+  const SEARCH_DELAY_MS = 300;
   let matches = [],
     currentMatch = -1,
     regexMode = false,
-    keyboardGap = 0;
+    keyboardGap = 0,
+    highlighted = [], // { node, pieces } for each text node we split up
+    searchTimer = 0,
+    lastSearchKey = "";
   // Mobile: keep the floating search panel above the on-screen keyboard.
   // position:fixed is anchored to the layout viewport, and the keyboard (or a
   // fast programmatic scroll while it is open) can leave that behind the
@@ -2529,6 +2534,7 @@ async function pageReader(root, arg) {
     viewport?.removeEventListener("resize", syncSearchPanelToViewport);
     viewport?.removeEventListener("scroll", syncSearchPanelToViewport);
     removeEventListener("scroll", syncSearchPanelToViewport);
+    clearTimeout(searchTimer);
     searchPanel.remove();
     searchToggle.remove();
   };
@@ -2555,11 +2561,16 @@ async function pageReader(root, arg) {
     }
     match.scrollIntoView({ block: "center", behavior: "smooth" });
   };
+  // Undo by putting each original text node back, rather than merging the
+  // whole article's text nodes again with normalize(): far cheaper when there
+  // are thousands of highlights.
   const clearHighlights = () => {
-    body.querySelectorAll("mark.reference-search-match").forEach((mark) => {
-      mark.replaceWith(document.createTextNode(mark.textContent));
-    });
-    body.normalize();
+    for (const { node, pieces } of highlighted) {
+      if (!pieces[0].parentNode) continue;
+      pieces[0].replaceWith(node);
+      for (let i = 1; i < pieces.length; i++) pieces[i].remove();
+    }
+    highlighted = [];
     matches = [];
     currentMatch = -1;
   };
@@ -2578,58 +2589,87 @@ async function pageReader(root, arg) {
     searchPanel.querySelector(".reference-search-prev").disabled = true;
     searchPanel.querySelector(".reference-search-next").disabled = true;
   };
+  // Returns true if it ran a new search, false if the query is unchanged.
   const updateSearch = () => {
+    clearTimeout(searchTimer);
+    searchTimer = 0;
+    const query = searchInput.value.trim(),
+      key = query ? (regexMode ? "re:" : "text:") + query : "";
+    if (key === lastSearchKey) return false;
+    lastSearchKey = key;
     clearHighlights();
     searchInput.removeAttribute("aria-invalid");
-    const query = searchInput.value.trim();
-    if (!query) return resetResults();
+    if (!query) {
+      resetResults();
+      return true;
+    }
     let expression;
     try {
       expression = new RegExp(
         regexMode ? query : query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
-        "gi",
+        // Regex mode is case sensitive; plain-text mode stays case-insensitive.
+        regexMode ? "g" : "gi",
       );
     } catch {
       searchInput.setAttribute("aria-invalid", "true");
-      return resetResults("Invalid pattern");
+      resetResults("Invalid pattern");
+      return true;
     }
+    // Find every match first (the walker can't survive the DOM edits below).
     const walker = document.createTreeWalker(body, NodeFilter.SHOW_TEXT),
-      nodes = [];
-    while (walker.nextNode()) {
-      const node = walker.currentNode;
-      if (!node.parentElement.closest("script, style, mark")) nodes.push(node);
-    }
-    for (const node of nodes) {
+      found = [];
+    for (let node; (node = walker.nextNode()); ) {
       const text = node.nodeValue,
         ranges = [];
       expression.lastIndex = 0;
-      let found;
-      while ((found = expression.exec(text))) {
+      let hit;
+      while ((hit = expression.exec(text))) {
         // Zero-length matches (e.g. /a*/ or /\b/) can't be highlighted and
         // would never advance lastIndex, so skip past them.
-        if (!found[0]) {
+        if (!hit[0]) {
           expression.lastIndex++;
           continue;
         }
-        ranges.push([found.index, found.index + found[0].length]);
+        ranges.push([hit.index, hit.index + hit[0].length]);
       }
-      for (let i = ranges.length - 1; i >= 0; i--) {
-        const [start, end] = ranges[i],
-          range = document.createRange();
-        range.setStart(node, start);
-        range.setEnd(node, end);
+      if (ranges.length && !node.parentElement.closest("script, style, mark"))
+        found.push([node, text, ranges]);
+    }
+    // Then rebuild each affected text node once, in a single DOM operation,
+    // instead of splitting it with a Range for every match.
+    for (const [node, text, ranges] of found) {
+      const pieces = [],
+        fragment = document.createDocumentFragment();
+      let at = 0;
+      for (const [start, end] of ranges) {
+        if (start > at)
+          pieces.push(document.createTextNode(text.slice(at, start)));
         const mark = document.createElement("mark");
         mark.className = "reference-search-match";
-        range.surroundContents(mark);
+        mark.textContent = text.slice(start, end);
+        pieces.push(mark);
+        matches.push(mark);
+        at = end;
       }
+      if (at < text.length)
+        pieces.push(document.createTextNode(text.slice(at)));
+      for (const piece of pieces) fragment.appendChild(piece);
+      node.replaceWith(fragment);
+      highlighted.push({ node, pieces });
     }
-    matches = [...body.querySelectorAll("mark.reference-search-match")];
     const hasMatches = matches.length > 0;
     searchPanel.classList.toggle("has-matches", hasMatches);
     searchPanel.querySelector(".reference-search-prev").disabled = !hasMatches;
     searchPanel.querySelector(".reference-search-next").disabled = !hasMatches;
     if (hasMatches) showMatch(0);
     else searchCount.textContent = "No matches";
+    return true;
+  };
+  // Typing waits for a pause before searching; emptying the box is instant.
+  const scheduleSearch = () => {
+    clearTimeout(searchTimer);
+    if (!searchInput.value.trim()) updateSearch();
+    else searchTimer = setTimeout(updateSearch, SEARCH_DELAY_MS);
   };
   const closeMobileSearch = () => {
     searchPanel.classList.remove("mobile-open");
@@ -2641,17 +2681,24 @@ async function pageReader(root, arg) {
     searchInput.value = "";
     updateSearch();
   };
-  searchInput.addEventListener("input", updateSearch);
+  searchInput.addEventListener("input", scheduleSearch);
   // Don't steal focus from the input, so the keyboard stays up on mobile.
   regexToggle.addEventListener("mousedown", (event) => event.preventDefault());
   regexToggle.addEventListener("click", () => {
     regexMode = !regexMode;
     regexToggle.setAttribute("aria-pressed", String(regexMode));
+    regexToggle.title = "Regular expression: " + (regexMode ? "on" : "off");
+    searchPanel.classList.toggle("regex-on", regexMode);
+    searchInput.placeholder = regexMode
+      ? "Find with regex"
+      : "Find in this reference";
     updateSearch();
   });
   searchInput.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {
       event.preventDefault();
+      // Enter while a search is still waiting runs it now instead of moving on.
+      if (searchTimer && updateSearch()) return;
       showMatch(currentMatch + (event.shiftKey ? -1 : 1));
     } else if (
       event.key === "Escape" &&
@@ -2715,6 +2762,7 @@ async function pageReader(root, arg) {
       ),
       tocNav,
     );
+    lastSearchKey = null;
     if (searchInput.value) updateSearch();
     root.onclick = (e) => {
       const a = e.target.closest("[data-a]");
