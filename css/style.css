@@ -1565,7 +1565,7 @@ nav.reference-toc-links a.reference-toc-link:hover {
     align-items: center;
     justify-content: center;
     gap: 0.3rem;
-
+    opacity: 0.5;
     min-height: 2.8rem;
     margin: 0;
     padding: 0.4rem 0.8rem;
@@ -2684,7 +2684,7 @@ textarea:hover {
     height: 2.8rem;
 
     place-items: center;
-
+    opacity: 0.5;
     margin: 0;
     padding: 0;
 
