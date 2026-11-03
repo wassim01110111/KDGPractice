@@ -4636,6 +4636,7 @@ setTimeout(function loop() {
 }, 60000);
 const clickme = document.getElementById("clickme");
 function hideClickme() {
+  if (!clickme.classList.contains("is-visible")) return;
   clickme.classList.remove("is-visible");
   clickme.classList.add("is-hiding");
 
@@ -5040,7 +5041,7 @@ document.addEventListener(
 
 focusButton.addEventListener("click", () => {
   const isPressed = focusButton.getAttribute("aria-pressed") === "true";
-  if (!isPressed && clickme.classList.contains("is-visible")) {
+  if (!isPressed) {
     hideClickme();
   }
   focusButton.title = focusButton.querySelector(".focus-label").textContent =
