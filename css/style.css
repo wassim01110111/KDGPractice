@@ -5577,3 +5577,68 @@ html.route-sliding {
     transition: none !important;
   }
 }
+
+
+/* Loading placeholders */
+.loading-note {
+  display: flex;
+  align-items: center;
+  gap: .5em;
+  font-size: .85em;
+  opacity: .85;
+}
+.loading-spin {
+  flex: none;
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: app-spin .8s linear infinite;
+  opacity: .7;
+}
+.loading-skeleton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  min-height: 12rem;
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+  background: linear-gradient(90deg, rgba(128,128,128,.10) 25%, rgba(128,128,128,.22) 50%, rgba(128,128,128,.10) 75%);
+  background-size: 200% 100%;
+  animation: app-shimmer 1.4s ease-in-out infinite;
+}
+.loading-skeleton .loading-note { justify-content: center; }
+.loading-sub { font-size: .8em; opacity: .7; }
+@keyframes app-spin { to { transform: rotate(360deg); } }
+@keyframes app-shimmer {
+  from { background-position: 200% 0; }
+  to { background-position: -200% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .loading-spin, .loading-skeleton { animation: none; }
+  .loading-spin { border-right-color: currentColor; opacity: .4; }
+}
+
+/* Markdown code token colours */
+.md code .tok-kw { color: #a626a4; font-weight: 600; }
+.md code .tok-fn { color: #4078f2; }
+.md code .tok-str { color: #50a14f; }
+.md code .tok-num, .md code .tok-lit { color: #b76b01; }
+.md code .tok-id, .md code .tok-type, .md code .tok-attr { color: #c18401; }
+.md code .tok-com { color: #8a8f98; font-style: italic; }
+.md code .tok-op, .md code .tok-ann { color: #0184bc; }
+.md code .tok-tag { color: #e45649; }
+html[data-theme="dark"] .md code .tok-kw { color: #c678dd; }
+html[data-theme="dark"] .md code .tok-fn { color: #61afef; }
+html[data-theme="dark"] .md code .tok-str { color: #98c379; }
+html[data-theme="dark"] .md code .tok-num, html[data-theme="dark"] .md code .tok-lit,
+html[data-theme="dark"] .md code .tok-attr { color: #d19a66; }
+html[data-theme="dark"] .md code .tok-id, html[data-theme="dark"] .md code .tok-type { color: #e5c07b; }
+html[data-theme="dark"] .md code .tok-com { color: #7f848e; }
+html[data-theme="dark"] .md code .tok-op, html[data-theme="dark"] .md code .tok-ann { color: #56b6c2; }
+html[data-theme="dark"] .md code .tok-tag { color: #e06c75; }

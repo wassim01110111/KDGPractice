@@ -38,22 +38,6 @@ function updatePlantUmlImageTheme() {
 const empty = (a, b) =>
   h("div", { class: "empty" }, h("strong", {}, a), h("div", {}, b || ""));
 // ---------- loading placeholders ----------
-// Styles are injected here so the placeholders work without touching the
-// stylesheet. Animations are switched off for prefers-reduced-motion.
-(() => {
-  const style = document.createElement("style");
-  style.textContent = `
-.loading-note{display:flex;align-items:center;gap:.5em;font-size:.85em;opacity:.85}
-.loading-spin{flex:none;display:inline-block;width:1em;height:1em;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:app-spin .8s linear infinite;opacity:.7}
-.loading-skeleton{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;min-height:12rem;padding:1rem;border-radius:8px;text-align:center;background:linear-gradient(90deg,rgba(128,128,128,.10) 25%,rgba(128,128,128,.22) 50%,rgba(128,128,128,.10) 75%);background-size:200% 100%;animation:app-shimmer 1.4s ease-in-out infinite}
-.loading-skeleton .loading-note{justify-content:center}
-.loading-sub{font-size:.8em;opacity:.7}
-@keyframes app-spin{to{transform:rotate(360deg)}}
-@keyframes app-shimmer{from{background-position:200% 0}to{background-position:-200% 0}}
-@media (prefers-reduced-motion:reduce){.loading-spin,.loading-skeleton{animation:none}.loading-spin{border-right-color:currentColor;opacity:.4}}
-`;
-  document.head.append(style);
-})();
 const loadingNote = (text, extra = {}) =>
   h(
     "div",
@@ -930,48 +914,6 @@ const formatCanvasSQL = (block) => {
 // Syntax colouring for fenced code blocks in the markdown pages (Canvas and
 // Reference). One small tokenizer, configured per language in CODE_LANGS.
 // Output is <span class="tok-…"> markup; colours are injected once (light+dark).
-function ensureCodeStyles() {
-  if (document.getElementById("code-highlight-style")) return;
-  const style = document.createElement("style");
-  const light = {
-    kw: "#a626a4;font-weight:600",
-    fn: "#4078f2",
-    str: "#50a14f",
-    num: "#b76b01",
-    lit: "#b76b01",
-    id: "#c18401",
-    com: "#8a8f98;font-style:italic",
-    op: "#0184bc",
-    type: "#986801",
-    ann: "#0184bc",
-    tag: "#e45649",
-    attr: "#986801",
-  };
-  const dark = {
-    kw: "#c678dd",
-    fn: "#61afef",
-    str: "#98c379",
-    num: "#d19a66",
-    lit: "#d19a66",
-    id: "#e5c07b",
-    com: "#7f848e",
-    op: "#56b6c2",
-    type: "#e5c07b",
-    ann: "#56b6c2",
-    tag: "#e06c75",
-    attr: "#d19a66",
-  };
-  style.id = "code-highlight-style";
-  style.textContent =
-    Object.entries(light)
-      .map(([k, v]) => `.md code .tok-${k}{color:${v}}`)
-      .join("\n") +
-    "\n" +
-    Object.entries(dark)
-      .map(([k, v]) => `html[data-theme="dark"] .md code .tok-${k}{color:${v}}`)
-      .join("\n");
-  document.head.append(style);
-}
 const CODE_LANGS = {};
 (() => {
   const R = String.raw;
@@ -3582,7 +3524,6 @@ async function pageLibrary(root, arg, termArg, view) {
           /* keep the original text if formatting fails */
         }
       });
-    ensureCodeStyles();
     body.querySelectorAll('pre code[class^="language-"]').forEach((code) => {
       const html = highlightCode(
         code.textContent,
@@ -3738,6 +3679,20 @@ async function pageLibrary(root, arg, termArg, view) {
   await showTerm(termIndex);
 }
 
+const PRACTICE_PAGE_SIZE = 40;
+const PRACTICE_VISIBLE_KEY = "practice-site-practice-visible-count";
+function readPracticeVisibleCount() {
+  try {
+    const value = Number(sessionStorage.getItem(PRACTICE_VISIBLE_KEY));
+    return Number.isSafeInteger(value) && value >= PRACTICE_PAGE_SIZE
+      ? value
+      : PRACTICE_PAGE_SIZE;
+  } catch {
+    return PRACTICE_PAGE_SIZE;
+  }
+}
+let practiceVisibleCount = readPracticeVisibleCount();
+
 async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
   if (!S.exercises.length)
     return root.append(
@@ -3759,8 +3714,6 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
   let items = [];
   // Rendering 1000+ buttons at once crashes Safari on iPhone, so only a window
   // of the filtered list is in the DOM. "Show more" extends the window.
-  const PRACTICE_PAGE_SIZE = 40;
-  let visibleCount = PRACTICE_PAGE_SIZE;
   let lastResults = {};
   // Lower-cased search text computed once instead of on every keystroke.
   const haystack = new Map(
@@ -3942,22 +3895,27 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
     h(
       "div",
       { class: "practice-more" },
-      h("small", {}, `Showing ${visibleCount} of ${items.length}`),
+      h("small", {}, `Showing ${Math.min(practiceVisibleCount, items.length)} of ${items.length}`),
       h(
         "button",
         { type: "button", class: "sec", onclick: showMore },
-        `Show ${Math.min(PRACTICE_PAGE_SIZE, items.length - visibleCount)} more`,
+        `Show ${Math.min(PRACTICE_PAGE_SIZE, items.length - practiceVisibleCount)} more`,
       ),
     );
   // Append the next chunk instead of rebuilding the list, so the scroll
   // position stays put and the DOM work stays small.
   function showMore() {
-    const from = visibleCount;
-    visibleCount += PRACTICE_PAGE_SIZE;
+    const from = practiceVisibleCount;
+    practiceVisibleCount += PRACTICE_PAGE_SIZE;
+    try {
+      sessionStorage.setItem(PRACTICE_VISIBLE_KEY, String(practiceVisibleCount));
+    } catch {
+      // The in-memory count still works when session storage is unavailable.
+    }
     list.querySelector(".practice-more")?.remove();
-    const fresh = items.slice(from, visibleCount).map(makeButton);
+    const fresh = items.slice(from, practiceVisibleCount).map(makeButton);
     list.append(...fresh);
-    if (items.length > visibleCount) list.append(moreRow());
+    if (items.length > practiceVisibleCount) list.append(moreRow());
     fresh[0]?.focus({ preventScroll: true });
   }
   const draw = () => {
@@ -3986,11 +3944,13 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
       const currentExercise = filtered.find((e) => keyOf(e) === selectedKey);
       if (currentExercise) items.unshift(currentExercise);
     }
-    // Keep the selected exercise inside the rendered window (deep links,
-    // "Next exercise" past the last visible item).
+    // Keep the list virtualized when a deep link or Next action selects an
+    // exercise beyond the visible window. Show that selected row separately
+    // instead of expanding the list through every preceding exercise.
+    const nodes = items.slice(0, practiceVisibleCount).map(makeButton);
     const selectedIndex = items.findIndex((e) => keyOf(e) === selectedKey);
-    while (selectedIndex >= visibleCount) visibleCount += PRACTICE_PAGE_SIZE;
-    const nodes = items.slice(0, visibleCount).map(makeButton);
+    if (selectedIndex >= practiceVisibleCount)
+      nodes.push(makeButton(items[selectedIndex]));
     if (!nodes.length)
       nodes.push(
         h(
@@ -4001,13 +3961,18 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
             : "No exercises match these filters.",
         ),
       );
-    else if (items.length > visibleCount) nodes.push(moreRow());
+    else if (items.length > practiceVisibleCount) nodes.push(moreRow());
     list.replaceChildren(...nodes);
     pane.firstElementChild?.refreshNextExercise?.();
   };
   // Filter, search and completed-toggle changes start again from page one.
   function redraw() {
-    visibleCount = PRACTICE_PAGE_SIZE;
+    practiceVisibleCount = PRACTICE_PAGE_SIZE;
+    try {
+      sessionStorage.setItem(PRACTICE_VISIBLE_KEY, String(practiceVisibleCount));
+    } catch {
+      // Ignore storage restrictions; filtering still redraws correctly.
+    }
     draw();
   }
   function selectExercise(exercise, addHistoryEntry) {
