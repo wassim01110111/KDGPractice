@@ -1740,11 +1740,7 @@ The `Rectangle` exercise asks for a `toString()` representation that includes th
 
 ---
 
-## 16. The `Math` class- Its constants include `E`, the base of the natural logarithms, and `PI`, the ratio of a circle's circumference to its diameter.
-
-
-
-- Static methods and variables are called on the class, using the class name such as `Math`.
+## 16. The `Math` class- Its constants include `E`, the base of the natural logarithms, and `PI`, the ratio of a circle's circumference to its diameter
 
 Methods explicitly listed include:
 
