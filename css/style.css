@@ -5348,3 +5348,232 @@ html.term-sliding {
 html.route-sliding {
   overflow-x: clip;
 }
+/* =========================================
+   PRACTICE MORE — DYNAMIC COMPONENT
+========================================= */
+
+.practice-more {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 14px;
+
+  padding: 14px 16px;
+  margin-top: 20px;
+
+  background: var(--card);
+  border: 1px solid var(--bd);
+  border-radius: 14px;
+
+  box-shadow: var(--shadow);
+
+  overflow: hidden;
+  isolation: isolate;
+
+  transition:
+    background 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
+}
+
+/* Animated ambient background */
+.practice-more::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    color-mix(in srgb, var(--ac) 5%, transparent) 45%,
+    transparent 100%
+  );
+
+  opacity: 0;
+  transform: translateX(-100%);
+  transition: opacity 0.3s ease;
+}
+
+.practice-more:hover::before {
+  opacity: 1;
+  animation: practice-shimmer 1.5s ease;
+}
+
+@keyframes practice-shimmer {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+/* =========================================
+   TEXT / COUNTER
+========================================= */
+
+.practice-more small {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  color: var(--mut);
+  font-size: 12px;
+  font-weight: 650;
+  letter-spacing: 0.035em;
+
+  white-space: nowrap;
+
+  transition: color 0.25s ease;
+}
+
+/* Counter indicator */
+.practice-more small::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+
+  border-radius: 50%;
+  background: var(--ok);
+
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--ok) 13%, transparent);
+
+  animation: practice-pulse 2s ease-in-out infinite;
+}
+
+@keyframes practice-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--ok) 12%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 0 6px color-mix(in srgb, var(--ok) 5%, transparent);
+  }
+}
+
+.practice-more:hover small {
+  color: var(--fg);
+}
+
+/* =========================================
+   SHOW MORE BUTTON
+========================================= */
+
+.practice-more button.sec {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+
+  min-height: 38px;
+  padding: 9px 17px;
+
+  border: 1px solid color-mix(in srgb, var(--ac) 35%, var(--bd));
+  border-radius: 10px;
+
+  background: var(--soft);
+  color: var(--ac);
+
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 750;
+  letter-spacing: 0.025em;
+
+  cursor: pointer;
+  overflow: hidden;
+
+  transition:
+    color 0.25s ease,
+    background 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Plus icon */
+.practice-more button.sec::before {
+  content: "+";
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 17px;
+  height: 17px;
+
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--ac) 12%, transparent);
+
+  font-size: 16px;
+  line-height: 1;
+
+  transition:
+    transform 0.3s ease,
+    background 0.25s ease;
+}
+
+/* Hover */
+.practice-more button.sec:hover {
+  color: #fff;
+  background: var(--ac);
+  border-color: var(--ac);
+
+  box-shadow: 0 5px 16px color-mix(in srgb, var(--ac) 28%, transparent);
+
+  transform: translateY(-2px);
+}
+
+.practice-more button.sec:hover::before {
+  color: var(--ac);
+  background: #fff;
+  transform: rotate(90deg);
+}
+
+/* Active / click */
+.practice-more button.sec:active {
+  transform: translateY(0) scale(0.96);
+  box-shadow: none;
+}
+
+/* Keyboard accessibility */
+.practice-more button.sec:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--ac) 35%, transparent);
+  outline-offset: 4px;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 480px) {
+  .practice-more {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    padding: 14px;
+  }
+
+  .practice-more small {
+    justify-content: center;
+  }
+
+  .practice-more button.sec {
+    width: 100%;
+  }
+}
+
+/* =========================================
+   REDUCED MOTION
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .practice-more,
+  .practice-more *,
+  .practice-more::before {
+    animation: none !important;
+    transition: none !important;
+  }
+}

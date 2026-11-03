@@ -3677,6 +3677,21 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
   let showCompleted = false;
   let selectedKey = "";
   let items = [];
+  // Rendering 1000+ buttons at once crashes Safari on iPhone, so only a window
+  // of the filtered list is in the DOM. "Show more" extends the window.
+  const PRACTICE_PAGE_SIZE = 40;
+  let visibleCount = PRACTICE_PAGE_SIZE;
+  let lastResults = {};
+  // Lower-cased search text computed once instead of on every keystroke.
+  const haystack = new Map(
+    S.exercises.map((e) => [
+      e,
+      [e.title, e.instructions, e.id]
+        .map((value) => String(value || ""))
+        .join("\n")
+        .toLocaleLowerCase(),
+    ]),
+  );
   const categoryLabel = (category) =>
     category
       .replace(/-/g, " ")
@@ -3696,7 +3711,7 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
       type: "search",
       placeholder: "Search titles, instructions, or IDs",
       "aria-label": "Search questions",
-      oninput: () => draw(),
+      oninput: () => redraw(),
     }),
     searchControl = h(
       "label",
@@ -3711,7 +3726,7 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
           f.term = e.target.value;
           f.category = "";
           refreshCategories();
-          draw();
+          redraw();
         },
       },
       h("option", { value: "" }, "All terms"),
@@ -3726,7 +3741,7 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
           f.course = e.target.value;
           f.category = "";
           refreshCategories();
-          draw();
+          redraw();
         },
       },
       h("option", { value: "" }, "All"),
@@ -3743,7 +3758,7 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
           courseSelect.value = f.course;
         }
         refreshCategories();
-        draw();
+        redraw();
       },
     }),
     difficultySelect = h(
@@ -3751,7 +3766,7 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
       {
         onchange: (e) => {
           f.difficulty = e.target.value;
-          draw();
+          redraw();
         },
       },
       h("option", { value: "" }, "All"),
@@ -3778,7 +3793,7 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
           ? "Hide completed"
           : "Show all exercises";
         completedToggle.setAttribute("aria-pressed", String(showCompleted));
-        draw();
+        redraw();
       },
     },
     "Show all exercises",
@@ -3826,17 +3841,51 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
     filterControl("Difficulty", difficultySelect),
     completedToggle,
   );
+  const makeButton = (e) =>
+    h(
+      "button",
+      {
+        class: "item" + (keyOf(e) === selectedKey ? " on" : ""),
+        "aria-pressed": keyOf(e) === selectedKey,
+        onclick: () => {
+          selectExercise(e, true);
+        },
+      },
+      `${lastResults[keyOf(e)] === undefined ? "○" : lastResults[keyOf(e)] ? "✔" : "✘"} ${e.title}`,
+      h(
+        "small",
+        {},
+        ` ${packageLabel(e.packageId)} · ${Number.isInteger(e.term) ? `Term ${e.term} · ` : ""}${e.difficulty}${e.examEligible ? "" : " · not on exam"}`,
+      ),
+    );
+  const moreRow = () =>
+    h(
+      "div",
+      { class: "practice-more" },
+      h("small", {}, `Showing ${visibleCount} of ${items.length}`),
+      h(
+        "button",
+        { type: "button", class: "sec", onclick: showMore },
+        `Show ${Math.min(PRACTICE_PAGE_SIZE, items.length - visibleCount)} more`,
+      ),
+    );
+  // Append the next chunk instead of rebuilding the list, so the scroll
+  // position stays put and the DOM work stays small.
+  function showMore() {
+    const from = visibleCount;
+    visibleCount += PRACTICE_PAGE_SIZE;
+    list.querySelector(".practice-more")?.remove();
+    const fresh = items.slice(from, visibleCount).map(makeButton);
+    list.append(...fresh);
+    if (items.length > visibleCount) list.append(moreRow());
+    fresh[0]?.focus({ preventScroll: true });
+  }
   const draw = () => {
     const query = search.value.trim().toLocaleLowerCase();
     const filtered = S.exercises.filter(
       (e) =>
         Object.entries(f).every(([k, v]) => !v || String(e[k]) === v) &&
-        (!query ||
-          [e.title, e.instructions, e.id].some((value) =>
-            String(value || "")
-              .toLocaleLowerCase()
-              .includes(query),
-          )),
+        (!query || haystack.get(e).includes(query)),
     );
     // A selected exercise must not leak back into the list after a filter
     // (especially Term) excludes it. Keep completed selections visible only
@@ -3849,34 +3898,21 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
       (e) =>
         showCompleted || keyOf(e) === selectedKey || !S.xpRewards[keyOf(e)],
     );
-    const la = {};
+    lastResults = {};
     S.attempts.forEach((a) => {
-      la[a.key] = a.correct;
+      lastResults[a.key] = a.correct;
     });
     if (selectedKey && !items.some((e) => keyOf(e) === selectedKey)) {
       const currentExercise = filtered.find((e) => keyOf(e) === selectedKey);
       if (currentExercise) items.unshift(currentExercise);
     }
-    const buttons = items.map((e) =>
-      h(
-        "button",
-        {
-          class: "item" + (keyOf(e) === selectedKey ? " on" : ""),
-          "aria-pressed": keyOf(e) === selectedKey,
-          onclick: () => {
-            selectExercise(e, true);
-          },
-        },
-        `${la[keyOf(e)] === undefined ? "○" : la[keyOf(e)] ? "✔" : "✘"} ${e.title}`,
-        h(
-          "small",
-          {},
-          ` ${packageLabel(e.packageId)} · ${Number.isInteger(e.term) ? `Term ${e.term} · ` : ""}${e.difficulty}${e.examEligible ? "" : " · not on exam"}`,
-        ),
-      ),
-    );
-    if (!buttons.length)
-      buttons.push(
+    // Keep the selected exercise inside the rendered window (deep links,
+    // "Next exercise" past the last visible item).
+    const selectedIndex = items.findIndex((e) => keyOf(e) === selectedKey);
+    while (selectedIndex >= visibleCount) visibleCount += PRACTICE_PAGE_SIZE;
+    const nodes = items.slice(0, visibleCount).map(makeButton);
+    if (!nodes.length)
+      nodes.push(
         h(
           "small",
           {},
@@ -3885,9 +3921,15 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
             : "No exercises match these filters.",
         ),
       );
-    list.replaceChildren(...buttons);
+    else if (items.length > visibleCount) nodes.push(moreRow());
+    list.replaceChildren(...nodes);
     pane.firstElementChild?.refreshNextExercise?.();
   };
+  // Filter, search and completed-toggle changes start again from page one.
+  function redraw() {
+    visibleCount = PRACTICE_PAGE_SIZE;
+    draw();
+  }
   function selectExercise(exercise, addHistoryEntry) {
     selectedKey = keyOf(exercise);
     draw();
