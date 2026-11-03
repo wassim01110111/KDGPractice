@@ -3791,7 +3791,7 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
         showCompleted = !showCompleted;
         completedToggle.textContent = showCompleted
           ? "Hide completed"
-          : "Show all exercises";
+          : "Show completed exercises";
         completedToggle.setAttribute("aria-pressed", String(showCompleted));
         redraw();
       },
