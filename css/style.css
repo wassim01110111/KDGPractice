@@ -1301,6 +1301,30 @@ nav.reference-tabs a.reference-tab.on .reference-tab-label {
 .reference-search-toggle {
   display: none;
 }
+.reference-search-controls .reference-search-regex {
+  font-family: ui-monospace, "Cascadia Code", Menlo, monospace;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: -0.05em;
+}
+.reference-search-controls button.reference-search-regex[aria-pressed="true"] {
+  color: var(--ac);
+  background: color-mix(in srgb, var(--ac) 18%, var(--card));
+  border-color: var(--ac);
+  box-shadow: inset 0 0 0 1px var(--ac);
+}
+.reference-search-controls
+  button.reference-search-regex[aria-pressed="true"]:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--ac) 26%, var(--card));
+  border-color: var(--ac);
+}
+.reference-search-input[aria-invalid="true"] {
+  border-color: var(--bad);
+}
+.reference-search-input[aria-invalid="true"]:focus-visible {
+  outline-color: color-mix(in srgb, var(--bad) 30%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--bad) 10%, transparent);
+}
 .reference-search-match {
   color: var(--fg);
   background: color-mix(in srgb, #f3c969 65%, var(--card));
@@ -1544,6 +1568,11 @@ nav.reference-toc-links a.reference-toc-link:hover {
     background: var(--card);
     border-color: var(--ac);
     box-shadow: 0 8px 32px rgb(0 0 0 / 24%);
+  }
+  /* Set from visualViewport in app.js: sit just above the on-screen keyboard
+     (the keyboard covers the safe-area inset, so it isn't added here). */
+  .reference-search-panel.mobile-open.keyboard-open {
+    bottom: calc(var(--search-kb-offset, 0px) + 0.65rem);
   }
   .reference-search-close {
     display: grid;

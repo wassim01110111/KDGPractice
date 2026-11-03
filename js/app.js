@@ -2366,6 +2366,9 @@ function withoutContentsSection(src) {
 }
 
 // ---------- pages ----------
+// Tears down what the reader page attaches outside its own view (the floating
+// search button/panel and the visualViewport listeners). Called by route().
+let readerSearchCleanup = null;
 async function pageReader(root, arg) {
   const refs = (S.manifest && S.manifest.referenceFiles) || [];
   if (!refs.length) return root.append(empty("No reference files configured."));
@@ -2384,6 +2387,17 @@ async function pageReader(root, arg) {
       role: "status",
       "aria-live": "polite",
     }),
+    regexToggle = h(
+      "button",
+      {
+        class: "sec reference-search-regex",
+        type: "button",
+        "aria-label": "Use regular expression",
+        "aria-pressed": "false",
+        title: "Regular expression",
+      },
+      ".*",
+    ),
     searchPanel = h(
       "div",
       { class: "reference-search-panel" },
@@ -2406,6 +2420,7 @@ async function pageReader(root, arg) {
         "div",
         { class: "reference-search-controls" },
         searchCount,
+        regexToggle,
         h(
           "button",
           {
@@ -2483,7 +2498,63 @@ async function pageReader(root, arg) {
   root.append(header, h("div", { class: "reference-layout" }, sidebar, body));
   document.body.appendChild(searchToggle);
   let matches = [],
-    currentMatch = -1;
+    currentMatch = -1,
+    regexMode = false,
+    keyboardGap = 0;
+  // Mobile: keep the floating search panel above the on-screen keyboard.
+  // position:fixed is anchored to the layout viewport, and the keyboard (or a
+  // fast programmatic scroll while it is open) can leave that behind the
+  // visual viewport. Measure the gap and lift the panel by it.
+  const viewport = window.visualViewport;
+  const syncSearchPanelToViewport = () => {
+    const open = searchPanel.classList.contains("mobile-open"),
+      gap =
+        open && viewport
+          ? Math.max(
+              0,
+              Math.round(innerHeight - viewport.height - viewport.offsetTop),
+            )
+          : 0,
+      lifted = gap > 2;
+    if (gap === keyboardGap) return;
+    keyboardGap = gap;
+    if (lifted) searchPanel.style.setProperty("--search-kb-offset", gap + "px");
+    else searchPanel.style.removeProperty("--search-kb-offset");
+    searchPanel.classList.toggle("keyboard-open", lifted);
+  };
+  viewport?.addEventListener("resize", syncSearchPanelToViewport);
+  viewport?.addEventListener("scroll", syncSearchPanelToViewport);
+  addEventListener("scroll", syncSearchPanelToViewport, { passive: true });
+  readerSearchCleanup = () => {
+    viewport?.removeEventListener("resize", syncSearchPanelToViewport);
+    viewport?.removeEventListener("scroll", syncSearchPanelToViewport);
+    removeEventListener("scroll", syncSearchPanelToViewport);
+    searchPanel.remove();
+    searchToggle.remove();
+  };
+  // Centre the match in the part of the screen that is actually visible: on
+  // mobile that is between the sticky header (or the top of the visual
+  // viewport) and the floating search panel, not the middle of the page.
+  const scrollToMatch = (match) => {
+    if (viewport && searchPanel.classList.contains("mobile-open")) {
+      syncSearchPanelToViewport();
+      const header = document.querySelector("header"),
+        top = Math.max(
+          viewport.offsetTop,
+          header ? header.getBoundingClientRect().bottom : 0,
+        ),
+        bottom = searchPanel.getBoundingClientRect().top,
+        box = match.getBoundingClientRect();
+      if (bottom - top > 40) {
+        window.scrollBy({
+          top: box.top + box.height / 2 - (top + bottom) / 2,
+          behavior: "smooth",
+        });
+        return;
+      }
+    }
+    match.scrollIntoView({ block: "center", behavior: "smooth" });
+  };
   const clearHighlights = () => {
     body.querySelectorAll("mark.reference-search-match").forEach((mark) => {
       mark.replaceWith(document.createTextNode(mark.textContent));
@@ -2499,21 +2570,30 @@ async function pageReader(root, arg) {
     const match = matches[currentMatch];
     match.classList.add("current");
     searchCount.textContent = `${currentMatch + 1} of ${matches.length}`;
-    match.scrollIntoView({ block: "center", behavior: "smooth" });
+    scrollToMatch(match);
+  };
+  const resetResults = (message = "") => {
+    searchCount.textContent = message;
+    searchPanel.classList.remove("has-matches");
+    searchPanel.querySelector(".reference-search-prev").disabled = true;
+    searchPanel.querySelector(".reference-search-next").disabled = true;
   };
   const updateSearch = () => {
     clearHighlights();
+    searchInput.removeAttribute("aria-invalid");
     const query = searchInput.value.trim();
-    if (!query) {
-      searchCount.textContent = "";
-      searchPanel.classList.remove("has-matches");
-      searchPanel.querySelector(".reference-search-prev").disabled = true;
-      searchPanel.querySelector(".reference-search-next").disabled = true;
-      return;
+    if (!query) return resetResults();
+    let expression;
+    try {
+      expression = new RegExp(
+        regexMode ? query : query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
+        "gi",
+      );
+    } catch {
+      searchInput.setAttribute("aria-invalid", "true");
+      return resetResults("Invalid pattern");
     }
-    const escapedQuery = query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
-      expression = new RegExp(escapedQuery, "gi"),
-      walker = document.createTreeWalker(body, NodeFilter.SHOW_TEXT),
+    const walker = document.createTreeWalker(body, NodeFilter.SHOW_TEXT),
       nodes = [];
     while (walker.nextNode()) {
       const node = walker.currentNode;
@@ -2524,8 +2604,15 @@ async function pageReader(root, arg) {
         ranges = [];
       expression.lastIndex = 0;
       let found;
-      while ((found = expression.exec(text)))
+      while ((found = expression.exec(text))) {
+        // Zero-length matches (e.g. /a*/ or /\b/) can't be highlighted and
+        // would never advance lastIndex, so skip past them.
+        if (!found[0]) {
+          expression.lastIndex++;
+          continue;
+        }
         ranges.push([found.index, found.index + found[0].length]);
+      }
       for (let i = ranges.length - 1; i >= 0; i--) {
         const [start, end] = ranges[i],
           range = document.createRange();
@@ -2546,6 +2633,7 @@ async function pageReader(root, arg) {
   };
   const closeMobileSearch = () => {
     searchPanel.classList.remove("mobile-open");
+    syncSearchPanelToViewport();
     searchToggle.setAttribute("aria-expanded", "false");
     if (searchPanel.parentElement === document.body)
       sidebar.insertBefore(searchPanel, tocDetails);
@@ -2554,6 +2642,13 @@ async function pageReader(root, arg) {
     updateSearch();
   };
   searchInput.addEventListener("input", updateSearch);
+  // Don't steal focus from the input, so the keyboard stays up on mobile.
+  regexToggle.addEventListener("mousedown", (event) => event.preventDefault());
+  regexToggle.addEventListener("click", () => {
+    regexMode = !regexMode;
+    regexToggle.setAttribute("aria-pressed", String(regexMode));
+    updateSearch();
+  });
   searchInput.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {
       event.preventDefault();
@@ -2578,6 +2673,7 @@ async function pageReader(root, arg) {
     if (matchMedia("(max-width: 760px)").matches)
       document.body.append(searchPanel);
     searchPanel.classList.add("mobile-open");
+    syncSearchPanelToViewport();
     searchToggle.setAttribute("aria-expanded", "true");
     searchInput.focus();
   });
@@ -4677,6 +4773,8 @@ async function route() {
   if (routeHash === lastRouteHash && routePending) return;
   lastRouteHash = routeHash;
   if (activeConfirmDialog?.open) activeConfirmDialog.close("cancel");
+  readerSearchCleanup?.();
+  readerSearchCleanup = null;
   const tok = ++routeTok,
     [, p = "reader", arg, exerciseArg] = routeHash.split("/"),
     main = $("#main");
