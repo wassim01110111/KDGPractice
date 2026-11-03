@@ -1535,7 +1535,7 @@ nav.reference-toc-links a.reference-toc-link:hover {
   }
   .reference-search-panel.mobile-open {
     position: fixed;
-    z-index: 6;
+    z-index: 20;
     right: max(0.65rem, env(safe-area-inset-right));
     bottom: max(0.65rem, env(safe-area-inset-bottom));
     left: max(0.65rem, env(safe-area-inset-left));
@@ -1554,17 +1554,24 @@ nav.reference-toc-links a.reference-toc-link:hover {
     font-size: 1.35rem;
   }
   .reference-search-toggle {
-    position: fixed;
-    z-index: 4;
-    right: max(4.2rem, calc(env(safe-area-inset-right) + 3.2rem));
+    position: fixed !important;
+    z-index: 10;
+
+    right: calc(max(0.9rem, env(safe-area-inset-right)) + 3.4rem);
+
     bottom: max(0.9rem, env(safe-area-inset-bottom));
+
     display: inline-flex;
-    min-height: 2.8rem;
     align-items: center;
+    justify-content: center;
     gap: 0.3rem;
+
+    min-height: 2.8rem;
     margin: 0;
     padding: 0.4rem 0.8rem;
+
     box-shadow: 0 3px 12px rgb(0 0 0 / 12%);
+    transform: none;
   }
   .reference-search-toggle[aria-expanded="true"] {
     opacity: 0;
@@ -2666,24 +2673,22 @@ textarea:hover {
 }
 @media (max-width: 760px) {
   .back-to-top {
-    position: fixed;
-    z-index: 4;
+    position: fixed !important;
+    z-index: 10;
+
     right: max(0.9rem, env(safe-area-inset-right));
     bottom: max(0.9rem, env(safe-area-inset-bottom));
+
     display: grid;
     width: 2.8rem;
     height: 2.8rem;
+
     place-items: center;
+
     margin: 0;
     padding: 0;
-    color: var(--fg);
-    background: color-mix(in srgb, var(--card) 90%, transparent);
-    border: 1px solid color-mix(in srgb, var(--bd) 80%, transparent);
-    border-radius: 50%;
-    box-shadow: 0 3px 12px rgb(0 0 0 / 12%);
-    opacity: 0.42;
-    backdrop-filter: blur(8px);
-    transition: opacity 0.2s ease;
+
+    transform: none;
   }
   .back-to-top[hidden] {
     display: none;

@@ -2480,11 +2480,8 @@ async function pageReader(root, arg) {
     searchPanel,
     tocDetails,
   );
-  root.append(
-    header,
-    searchToggle,
-    h("div", { class: "reference-layout" }, sidebar, body),
-  );
+  root.append(header, h("div", { class: "reference-layout" }, sidebar, body));
+  document.body.appendChild(searchToggle);
   let matches = [],
     currentMatch = -1;
   const clearHighlights = () => {
