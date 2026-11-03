@@ -235,6 +235,33 @@ const compatibleManifest = (m) =>
   Boolean(m) &&
   typeof m === "object" &&
   Core.compatibleSchemaVersion(m.schemaVersion, 1);
+// Turns a manifest map into [{ id, title, terms: [{ label, file }] }].
+// Current format: `terms` is an ordered array of { file, name } and keeps the
+// order written in the manifest. Still accepted: the older
+// { "Term 1": { file } } object (sorted naturally, "Term 2" before "Term 10")
+// and a single `file` entry (treated as "Term 1").
+function normalizeLibrary(map) {
+  return Object.entries(map || {}).map(([id, entry]) => {
+    let terms;
+    if (Array.isArray(entry?.terms)) {
+      terms = entry.terms.map((t, i) =>
+        typeof t === "string"
+          ? { label: `Term ${i + 1}`, file: t }
+          : { label: t?.name ?? t?.label ?? `Term ${i + 1}`, file: t?.file },
+      );
+    } else if (entry?.terms && typeof entry.terms === "object") {
+      terms = Object.entries(entry.terms)
+        .map(([label, t]) => ({
+          label,
+          file: typeof t === "string" ? t : t?.file,
+        }))
+        .sort((x, y) =>
+          x.label.localeCompare(y.label, undefined, { numeric: true }),
+        );
+    } else terms = entry?.file ? [{ label: "Term 1", file: entry.file }] : [];
+    return { ...entry, id, terms: terms.filter((t) => t.file) };
+  });
+}
 async function loadContent() {
   S.exercises = [];
   S.datasets = {};
@@ -257,12 +284,12 @@ async function loadContent() {
         `Incompatible manifest schema version ${manifest.schemaVersion}; supported: ${ctx.schemaVersion}`,
       );
 
-    // packages and referenceFiles are objects keyed by ID.
+    // packages, referenceFiles and canvasFiles are objects keyed by ID. The
+    // last two hold per-term files: { title, terms: { "Term 1": { file } } }.
     S.manifest = {
       ...manifest,
-      referenceFiles: Object.entries(manifest.referenceFiles || {}).map(
-        ([id, ref]) => ({ ...ref, id }),
-      ),
+      referenceFiles: normalizeLibrary(manifest.referenceFiles),
+      canvasFiles: normalizeLibrary(manifest.canvasFiles),
     };
 
     for (const [manifestId, entry] of Object.entries(manifest.packages || {})) {
@@ -306,6 +333,7 @@ async function loadContent() {
     S.manifest = {
       packages: {},
       referenceFiles: [],
+      canvasFiles: [],
     };
   }
 
@@ -816,6 +844,366 @@ const formatSQL = (sql) => {
 
   return result.replace(/\n{3,}/g, "\n\n").trim();
 };
+
+// Canvas-only: formats a whole ```sql block. formatSQL() alone would glue
+// comments to the following code, so comment-only lines stay on their own
+// line and trailing "-- ..." comments are moved below their statement.
+const formatCanvasSQL = (block) => {
+  const out = [];
+  let chunk = [],
+    trailing = [];
+  const flush = () => {
+    if (chunk.length) out.push(formatSQL(chunk.join("\n")));
+    trailing.forEach((c) => out.push(c));
+    chunk = [];
+    trailing = [];
+  };
+  const commentStart = (line) => {
+    let quote = "";
+    for (let i = 0; i < line.length; i++) {
+      const c = line[i];
+      if (quote) {
+        if (c === quote) quote = "";
+      } else if (c === "'" || c === '"' || c === "`") quote = c;
+      else if (c === "-" && line[i + 1] === "-") return i;
+    }
+    return -1;
+  };
+  for (const line of block.replace(/\r/g, "").split("\n")) {
+    const t = line.trim();
+    if (!t) {
+      flush();
+      continue;
+    }
+    if (t.startsWith("--")) {
+      flush();
+      out.push(t);
+      continue;
+    }
+    const at = commentStart(line);
+    if (at > 0) {
+      chunk.push(line.slice(0, at));
+      trailing.push(line.slice(at).trim());
+    } else chunk.push(line);
+    if (chunk.length && chunk[chunk.length - 1].trimEnd().endsWith(";"))
+      flush();
+  }
+  flush();
+  return out.join("\n");
+};
+
+// Syntax colouring for fenced code blocks in the markdown pages (Canvas and
+// Reference). One small tokenizer, configured per language in CODE_LANGS.
+// Output is <span class="tok-…"> markup; colours are injected once (light+dark).
+function ensureCodeStyles() {
+  if (document.getElementById("code-highlight-style")) return;
+  const style = document.createElement("style");
+  const light = {
+    kw: "#a626a4;font-weight:600",
+    fn: "#4078f2",
+    str: "#50a14f",
+    num: "#b76b01",
+    lit: "#b76b01",
+    id: "#c18401",
+    com: "#8a8f98;font-style:italic",
+    op: "#0184bc",
+    type: "#986801",
+    ann: "#0184bc",
+    tag: "#e45649",
+    attr: "#986801",
+  };
+  const dark = {
+    kw: "#c678dd",
+    fn: "#61afef",
+    str: "#98c379",
+    num: "#d19a66",
+    lit: "#d19a66",
+    id: "#e5c07b",
+    com: "#7f848e",
+    op: "#56b6c2",
+    type: "#e5c07b",
+    ann: "#56b6c2",
+    tag: "#e06c75",
+    attr: "#d19a66",
+  };
+  style.id = "code-highlight-style";
+  style.textContent =
+    Object.entries(light)
+      .map(([k, v]) => `.md code .tok-${k}{color:${v}}`)
+      .join("\n") +
+    "\n" +
+    Object.entries(dark)
+      .map(([k, v]) => `html[data-theme="dark"] .md code .tok-${k}{color:${v}}`)
+      .join("\n");
+  document.head.append(style);
+}
+const CODE_LANGS = {};
+(() => {
+  const R = String.raw;
+  const words = (s) => new Set(s.trim().split(/\s+/).filter(Boolean));
+  const DQ = R`"(?:\\.|[^"\\\n])*"`,
+    SQ = R`'(?:\\.|[^'\\\n])*'`,
+    CH = R`'(?:\\[^'\n]+|[^'\\\n])'`,
+    BT = R`\`(?:\\[\s\S]|[^\`\\])*\``,
+    TQ = R`"""[\s\S]*?"""|'''[\s\S]*?'''`,
+    NUM = R`\b(?:0[xX][\da-fA-F_]+|\d[\d_]*(?:\.\d+)?(?:[eE][+-]?\d+)?[fFdDlLuU]*)\b`;
+  const strRule = { dq: DQ, sq: SQ, ch: CH, bt: BT, tq: TQ };
+  // Builds a rule list for a C-style / scripting language.
+  const mk = (o) => {
+    const rules = [...(o.extra || [])];
+    if (o.block !== false) rules.push(["com", R`/\*[\s\S]*?\*/`]);
+    for (const p of o.line || ["//"]) rules.push(["com", p + R`[^\n]*`]);
+    const pre = o.prefix ? R`(?:[rRbBfFuU]{1,2})?` : "";
+    for (const k of (o.str || "dq sq").split(" "))
+      rules.push(["str", pre + `(?:${strRule[k]})`]);
+    if (o.ann !== false) rules.push(["ann", R`@[A-Za-z_][\w.]*`]);
+    rules.push(["num", NUM]);
+    rules.push(["word", R`[A-Za-z_$][\w$]*`]);
+    if (o.op)
+      rules.push(["op", R`::|->|=>|<>|!=|<=|>=|\|\||&&|[=<>+\-*/%!&|^~?:]`]);
+    return {
+      rules,
+      kws: words(o.kw),
+      lits: words(o.lit || ""),
+      ci: !!o.ci,
+      types: o.types !== false,
+      fnKw: words(o.fnKw || ""),
+    };
+  };
+  const def = (names, cfg) =>
+    names.split(" ").forEach((n) => (CODE_LANGS[n] = cfg));
+  const plain = (rules) => ({
+    rules,
+    kws: new Set(),
+    lits: new Set(),
+    ci: false,
+    types: false,
+    fnKw: new Set(),
+  });
+
+  def(
+    "js javascript jsx mjs cjs ts typescript tsx",
+    mk({
+      kw: `break case catch class const continue debugger default delete do else export extends finally for function if import in instanceof let new of return super switch this throw try typeof var void while with yield async await static get set from as type interface enum implements public private protected readonly abstract declare namespace keyof`,
+      lit: "true false null undefined NaN Infinity",
+      str: "dq sq bt",
+    }),
+  );
+  def(
+    "java",
+    mk({
+      kw: `abstract assert break case catch class const continue default do else enum extends final finally for goto if implements import instanceof interface native new package private protected public return static strictfp super switch synchronized this throw throws transient try volatile while var record sealed permits yield boolean byte char double float int long short void`,
+      lit: "true false null",
+      str: "tq dq ch",
+    }),
+  );
+  def(
+    "python py",
+    mk({
+      kw: `and as assert async await break class continue def del elif else except finally for from global if import in is lambda nonlocal not or pass raise return try while with yield match case`,
+      lit: "True False None",
+      line: ["#"],
+      block: false,
+      str: "tq dq sq",
+      prefix: true,
+    }),
+  );
+  const cKw = `auto break case char const continue default do double else enum extern float for goto if inline int long register restrict return short signed sizeof static struct switch typedef union unsigned void volatile while`;
+  def(
+    "c h",
+    mk({
+      kw: cKw,
+      lit: "true false NULL",
+      str: "dq ch",
+      ann: false,
+      extra: [["ann", R`#\s*[a-z]+\b`]],
+    }),
+  );
+  def(
+    "cpp c++ cc cxx hpp",
+    mk({
+      kw: `${cKw} alignas alignof and bool catch class constexpr const_cast decltype delete dynamic_cast explicit export false friend mutable namespace new noexcept not nullptr operator or override private protected public reinterpret_cast static_assert static_cast template this throw true try typeid typename using virtual final`,
+      lit: "true false NULL nullptr",
+      str: "dq ch",
+      ann: false,
+      extra: [["ann", R`#\s*[a-z]+\b`]],
+    }),
+  );
+  def(
+    "csharp cs c#",
+    mk({
+      kw: `abstract as base bool break byte case catch char checked class const continue decimal default delegate do double else enum event explicit extern finally fixed float for foreach goto if implicit in int interface internal is lock long namespace new object operator out override params private protected public readonly ref return sbyte sealed short sizeof stackalloc static string struct switch this throw try typeof uint ulong unchecked unsafe ushort using var virtual void volatile while async await record init get set yield`,
+      lit: "true false null",
+      str: "dq ch",
+      ann: false,
+    }),
+  );
+  def(
+    "go golang",
+    mk({
+      kw: `break case chan const continue default defer else fallthrough for func go goto if import interface map package range return select struct switch type var`,
+      lit: "true false nil iota",
+      str: "dq bt ch",
+      ann: false,
+    }),
+  );
+  def(
+    "rust rs",
+    mk({
+      kw: `as async await break const continue crate dyn else enum extern fn for if impl in let loop match mod move mut pub ref return self Self static struct super trait type unsafe use where while`,
+      lit: "true false",
+      str: "dq ch",
+      ann: false,
+    }),
+  );
+  def(
+    "php",
+    mk({
+      kw: `abstract and array as break case catch class clone const continue declare default do echo else elseif empty enddeclare endfor endforeach endif endswitch endwhile extends final finally fn for foreach function global if implements include include_once instanceof interface isset list match namespace new or print private protected public require require_once return static switch throw trait try unset use var while xor yield`,
+      lit: "true false null",
+      line: ["//", "#"],
+      ci: true,
+      ann: false,
+      extra: [["id", R`\$[A-Za-z_]\w*`]],
+    }),
+  );
+  def(
+    "ruby rb",
+    mk({
+      kw: `alias and begin break case class def defined do else elsif end ensure for if in module next not or redo rescue retry return self super then undef unless until when while yield`,
+      lit: "true false nil",
+      line: ["#"],
+      block: false,
+      extra: [["id", R`(?<!:):[A-Za-z_]\w*`]],
+    }),
+  );
+  def(
+    "kotlin kt",
+    mk({
+      kw: `as break class continue do else for fun if in interface is object package return super this throw try typealias val var when while by catch constructor finally get import init set where abstract annotation companion const data enum final infix inline inner internal lateinit open operator out override private protected public reified sealed suspend tailrec vararg`,
+      lit: "true false null",
+      str: "tq dq ch",
+    }),
+  );
+  def(
+    "swift",
+    mk({
+      kw: `associatedtype class deinit enum extension fileprivate func import init inout internal let open operator private protocol public rethrows static struct subscript typealias var break case catch continue default defer do else fallthrough for guard if in repeat return throw switch where while as await is self Self super throws try async`,
+      lit: "true false nil",
+      str: "tq dq",
+    }),
+  );
+  def(
+    "bash sh shell zsh",
+    mk({
+      kw: `if then else elif fi for while do done case esac in function select until return exit export local readonly echo cd source alias unset`,
+      line: ["#"],
+      block: false,
+      ann: false,
+      types: false,
+      extra: [["id", R`\$(?:\{[^}\n]*\}|[A-Za-z_]\w*|[0-9@#?*!$-])`]],
+    }),
+  );
+  def(
+    "sql postgresql psql",
+    mk({
+      kw: `select distinct from where and or not in is null like ilike between exists join left right full inner outer cross natural on using group by order having limit offset fetch first next rows row only with as union all intersect except case when then else end asc desc nulls last create table insert into values update set delete drop alter add primary key foreign references default check unique view index true false any some over partition filter interval cast returning`,
+      fnKw: "left right",
+      line: ["--"],
+      str: "sq",
+      ann: false,
+      ci: true,
+      op: true,
+      types: false,
+      extra: [["id", R`"(?:""|[^"])*"`]],
+    }),
+  );
+  def(
+    "json jsonc",
+    plain([
+      ["attr", DQ + R`(?=\s*:)`],
+      ["str", DQ],
+      ["num", NUM],
+      ["lit", R`\b(?:true|false|null)\b`],
+    ]),
+  );
+  def(
+    "yaml yml",
+    plain([
+      ["com", R`#[^\n]*`],
+      ["attr", R`[\w.-]+(?=\s*:(?:\s|$))`],
+      ["str", DQ],
+      ["str", SQ],
+      ["num", NUM],
+      ["lit", R`\b(?:true|false|null|yes|no)\b`],
+    ]),
+  );
+  def(
+    "html xml svg",
+    plain([
+      ["com", R`<!--[\s\S]*?-->`],
+      ["tag", R`</?[A-Za-z][\w:-]*|/?>`],
+      ["attr", R`[A-Za-z_:@][\w:.@-]*(?=\s*=)`],
+      ["str", DQ],
+      ["str", SQ],
+    ]),
+  );
+  def(
+    "css scss",
+    plain([
+      ["com", R`/\*[\s\S]*?\*/`],
+      ["ann", R`@[\w-]+`],
+      ["str", DQ],
+      ["str", SQ],
+      [
+        "num",
+        R`#[\da-fA-F]{3,8}\b|(?<![\w-])-?(?:\d*\.)?\d+(?:px|r?em|%|vh|vw|vmin|vmax|ms|s|deg|fr|ch|pt)?(?!\w)`,
+      ],
+      ["attr", R`[A-Za-z-]+(?=\s*:)`],
+      ["type", R`[.#][A-Za-z_-][\w-]*`],
+    ]),
+  );
+})();
+
+function highlightCode(text, lang) {
+  const cfg = CODE_LANGS[lang];
+  if (!cfg) return null;
+  if (!cfg.re) {
+    cfg.kinds = cfg.rules.map((r) => r[0]);
+    cfg.re = new RegExp(cfg.rules.map((r) => `(${r[1]})`).join("|"), "g");
+  }
+  const esc = (v) =>
+    v.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  const span = (kind, t) => `<span class="tok-${kind}">${esc(t)}</span>`;
+  const classify = (w, rest) => {
+    const key = cfg.ci ? w.toLowerCase() : w;
+    if (cfg.kws.has(key))
+      return cfg.fnKw.has(key) && /^\(/.test(rest) ? "fn" : "kw";
+    if (cfg.lits.has(w)) return "lit";
+    if (/^\s*\(/.test(rest)) return "fn";
+    if (cfg.types && /^[A-Z][a-z\d]/.test(w)) return "type";
+    return null;
+  };
+  const re = cfg.re;
+  re.lastIndex = 0;
+  let out = "",
+    last = 0,
+    m;
+  while ((m = re.exec(text))) {
+    const tok = m[0];
+    if (!tok) {
+      re.lastIndex++;
+      continue;
+    }
+    out += esc(text.slice(last, m.index));
+    let kind = cfg.kinds[m.findIndex((v, i) => i > 0 && v !== undefined) - 1];
+    if (kind === "word")
+      kind = classify(tok, text.slice(re.lastIndex, re.lastIndex + 40));
+    out += kind ? span(kind, tok) : esc(tok);
+    last = m.index + tok.length;
+  }
+  return out + esc(text.slice(last));
+}
 
 const expectedText = (ex) =>
   ex.type === "sql-query"
@@ -2102,7 +2490,7 @@ const escapeHtml = (value) =>
 
 function appendSanitizedReferenceHtml(target, source) {
   const allowedElements = new Set(
-      "a b blockquote br code div em h1 h2 h3 h4 h5 h6 hr i li ol p pre section span strong style table tbody td th thead tr ul".split(
+      "a b blockquote br code details div em h1 h2 h3 h4 h5 h6 hr i li ol p pre section span strong style summary table tbody td th thead tr ul".split(
         " ",
       ),
     ),
@@ -2116,6 +2504,7 @@ function appendSanitizedReferenceHtml(target, source) {
       "colspan",
       "rowspan",
       "data-a",
+      "open",
     ]),
     parsed = new DOMParser().parseFromString(source, "text/html"),
     cleanNode = (node) => {
@@ -2267,6 +2656,24 @@ function md(src) {
         );
       continue;
     }
+    if (/^\s*<details\b[^>]*>\s*$/i.test(l)) {
+      fl();
+      o.push(/\bopen\b/i.test(l) ? "<details open>" : "<details>");
+      continue;
+    }
+    if (/^\s*<\/details>\s*$/i.test(l)) {
+      fl();
+      o.push("</details>");
+      continue;
+    }
+    {
+      const sm = l.match(/^\s*<summary>(.*?)<\/summary>\s*$/i);
+      if (sm) {
+        fl();
+        o.push("<summary>" + inl(sm[1]) + "</summary>");
+        continue;
+      }
+    }
     if (/^\s*<(style|div|section|table|figure|blockquote)\b/i.test(l)) {
       fl();
       const tag = l
@@ -2319,9 +2726,14 @@ function md(src) {
     const hm = l.match(/^(#{1,6})\s+(.*)/);
     if (hm) {
       fl();
+      // Headings can contain markdown links ("[Title](https://…)"); the
+      // contents list and the anchor id should only use the visible text.
+      const plain = hm[2]
+        .replace(/!?\[([^\]]*)\]\([^)]*\)/g, "$1")
+        .replace(/[`*]/g, "");
       const n = hm[1].length,
-        id = slug(hm[2]);
-      if (n >= 2 && n <= 3) toc.push({ n, id, t: hm[2].replace(/[`*]/g, "") });
+        id = slug(plain);
+      if (n >= 2 && n <= 3) toc.push({ n, id, t: plain });
       o.push(`<h${n} id="${id}">${inl(hm[2])}</h${n}>`);
       continue;
     }
@@ -2369,16 +2781,59 @@ function withoutContentsSection(src) {
 // Tears down what the reader page attaches outside its own view (the floating
 // search button/panel and the visualViewport listeners). Called by route().
 let readerSearchCleanup = null;
-async function pageReader(root, arg) {
-  const refs = (S.manifest && S.manifest.referenceFiles) || [];
-  if (!refs.length) return root.append(empty("No reference files configured."));
-  const cur = refs.find((r) => r.id === arg) || refs[0],
-    body = h("article", { class: "md" });
+// Remembers the last term picked per section so switching subject keeps it.
+const lastLibraryTerm = {};
+const libraryFileKind = (file) =>
+  /\.html?(?:[?#].*)?$/i.test(file) ? "html" : "md";
+// Term picker on the Reference and Canvas pages.
+//   true  -> the picker is shown even when a subject has only one term
+//   false -> the picker is hidden when there is nothing to choose between
+const SHOW_TERM_PICKER_WITH_SINGLE_TERM = true;
+const LIBRARY_VIEWS = {
+  reader: {
+    key: "referenceFiles",
+    route: "reader",
+    eyebrow: "STUDY LIBRARY",
+    title: "Quick references",
+    intro: "Choose a subject to browse its guide.",
+    empty: "No reference files configured.",
+    noun: "reference",
+  },
+  canvas: {
+    key: "canvasFiles",
+    route: "canvas",
+    eyebrow: "CANVAS",
+    title: "Canvas",
+    intro: "Choose a subject to open its canvas.",
+    empty: "No canvas files configured.",
+    noun: "canvas",
+  },
+};
+const pageReader = (root, arg, term) =>
+  pageLibrary(root, arg, term, LIBRARY_VIEWS.reader);
+const pageCanvas = (root, arg, term) =>
+  pageLibrary(root, arg, term, LIBRARY_VIEWS.canvas);
+
+// Shared by the Reference and Canvas pages. Each subject has several terms
+// (a slider switches between them); each term points at a .md or .html file.
+async function pageLibrary(root, arg, termArg, view) {
+  const refs = (S.manifest && S.manifest[view.key]) || [];
+  if (!refs.length) return root.append(empty(view.empty));
+  const cur = refs.find((r) => r.id === arg) || refs[0];
+  if (!cur.terms.length)
+    return root.append(empty(`"${cur.title}" has no files configured.`));
+  const termCount = cur.terms.length,
+    requestedTerm = termArg || lastLibraryTerm[view.route];
+  let termIndex = Math.max(
+    0,
+    cur.terms.findIndex((t) => t.label === requestedTerm),
+  );
+  const body = h("article", { class: "md" });
   const searchInput = h("input", {
       type: "search",
       class: "reference-search-input",
-      placeholder: "Find in this reference",
-      "aria-label": "Find in this reference",
+      placeholder: `Find in this ${view.noun}`,
+      "aria-label": `Find in this ${view.noun}`,
       autocomplete: "off",
       spellcheck: false,
     }),
@@ -2410,7 +2865,7 @@ async function pageReader(root, arg) {
           {
             class: "reference-search-close",
             type: "button",
-            "aria-label": "Close reference search",
+            "aria-label": `Close ${view.noun} search`,
             title: "Close search",
           },
           "×",
@@ -2450,7 +2905,7 @@ async function pageReader(root, arg) {
       {
         class: "reference-search-toggle",
         type: "button",
-        "aria-label": "Search this reference",
+        "aria-label": `Search this ${view.noun}`,
         "aria-expanded": "false",
       },
       h("span", { "aria-hidden": "true" }, "⌕"),
@@ -2458,45 +2913,214 @@ async function pageReader(root, arg) {
     );
   const tabs = h(
     "nav",
-    { class: "reference-tabs", "aria-label": "Choose a reference" },
+    { class: "reference-tabs", "aria-label": `Choose a ${view.noun}` },
     refs.map((r) =>
       h(
         "a",
         {
-          href: "#/reader/" + encodeURIComponent(r.id),
+          href: `#/${view.route}/${encodeURIComponent(r.id)}`,
           class: "reference-tab" + (r === cur ? " on" : ""),
           "aria-current": r === cur ? "page" : false,
         },
-        h("span", { class: "reference-tab-label" }, r.id.toUpperCase()),
+        h(
+          "span",
+          { class: "reference-tab-label" },
+          r.id.replace(/[_-]/g, " ").toUpperCase(),
+        ),
         h("strong", {}, r.title),
       ),
     ),
   );
-  const header = h(
+  // ----- term picker (segmented control with a gliding highlight) -----
+  // With a single term the picker is still drawn when
+  // SHOW_TERM_PICKER_WITH_SINGLE_TERM is true (see LIBRARY_VIEWS above).
+  const showTermPicker = termCount > 1 || SHOW_TERM_PICKER_WITH_SINGLE_TERM;
+  const motionOK = () =>
+    !matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const termThumb = h("span", { class: "term-thumb", "aria-hidden": "true" }),
+    termPos = h("span", { class: "term-picker-pos", "aria-hidden": "true" }),
+    termTicks = cur.terms.map((t, i) =>
+      h(
+        "button",
+        {
+          type: "button",
+          role: "tab",
+          class: "term-pill" + (i === termIndex ? " on" : ""),
+          title: t.label,
+          "aria-selected": String(i === termIndex),
+          tabindex: i === termIndex ? "0" : "-1",
+          onclick: () => {
+            if (i !== termIndex) showTerm(i, true);
+          },
+        },
+        t.label,
+      ),
+    ),
+    termPills = h(
+      "div",
+      {
+        class: "term-pills",
+        role: "tablist",
+        "aria-label": "Term",
+        onkeydown: (e) => {
+          const step =
+            e.key === "ArrowRight" || e.key === "ArrowDown"
+              ? 1
+              : e.key === "ArrowLeft" || e.key === "ArrowUp"
+                ? -1
+                : 0;
+          if (e.key === "Home" || e.key === "End" || step) {
+            e.preventDefault();
+            const next =
+              e.key === "Home"
+                ? 0
+                : e.key === "End"
+                  ? termCount - 1
+                  : (termIndex + step + termCount) % termCount;
+            // Wrapping around keeps sliding the way the arrow key points.
+            if (next !== termIndex) showTerm(next, true, step);
+            termTicks[next].focus({ preventScroll: true });
+          }
+        },
+      },
+      termThumb,
+      termTicks,
+    ),
+    termSlider = !showTermPicker
+      ? ""
+      : h(
+          "div",
+          { class: "term-picker", "data-n": String(termCount) },
+          h("span", { class: "term-picker-label" }, "TERM"),
+          termPos,
+          h("div", { class: "term-frame" }, termPills),
+        );
+  let termObserver = null;
+  // Fade the row's edges only on the side that still has pills out of view.
+  const syncTermEdges = () => {
+    const max = termPills.scrollWidth - termPills.clientWidth;
+    termPills.classList.toggle("fade-start", termPills.scrollLeft > 2);
+    termPills.classList.toggle("fade-end", termPills.scrollLeft < max - 2);
+  };
+  termPills.addEventListener("scroll", syncTermEdges, { passive: true });
+  // Keeps the pill states, the counter and the gliding highlight in step
+  // with termIndex, and scrolls the chosen pill to the middle of a long row.
+  const syncTermPicker = (animate = true) => {
+    termTicks.forEach((tick, i) => {
+      tick.classList.toggle("on", i === termIndex);
+      tick.setAttribute("aria-selected", String(i === termIndex));
+      tick.tabIndex = i === termIndex ? 0 : -1;
+    });
+    termPos.textContent = `${termIndex + 1} / ${termCount}`;
+    const active = termTicks[termIndex];
+    // Not laid out yet: the ResizeObserver below calls this again once it is.
+    if (!showTermPicker || !active?.isConnected || !active.offsetWidth) return;
+    termPills.style.setProperty("--thumb-x", `${active.offsetLeft}px`);
+    termPills.style.setProperty("--thumb-w", `${active.offsetWidth}px`);
+    if (!termPills.classList.contains("is-ready")) {
+      // Commit the first position before the glide transition is switched on,
+      // so the highlight appears in place instead of sliding in from the edge.
+      void termPills.offsetWidth;
+      termPills.classList.add("is-ready");
+    }
+    const overflow = termPills.scrollWidth - termPills.clientWidth;
+    if (overflow > 1)
+      termPills.scrollTo({
+        left: Math.min(
+          overflow,
+          Math.max(
+            0,
+            active.offsetLeft -
+              (termPills.clientWidth - active.offsetWidth) / 2,
+          ),
+        ),
+        behavior: animate && motionOK() ? "smooth" : "auto",
+      });
+    syncTermEdges();
+  };
+
+  // ----- page slide between terms -----
+  // The page on screen slides out, then the next one slides in from the side
+  // the new term sits on: later terms arrive from the right, earlier from the
+  // left. Skipped for the first load and for reduced-motion users.
+  const SLIDE_OUT_MS = 170,
+    SLIDE_IN_MS = 380,
+    SLIDE_EASE = "cubic-bezier(0.22, 1, 0.36, 1)";
+  let slideAnim = null,
+    pageShown = false; // true once a term's content is on screen
+  const canSlide = () => motionOK() && typeof body.animate === "function";
+  const stopSlide = () => {
+    slideAnim?.cancel();
+    slideAnim = null;
+  };
+  // While pages swap, hold the card's height so the layout doesn't jump, and
+  // stop the sideways motion from ever adding a horizontal scrollbar.
+  const beginSlideState = () => {
+    if (!body.style.minHeight) body.style.minHeight = `${body.offsetHeight}px`;
+    document.documentElement.classList.add("term-sliding");
+  };
+  const endSlideState = () => {
+    body.style.minHeight = "";
+    document.documentElement.classList.remove("term-sliding");
+  };
+  const slidePage = (phase, dir) => {
+    stopSlide();
+    const out = phase === "out",
+      shift = Math.round(Math.min(72, Math.max(24, innerWidth * 0.07))) * dir;
+    slideAnim = body.animate(
+      out
+        ? [
+            { opacity: 1, transform: "translateX(0)" },
+            { opacity: 0, transform: `translateX(${-shift}px)` },
+          ]
+        : [
+            { opacity: 0, transform: `translateX(${shift}px)` },
+            { opacity: 1, transform: "translateX(0)" },
+          ],
+      {
+        duration: out ? SLIDE_OUT_MS : SLIDE_IN_MS,
+        easing: out ? "cubic-bezier(0.4, 0, 1, 1)" : SLIDE_EASE,
+        // Stay hidden after sliding out until the next page has loaded.
+        fill: out ? "forwards" : "none",
+      },
+    );
+    return slideAnim;
+  };
+  const heading = h(
     "section",
     { class: "reference-heading" },
     h(
       "div",
       {},
-      h("p", { class: "eyebrow" }, "STUDY LIBRARY"),
-      h("h1", {}, "Quick references"),
-      h(
-        "p",
-        { class: "reference-intro" },
-        "Choose a subject to browse its guide.",
-      ),
+      h("p", { class: "eyebrow" }, view.eyebrow),
+      h("h1", {}, view.title),
+      h("p", { class: "reference-intro" }, view.intro),
     ),
     tabs,
+    termSlider,
   );
-  const tocDetails = h("details", { class: "reference-toc" });
+  // "On this page" starts open on desktop and collapsed on mobile (same 760px
+  // breakpoint as the rest of the app). Chosen once, so switching terms keeps
+  // whatever the reader toggled.
+  const tocDetails = h("details", {
+    class: "reference-toc",
+    open: !matchMedia("(max-width: 760px)").matches,
+  });
   const sidebar = h(
     "aside",
-    { class: "reference-sidebar", "aria-label": "Reference navigation" },
+    { class: "reference-sidebar", "aria-label": "Navigation" },
     searchPanel,
     tocDetails,
   );
-  root.append(header, h("div", { class: "reference-layout" }, sidebar, body));
+  root.append(heading, h("div", { class: "reference-layout" }, sidebar, body));
   document.body.appendChild(searchToggle);
+  // Re-measure the highlight when the row is resized (rotation, window resize)
+  // or when the web font settles and changes the pill widths.
+  if (showTermPicker && typeof ResizeObserver === "function") {
+    termObserver = new ResizeObserver(() => syncTermPicker(false));
+    termObserver.observe(termPills);
+  }
+  document.fonts?.ready.then(() => syncTermPicker(false));
   // How long typing must pause before the page is searched.
   const SEARCH_DELAY_MS = 300;
   let matches = [],
@@ -2505,7 +3129,14 @@ async function pageReader(root, arg) {
     keyboardGap = 0,
     highlighted = [], // { node, pieces } for each text node we split up
     searchTimer = 0,
-    lastSearchKey = "";
+    lastSearchKey = "",
+    loadToken = 0,
+    frame = null, // the iframe, while an .html file is shown
+    frameObserver = null,
+    currentDoc = document; // document that holds the rendered content
+  // Where text is searched: the article for markdown, the iframe body for html.
+  const getSearchRoot = () =>
+    frame ? frame.contentDocument?.body || null : body;
   // Mobile: keep the floating search panel above the on-screen keyboard.
   // position:fixed is anchored to the layout viewport, and the keyboard (or a
   // fast programmatic scroll while it is open) can leave that behind the
@@ -2530,27 +3161,63 @@ async function pageReader(root, arg) {
   viewport?.addEventListener("resize", syncSearchPanelToViewport);
   viewport?.addEventListener("scroll", syncSearchPanelToViewport);
   addEventListener("scroll", syncSearchPanelToViewport, { passive: true });
+  // Pass the app theme to html canvases (as data-theme) so they can follow it.
+  const syncFrameTheme = () => {
+    const el = frame?.contentDocument?.documentElement;
+    if (el) el.dataset.theme = currentTheme();
+  };
+  const themeObserver = new MutationObserver(syncFrameTheme);
+  themeObserver.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["data-theme"],
+  });
+  const teardownFrame = () => {
+    frameObserver?.disconnect();
+    frameObserver = null;
+    frame = null;
+    currentDoc = document;
+  };
   readerSearchCleanup = () => {
     viewport?.removeEventListener("resize", syncSearchPanelToViewport);
     viewport?.removeEventListener("scroll", syncSearchPanelToViewport);
     removeEventListener("scroll", syncSearchPanelToViewport);
     clearTimeout(searchTimer);
+    loadToken++;
+    themeObserver.disconnect();
+    termObserver?.disconnect();
+    stopSlide();
+    endSlideState();
+    teardownFrame();
     searchPanel.remove();
     searchToggle.remove();
+  };
+  // Box of a match in page coordinates (matches inside the iframe are
+  // measured relative to the frame, so add the frame's own offset).
+  const matchBox = (match) => {
+    const box = match.getBoundingClientRect();
+    if (!frame) return box;
+    const outer = frame.getBoundingClientRect();
+    return { top: box.top + outer.top, height: box.height };
   };
   // Centre the match in the part of the screen that is actually visible: on
   // mobile that is between the sticky header (or the top of the visual
   // viewport) and the floating search panel, not the middle of the page.
   const scrollToMatch = (match) => {
+    for (
+      let d = match.closest?.("details:not([open])");
+      d;
+      d = d.parentElement?.closest("details:not([open])")
+    )
+      d.open = true;
+    const box = matchBox(match);
     if (viewport && searchPanel.classList.contains("mobile-open")) {
       syncSearchPanelToViewport();
-      const header = document.querySelector("header"),
+      const siteHeader = document.querySelector("header"),
         top = Math.max(
           viewport.offsetTop,
-          header ? header.getBoundingClientRect().bottom : 0,
+          siteHeader ? siteHeader.getBoundingClientRect().bottom : 0,
         ),
-        bottom = searchPanel.getBoundingClientRect().top,
-        box = match.getBoundingClientRect();
+        bottom = searchPanel.getBoundingClientRect().top;
       if (bottom - top > 40) {
         window.scrollBy({
           top: box.top + box.height / 2 - (top + bottom) / 2,
@@ -2559,7 +3226,22 @@ async function pageReader(root, arg) {
         return;
       }
     }
-    match.scrollIntoView({ block: "center", behavior: "smooth" });
+    if (frame)
+      window.scrollBy({
+        top: box.top + box.height / 2 - innerHeight / 2,
+        behavior: "smooth",
+      });
+    else match.scrollIntoView({ block: "center", behavior: "smooth" });
+  };
+  // Scroll a heading into view; inside the iframe this must be done by hand.
+  const scrollToHeading = (el) => {
+    if (!frame) return el.scrollIntoView();
+    const top =
+      el.getBoundingClientRect().top +
+      frame.getBoundingClientRect().top +
+      scrollY -
+      88;
+    window.scrollTo({ top: Math.max(0, top) });
   };
   // Undo by putting each original text node back, rather than merging the
   // whole article's text nodes again with normalize(): far cheaper when there
@@ -2570,6 +3252,12 @@ async function pageReader(root, arg) {
       pieces[0].replaceWith(node);
       for (let i = 1; i < pieces.length; i++) pieces[i].remove();
     }
+    highlighted = [];
+    matches = [];
+    currentMatch = -1;
+  };
+  // Forget highlights without touching the DOM (used once it is thrown away).
+  const forgetHighlights = () => {
     highlighted = [];
     matches = [];
     currentMatch = -1;
@@ -2615,8 +3303,14 @@ async function pageReader(root, arg) {
       resetResults("Invalid pattern");
       return true;
     }
+    const searchRoot = getSearchRoot();
+    if (!searchRoot) {
+      resetResults("No matches");
+      return true;
+    }
+    const doc = searchRoot.ownerDocument;
     // Find every match first (the walker can't survive the DOM edits below).
-    const walker = document.createTreeWalker(body, NodeFilter.SHOW_TEXT),
+    const walker = doc.createTreeWalker(searchRoot, NodeFilter.SHOW_TEXT),
       found = [];
     for (let node; (node = walker.nextNode()); ) {
       const text = node.nodeValue,
@@ -2632,27 +3326,28 @@ async function pageReader(root, arg) {
         }
         ranges.push([hit.index, hit.index + hit[0].length]);
       }
-      if (ranges.length && !node.parentElement.closest("script, style, mark"))
+      if (
+        ranges.length &&
+        !node.parentElement?.closest("script, style, noscript, mark")
+      )
         found.push([node, text, ranges]);
     }
     // Then rebuild each affected text node once, in a single DOM operation,
     // instead of splitting it with a Range for every match.
     for (const [node, text, ranges] of found) {
       const pieces = [],
-        fragment = document.createDocumentFragment();
+        fragment = doc.createDocumentFragment();
       let at = 0;
       for (const [start, end] of ranges) {
-        if (start > at)
-          pieces.push(document.createTextNode(text.slice(at, start)));
-        const mark = document.createElement("mark");
+        if (start > at) pieces.push(doc.createTextNode(text.slice(at, start)));
+        const mark = doc.createElement("mark");
         mark.className = "reference-search-match";
         mark.textContent = text.slice(start, end);
         pieces.push(mark);
         matches.push(mark);
         at = end;
       }
-      if (at < text.length)
-        pieces.push(document.createTextNode(text.slice(at)));
+      if (at < text.length) pieces.push(doc.createTextNode(text.slice(at)));
       for (const piece of pieces) fragment.appendChild(piece);
       node.replaceWith(fragment);
       highlighted.push({ node, pieces });
@@ -2691,7 +3386,7 @@ async function pageReader(root, arg) {
     searchPanel.classList.toggle("regex-on", regexMode);
     searchInput.placeholder = regexMode
       ? "Find with regex"
-      : "Find in this reference";
+      : `Find in this ${view.noun}`;
     updateSearch();
   });
   searchInput.addEventListener("keydown", (event) => {
@@ -2724,35 +3419,18 @@ async function pageReader(root, arg) {
     searchToggle.setAttribute("aria-expanded", "true");
     searchInput.focus();
   });
-  try {
-    const r = await fetch("content/" + cur.file);
-    if (!r.ok) throw new Error("HTTP " + r.status);
-    const { html, toc } = md(withoutContentsSection(await r.text()));
-    appendSanitizedReferenceHtml(body, html);
-    body.querySelectorAll("pre code.language-java").forEach((code) => {
-      code.innerHTML = Core.highlightJava(code.textContent);
-    });
-    body.querySelectorAll(".mermaid-source").forEach((source) => {
-      const diagram = renderMermaidFlowchart(source.textContent);
-      if (diagram) source.replaceWith(diagram);
-      else source.classList.add("reference-code-fallback");
-    });
-    const tocNav = h(
-      "nav",
-      { class: "reference-toc-links", "aria-label": "Reference sections" },
-      toc.map((t) =>
-        h(
-          "a",
-          {
-            href: "#",
-            class: "reference-toc-link",
-            "data-a": t.id,
-            style: `padding-left:${(t.n - 2) * 0.75 + 0.5}rem`,
-          },
-          t.t,
-        ),
-      ),
-    );
+  root.onclick = (e) => {
+    const a = e.target.closest("[data-a]");
+    if (a) {
+      e.preventDefault();
+      const el = currentDoc.getElementById(a.dataset.a);
+      if (el) scrollToHeading(el);
+    }
+  };
+
+  // ----- content loading (markdown or html, chosen by file extension) -----
+  const renderToc = (toc) => {
+    tocDetails.hidden = !toc.length;
     tocDetails.replaceChildren(
       h(
         "summary",
@@ -2760,23 +3438,196 @@ async function pageReader(root, arg) {
         h("strong", {}, "On this page"),
         h("span", {}, `${toc.length} sections`),
       ),
-      tocNav,
+      h(
+        "nav",
+        { class: "reference-toc-links", "aria-label": "Sections" },
+        toc.map((t) =>
+          h(
+            "a",
+            {
+              href: "#",
+              class: "reference-toc-link",
+              "data-a": t.id,
+              style: `padding-left:${Math.max(0, t.n - 2) * 0.75 + 0.5}rem`,
+            },
+            t.t,
+          ),
+        ),
+      ),
     );
-    lastSearchKey = null;
-    if (searchInput.value) updateSearch();
-    root.onclick = (e) => {
-      const a = e.target.closest("[data-a]");
-      if (a) {
-        e.preventDefault();
-        const el = document.getElementById(a.dataset.a);
-        if (el) el.scrollIntoView();
-      }
+  };
+  const loadMarkdown = async (term, token) => {
+    const r = await fetch("content/" + term.file);
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    const source = await r.text();
+    if (token !== loadToken) return null;
+    const { html, toc } = md(withoutContentsSection(source));
+    body.className = "md";
+    body.replaceChildren();
+    currentDoc = document;
+    appendSanitizedReferenceHtml(body, html);
+    if (view.route === "canvas")
+      body.querySelectorAll("pre code.language-sql").forEach((code) => {
+        try {
+          code.textContent = formatCanvasSQL(code.textContent);
+        } catch {
+          /* keep the original text if formatting fails */
+        }
+      });
+    ensureCodeStyles();
+    body.querySelectorAll('pre code[class^="language-"]').forEach((code) => {
+      const html = highlightCode(
+        code.textContent,
+        code.className.slice("language-".length).toLowerCase(),
+      );
+      if (html !== null) code.innerHTML = html;
+    });
+    body.querySelectorAll(".mermaid-source").forEach((source) => {
+      const diagram = renderMermaidFlowchart(source.textContent);
+      if (diagram) source.replaceWith(diagram);
+      else source.classList.add("reference-code-fallback");
+    });
+    return toc;
+  };
+  // An .html canvas runs in an iframe, so its own CSS and JS execute normally
+  // without touching (or being touched by) the rest of the app.
+  const loadHtml = async (term, token) => {
+    const r = await fetch("content/" + term.file);
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    r.body?.cancel?.();
+    if (token !== loadToken) return null;
+    const f = h("iframe", {
+      class: "canvas-frame",
+      title: `${cur.title} – ${term.label}`,
+      sandbox:
+        "allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads",
+      src: "content/" + term.file,
+    });
+    // Attach the listener before inserting so the load can't be missed.
+    const loaded = new Promise((resolve) =>
+      f.addEventListener("load", resolve, { once: true }),
+    );
+    body.className = "canvas-html";
+    body.replaceChildren(f);
+    frame = f;
+    await loaded;
+    if (token !== loadToken || frame !== f) return null;
+    const doc = f.contentDocument;
+    if (!doc || !doc.documentElement) throw new Error("Cannot read the page");
+    currentDoc = doc;
+    syncFrameTheme();
+    const style = doc.createElement("style");
+    style.textContent =
+      ".reference-search-match{color:#172033;background:#f3c969;border-radius:2px}" +
+      ".reference-search-match.current{outline:2px solid #315bd6;outline-offset:1px;background:#f0b93a}";
+    (doc.head || doc.documentElement).append(style);
+    // Grow the frame to fit its content so the page itself scrolls (this
+    // keeps the sticky sidebar, search and scroll-to-match behaving).
+    const fit = () => {
+      const height = Math.max(
+        doc.documentElement.scrollHeight,
+        doc.body ? doc.body.scrollHeight : 0,
+      );
+      if (height && Math.abs(f.offsetHeight - height) > 1)
+        f.style.height = height + "px";
     };
-  } catch (e) {
-    body.replaceChildren(
-      h("p", { class: "err" }, "Could not load " + cur.file + ": " + e.message),
-    );
+    fit();
+    frameObserver = new ResizeObserver(fit);
+    frameObserver.observe(doc.documentElement);
+    if (doc.body) frameObserver.observe(doc.body);
+    return [...doc.querySelectorAll("h1, h2, h3")]
+      .filter((el) => el.textContent.trim())
+      .map((el, i) => {
+        if (!el.id) el.id = `canvas-section-${i}`;
+        return {
+          n: Number(el.tagName[1]),
+          id: el.id,
+          t: el.textContent.trim().replace(/\s+/g, " "),
+        };
+      });
+  };
+  async function showTerm(index, userSwitch = false, direction = 0) {
+    const token = ++loadToken,
+      term = cur.terms[index],
+      previousIndex = termIndex,
+      dir = direction || (index > previousIndex ? 1 : -1);
+    termIndex = index;
+    lastLibraryTerm[view.route] = term.label;
+    syncTermPicker(userSwitch);
+    // replaceState keeps the address shareable without re-running the route.
+    const url = `#/${view.route}/${encodeURIComponent(cur.id)}/${encodeURIComponent(term.label)}`;
+    if (location.hash !== url) history.replaceState(null, "", url);
+    clearTimeout(searchTimer);
+    searchTimer = 0;
+    // Slide the page that is on screen out first. Only for a real switch
+    // between two terms (not the first load, not reduced motion).
+    const slide =
+      userSwitch && pageShown && index !== previousIndex && canSlide();
+    pageShown = false;
+    if (slide) {
+      beginSlideState();
+      await slidePage("out", dir).finished.catch(() => {});
+      if (token !== loadToken) return; // a newer switch took over
+    } else {
+      stopSlide();
+      endSlideState();
+    }
+    forgetHighlights();
+    teardownFrame();
+    body.className = "md";
+    body.replaceChildren(h("p", { class: "reference-loading" }, "Loading…"));
+    // If the next page is slow, stop hiding the card so "Loading…" shows.
+    const reveal = slide
+      ? setTimeout(() => token === loadToken && stopSlide(), 260)
+      : 0;
+    let toc = [];
+    try {
+      toc =
+        libraryFileKind(term.file) === "html"
+          ? await loadHtml(term, token)
+          : await loadMarkdown(term, token);
+      if (token !== loadToken || !toc) return;
+    } catch (e) {
+      if (token !== loadToken) return;
+      teardownFrame();
+      body.className = "md";
+      body.replaceChildren(
+        h("p", { class: "err" }, `Could not load ${term.file}: ${e.message}`),
+      );
+    } finally {
+      clearTimeout(reveal);
+    }
+    renderToc(toc);
+    // Re-apply whatever is in the search box to the newly shown term.
+    lastSearchKey = null;
+    updateSearch();
+    pageShown = true;
+    // The new page arrives at its own height, then slides in.
+    if (slide) body.style.minHeight = "";
+    if (userSwitch && body.getBoundingClientRect().top < 0)
+      body.scrollIntoView({ block: "start" });
+    if (slide) {
+      slidePage("in", dir).finished.then(
+        () => {
+          if (token === loadToken) endSlideState();
+        },
+        () => {}, // cancelled by a newer switch, which cleans up itself
+      );
+      tocDetails.animate?.(
+        [
+          { opacity: 0, transform: "translateY(10px)" },
+          { opacity: 1, transform: "none" },
+        ],
+        {
+          duration: SLIDE_IN_MS,
+          delay: 60,
+          easing: SLIDE_EASE,
+          fill: "backwards",
+        },
+      );
+    }
   }
+  await showTerm(termIndex);
 }
 
 async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
@@ -4639,10 +5490,20 @@ function resetLocalDataControl(root) {
 
 const pages = {
   reader: pageReader,
+  canvas: pageCanvas,
   practice: pagePractice,
   exam: pageExam,
   progress: pageProgress,
 };
+// Add the Canvas link to the nav if index.html doesn't have it yet.
+(() => {
+  const navEl = $("#nav");
+  if (!navEl || navEl.querySelector('a[href="#/canvas"]')) return;
+  const link = h("a", { href: "#/canvas" }, "Canvas");
+  const readerLink = navEl.querySelector('a[href="#/reader"]');
+  if (readerLink) readerLink.after(link);
+  else navEl.append(link);
+})();
 const periodicToast = $("#periodic-toast");
 const terminalArtifact = $("#terminal-artifact");
 const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
@@ -4847,7 +5708,11 @@ async function route() {
   } else if (p === "exam") {
     await pageExam(view, () => tok === routeTok);
   } else {
-    await (pages[p] || pageReader)(view, decodeRouteSegment(arg));
+    await (pages[p] || pageReader)(
+      view,
+      decodeRouteSegment(arg),
+      decodeRouteSegment(exerciseArg),
+    );
   }
   if (tok !== routeTok) view.remove();
   else routePending = false;

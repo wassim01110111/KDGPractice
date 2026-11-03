@@ -3,47 +3,77 @@
   "packages": {
     "os1": {
       "version": "0.0.1",
-      "files": [
-        "os-course.json"
-      ]
+      "files": ["os-course.json"]
     },
     "sql1": {
       "version": "0.0.1",
-      "files": [
-        "sql-course.json"
-      ]
+      "files": ["sql-course.json"]
     },
     "sql1t": {
       "version": "0.0.1",
-      "files": [
-        "sql-theory-course.json"
-      ]
+      "files": ["sql-theory-course.json"]
     },
     "sql1e": {
       "version": "0.0.1",
-      "files": [
-        "sql-extreme-t1.json"
-      ]
+      "files": ["sql-extreme-t1.json"]
     },
     "prog1t": {
       "version": "0.0.1",
-      "files": [
-        "programming-fundamentals-theory-t1.json"
-      ]
+      "files": ["programming-fundamentals-theory-t1.json"]
     }
   },
   "referenceFiles": {
     "sql": {
       "title": "SQL cheat sheet",
-      "file": "reference/sql-cheat-sheet.md"
+      "terms": [
+        {
+          "file": "reference/sql-cheat-sheet.md",
+          "name": "Term 1"
+        }
+      ]
     },
     "os": {
       "title": "Linux / OS summary",
-      "file": "reference/linux-summary.md"
+      "terms": [
+        {
+          "file": "reference/linux-summary.md",
+          "name": "Term 1"
+        }
+      ]
     },
     "programming_fundamentals": {
       "title": "Programming Fundamentals theory",
-      "file": "reference/prog-summary.md"
+      "terms": [
+        {
+          "file": "reference/prog-summary.md",
+          "name": "Term 1"
+        }
+      ]
+    }
+  },
+  "canvasFiles": {
+    "sql": {
+      "title": "Relational database",
+      "terms": [
+        {
+          "file": "reference/relational-database-term-1-ex.md",
+          "name": "Term 1"
+        }
+      ]
+    },
+
+    "programming_fundamentals": {
+      "title": "Programming Fundamentals",
+      "terms": [
+        {
+          "file": "reference/programming-fundamentals-term-1-ex.md",
+          "name": "Term 1"
+        },
+        {
+          "file": "reference/programming-fundamentals-term-1-brownfielders.md",
+          "name": "Brownfielders 1"
+        }
+      ]
     }
   }
 }

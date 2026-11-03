@@ -5069,3 +5069,275 @@ pre:focus-within,
     transition: none;
   }
 }
+
+/* ============================================================
+   Reference / Canvas: term picker, page slide and html canvas frame
+   ============================================================ */
+
+/* Registered so the edge fades on the pill row can animate smoothly. */
+@property --fade-l {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+@property --fade-r {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0px;
+}
+
+/* app.js adds this to <html> while a term page slides sideways, so the
+   motion can never create a horizontal scrollbar. */
+html.term-sliding {
+  overflow-x: clip;
+}
+
+.term-picker {
+  --term-pad: 0.28rem;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  width: fit-content;
+  max-width: 100%;
+  min-width: 0;
+  justify-self: start;
+}
+.term-picker-label {
+  color: var(--mut);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+/* "2 / 4" position chip (desktop only; pointless with a single term). */
+.term-picker-pos {
+  padding: 0.14rem 0.55rem;
+  color: var(--ac);
+  background: color-mix(in srgb, var(--ac) 11%, transparent);
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 750;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.term-picker[data-n="1"] .term-picker-pos {
+  display: none;
+}
+
+/* The frame draws the track; the row inside it scrolls when there are more
+   pills than fit, and carries the gliding highlight. */
+.term-frame {
+  min-width: 0;
+  max-width: 100%;
+  background: color-mix(in srgb, var(--soft) 78%, var(--card));
+  border: 1px solid var(--bd);
+  border-radius: 999px;
+  box-shadow: inset 0 1px 2px color-mix(in srgb, var(--fg) 7%, transparent);
+}
+.term-pills {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  gap: 0.15rem;
+  padding: var(--term-pad);
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    #000 var(--fade-l),
+    #000 calc(100% - var(--fade-r)),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    #000 var(--fade-l),
+    #000 calc(100% - var(--fade-r)),
+    transparent 100%
+  );
+  transition:
+    --fade-l 0.25s ease,
+    --fade-r 0.25s ease;
+}
+.term-pills::-webkit-scrollbar {
+  display: none;
+}
+.term-pills.fade-start {
+  --fade-l: 1.4rem;
+}
+.term-pills.fade-end {
+  --fade-r: 1.4rem;
+}
+
+/* The highlight. app.js sets --thumb-x / --thumb-w from the chosen pill. */
+.term-thumb {
+  position: absolute;
+  z-index: 0;
+  top: var(--term-pad);
+  bottom: var(--term-pad);
+  left: 0;
+  width: var(--thumb-w, 0px);
+  background: linear-gradient(135deg, var(--ac), var(--ac-hover));
+  border-radius: 999px;
+  box-shadow:
+    0 3px 10px color-mix(in srgb, var(--ac) 34%, transparent),
+    inset 0 1px 0 rgb(255 255 255 / 24%);
+  opacity: 0;
+  transform: translateX(var(--thumb-x, 0px));
+  pointer-events: none;
+}
+.term-pills.is-ready .term-thumb {
+  opacity: 1;
+  transition:
+    transform 0.5s cubic-bezier(0.3, 1.25, 0.5, 1),
+    width 0.5s cubic-bezier(0.3, 1.25, 0.5, 1),
+    opacity 0.2s ease;
+}
+
+/* Pills. The `.term-picker button.term-pill` prefix is deliberate: it has to
+   out-rank the app-wide `button:not(:disabled)` rules (light sweep, hover lift,
+   accent fill, press shadow) that would otherwise leak into the pills. */
+.term-picker button.term-pill {
+  position: relative;
+  z-index: 1;
+  flex: 1 0 auto;
+  min-width: 4.6rem;
+  min-height: 2.5rem;
+  max-width: 16rem;
+  margin: 0;
+  padding: 0.4rem 1.1rem;
+  color: var(--mut);
+  background: transparent;
+  border: 0;
+  border-radius: 999px;
+  box-shadow: none;
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 650;
+  line-height: 1.1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  scroll-snap-align: center;
+  cursor: pointer;
+  transition:
+    color 0.25s ease,
+    background-color 0.2s ease,
+    transform 0.18s var(--ui-ease, ease);
+}
+.term-picker button.term-pill::after {
+  content: none;
+}
+.term-picker button.term-pill:hover:not(:disabled) {
+  color: var(--fg);
+  background: color-mix(in srgb, var(--ac) 11%, transparent);
+  border-color: transparent;
+  box-shadow: none;
+  filter: none;
+  transform: none;
+}
+.term-picker button.term-pill:active:not(:disabled) {
+  box-shadow: none;
+  filter: none;
+  transform: scale(0.95);
+}
+/* The chosen pill sits on the highlight, so it needs the page colour. */
+.term-picker button.term-pill.on,
+.term-picker button.term-pill.on:hover:not(:disabled) {
+  color: var(--bg);
+  background: transparent;
+  font-weight: 750;
+}
+/* Until the highlight has been measured, colour the chosen pill itself. */
+.term-pills:not(.is-ready) button.term-pill.on,
+.term-pills:not(.is-ready) button.term-pill.on:hover:not(:disabled) {
+  background: var(--ac);
+}
+.term-picker button.term-pill:focus-visible {
+  outline: 2px solid var(--ac);
+  outline-offset: -3px;
+  box-shadow: none;
+}
+.term-picker button.term-pill.on:focus-visible {
+  outline-color: var(--bg);
+}
+/* One term: shown, but nothing to switch to. */
+.term-picker[data-n="1"] button.term-pill,
+.term-picker[data-n="1"] button.term-pill:hover:not(:disabled) {
+  cursor: default;
+}
+.term-picker[data-n="1"] button.term-pill:active:not(:disabled) {
+  transform: none;
+}
+
+@keyframes term-picker-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .term-picker {
+    animation: term-picker-in 0.45s var(--ui-ease, ease) both;
+  }
+}
+
+.reference-loading {
+  margin: 0;
+  color: var(--mut);
+}
+.canvas-html {
+  min-width: 0;
+  overflow: hidden;
+  background: var(--card);
+  border: 1px solid var(--bd);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+.canvas-frame {
+  display: block;
+  width: 100%;
+  min-height: 60vh;
+  border: 0;
+  background: #fff;
+}
+/* Phones: the picker spans the row, pills get 44px touch targets, and a long
+   row scrolls sideways with the chosen pill kept in the middle. */
+@media (max-width: 760px) {
+  .term-picker {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 0.6rem;
+    width: 100%;
+    justify-self: stretch;
+  }
+  .term-picker[data-n="1"] {
+    grid-template-columns: auto auto;
+    width: fit-content;
+  }
+  .term-picker-pos {
+    display: none;
+  }
+  .term-picker button.term-pill {
+    min-width: 4.2rem;
+    min-height: 2.75rem;
+    padding: 0.4rem 0.95rem;
+    font-size: 0.86rem;
+  }
+}
+@media (max-width: 380px) {
+  .term-picker {
+    gap: 0.45rem;
+  }
+  .term-picker-label {
+    font-size: 0.64rem;
+    letter-spacing: 0.08em;
+  }
+  .term-picker button.term-pill {
+    min-width: 3.8rem;
+    padding: 0.4rem 0.8rem;
+  }
+}
