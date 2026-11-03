@@ -1,8 +1,8 @@
-# Programming Fundamentals — Term 1
+# Programming Fundamentals: Term 1 Exercises
 
 ## Table of contents
 
-- [Programming Fundamentals — Term 1](#programming-fundamentals--term-1)
+- [Programming Fundamentals: Term 1 Exercises](#programming-fundamentals-term-1-exercises)
   - [Table of contents](#table-of-contents)
   - [Week 1](#week-1)
     - [Ex 01.03 Sum](#ex-0103-sum)

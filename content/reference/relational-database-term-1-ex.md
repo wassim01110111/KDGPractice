@@ -1,8 +1,8 @@
-# Relational Databases – Term 1 Exercises
+# Relational Databases: Term 1 Exercises
 
 ## Table of contents
 
-- [Relational Databases – Term 1 Exercises](#relational-databases--term-1-exercises)
+- [Relational Databases: Term 1 Exercises](#relational-databases-term-1-exercises)
   - [Table of contents](#table-of-contents)
   - [Week 2](#week-2)
     - [Enterprise - Exercises on SIMPLE Selects and Fetch](#enterprise---exercises-on-simple-selects-and-fetch)

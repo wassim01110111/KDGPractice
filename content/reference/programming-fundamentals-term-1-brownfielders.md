@@ -1,4 +1,4 @@
-# Programming Fundamentals — Term 1 Brownfielders
+# Programming Fundamentals: Term 1 Brownfielders
 
 Solutions are hidden by default. Expand **\***Show solution**\*** to view the Java code.
 
