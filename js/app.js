@@ -516,45 +516,39 @@ function addPackage(f, ctx) {
 }
 
 // ---------- SQL engine ----------
-const snaps = {};
-const snapshotLoads = {};
+// PGlite runs in a dedicated Web Worker (see pglite-loader.js). Keep complete
+// dataset operations in a single queue: the worker owns one PostgreSQL
+// connection, and a reset + dataset setup + query must never interleave with
+// another exercise's work.
+let databaseQueue = Promise.resolve();
+const preparedDatasets = new Set();
 async function engine() {
   await (window.pgliteReady ||
-    Promise.reject(new Error("PGlite loader missing")));
+    Promise.reject(new Error("PGlite worker loader missing")));
+  if (!window.PGlite) throw new Error("PGlite worker is unavailable");
   return window.PGlite;
 }
-async function freshDb(ds) {
-  const P = await engine(),
-    k = ds.id + "@" + ds.version;
-  let s = snaps[k];
-  if (s && s !== "exec") return new P({ loadDataDir: s });
-  if (!s) {
-    snapshotLoads[k] ??= (async () => {
-      const db = new P();
-      try {
-        await db.exec(ds.sql);
-        try {
-          snaps[k] = await db.dumpDataDir();
-        } catch {
-          snaps[k] = "exec";
-        }
-      } finally {
-        db.close();
-      }
-    })().finally(() => {
-      delete snapshotLoads[k];
-    });
-    await snapshotLoads[k];
-    s = snaps[k];
-    if (s && s !== "exec") return new P({ loadDataDir: s });
-  }
-  const db = new P();
+async function resetDatabase(db, ds) {
+  // Recreate the public schema for each operation so student SQL and reference
+  // SQL always run against a clean copy of the selected exercise dataset.
+  await db.exec("DROP SCHEMA IF EXISTS public CASCADE; CREATE SCHEMA public;");
   await db.exec(ds.sql);
-  return db;
+  preparedDatasets.add(ds.id + "@" + ds.version);
+}
+function withFreshDb(ds, task) {
+  const operation = databaseQueue.then(async () => {
+    const db = await engine();
+    await resetDatabase(db, ds);
+    return task(db);
+  });
+  // Keep the queue usable after a failed query/setup while returning the
+  // original rejection to the caller.
+  databaseQueue = operation.catch(() => {});
+  return operation;
 }
 const dbIsWarm = (ex) => {
   const ds = S.datasets[ex.datasetId];
-  return !!(ds && snaps[ds.id + "@" + ds.version]);
+  return !!(ds && preparedDatasets.has(ds.id + "@" + ds.version));
 };
 function describeSqlError(e, sql) {
   let msg = e.message;
@@ -588,14 +582,11 @@ function checkKind(ex, sql) {
 }
 async function runStudent(ex, sql) {
   checkKind(ex, sql);
-  const t0 = performance.now(),
-    db = await freshDb(S.datasets[ex.datasetId]);
-  try {
-    const res = await runSql(db, sql);
-    return { res, ms: Math.round(performance.now() - t0) };
-  } finally {
-    db.close();
-  }
+  const t0 = performance.now();
+  const res = await withFreshDb(S.datasets[ex.datasetId], (db) =>
+    runSql(db, sql),
+  );
+  return { res, ms: Math.round(performance.now() - t0) };
 }
 async function gradeSql(ex, sql) {
   const ds = S.datasets[ex.datasetId],
@@ -605,29 +596,40 @@ async function gradeSql(ex, sql) {
   } catch (e) {
     return { correct: false, error: e.message };
   }
-  const [a, b] = await Promise.all([freshDb(ds), freshDb(ds)]),
-    t1 = performance.now();
-  try {
-    const [s, r] = await Promise.allSettled([
-      runSql(a, sql),
-      runSql(b, ex.referenceSolution),
-    ]);
+  return withFreshDb(ds, async (db) => {
+    const t1 = performance.now();
+    let s, r;
+    try {
+      s = { status: "fulfilled", value: await runSql(db, sql) };
+    } catch (reason) {
+      s = { status: "rejected", reason };
+    }
+    // Run the reference query on a freshly restored dataset in the same
+    // worker, rather than trying to open a second main-thread database.
+    await resetDatabase(db, ds);
+    try {
+      r = { status: "fulfilled", value: await runSql(db, ex.referenceSolution) };
+    } catch (reason) {
+      r = { status: "rejected", reason };
+    }
     if (r.status === "rejected")
-      return { correct: false, error: describeSqlError(s.reason, sql) };
+      return {
+        correct: false,
+        error: s.status === "rejected"
+          ? describeSqlError(s.reason, sql)
+          : describeSqlError(r.reason, ex.referenceSolution),
+      };
     if (s.status === "rejected")
       return { correct: false, error: s.reason.message };
     const cmp = compare(s.value, r.value, ex);
     return {
       correct: cmp.ok,
       cmp,
-      res: s.value, // the student's own result set, so callers can show it
+      res: s.value,
       setupMs: Math.round(t1 - t0),
       totalMs: Math.round(performance.now() - t0),
     };
-  } finally {
-    a.close();
-    b.close();
-  }
+  });
 }
 // ---------- rendering helpers ----------
 function table(r, max = 200) {
@@ -1242,19 +1244,18 @@ function schemaView(ex) {
     );
     let columns, keys;
     try {
-      const db = await freshDb(S.datasets[ex.datasetId]);
-      try {
-        [columns, keys] = await Promise.all([
-          db.query(
+      [columns, keys] = await withFreshDb(
+        S.datasets[ex.datasetId],
+        async (db) => {
+          const columns = await db.query(
             "select table_name, column_name, data_type, is_nullable from information_schema.columns where table_schema='public' order by table_name, ordinal_position",
-          ),
-          db.query(
-            "select tc.table_name, kcu.column_name, tc.constraint_type, ccu.table_name as referenced_table, ccu.column_name as referenced_column from information_schema.table_constraints tc join information_schema.key_column_usage kcu on tc.constraint_name=kcu.constraint_name and tc.table_schema=kcu.table_schema join information_schema.constraint_column_usage ccu on ccu.constraint_name=tc.constraint_name and ccu.table_schema=tc.table_schema where tc.table_schema='public' and tc.constraint_type in ('PRIMARY KEY','FOREIGN KEY') order by tc.table_name, kcu.ordinal_position",
-          ),
-        ]);
-      } finally {
-        db.close();
-      }
+          );
+          const keys = await db.query(
+            "select tc.table_name, kcu.column_name, tc.constraint_type, ccu.table_name as referenced_table, ccu.column_name as referenced_column from information_schema.table_constraints tc join information_schema.key_column_usage kcu on tc.constraint_name=kcu.constraint_name and tc.table_schema=kcu.table_schema join information_schema.constraint_column_usage ccu on ccu.constraint_name=kcu.constraint_name and ccu.table_schema=kcu.table_schema where tc.table_schema='public' and tc.constraint_type in ('PRIMARY KEY','FOREIGN KEY') order by tc.table_name, kcu.ordinal_position",
+          );
+          return [columns, keys];
+        },
+      );
     } catch (e) {
       box.dataset.loaded = "";
       content.replaceChildren(h("pre", { class: "err" }, e.message));
