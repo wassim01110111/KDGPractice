@@ -5059,7 +5059,12 @@ wassimSign.addEventListener("click", () => {
   clearTimeout(clickTimer);
 
   if (clickCount >= 5) {
-    focusButton.style.display = "block";
+    if (focusButton.style.display === "block") {
+      focusButton.style.display = "none";
+      focusButton.setAttribute("aria-pressed", "false");
+    } else {
+      focusButton.style.display = "block";
+    }
 
     clickCount = 0;
     return;
