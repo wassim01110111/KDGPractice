@@ -3796,7 +3796,7 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
         redraw();
       },
     },
-    "Show all exercises",
+    "Show completed exercises",
   );
   function refreshCategories() {
     const categories = [
