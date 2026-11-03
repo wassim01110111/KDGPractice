@@ -37,6 +37,37 @@ function updatePlantUmlImageTheme() {
 }
 const empty = (a, b) =>
   h("div", { class: "empty" }, h("strong", {}, a), h("div", {}, b || ""));
+// ---------- loading placeholders ----------
+// Styles are injected here so the placeholders work without touching the
+// stylesheet. Animations are switched off for prefers-reduced-motion.
+(() => {
+  const style = document.createElement("style");
+  style.textContent = `
+.loading-note{display:flex;align-items:center;gap:.5em;font-size:.85em;opacity:.85}
+.loading-spin{flex:none;display:inline-block;width:1em;height:1em;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:app-spin .8s linear infinite;opacity:.7}
+.loading-skeleton{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;min-height:12rem;padding:1rem;border-radius:8px;text-align:center;background:linear-gradient(90deg,rgba(128,128,128,.10) 25%,rgba(128,128,128,.22) 50%,rgba(128,128,128,.10) 75%);background-size:200% 100%;animation:app-shimmer 1.4s ease-in-out infinite}
+.loading-skeleton .loading-note{justify-content:center}
+.loading-sub{font-size:.8em;opacity:.7}
+@keyframes app-spin{to{transform:rotate(360deg)}}
+@keyframes app-shimmer{from{background-position:200% 0}to{background-position:-200% 0}}
+@media (prefers-reduced-motion:reduce){.loading-spin,.loading-skeleton{animation:none}.loading-spin{border-right-color:currentColor;opacity:.4}}
+`;
+  document.head.append(style);
+})();
+const loadingNote = (text, extra = {}) =>
+  h(
+    "div",
+    { class: "loading-note", role: "status", "aria-live": "polite", ...extra },
+    h("span", { class: "loading-spin", "aria-hidden": "true" }),
+    h("span", {}, text),
+  );
+const loadingSkeleton = (text, sub = "") =>
+  h(
+    "div",
+    { class: "loading-skeleton" },
+    loadingNote(text),
+    sub ? h("small", { class: "loading-sub" }, sub) : "",
+  );
 const uniq = (arr, f) =>
   [...new Set(arr.map(f).filter((x) => x !== undefined && x !== ""))].sort();
 const courseLabel = (course) =>
@@ -537,6 +568,10 @@ async function freshDb(ds) {
   await db.exec(ds.sql);
   return db;
 }
+const dbIsWarm = (ex) => {
+  const ds = S.datasets[ex.datasetId];
+  return !!(ds && snaps[ds.id + "@" + ds.version]);
+};
 function describeSqlError(e, sql) {
   let msg = e.message;
   const pos = parseInt(e.position, 10);
@@ -1234,7 +1269,10 @@ function schemaView(ex) {
   const content = h(
     "div",
     { class: "schema-content" },
-    h("small", {}, "Loading the PlantUML-rendered relationship diagram…"),
+    loadingSkeleton(
+      "Loading the relationship diagram…",
+      "Open to build the sample database",
+    ),
   );
   const box = h(
     "details",
@@ -1254,7 +1292,12 @@ function schemaView(ex) {
   box.addEventListener("toggle", async () => {
     if (!box.open || box.dataset.loaded) return;
     box.dataset.loaded = "true";
-    content.replaceChildren(h("small", {}, "Loading dataset diagram…"));
+    content.replaceChildren(
+      loadingSkeleton(
+        "Creating the sample database…",
+        dbIsWarm(ex) ? "" : "The first time takes a few seconds",
+      ),
+    );
     let columns, keys;
     try {
       const db = await freshDb(S.datasets[ex.datasetId]);
@@ -1348,10 +1391,30 @@ function schemaView(ex) {
     });
     const diagramImage = h("img", {
       alt: `PlantUML entity relationship diagram for ${ex.datasetId}`,
-      loading: "lazy",
       draggable: "false",
     });
+    // Hidden (but still loading) until the image arrives; a skeleton fills the
+    // space meanwhile. The PlantUML server can be slow, so say so after a while.
+    diagramImage.style.display = "none";
+    const diagramPlaceholder = loadingSkeleton(
+      "Rendering the PlantUML diagram…",
+    );
+    const slowTimer = setTimeout(() => {
+      diagramPlaceholder.append(
+        h(
+          "small",
+          { class: "loading-sub" },
+          "Still working: the PlantUML server is slow right now.",
+        ),
+      );
+    }, 8000);
+    diagramImage.addEventListener("load", () => {
+      clearTimeout(slowTimer);
+      diagramPlaceholder.remove();
+      diagramImage.style.display = "";
+    });
     diagramImage.addEventListener("error", () => {
+      clearTimeout(slowTimer);
       diagramViewer.replaceChildren(
         h(
           "span",
@@ -1360,7 +1423,7 @@ function schemaView(ex) {
         ),
       );
     });
-    diagramViewer.append(diagramImage);
+    diagramViewer.append(diagramPlaceholder, diagramImage);
     let zoom = 1,
       panX = 0,
       panY = 0,
@@ -1552,6 +1615,7 @@ function schemaView(ex) {
       diagramImage.dataset.plantumlEncoded = encoded;
       diagramImage.src = plantUmlImageUrl(encoded);
     } catch (e) {
+      clearTimeout(slowTimer);
       diagramViewer.replaceChildren(
         h(
           "span",
@@ -1683,7 +1747,13 @@ function qView(
           const currentRun = ++runId;
           const sql = ta.value; // capture, in case they edit while it runs
           fb.replaceChildren();
-          out.replaceChildren(h("small", {}, "Running…"));
+          out.replaceChildren(
+            loadingNote(
+              dbIsWarm(ex)
+                ? "Running…"
+                : "Setting up the database (first run takes a few seconds)…",
+            ),
+          );
           try {
             const r = await runStudent(ex, sql);
             if (currentRun !== runId || !q.isConnected) return;
@@ -1727,7 +1797,13 @@ function qView(
           onclick: async () => {
             const currentGrading = ++gradingId;
             ++runId; // a Run still in flight must not overwrite this output
-            fb.replaceChildren(h("small", {}, "Grading…"));
+            fb.replaceChildren(
+              loadingNote(
+                dbIsWarm(ex)
+                  ? "Grading…"
+                  : "Setting up the database and grading…",
+              ),
+            );
             const g = await gradeSql(ex, ta.value);
             if (currentGrading !== gradingId || !q.isConnected) return;
             // Show the result table of the submitted query, like Run does.
@@ -2046,7 +2122,11 @@ function qView(
         toggle.disabled = true;
         snippet.replaceChildren(
           h("strong", {}, "Expected result preview"),
-          h("small", {}, "Loading the first five result rows…"),
+          loadingNote(
+            dbIsWarm(ex)
+              ? "Loading the first five result rows…"
+              : "Setting up the database and loading the first five rows…",
+          ),
         );
         try {
           const { res } = await runStudent(ex, ex.referenceSolution);
