@@ -6227,14 +6227,23 @@ header > #nav a:not(.reference-tab):focus-visible::after {
     width: 100%;
   }
 
-  /* 3 visible elements: #focus-toggle is hidden -> 3 columns */
-  .header-tools:has(#focus-toggle[hidden]) {
+  /* Exactly 3 visible elements: 3 columns in the first row */
+  .header-tools:has(#focus-toggle[hidden]):has(
+      > :nth-child(3 of :not([hidden]))
+    ):not(:has(> :nth-child(4 of :not([hidden])))) {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  /* 4 visible elements: #focus-toggle is visible -> 2 columns */
-  .header-tools:has(#focus-toggle:not([hidden])) {
+  /* Exactly 4 visible elements: 2 columns per row */
+  .header-tools:has(#focus-toggle:not([hidden])):has(
+      > :nth-child(4 of :not([hidden]))
+    ):not(:has(> :nth-child(5 of :not([hidden])))) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  /* 5 or more visible elements */
+  .header-tools:has(> :nth-child(5 of :not([hidden]))) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
@@ -6254,8 +6263,4 @@ header > #nav a:not(.reference-tab):focus-visible::after {
   .header-tools > #wassim-sign .maker-cursor {
     animation: none;
   }
-}
-
-[hidden] {
-  display: none !important;
 }
