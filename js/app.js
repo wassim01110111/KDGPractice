@@ -3709,7 +3709,7 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
   ].sort((a, b) => a - b);
   const search = h("input", {
       type: "search",
-      placeholder: "Search titles, instructions, or IDs",
+      placeholder: "Search titles",
       "aria-label": "Search questions",
       oninput: () => redraw(),
     }),
