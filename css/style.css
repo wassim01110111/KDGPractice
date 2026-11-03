@@ -5341,3 +5341,10 @@ html.term-sliding {
     padding: 0.4rem 0.8rem;
   }
 }
+
+/* Page transitions (see route() in app.js): sections and Reference/Canvas
+   subjects slide sideways, so the motion must never add a horizontal
+   scrollbar while it runs. */
+html.route-sliding {
+  overflow-x: clip;
+}

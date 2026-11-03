@@ -3234,7 +3234,35 @@ async function pageLibrary(root, arg, termArg, view) {
     else match.scrollIntoView({ block: "center", behavior: "smooth" });
   };
   // Scroll a heading into view; inside the iframe this must be done by hand.
+  // Brief glow on the heading you jumped to, so the eye finds where the
+  // smooth scroll landed. Uses the Web Animations API so it also works on a
+  // heading inside an .html canvas iframe (no stylesheet needed there).
+  const flashHeading = (el) => {
+    if (!motionOK() || typeof el.animate !== "function") return;
+    const glow = (a) => `rgba(243, 201, 105, ${a})`;
+    el.animate(
+      [
+        {
+          backgroundColor: glow(0.5),
+          boxShadow: `0 0 0 6px ${glow(0.5)}`,
+          offset: 0,
+        },
+        {
+          backgroundColor: glow(0.5),
+          boxShadow: `0 0 0 6px ${glow(0.5)}`,
+          offset: 0.3,
+        },
+        {
+          backgroundColor: glow(0),
+          boxShadow: `0 0 0 6px ${glow(0)}`,
+          offset: 1,
+        },
+      ],
+      { duration: 1800, easing: "ease-out" },
+    );
+  };
   const scrollToHeading = (el) => {
+    flashHeading(el);
     if (!frame) return el.scrollIntoView();
     const top =
       el.getBoundingClientRect().top +
@@ -5677,6 +5705,78 @@ const decodeRouteSegment = (segment) => {
     return "";
   }
 };
+// ---------- page transitions ----------
+// Moving between sections slides the old page out and the new one in from the
+// side the new section sits on (nav order: a later link arrives from the
+// right, an earlier one from the left). Switching subject inside Reference or
+// Canvas keeps the heading and tabs still and slides only the content below
+// them. Nothing animates for reduced-motion users, or when the address changes
+// without changing what is on screen.
+const ROUTE_OUT_MS = 140,
+  ROUTE_IN_MS = 360,
+  ROUTE_EASE = "cubic-bezier(0.22, 1, 0.36, 1)";
+let routeShown = null; // { page, subject } currently on screen
+let routeEnterAnim = null; // enter animation still running, if any
+let routeLeaving = null; // { target, anim }: the exit that is in flight
+// Reference/Canvas subject, normalised so "" and the first subject match.
+const routeSubject = (page, arg) => {
+  const lib = LIBRARY_VIEWS[page];
+  if (!lib) return "";
+  const refs = S.manifest?.[lib.key] || [],
+    id = decodeRouteSegment(arg);
+  return (refs.find((r) => r.id === id) || refs[0])?.id ?? "";
+};
+// What kind of transition this navigation needs (null = none). dir is +1 when
+// the new page sits after the old one, -1 before it, 0 for the first load.
+function routeMotion(page, subject) {
+  if (!routeShown) return { kind: "page", dir: 0 };
+  if (routeShown.page !== page) {
+    const order = [...document.querySelectorAll("#nav a")].map((a) =>
+        a.getAttribute("href"),
+      ),
+      from = order.indexOf("#/" + routeShown.page),
+      to = order.indexOf("#/" + page);
+    return { kind: "page", dir: to >= from ? 1 : -1 };
+  }
+  const lib = LIBRARY_VIEWS[page];
+  if (lib && routeShown.subject !== subject) {
+    const ids = (S.manifest?.[lib.key] || []).map((r) => r.id);
+    return {
+      kind: "subject",
+      dir: ids.indexOf(subject) >= ids.indexOf(routeShown.subject) ? 1 : -1,
+    };
+  }
+  return null;
+}
+function playRoute(el, phase, motion) {
+  const out = phase === "out",
+    sideways = motion.dir !== 0,
+    shift =
+      motion.kind === "subject"
+        ? 32
+        : Math.round(Math.min(56, Math.max(20, innerWidth * 0.05))),
+    offset = sideways ? motion.dir * shift : 14,
+    axis = sideways ? "translateX" : "translateY",
+    anim = el.animate(
+      out
+        ? [
+            { opacity: 1, transform: `${axis}(0)` },
+            { opacity: 0, transform: `${axis}(${-offset}px)` },
+          ]
+        : [
+            { opacity: 0, transform: `${axis}(${offset}px)` },
+            { opacity: 1, transform: `${axis}(0)` },
+          ],
+      {
+        duration: out ? ROUTE_OUT_MS : ROUTE_IN_MS,
+        easing: out ? "cubic-bezier(0.4, 0, 1, 1)" : ROUTE_EASE,
+        // Stay hidden after sliding out until the old page is removed.
+        fill: out ? "forwards" : "none",
+      },
+    );
+  if (!out) routeEnterAnim = anim;
+  return anim;
+}
 async function route() {
   const routeHash = location.hash;
   if (routeHash === lastRouteHash && routePending) return;
@@ -5684,36 +5784,74 @@ async function route() {
   if (activeConfirmDialog?.open) activeConfirmDialog.close("cancel");
   readerSearchCleanup?.();
   readerSearchCleanup = null;
+  routeEnterAnim?.cancel();
+  routeEnterAnim = null;
   const tok = ++routeTok,
     [, p = "reader", arg, exerciseArg] = routeHash.split("/"),
-    main = $("#main");
+    main = $("#main"),
+    page = pages[p] ? p : "reader",
+    motion =
+      !reducedMotion.matches && typeof main.animate === "function"
+        ? routeMotion(page, routeSubject(page, arg))
+        : null,
+    leaving = main.firstElementChild,
+    root = document.documentElement;
   routePending = true;
-  main.replaceChildren();
   document
     .querySelectorAll("#nav a")
     .forEach((a) =>
-      a.classList.toggle(
-        "on",
-        a.getAttribute("href") === "#/" + (pages[p] ? p : "reader"),
-      ),
+      a.classList.toggle("on", a.getAttribute("href") === "#/" + page),
     );
+  // Slide the page that is on screen out first (not on the very first load).
+  if (motion && motion.dir !== 0 && leaving) {
+    const target =
+      motion.kind === "subject"
+        ? leaving.querySelector(".reference-layout") || leaving
+        : leaving;
+    // A second click during the exit reuses it instead of restarting it.
+    if (routeLeaving?.target !== target)
+      routeLeaving = { target, anim: playRoute(target, "out", motion) };
+    leaving.style.pointerEvents = "none";
+    root.classList.add("route-sliding");
+    await routeLeaving.anim.finished.catch(() => {});
+    if (tok !== routeTok) return; // a newer navigation took over
+  } else if (!motion) {
+    root.classList.remove("route-sliding");
+  }
+  main.replaceChildren();
   const view = h("div");
   main.append(view);
-  if (p === "practice") {
-    await pagePractice(
-      view,
-      decodeRouteSegment(arg),
-      decodeRouteSegment(exerciseArg),
-    );
-  } else if (p === "exam") {
-    await pageExam(view, () => tok === routeTok);
-  } else {
-    await (pages[p] || pageReader)(
-      view,
-      decodeRouteSegment(arg),
-      decodeRouteSegment(exerciseArg),
+  routeShown = { page, subject: routeSubject(page, arg) };
+  // The page functions build their markup before their first await, so the
+  // view is ready to animate straight away while content keeps loading.
+  const run =
+    p === "practice"
+      ? pagePractice(
+          view,
+          decodeRouteSegment(arg),
+          decodeRouteSegment(exerciseArg),
+        )
+      : p === "exam"
+        ? pageExam(view, () => tok === routeTok)
+        : (pages[p] || pageReader)(
+            view,
+            decodeRouteSegment(arg),
+            decodeRouteSegment(exerciseArg),
+          );
+  if (motion) {
+    const target =
+      motion.kind === "subject"
+        ? view.querySelector(".reference-layout") || view
+        : view;
+    if (motion.dir !== 0) root.classList.add("route-sliding");
+    playRoute(target, "in", motion).finished.then(
+      () => {
+        if (tok === routeTok) root.classList.remove("route-sliding");
+      },
+      () => {}, // cancelled by a newer navigation, which cleans up itself
     );
   }
+  await run;
   if (tok !== routeTok) view.remove();
   else routePending = false;
 }
