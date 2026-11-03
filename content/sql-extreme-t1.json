@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "packageId": "sql-extreme-term-1",
   "version": "1.0.0",
-  "title": "Weeks 2–5 Integrated PostgreSQL Examination — Extreme",
+  "title": "Weeks 2–5 Integrated PostgreSQL Examination: Extreme",
   "description": "Forty extreme SQL-writing exercises integrating query construction, filtering, functions, conversions, joins, self-joins, composite keys, grouping, aggregates, outer joins and NULL handling. The supplied course cheat sheet is the authority for SQL scope.",
   "sqlDialect": "PostgreSQL",
   "term": 1,

@@ -1,11 +1,11 @@
-# MASTER PROMPT — GENERATE A COMPLETE OS / LINUX EXERCISE JSON PACKAGE
+# MASTER PROMPT: GENERATE A COMPLETE OS / LINUX EXERCISE JSON PACKAGE
 
 You are an expert educational exercise generator. Your task is to generate a large, high-quality, exam-focused JSON exercise package for the Operating Systems / Linux coursework.
 
 You will receive:
 
-1. `Linux_Summary.md` — the authoritative source for the course content.
-2. A JSON example/schema — the required structure and format for the generated exercise package.
+1. `Linux_Summary.md`: the authoritative source for the course content.
+2. A JSON example/schema: the required structure and format for the generated exercise package.
 
 Your task is to generate a complete OS exercise package using ONLY the examinable content supported by the Markdown summary and the restrictions in this prompt.
 
@@ -23,7 +23,7 @@ The Markdown summary is the source of course information, but not everything men
 
 You must follow the explicit inclusions and exclusions in this prompt.
 
-## Strict exclusions — NEVER generate exercises about these topics
+## Strict exclusions: NEVER generate exercises about these topics
 
 The following material is NOT part of the exam and must be completely excluded:
 
@@ -70,7 +70,7 @@ The subject descriptions below establish the intended coverage. However, the Mar
 
 Do not generate material beyond what the summary supports.
 
-## TOPIC 1 — LINUX FUNDAMENTALS
+## TOPIC 1: LINUX FUNDAMENTALS
 
 Cover the fundamental concepts explicitly included in the summary, such as:
 
@@ -94,7 +94,7 @@ Generate conceptual questions that test understanding rather than simple memoriz
 
 Minimum: 10 exercises.
 
-## TOPIC 2 — SHELL BASICS AND COMMAND SYNTAX
+## TOPIC 2: SHELL BASICS AND COMMAND SYNTAX
 
 Cover:
 
@@ -119,7 +119,7 @@ Only include syntax and expansion types explicitly supported by the summary.
 
 Minimum: 15 exercises.
 
-## TOPIC 3 — WILDCARDS AND GLOBBING
+## TOPIC 3: WILDCARDS AND GLOBBING
 
 Cover the shell wildcard and filename expansion features included in the coursework:
 
@@ -140,7 +140,7 @@ Important:
 
 Minimum: 15 exercises.
 
-## TOPIC 4 — NAVIGATION AND SYSTEM INFORMATION
+## TOPIC 4: NAVIGATION AND SYSTEM INFORMATION
 
 Cover the commands and options included in the summary:
 
@@ -176,7 +176,7 @@ Do not assume every option above is examinable if the summary says otherwise.
 
 Minimum: 20 exercises.
 
-## TOPIC 5 — FILE INSPECTION
+## TOPIC 5: FILE INSPECTION
 
 Cover:
 
@@ -199,7 +199,7 @@ Test:
 
 Minimum: 15 exercises.
 
-## TOPIC 6 — FILE AND DIRECTORY MANAGEMENT
+## TOPIC 6: FILE AND DIRECTORY MANAGEMENT
 
 Cover:
 
@@ -231,21 +231,21 @@ Test:
 
 Minimum: 20 exercises.
 
-## TOPIC 7 — CORE TEXT UTILITIES
+## TOPIC 7: CORE TEXT UTILITIES
 
 Cover the text utilities explicitly included in the exam coursework.
 
 Potential commands include:
 
 - `echo`
-- `sed` — ONLY non-regex functionality explicitly taught and examinable in the summary.
+- `sed`: ONLY non-regex functionality explicitly taught and examinable in the summary.
 - `cut`
 - `sort`
 - `uniq`
 - `tr`
 - `tee`
 - `wc`
-- `ps` — only if included as examinable coursework.
+- `ps`: only if included as examinable coursework.
 
 Also include `cat`, `head`, and `tail` where appropriate to the course content.
 
@@ -266,7 +266,7 @@ Do not invent options or functionality for any command.
 
 Minimum: 20 exercises.
 
-## TOPIC 8 — INPUT AND OUTPUT REDIRECTION
+## TOPIC 8: INPUT AND OUTPUT REDIRECTION
 
 Cover:
 
@@ -294,7 +294,7 @@ Test:
 
 Minimum: 15 exercises.
 
-## TOPIC 9 — HARD LINKS AND SYMBOLIC LINKS
+## TOPIC 9: HARD LINKS AND SYMBOLIC LINKS
 
 Cover:
 
@@ -310,7 +310,7 @@ Test both conceptual understanding and practical command construction.
 
 Minimum: 12 exercises.
 
-## TOPIC 10 — QUOTING
+## TOPIC 10: QUOTING
 
 Cover:
 
@@ -326,7 +326,7 @@ Test students' ability to predict how the shell interprets commands.
 
 Minimum: 12 exercises.
 
-## TOPIC 11 — USERS, GROUPS AND PASSWORDS
+## TOPIC 11: USERS, GROUPS AND PASSWORDS
 
 Cover the user and group management material in the summary:
 
@@ -352,7 +352,7 @@ Only test commands, options, files, and configuration details actually included 
 
 Minimum: 20 exercises.
 
-## TOPIC 12 — FILE PERMISSIONS
+## TOPIC 12: FILE PERMISSIONS
 
 Cover:
 
@@ -387,7 +387,7 @@ Test:
 
 Minimum: 25 exercises.
 
-## TOPIC 13 — FINDING FILES WITH FIND
+## TOPIC 13: FINDING FILES WITH FIND
 
 Cover the `find` command and its documented functionality:
 
@@ -408,7 +408,7 @@ Test students' ability to construct commands for realistic file-search tasks.
 
 Minimum: 15 exercises.
 
-## TOPIC 14 — ARCHIVING AND COPYING FILES
+## TOPIC 14: ARCHIVING AND COPYING FILES
 
 Cover:
 
@@ -428,7 +428,7 @@ Test:
 
 Minimum: 15 exercises.
 
-## TOPIC 15 — IMPORTANT LINUX DIRECTORIES AND FILES
+## TOPIC 15: IMPORTANT LINUX DIRECTORIES AND FILES
 
 Cover important directories and system files mentioned in the summary.
 
@@ -456,7 +456,7 @@ Test:
 
 Minimum: 12 exercises.
 
-## TOPIC 16 — SHELL ENVIRONMENT AND CONFIGURATION
+## TOPIC 16: SHELL ENVIRONMENT AND CONFIGURATION
 
 Cover environment variables and shell configuration only where they are explicitly included in the summary.
 
@@ -473,7 +473,7 @@ Do not invent configuration files, variables, or shell behavior.
 
 Minimum: 10 exercises.
 
-## TOPIC 17 — VIM
+## TOPIC 17: VIM
 
 Cover Vim only to the extent explicitly included in the summary.
 
@@ -539,7 +539,7 @@ If a subject has less examinable content than expected, do not invent extra cont
 
 ---
 
-# 4. CRITICAL REQUIREMENT: EXERCISE TYPE DISTRIBUTION — 90/10
+# 4. CRITICAL REQUIREMENT: EXERCISE TYPE DISTRIBUTION: 90/10
 
 **THE PACKAGE MUST CONSIST OF APPROXIMATELY 90% COMMAND-WRITING EXERCISES AND 10% MULTIPLE-CHOICE QUESTIONS.**
 
@@ -560,7 +560,7 @@ Do NOT generate an equal split.
 Do NOT generate mostly multiple-choice questions.
 Do NOT replace command-writing exercises with MCQs because they are easier to create.
 
-## Exercise type 1 — `command-text` (90%)
+## Exercise type 1: `command-text` (90%)
 
 This must be the dominant exercise type.
 
@@ -593,7 +593,7 @@ Examples:
 
 These must be genuine practical tasks. The student must produce the command themselves rather than select it from a list.
 
-## Exercise type 2 — `mcq-single` (10%)
+## Exercise type 2: `mcq-single` (10%)
 
 Use multiple-choice questions sparingly.
 
@@ -1017,5 +1017,5 @@ If the response length limit prevents you from outputting everything in one resp
 5. Make students actually construct Linux commands, rather than only recognizing them.
 6. Ensure every exercise is accurate, answerable, and compatible with the supplied JSON schema.
 7. Return the complete JSON package.
-, answerable, and compatible with the supplied JSON schema.
-7. Return the complete JSON package.
+   , answerable, and compatible with the supplied JSON schema.
+8. Return the complete JSON package.

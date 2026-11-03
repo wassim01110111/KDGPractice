@@ -1,8 +1,8 @@
-# Programming Fundamentals Java — Complete Theory Summary
+# Programming Fundamentals Java: Complete Theory Summary
 
 ## Table of contents
 
-- [Programming Fundamentals Java — Complete Theory Summary](#programming-fundamentals-java--complete-theory-summary)
+- [Programming Fundamentals Java: Complete Theory Summary](#programming-fundamentals-java-complete-theory-summary)
   - [Table of contents](#table-of-contents)
   - [1. Basic concepts: programming languages and Java](#1-basic-concepts-programming-languages-and-java)
     - [1.1 What is a programming language?](#11-what-is-a-programming-language)
@@ -102,7 +102,7 @@
     - [14.5 Constructor overloading and a copy constructor](#145-constructor-overloading-and-a-copy-constructor)
     - [14.6 Calling one constructor from another with `this(...)`](#146-calling-one-constructor-from-another-with-this)
   - [15. The `toString()` method](#15-the-tostring-method)
-  - [16. The `Math` class](#16-the-math-class)
+  - [16. The `Math` class- Its constants include `E`, the base of the natural logarithms, and `PI`, the ratio of a circle's circumference to its diameter.](#16-the-math-class--its-constants-include-e-the-base-of-the-natural-logarithms-and-pi-the-ratio-of-a-circles-circumference-to-its-diameter)
   - [17. High-value comparisons to remember](#17-high-value-comparisons-to-remember)
   - [18. Coursework boundaries: items mentioned but not fully explained](#18-coursework-boundaries-items-mentioned-but-not-fully-explained)
   - [19. Quick revision checklist](#19-quick-revision-checklist)
@@ -216,11 +216,11 @@ The course says it will initially focus on desktop applications.
 
 ### 1.6 JRE, JDK and IDE
 
-| Term                                         | Meaning in the slides                  | Purpose                                                                                                  |
-| -------------------------------------------- | -------------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| **JRE — Java Runtime Environment**           | JVM + Java API                         | Needed to run Java bytecode programs.                                                                    |
-| **JDK — Java Development Kit**               | JRE plus development tools and extras  | Includes tools such as compiling and debugging tools; API reference documentation is listed as optional. |
-| **IDE — Integrated Development Environment** | A workbench application for developers | Helps developers write, build and run programs; an IDE can support multiple programming languages.       |
+| Term                                        | Meaning in the slides                  | Purpose                                                                                                  |
+| ------------------------------------------- | -------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| **JRE: Java Runtime Environment**           | JVM + Java API                         | Needed to run Java bytecode programs.                                                                    |
+| **JDK: Java Development Kit**               | JRE plus development tools and extras  | Includes tools such as compiling and debugging tools; API reference documentation is listed as optional. |
+| **IDE: Integrated Development Environment** | A workbench application for developers | Helps developers write, build and run programs; an IDE can support multiple programming languages.       |
 
 The relationship is **JDK = JRE + development extras**. An IDE is the developer's workbench; it is not the same thing as the JDK or JRE.
 
@@ -1741,6 +1741,9 @@ The `Rectangle` exercise asks for a `toString()` representation that includes th
 ---
 
 ## 16. The `Math` class- Its constants include `E`, the base of the natural logarithms, and `PI`, the ratio of a circle's circumference to its diameter.
+
+
+
 - Static methods and variables are called on the class, using the class name such as `Math`.
 
 Methods explicitly listed include:

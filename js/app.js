@@ -1860,7 +1860,7 @@ function qView(
         h(
           "small",
           {},
-          "Graded by text matching against accepted answers — the command is not executed.",
+          "Graded by text matching against accepted answers: the command is not executed.",
         ),
       );
     if (mode === "practice") {
@@ -4295,7 +4295,7 @@ async function pageExam(root, isCurrent = () => true) {
                   h(
                     "p",
                     { class: "bad" },
-                    "Not enough eligible exercises — nothing was substituted. " +
+                    "Not enough eligible exercises: nothing was substituted. " +
                       Object.entries(r.shortage)
                         .map(
                           ([difficulty, shortage]) =>
@@ -4307,7 +4307,7 @@ async function pageExam(root, isCurrent = () => true) {
                   h(
                     "small",
                     {},
-                    `Available in selected terms — Easy ${avail("Easy")}, Medium ${avail("Medium")}, Hard ${avail("Hard")}, Extreme ${avail("Extreme")}. Adjust the numbers above.`,
+                    `Available in selected terms: Easy ${avail("Easy")}, Medium ${avail("Medium")}, Hard ${avail("Hard")}, Extreme ${avail("Extreme")}. Adjust the numbers above.`,
                   ),
                 );
               }
@@ -4356,7 +4356,7 @@ async function historyView() {
             h(
               "div",
               {},
-              `${new Date(x.date).toLocaleString()} — ${x.score}/${x.total} (${x.ids.length} questions, ${Math.round(x.cfg.mins)} min)`,
+              `${new Date(x.date).toLocaleString()}: ${x.score}/${x.total} (${x.ids.length} questions, ${Math.round(x.cfg.mins)} min)`,
             ),
           )
       : h("small", {}, "No exams taken yet."),

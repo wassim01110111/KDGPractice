@@ -1,4 +1,4 @@
-# MASTER PROMPT — GENERATE A COMPLETE SQL EXERCISE JSON PACKAGE
+# MASTER PROMPT: GENERATE A COMPLETE SQL EXERCISE JSON PACKAGE
 
 You are an expert SQL instructor, PostgreSQL specialist, and educational exercise generator.
 
@@ -6,8 +6,8 @@ Your task is to generate a large, high-quality, exam-focused SQL exercise packag
 
 You will receive:
 
-1. `sql_exam_cheat_sheet.md` — the authoritative SQL course summary.
-2. A JSON example/schema — the required structure and format for the generated exercise package.
+1. `sql_exam_cheat_sheet.md`: the authoritative SQL course summary.
+2. A JSON example/schema: the required structure and format for the generated exercise package.
 
 The package must contain a large collection of SQL exercises organized according to the actual course weeks, with realistic datasets, reference solutions, hints, and explanations.
 
@@ -96,7 +96,7 @@ If you are uncertain whether a feature is examinable, leave it out.
 
 ---
 
-# 2. COURSE STRUCTURE — WEEKS 2 TO 5
+# 2. COURSE STRUCTURE: WEEKS 2 TO 5
 
 The package must be organized into the following four course weeks.
 
@@ -108,7 +108,7 @@ The week progression is important: exercises should become progressively more co
 
 ---
 
-## WEEK 2 — BASIC SQL QUERIES AND FILTERING
+## WEEK 2: BASIC SQL QUERIES AND FILTERING
 
 <badge color="success">Week 2</badge>
 
@@ -313,7 +313,7 @@ Do not use Week 3, 4, or 5 material in Week 2 exercises.
 
 ---
 
-## WEEK 3 — DATA TYPES, CONVERSION AND SQL FUNCTIONS
+## WEEK 3: DATA TYPES, CONVERSION AND SQL FUNCTIONS
 
 <badge color="success">Week 3</badge>
 
@@ -497,7 +497,7 @@ Do not use JOINs, GROUP BY, or aggregate functions as core requirements in Week 
 
 ---
 
-## WEEK 4 — JOINS AND RELATIONSHIPS BETWEEN TABLES
+## WEEK 4: JOINS AND RELATIONSHIPS BETWEEN TABLES
 
 <badge color="success">Week 4</badge>
 
@@ -637,7 +637,7 @@ Do not introduce aggregate functions or GROUP BY as core requirements in Week 4 
 
 ---
 
-## WEEK 5 — AGGREGATE FUNCTIONS, GROUPING AND OUTER JOINS
+## WEEK 5: AGGREGATE FUNCTIONS, GROUPING AND OUTER JOINS
 
 <badge color="success">Week 5</badge>
 
@@ -857,7 +857,7 @@ You may organize topics more finely where useful, but every topic must belong to
 
 ---
 
-# 4. CRITICAL REQUIREMENT — EXERCISE TYPE DISTRIBUTION: 90/10
+# 4. CRITICAL REQUIREMENT: EXERCISE TYPE DISTRIBUTION: 90/10
 
 **THE PACKAGE MUST CONSIST OF APPROXIMATELY 90% SQL QUERY-WRITING EXERCISES AND 10% MULTIPLE-CHOICE QUESTIONS.**
 
@@ -878,7 +878,7 @@ For 140 exercises, generate:
 
 The distribution should remain as close to 90/10 as possible.
 
-## Exercise type 1 — `sql-query` (90%)
+## Exercise type 1: `sql-query` (90%)
 
 This must be the dominant exercise type.
 
@@ -917,7 +917,7 @@ The student must construct the SQL query.
 
 Do not turn a query-writing exercise into a multiple-choice question.
 
-## Exercise type 2 — `mcq-single` (10%)
+## Exercise type 2: `mcq-single` (10%)
 
 Use MCQs sparingly.
 
@@ -1043,7 +1043,7 @@ Do not make a question Hard by using an excluded feature.
 
 ---
 
-# 6. DATASET GENERATION — CREATE MULTIPLE DIFFERENT DATASETS
+# 6. DATASET GENERATION: CREATE MULTIPLE DIFFERENT DATASETS
 
 This is a critical requirement.
 
@@ -1057,7 +1057,7 @@ Generate at least **four separate synthetic PostgreSQL datasets** with different
 
 Each dataset must be usable by multiple exercises.
 
-## Dataset 1 — Business / Employee Management
+## Dataset 1: Business / Employee Management
 
 Create a realistic business dataset.
 
@@ -1098,7 +1098,7 @@ This dataset should support:
 - Week 4 joins and self-joins.
 - Week 5 aggregates and outer joins.
 
-## Dataset 2 — Education / Student Administration
+## Dataset 2: Education / Student Administration
 
 Create a realistic educational dataset.
 
@@ -1143,7 +1143,7 @@ This dataset should support:
 - GROUP BY and HAVING.
 - Outer joins.
 
-## Dataset 3 — Retail / Inventory / Orders
+## Dataset 3: Retail / Inventory / Orders
 
 Create a realistic retail dataset.
 
@@ -1188,7 +1188,7 @@ This dataset should support:
 - Week 4 multi-table joins.
 - Week 5 totals, averages, grouping, and outer joins.
 
-## Dataset 4 — Training / Projects / Services
+## Dataset 4: Training / Projects / Services
 
 Create a fourth dataset with a different structure and purpose.
 
@@ -1829,7 +1829,6 @@ The final JSON must include:
 7. Ensure every SQL exercise has a valid dataset and executable reference solution.
 8. Ensure the JSON follows the supplied application schema exactly.
 9. Return the complete JSON package.
-
 
 - An introduction.
 - A summary.

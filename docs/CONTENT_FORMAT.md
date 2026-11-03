@@ -52,8 +52,7 @@ Every exercise requires:
 Optional common fields are `week`, `subtopic`, `hints` (string array), and
 `explanation`.
 
-The first correct solve awards XP once: Easy 25, Medium 50, Hard 100, Extreme
-200. The exam builder includes an Extreme count input set to 0 by default, so
+The first correct solve awards XP once: Easy 25, Medium 50, Hard 100, Extreme 200. The exam builder includes an Extreme count input set to 0 by default, so
 existing exam lengths remain unchanged unless you opt in.
 
 ## SQL exercises
@@ -81,14 +80,14 @@ SQL knowledge-check exercises may use `mcq-single`, `mcq-multi`, or
 
 These types are graded by answer matching rather than SQL execution:
 
-| Type | Additional fields | `expected` |
-|---|---|---|
-| `mcq-single` | `options`: string array | Array containing exactly one valid option index |
-| `mcq-multi` | `options`: string array | Array of valid option indexes |
-| `mcq-multiple` | `options`: string array | Array of valid option indexes (multi-select alias) |
-| `command-text` | — | Object with `accepted` and/or `patterns` arrays; at least one must contain an entry |
-| `fill-blank` | — | Object with `blanks`: one array of accepted strings per blank |
-| `short-answer-self-check` | — | Model answer string; the student self-marks |
+| Type                      | Additional fields       | `expected`                                                                          |
+| ------------------------- | ----------------------- | ----------------------------------------------------------------------------------- |
+| `mcq-single`              | `options`: string array | Array containing exactly one valid option index                                     |
+| `mcq-multi`               | `options`: string array | Array of valid option indexes                                                       |
+| `mcq-multiple`            | `options`: string array | Array of valid option indexes (multi-select alias)                                  |
+| `command-text`            | :                       | Object with `accepted` and/or `patterns` arrays; at least one must contain an entry |
+| `fill-blank`              | :                       | Object with `blanks`: one array of accepted strings per blank                       |
+| `short-answer-self-check` | :                       | Model answer string; the student self-marks                                         |
 
 For `command-text`, whitespace is normalised before accepted answers are
 compared or patterns are tested. Patterns are regular expressions.

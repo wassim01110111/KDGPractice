@@ -406,10 +406,10 @@ Returns employees earning between 20,000 and 40,000, including both endpoints.
 `%` = any amount of characters
 `_` = one character
 
-- `'A%'` — starts with A.
-- `'%A'` — ends with A.
-- `'%A%'` — contains A.
-- `'A_'` — A followed by exactly one character.
+- `'A%'`: starts with A.
+- `'%A'`: ends with A.
+- `'%A%'`: contains A.
+- `'A_'`: A followed by exactly one character.
 
 **Combining and negating:**
 
