@@ -460,56 +460,70 @@ pre {
   border: 1px solid var(--bd);
   border-radius: 8px;
 }
-.md pre code .java-keyword {
+/* Java syntax highlighting */
+:is(.md, .stmt) pre code .java-keyword {
   color: #8251b5;
   font-weight: 700;
 }
-.md pre code .java-literal {
+
+:is(.md, .stmt) pre code .java-literal {
   color: #b04d8a;
   font-weight: 650;
 }
-.md pre code .java-string {
+
+:is(.md, .stmt) pre code .java-string {
   color: #287a45;
 }
-.md pre code .java-comment {
+
+:is(.md, .stmt) pre code .java-comment {
   color: #718078;
   font-style: italic;
 }
-.md pre code .java-annotation {
+
+:is(.md, .stmt) pre code .java-annotation {
   color: #9a6816;
 }
-.md pre code .java-type {
+
+:is(.md, .stmt) pre code .java-type {
   color: #176f91;
   font-weight: 600;
 }
-.md pre code .java-number {
+
+:is(.md, .stmt) pre code .java-number {
   color: #b75d22;
 }
-.md pre code .java-operator {
+
+:is(.md, .stmt) pre code .java-operator,
+:is(.md, .stmt) pre code .java-punctuation {
   color: var(--mut);
 }
-.md pre code .java-punctuation {
-  color: var(--mut);
-}
-:root[data-theme="dark"] .md pre code .java-keyword {
+
+/* Dark theme */
+:root[data-theme="dark"] :is(.md, .stmt) pre code .java-keyword {
   color: #d4a9ff;
 }
-:root[data-theme="dark"] .md pre code .java-literal {
+
+:root[data-theme="dark"] :is(.md, .stmt) pre code .java-literal {
   color: #ff9bd1;
 }
-:root[data-theme="dark"] .md pre code .java-string {
+
+:root[data-theme="dark"] :is(.md, .stmt) pre code .java-string {
   color: #9ce0a9;
 }
-:root[data-theme="dark"] .md pre code .java-comment {
+
+:root[data-theme="dark"] :is(.md, .stmt) pre code .java-comment {
   color: #a4b4aa;
 }
-:root[data-theme="dark"] .md pre code .java-annotation {
+
+:root[data-theme="dark"] :is(.md, .stmt) pre code .java-annotation {
   color: #f0cb83;
 }
-:root[data-theme="dark"] .md pre code .java-type {
+
+:root[data-theme="dark"] :is(.md, .stmt) pre code .java-type {
   color: #91dafa;
 }
-:root[data-theme="dark"] .md pre code .java-number {
+
+:root[data-theme="dark"] :is(.md, .stmt) pre code .java-number {
   color: #ffb078;
 }
 .err {
@@ -2660,6 +2674,7 @@ textarea:hover {
   padding-left: 0.8rem;
 }
 .md pre,
+.stmt pre,
 .md .tw,
 .schema-content {
   scrollbar-color: var(--mut) transparent;
@@ -3370,6 +3385,7 @@ pre,
 
 pre,
 .md pre,
+.stmt pre,
 .plantuml-source pre {
   tab-size: 2;
   scrollbar-width: thin;
@@ -5654,62 +5670,78 @@ html.route-sliding {
 }
 
 /* Markdown code token colours */
-.md code .tok-kw {
+:is(.md, .stmt) code .tok-kw {
   color: #a626a4;
   font-weight: 600;
 }
-.md code .tok-fn {
+
+:is(.md, .stmt) code .tok-fn {
   color: #4078f2;
 }
-.md code .tok-str {
+
+:is(.md, .stmt) code .tok-str {
   color: #50a14f;
 }
-.md code .tok-num,
-.md code .tok-lit {
+
+:is(.md, .stmt) code .tok-num,
+:is(.md, .stmt) code .tok-lit {
   color: #b76b01;
 }
-.md code .tok-id,
-.md code .tok-type,
-.md code .tok-attr {
+
+:is(.md, .stmt) code .tok-id,
+:is(.md, .stmt) code .tok-type,
+:is(.md, .stmt) code .tok-attr {
   color: #c18401;
 }
-.md code .tok-com {
+
+:is(.md, .stmt) code .tok-com {
   color: #8a8f98;
   font-style: italic;
 }
-.md code .tok-op,
-.md code .tok-ann {
+
+:is(.md, .stmt) code .tok-op,
+:is(.md, .stmt) code .tok-ann {
   color: #0184bc;
 }
-.md code .tok-tag {
+
+:is(.md, .stmt) code .tok-tag {
   color: #e45649;
 }
-html[data-theme="dark"] .md code .tok-kw {
+
+/* Dark theme */
+html[data-theme="dark"] :is(.md, .stmt) code .tok-kw {
   color: #c678dd;
 }
-html[data-theme="dark"] .md code .tok-fn {
+
+html[data-theme="dark"] :is(.md, .stmt) code .tok-fn {
   color: #61afef;
 }
-html[data-theme="dark"] .md code .tok-str {
+
+html[data-theme="dark"] :is(.md, .stmt) code .tok-str {
   color: #98c379;
 }
-html[data-theme="dark"] .md code .tok-num,
-html[data-theme="dark"] .md code .tok-lit,
-html[data-theme="dark"] .md code .tok-attr {
+
+html[data-theme="dark"] :is(.md, .stmt) code .tok-num,
+html[data-theme="dark"] :is(.md, .stmt) code .tok-lit,
+html[data-theme="dark"] :is(.md, .stmt) code .tok-attr {
   color: #d19a66;
 }
-html[data-theme="dark"] .md code .tok-id,
-html[data-theme="dark"] .md code .tok-type {
+
+html[data-theme="dark"] :is(.md, .stmt) code .tok-id,
+html[data-theme="dark"] :is(.md, .stmt) code .tok-type {
   color: #e5c07b;
 }
-html[data-theme="dark"] .md code .tok-com {
+
+html[data-theme="dark"] :is(.md, .stmt) code .tok-com {
   color: #7f848e;
 }
-html[data-theme="dark"] .md code .tok-op,
-html[data-theme="dark"] .md code .tok-ann {
+
+html[data-theme="dark"] :is(.md, .stmt) code .tok-op,
+html[data-theme="dark"] :is(.md, .stmt) code .tok-ann {
   color: #56b6c2;
 }
-html[data-theme="dark"] .md code .tok-tag {
+
+html[data-theme="dark"] :is(.md, .stmt) code .tok-tag {
   color: #e06c75;
 }
 /* ---------- Try exercise button (clean version) ---------- */

@@ -1195,9 +1195,7 @@ function renderExerciseInstructions(target, source) {
   const { html } = md(String(source ?? ""));
   appendSanitizedReferenceHtml(target, html);
   target.querySelectorAll('pre code[class^="language-"]').forEach((code) => {
-    const language = code.className
-      .slice("language-".length)
-      .toLowerCase();
+    const language = code.className.slice("language-".length).toLowerCase();
     const highlighted = highlightCode(code.textContent, language);
     if (highlighted !== null) code.innerHTML = highlighted;
   });
@@ -1657,7 +1655,7 @@ function qView(
       console.error("Could not save answer draft:", e);
     });
   };
-  const instructions = h("div", { class: "stmt md" });
+  const instructions = h("div", { class: "stmt" });
   renderExerciseInstructions(instructions, ex.instructions);
   q.append(
     h("h3", {}, ex.title),
@@ -4034,10 +4032,7 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
       (e) =>
         showCompleted || keyOf(e) === selectedKey || !S.xpRewards[keyOf(e)],
     );
-    if (
-      selectedExercise &&
-      !items.some((e) => keyOf(e) === selectedKey)
-    ) {
+    if (selectedExercise && !items.some((e) => keyOf(e) === selectedKey)) {
       items.unshift(selectedExercise);
     }
     lastResults = {};

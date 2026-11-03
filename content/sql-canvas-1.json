@@ -137,9 +137,7 @@
         "A date shifted forward by the person’s age",
         "The weekday on which the person was born"
       ],
-      "expected": [
-        1
-      ],
+      "expected": [1],
       "explanation": "Subtracting one PostgreSQL date from another returns the number of days between the dates."
     },
     "w2-enterprise-e05-a": {
@@ -158,9 +156,7 @@
         "The first statement is missing a WHERE clause; the second uses an invalid alias; the third needs GROUP BY",
         "All three statements are valid SQL and return the intended data"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "explanation": "The supplied solution identifies the missing FROM clause in the first statement and the TASK/TASKS table-name typo in the second. The supplied Enterprise schema defines mgr_start_date, not start_date, for departments."
     },
     "w2-enterprise-e05-b": {
@@ -179,9 +175,7 @@
         "department_id must be in the WHERE clause",
         "The query must use SELECT DISTINCT"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "explanation": "The supplied solution identifies the missing comma. Without it, department_id is interpreted as an alias for salary."
     },
     "w2-enterprise-e06-a": {
@@ -800,9 +794,7 @@
         "student_id must be converted to VARCHAR",
         "ORDER BY cannot be used with a WHERE clause"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "explanation": "The supplied solution says student_id cannot be used in ORDER BY here because it is not selected as an attribute."
     },
     "w2-sa-e10": {
@@ -861,9 +853,7 @@
         "No; BETWEEN only works with text values",
         "Yes; the bounds are interpreted as an unordered pair"
       ],
-      "expected": [
-        1
-      ],
+      "expected": [1],
       "explanation": "The supplied solution says the minimum and maximum values are swapped. BETWEEN expects the lower bound first and the upper bound second."
     },
     "w2-sa-e13": {
@@ -882,9 +872,7 @@
         "The comparison must use BETWEEN",
         "The condition is valid and needs no change"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "explanation": "The supplied solution rewrites the condition as `NOT prerequisite >= 140` and notes that `< 140` is another equivalent form."
     },
     "w2-sa-e14": {
@@ -951,7 +939,7 @@
       "course": "sql",
       "category": "select",
       "title": "Week 2 · Student Admin · Exercise 17",
-      "instructions": "Look at the solution to question 16. Write the query using IN, assuming you now know the zip codes. The RT should be the same, except that you should show the last name in reverse alphabetical order.\n\n**Context from Question 16:** The previous exercise listed students whose ZIP codes fall between `05000` and `06825`, sorted by ZIP code and then by last name. The matching ZIP codes identified for that result were `06483`, `06605`, `06798`, and `06820`.\n\n```sql\nSELECT student_id, last_name, zip\nFROM students\nWHERE zip BETWEEN '05000' AND '06825'\nORDER BY zip, last_name;\n```",
+      "instructions": "Look at the solution to question 16. Write the query using IN, assuming you now know the zip codes. The RT should be the same, except that you should show the last name in reverse alphabetical order.",
       "difficulty": "Easy",
       "type": "sql-query",
       "examEligible": true,
@@ -2363,9 +2351,7 @@
         "Both queries return exactly the same student/instructor pairs",
         "The second query compares ZIP codes without joining the student table"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "explanation": "The supplied solution describes the first query as matching on ZIP code alone. The second follows the student’s enrollment to a section and its instructor before checking the ZIP codes."
     },
     "w4-sa-e19": {
@@ -2504,9 +2490,7 @@
         "AVG and SUM require DISTINCT in every query",
         "The table names should be singular"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "explanation": "The supplied solution identifies both issues: aggregate functions are not allowed in WHERE, and a non-aggregated selected column must be grouped."
     },
     "w5-enterprise-big-e02": {
@@ -2525,9 +2509,7 @@
         "Both functions count every row, including NULL hours",
         "SUM(hours) returns the largest hours value"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "explanation": "The supplied solution says COUNT(hours) counts rows where hours is not NULL, while SUM(hours) adds the available hours values."
     },
     "w5-enterprise-big-e03": {
@@ -2546,9 +2528,7 @@
         "Both return the average salary",
         "COUNT includes NULL salary values while SUM excludes all employees"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "explanation": "The supplied solution describes SUM as adding salary values and COUNT(salary) as counting rows with a known (non-NULL) salary."
     },
     "w5-enterprise-big-e04": {
@@ -2567,9 +2547,7 @@
         "COUNT(*) removes duplicates, while COUNT(hours) sorts the rows",
         "The functions count different tables"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "explanation": "COUNT(*) counts rows regardless of column values. COUNT(hours) counts only rows where hours is not NULL."
     },
     "w5-enterprise-big-e05": {
@@ -2788,16 +2766,14 @@
         "Both queries are valid and equivalent",
         "Neither query can use AVG"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "explanation": "The supplied solution selects Query A because WHERE filters individual employees before grouping. HAVING is used for conditions on aggregated groups."
     },
     "w5-enterprise-big-e16-q1": {
       "course": "sql",
       "category": "aggregate",
       "title": "Identify row-level filtering",
-      "instructions": "In Exercise 16, which query filters out individual employees before the groups are calculated?\n\n**Context from Exercise 16:** The two queries use different filtering stages. Query A contains the row-level condition `WHERE salary > 40000`; Query B contains the group-level condition `HAVING COUNT(*) > 2`. The full SELECT lists are not retained in the source package.",
+      "instructions": "In Exercise 16, which query filters out individual employees before the groups are calculated?\n\n```sql \n-- Query A \nSELECT department_id, AVG(salary) \nFROM employees \nWHERE salary > 30000 \nGROUP BY department_id; \n-- Query B \nSELECT department_id, AVG(salary) \nFROM employees \nGROUP BY department_id \nWHERE AVG(salary) > 30000; \n```",
       "difficulty": "Hard",
       "type": "mcq-single",
       "examEligible": true,
@@ -2809,16 +2785,14 @@
         "Both queries filter individual employees",
         "Neither query filters rows or groups"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "explanation": "The supplied solution identifies Query A. WHERE filters individual rows before GROUP BY."
     },
     "w5-enterprise-big-e16-q2": {
       "course": "sql",
       "category": "aggregate",
       "title": "Identify group-level filtering",
-      "instructions": "In Exercise 16, which query filters entire groups after aggregation?\n\n**Context from Exercise 16:** The two queries use different filtering stages. Query A contains the row-level condition `WHERE salary > 40000`; Query B contains the group-level condition `HAVING COUNT(*) > 2`. The full SELECT lists are not retained in the source package.",
+      "instructions": "In Exercise 16, which query filters entire groups after aggregation?\n\n```sql \n-- Query A \nSELECT department_id, AVG(salary) \nFROM employees \nWHERE salary > 30000 \nGROUP BY department_id; \n-- Query B \nSELECT department_id, AVG(salary) \nFROM employees \nGROUP BY department_id \nWHERE AVG(salary) > 30000; \n```",
       "difficulty": "Hard",
       "type": "mcq-single",
       "examEligible": true,
@@ -2830,9 +2804,7 @@
         "Both queries filter entire groups",
         "Neither query filters groups"
       ],
-      "expected": [
-        1
-      ],
+      "expected": [1],
       "explanation": "The supplied solution identifies Query B. HAVING filters groups after the COUNT aggregate has been calculated."
     },
     "w5-enterprise-big-e17": {
@@ -2951,9 +2923,7 @@
         "Solution 1, because GROUP BY is not needed",
         "Both are guaranteed to have identical performance on every database"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "explanation": "The supplied solution chooses Solution 1: it filters rows in WHERE before the grouping step, leaving fewer rows to group."
     },
     "w5-enterprise-big-e23-1": {
@@ -2972,9 +2942,7 @@
         "RIGHT OUTER JOIN from employees to departments",
         "FULL OUTER JOIN"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "explanation": "The supplied solution uses an INNER JOIN, retaining only employees with a matching department."
     },
     "w5-enterprise-big-e23-2": {
@@ -2993,9 +2961,7 @@
         "RIGHT OUTER JOIN",
         "CROSS JOIN"
       ],
-      "expected": [
-        1
-      ],
+      "expected": [1],
       "explanation": "The supplied solution uses LEFT JOIN from employees to departments, which preserves every employee row."
     },
     "w5-enterprise-big-e23-3": {
@@ -3014,9 +2980,7 @@
         "RIGHT OUTER JOIN",
         "CROSS JOIN"
       ],
-      "expected": [
-        2
-      ],
+      "expected": [2],
       "explanation": "The supplied solution uses RIGHT JOIN from employees to departments, preserving every department row on the right."
     },
     "w5-enterprise-big-e23-4": {
@@ -3035,9 +2999,7 @@
         "RIGHT OUTER JOIN",
         "FULL OUTER JOIN"
       ],
-      "expected": [
-        3
-      ],
+      "expected": [3],
       "explanation": "The supplied solution uses FULL JOIN, retaining matched rows and unmatched rows from both tables."
     },
     "w5-enterprise-big-e24": {
@@ -3056,9 +3018,7 @@
         "Both tables equally",
         "Neither table; NULL is added to the departments table"
       ],
-      "expected": [
-        1
-      ],
+      "expected": [1],
       "explanation": "The supplied solution says the NULL-extended row comes from employees because there is no corresponding employee. The same solution block also states `null null` for the two displayed values; that value note should be reviewed against the query output."
     },
     "w5-enterprise-big-e25-1": {
@@ -3077,9 +3037,7 @@
         "Yes; every NULL value proves there is no matching task",
         "No; LEFT JOIN cannot be used with a WHERE clause"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "explanation": "The supplied solution says this is not always safe because a task record may exist with hours set to NULL."
     },
     "w5-enterprise-big-e25-2": {
@@ -3098,9 +3056,7 @@
         "Whether every project has the same number of employees",
         "Whether hours is sorted in ascending order"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "explanation": "The supplied solution says you need to know whether hours can be NULL. If it can, NULL hours do not prove that no task row exists."
     },
     "w5-enterprise-big-e25-3": {
@@ -3119,9 +3075,7 @@
         "p.project_id IS NULL",
         "e.last_name IS NULL"
       ],
-      "expected": [
-        1
-      ],
+      "expected": [1],
       "explanation": "The supplied solution recommends t.employee_id IS NULL because employee_id is the join key and is non-NULL in an existing tasks row."
     },
     "w5-enterprise-big-e26": {
@@ -3140,9 +3094,7 @@
         "parking_spot IS NULL automatically means that the row was created by an OUTER JOIN",
         "A primary key automatically has a NOT NULL property"
       ],
-      "expected": [
-        2
-      ],
+      "expected": [2],
       "explanation": "The supplied solution marks statement 3 as false: parking_spot is allowed to be NULL in the real employees table, so a NULL there does not by itself prove an OUTER JOIN created the result row."
     },
     "w5-enterprise-big-e27": {
@@ -3249,7 +3201,7 @@
       "course": "sql",
       "category": "outer-join",
       "title": "Week 5 · Entreprise BIG · Exercise 31 B",
-      "instructions": "Suppose that each employee is always assigned to a department. (Let’s assume for the moment that there is a NOT NULL constraint on the `department_id` column in the `employees` table).\nHow can we then adapt the previous solution?\n\n**Context from Exercise 31A — previous solution:** The earlier query listed employees whose surnames begin with G or J, along with their department and family-member names. It used LEFT JOIN for both relationships:\n\n```sql\nSELECT e.employee_id, e.last_name, d.department_name, f.name AS family_member\nFROM employees e\nLEFT JOIN departments d ON e.department_id = d.department_id\nLEFT JOIN family_members f ON f.employee_id = e.employee_id\nWHERE LOWER(SUBSTR(e.last_name, 1, 1)) IN ('g', 'j')\nORDER BY e.last_name;\n```",
+      "instructions": "Suppose that each employee is always assigned to a department. (Let’s assume for the moment that there is a NOT NULL constraint on the `department_id` column in the `employees` table).\nHow can we then adapt the previous solution?\n\n**Context from Exercise 31A, previous solution:** The earlier query listed employees whose surnames begin with G or J, along with their department and family-member names. It used LEFT JOIN for both relationships:\n\n```sql\nSELECT e.employee_id, e.last_name, d.department_name, f.name AS family_member\nFROM employees e\nLEFT JOIN departments d ON e.department_id = d.department_id\nLEFT JOIN family_members f ON f.employee_id = e.employee_id\nWHERE LOWER(SUBSTR(e.last_name, 1, 1)) IN ('g', 'j')\nORDER BY e.last_name;\n```",
       "difficulty": "Hard",
       "type": "sql-query",
       "examEligible": true,
