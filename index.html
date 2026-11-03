@@ -16,24 +16,16 @@
   </head>
   <body>
     <header>
-      <button id="brand" class="brand" type="button" aria-label="ACS Practice">
-        ACS Practice
-        <div id="clickme">Click me</div>
-      </button>
-      <nav id="nav">
-        <a href="#/reader">Reference</a><a href="#/practice">Practice</a
-        ><a href="#/exam">Exam</a><a href="#/progress">Progress</a>
-      </nav>
-      <div class="header-tools">
-        <div
-          id="wassim-sign"
-          class="maker-signature"
-          aria-label="Made by Wassim"
+      <div class="header-tools" id="header-tools">
+        <button
+          id="brand"
+          class="brand"
+          type="button"
+          aria-label="ACS Practice"
         >
-          <span>MADE BY</span>
-          <strong data-text="WASSIM">WASSIM</strong>
-          <span class="maker-cursor" aria-hidden="true">_</span>
-        </div>
+          ACS Practice
+          <div id="clickme">Click me</div>
+        </button>
         <button
           id="theme-toggle"
           class="theme-toggle"
@@ -43,25 +35,35 @@
         >
           <span aria-hidden="true">☾</span>
         </button>
-        <span
-          id="theme-status"
-          class="visually-hidden"
-          role="status"
-          aria-live="polite"
-        ></span>
+
+        <button
+          id="focus-toggle"
+          class="focus-toggle"
+          type="button"
+          aria-label="Enable focus mode"
+          aria-pressed="false"
+          hidden
+          title="Hide distractions"
+        >
+          <span aria-hidden="true">◎</span>
+          <span class="focus-label">Hide distractions</span>
+        </button>
+        <div
+          id="wassim-sign"
+          class="maker-signature"
+          aria-label="Made by Wassim"
+        >
+          <span>MADE BY</span>
+          <div class="maker-name-row">
+            <strong data-text="WASSIM">WASSIM</strong>
+            <span class="maker-cursor" aria-hidden="true">_</span>
+          </div>
+        </div>
       </div>
-      <button
-        id="focus-toggle"
-        class="focus-toggle"
-        type="button"
-        aria-label="Enable focus mode"
-        aria-pressed="false"
-        style="display: none"
-        title="Hide distractions"
-      >
-        <span aria-hidden="true">◎</span>
-        <span class="focus-label">Hide distractions</span>
-      </button>
+      <nav id="nav">
+        <a href="#/reader">Reference</a><a href="#/practice">Practice</a
+        ><a href="#/exam">Exam</a><a href="#/progress">Progress</a>
+      </nav>
     </header>
     <div
       id="terminal-artifact"

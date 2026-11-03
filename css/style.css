@@ -149,94 +149,262 @@ header strong {
   font-size: 1.05rem;
   letter-spacing: -0.02em;
 }
+
 .maker-signature {
+  /* Theme */
+  --maker-accent: var(--ac);
+  --maker-accent-hover: var(--ac-hover);
+  --maker-border: color-mix(in srgb, var(--ac) 35%, var(--bd));
+  --maker-glow: color-mix(in srgb, var(--ac) 18%, transparent);
+
+  /* Layout */
+  position: relative;
+  isolation: isolate;
   display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-left: auto;
-  margin-right: 1rem;
-  padding: 0.4rem 0.9rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.2rem;
 
-  color: var(--ac);
+  margin-left: 2rem;
+  padding: 0.5rem 0.75rem;
 
+  /* Appearance */
+  color: var(--maker-accent);
   background:
-    linear-gradient(
-      110deg,
-      transparent 0 18%,
-      color-mix(in srgb, var(--ac) 9%, transparent) 18% 82%,
-      transparent 82%
+    repeating-linear-gradient(
+      0deg,
+      transparent 0 3px,
+      color-mix(in srgb, var(--ac) 3%, transparent) 3px 4px
     ),
-    var(--card);
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--ac) 5%, var(--card)),
+      var(--card) 65%
+    );
 
-  border: 1px solid color-mix(in srgb, var(--ac) 35%, var(--bd));
-  border-radius: 999px; /* Fully rounded pill shape */
+  border: 1px solid var(--maker-border);
+  border-left: 3px solid var(--maker-accent);
+  border-radius: 4px;
 
   box-shadow:
-    inset 0 0 12px color-mix(in srgb, var(--ac) 8%, transparent),
-    0 4px 12px rgb(0 0 0 / 6%); /* Softer, deeper shadow */
+    inset 0 0 12px color-mix(in srgb, var(--ac) 5%, transparent),
+    0 2px 8px rgb(0 0 0 / 10%);
 
-  font:
-    700 0.95rem/1.2 ui-monospace,
-    "Cascadia Code",
-    monospace;
+  /* Typography */
+  font-family:
+    "Cascadia Code", "SFMono-Regular", "Consolas", ui-monospace, monospace;
 
-  letter-spacing: 0.08em;
+  font-size: 0.85rem;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
   white-space: nowrap;
 
+  /* Interaction */
+  cursor: default;
   transition:
-    border-color 0.25s ease,
-    box-shadow 0.25s ease,
-    background 0.25s ease,
-    transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+    transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    border-color 220ms ease,
+    box-shadow 220ms ease,
+    background 220ms ease;
 }
 
-/* Prefix text */
+/* Subtle accent glow */
+.maker-signature::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+
+  background: var(--maker-glow);
+  opacity: 0;
+
+  transition: opacity 220ms ease;
+}
+
+/* Small console label */
 .maker-signature > span:first-child {
   color: var(--mut);
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  opacity: 0.8;
+
+  transition:
+    color 180ms ease,
+    opacity 180ms ease;
+}
+
+/* Name + cursor */
+.maker-name-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+
+  transition: transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 /* Name */
 .maker-signature strong {
   position: relative;
+  display: inline-block;
 
-  color: var(--ac);
+  color: var(--maker-accent);
   font: inherit;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.14em;
 
-  text-shadow: 0 0 8px color-mix(in srgb, var(--ac) 40%, transparent);
+  text-shadow: 0 0 8px color-mix(in srgb, var(--ac) 25%, transparent);
+
+  transition:
+    color 180ms ease,
+    text-shadow 180ms ease;
 }
 
 /* Glitch layers */
 .maker-signature strong::before,
 .maker-signature strong::after {
+  content: attr(data-text);
   position: absolute;
   inset: 0;
+
   overflow: hidden;
-
-  color: var(--ac);
-  content: attr(data-text);
-
-  clip-path: inset(0 0 100% 0);
   pointer-events: none;
+  opacity: 0;
+
+  clip-path: inset(50% 0 50% 0);
+}
+
+.maker-signature strong::before {
+  color: var(--maker-accent-hover);
+  transform: translateX(-2px);
 }
 
 .maker-signature strong::after {
   color: var(--fg);
+  transform: translateX(2px);
 }
 
 /* Cursor */
 .maker-cursor {
-  color: var(--ac);
+  color: var(--maker-accent);
   animation: maker-blink 1s steps(2, start) infinite;
 }
 
-/* Hover */
+/* Interactive hover */
 .maker-signature:hover {
-  border-color: var(--ac);
+  border-color: var(--maker-accent);
+  border-left-color: var(--maker-accent-hover);
+
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent 0 3px,
+      color-mix(in srgb, var(--ac) 5%, transparent) 3px 4px
+    ),
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--ac) 9%, var(--card)),
+      var(--card) 65%
+    );
 
   box-shadow:
-    inset 0 0 18px color-mix(in srgb, var(--ac) 12%, transparent),
-    0 0 10px color-mix(in srgb, var(--ac) 15%, transparent);
+    inset 0 0 16px color-mix(in srgb, var(--ac) 10%, transparent),
+    0 0 12px var(--maker-glow),
+    0 4px 12px rgb(0 0 0 / 12%);
+
+  transform: translateY(-2px);
+}
+
+.maker-signature:hover::before {
+  opacity: 1;
+}
+
+.maker-signature:hover > span:first-child {
+  color: var(--maker-accent);
+  opacity: 1;
+}
+
+.maker-signature:hover .maker-name-row {
+  transform: translateX(3px);
+}
+
+.maker-signature:hover strong {
+  text-shadow: 0 0 10px color-mix(in srgb, var(--ac) 45%, transparent);
+}
+
+.maker-signature:hover strong::before {
+  animation: maker-glitch 350ms steps(2, end) 1;
+}
+
+.maker-signature:hover strong::after {
+  animation: maker-glitch 350ms steps(2, end) 1 reverse;
+}
+
+/* Keyboard accessibility */
+.maker-signature:focus-visible {
+  outline: 2px solid var(--maker-accent);
+  outline-offset: 4px;
+}
+
+/* Animations */
+@keyframes maker-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes maker-glitch {
+  0% {
+    opacity: 0;
+    clip-path: inset(50% 0 50% 0);
+  }
+
+  20% {
+    opacity: 1;
+    clip-path: inset(10% 0 70% 0);
+  }
+
+  40% {
+    clip-path: inset(60% 0 20% 0);
+  }
+
+  60% {
+    clip-path: inset(30% 0 40% 0);
+  }
+
+  80% {
+    clip-path: inset(70% 0 5% 0);
+  }
+
+  100% {
+    opacity: 0;
+    clip-path: inset(50% 0 50% 0);
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .maker-signature,
+  .maker-signature *,
+  .maker-signature::before {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .maker-signature:hover {
+    transform: none;
+  }
+
+  .maker-signature:hover .maker-name-row {
+    transform: none;
+  }
 }
 
 /* Cursor animation */
@@ -256,11 +424,8 @@ header strong {
   display: flex;
   align-items: center;
   gap: 0.55rem;
-  margin-left: auto;
 }
-.header-tools .maker-signature {
-  margin-left: 0;
-}
+
 .theme-toggle {
   display: grid;
   width: 2.45rem;
@@ -299,6 +464,8 @@ header strong {
 nav {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
   gap: 0.35rem;
 }
 nav a {
@@ -1085,31 +1252,6 @@ th {
   outline: 2px solid var(--fg);
 }
 @media (max-width: 760px) {
-  header {
-    position: static;
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: 0.35rem 0.65rem;
-    padding: 0.75rem 1rem;
-  }
-  header > .brand {
-    grid-column: 1;
-    grid-row: 1;
-    justify-self: start;
-  }
-  header > #nav {
-    grid-column: 1 / -1;
-    grid-row: 2;
-  }
-  .header-tools {
-    grid-column: 2;
-    grid-row: 1;
-    justify-self: end;
-    gap: 0.35rem;
-  }
-  .header-tools .maker-signature {
-    margin-left: 0;
-  }
   .exam-difficulty-controls {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -1144,27 +1286,6 @@ th {
   }
 }
 @media (max-width: 480px) {
-  header {
-    column-gap: 0.35rem;
-    padding-right: 0.65rem;
-    padding-left: 0.65rem;
-  }
-  header > .brand {
-    font-size: 1rem;
-    white-space: nowrap;
-  }
-  .header-tools {
-    gap: 0.25rem;
-  }
-  .maker-signature {
-    gap: 0.25rem;
-    padding: 0.3rem 0.4rem;
-    font-size: 0.7rem;
-  }
-  .theme-toggle {
-    width: 2.2rem;
-    height: 2.2rem;
-  }
   .exam-difficulty-controls {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -3541,7 +3662,6 @@ html {
   background: color-mix(in srgb, var(--ac) 28%, transparent);
 }
 
-/* A more responsive-feeling top bar and navigation. */
 header {
   box-shadow:
     var(--shadow),
@@ -5001,6 +5121,7 @@ pre:focus-within,
 
   min-height: 36px;
   padding: 7px 12px;
+  text-wrap: wrap;
 
   color: var(--mut);
   background: var(--card);
@@ -5844,4 +5965,297 @@ html[data-theme="dark"] :is(.md, .stmt) code .tok-tag {
     transition: none;
     animation: none;
   }
+}
+
+/* ============================================================
+   HEADER LAYOUT
+   Desktop: brand on the left, controls grouped on the right.
+   Mobile: balance visible header tools into 2- or 3-column rows.
+   ============================================================ */
+
+/* Keep the tools and navigation on separate lines. */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.35rem;
+  width: 100%;
+  padding: 0.65rem max(1rem, calc((100vw - 1200px) / 2));
+}
+
+/* The brand takes the available space before the compact controls. */
+.header-tools {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 0.35rem 0.55rem;
+  width: min(100%, 1200px);
+  min-width: 0;
+  margin: 0 auto;
+}
+
+.header-tools > :is(.brand, #brand) {
+  flex: 0 1 auto;
+  margin-right: auto;
+}
+
+/* Theme control */
+.header-tools > #theme-toggle {
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  width: 2.65rem;
+  height: 2.65rem;
+  min-width: 2.65rem;
+  min-height: 2.65rem;
+  margin: 0;
+  padding: 0;
+  color: var(--fg);
+  background: var(--card);
+  border: 1px solid var(--bd);
+  border-radius: 10px;
+  box-shadow: 0 2px 7px rgb(0 0 0 / 9%);
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background-color 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.18s ease;
+}
+
+.header-tools > #theme-toggle:hover:not(:disabled) {
+  color: var(--ac);
+  background: var(--soft);
+  border-color: var(--ac);
+  box-shadow: 0 3px 10px rgb(0 0 0 / 12%);
+  transform: translateY(-1px);
+}
+
+/* Focus control — deliberately no display declaration here.
+   Its visibility is left to the HTML/inline style. */
+.header-tools > #focus-toggle {
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  min-width: 0;
+  min-height: 2.65rem;
+  margin: 0;
+  padding: 0.45rem 0.8rem;
+  color: var(--fg);
+  background: var(--card);
+  border: 1px solid var(--bd);
+  border-radius: 10px;
+  box-shadow: 0 2px 7px rgb(0 0 0 / 9%);
+  font-size: 0.78rem;
+  font-weight: 650;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    color 0.18s ease,
+    background-color 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.18s ease;
+}
+
+.header-tools > #focus-toggle > span:first-child {
+  color: var(--mut);
+  font-size: 1rem;
+}
+
+.header-tools > #focus-toggle:hover:not(:disabled) {
+  color: var(--ac);
+  background: var(--soft);
+  border-color: var(--ac);
+  box-shadow: 0 3px 10px rgb(0 0 0 / 12%);
+  transform: translateY(-1px);
+}
+
+.header-tools > #focus-toggle[aria-pressed="true"],
+.header-tools > #focus-toggle[aria-pressed="true"]:hover {
+  color: var(--ac);
+  background: color-mix(in srgb, var(--ac) 12%, var(--card));
+  border-color: var(--ac);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--ac) 24%, transparent),
+    0 2px 8px color-mix(in srgb, var(--ac) 16%, transparent);
+  transform: none;
+}
+
+.header-tools > #focus-toggle[aria-pressed="true"] > span:first-child {
+  color: var(--ac);
+}
+
+/* Maker credit */
+.header-tools > #wassim-sign {
+  flex: 0 0 auto;
+  max-width: 100%;
+}
+
+/* Navigation remains below the tools. */
+header > #nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  margin-inline: auto;
+  text-align: center;
+}
+
+header > #nav a {
+  display: inline-flex;
+  flex: 0 0 auto;
+  min-width: 0;
+  min-height: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0.45rem 0.7rem 0.6rem;
+  color: var(--mut);
+  background: transparent;
+  border-radius: 999px;
+  box-shadow: none;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  overflow-wrap: normal;
+}
+
+header > #nav a:hover,
+header > #nav a.on {
+  color: var(--ac);
+  background: var(--soft);
+  box-shadow: none;
+}
+
+header > #nav a.on {
+  font-weight: 700;
+}
+
+/* Short centered underline for primary navigation links. */
+header > #nav a:not(.reference-tab) {
+  position: relative;
+  isolation: isolate;
+}
+
+header > #nav a:not(.reference-tab)::after {
+  content: "";
+  position: absolute;
+  left: 25%;
+  bottom: 0.22rem;
+  width: 50%;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--ac);
+  transform: scaleX(0);
+  transform-origin: center;
+  opacity: 0;
+  transition:
+    transform 0.22s ease,
+    opacity 0.22s ease;
+  pointer-events: none;
+}
+
+header > #nav a:not(.reference-tab):hover::after,
+header > #nav a:not(.reference-tab).on::after,
+header > #nav a:not(.reference-tab):focus-visible::after {
+  transform: scaleX(1);
+  opacity: 1;
+}
+
+@media (max-width: 760px) {
+  header {
+    position: static;
+    padding: 0.75rem 1rem;
+  }
+
+  .maker-signature {
+    margin: 0;
+  }
+
+  .header-tools {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.65rem 0.5rem;
+    width: 100%;
+  }
+
+  /* Even count: two items per row */
+  .header-tools > :not([hidden]) {
+    flex: 0 0 calc(50% - 0.25rem);
+    display: flex;
+    justify-content: center;
+  }
+
+  /* Odd count: first three items share the first row */
+  .header-tools:has(
+      > :nth-child(odd of :not([hidden])):nth-last-child(1 of :not([hidden]))
+    ):has(> :nth-child(3 of :not([hidden])))
+    > :nth-child(-n + 3 of :not([hidden])) {
+    flex-basis: calc(33.333% - 0.34rem);
+  }
+}
+
+@media (max-width: 760px) {
+  header {
+    position: static;
+    padding: 0.75rem 1rem;
+  }
+
+  .maker-signature {
+    margin: 0;
+  }
+
+  .header-tools {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-flow: row;
+    align-items: center;
+    justify-items: center;
+    gap: 0.65rem 0.5rem;
+    width: 100%;
+  }
+
+  /* 3 visible elements: #focus-toggle is hidden -> 3 columns */
+  .header-tools:has(#focus-toggle[hidden]) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  /* 4 visible elements: #focus-toggle is visible -> 2 columns */
+  .header-tools:has(#focus-toggle:not([hidden])) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Ensure hidden elements never participate in the grid */
+[hidden] {
+  display: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header-tools > #theme-toggle,
+  .header-tools > #focus-toggle,
+  .header-tools > #wassim-sign,
+  header > #nav a {
+    transition: none;
+  }
+
+  .header-tools > #wassim-sign .maker-cursor {
+    animation: none;
+  }
+}
+
+[hidden] {
+  display: none !important;
 }

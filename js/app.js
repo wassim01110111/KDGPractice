@@ -9,7 +9,8 @@ const {
   shuffle,
   DIFF,
 } = Core;
-const focusButton = document.querySelector("#focus-toggle");
+const focusButton = document.getElementById("focus-toggle");
+const headerTools = document.getElementById("header-tools");
 const $ = (s, r = document) => r.querySelector(s);
 const h = (t, a = {}, ...k) => {
   const e = document.createElement(t);
@@ -5747,7 +5748,6 @@ const periodicToast = $("#periodic-toast");
 const terminalArtifact = $("#terminal-artifact");
 const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
 const themeToggle = $("#theme-toggle");
-const themeStatus = $("#theme-status");
 const systemPrefersDark = matchMedia("(prefers-color-scheme: dark)");
 function currentTheme() {
   return (
@@ -5770,11 +5770,7 @@ themeToggle?.addEventListener("click", () => {
   updateThemeToggle();
   try {
     localStorage.setItem("acs-practice-theme", nextTheme);
-    themeStatus.textContent = `${nextTheme === "dark" ? "Dark" : "Light"} mode enabled.`;
-  } catch (error) {
-    themeStatus.textContent =
-      "Theme changed, but the preference could not be saved: " + error.message;
-  }
+  } catch (error) {}
 });
 systemPrefersDark.addEventListener("change", () => {
   if (!document.documentElement.dataset.theme) updateThemeToggle();
@@ -6068,6 +6064,7 @@ async function route() {
 }
 addEventListener("hashchange", route);
 addEventListener("popstate", route);
+
 loadContent()
   .then(route)
   .catch((e) => {
@@ -6420,11 +6417,11 @@ wassimSign.addEventListener("click", () => {
   clearTimeout(clickTimer);
 
   if (clickCount >= 5) {
-    if (focusButton.style.display === "block") {
-      focusButton.style.display = "none";
+    if (!focusButton.hidden) {
+      focusButton.hidden = true;
       focusButton.setAttribute("aria-pressed", "false");
     } else {
-      focusButton.style.display = "block";
+      focusButton.hidden = false;
     }
 
     clickCount = 0;
