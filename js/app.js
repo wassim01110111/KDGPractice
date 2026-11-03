@@ -608,16 +608,20 @@ async function gradeSql(ex, sql) {
     // worker, rather than trying to open a second main-thread database.
     await resetDatabase(db, ds);
     try {
-      r = { status: "fulfilled", value: await runSql(db, ex.referenceSolution) };
+      r = {
+        status: "fulfilled",
+        value: await runSql(db, ex.referenceSolution),
+      };
     } catch (reason) {
       r = { status: "rejected", reason };
     }
     if (r.status === "rejected")
       return {
         correct: false,
-        error: s.status === "rejected"
-          ? describeSqlError(s.reason, sql)
-          : describeSqlError(r.reason, ex.referenceSolution),
+        error:
+          s.status === "rejected"
+            ? describeSqlError(s.reason, sql)
+            : describeSqlError(r.reason, ex.referenceSolution),
       };
     if (s.status === "rejected")
       return { correct: false, error: s.reason.message };
@@ -2733,6 +2737,20 @@ function md(src) {
         );
       continue;
     }
+    {
+      // "Try exercise" buttons: a raw <a class="try-exercise-button"> line.
+      // Rendered as a real link; "domain/#/..." is reduced to the in-app "#/...".
+      const tb = l.match(
+        /^\s*<a\s+class="try-exercise-button"\s+href="(?:[^"#]*)(#\/[^"]*)">([^<]*)<\/a>\s*$/i,
+      );
+      if (tb) {
+        fl();
+        o.push(
+          `<p><a class="try-exercise-button" href="${esc(tb[1]).replace(/"/g, "&quot;")}">${esc(tb[2])}</a></p>`,
+        );
+        continue;
+      }
+    }
     if (/^\s*<details\b[^>]*>\s*$/i.test(l)) {
       fl();
       o.push(/\bopen\b/i.test(l) ? "<details open>" : "<details>");
@@ -3950,7 +3968,11 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
     h(
       "div",
       { class: "practice-more" },
-      h("small", {}, `Showing ${Math.min(practiceVisibleCount, items.length)} of ${items.length}`),
+      h(
+        "small",
+        {},
+        `Showing ${Math.min(practiceVisibleCount, items.length)} of ${items.length}`,
+      ),
       h(
         "button",
         { type: "button", class: "sec", onclick: showMore },
@@ -3963,7 +3985,10 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
     const from = practiceVisibleCount;
     practiceVisibleCount += PRACTICE_PAGE_SIZE;
     try {
-      sessionStorage.setItem(PRACTICE_VISIBLE_KEY, String(practiceVisibleCount));
+      sessionStorage.setItem(
+        PRACTICE_VISIBLE_KEY,
+        String(practiceVisibleCount),
+      );
     } catch {
       // The in-memory count still works when session storage is unavailable.
     }
@@ -4024,13 +4049,20 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
   function redraw() {
     practiceVisibleCount = PRACTICE_PAGE_SIZE;
     try {
-      sessionStorage.setItem(PRACTICE_VISIBLE_KEY, String(practiceVisibleCount));
+      sessionStorage.setItem(
+        PRACTICE_VISIBLE_KEY,
+        String(practiceVisibleCount),
+      );
     } catch {
       // Ignore storage restrictions; filtering still redraws correctly.
     }
     draw();
   }
-  function selectExercise(exercise, addHistoryEntry, scrollToExercise = addHistoryEntry) {
+  function selectExercise(
+    exercise,
+    addHistoryEntry,
+    scrollToExercise = addHistoryEntry,
+  ) {
     selectedKey = keyOf(exercise);
     draw();
     const nextExerciseAfter = () => {
