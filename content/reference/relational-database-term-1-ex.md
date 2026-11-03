@@ -195,6 +195,8 @@
 
 Provide full details of all projects completed within the company.
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w2-enterprise-e01">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -207,6 +209,8 @@ SELECT * from projects;
 #### Exercise 2
 
 For all projects, print the project name and department number of the supporting department
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w2-enterprise-e02">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -221,6 +225,8 @@ select projects.project_name, projects.department_id from projects;
 
 **a.** Modify the previous SELECT so that you get the following results table:
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w2-enterprise-e03-a">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -233,6 +239,8 @@ select 'project', projects.project_id, 'is handled by', projects.department_id f
 **b.** Now make sure that the headers for the constant columns remain blank.
 FYI: column names are printed in bold below, the words 'text' and 'numeric' indicate the data type of that column
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w2-enterprise-e03-b">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -244,6 +252,8 @@ select 'Project' as " ", projects.project_id, 'is handled by' as " ", projects.d
 
 **c.** Make sure you print everything in 1 column and give the whole column the header "projects with department".
 FYI: column names in IntelliJ are sometimes shown with quotes, sometimes not.
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w2-enterprise-e03-c">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -262,6 +272,8 @@ Perform the following instruction. What does the result show?
 SELECT current_date - birth_date
 FROM FAMILY_MEMBERS;
 ```
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w2-enterprise-e04">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -284,6 +296,8 @@ SELECT department_id, manager_id, start_date
 FROM DEPARTMENTS;
 ```
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w2-enterprise-e05-a">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -303,6 +317,8 @@ Note that these types of errors are more difficult to detect than the above as t
 SELECT last_name, salary department_id FROM EMPLOYEES;
 ```
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w2-enterprise-e05-b">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -318,6 +334,8 @@ SELECT last_name, salary department_id FROM EMPLOYEES;
 **a.** A survey is requested of the places of residence of the company's employees.
 This gives the result table below:
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w2-enterprise-e06-a">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -328,6 +346,8 @@ select location from employees;
 </details>
 
 **b.** Take a critical look at the results table and write a query that gives a better result:
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w2-enterprise-e06-b">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -342,6 +362,8 @@ FROM employees;
 #### Exercise 7
 
 We want to know in which departments employees are employed and what their place of residence is. Write the query.
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w2-enterprise-e07">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -358,6 +380,8 @@ SELECT without table
 
 **a.** query for today's date.
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w2-enterprise-e08-a">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -369,6 +393,8 @@ select current_date;
 
 **b.** calculate a 15% discount on 150. You should obtain the following results table
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w2-enterprise-e08-b">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -379,6 +405,8 @@ select 150*(1-0.15) as Calculation;
 </details>
 
 **c.** Use the separate words "Data Retrieval", " Chapter 3-4" and "SQL" to obtain the following results table in one instruction. Also note the column title!
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w2-enterprise-e08-c">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -393,6 +421,8 @@ select 'SQL ' || 'Data Retrieval ' || 'Chapter 3-4'  "Best Course";
 
 Which people belong to the family of employee 999111111? You must obtain exactly the following table of results.
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w2-enterprise-e09">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -405,6 +435,8 @@ select employee_id employee, name "NAME FAMILY MEMBER", relationship, gender fro
 #### Exercise 10
 
 Provide all information about the administration department?
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w2-enterprise-e10">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -430,6 +462,8 @@ This gives the following table of results:
 Why is employee 999555555 not in the results table?
 Modify the query in an efficient way.
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w2-enterprise-e11">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -444,6 +478,8 @@ select * from employees where employee_id='999555555';
 
 Which employees worked between 20 and 35 hours (both inclusive) on project 10? Display the employee number, project number, and number of hours worked.
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w2-enterprise-e12">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -456,6 +492,8 @@ select employee_id, project_id, hours  from tasks where hours between 20 and 35 
 #### Exercise 13
 
 On which projects did employee 999222222 work less than 10 hours? Provide project number and number of hours.
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w2-enterprise-e13">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -471,6 +509,8 @@ select  project_id, hours from tasks where employee_id='999222222' and hours < 1
 Which employees are from the province of Groningen (GR) or Noord Brabant (NB)?
 Solve in 2 ways!
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w2-enterprise-e14">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -484,6 +524,8 @@ select employee_id, last_name, province from employees where province='GR' or pr
 #### Exercise 15
 
 Are there any employees with first name Suzan, Martina, Henk or Douglas and in which department do they work? Sort by department number (in descending order) and within that alphabetically by first name.
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w2-enterprise-e15">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -502,6 +544,8 @@ Name, department number, and salary of employees in department 7 earning less th
 
 - name, department number, and salary of employee 999666666
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w2-enterprise-e16">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -514,6 +558,8 @@ select last_name, salary, department_id from employees where (salary<40000 and d
 #### Exercise 17
 
 Which employees do not live in Maarssen and neither in Eindhoven?
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w2-enterprise-e17">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -531,6 +577,8 @@ Summarize the contents of the table TASKS.
 **a.** Sort by HOURS in ascending order.
 Ensure that rows with a NULL value for HOURS are displayed first.
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w2-enterprise-e18-a">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -542,6 +590,8 @@ select employee_id, project_id, hours  from tasks order by hours NULLS first;
 
 **b.** Sort by HOURS in descending order.
 Make sure that rows with a NULL value for HOURS are shown last.
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w2-enterprise-e18-b">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -556,6 +606,8 @@ select employee_id, project_id, hours  from tasks order by hours desc NULLS last
 
 List the employees and their place of residence whose place of residence begins with an "m" or "o" and who have a salary greater than 30000€.
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w2-enterprise-e19">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -568,6 +620,8 @@ select last_name, location, salary from employees where left(lower(location), 1)
 #### Exercise 20
 
 Give the names of family members born in 1988
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w2-enterprise-e20">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -584,6 +638,8 @@ select name from family_members where EXTRACT(YEAR FROM birth_date) = 1988;
 
 Provide the employees with the lowest salary
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w2-enterprise-e21">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -598,6 +654,8 @@ FETCH first 3 rows only;
 
 Provide the 3 oldest employees.
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w2-enterprise-e22">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -610,6 +668,8 @@ select first_name, last_name, birth_date from employees order by birth_date fetc
 #### Exercise 23
 
 Provide the employee ID for the employees on the 4th, 5th and 6th place, if you sort by hours performed, from most to least, without taking the NULL into account
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w2-enterprise-e23">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -633,6 +693,8 @@ select to_number('2500', '9999')
 
 Give the names of all instructors who live at '518 West 120th'
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w2-sa-e01">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -645,6 +707,8 @@ SELECT salutation, last_name,first_name,street_address from instructors where st
 #### Exercise 2
 
 List all students with the surname 'Grant'. Sort by address title and within address title by first name.
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w2-sa-e02">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -659,6 +723,8 @@ select salutation, first_name, last_name from students where last_name = 'Grant'
 
 Give all students who are addressed as "Ms." AND who call either "Allende" or "Grant. Sort by last name.
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w2-sa-e03">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -671,6 +737,8 @@ select student_id, salutation, students.first_name, students.last_name from stud
 #### Exercise 4
 
 List the enrollment(s) for which a final grade has already been obtained
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w2-sa-e04">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -686,6 +754,8 @@ select student_id, section_id, enroll_date, final_grade from enrollments where f
 Which students live in a municipality with zip code 10048,11102 or 11209?
 Please note that the zip codes are of type VARCHAR!
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w2-sa-e05">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -698,6 +768,8 @@ select first_name || ' ' || last_name as "Name", street_address as "Address", zi
 #### Exercise 6
 
 Which students have first name Yvonne AND live in a location with a zip code equal to 10029 and which students have last name Zuckerberg ?
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w2-sa-e06">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -712,6 +784,8 @@ select student_id, first_name as first, last_name as last, zip from students whe
 
 Provide the description of all courses with a prerequisite less than 122.
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w2-sa-e07">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -724,6 +798,8 @@ select description, prerequisite from courses where prerequisite<122;
 #### Exercise 8
 
 List all instructors except instructor ‘Schorin’.
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w2-sa-e08">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -745,6 +821,8 @@ ORDER BY student_id;
 ```
 
 What result does this instruction give? Explain!
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w2-sa-e09">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -769,6 +847,8 @@ WHERE prerequisite IS NOT NULL
 ORDER BY description;
 ```
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w2-sa-e10">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -789,6 +869,8 @@ ORDER BY description;
 
 Give the description of the courses for which the cost is 1195 and the prerequisite is 20 or 25.
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w2-sa-e11">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -806,6 +888,8 @@ Does this instruction succeed? Why yes/no and explain!
 SELECT course_no, cost FROM courses
 WHERE cost BETWEEN 1500 AND 1000;
 ```
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w2-sa-e12">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -827,6 +911,8 @@ SELECT description, prerequisite
 FROM courses
 WHERE prerequisite NOT >= 140;
 ```
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w2-sa-e13">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -851,6 +937,8 @@ WHERE description >= 'Midterm' AND description <=
 'Project';
 ```
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w2-sa-e14">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -872,6 +960,8 @@ FROM zipcodes;
 WHERE state != 'NY' ;
 ```
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w2-sa-e15">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -885,6 +975,8 @@ SELECT city FROM zipcodes WHERE NOT state ='NY';
 
 List students who have a zip code between 5000 and 6825. Sort the table first by zip code and within zip code by last name.
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w2-sa-e16">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -897,6 +989,8 @@ select student_id, last_name, zip  from students where zip between '05000' and '
 #### Exercise 17
 
 Look at the solution to question 16. Write the query using IN, assuming you now know the zip codes. The RT should be the same, except that you should show the last name in reverse alphabetical order.
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w2-sa-e17">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -912,6 +1006,8 @@ select student_id, last_name, zip  from students where zip in ('06483','06605','
 Show students who have either a first name Brian, Angel or Yvonne or their last name is Torres.
 Sort by last name and in the case of the same last name sort by first name.
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w2-sa-e18">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -924,6 +1020,8 @@ select student_id, first_name first, last_name last from students where first_na
 #### Exercise 19
 
 Which students registered before February 03, 2021?
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w2-sa-e19">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -938,6 +1036,8 @@ select student_id, first_name first, last_name last, registration_date registrat
 
 List grades between 3 and 4, boundaries included
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w2-sa-e20">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -950,6 +1050,8 @@ select letter_grade, grade_point, max_grade, min_grade from grade_conversions wh
 #### Exercise 21
 
 List the courses where the course number is less than 100. Pay attention to the sorting order!
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w2-sa-e21">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -972,6 +1074,8 @@ select  course_no, description, prerequisite from courses where course_no<100 or
 
 Give the employee numbers of those with children under 18?
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w3-enterprise-e01">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -984,6 +1088,8 @@ select DISTINCT employee_id from family_members where relationship in ('DAUGHTER
 #### Exercise 2
 
 Which employees from Eindhoven or Maarssen are older than 30?
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w3-enterprise-e02">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -998,6 +1104,8 @@ select employee_id, last_name, location, AGE(birth_date) age from employees wher
 
 Which employees have a partner with an age between 35y and 50y? Give the number of the employee and the age of that partner.
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w3-enterprise-e03">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -1010,6 +1118,8 @@ select employee_id, age(birth_date) "age partner" from family_members where age(
 #### Exercise 4
 
 For each employee, give the date when he/she will retire. Assume that the retirement age is 65 and that one retires on his/her birthday.
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w3-enterprise-e04">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -1024,6 +1134,8 @@ select first_name, last_name, to_char(birth_date, 'DD Month YYYY') "Date of birt
 
 **a.** Enter the date of birth of family members in the format below. Note the order.
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w3-enterprise-e05-a">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -1035,6 +1147,8 @@ select name, to_char(birth_date, 'day DD month YYYY') "born on"  from family_mem
 
 **b.** Do the same but provide a custom format.
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w3-enterprise-e05-b">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -1045,6 +1159,8 @@ select name, to_char(birth_date, 'FMday DD FMMonth YYYY') "born on"  from family
 </details>
 
 **c.** And now put this in "French”
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w3-enterprise-e05-c">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -1062,6 +1178,8 @@ Provide the full name of each employee! Please provide a solution that:
 
 **a)** Does not use a function
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w3-enterprise-e06-a">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -1073,6 +1191,8 @@ select first_name || ' ' || last_name name  from employees;
 
 **b)** Only uses the function concat
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w3-enterprise-e06-b">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -1083,6 +1203,8 @@ select concat(first_name, ' ', last_name) name from employees;
 </details>
 
 **c)** Uses functions concat, lpad (to add a blank) and length each used once
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w3-enterprise-e06-c">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -1099,6 +1221,8 @@ Get the address of all employees to which you apply the following:
 
 **a)** Convert all characters to lowercase
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w3-enterprise-e07-a">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -1110,6 +1234,8 @@ select lower(street) new_address   from employees;
 
 **b)** Remove the initial 'z' from the address
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w3-enterprise-e07-b">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -1120,6 +1246,8 @@ select ltrim(lower(street), 'z') new_address   from employees;
 </details>
 
 **c)** Show 30 characters each, if the address is shorter complete the string with '\*' characters
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w3-enterprise-e07-c">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -1134,6 +1262,8 @@ select rpad(ltrim(lower(street), 'z'), 30, '*') new_address  from employees;
 
 List all employees with the letter 'o' in their name and first name? Use a text function.
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w3-enterprise-e08">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -1146,6 +1276,8 @@ select first_name, last_name from employees where first_name like '%o%' and last
 #### Exercise 9
 
 List all employees who have 2 O's in a row in their last name and no other O's.
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w3-enterprise-e09">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -1162,6 +1294,8 @@ select last_name from employees where last_name like '%oo%' AND length(last_name
 
 In employees' addresses, replace all the letters 'e' with an 'o' except the first 'e'.
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w3-enterprise-e10">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -1176,6 +1310,8 @@ from employees;
 #### Exercise 11
 
 Form an email address for each employee. Form: 3 first characters of first name + "." + 3 first characters of the last name + "@" + name of the department + ".be". All must be in lower case. Do not use a || sign.
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w3-enterprise-e11">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -1198,6 +1334,8 @@ order by e.first_name;
 
 List all cities with zip code less than 5000 and cities located in the state of WV. Show city and state as in RT below. Note the order.
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w3-sa-e01">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -1212,6 +1350,8 @@ select city, initcap(state) as "state" from zipcodes where zip::integer<5000 or 
 Show all cities from the state of CT. Only those cities that start with letters between A and M.
 Have a close look at the formatting of the results.
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w3-sa-e02">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -1224,6 +1364,8 @@ select rpad(city, 20, '.') "CITY" from zipcodes where upper(state) = 'CT' and su
 #### Exercise 3
 
 Display only those names where the letter 'a' appears only after the 8th position in the name. In a separate column, indicate the position of the letter 'a' in the student's name.
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w3-sa-e03">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -1238,6 +1380,8 @@ select last_name, position('a' in last_name) "Letter a" from students where posi
 
 Display a list of all students with student_id less than 106. Give the number of days since the row was created. The result below was generated on 19/10/2021.
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w3-sa-e04">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -1250,6 +1394,8 @@ select student_id, last_name, students.created_date, current_date-created_date |
 #### Exercise 5
 
 What course sections were registered for in October 2021? Hint: use distinct.
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w3-sa-e05">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -1265,6 +1411,8 @@ select * from sections where start_date_time between '2021-10-01' and '2021-10-3
 
 Give the different cost prices of the courses, the same price increased by 50% and this price rounded off in the last column. Cost can’t be equal to 0.
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w3-sa-e06">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -1278,6 +1426,8 @@ select distinct cost, cost*1.5 "cost + 50%", round(cost*1.5) "cost + 50 with rou
 
 List the students numbered 123, 161 and 190 and their respective registration dates in the following formats.
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w3-sa-e07">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -1290,6 +1440,8 @@ select last_name, registration_date, to_char(registration_date, 'DD-MM-YYYY') "R
 #### Exercise 8
 
 List the students with a last name beginning with 'E'. First, carefully review the results table.
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w3-sa-e08">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -1306,6 +1458,8 @@ order by last_name;
 List all students who have a '.' in their first name and are addressed as 'Ms.'
 Sort by last name, those with the fewest letters first.
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w3-sa-e09">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -1319,6 +1473,8 @@ select student_id, salutation, first_name, last_name from students where first_n
 
 Which students have the letter Y in their first name AND live in a location with a zip code equal to 10025 or have a last name whose first letter is between W and Z?
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w3-sa-e10">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -1331,6 +1487,8 @@ select student_id, first_name, last_name, zip from students where (lower(first_n
 #### Exercise 11
 
 Give the description of courses that begin with 'Intro to' and have no prerequisite.
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w3-sa-e11">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -1346,6 +1504,8 @@ select description, prerequisite from courses where description like 'Intro to%'
 Have the system count how many letters are in the following text, "I count this amount of letters”.
 See the result below. What is your result?
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w3-sa-e12">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -1358,6 +1518,8 @@ select length('I count this amount of letters') "Total letters";
 #### Exercise 13
 
 Give all students who are addressed as 'Ms.' And who are called either "Allende" or "Grant. Sort by last name , those with the fewest letters first.
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w3-sa-e13">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -1373,6 +1535,8 @@ order by length(last_name), last_name;
 
 List all instructors who have the letter o in their last name in the 2nd place.
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w3-sa-e14">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -1385,6 +1549,8 @@ select last_name "LAST NAME", first_name "FIRST NAME" from instructors where sub
 #### Exercise 15
 
 Using the notation below, display today's date. (Of course, you will get a different result depending on the day).
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w3-sa-e15">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -1399,6 +1565,8 @@ select 'today it is the ' || to_char(current_date, 'DD/MM/YYYY')||'****' "What d
 
 Using the notation below, show today's date.
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w3-sa-e16">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -1411,6 +1579,8 @@ select 'today it is the ' || rpad(to_char(current_date, 'Day'), 10, '*')||' the 
 #### Exercise 17
 
 Now write a query that replaces the word "Java" with "C#" in the description column.
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w3-sa-e17">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -1426,6 +1596,8 @@ order by course_no;
 
 The points for ProjectAdministration (grade_type_code='PA') should be reduced to 20. They must be rounded to the whole. Results are only part of the output.
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w3-sa-e18">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -1438,6 +1610,8 @@ select student_id, section_id, grade_type_code, round(numeric_grade/5, 0) numeri
 #### Exercise 19
 
 How many months is this academic year already going (obviously you will get a different result depending on the day).
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w3-sa-e19">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -1455,6 +1629,8 @@ SELECT date_part('months', AGE(
 
 For sections between 80 and 89 (both incl), determine which day they start. Note the spelling of the dates!
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w3-sa-e20">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -1470,6 +1646,8 @@ Tip: check out the format masks in the 'databases 1' course
 
 **a.** List the entries for section 117. Note the way the date is written.
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w3-sa-e21-a">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -1480,6 +1658,8 @@ select student_id, section_id, to_char(enroll_date, 'DD month YYYY') "enrollment
 </details>
 
 **b.** Adjust the date from the above query so that you get the following result table:
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w3-sa-e21-b">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -1520,6 +1700,8 @@ FROM DEPARTMENTS d, PROJECTS ;
 What is the cause of this and how do you fix it?
 Rewrite the query and check the result table again
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w4-enterprise-e01">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -1547,6 +1729,8 @@ order by department_id;
 
 Make a list of all department managers with their employee number, name, salary and the numbers of their assigned parking spaces.
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w4-enterprise-e02">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -1566,6 +1750,8 @@ location of the project
 name of the employee
 Department to which the employee is assigned
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w4-enterprise-e03">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -1581,6 +1767,8 @@ order by department_id, last_name;
 #### Exercise 4
 
 Now limit the results table of the previous query to projects localized in Eindhoven or managed by department Administration.
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w4-enterprise-e04">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -1599,6 +1787,8 @@ order by p.department_id, last_name;
 List employees with their children.
 Please note the sorting!!!
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w4-enterprise-e05">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -1616,6 +1806,8 @@ order by f.birth_date;
 
 Which male employees have a different residence from employee Jochems?
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w4-enterprise-e06">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -1632,6 +1824,8 @@ order by r.last_name;
 
 List employees who have their birth date in the same month. Note the order of the rows.
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w4-enterprise-e07">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -1647,6 +1841,8 @@ order by extract(month from e1.birth_date);
 
 Which projects are supported by the same department as project 3? Please provide all project data
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w4-enterprise-e08">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -1661,6 +1857,8 @@ where pr.department_id = po.department_id;
 #### Exercise 9
 
 A self join with a foreign key that points to a primary table is called recursive because you can apply it multiple times. Show the workers for whom Bordoloi is the boss of their boss
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w4-enterprise-e09">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -1689,6 +1887,8 @@ EQUI-JOINS, non-EQUI joins, SELFjoins:
 Provide the last name, city, state and zip code for all students with a zip code less than 03000. Sort by the zip code.
 Note the headings and use the CAST function (look up in slides Week 3)
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w4-sa-e01">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -1704,6 +1904,8 @@ order by s.zip;
 #### Exercise 2
 
 Provide the first and last name,student_id and enrollment date of students who registered for courses before February 3, 2021 and sort by last name.
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w4-sa-e02">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -1721,6 +1923,8 @@ order by last_name;
 
 Provide the course number, course description, and section number of courses for which sequencing does not apply . Sort by course number and section number
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w4-sa-e03">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -1736,6 +1940,8 @@ order by c.course_no, s.section_no;
 #### Exercise 4
 
 Select the student number, course number, enrollment date and section number for students enrolled in the course ' Intro to Information Systems'
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w4-sa-e04">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -1755,6 +1961,8 @@ order by s.student_id;
 
 Select students and teachers who have the same zip code
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w4-sa-e05">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -1768,6 +1976,8 @@ join instructors i on i.zip = s.zip;
 #### Exercise 6
 
 Show the student number, course number, and section number of students enrolled in a section taught by an instructor living in zip code 10025. Must be for courses with no sequencing.
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w4-sa-e06">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -1788,6 +1998,8 @@ order by s.student_id;
 
 Create a mailing list of teachers who have taught sections with start dates in April 2021.
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w4-sa-e07">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -1804,6 +2016,8 @@ order by name, s.start_date_time;
 
 List enrolled students (student number) living in Connecticut (state = 'CT').
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w4-sa-e08">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -1819,6 +2033,8 @@ where z.state = 'CT';
 
 Show all points earned by student Daniel Wicelinski for section_id 87.
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w4-sa-e09">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -1833,6 +2049,8 @@ where section_id=87 and concat(first_name, ' ', last_name) = 'Daniel Wicelinski'
 #### Exercise 10
 
 For all students enrolled in course_no 420, please provide the numeric grade and the letter grade they obtained for their final examinations (grade_type_code=FI).
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w4-sa-e10">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -1852,6 +2070,8 @@ where course_no = 420 and grade_type_code='FI';
 Display the student number, last name, section_id,percent_of_final_grade, grade_type_code, and numeric_grade for students who received 80 or less for their class project (grade_type_code = 'PJ').
 Sort the results by the student's last name..
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w4-sa-e11">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -1869,6 +2089,8 @@ order by numeric_grade desc;
 
 Select course description, section number and location for sections continuing at location L211. Sort by course description
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w4-sa-e12">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -1884,6 +2106,8 @@ order by description desc;
 #### Exercise 13
 
 Display the course description(s), section number(s), start date(s) and time(s) of the courses for which Joseph German has enrolled.
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w4-sa-e13">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -1902,6 +2126,8 @@ where concat(first_name, ' ', last_name) = 'Joseph German';
 
 List courses for which class participation grade_type_code=PA) accounts for at least 25% of total points Sort the result by course_no
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w4-sa-e14">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -1919,6 +2145,8 @@ order by s.section_id;
 
 Display first and last names and numeric_grade for students who earned 99 or more points on the class project (grade_type_code='PJ').
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w4-sa-e15">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -1935,6 +2163,8 @@ where numeric_grade>=99 and grade_type_code='PJ';
 
 For students with zip code 10956, select the numeric grades they achieved on quizzes.
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w4-sa-e16">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -1950,6 +2180,8 @@ where zip='10956' and grade_type_code='QZ';
 #### Exercise 17
 
 List course numbers, section numbers with first and last names of instructors for courses that have course number 20 as prerequisite.
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w4-sa-e17">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -1982,6 +2214,8 @@ JOIN instructors I ON sec.instructor_id = i.instructor_id
 WHERE stud.zip = i.zip;
 ```
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w4-sa-e18">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -2005,6 +2239,8 @@ where stud.zip = i.zip;
 
 For courses with prerequisites, provide the description of the course and the description of the course(s) that are prerequisite
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w4-sa-e19">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -2021,6 +2257,8 @@ order by c.course_no;
 
 Display the student number, last name and address of students who have the same address and zip code. Sort by address
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w4-sa-e20">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -2035,6 +2273,8 @@ order by  s.street_address;
 #### Exercise 21
 
 Provide a list of instructors who live in the same municipality (who have the same zip code)
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w4-sa-e21">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -2051,6 +2291,8 @@ order by zip, first_name;
 
 Are any classrooms overbooked (i.e. determine if any sections are programmed at the same time and location)?
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w4-sa-e22">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -2065,6 +2307,8 @@ order by starttijd;
 #### Exercise 23
 
 Which students scored lower on their final exam (FI) for section 95 (=section_id) than student Maria Martin?
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w4-sa-e23">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -2083,6 +2327,8 @@ order by student_id desc;
 #### Exercise 24
 
 For section_id=99, determine which students received a lower grade on their final exam (FI) than on their midterm exam (MT). Display the student_id and the grades for their midterm and final exam.
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w4-sa-e24">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -2129,6 +2375,8 @@ SELECT employee_id, SUM(hours)
 FROM tasks;
 ```
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-enterprise-big-e01">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -2167,6 +2415,8 @@ WHERE employee_id='999444444';
 
 Conclusion?
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-enterprise-big-e02">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -2193,6 +2443,8 @@ FROM employees;
 SELECT COUNT(salary)
 FROM employees;
 ```
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-enterprise-big-e03">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -2221,6 +2473,8 @@ FROM tasks;
 
 Why do the two queries not return the same result?
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-enterprise-big-e04">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -2240,6 +2494,8 @@ FROM tasks;
 
 Return the number of projects that staff are currently working on.
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-enterprise-big-e05">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -2253,6 +2509,8 @@ from projects;
 #### Exercise 6
 
 How many hours were spent on average on project 30?
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-enterprise-big-e06">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -2269,6 +2527,8 @@ where project_id = 30;
 
 How many staff members have children?
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-enterprise-big-e07">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -2282,6 +2542,8 @@ from family_members;
 #### Exercise 8
 
 What is the highest number of hours spent on Project 20?
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-enterprise-big-e08">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -2298,6 +2560,8 @@ where project_id = 20;
 
 What is the date of birth of employee 999111111’s youngest child?
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-enterprise-big-e09">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -2312,6 +2576,8 @@ where  employee_id='999111111' and lower(relationship) in ('daughter', 'son');
 #### Exercise 10
 
 What is the average length of employees’ surnames?
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-enterprise-big-e10">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -2342,6 +2608,8 @@ ORDER BY column names
 
 For each project, give the number of staff working on that project.
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-enterprise-big-e11">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -2357,6 +2625,8 @@ order by project_id;
 #### Exercise 12
 
 For each department, state the number of staff who come from the province of Limburg (LI).
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-enterprise-big-e12">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -2374,6 +2644,8 @@ group by department_id;
 
 State the number of subordinates for each manager.
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-enterprise-big-e13">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -2389,6 +2661,8 @@ group by manager_id;
 #### Exercise 14
 
 How many projects does a department support per location?
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-enterprise-big-e14">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -2420,6 +2694,8 @@ FROM employees
 GROUP BY department_id
 WHERE AVG(salary) > 30000;
 ```
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-enterprise-big-e15">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -2453,6 +2729,8 @@ HAVING COUNT(*) > 2;
 
 **Q1.** Which query filters out individual employees?
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-enterprise-big-e16-q1">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -2466,6 +2744,8 @@ GROUP BY department_id;
 </details>
 
 **Q2.** Which query filters out entire groups?
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-enterprise-big-e16-q2">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -2494,6 +2774,8 @@ HAVING ...;
 
 What would change if you tried to include gender = 'F' in the HAVING clause?
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-enterprise-big-e17">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -2513,6 +2795,8 @@ having avg(salary)> 30000;
 Show how many sons and how many daughters an employee has
 But only for those employees who have more than one child of the same sex. Solve this in a single statement.
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-enterprise-big-e18">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -2531,6 +2815,8 @@ order by employee_id;
 
 For each department, state the number of female employees who earn less than 33,000 and have a parking space.
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-enterprise-big-e19">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -2546,6 +2832,8 @@ group by department_id;
 #### Exercise 20
 
 For each employee, state the number of PROJECTS on which they are or have been working. Note the resulting table.
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-enterprise-big-e20">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -2563,6 +2851,8 @@ order by e.first_name;
 #### Exercise 21
 
 For employees with grandchildren, state the number of grandchildren. Pay close attention to the RT.
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-enterprise-big-e21">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -2600,6 +2890,8 @@ GROUP BY location
 HAVING UPPER(location) IN ('EINDHOVEN','OEGSTGEEST');
 ```
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-enterprise-big-e22">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -2634,6 +2926,8 @@ department_id
 
 **1.** Show only employees who are linked to an existing department.
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-enterprise-big-e23-1">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -2646,6 +2940,8 @@ join departments d on e.department_id = d.department_id;
 </details>
 
 **2.** Show all employees, including those without a department.
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-enterprise-big-e23-2">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -2660,6 +2956,8 @@ left join departments d on e.department_id = d.department_id;
 
 **3.** Show all departments, including those without employees.
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-enterprise-big-e23-3">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -2672,6 +2970,8 @@ right join departments d on e.department_id = d.department_id;
 </details>
 
 **4.** Show both all employees and all departments, even if there is no match on either side.
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-enterprise-big-e23-4">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -2698,6 +2998,8 @@ Query:
 Suppose the Research department has no staff.
 What value(s) would you expect in the results row for Research for ‘department_name’ and ‘last_name’?
 Which table does the temporary NULL row come from?
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-enterprise-big-e24">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -2729,8 +3031,16 @@ WHERE t.hours IS NULL;
 ```
 
 1. Is this solution always safe? Try running the query without the WHERE clause.
-2. What information about ‘hours’ do you need to know first?
-3. Which attribute would you prefer to use to establish with certainty that no ‘tasks’ row exists?
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-enterprise-big-e25-1">Try exercise</a>
+
+1. What information about ‘hours’ do you need to know first?
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-enterprise-big-e25-2">Try exercise</a>
+
+1. Which attribute would you prefer to use to establish with certainty that no ‘tasks’ row exists?
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-enterprise-big-e25-3">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -2770,6 +3080,8 @@ Which statements are correct? Which statement is incorrect and why?
 4. After an OUTER JOIN, `employee_id` from the unmatched table may still appear as `NULL` in the result.
 5. A PRIMARY KEY automatically has a NOT NULL property.
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-enterprise-big-e26">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -2792,6 +3104,8 @@ Which statements are correct? Which statement is incorrect and why?
 
 List all employees aged between 30 and 35, along with the projects they are working on.
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-enterprise-big-e27">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -2809,6 +3123,8 @@ order by e.last_name;
 
 List the employees who have not yet been assigned to any project. We want the first name and surname of these employees in the results table.
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-enterprise-big-e28">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -2824,6 +3140,8 @@ where t.project_id is null;
 #### Exercise 29
 
 For each employee aged between 30 and 35, state the number of projects they have worked on. Take a critical look at your results table!
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-enterprise-big-e29">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -2844,6 +3162,8 @@ order by e.last_name;
 List all departments and the projects they support (if any).
 The results table should include: department name, project name and project location.
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-enterprise-big-e30">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -2858,6 +3178,8 @@ left join projects p on p.department_id = d.department_id;
 #### Exercise 31
 
 **a.** List all employees whose surname begins with the letter ‘G’ or ‘J’ and also state the name of the department in which they work. Also provide the names of their family members.
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-enterprise-big-e31-a">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -2875,6 +3197,8 @@ order by e.last_name ;
 
 **b.** Suppose that each employee is always assigned to a department. (Let’s assume for the moment that there is a NOT NULL constraint on the `department_id` column in the `employees` table).
 How can we then adapt the previous solution?
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-enterprise-big-e31-b">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -2895,6 +3219,8 @@ order by e.last_name ;
 List all employees whose first name begins with the letter B, D, G, L or M, along with the projects they are working on.
 In the results table, we want the surname, first name, project name and the number of hours that employee worked on that project. Note the order.
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-enterprise-big-e32">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -2913,6 +3239,8 @@ order by p.project_name;
 
 List all employees who are not managers of any other employee.
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-enterprise-big-e33">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -2929,6 +3257,8 @@ order by e.employee_id;
 #### Exercise 34
 
 List all employees who are not the manager of another employee or who do not have a manager. Tip: Think carefully first about what type of join you need.
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-enterprise-big-e34">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -2980,6 +3310,8 @@ Make sure the you get exactly the output as shown below.
 +-----------+-------------------------------------+------------------------------------------+
 ```
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-enterprise-combo">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -3015,6 +3347,8 @@ Query the same columns with the same column headings. Also note the sorting orde
 
 **A.** How many entries are currently in the database?
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-sa-e01-a">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -3027,6 +3361,8 @@ from enrollments;
 
 **B.** How many different sections are there entries for?
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-sa-e01-b">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -3038,6 +3374,8 @@ from sections;
 </details>
 
 **C.** Give the total capacity, average capacity, minimum and maximum capacity of all sections
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-sa-e01-c">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -3053,6 +3391,8 @@ from sections;
 
 How expensive is the most expensive course taught?
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-sa-e02">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -3066,6 +3406,8 @@ from courses;
 #### Exercise 3
 
 On what date did the very first student registration take place and the most recent date?
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-sa-e03">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -3081,6 +3423,8 @@ from enrollments;
 
 How many courses have no prequisites? (prequisite)
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-sa-e04">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -3095,6 +3439,8 @@ where prerequisite is null;
 #### Exercise 5
 
 How many students are currently enrolled in sections?
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-sa-e05">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -3112,6 +3458,8 @@ join sections se on se.section_id = e.section_id;
 
 Which course description comes alphabetically first and which last?
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-sa-e06">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -3126,6 +3474,8 @@ from courses;
 
 Provide the date of the most recent enrollment.
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-sa-e07">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -3139,6 +3489,8 @@ from enrollments;
 #### Exercise 8
 
 For each location, provide the number of sections, total capacity, minimum and maximum capacity.
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-sa-e08">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -3155,6 +3507,8 @@ group by location;
 
 **A.** For each location and instructor_id, provide the number of sections, total capacity, minimum and maximum capacity. Sort by location.
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-sa-e09-a">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -3169,6 +3523,8 @@ order by s.location;
 </details>
 
 **B.** For each location and instructor_id, provide the number of sections, total capacity, minimum and maximum capacity. The result table should show only rows with total capacity greater than 50. Provide output sorted by total capacity.
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-sa-e09-b">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -3186,6 +3542,8 @@ order by sum(capacity) desc;
 
 **C.** For each location and instructor_id, provide the number of sections, total capacity, minimum and maximum capacity. In the results table, only rows should be shown regarding a total capacity greater than 50.We are also only interested in the courses with COURSE_NO greater than 99. Return the output sorted by total capacity.
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-sa-e09-c">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -3202,6 +3560,8 @@ order by sum(s.capacity) desc, s.location;
 </details>
 
 **D.** Provide the total capacity for each location. The location name must begin with 'L5' and the location must have been used at least 3 times.
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-sa-e09-d">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -3221,6 +3581,8 @@ order by sum(capacity) desc;
 
 List the points students averaged per section on their homeworks. The results table should include only students who averaged less than 80 points. Sort by student and section.
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-sa-e10">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -3239,6 +3601,8 @@ order by student_id, section_id;
 
 Which student seniors are enrolled in more than 2 course sections?
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-sa-e11">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -3254,6 +3618,8 @@ having count(section_id) > 2;
 #### Exercise 12
 
 For each course taught by instructor Fernand Hanks (instructor_id=101), display the average capacity and rounded average capacity.
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-sa-e12">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -3271,6 +3637,8 @@ group by s.course_no;
 
 For each course cost, show how many courses have this cost.
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-sa-e13">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -3286,6 +3654,8 @@ order by cost;
 #### Exercise 14
 
 On what dates was course section 90 registered and how many registrations were there on each of those dates?
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-sa-e14">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -3304,6 +3674,8 @@ group by enroll_date;
 
 For each company in which more than 4 students are employed, indicate how many students they employ.
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-sa-e15">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -3319,6 +3691,8 @@ having count(s.student_id)>4;
 #### Exercise 16
 
 For each instructor, determine how many different courses he/she teaches.
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-sa-e16">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -3338,6 +3712,8 @@ order by i.instructor_id;
 
 For the sections concerning the course 'Intro to Programming' (section_id between 85 and 93), determine the highest grade obtained on the Midterm exam (grade_type_code ='MT').
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-sa-e17">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -3355,6 +3731,8 @@ order by s.section_id;
 #### Exercise 18
 
 For students who enrolled in more than 2 sections, determine the average grade they achieved on all their evaluations.
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-sa-e18">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -3374,6 +3752,8 @@ order by s.student_id;
 #### Exercise 19
 
 List regions (zip view) from which there are more than 5 students
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-sa-e19">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -3398,6 +3778,8 @@ You make all these exercises by using an outer join, even if you can solve it an
 
 Show all courses that do not have sections.
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-sa-e20">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -3415,6 +3797,8 @@ order by course_no;
 
 Show the description of all courses with prerequisite course 350. In the result, also show the sections and their location. Courses that do not have a section should also be shown.
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-sa-e21">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -3430,6 +3814,8 @@ where c.prerequisite = 350;
 #### Exercise 22
 
 Which teachers did not teach course sections yet. Please also list which state they are from.
+
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-sa-e22">Try exercise</a>
 
 <details>
 <summary>***Show solution***</summary>
@@ -3448,6 +3834,8 @@ where s.section_id is null;
 
 Show the unpopular courses (= courses for which there are no enrollments yet).
 
+<a class="try-exercise-button" href="#/practice/sql-term-1-canvas/w5-sa-e23">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
@@ -3461,3 +3849,4 @@ order by s.section_id;
 ```
 
 </details>
+
