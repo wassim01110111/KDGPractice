@@ -5584,14 +5584,13 @@ html.route-sliding {
   }
 }
 
-
 /* Loading placeholders */
 .loading-note {
   display: flex;
   align-items: center;
-  gap: .5em;
-  font-size: .85em;
-  opacity: .85;
+  gap: 0.5em;
+  font-size: 0.85em;
+  opacity: 0.85;
 }
 .loading-spin {
   flex: none;
@@ -5601,50 +5600,214 @@ html.route-sliding {
   border: 2px solid currentColor;
   border-right-color: transparent;
   border-radius: 50%;
-  animation: app-spin .8s linear infinite;
-  opacity: .7;
+  animation: app-spin 0.8s linear infinite;
+  opacity: 0.7;
 }
 .loading-skeleton {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: .5rem;
+  gap: 0.5rem;
   min-height: 12rem;
   padding: 1rem;
   border-radius: 8px;
   text-align: center;
-  background: linear-gradient(90deg, rgba(128,128,128,.10) 25%, rgba(128,128,128,.22) 50%, rgba(128,128,128,.10) 75%);
+  background: linear-gradient(
+    90deg,
+    rgba(128, 128, 128, 0.1) 25%,
+    rgba(128, 128, 128, 0.22) 50%,
+    rgba(128, 128, 128, 0.1) 75%
+  );
   background-size: 200% 100%;
   animation: app-shimmer 1.4s ease-in-out infinite;
 }
-.loading-skeleton .loading-note { justify-content: center; }
-.loading-sub { font-size: .8em; opacity: .7; }
-@keyframes app-spin { to { transform: rotate(360deg); } }
+.loading-skeleton .loading-note {
+  justify-content: center;
+}
+.loading-sub {
+  font-size: 0.8em;
+  opacity: 0.7;
+}
+@keyframes app-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
 @keyframes app-shimmer {
-  from { background-position: 200% 0; }
-  to { background-position: -200% 0; }
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
 }
 @media (prefers-reduced-motion: reduce) {
-  .loading-spin, .loading-skeleton { animation: none; }
-  .loading-spin { border-right-color: currentColor; opacity: .4; }
+  .loading-spin,
+  .loading-skeleton {
+    animation: none;
+  }
+  .loading-spin {
+    border-right-color: currentColor;
+    opacity: 0.4;
+  }
 }
 
 /* Markdown code token colours */
-.md code .tok-kw { color: #a626a4; font-weight: 600; }
-.md code .tok-fn { color: #4078f2; }
-.md code .tok-str { color: #50a14f; }
-.md code .tok-num, .md code .tok-lit { color: #b76b01; }
-.md code .tok-id, .md code .tok-type, .md code .tok-attr { color: #c18401; }
-.md code .tok-com { color: #8a8f98; font-style: italic; }
-.md code .tok-op, .md code .tok-ann { color: #0184bc; }
-.md code .tok-tag { color: #e45649; }
-html[data-theme="dark"] .md code .tok-kw { color: #c678dd; }
-html[data-theme="dark"] .md code .tok-fn { color: #61afef; }
-html[data-theme="dark"] .md code .tok-str { color: #98c379; }
-html[data-theme="dark"] .md code .tok-num, html[data-theme="dark"] .md code .tok-lit,
-html[data-theme="dark"] .md code .tok-attr { color: #d19a66; }
-html[data-theme="dark"] .md code .tok-id, html[data-theme="dark"] .md code .tok-type { color: #e5c07b; }
-html[data-theme="dark"] .md code .tok-com { color: #7f848e; }
-html[data-theme="dark"] .md code .tok-op, html[data-theme="dark"] .md code .tok-ann { color: #56b6c2; }
-html[data-theme="dark"] .md code .tok-tag { color: #e06c75; }
+.md code .tok-kw {
+  color: #a626a4;
+  font-weight: 600;
+}
+.md code .tok-fn {
+  color: #4078f2;
+}
+.md code .tok-str {
+  color: #50a14f;
+}
+.md code .tok-num,
+.md code .tok-lit {
+  color: #b76b01;
+}
+.md code .tok-id,
+.md code .tok-type,
+.md code .tok-attr {
+  color: #c18401;
+}
+.md code .tok-com {
+  color: #8a8f98;
+  font-style: italic;
+}
+.md code .tok-op,
+.md code .tok-ann {
+  color: #0184bc;
+}
+.md code .tok-tag {
+  color: #e45649;
+}
+html[data-theme="dark"] .md code .tok-kw {
+  color: #c678dd;
+}
+html[data-theme="dark"] .md code .tok-fn {
+  color: #61afef;
+}
+html[data-theme="dark"] .md code .tok-str {
+  color: #98c379;
+}
+html[data-theme="dark"] .md code .tok-num,
+html[data-theme="dark"] .md code .tok-lit,
+html[data-theme="dark"] .md code .tok-attr {
+  color: #d19a66;
+}
+html[data-theme="dark"] .md code .tok-id,
+html[data-theme="dark"] .md code .tok-type {
+  color: #e5c07b;
+}
+html[data-theme="dark"] .md code .tok-com {
+  color: #7f848e;
+}
+html[data-theme="dark"] .md code .tok-op,
+html[data-theme="dark"] .md code .tok-ann {
+  color: #56b6c2;
+}
+html[data-theme="dark"] .md code .tok-tag {
+  color: #e06c75;
+}
+/* ---------- Try exercise button (clean version) ---------- */
+.md a.try-exercise-button {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.65rem 1.2rem 0.65rem 1rem;
+  border: 1px solid var(--bd);
+  border-radius: 999px;
+  background: var(--soft);
+  color: var(--ac);
+  font-weight: 600;
+  font-size: 0.92rem;
+  line-height: 1;
+  text-decoration: none;
+  box-shadow: var(--shadow);
+  transition:
+    transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.22s ease,
+    border-color 0.22s ease,
+    color 0.2s ease;
+  animation: try-ex-pulse 1.6s ease-out 0.4s 2;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ▶ icon */
+.md a.try-exercise-button::before {
+  content: "▶";
+  font-size: 0.7em;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* colour fill sweeping in from the left */
+.md a.try-exercise-button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--ac);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.md a.try-exercise-button:hover,
+.md a.try-exercise-button:focus-visible {
+  transform: translateY(-3px);
+  color: var(--card);
+  border-color: var(--ac);
+  box-shadow:
+    0 12px 28px rgb(25 45 85 / 22%),
+    0 0 0 4px color-mix(in srgb, var(--ac) 22%, transparent);
+  animation: none;
+}
+.md a.try-exercise-button:hover::after,
+.md a.try-exercise-button:focus-visible::after {
+  transform: scaleX(1);
+}
+.md a.try-exercise-button:hover::before,
+.md a.try-exercise-button:focus-visible::before {
+  transform: translateX(3px) scale(1.2);
+}
+.md a.try-exercise-button:active {
+  transform: translateY(1px) scale(0.96);
+  transition-duration: 0.08s;
+}
+.md a.try-exercise-button:focus-visible {
+  outline: 2px solid var(--ac);
+  outline-offset: 3px;
+}
+
+@keyframes try-ex-pulse {
+  0% {
+    box-shadow:
+      var(--shadow),
+      0 0 0 0 color-mix(in srgb, var(--ac) 45%, transparent);
+  }
+  70% {
+    box-shadow:
+      var(--shadow),
+      0 0 0 12px transparent;
+  }
+  100% {
+    box-shadow:
+      var(--shadow),
+      0 0 0 0 transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .md a.try-exercise-button,
+  .md a.try-exercise-button::before,
+  .md a.try-exercise-button::after {
+    transition: none;
+    animation: none;
+  }
+}
