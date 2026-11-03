@@ -2058,10 +2058,11 @@ function qView(
         class: "sql-result-panel",
       });
       let loadingSnippet = false;
-      const loadResultSnippet = async () => {
-        if (snippet.dataset.loaded || loadingSnippet) return;
-        loadingSnippet = true;
-        toggle.disabled = true;
+      let previewLoadScheduled = false;
+      let previewIdleHandle = null;
+      let previewTimer = null;
+      const showPreviewLoading = () => {
+        snippet.setAttribute("aria-busy", "true");
         snippet.replaceChildren(
           h("strong", {}, "Expected result preview"),
           loadingNote(
@@ -2070,6 +2071,12 @@ function qView(
               : "Setting up the database and loading the first five rows…",
           ),
         );
+      };
+      const loadResultSnippet = async () => {
+        if (snippet.dataset.loaded || loadingSnippet || !snippet.isConnected)
+          return;
+        loadingSnippet = true;
+        showPreviewLoading();
         try {
           const { res } = await runStudent(ex, ex.referenceSolution);
           snippet.replaceChildren(
@@ -2083,14 +2090,57 @@ function qView(
           );
           snippet.dataset.loaded = "true";
         } catch (e) {
+          const message = e?.message || String(e);
+          const retry = h(
+            "button",
+            {
+              type: "button",
+              class: "sec",
+              onclick: () => {
+                showPreviewLoading();
+                loadResultSnippet();
+              },
+            },
+            "Try loading preview again",
+          );
           snippet.replaceChildren(
             h("strong", {}, "Could not load result preview"),
-            h("pre", { class: "err" }, e.message),
+            h("pre", { class: "err" }, message),
+            retry,
           );
         } finally {
           loadingSnippet = false;
-          toggle.disabled = false;
+          snippet.removeAttribute("aria-busy");
         }
+      };
+      // Give the browser a real paint opportunity before database setup starts.
+      // Starting PGlite in the same animation frame that creates the panel can
+      // otherwise prevent the loading indicator and filter controls from
+      // appearing responsive on a cold database.
+      const schedulePreviewLoad = () => {
+        if (
+          previewLoadScheduled ||
+          loadingSnippet ||
+          snippet.dataset.loaded ||
+          snippet.hidden
+        )
+          return;
+        previewLoadScheduled = true;
+        const start = () => {
+          previewLoadScheduled = false;
+          previewIdleHandle = null;
+          previewTimer = null;
+          if (snippet.isConnected && !snippet.hidden) loadResultSnippet();
+        };
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            if ("requestIdleCallback" in window) {
+              previewIdleHandle = requestIdleCallback(start, { timeout: 1800 });
+            } else {
+              previewTimer = setTimeout(start, 180);
+            }
+          });
+        });
       };
       const toggle = h(
         "button",
@@ -2115,7 +2165,11 @@ function qView(
       );
       btns.append(toggle);
       q.append(snippet);
-      loadResultSnippet();
+      // Show the loading state immediately, but start database work only once
+      // the page has painted and the browser has had an idle opportunity to
+      // process filter/search input.
+      showPreviewLoading();
+      schedulePreviewLoad();
     }
     const hasSol = ex.type === "sql-query" ? !!ex.referenceSolution : true;
     if (hasSol && ex.type !== "short-answer-self-check") {
@@ -3975,7 +4029,7 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
     }
     draw();
   }
-  function selectExercise(exercise, addHistoryEntry) {
+  function selectExercise(exercise, addHistoryEntry, scrollToExercise = addHistoryEntry) {
     selectedKey = keyOf(exercise);
     draw();
     const nextExerciseAfter = () => {
@@ -3995,25 +4049,29 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
       () => !!nextExerciseAfter(),
     );
     pane.replaceChildren(view);
-    requestAnimationFrame(() => {
-      // User-initiated selection: put the top of the exercise at the top of
-      // the viewport, below the header if it is sticky/fixed.
-      if (addHistoryEntry) {
-        const header = document.querySelector("header"),
-          pinned =
-            header &&
-            ["sticky", "fixed"].includes(getComputedStyle(header).position),
-          offset = pinned ? header.getBoundingClientRect().height : 0,
-          top = view.getBoundingClientRect().top + scrollY - offset - 8;
-        window.scrollTo({
-          top: Math.max(0, top),
-          behavior: matchMedia("(prefers-reduced-motion: reduce)").matches
-            ? "auto"
-            : "smooth",
-        });
-      }
-      view.focusInput?.();
-    });
+    requestAnimationFrame(() =>
+      requestAnimationFrame(() => {
+        // Anchor to the actual exercise heading after the page has been
+        // attached and laid out. This also works for direct URLs and reloads,
+        // not only for clicks in the exercise list.
+        if (scrollToExercise && view.isConnected) {
+          const title = view.querySelector("h3") || view,
+            header = document.querySelector("header"),
+            pinned =
+              header &&
+              ["sticky", "fixed"].includes(getComputedStyle(header).position),
+            offset = pinned ? header.getBoundingClientRect().height : 0,
+            top = title.getBoundingClientRect().top + scrollY - offset - 12;
+          window.scrollTo({
+            top: Math.max(0, top),
+            behavior: matchMedia("(prefers-reduced-motion: reduce)").matches
+              ? "auto"
+              : "smooth",
+          });
+        }
+        view.focusInput?.();
+      }),
+    );
     if (addHistoryEntry) {
       const url = `#/practice/${encodeURIComponent(exercise.packageId)}/${encodeURIComponent(exercise.id)}`;
       if (location.hash !== url) history.pushState(null, "", url);
@@ -4024,7 +4082,7 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
     (exercise) =>
       exercise.packageId === routePackageId && exercise.id === routeExerciseId,
   );
-  if (routeExercise) selectExercise(routeExercise, false);
+  if (routeExercise) selectExercise(routeExercise, false, true);
   root.append(flt, h("div", { class: "cols" }, list, pane));
 }
 

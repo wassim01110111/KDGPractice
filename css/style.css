@@ -1984,6 +1984,12 @@ button.schema-view-toggle.on {
 .sql-result-panel[hidden] {
   display: none;
 }
+.sql-result-panel[aria-busy="true"] {
+  min-height: 4.5rem;
+}
+.q > h3 {
+  scroll-margin-top: 1rem;
+}
 .sql-result-panel .tw {
   margin-top: 0.2rem;
 }
