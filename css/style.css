@@ -2140,6 +2140,7 @@ button.sql-result-toggle:hover:not(:disabled) {
 }
 .answer-options {
   display: grid;
+  margin-bottom: 1rem;
   gap: 0.55rem;
 }
 .answer-options label,
@@ -6881,8 +6882,8 @@ pre,
   }
   100% {
     opacity: 0;
-    transform: translate(var(--dx), calc(var(--dy) + 18px))
-      rotate(var(--sr)) scale(1);
+    transform: translate(var(--dx), calc(var(--dy) + 18px)) rotate(var(--sr))
+      scale(1);
   }
 }
 @keyframes ach-rise {
