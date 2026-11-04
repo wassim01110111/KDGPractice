@@ -8249,7 +8249,6 @@ wassimSign.addEventListener("click", () => {
     achTrack((s) => void s.signToggles++, { full: false });
     if (!focusButton.hidden) {
       focusButton.hidden = true;
-      focusButton.setAttribute("aria-pressed", "false");
     } else {
       focusButton.hidden = false;
     }
