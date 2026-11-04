@@ -717,6 +717,12 @@ small {
   white-space: pre-wrap;
   margin: 0.75rem 0;
 }
+label.stmt {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
 .tw {
   overflow: auto;
   max-height: 340px;

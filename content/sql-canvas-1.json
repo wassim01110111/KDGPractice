@@ -163,7 +163,7 @@
       "course": "sql",
       "category": "select",
       "title": "Spot a missing comma in SELECT",
-      "instructions": "The query should return last_name, salary and department_id. What is wrong with `SELECT last_name, salary department_id FROM EMPLOYEES;`?",
+      "instructions": "The query should return last_name, salary and department_id. What is wrong with \n```sql\nSELECT last_name, salary department_id \nFROM EMPLOYEES;\n```?",
       "difficulty": "Easy",
       "type": "mcq-single",
       "examEligible": true,

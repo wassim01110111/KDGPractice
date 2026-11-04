@@ -18,7 +18,7 @@
         "A separately compiled executable for each target architecture",
         "One processor-specific executable that is guaranteed to run on both architectures",
         "The source file only; the target computer converts it automatically without a compiler or interpreter",
-        "A Java ```java\\n.class\\n``` file for each architecture"
+        "A Java `.class` file for each architecture"
       ],
       "expected": [
         0
@@ -56,7 +56,7 @@
       "course": "Programming Fundamentals",
       "category": "Programming Languages and the Java Platform",
       "title": "Why Java bytecode is portable",
-      "instructions": "A ```java\\n.class\\n``` file produced on an ARM development computer is moved to an Intel computer. Both computers have a suitable Java platform installed. Why can the same bytecode run on both?",
+      "instructions": "A `.class` file produced on an ARM development computer is moved to an Intel computer. Both computers have a suitable Java platform installed. Why can the same bytecode run on both?",
       "difficulty": "Medium",
       "type": "mcq-single",
       "examEligible": true,
@@ -64,8 +64,8 @@
       "contentVersion": 3,
       "options": [
         "The JVM on each computer executes the platform-independent Java bytecode",
-        "The ```java\\n.class\\n``` file contains separate Intel and ARM machine-code sections",
-        "Java recompiles the original `.java` source on the target, even though only the ```java\\n.class\\n``` file was copied",
+        "The `.class` file contains separate Intel and ARM machine-code sections",
+        "Java recompiles the original `.java` source on the target, even though only the `.class` file was copied",
         "The processor treats Java bytecode as ordinary native instructions"
       ],
       "expected": [
@@ -112,8 +112,8 @@
       "contentVersion": 3,
       "options": [
         "`javac Hello.java`, followed by `java Hello`",
-        "`java Hello.java`, followed by ```java\\njavac Hello.class\\n```",
-        "```java\\njavac Hello.class\\n```, followed by `java Hello.java`",
+        "`java Hello.java`, followed by `javac Hello.clas`",
+        "`javac Hello.class`, followed by `java Hello.java`",
         "`java Hello`, followed by `javac Hello.java`"
       ],
       "expected": [
@@ -122,23 +122,23 @@
       "hints": [
         "One command compiles source into bytecode; the other starts the JVM for the compiled class."
       ],
-      "explanation": "`javac` compiles the `.java` source and creates a ```java\\n.class\\n``` file. The `java` command then launches the JVM to execute the class; the class name is used without the extension."
+      "explanation": "`javac` compiles the `.java` source and creates a `.class` file. The `java` command then launches the JVM to execute the class; the class name is used without the extension."
     },
     "pfj-006": {
       "course": "Programming Fundamentals",
       "category": "The Java Platform and Your First Java Program",
       "title": "Resolving a Scanner compilation error",
-      "instructions": "A program contains ```java\\nScanner keyboard = new Scanner(System.in);\\n``` but the compiler reports that it cannot find the symbol `Scanner`. The program has no import statements. Which change addresses the likely cause?",
+      "instructions": "A program contains\n```java\nScanner keyboard = new Scanner(System.in);\n```\nbut the compiler reports that it cannot find the symbol `Scanner`. The program has no import statements. Which change addresses the likely cause?",
       "difficulty": "Easy",
       "type": "mcq-single",
       "examEligible": true,
       "provenance": "M1_Basic_concepts.pdf",
       "contentVersion": 3,
       "options": [
-        "Add ```java\\nimport java.util.Scanner;\\n``` before the class declaration",
+        "Add\n```java\nimport java.util.Scanner;\n```\nbefore the class declaration",
         "Replace `Scanner` with `JVM`",
-        "Add ```java\\npackage Scanner;\\n``` inside the main method",
-        "Rename the source file to ```java\\nScanner.class\\n```"
+        "Add\n```java\npackage Scanner;\n```\ninside the main method",
+        "Rename the source file to `Scanner.class`"
       ],
       "expected": [
         0
@@ -159,7 +159,7 @@
       "provenance": "M1_Basic_concepts.pdf",
       "contentVersion": 3,
       "options": [
-        "In the `main` method with the standard ```java\\npublic static void main(String[] args)\\n``` entry-point form",
+        "In the `main` method with the standard\n```java\npublic static void main(String[] args)\n```\nentry-point form",
         "In the first constructor declared in the project",
         "In the first method in alphabetical order",
         "In whichever class contains the most attributes"
@@ -170,7 +170,7 @@
       "hints": [
         "Think about the method the runtime looks for when starting a basic Java application."
       ],
-      "explanation": "The course’s first-program structure uses ```java\\npublic static void main(String[] args)\\n``` as the application entry point. Other methods are called from executing code; their presence alone does not start them."
+      "explanation": "The course’s first-program structure uses\n```java\npublic static void main(String[] args)\n```\nas the application entry point. Other methods are called from executing code; their presence alone does not start them."
     },
     "pfj-008": {
       "course": "Programming Fundamentals",
@@ -355,7 +355,7 @@
       "provenance": "M2_Variables_Operators.pdf",
       "contentVersion": 3,
       "options": [
-        "Declare one ```java\\nfinal\\n``` variable and use it in each calculation",
+        "Declare one `final` variable and use it in each calculation",
         "Repeat the numeric literal in every calculation and change it whenever needed",
         "Store it in a variable named `vat` and rely on the programmer not to change it",
         "Declare it as a local variable inside every calculation"
@@ -366,23 +366,23 @@
       "hints": [
         "Look for the language feature that prevents reassignment after initialization and avoids repeated literal values."
       ],
-      "explanation": "A ```java\\nfinal\\n``` variable cannot be reassigned after initialization. Defining the rate once makes the intention explicit and avoids inconsistent copies of the same literal throughout the program."
+      "explanation": "A `final` variable cannot be reassigned after initialization. Defining the rate once makes the intention explicit and avoids inconsistent copies of the same literal throughout the program."
     },
     "pfj-016": {
       "course": "Programming Fundamentals",
       "category": "Variables, Types, Conversions and Operators",
       "title": "Fixing a narrowing conversion",
-      "instructions": "The following assignment does not compile: ```java\\ndouble price = 12.75;\nint whole = price;\\n```. The programmer intentionally wants an integer conversion and accepts losing the fractional part. Which change is appropriate?",
+      "instructions": "The following assignment does not compile:\n```java\ndouble price = 12.75;\nint whole = price;\n```\nThe programmer intentionally wants an integer conversion and accepts losing the fractional part. Which change is appropriate?",
       "difficulty": "Medium",
       "type": "mcq-single",
       "examEligible": true,
       "provenance": "M2_Variables_Operators.pdf",
       "contentVersion": 3,
       "options": [
-        "```java\\nint whole = (int) price;\\n```",
-        "```java\\nint whole = double price;\\n```",
-        "```java\\ndouble whole = (int) price;\\n```",
-        "```java\\nint whole = price + 0.0;\\n```"
+        "```java\nint whole = (int) price;\n```",
+        "```java\nint whole = double price;\n```",
+        "```java\ndouble whole = (int) price;\n```",
+        "```java\nint whole = price + 0.0;\n```"
       ],
       "expected": [
         0
@@ -396,7 +396,7 @@
       "course": "Programming Fundamentals",
       "category": "Variables, Types, Conversions and Operators",
       "title": "Predicting integer and floating-point division",
-      "instructions": "What values are produced by the following statements, in order? ```java\\nint a = 5;\nint b = 2;\ndouble x = a / b;\ndouble y = (double) a / b;\\n```",
+      "instructions": "What values are produced by the following statements, in order?\n```java\nint a = 5;\nint b = 2;\ndouble x = a / b;\ndouble y = (double) a / b;\n```",
       "difficulty": "Medium",
       "type": "mcq-single",
       "examEligible": true,
@@ -420,7 +420,7 @@
       "course": "Programming Fundamentals",
       "category": "Variables, Types, Conversions and Operators",
       "title": "Understanding truncation when casting",
-      "instructions": "What is the value of `n` after this statement? ```java\\ndouble amount = 8.9;\nint n = (int) amount;\\n```",
+      "instructions": "What is the value of `n` after this statement?\n```java\ndouble amount = 8.9;\nint n = (int) amount;\n```",
       "difficulty": "Easy",
       "type": "mcq-single",
       "examEligible": true,
@@ -468,7 +468,7 @@
       "course": "Programming Fundamentals",
       "category": "Variables, Types, Conversions and Operators",
       "title": "Tracing pre-increment and post-increment",
-      "instructions": "What are the final values of `first`, `second` and `i`? ```java\\nint i = 4;\nint first = i++;\nint second = ++i;\\n```",
+      "instructions": "What are the final values of `first`, `second` and `i`? \n```java\nint i = 4;\nint first = i++;\nint second = ++i;\n```",
       "difficulty": "Hard",
       "type": "mcq-single",
       "examEligible": true,
@@ -492,7 +492,7 @@
       "course": "Programming Fundamentals",
       "category": "Variables, Types, Conversions and Operators",
       "title": "Combining arithmetic and assignment",
-      "instructions": "Starting with ```java\\nint total = 12;\nint step = 5;\\n```, what are the values after ```java\\ntotal += step;\nstep *= 2;\ntotal %= step;\\n```?",
+      "instructions": "Start with these declarations:\n```java\nint total = 12;\nint step = 5;\n```\nThen execute these statements:\n```java\ntotal += step;\nstep *= 2;\ntotal %= step;\n```\nWhat are the resulting values of `total` and `step`?",
       "difficulty": "Hard",
       "type": "mcq-single",
       "examEligible": true,
@@ -572,9 +572,9 @@
       "contentVersion": 3,
       "options": [
         "`!available`",
-        "```java\\navailable == true\\n```",
-        "```java\\navailable || false\\n```",
-        "```java\\navailable && false\\n```"
+        "```java\navailable == true\n```",
+        "```java\navailable || false\n```",
+        "```java\navailable && false\n```"
       ],
       "expected": [
         0
@@ -588,7 +588,7 @@
       "course": "Programming Fundamentals",
       "category": "Variables, Types, Conversions and Operators",
       "title": "Applying operator precedence",
-      "instructions": "What value is assigned to `result`? ```java\\nint result = 2 + 3 * 4;\\n```",
+      "instructions": "What value is assigned to `result`?\n```java\nint result = 2 + 3 * 4;\n```",
       "difficulty": "Easy",
       "type": "mcq-single",
       "examEligible": true,
@@ -667,10 +667,10 @@
       "provenance": "M2_Variables_Operators.pdf",
       "contentVersion": 3,
       "options": [
-        "```java\\nsum += next;\\n```",
-        "```java\\nsum = next;\\n```",
-        "```java\\nsum == next;\\n```",
-        "```java\\nsum + next;\\n```"
+        "```java\nsum += next;\n```",
+        "```java\nsum = next;\n```",
+        "```java\nsum == next;\n```",
+        "```java\nsum + next;\n```"
       ],
       "expected": [
         0
@@ -691,7 +691,7 @@
       "provenance": "M2_Variables_Operators.pdf",
       "contentVersion": 3,
       "options": [
-        "```java\\nchar grade = 'B';\\n```",
+        "```java\nchar grade = 'B';\n```",
         "`String grade = B;",
         "`boolean grade = \"B\";",
         "`int grade = \"B\";"
@@ -715,10 +715,10 @@
       "provenance": "M2_Variables_Operators.pdf",
       "contentVersion": 3,
       "options": [
-        "```java\\nSystem.out.println(\"Welcome to \\\"Java\\\"\");\\n```",
-        "```java\\nSystem.out.println(\"Welcome to \"Java\"\");\\n```",
-        "```java\\nSystem.out.println(Welcome to \"Java\");\\n```",
-        "```java\\nSystem.out.println(\"Welcome to \\nJava\");\\n```"
+        "```java\nSystem.out.println(\"Welcome to \\\"Java\\\"\");\n```",
+        "```java\nSystem.out.println(\"Welcome to \"Java\"\");\n```",
+        "```java\nSystem.out.println(Welcome to \"Java\");\n```",
+        "```java\nSystem.out.println(\"Welcome to \\nJava\");\n```"
       ],
       "expected": [
         0
@@ -739,10 +739,10 @@
       "provenance": "M2_Variables_Operators.pdf",
       "contentVersion": 3,
       "options": [
-        "```java\\nString status = age >= 18 ? \"adult\" : \"minor\";\\n```",
-        "```java\\nString status = if (age >= 18) \"adult\" else \"minor\";\\n```",
-        "```java\\nString status = age >= 18 && \"adult\";\\n```",
-        "```java\\nString status = age >= 18 : \"adult\" ? \"minor\";\\n```"
+        "```java\nString status = age >= 18 ? \"adult\": \"minor\";\n```",
+        "```java\nString status = if (age >= 18) \"adult\" else \"minor\";\n```",
+        "```java\nString status = age >= 18 && \"adult\";\n```",
+        "```java\nString status = age >= 18: \"adult\" ? \"minor\";\n```"
       ],
       "expected": [
         0
@@ -787,7 +787,7 @@
       "provenance": "M2_Variables_Operators.pdf",
       "contentVersion": 3,
       "options": [
-        "Declare one clearly named ```java\\nfinal\\n``` constant and use it in every comparison",
+        "Declare one clearly named `final` constant and use it in every comparison",
         "Copy the numeric value into each comparison so each method is independent",
         "Use a new randomly generated limit in each method",
         "Declare a local variable with a different value in each method"
@@ -798,13 +798,13 @@
       "hints": [
         "Look for a single source of truth that cannot accidentally be changed at runtime."
       ],
-      "explanation": "A shared ```java\\nfinal\\n``` constant avoids duplicated “magic numbers” and keeps all comparisons consistent when the allowed limit changes."
+      "explanation": "A shared `final` constant avoids duplicated “magic numbers” and keeps all comparisons consistent when the allowed limit changes."
     },
     "pfj-034": {
       "course": "Programming Fundamentals",
       "category": "Flow Control, Scope and Functions",
       "title": "Choosing a branch structure for a grade calculation",
-      "instructions": "A program assigns A for scores of at least 90, B for 80–89, C for 70–79, D for 60–69 and E below 60. Which ordering makes an ```java\\nif / else if\\n``` chain work correctly?",
+      "instructions": "A program assigns A for scores of at least 90, B for 80–89, C for 70–79, D for 60–69 and E below 60. Which ordering makes an `if / else if` chain work correctly?",
       "difficulty": "Medium",
       "type": "mcq-single",
       "examEligible": true,
@@ -813,14 +813,14 @@
       "options": [
         "Test thresholds from highest to lowest: 90, 80, 70, 60, then else",
         "Test thresholds from lowest to highest: 60, 70, 80, 90, then else",
-        "Use four independent ```java\\nif\\n``` statements and allow every matching branch to run",
+        "Use four independent `if` statements and allow every matching branch to run",
         "Test only whether the score is greater than zero"
       ],
       "expected": [
         0
       ],
       "hints": [
-        "An ```java\\nelse if\\n``` chain executes the first matching branch, so consider what happens to a score of 95 if the lowest threshold is tested first."
+        "An `else if` chain executes the first matching branch, so consider what happens to a score of 95 if the lowest threshold is tested first."
       ],
       "explanation": "Testing from the highest threshold down ensures that a score such as 95 matches A immediately. If 60 were tested first, every higher score would be classified as E before later tests could run."
     },
@@ -852,7 +852,7 @@
       "course": "Programming Fundamentals",
       "category": "Flow Control, Scope and Functions",
       "title": "Identifying a fall-through bug in switch",
-      "instructions": "What is printed by this code? ```java\\nint choice = 1;\nswitch (choice) { case 1: System.out.print(\"A\");\ncase 2: System.out.print(\"B\");\nbreak;\ndefault: System.out.print(\"C\");\n}\\n```",
+      "instructions": "What is printed by this code?\n```java\nint choice = 1;\nswitch (choice) {\n    case 1:\n        System.out.print(\"A\");\n    case 2:\n        System.out.print(\"B\");\n        break;\n    default:\n        System.out.print(\"C\");\n}\n```",
       "difficulty": "Hard",
       "type": "mcq-single",
       "examEligible": true,
@@ -868,9 +868,9 @@
         0
       ],
       "hints": [
-        "In a traditional switch, follow execution after the first matching label until a ```java\\nbreak\\n``` is reached."
+        "In a traditional switch, follow execution after the first matching label until a `break` is reached."
       ],
-      "explanation": "Case 1 matches and prints A. Because there is no ```java\\nbreak\\n``` after that statement, execution continues into case 2, prints B, and then stops at its ```java\\nbreak\\n```."
+      "explanation": "Case 1 matches and prints A. Because there is no `break` after that statement, execution continues into case 2, prints B, and then stops at its `break`."
     },
     "pfj-037": {
       "course": "Programming Fundamentals",
@@ -883,8 +883,8 @@
       "provenance": "M3_FlowControl_Functions.pdf",
       "contentVersion": 3,
       "options": [
-        "Let the case labels fall through to one shared statement, then use ```java\\nbreak\\n```",
-        "Place a ```java\\nreturn\\n``` after every case label before the output",
+        "Let the case labels fall through to one shared statement, then use `break`",
+        "Place a `return` after every case label before the output",
         "Use a separate switch statement for each month",
         "Omit the case labels and rely on the default branch"
       ],
@@ -894,7 +894,7 @@
       "hints": [
         "Multiple labels can lead to the same sequence of statements when no statement separates them."
       ],
-      "explanation": "Adjacent case labels can share one block. Execution enters at the matched label and continues to the common output until ```java\\nbreak\\n``` exits the switch."
+      "explanation": "Adjacent case labels can share one block. Execution enters at the matched label and continues to the common output until `break` exits the switch."
     },
     "pfj-038": {
       "course": "Programming Fundamentals",
@@ -924,7 +924,7 @@
       "course": "Programming Fundamentals",
       "category": "Flow Control, Scope and Functions",
       "title": "Understanding a switch expression",
-      "instructions": "A method assigns ```java\\nString season = switch (month) { ... };\\n```. Some possible month values are not handled by any listed case. Why must the switch expression provide a result for those remaining values?",
+      "instructions": "A method assigns the result of this switch expression:\n```java\nString season = switch (month) {\n    ...\n};\n```\nSome possible month values are not handled by any listed case. Why must the switch expression provide a result for those remaining values?",
       "difficulty": "Medium",
       "type": "mcq-single",
       "examEligible": true,
@@ -948,17 +948,17 @@
       "course": "Programming Fundamentals",
       "category": "Flow Control, Scope and Functions",
       "title": "Returning a value from a switch block",
-      "instructions": "In a switch expression, one case contains several statements inside ```java\\n{ ... }\\n``` and must produce the String `\"invalid\"` as the expression result. Which construct supplies that value?",
+      "instructions": "In a switch expression, one case contains several statements inside `{ ... }` and must produce the String `\"invalid\"` as the expression result. Which construct supplies that value?",
       "difficulty": "Medium",
       "type": "mcq-single",
       "examEligible": true,
       "provenance": "M3_FlowControl_Functions.pdf",
       "contentVersion": 3,
       "options": [
-        "```java\\nyield \"invalid\";\\n```",
-        "```java\\nbreak \"invalid\";\\n```",
-        "```java\\ncontinue \"invalid\";\\n```",
-        "```java\\nSystem.out.print(\"invalid\");\\n```"
+        "```java\nyield \"invalid\";\n```",
+        "```java\nbreak \"invalid\";\n```",
+        "```java\ncontinue \"invalid\";\n```",
+        "```java\nSystem.out.print(\"invalid\");\n```"
       ],
       "expected": [
         0
@@ -966,7 +966,7 @@
       "hints": [
         "A multi-statement case block in a switch expression needs an explicit value-producing statement."
       ],
-      "explanation": "```java\\nyield\\n``` supplies the value returned by that case block to the switch expression. Printing text is a side effect and does not provide the expression’s result."
+      "explanation": "`yield` supplies the value returned by that case block to the switch expression. Printing text is a side effect and does not provide the expression’s result."
     },
     "pfj-041": {
       "course": "Programming Fundamentals",
@@ -979,10 +979,10 @@
       "provenance": "M3_FlowControl_Functions.pdf",
       "contentVersion": 3,
       "options": [
-        "A ```java\\nwhile\\n``` loop whose condition represents whether the password is still incorrect",
-        "A ```java\\nfor\\n``` loop that always runs exactly ten times",
+        "A `while` loop whose condition represents whether the password is still incorrect",
+        "A `for` loop that always runs exactly ten times",
         "A `do` loop with no condition",
-        "A sequence of ten separate ```java\\nif\\n``` statements"
+        "A sequence of ten separate `if` statements"
       ],
       "expected": [
         0
@@ -990,13 +990,13 @@
       "hints": [
         "Choose a loop whose continuation can be based on a condition rather than a predetermined count."
       ],
-      "explanation": "A ```java\\nwhile\\n``` loop repeats while its condition is true. The number of attempts is data-dependent, so a condition-controlled loop fits the task."
+      "explanation": "A `while` loop repeats while its condition is true. The number of attempts is data-dependent, so a condition-controlled loop fits the task."
     },
     "pfj-042": {
       "course": "Programming Fundamentals",
       "category": "Flow Control, Scope and Functions",
       "title": "Diagnosing an infinite while loop",
-      "instructions": "Why does this loop never finish? ```java\\nint counter = 0;\nwhile (counter < 5) { System.out.println(counter);\n}\\n```",
+      "instructions": "Why does this loop never finish?\n```java\nint counter = 0;\nwhile (counter < 5) {\n    System.out.println(counter);\n}\n```",
       "difficulty": "Medium",
       "type": "mcq-single",
       "examEligible": true,
@@ -1027,9 +1027,9 @@
       "provenance": "M3_FlowControl_Functions.pdf",
       "contentVersion": 3,
       "options": [
-        "```java\\ndo ... while\\n```",
-        "```java\\nwhile\\n```",
-        "A ```java\\nfor\\n``` loop with an initially false condition",
+        "`do ... while`",
+        "`while`",
+        "A `for` loop with an initially false condition",
         "A switch statement"
       ],
       "expected": [
@@ -1038,7 +1038,7 @@
       "hints": [
         "Compare whether the condition is checked before or after the first execution of the body."
       ],
-      "explanation": "A ```java\\ndo ... while\\n``` loop executes its body first and tests its condition afterward, so the menu is shown at least once."
+      "explanation": "A `do ... while` loop executes its body first and tests its condition afterward, so the menu is shown at least once."
     },
     "pfj-044": {
       "course": "Programming Fundamentals",
@@ -1051,10 +1051,10 @@
       "provenance": "M3_FlowControl_Functions.pdf",
       "contentVersion": 3,
       "options": [
-        "```java\\nfor (int i = 1;\ni <= 5;\ni++)\\n```",
-        "```java\\nfor (int i = 1;\ni < 5;\ni++)\\n```",
-        "```java\\nfor (int i = 0;\ni < 5;\ni++)\\n```",
-        "```java\\nfor (int i = 1;\ni >= 5;\ni++)\\n```"
+        "```java\nfor (int i = 1; i <= 5; i++)\n```",
+        "```java\nfor (int i = 1; i < 5; i++)\n```",
+        "```java\nfor (int i = 0; i < 5; i++)\n```",
+        "```java\nfor (int i = 1; i >= 5; i++)\n```"
       ],
       "expected": [
         0
@@ -1068,7 +1068,7 @@
       "course": "Programming Fundamentals",
       "category": "Flow Control, Scope and Functions",
       "title": "Tracing a for loop",
-      "instructions": "What sequence is printed? ```java\\nfor (int i = 2;\ni <= 8;\ni += 2) { System.out.print(i + \" \");\n}\\n```",
+      "instructions": "What sequence is printed?\n```java\nfor (int i = 2; i <= 8; i += 2) {\n    System.out.print(i + \" \");\n}\n```",
       "difficulty": "Medium",
       "type": "mcq-single",
       "examEligible": true,
@@ -1092,17 +1092,17 @@
       "course": "Programming Fundamentals",
       "category": "Flow Control, Scope and Functions",
       "title": "Translating a for loop into while",
-      "instructions": "Which ```java\\nwhile\\n``` loop is equivalent to ```java\\nfor (int i = 0;\ni < 4;\ni++) { System.out.println(i);\n}\\n```?",
+      "instructions": "Which `while` loop is equivalent to\n```java\nfor (int i = 0; i < 4; i++) {\n    System.out.println(i);\n}\n```\n?",
       "difficulty": "Medium",
       "type": "mcq-single",
       "examEligible": true,
       "provenance": "M3_FlowControl_Functions.pdf",
       "contentVersion": 3,
       "options": [
-        "```java\\nint i = 0;\nwhile (i < 4) { System.out.println(i);\ni++;\n}\\n```",
-        "```java\\nint i = 0;\nwhile (i <= 4) { System.out.println(i);\n}\\n```",
-        "```java\\nint i = 0;\nwhile (i < 4) { i++;\nSystem.out.println(i);\n}\\n```",
-        "```java\\nwhile (int i = 0;\ni < 4;\ni++) { System.out.println(i);\n}\\n```"
+        "```java\nint i = 0;\nwhile (i < 4) {\n    System.out.println(i);\n    i++;\n}\n```",
+        "```java\nint i = 0;\nwhile (i <= 4) {\n    System.out.println(i);\n}\n```",
+        "```java\nint i = 0;\nwhile (i < 4) {\n    i++;\n    System.out.println(i);\n}\n```",
+        "```java\nwhile (int i = 0; i < 4; i++) {\n    System.out.println(i);\n}\n```"
       ],
       "expected": [
         0
@@ -1116,7 +1116,7 @@
       "course": "Programming Fundamentals",
       "category": "Flow Control, Scope and Functions",
       "title": "Distinguishing break from continue",
-      "instructions": "What is printed by this code? ```java\\nfor (int i = 1;\ni <= 5;\ni++) { if (i == 3) continue;\nif (i == 5) break;\nSystem.out.print(i);\n}\\n```",
+      "instructions": "What is printed by this code?\n```java\nfor (int i = 1; i <= 5; i++) {\n    if (i == 3) continue;\n    if (i == 5) break;\n    System.out.print(i);\n}\n```",
       "difficulty": "Hard",
       "type": "mcq-single",
       "examEligible": true,
@@ -1132,22 +1132,22 @@
         0
       ],
       "hints": [
-        "```java\\ncontinue\\n``` skips the rest of the current iteration; ```java\\nbreak\\n``` exits the loop entirely."
+        "`continue` skips the rest of the current iteration; `break` exits the loop entirely."
       ],
-      "explanation": "At i=1 and i=2 the values are printed. At i=3, ```java\\ncontinue\\n``` skips the print. At i=4 it prints 4. At i=5, ```java\\nbreak\\n``` exits before printing, giving `124`."
+      "explanation": "At i=1 and i=2 the values are printed. At i=3, `continue` skips the print. At i=4 it prints 4. At i=5, `break` exits before printing, giving `124`."
     },
     "pfj-048": {
       "course": "Programming Fundamentals",
       "category": "Flow Control, Scope and Functions",
       "title": "Understanding variable scope in nested blocks",
-      "instructions": "Consider: ```java\\nint total = 10;\nif (total > 0) { int bonus = 5;\nSystem.out.println(total + bonus);\n} System.out.println(total);\\n``` Which statement is valid?",
+      "instructions": "Consider:\n```java\nint total = 10;\nif (total > 0) {\n    int bonus = 5;\n    System.out.println(total + bonus);\n}\nSystem.out.println(total);\n```\nWhich statement is valid?",
       "difficulty": "Medium",
       "type": "mcq-single",
       "examEligible": true,
       "provenance": "M3_FlowControl_Functions.pdf",
       "contentVersion": 3,
       "options": [
-        "Both print statements compile; `bonus` is available only inside the ```java\\nif\\n``` block",
+        "Both print statements compile; `bonus` is available only inside the `if` block",
         "The second print statement can use both `total` and `bonus`",
         "The first print statement cannot use `total` because it was declared outside the block",
         "The declaration of `bonus` changes the value of `total`"
@@ -1158,22 +1158,22 @@
       "hints": [
         "A variable declared in an outer block can be used in a nested block; a variable declared in the nested block does not escape it."
       ],
-      "explanation": "`total` is declared in the method block and is visible inside and after the ```java\\nif\\n```. `bonus` is local to the ```java\\nif\\n``` block, so it can be used in the first print but not outside that block."
+      "explanation": "`total` is declared in the method block and is visible inside and after the `if`. `bonus` is local to the `if` block, so it can be used in the first print but not outside that block."
     },
     "pfj-049": {
       "course": "Programming Fundamentals",
       "category": "Flow Control, Scope and Functions",
       "title": "Fixing a scope error",
-      "instructions": "A method declares ```java\\nint result = 0;\\n``` inside an ```java\\nif\\n``` block but tries to return `result` after the closing brace of that block. What is the simplest structural fix?",
+      "instructions": "A method declares\n```java\nint result = 0;\n```\ninside an `if` block but tries to return `result` after the closing brace of that block. What is the simplest structural fix?",
       "difficulty": "Medium",
       "type": "mcq-single",
       "examEligible": true,
       "provenance": "M3_FlowControl_Functions.pdf",
       "contentVersion": 3,
       "options": [
-        "Declare `result` in an enclosing block before the ```java\\nif\\n```, then assign it inside the ```java\\nif\\n```",
-        "Move the ```java\\nreturn\\n``` statement to a different class without changing the variable",
-        "Declare `result` again after the ```java\\nif\\n``` and expect the inner value to carry over",
+        "Declare `result` in an enclosing block before the `if`, then assign it inside the `if`",
+        "Move the `return` statement to a different class without changing the variable",
+        "Declare `result` again after the `if` and expect the inner value to carry over",
         "Change the variable type from `int` to `double`"
       ],
       "expected": [
@@ -1182,13 +1182,13 @@
       "hints": [
         "The variable must be declared in a scope that includes both the assignment and the return statement."
       ],
-      "explanation": "The return statement cannot see a variable declared only inside the ```java\\nif\\n``` block. Declaring it in the enclosing method block makes it visible both inside the conditional and at the return point."
+      "explanation": "The return statement cannot see a variable declared only inside the `if` block. Declaring it in the enclosing method block makes it visible both inside the conditional and at the return point."
     },
     "pfj-050": {
       "course": "Programming Fundamentals",
       "category": "Flow Control, Scope and Functions",
       "title": "Using separate blocks for separate local variables",
-      "instructions": "A method contains two separate ```java\\nif\\n``` blocks. Each block declares a local variable named `message`, and neither block uses the other block’s variable. Why can these declarations coexist?",
+      "instructions": "A method contains two separate `if` blocks. Each block declares a local variable named `message`, and neither block uses the other block’s variable. Why can these declarations coexist?",
       "difficulty": "Medium",
       "type": "mcq-single",
       "examEligible": true,
@@ -1244,7 +1244,7 @@
       "contentVersion": 3,
       "options": [
         "A method with return type `double` that returns the calculated average",
-        "A method with return type ```java\\nvoid\\n``` that only prints the average",
+        "A method with return type `void` that only prints the average",
         "A method with no parameters that always returns 0",
         "A method with return type `String` that changes the caller’s variables"
       ],
@@ -1254,7 +1254,7 @@
       "hints": [
         "The caller needs a value it can assign and use in later calculations."
       ],
-      "explanation": "The method should return a `double`, because the average is a numeric result that the caller must receive. A ```java\\nvoid\\n``` method performs an action but does not produce a value for assignment."
+      "explanation": "The method should return a `double`, because the average is a numeric result that the caller must receive. A `void` method performs an action but does not produce a value for assignment."
     },
     "pfj-053": {
       "course": "Programming Fundamentals",
@@ -1267,7 +1267,7 @@
       "provenance": "M3_FlowControl_Functions.pdf",
       "contentVersion": 3,
       "options": [
-        "```java\\nvoid\\n```",
+        "`void`",
         "`int`",
         "`double`",
         "`boolean`"
@@ -1278,7 +1278,7 @@
       "hints": [
         "Choose a return type based on whether the method must give a value back to its caller."
       ],
-      "explanation": "The method only performs output and has no result to return. ```java\\nvoid\\n``` expresses that contract; the other types would require a value of the corresponding type."
+      "explanation": "The method only performs output and has no result to return. `void` expresses that contract; the other types would require a value of the corresponding type."
     },
     "pfj-054": {
       "course": "Programming Fundamentals",
@@ -1291,10 +1291,10 @@
       "provenance": "M3_FlowControl_Functions.pdf",
       "contentVersion": 3,
       "options": [
-        "```java\\ndouble doubled = average(a, b, c) * 2;\\n```",
-        "```java\\ndouble doubled = printAverage(a, b, c) * 2;\\n``` where `printAverage` returns void",
-        "```java\\naverage(a, b, c) = 2;\\n```",
-        "```java\\nSystem.out.println(void);\\n```"
+        "```java\ndouble doubled = average(a, b, c) * 2;\n```",
+        "```java\ndouble doubled = printAverage(a, b, c) * 2;\n```\nwhere `printAverage` returns void",
+        "```java\naverage(a, b, c) = 2;\n```",
+        "```java\nSystem.out.println(void);\n```"
       ],
       "expected": [
         0
@@ -1356,7 +1356,7 @@
       "course": "Programming Fundamentals",
       "category": "Objects, References, Random, Strings and Formatting",
       "title": "Creating distinct object instances",
-      "instructions": "A program creates ```java\\nRandom first = new Random(10);\\n``` and ```java\\nRandom second = new Random(10);\\n```. Which statement best describes the two variables?",
+      "instructions": "A program creates two variables with these declarations:\n```java\nRandom first = new Random(10);\nRandom second = new Random(10);\n```\nWhich statement best describes the two variables?",
       "difficulty": "Medium",
       "type": "mcq-single",
       "examEligible": true,
@@ -1372,9 +1372,9 @@
         0
       ],
       "hints": [
-        "Each execution of ```java\\nnew\\n``` creates an object; a seed controls the generated sequence, not object identity."
+        "Each execution of `new` creates an object; a seed controls the generated sequence, not object identity."
       ],
-      "explanation": "Each ```java\\nnew Random(10)\\n``` call creates a distinct object. Because the seeds are equal, each instance produces the same pseudo-random sequence, but the references point to separate objects."
+      "explanation": "Each `new Random(10)` call creates a distinct object. Because the seeds are equal, each instance produces the same pseudo-random sequence, but the references point to separate objects."
     },
     "pfj-058": {
       "course": "Programming Fundamentals",
@@ -1452,7 +1452,7 @@
       "course": "Programming Fundamentals",
       "category": "Objects, References, Random, Strings and Formatting",
       "title": "Understanding shared object references",
-      "instructions": "After ```java\\nPlayer p1 = new Player(\"Ada\", 3);\nPlayer p2 = p1;\np1.extraLife();\\n```, what does `p2.getLives()` return, assuming `extraLife()` adds one life to the player?",
+      "instructions": "After executing these statements:\n```java\nPlayer p1 = new Player(\"Ada\", 3);\nPlayer p2 = p1;\np1.extraLife();\n```\nwhat does `p2.getLives()` return, assuming `extraLife()` adds one life to the player?",
       "difficulty": "Medium",
       "type": "mcq-single",
       "examEligible": true,
@@ -1476,7 +1476,7 @@
       "course": "Programming Fundamentals",
       "category": "Objects, References, Random, Strings and Formatting",
       "title": "Contrasting primitive and reference assignment",
-      "instructions": "Consider ```java\\nint a = 7;\nint b = a;\na++;\\n```. What is the value of `b` afterward, and why?",
+      "instructions": "Consider this code:\n```java\nint a = 7;\nint b = a;\na++;\n```\nWhat is the value of `b` afterward, and why?",
       "difficulty": "Medium",
       "type": "mcq-single",
       "examEligible": true,
@@ -1531,7 +1531,7 @@
       "provenance": "M4_OO_Programming_Objects.pdf",
       "contentVersion": 3,
       "options": [
-        "Add ```java\\nimport java.util.Random;\\n``` and then use `Random`",
+        "Add\n```java\nimport java.util.Random;\n```\nand then use `Random`",
         "Use `Random` without importing it and without a package qualification",
         "Declare a local variable named `java.util`",
         "Put the import statement inside the constructor body"
@@ -1548,7 +1548,7 @@
       "course": "Programming Fundamentals",
       "category": "Objects, References, Random, Strings and Formatting",
       "title": "Understanding String immutability",
-      "instructions": "What is printed? ```java\\nString word = \"cat\";\nword.concat(\"fish\");\nSystem.out.println(word);\\n```",
+      "instructions": "What is printed?\n```java\nString word = \"cat\";\nword.concat(\"fish\");\nSystem.out.println(word);\n```",
       "difficulty": "Medium",
       "type": "mcq-single",
       "examEligible": true,
@@ -1572,17 +1572,17 @@
       "course": "Programming Fundamentals",
       "category": "Objects, References, Random, Strings and Formatting",
       "title": "Keeping the result of a String operation",
-      "instructions": "Suppose ```java\\nString word = \"cat\";\\n```. The program wants to keep `word` unchanged and also store the result of adding `\"fish\"`. Which statement creates the new result?",
+      "instructions": "Suppose `word` is initialized as follows:\n```java\nString word = \"cat\";\n```\nThe program wants to keep `word` unchanged and also store the result of adding `\"fish\"`. Which statement creates the new result?",
       "difficulty": "Medium",
       "type": "mcq-single",
       "examEligible": true,
       "provenance": "M4_OO_Programming_Objects.pdf",
       "contentVersion": 3,
       "options": [
-        "```java\\nString combined = word.concat(\"fish\");\\n```",
-        "```java\\nword.concat(\"fish\");\\n```",
-        "```java\\nword = word.length();\\n```",
-        "```java\\nString combined = word.length();\\n```"
+        "```java\nString combined = word.concat(\"fish\");\n```",
+        "```java\nword.concat(\"fish\");\n```",
+        "```java\nword = word.length();\n```",
+        "```java\nString combined = word.length();\n```"
       ],
       "expected": [
         0
@@ -1620,7 +1620,7 @@
       "course": "Programming Fundamentals",
       "category": "Objects, References, Random, Strings and Formatting",
       "title": "Predicting String reference comparisons",
-      "instructions": "Consider ```java\\nString a = \"abc\";\nString b = \"abc\";\nString c = new String(\"abc\");\\n```. Which statement is correct?",
+      "instructions": "Consider these declarations:\n```java\nString a = \"abc\";\nString b = \"abc\";\nString c = new String(\"abc\");\n```\nWhich statement is correct?",
       "difficulty": "Hard",
       "type": "mcq-single",
       "examEligible": true,
@@ -1628,7 +1628,7 @@
       "contentVersion": 3,
       "options": [
         "`a.equals(c)` is true even though `a == c` is false",
-        "`a.equals(c)` is false because `c` was created with ```java\\nnew\\n```",
+        "`a.equals(c)` is false because `c` was created with `new`",
         "`a == c` must be true because the contents match",
         "All three variables must refer to separate objects"
       ],
@@ -1638,7 +1638,7 @@
       "hints": [
         "Use `equals` for the text and `==` for reference identity."
       ],
-      "explanation": "The explicit ```java\\nnew String\\n``` creates a distinct object, so `a == c` is false. Their characters are the same, so `a.equals(c)` is true."
+      "explanation": "The explicit `new String` creates a distinct object, so `a == c` is false. Their characters are the same, so `a.equals(c)` is true."
     },
     "pfj-069": {
       "course": "Programming Fundamentals",
@@ -1668,7 +1668,7 @@
       "course": "Programming Fundamentals",
       "category": "Objects, References, Random, Strings and Formatting",
       "title": "Fixing the Scanner nextInt-nextLine issue",
-      "instructions": "A program reads an age with ```java\\nint age = keyboard.nextInt();\\n``` and immediately reads a name with ```java\\nString name = keyboard.nextLine();\\n```. The name is unexpectedly empty. What is the appropriate fix?",
+      "instructions": "A program reads an age and then a name:\n```java\nint age = keyboard.nextInt();\nString name = keyboard.nextLine();\n```\nThe name is unexpectedly empty. What is the appropriate fix?",
       "difficulty": "Medium",
       "type": "mcq-single",
       "examEligible": true,
@@ -1716,7 +1716,7 @@
       "course": "Programming Fundamentals",
       "category": "Objects, References, Random, Strings and Formatting",
       "title": "Tracing chained StringBuilder calls",
-      "instructions": "What text is printed? ```java\\nStringBuilder builder = new StringBuilder(\"A\");\nbuilder.append(\"B\").append(\"C\");\nSystem.out.println(builder);\\n```",
+      "instructions": "What text is printed?\n```java\nStringBuilder builder = new StringBuilder(\"A\");\nbuilder.append(\"B\").append(\"C\");\nSystem.out.println(builder);\n```",
       "difficulty": "Easy",
       "type": "mcq-single",
       "examEligible": true,
@@ -1740,7 +1740,7 @@
       "course": "Programming Fundamentals",
       "category": "Objects, References, Random, Strings and Formatting",
       "title": "Predicting StringBuilder reverse",
-      "instructions": "What is printed? ```java\\nStringBuilder builder = new StringBuilder(\"drawer\");\nbuilder.reverse();\nSystem.out.println(builder);\\n```",
+      "instructions": "What is printed?\n```java\nStringBuilder builder = new StringBuilder(\"drawer\");\nbuilder.reverse();\nSystem.out.println(builder);\n```",
       "difficulty": "Easy",
       "type": "mcq-single",
       "examEligible": true,
@@ -1764,7 +1764,7 @@
       "course": "Programming Fundamentals",
       "category": "Objects, References, Random, Strings and Formatting",
       "title": "Understanding left-to-right String concatenation",
-      "instructions": "What is printed by ```java\\nSystem.out.println(3 + 7 + \" items \" + 3 + 7);\\n```?",
+      "instructions": "What is printed by this statement?\n```java\nSystem.out.println(3 + 7 + \" items \" + 3 + 7);\n```",
       "difficulty": "Hard",
       "type": "mcq-single",
       "examEligible": true,
@@ -1796,9 +1796,9 @@
       "contentVersion": 3,
       "options": [
         "`String.format(...)`",
-        "```java\\nSystem.out.printf(...)\\n```",
-        "```java\\nSystem.out.format(...)\\n```",
-        "```java\\nSystem.out.println(...)\\n```"
+        "```java\nSystem.out.printf(...)\n```",
+        "```java\nSystem.out.format(...)\n```",
+        "```java\nSystem.out.println(...)\n```"
       ],
       "expected": [
         0
@@ -1806,7 +1806,7 @@
       "hints": [
         "Distinguish methods that display output from the method that returns a String value."
       ],
-      "explanation": "`String.format` creates and returns a formatted String object. `printf` and `format` on ```java\\nSystem.out\\n``` write formatted output to the console."
+      "explanation": "`String.format` creates and returns a formatted String object. `printf` and `format` on `System.out` write formatted output to the console."
     },
     "pfj-076": {
       "course": "Programming Fundamentals",
@@ -1908,7 +1908,7 @@
       "course": "Programming Fundamentals",
       "category": "Classes, Attributes, Methods, Constructors and Math",
       "title": "Understanding private attribute access",
-      "instructions": "A field ```java\\nprivate int speed;\\n``` is declared in class `Car`. A separate application class creates a Car object and tries to read `myCar.speed`. What should happen?",
+      "instructions": "A field\n```java\nprivate int speed;\n```\nis declared in class `Car`. A separate application class creates a Car object and tries to read `myCar.speed`. What should happen?",
       "difficulty": "Medium",
       "type": "mcq-single",
       "examEligible": true,
@@ -1932,7 +1932,7 @@
       "course": "Programming Fundamentals",
       "category": "Classes, Attributes, Methods, Constructors and Math",
       "title": "Distinguishing field defaults from local variables",
-      "instructions": "A class declares ```java\\nprivate int count;\\n``` and a method declares ```java\\nint result;\\n``` without assigning either variable. Which statement is correct?",
+      "instructions": "A class declares\n```java\nprivate int count;\n```\nand a method declares\n```java\nint result;\n```\nwithout assigning either variable. Which statement is correct?",
       "difficulty": "Medium",
       "type": "mcq-single",
       "examEligible": true,
@@ -1956,7 +1956,7 @@
       "course": "Programming Fundamentals",
       "category": "Classes, Attributes, Methods, Constructors and Math",
       "title": "Avoiding a null reference failure",
-      "instructions": "A field is declared as ```java\\nprivate String name;\\n``` and is never assigned a String object. The constructor then calls `name.length()`. What is the likely runtime result?",
+      "instructions": "A field is declared as\n```java\nprivate String name;\n```\nand is never assigned a String object. The constructor then calls `name.length()`. What is the likely runtime result?",
       "difficulty": "Medium",
       "type": "mcq-single",
       "examEligible": true,
@@ -1974,13 +1974,13 @@
       "hints": [
         "An object reference field has a default value; consider whether that value supports method calls."
       ],
-      "explanation": "Object-reference attributes default to ```java\\nnull\\n```, not to an empty String. Calling an instance method through a null reference causes a `NullPointerException`."
+      "explanation": "Object-reference attributes default to `null`, not to an empty String. Calling an instance method through a null reference causes a `NullPointerException`."
     },
     "pfj-083": {
       "course": "Programming Fundamentals",
       "category": "Classes, Attributes, Methods, Constructors and Math",
       "title": "Using this to access a shadowed attribute",
-      "instructions": "A class contains ```java\\nprivate int width = 10;\\n``` and a method ```java\\npublic void setWidth(int width) { width = width;\n}\\n```. Why does this method fail to update the object’s attribute?",
+      "instructions": "A class contains the following field and method:\n```java\nprivate int width = 10;\npublic void setWidth(int width) {\n    width = width;\n}\n```\nWhy does this method fail to update the object’s attribute?",
       "difficulty": "Medium",
       "type": "mcq-single",
       "examEligible": true,
@@ -2011,10 +2011,10 @@
       "provenance": "M5_Classes.pdf",
       "contentVersion": 3,
       "options": [
-        "```java\\npublic void setX(int x) { this.x = x;\n}\\n```",
-        "```java\\npublic void setX(int x) { x = this;\n}\\n```",
-        "```java\\npublic int setX(int x) { this = x;\n}\\n```",
-        "```java\\npublic void setX(int x) { int x = this.x;\n}\\n```"
+        "```java\npublic void setX(int x) {\n    this.x = x;\n}\n```",
+        "```java\npublic void setX(int x) {\n    x = this;\n}\n```",
+        "```java\npublic int setX(int x) {\n    this = x;\n}\n```",
+        "```java\npublic void setX(int x) {\n    int x = this.x;\n}\n```"
       ],
       "expected": [
         0
@@ -2076,17 +2076,17 @@
       "course": "Programming Fundamentals",
       "category": "Classes, Attributes, Methods, Constructors and Math",
       "title": "Using a method return value correctly",
-      "instructions": "A method `getWidth()` returns an `int`, while `setWidth(int width)` returns ```java\\nvoid\\n```. Which statement is valid?",
+      "instructions": "A method `getWidth()` returns an `int`, while `setWidth(int width)` returns `void`. Which statement is valid?",
       "difficulty": "Medium",
       "type": "mcq-single",
       "examEligible": true,
       "provenance": "M5_Classes.pdf",
       "contentVersion": 3,
       "options": [
-        "```java\\nint current = rect.getWidth();\\n```",
-        "```java\\nint current = rect.setWidth(5);\\n```",
-        "```java\\nSystem.out.println(rect.setWidth(5));\\n```",
-        "```java\\nrect.getWidth() = 5;\\n```"
+        "```java\nint current = rect.getWidth();\n```",
+        "```java\nint current = rect.setWidth(5);\n```",
+        "```java\nSystem.out.println(rect.setWidth(5));\n```",
+        "```java\nrect.getWidth() = 5;\n```"
       ],
       "expected": [
         0
@@ -2107,10 +2107,10 @@
       "provenance": "M5_Classes.pdf",
       "contentVersion": 3,
       "options": [
-        "```java\\npublic void report(String unit)\\n```",
-        "```java\\npublic int report()\\n``` with no parameters",
-        "```java\\nprivate void report()\\n``` with no parameters and the same signature",
-        "```java\\npublic void report(String unit, int speed)\\n``` replacing the original method"
+        "```java\npublic void report(String unit)\n```",
+        "```java\npublic int report()\n```\nwith no parameters",
+        "```java\nprivate void report()\n```\nwith no parameters and the same signature",
+        "```java\npublic void report(String unit, int speed)\n```\nreplacing the original method"
       ],
       "expected": [
         0
@@ -2124,7 +2124,7 @@
       "course": "Programming Fundamentals",
       "category": "Classes, Attributes, Methods, Constructors and Math",
       "title": "Understanding constructor availability",
-      "instructions": "A class `Point` initially declares no constructors. A programmer later adds only `Point(double x, double y)`. Which statement about ```java\\nnew Point()\\n``` is correct?",
+      "instructions": "A class `Point` initially declares no constructors. A programmer later adds only `Point(double x, double y)`. Which statement about `new Point()` is correct?",
       "difficulty": "Medium",
       "type": "mcq-single",
       "examEligible": true,
@@ -2142,7 +2142,7 @@
       "hints": [
         "The compiler supplies a no-argument default constructor only when the class declares no constructor at all."
       ],
-      "explanation": "Once a constructor is declared, Java no longer generates the automatic no-argument default constructor. The class must explicitly declare `Point()` if clients should still be able to call ```java\\nnew Point()\\n```."
+      "explanation": "Once a constructor is declared, Java no longer generates the automatic no-argument default constructor. The class must explicitly declare `Point()` if clients should still be able to call `new Point()`."
     },
     "pfj-090": {
       "course": "Programming Fundamentals",
@@ -2172,7 +2172,7 @@
       "course": "Programming Fundamentals",
       "category": "Classes, Attributes, Methods, Constructors and Math",
       "title": "Preventing invalid state during construction",
-      "instructions": "A Car constructor currently assigns its speed parameter directly, so ```java\\nnew Car(-1000)\\n``` creates an invalid object. The class already has a setter that checks the allowed speed range. What is the best change?",
+      "instructions": "A Car constructor currently assigns its speed parameter directly, so `new Car(-1000)` creates an invalid object. The class already has a setter that checks the allowed speed range. What is the best change?",
       "difficulty": "Medium",
       "type": "mcq-single",
       "examEligible": true,
@@ -2203,10 +2203,10 @@
       "provenance": "M5_Classes.pdf",
       "contentVersion": 3,
       "options": [
-        "```java\\npublic Circle() { this(1.0);\n}\\n```",
-        "```java\\npublic Circle() { Circle(1.0);\n}\\n```",
-        "```java\\npublic Circle() { return this(1.0);\n}\\n```",
-        "```java\\npublic Circle() { this.radius = this(1.0);\n}\\n```"
+        "```java\npublic Circle() {\n    this(1.0);\n}\n```",
+        "```java\npublic Circle() {\n    Circle(1.0);\n}\n```",
+        "```java\npublic Circle() {\n    return this(1.0);\n}\n```",
+        "```java\npublic Circle() {\n    this.radius = this(1.0);\n}\n```"
       ],
       "expected": [
         0
@@ -2220,7 +2220,7 @@
       "course": "Programming Fundamentals",
       "category": "Classes, Attributes, Methods, Constructors and Math",
       "title": "Recognising constructor delegation order",
-      "instructions": "A constructor contains ```java\\nSystem.out.println(\"starting\");\nthis(5);\\n```. Why is this structure invalid?",
+      "instructions": "A constructor contains these statements:\n```java\nSystem.out.println(\"starting\");\nthis(5);\n```\nWhy is this structure invalid?",
       "difficulty": "Medium",
       "type": "mcq-single",
       "examEligible": true,
@@ -2268,7 +2268,7 @@
       "course": "Programming Fundamentals",
       "category": "Classes, Attributes, Methods, Constructors and Math",
       "title": "Understanding the default toString result",
-      "instructions": "A class has no custom `toString()` method. A program executes ```java\\nSystem.out.println(myObject);\\n```. What kind of output should the programmer expect from the inherited default implementation?",
+      "instructions": "A class has no custom `toString()` method. A program executes this statement:\n```java\nSystem.out.println(myObject);\n```\nWhat kind of output should the programmer expect from the inherited default implementation?",
       "difficulty": "Medium",
       "type": "mcq-single",
       "examEligible": true,
@@ -2292,7 +2292,7 @@
       "course": "Programming Fundamentals",
       "category": "Classes, Attributes, Methods, Constructors and Math",
       "title": "Predicting output after overriding toString",
-      "instructions": "A class `Guide` defines ```java\\npublic String toString() { return \"Answer: \" + answer;\n}\\n```. The field `answer` is 42. What does ```java\\nSystem.out.println(guide);\\n``` display?",
+      "instructions": "A class `Guide` defines this method:\n```java\npublic String toString() {\n    return \"Answer: \" + answer;\n}\n```\nThe field `answer` is 42. What does this statement display?\n```java\nSystem.out.println(guide);\n```",
       "difficulty": "Medium",
       "type": "mcq-single",
       "examEligible": true,
@@ -2325,7 +2325,7 @@
       "options": [
         "`Math.abs(x)`, `Math.sqrt(y)`, `Math.pow(a, b)`",
         "`Math.min(x)`, `Math.length(y)`, `Math.add(a, b)`",
-        "```java\\nnew Math(x)\\n```, `Math.reverse(y)`, `Math.pow(a)`",
+        "`new Math(x)`, `Math.reverse(y)`, `Math.pow(a)`",
         "`Math.toString(x)`, `Math.random(y)`, `Math.square(a, b)`"
       ],
       "expected": [
@@ -2364,7 +2364,7 @@
       "course": "Programming Fundamentals",
       "category": "Classes, Attributes, Methods, Constructors and Math",
       "title": "Separating a local variable from an attribute",
-      "instructions": "A class has ```java\\nprivate int number = 42;\\n```. Its method declares ```java\\nint number = 7;\\n``` and then prints `number` followed by `this.number`. What is printed?",
+      "instructions": "A class has the following field:\n```java\nprivate int number = 42;\n```\nIts method declares this local variable:\n```java\nint number = 7;\n```\nThe method then prints `number` followed by `this.number`. What is printed?",
       "difficulty": "Medium",
       "type": "mcq-single",
       "examEligible": true,
@@ -2545,15 +2545,15 @@
       "course": "Programming Fundamentals",
       "category": "Objects, References, Random, Strings and Formatting",
       "title": "Using String methods to validate a code",
-      "instructions": "What is the value of `valid`? ```java\\nString code = \"A7Q\";\nboolean valid = code.length() == 3 && code.charAt(0) == 'A';\\n```",
+      "instructions": "What is the value of `valid`?\n```java\nString code = \"A7Q\";\nboolean valid = code.length() == 3 && code.charAt(0) == 'A';\n```",
       "difficulty": "Medium",
       "type": "mcq-single",
       "examEligible": true,
       "provenance": "M4_OO_Programming_Objects.pdf",
       "contentVersion": 3,
       "options": [
-        "```java\\ntrue\\n```",
-        "```java\\nfalse\\n```",
+        "`true`",
+        "`false`",
         "`3`",
         "The expression does not compile because `charAt` returns a String"
       ],
@@ -2629,9 +2629,9 @@
       "contentVersion": 3,
       "options": [
         "Declare the field with no accessibility modifier (package access)",
-        "Declare the field ```java\\nprivate\\n```",
-        "Declare the field ```java\\npublic\\n```",
-        "Declare the field ```java\\nprotected\\n```"
+        "Declare the field `private`",
+        "Declare the field `public`",
+        "Declare the field `protected`"
       ],
       "expected": [
         0
@@ -2645,7 +2645,7 @@
       "course": "Programming Fundamentals",
       "category": "Classes, Attributes, Methods, Constructors and Math",
       "title": "Matching a public class to its source file",
-      "instructions": "A source file is named `Shape.java`, but its public top-level class is declared as ```java\\npublic class Rectangle\\n```. What must be corrected for the code to follow the Java file-naming rule taught in the course?",
+      "instructions": "A source file is named `Shape.java`, but its public top-level class is declared as follows:\n```java\npublic class Rectangle\n```\nWhat must be corrected for the code to follow the Java file-naming rule taught in the course?",
       "difficulty": "Medium",
       "type": "mcq-single",
       "examEligible": true,
@@ -2655,7 +2655,7 @@
         "Rename the file to `Rectangle.java`",
         "Rename the class to `ShapeApp` regardless of the file name",
         "Move the class declaration into the main method",
-        "Change ```java\\npublic\\n``` to ```java\\nprivate\\n``` on the class"
+        "Change `public` to `private` on the class"
       ],
       "expected": [
         0
@@ -2676,10 +2676,10 @@
       "provenance": "M4_OO_Programming_Objects.pdf",
       "contentVersion": 3,
       "options": [
-        "```java\\nSystem.out.printf(\"%d%% VAT\", 21);\\n```",
-        "```java\\nSystem.out.printf(\"%d% VAT\", 21);\\n```",
-        "```java\\nSystem.out.printf(\"%%d VAT\", 21);\\n```",
-        "```java\\nSystem.out.printf(\"%s VAT\", 21);\\n```"
+        "```java\nSystem.out.printf(\"%d%% VAT\", 21);\n```",
+        "```java\nSystem.out.printf(\"%d% VAT\", 21);\n```",
+        "```java\nSystem.out.printf(\"%%d VAT\", 21);\n```",
+        "```java\nSystem.out.printf(\"%s VAT\", 21);\n```"
       ],
       "expected": [
         0
@@ -2701,7 +2701,7 @@
       "contentVersion": 3,
       "options": [
         "`Math.PI` and `Math.max(first, second)`",
-        "```java\\nnew Math().PI\\n``` and `Math.larger(first, second)`",
+        "`new Math().PI` and `Math.larger(first, second)`",
         "`Math.pi()` and `Math.maximum(first, second)`",
         "`PI.Math` and `Math.max()`"
       ],
@@ -2717,7 +2717,7 @@
       "course": "Programming Fundamentals",
       "category": "Objects, References, Random, Strings and Formatting",
       "title": "Simulating a coin toss",
-      "instructions": "A program must simulate a fair coin toss and store the result as a boolean. Which code can directly produce ```java\\ntrue\\n``` or ```java\\nfalse\\n``` with equal probability?",
+      "instructions": "A program must simulate a fair coin toss and store the result as a boolean. Which code can directly produce `true` or `false` with equal probability?",
       "difficulty": "Medium",
       "type": "mcq-single",
       "examEligible": true,
@@ -2789,17 +2789,17 @@
       "course": "Programming Fundamentals",
       "category": "Classes, Attributes, Methods, Constructors and Math",
       "title": "Predicting default values for several attributes",
-      "instructions": "A class declares ```java\\ndouble price;\nboolean active;\nString name;\\n``` and does not assign values in its constructor. What are the initial values of these attributes?",
+      "instructions": "A class declares\n```java\ndouble price;\nboolean active;\nString name;\n```\nand does not assign values in its constructor. What are the initial values of these attributes?",
       "difficulty": "Medium",
       "type": "mcq-single",
       "examEligible": true,
       "provenance": "M5_Classes.pdf",
       "contentVersion": 3,
       "options": [
-        "`0.0`, ```java\\nfalse\\n```, ```java\\nnull\\n```",
-        "`0`, ```java\\ntrue\\n```, `\"\"`",
-        "```java\\nnull\\n```, ```java\\nfalse\\n```, ```java\\nnull\\n```",
-        "`0.0`, ```java\\nnull\\n```, ```java\\nfalse\\n```"
+        "`0.0`, `false`, `null`",
+        "`0`, `true`, `\"\"`",
+        "`null`, `false`, `null`",
+        "`0.0`, `null`, `false`"
       ],
       "expected": [
         0
@@ -2813,7 +2813,7 @@
       "course": "Programming Fundamentals",
       "category": "Classes, Attributes, Methods, Constructors and Math",
       "title": "Using Math.min for a lower bound",
-      "instructions": "A program must select the smaller of two measurements without writing an ```java\\nif\\n``` statement. Which call does that directly?",
+      "instructions": "A program must select the smaller of two measurements without writing an `if` statement. Which call does that directly?",
       "difficulty": "Medium",
       "type": "mcq-single",
       "examEligible": true,

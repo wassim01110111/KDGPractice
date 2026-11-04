@@ -3310,10 +3310,9 @@ function qView(
       inp = h(
         "div",
         { class: "answer-options" },
-        optionOrder.map((i) =>
-          h(
-            "label",
-            {},
+        optionOrder.map((i) => {
+          const label = h("label", { class: "stmt" });
+          label.append(
             h("input", {
               type: multi ? "checkbox" : "radio",
               name: keyOf(ex),
@@ -3325,9 +3324,12 @@ function qView(
                 updateAnswer([...s]);
               },
             }),
-            " " + ex.options[i],
-          ),
-        ),
+          );
+          // Render MCQ options exactly like exercise statements: Markdown,
+          // sanitized HTML, and the shared language syntax highlighter.
+          renderExerciseInstructions(label, ex.options[i]);
+          return label;
+        }),
       );
       focusTarget = inp.querySelector("input");
       readAns = () => get() || [];
@@ -4233,11 +4235,11 @@ function md(src) {
       continue;
     }
     fs();
-    if (/^```/.test(l)) {
+    if (/^ {0,3}```/.test(l)) {
       fl();
-      const language = l.match(/^```\s*([^\s`]*)/)?.[1]?.toLowerCase() || "";
+      const language = l.match(/^ {0,3}```\s*([^\s`]*)/)?.[1]?.toLowerCase() || "";
       const b = [];
-      for (i++; i < L.length && !/^```/.test(L[i]); i++) b.push(L[i]);
+      for (i++; i < L.length && !/^ {0,3}```/.test(L[i]); i++) b.push(L[i]);
       if (language === "mermaid")
         o.push(
           '<pre class="mermaid-source"><code>' +
