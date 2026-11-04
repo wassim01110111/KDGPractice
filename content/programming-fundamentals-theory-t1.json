@@ -402,10 +402,10 @@
       "provenance": "M2_Variables_Operators.pdf",
       "contentVersion": 3,
       "options": [
-        "`itemNumber % 5 == 0`",
-        "`itemNumber / 5 == 0`",
-        "`itemNumber % 5 == 1`",
-        "`itemNumber * 5 == 0`"
+        "```java\nitemNumber % 5 == 0\n```",
+        "```java\nitemNumber / 5 == 0\n```",
+        "```java\nitemNumber % 5 == 1\n```",
+        "```java\nitemNumber * 5 == 0\n```"
       ],
       "expected": [0],
       "hints": [
@@ -490,10 +490,10 @@
       "provenance": "M2_Variables_Operators.pdf",
       "contentVersion": 3,
       "options": [
-        "`score < 0 || score > 100`",
-        "`score < 0 && score > 100`",
-        "`score >= 0 && score <= 100`",
-        "`score == 0 || score == 100`"
+        "```java\nscore < 0 || score > 100\n```",
+        "```java\nscore < 0 && score > 100\n```",
+        "```java\nscore >= 0 && score <= 100\n```",
+        "```java\nscore == 0 || score == 100\n```"
       ],
       "expected": [0],
       "hints": [
@@ -1419,7 +1419,12 @@
       "examEligible": true,
       "provenance": "M4_OO_Programming_Objects.pdf",
       "contentVersion": 3,
-      "options": ["`equals()`", "`==`", "`compareTo() == 1`", "`length()`"],
+      "options": [
+        "```java\nequals()\n```",
+        "`==`",
+        "```java\ncompareTo() == 1\n```",
+        "```java\nlength()\n```"
+      ],
       "expected": [0],
       "hints": [
         "Separate object identity from equality of the character contents."
@@ -2440,10 +2445,10 @@
       "provenance": "M4_OO_Programming_Objects.pdf",
       "contentVersion": 3,
       "options": [
-        "`answer.equalsIgnoreCase(\"yes\")`",
-        "`answer == \"yes\"`",
-        "`answer.charAt(0) == 'y'`",
-        "`answer.length() == 3`"
+        "```java\nanswer.equalsIgnoreCase(\"yes\")\n```",
+        "```java\nanswer == \"yes\"\n```",
+        "```java\nanswer.charAt(0) == 'y'\n```",
+        "```java\nanswer.length() == 3\n```"
       ],
       "expected": [0],
       "hints": [
