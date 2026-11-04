@@ -717,9 +717,13 @@ small {
   white-space: pre-wrap;
   margin: 0.75rem 0;
 }
+.stmt > p,
+.stmt > ol,
+.stmt > pre {
+  margin-block: 0;
+}
+
 label.stmt {
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
   margin-top: 0 !important;
   margin-bottom: 0 !important;
 }
@@ -2146,6 +2150,7 @@ button.sql-result-toggle:hover:not(:disabled) {
 }
 .answer-options {
   display: grid;
+  margin-top: 3rem;
   margin-bottom: 1rem;
   gap: 0.55rem;
 }
