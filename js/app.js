@@ -3572,125 +3572,124 @@ function qView(
       btns.append(hb);
       q.append(hintPanel);
     }
-    if (ex.type === "sql-query" && ex.referenceSolution) {
-      const snippet = h("div", {
-        id: `sql-result-snippet-${ex.id}`,
-        class: "sql-result-panel",
-      });
-      let loadingSnippet = false;
-      let previewLoadScheduled = false;
-      let previewIdleHandle = null;
-      let previewTimer = null;
-      const showPreviewLoading = () => {
-        snippet.setAttribute("aria-busy", "true");
+  }
+  // Result snippet: shown in practice and exam, open by default.
+  if (ex.type === "sql-query" && ex.referenceSolution) {
+    const snippet = h("div", {
+      id: `sql-result-snippet-${ex.id}`,
+      class: "sql-result-panel",
+    });
+    let loadingSnippet = false;
+    let previewLoadScheduled = false;
+    let previewIdleHandle = null;
+    let previewTimer = null;
+    const showPreviewLoading = () => {
+      snippet.setAttribute("aria-busy", "true");
+      snippet.replaceChildren(
+        h("strong", {}, "Expected result preview"),
+        loadingNote(
+          dbIsWarm(ex)
+            ? "Loading the first five result rows…"
+            : "Setting up the database and loading the first five rows…",
+        ),
+      );
+    };
+    const loadResultSnippet = async () => {
+      if (snippet.dataset.loaded || loadingSnippet || !snippet.isConnected)
+        return;
+      loadingSnippet = true;
+      showPreviewLoading();
+      try {
+        const { res } = await runStudent(ex, ex.referenceSolution);
         snippet.replaceChildren(
           h("strong", {}, "Expected result preview"),
-          loadingNote(
-            dbIsWarm(ex)
-              ? "Loading the first five result rows…"
-              : "Setting up the database and loading the first five rows…",
-          ),
+          h("small", {}, "A preview of rows returned by the reference query."),
+          table(res, 5),
         );
-      };
-      const loadResultSnippet = async () => {
-        if (snippet.dataset.loaded || loadingSnippet || !snippet.isConnected)
-          return;
-        loadingSnippet = true;
-        showPreviewLoading();
-        try {
-          const { res } = await runStudent(ex, ex.referenceSolution);
-          snippet.replaceChildren(
-            h("strong", {}, "Expected result preview"),
-            h(
-              "small",
-              {},
-              "A preview of rows returned by the reference query.",
-            ),
-            table(res, 5),
-          );
-          snippet.dataset.loaded = "true";
-        } catch (e) {
-          const message = e?.message || String(e);
-          const retry = h(
-            "button",
-            {
-              type: "button",
-              class: "sec",
-              onclick: () => {
-                showPreviewLoading();
-                loadResultSnippet();
-              },
+        snippet.dataset.loaded = "true";
+      } catch (e) {
+        const message = e?.message || String(e);
+        const retry = h(
+          "button",
+          {
+            type: "button",
+            class: "sec",
+            onclick: () => {
+              showPreviewLoading();
+              loadResultSnippet();
             },
-            "Try loading preview again",
-          );
-          snippet.replaceChildren(
-            h("strong", {}, "Could not load result preview"),
-            h("pre", { class: "err" }, message),
-            retry,
-          );
-        } finally {
-          loadingSnippet = false;
-          snippet.removeAttribute("aria-busy");
-        }
-      };
-      // Give the browser a real paint opportunity before database setup starts.
-      // Starting PGlite in the same animation frame that creates the panel can
-      // otherwise prevent the loading indicator and filter controls from
-      // appearing responsive on a cold database.
-      const schedulePreviewLoad = () => {
-        if (
-          previewLoadScheduled ||
-          loadingSnippet ||
-          snippet.dataset.loaded ||
-          snippet.hidden
-        )
-          return;
-        previewLoadScheduled = true;
-        const start = () => {
-          previewLoadScheduled = false;
-          previewIdleHandle = null;
-          previewTimer = null;
-          if (snippet.isConnected && !snippet.hidden) loadResultSnippet();
-        };
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            if ("requestIdleCallback" in window) {
-              previewIdleHandle = requestIdleCallback(start, { timeout: 1800 });
-            } else {
-              previewTimer = setTimeout(start, 180);
-            }
-          });
-        });
-      };
-      const toggle = h(
-        "button",
-        {
-          class: "sql-result-toggle",
-          "aria-expanded": "true",
-          "aria-controls": snippet.id,
-          onclick: async () => {
-            if (!snippet.hidden) {
-              snippet.hidden = true;
-              toggle.textContent = "Show result snippet";
-              toggle.setAttribute("aria-expanded", "false");
-              return;
-            }
-            snippet.hidden = false;
-            toggle.textContent = "Hide result snippet";
-            toggle.setAttribute("aria-expanded", "true");
-            await loadResultSnippet();
           },
+          "Try loading preview again",
+        );
+        snippet.replaceChildren(
+          h("strong", {}, "Could not load result preview"),
+          h("pre", { class: "err" }, message),
+          retry,
+        );
+      } finally {
+        loadingSnippet = false;
+        snippet.removeAttribute("aria-busy");
+      }
+    };
+    // Give the browser a real paint opportunity before database setup starts.
+    // Starting PGlite in the same animation frame that creates the panel can
+    // otherwise prevent the loading indicator and filter controls from
+    // appearing responsive on a cold database.
+    const schedulePreviewLoad = () => {
+      if (
+        previewLoadScheduled ||
+        loadingSnippet ||
+        snippet.dataset.loaded ||
+        snippet.hidden
+      )
+        return;
+      previewLoadScheduled = true;
+      const start = () => {
+        previewLoadScheduled = false;
+        previewIdleHandle = null;
+        previewTimer = null;
+        if (snippet.isConnected && !snippet.hidden) loadResultSnippet();
+      };
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          if ("requestIdleCallback" in window) {
+            previewIdleHandle = requestIdleCallback(start, { timeout: 1800 });
+          } else {
+            previewTimer = setTimeout(start, 180);
+          }
+        });
+      });
+    };
+    const toggle = h(
+      "button",
+      {
+        class: "sql-result-toggle",
+        "aria-expanded": "true",
+        "aria-controls": snippet.id,
+        onclick: async () => {
+          if (!snippet.hidden) {
+            snippet.hidden = true;
+            toggle.textContent = "Show result snippet";
+            toggle.setAttribute("aria-expanded", "false");
+            return;
+          }
+          snippet.hidden = false;
+          toggle.textContent = "Hide result snippet";
+          toggle.setAttribute("aria-expanded", "true");
+          await loadResultSnippet();
         },
-        "Hide result snippet",
-      );
-      btns.append(toggle);
-      q.append(snippet);
-      // Show the loading state immediately, but start database work only once
-      // the page has painted and the browser has had an idle opportunity to
-      // process filter/search input.
-      showPreviewLoading();
-      schedulePreviewLoad();
-    }
+      },
+      "Hide result snippet",
+    );
+    btns.append(toggle);
+    q.append(snippet);
+    // Show the loading state immediately, but start database work only once
+    // the page has painted and the browser has had an idle opportunity to
+    // process filter/search input.
+    showPreviewLoading();
+    schedulePreviewLoad();
+  }
+  if (mode === "practice") {
     const hasSol = ex.type === "sql-query" ? !!ex.referenceSolution : true;
     if (hasSol && ex.type !== "short-answer-self-check") {
       const solution = h(
@@ -4237,7 +4236,8 @@ function md(src) {
     fs();
     if (/^ {0,3}```/.test(l)) {
       fl();
-      const language = l.match(/^ {0,3}```\s*([^\s`]*)/)?.[1]?.toLowerCase() || "";
+      const language =
+        l.match(/^ {0,3}```\s*([^\s`]*)/)?.[1]?.toLowerCase() || "";
       const b = [];
       for (i++; i < L.length && !/^ {0,3}```/.test(L[i]); i++) b.push(L[i]);
       if (language === "mermaid")
