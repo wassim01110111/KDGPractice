@@ -2457,15 +2457,7 @@ public class Main {
                     for (int i = 3; i > 0; i--) {
                         System.out.println(i);
                     }
-                    System.out.println("\nResults\n");
-                    System.out.println("------------------------------------");
-                    System.out.println("Student information");
-                    System.out.println("------------------------------------");
-                    System.out.printf("Name            : %s", student.getName());
-                    System.out.printf("%nID              : %d", student.getId());
-                    System.out.printf("%nGrade           : %.1f", student.getGrade());
-                    System.out.printf("%nPerformance     : %s%n", student.getPerformanceCategory());
-                    System.out.println("------------------------------------");
+                    System.out.printf("%n%s", student);
                 }
             } while (askAgain);
             System.out.printf("%nDo you want to enter another student? (yes/no): ");
@@ -2553,6 +2545,24 @@ public class Student {
             default:
                 return "Insufficient";
         }
+
+    }
+
+    public String toString() {
+        return String.format(String.format(
+                "\nResults\n" +
+                        "------------------------------------\n" +
+                        "Student information\n" +
+                        "------------------------------------\n" +
+                        "%-16s: %s\n" +
+                        "%-16s: %d\n" +
+                        "%-16s: %.1f\n" +
+                        "%-16s: %s\n" +
+                        "------------------------------------",
+                "Name", this.getName(),
+                "ID", this.getId(),
+                "Grade", this.getGrade(),
+                "Performance", this.getPerformanceCategory()));
 
     }
 
