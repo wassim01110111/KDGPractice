@@ -6403,3 +6403,550 @@ pre,
     transition: none;
   }
 }
+
+/* ============================================================
+   ACHIEVEMENT POPUPS (top right)
+   The stack is a manual popover, so it sits in the browser's top
+   layer: above the full-screen easter egg and above modal dialogs.
+   ============================================================ */
+.ach-stack {
+  position: fixed;
+  inset: auto;
+  top: max(0.85rem, env(safe-area-inset-top));
+  right: max(0.85rem, env(safe-area-inset-right));
+  width: min(23rem, calc(100vw - 1.7rem));
+  height: auto;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  overflow: visible;
+  pointer-events: none;
+}
+.ach-stack:popover-open {
+  display: grid;
+  gap: 0.6rem;
+}
+.ach-stack.ach-fallback {
+  display: grid;
+  gap: 0.6rem;
+  z-index: 2147483647;
+}
+
+.ach-toast {
+  --ach-a: #f5b82e;
+  --ach-b: #ff8a3d;
+  --ach-ink: var(--fg);
+  --ach-mut: var(--mut);
+  --ach-bg: var(--card);
+  --ach-dur: 6s;
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.85rem 0.7rem 1rem 0.85rem;
+  border: 1px solid var(--ach-a);
+  border-radius: 14px;
+  color: var(--ach-ink);
+  background: var(--ach-bg);
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--ach-a) 18%, transparent),
+      transparent 58%
+    ),
+    var(--ach-bg);
+  border-color: color-mix(in srgb, var(--ach-a) 72%, var(--bd));
+  box-shadow:
+    0 14px 34px rgb(0 0 0 / 28%),
+    0 0 26px color-mix(in srgb, var(--ach-a) 32%, transparent);
+  cursor: pointer;
+  pointer-events: auto;
+  user-select: none;
+  will-change: transform, opacity;
+}
+
+/* Clips the sweeping shine and the countdown bar to the rounded card. */
+.ach-clip {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  overflow: hidden;
+  pointer-events: none;
+}
+.ach-shine {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 34%,
+    rgb(255 255 255 / 46%) 50%,
+    transparent 66%
+  );
+  transform: translateX(-130%);
+}
+.ach-timer {
+  position: absolute;
+  inset: auto 0 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--ach-a), var(--ach-b));
+  transform-origin: left center;
+}
+.ach-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.ach-medal {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 3.3rem;
+  height: 3.3rem;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 30% 24%, rgb(255 255 255 / 70%), transparent 46%),
+    linear-gradient(145deg, var(--ach-a), var(--ach-b));
+  box-shadow:
+    inset 0 -3px 6px rgb(0 0 0 / 24%),
+    inset 0 2px 3px rgb(255 255 255 / 45%),
+    0 4px 14px color-mix(in srgb, var(--ach-a) 55%, transparent);
+}
+.ach-icon {
+  font-size: 1.6rem;
+  line-height: 1;
+  filter: drop-shadow(0 2px 2px rgb(0 0 0 / 30%));
+}
+.ach-ring {
+  position: absolute;
+  inset: 0;
+  border: 2px solid var(--ach-a);
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+}
+.ach-burst {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.ach-spark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0.45rem;
+  height: 0.45rem;
+  margin: -0.225rem 0 0 -0.225rem;
+  border-radius: 50%;
+  background: var(--ach-a);
+  opacity: 0;
+  --sr: 200deg;
+}
+.ach-spark:nth-child(3n + 1) {
+  border-radius: 2px;
+  background: var(--ach-b);
+  --sr: 320deg;
+}
+.ach-spark:nth-child(3n + 2) {
+  width: 0.18rem;
+  height: 0.7rem;
+  margin: -0.35rem 0 0 -0.09rem;
+  border-radius: 2px;
+  background: #fff;
+  --sr: -260deg;
+}
+
+.ach-text {
+  display: grid;
+  gap: 0.14rem;
+  min-width: 0;
+}
+.ach-kicker {
+  color: var(--ach-a);
+  color: color-mix(in srgb, var(--ach-a) 62%, var(--ach-ink));
+  font:
+    700 0.62rem/1.2 ui-monospace,
+    "Cascadia Code",
+    Menlo,
+    monospace;
+  letter-spacing: 0.16em;
+}
+.ach-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+.ach-detail {
+  color: var(--ach-mut);
+  font-size: 0.82rem;
+  line-height: 1.3;
+}
+.ach-flavor {
+  color: var(--ach-a);
+  color: color-mix(in srgb, var(--ach-a) 55%, var(--ach-ink));
+  font-size: 0.78rem;
+  line-height: 1.3;
+}
+.ach-close {
+  all: unset;
+  box-sizing: border-box;
+  align-self: start;
+  padding: 0.05rem 0.4rem 0.2rem;
+  border-radius: 6px;
+  color: var(--ach-mut);
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.ach-close:hover {
+  color: var(--ach-ink);
+  background: rgb(127 127 127 / 18%);
+}
+.ach-close:focus-visible {
+  outline: 2px solid var(--ach-a);
+}
+
+/* ---- tiers ---- */
+.ach-tier-bronze {
+  --ach-a: #cd7f32;
+  --ach-b: #efb06a;
+}
+.ach-tier-silver {
+  --ach-a: #7d93b3;
+  --ach-b: #c8d5e8;
+}
+.ach-tier-gold {
+  --ach-a: #f5b82e;
+  --ach-b: #ff8a3d;
+}
+.ach-tier-platinum {
+  --ach-a: #3fcfff;
+  --ach-b: #b48cff;
+}
+.ach-tier-shame {
+  --ach-a: #ff5d73;
+  --ach-b: #a83279;
+}
+.ach-tier-secret {
+  --ach-a: #a66bff;
+  --ach-b: #ff6bd6;
+  --ach-bg: #1b1230;
+  --ach-ink: #f2e9ff;
+  --ach-mut: #c7b6e8;
+}
+.ach-tier-wassim {
+  --ach-a: #48ff88;
+  --ach-b: #22d3ee;
+  --ach-bg: rgb(11 22 20 / 97%);
+  --ach-ink: #bdffd4;
+  --ach-mut: #7bac8e;
+  font-family: ui-monospace, "Cascadia Code", Menlo, monospace;
+}
+.ach-tier-wassim .ach-clip {
+  background: repeating-linear-gradient(
+    0deg,
+    rgb(0 255 140 / 5%) 0 1px,
+    transparent 1px 3px
+  );
+}
+.ach-tier-wassim .ach-clip::after {
+  position: absolute;
+  inset: -100% 0 auto;
+  height: 45%;
+  background: linear-gradient(transparent, rgb(142 255 187 / 18%), transparent);
+  content: "";
+}
+.ach-tier-wassim .ach-title {
+  text-shadow:
+    0 0 6px rgb(76 255 137 / 55%),
+    1px 0 rgb(255 63 139 / 38%),
+    -1px 0 rgb(67 231 255 / 38%);
+}
+.ach-tier-wassim .ach-medal {
+  box-shadow:
+    inset 0 -3px 6px rgb(0 0 0 / 35%),
+    0 0 18px rgb(72 255 136 / 55%);
+}
+
+/* ---- motion ---- */
+@media (prefers-reduced-motion: no-preference) {
+  .ach-toast {
+    animation: ach-in 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+  .ach-toast.ach-leaving {
+    animation: ach-out 0.46s cubic-bezier(0.55, 0, 0.8, 0.3) both;
+  }
+  .ach-tier-shame:not(.ach-leaving) {
+    animation:
+      ach-in 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) both,
+      ach-shake 0.6s ease-in-out 0.9s;
+  }
+  .ach-glow {
+    animation: ach-pulse 1.5s ease-out 0.4s 2;
+  }
+  .ach-shine {
+    animation:
+      ach-shine 1.15s ease-out 0.55s,
+      ach-shine 1.15s ease-out 3.4s;
+  }
+  .ach-timer {
+    animation: ach-timer var(--ach-dur) linear both;
+  }
+  .ach-paused .ach-timer {
+    animation-play-state: paused;
+  }
+  .ach-medal {
+    animation: ach-medal-pop 0.95s cubic-bezier(0.2, 1.3, 0.4, 1) 0.18s both;
+  }
+  .ach-tier-platinum .ach-medal {
+    animation:
+      ach-medal-pop 0.95s cubic-bezier(0.2, 1.3, 0.4, 1) 0.18s both,
+      ach-hue 3.5s linear 1.2s infinite;
+  }
+  .ach-icon {
+    animation: ach-icon-bob 2.6s ease-in-out 1.3s infinite;
+  }
+  .ach-ring {
+    animation: ach-ring 1.3s ease-out 0.5s 2;
+  }
+  .ach-ring-2 {
+    animation-delay: 0.85s;
+  }
+  .ach-spark {
+    animation: ach-spark calc(0.95s * var(--ss, 1))
+      cubic-bezier(0.1, 0.7, 0.3, 1) calc(0.5s + var(--sd, 0s)) both;
+  }
+  .ach-kicker {
+    animation: ach-track 0.9s ease-out 0.3s both;
+  }
+  .ach-title {
+    animation: ach-rise 0.5s ease-out 0.42s both;
+  }
+  .ach-detail {
+    animation: ach-rise 0.5s ease-out 0.55s both;
+  }
+  .ach-flavor {
+    animation: ach-rise 0.5s ease-out 0.7s both;
+  }
+  .ach-tier-wassim .ach-text {
+    animation: ach-glitch 0.7s steps(2, end) 0.5s 2;
+  }
+  .ach-tier-wassim .ach-clip::after {
+    animation: ach-scan 1.5s linear 0.3s 3;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ach-toast {
+    animation: ach-fade 0.25s ease-out both;
+  }
+  .ach-toast.ach-leaving {
+    animation: ach-fade 0.2s ease-in reverse both;
+  }
+  .ach-timer {
+    display: none;
+  }
+}
+
+@keyframes ach-in {
+  0% {
+    opacity: 0;
+    transform: translate3d(115%, -14px, 0) rotate(7deg) scale(0.85);
+  }
+  50% {
+    opacity: 1;
+    transform: translate3d(-4%, 0, 0) rotate(-1.8deg) scale(1.04);
+  }
+  72% {
+    transform: translate3d(1.5%, 0, 0) rotate(0.7deg) scale(0.99);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes ach-out {
+  0% {
+    opacity: 1;
+    transform: none;
+  }
+  25% {
+    opacity: 1;
+    transform: translate3d(-4%, 0, 0) scale(1.02);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(115%, 0, 0) rotate(6deg) scale(0.9);
+  }
+}
+@keyframes ach-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes ach-shake {
+  0%,
+  100% {
+    transform: none;
+  }
+  20% {
+    transform: translateX(-7px) rotate(-1.2deg);
+  }
+  40% {
+    transform: translateX(6px) rotate(1deg);
+  }
+  60% {
+    transform: translateX(-4px) rotate(-0.6deg);
+  }
+  80% {
+    transform: translateX(3px);
+  }
+}
+@keyframes ach-pulse {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--ach-a) 60%, transparent);
+  }
+  100% {
+    box-shadow: 0 0 0 20px transparent;
+  }
+}
+@keyframes ach-shine {
+  from {
+    transform: translateX(-130%);
+  }
+  to {
+    transform: translateX(130%);
+  }
+}
+@keyframes ach-timer {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
+}
+@keyframes ach-medal-pop {
+  0% {
+    transform: scale(0) rotate(-220deg);
+  }
+  60% {
+    transform: scale(1.28) rotate(14deg);
+  }
+  80% {
+    transform: scale(0.94) rotate(-5deg);
+  }
+  100% {
+    transform: none;
+  }
+}
+@keyframes ach-icon-bob {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0);
+  }
+  50% {
+    transform: translateY(-2px) rotate(-6deg) scale(1.07);
+  }
+}
+@keyframes ach-hue {
+  to {
+    filter: hue-rotate(360deg);
+  }
+}
+@keyframes ach-ring {
+  0% {
+    opacity: 0.9;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(2.4);
+  }
+}
+@keyframes ach-spark {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) rotate(0) scale(0.4);
+  }
+  65% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--dx), calc(var(--dy) + 18px))
+      rotate(var(--sr)) scale(1);
+  }
+}
+@keyframes ach-rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes ach-track {
+  from {
+    opacity: 0;
+    letter-spacing: 0.5em;
+  }
+  to {
+    opacity: 1;
+    letter-spacing: 0.16em;
+  }
+}
+@keyframes ach-glitch {
+  0%,
+  100% {
+    transform: none;
+  }
+  25% {
+    transform: translateX(-2px) skewX(-4deg);
+  }
+  50% {
+    transform: translateX(2px);
+  }
+  75% {
+    transform: translateX(-1px) skewX(3deg);
+  }
+}
+@keyframes ach-scan {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(360%);
+  }
+}
+
+@media (max-width: 520px) {
+  .ach-toast {
+    gap: 0.7rem;
+    padding: 0.7rem 0.55rem 0.9rem 0.7rem;
+  }
+  .ach-medal {
+    width: 2.8rem;
+    height: 2.8rem;
+  }
+  .ach-icon {
+    font-size: 1.35rem;
+  }
+  .ach-title {
+    font-size: 0.98rem;
+  }
+}
+@media print {
+  .ach-stack {
+    display: none !important;
+  }
+}

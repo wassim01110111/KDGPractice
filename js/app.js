@@ -209,7 +209,7 @@ const lastAttempt = () => {
 };
 const xpFor = (ex) =>
   ({ Easy: 25, Medium: 50, Hard: 100, Extreme: 200 })[ex.difficulty] || 25;
-async function rec(ex, correct, mode, onRecorded = () => {}) {
+async function rec(ex, correct, mode, onRecorded = () => {}, meta = {}) {
   const key = keyOf(ex),
     attempt = {
       key,
@@ -219,6 +219,7 @@ async function rec(ex, correct, mode, onRecorded = () => {}) {
       correct,
       mode,
     };
+  const prevAttempt = S.attempts.find((a) => a.key === key);
   const earnedReward = correct && !S.xpRewards[key];
   if (earnedReward) {
     S.xpRewards[key] = {
@@ -232,6 +233,8 @@ async function rec(ex, correct, mode, onRecorded = () => {}) {
   const writes = [kv.set("attempts", S.attempts)];
   if (earnedReward) writes.push(kv.set("xpRewards", S.xpRewards));
   await Promise.all(writes);
+  // Exams are scored as a whole by achOnExam once they are submitted.
+  if (mode === "practice") achOnAttempt(ex, key, correct, meta, !prevAttempt);
 }
 const draftWrites = new Map();
 function saveDraft(id, answer) {
@@ -244,6 +247,599 @@ function saveDraft(id, answer) {
   return write.finally(() => {
     if (draftWrites.get(id) === write) draftWrites.delete(id);
   });
+}
+
+// ---------- achievements ----------
+// Two kinds of achievement share one registry:
+//  - "base" milestones are computed from solved exercises, XP and exam history
+//    (see computeProgress, which the Progress page also uses);
+//  - "x:" achievements are driven by the small counters in S.stats below
+//    (easter eggs, Wassim sightings, reading time, failures, bad exams…).
+// Unlocked ids are stored under "achUnlocked" and stats under "stats", so a
+// popup fires exactly once per achievement.
+const achStatDefaults = () => ({
+  eggOpens: 0,
+  eggSkips: 0,
+  eggQuickSkips: 0,
+  eggFull: 0,
+  eggMemes: [],
+  signToggles: 0,
+  zenOn: 0,
+  themeToggles: 0,
+  watches: 0,
+  activeSeconds: 0,
+  refSeconds: 0,
+  canvasSeconds: 0,
+  longestRefStay: 0,
+  refSubjects: [],
+  canvasSubjects: [],
+  runs: 0,
+  shortcuts: 0,
+  hints: 0,
+  solutionPeeks: 0,
+  fails: 0,
+  failStreak: 0,
+  bestFailStreak: 0,
+  correctStreak: 0,
+  bestCorrectStreak: 0,
+  sqlErrors: 0,
+  blankSubmits: 0,
+  maxSameFails: 0,
+  redemptions: 0,
+  peekedFails: 0,
+  selfWrong: 0,
+  comebacks: 0,
+  firstTry: 0,
+  nightAttempts: 0,
+  earlyAttempts: 0,
+  weekendAttempts: 0,
+  dayStreak: 0,
+  bestDayStreak: 0,
+  totalDays: 0,
+  lastDay: "",
+  badExams: 0,
+  badExamStreak: 0,
+  bestBadExamStreak: 0,
+  zeroExams: 0,
+  guessingExams: 0,
+  halfExams: 0,
+  scrapeExams: 0,
+  declineStreak: 0,
+  bestDeclineStreak: 0,
+  lastExamPct: -1,
+  examComebacks: 0,
+  speedFails: 0,
+  speedPerfects: 0,
+  blankExams: 0,
+  timeouts: 0,
+  discards: 0,
+});
+S.stats = achStatDefaults();
+S.achUnlocked = null; // null until loaded; {} once loaded
+let achFrozen = false; // set while "Reset all local data" runs
+let achResolveReady;
+const achReady = new Promise((resolve) => (achResolveReady = resolve));
+const achSession = {
+  fails: Object.create(null),
+  peeked: new Set(),
+  seenPeek: new Set(),
+};
+
+const achEggMessages = () =>
+  typeof memes !== "undefined" && memes?.length ? memes.length : 5;
+const achSubjectCount = (key) =>
+  Math.max(2, (S.manifest?.[key] || []).length);
+// id, icon, tier, title, detail, flavor, stat getter, target, secret?
+const A = (id, icon, tier, title, detail, flavor, stat, target, secret) => ({
+  id: "x:" + id,
+  icon,
+  tier,
+  title,
+  detail,
+  flavor,
+  stat,
+  target,
+  secret: Boolean(secret),
+});
+const ACH_DEFS = [
+  // ---- the Wassim easter egg ----
+  A("egg-1", "🥚", "wassim", "Curious Clicker", "Open the Wassim easter egg", "You clicked the logo. Wassim noticed.", (s) => s.eggOpens, 1),
+  A("egg-5", "🔓", "wassim", "Logo Enthusiast", "Open the easter egg 5 times", "It's still the same logo.", (s) => s.eggOpens, 5),
+  A("egg-10", "🖱️", "wassim", "Compulsive Clicker", "Open the easter egg 10 times", "Doctors recommend a different hobby.", (s) => s.eggOpens, 10),
+  A("egg-25", "💻", "wassim", "Root Access Regular", "Open the easter egg 25 times", "Wassim is learning your fingerprints.", (s) => s.eggOpens, 25),
+  A("egg-50", "👑", "wassim", "Wassim's Biggest Fan", "Open the easter egg 50 times", "You've seen this more than the exam material.", (s) => s.eggOpens, 50),
+  A("egg-100", "🌱", "platinum", "Please Touch Grass", "Open the easter egg 100 times", "The logo is not a stress ball.", (s) => s.eggOpens, 100),
+  A("egg-memes", "🎞️", "gold", "Seen Every Secret", "See every different easter egg message", "You have now consumed all the lore.", (s) => s.eggMemes.length, achEggMessages),
+  A("egg-full", "⏳", "wassim", "Stayed for the Self-Destruct", "Let an easter egg play all the way through", "Respect. Nobody waits for the countdown.", (s) => s.eggFull, 1),
+  A("egg-full-10", "🍿", "wassim", "Front Row Seat", "Watch 10 easter eggs play through", "Popcorn is on the house.", (s) => s.eggFull, 10),
+  A("egg-skip", "⏭️", "bronze", "Skip Intro", "Close an easter egg early", "Wassim hates it when you do that.", (s) => s.eggSkips, 1),
+  A("egg-quick", "🐟", "shame", "Goldfish Attention Span", "Close an easter egg within 1.5 seconds", "Not even a full second of root access.", (s) => s.eggQuickSkips, 1),
+  A("sign", "🤝", "secret", "Secret Handshake", "Find the hidden distractions switch", "You clicked the sign five times. Nobody told you to.", (s) => s.signToggles, 1, true),
+  A("zen-1", "🔕", "wassim", "Do Not Disturb", "Turn the distractions off", "You muted Wassim. Brave.", (s) => s.zenOn, 1),
+  A("zen-10", "🧘", "silver", "Hermit Mode", "Turn the distractions off 10 times", "Peace and quiet, until the next signal.", (s) => s.zenOn, 10),
+  A("theme-5", "💡", "silver", "Light Switch Enthusiast", "Toggle the theme 5 times", "Dark mode, light mode, dark mode…", (s) => s.themeToggles, 5),
+  A("theme-25", "🌗", "bronze", "Cannot Decide", "Toggle the theme 25 times", "Pick a side, coward.", (s) => s.themeToggles, 25),
+
+  // ---- WassimGPT is watching ----
+  A("watch-1", "👁️", "wassim", "Under Surveillance", "Get caught by WassimGPT's monitor", "WassimGPT has entered the chat.", (s) => s.watches, 1),
+  A("watch-3", "🕵️", "wassim", "Familiar Face", "Get watched by Wassim 3 times", "He now knows your name.", (s) => s.watches, 3),
+  A("watch-5", "🎯", "wassim", "Person of Interest", "Get watched by Wassim 5 times", "Your file is getting thick.", (s) => s.watches, 5),
+  A("watch-10", "📹", "wassim", "Wassim's Favorite Subject", "Get watched by Wassim 10 times", "He has a folder just for you.", (s) => s.watches, 10),
+  A("watch-25", "🏠", "wassim", "Live-in Roommate", "Get watched by Wassim 25 times", "At this point Wassim pays half the rent.", (s) => s.watches, 25),
+  A("watch-50", "🛰️", "platinum", "Property of Wassim", "Get watched by Wassim 50 times", "There is no escape. There was never an escape.", (s) => s.watches, 50),
+
+  // ---- time spent in the references ----
+  A("ref-1m", "📖", "bronze", "Quick Skim", "Spend 1 minute in the references", "Reading is the first step.", (s) => s.refSeconds, 60),
+  A("ref-5m", "📄", "bronze", "Page Turner", "Spend 5 minutes in the references", "The pages are warm now.", (s) => s.refSeconds, 300),
+  A("ref-15m", "📑", "silver", "Chapter Closer", "Spend 15 minutes in the references", "One chapter down, who knows how many to go.", (s) => s.refSeconds, 900),
+  A("ref-30m", "🐛", "silver", "Bookworm", "Spend 30 minutes in the references", "You are now technically a worm.", (s) => s.refSeconds, 1800),
+  A("ref-1h", "🏛️", "gold", "Library Resident", "Spend 1 hour in the references", "The librarian knows your name.", (s) => s.refSeconds, 3600),
+  A("ref-3h", "🛏️", "gold", "Has a Bed in the Library", "Spend 3 hours in the references", "Maybe go outside? Just a little?", (s) => s.refSeconds, 10800),
+  A("ref-10h", "🧙", "platinum", "Reference Hermit", "Spend 10 hours in the references", "You've read this more closely than the author.", (s) => s.refSeconds, 36000),
+  A("stay-10", "🤿", "silver", "Deep Dive", "Stay 10 minutes in the references without leaving", "Pressure at this depth is intense.", (s) => s.longestRefStay, 600),
+  A("stay-30", "😴", "gold", "Unbothered", "Stay 30 minutes in the references without leaving", "Did you fall asleep on the keyboard?", (s) => s.longestRefStay, 1800),
+  A("subjects-3", "🦘", "bronze", "Subject Hopper", "Open 3 different reference subjects", "Commitment issues, but academic.", (s) => s.refSubjects.length, 3),
+  A("subjects-all", "🎫", "gold", "Library Card, Fully Stamped", "Open every reference subject", "You've been everywhere, man.", (s) => s.refSubjects.length, () => achSubjectCount("referenceFiles")),
+  A("canvas-5m", "🎨", "bronze", "Canvas Visitor", "Spend 5 minutes in Canvas", "Nice brushwork.", (s) => s.canvasSeconds, 300),
+  A("canvas-30m", "🖼️", "silver", "Canvas Resident", "Spend 30 minutes in Canvas", "You should be paying rent.", (s) => s.canvasSeconds, 1800),
+
+  // ---- stamina and habits ----
+  A("time-1h", "⏱️", "bronze", "Settling In", "Spend 1 active hour on the site", "The chair is warm now.", (s) => s.activeSeconds, 3600),
+  A("time-5h", "📚", "silver", "Dedicated", "Spend 5 active hours on the site", "This is starting to look like a habit.", (s) => s.activeSeconds, 18000),
+  A("time-24h", "🏕️", "platinum", "Lives Here Now", "Spend 24 active hours on the site", "Your chair has a you-shaped dent.", (s) => s.activeSeconds, 86400),
+  A("days-3", "🔥", "bronze", "Three-Day Streak", "Study 3 days in a row", "The fire has been lit.", (s) => s.bestDayStreak, 3),
+  A("days-7", "📅", "silver", "Weekly Habit", "Study 7 days in a row", "A whole week. Look at you.", (s) => s.bestDayStreak, 7),
+  A("days-14", "🌋", "gold", "Fortnight of Focus", "Study 14 days in a row", "Two weeks without skipping. Suspicious.", (s) => s.bestDayStreak, 14),
+  A("days-30", "🏆", "platinum", "Habit Formed", "Study 30 days in a row", "Science says it's a habit now.", (s) => s.bestDayStreak, 30),
+  A("night", "🦉", "silver", "Night Owl", "Answer a question between midnight and 5 am", "Sleep is just a suggestion.", (s) => s.nightAttempts, 1),
+  A("night-25", "🧛", "gold", "Vampire Hours", "Answer 25 questions between midnight and 5 am", "The sun is your enemy now.", (s) => s.nightAttempts, 25),
+  A("early", "🐦", "silver", "Early Bird", "Answer a question between 5 and 8 am", "You and the worm have a lot to discuss.", (s) => s.earlyAttempts, 1),
+  A("weekend", "🛡️", "silver", "Weekend Warrior", "Answer a question on a weekend", "Fun is for people without exams.", (s) => s.weekendAttempts, 1),
+
+  // ---- practice: wins ----
+  A("first-try-1", "🎯", "bronze", "First Try", "Solve an exercise on the first attempt", "Beginner's luck? We'll see.", (s) => s.firstTry, 1),
+  A("first-try-10", "🏹", "silver", "Sharpshooter", "Solve 10 exercises on the first attempt", "Measure twice, submit once.", (s) => s.firstTry, 10),
+  A("first-try-25", "🥷", "gold", "Sniper Elite", "Solve 25 exercises on the first attempt", "One shot. One kill. Zero retries.", (s) => s.firstTry, 25),
+  A("streak-5", "✨", "bronze", "Warming Up", "Get 5 correct answers in a row", "Don't jinx it.", (s) => s.bestCorrectStreak, 5),
+  A("streak-10", "🔥", "silver", "Hot Streak", "Get 10 correct answers in a row", "Somebody call the fire department.", (s) => s.bestCorrectStreak, 10),
+  A("streak-20", "⚡", "platinum", "Unstoppable", "Get 20 correct answers in a row", "Are you sure you're not Wassim?", (s) => s.bestCorrectStreak, 20),
+  A("run-1", "▶️", "bronze", "Hello, Database", "Run your first SQL query", "SELECT 'hello' FROM world;", (s) => s.runs, 1),
+  A("run-25", "🔍", "silver", "Query Enthusiast", "Run 25 SQL queries", "Your keyboard is starting to wear.", (s) => s.runs, 25),
+  A("run-100", "🗃️", "gold", "SELECT * FROM life", "Run 100 SQL queries", "No WHERE clause. No regrets.", (s) => s.runs, 100),
+  A("shortcut-10", "⌨️", "silver", "Keyboard Warrior", "Use Ctrl+Enter 10 times", "The mouse is feeling neglected.", (s) => s.shortcuts, 10),
+  A("hint-1", "💡", "bronze", "Hint Taker", "Open a hint", "There's no shame in asking. Mostly.", (s) => s.hints, 1),
+  A("hint-10", "🆘", "silver", "Hint Addict", "Open hints on 10 exercises", "They're free. For now.", (s) => s.hints, 10),
+  A("peek-1", "👀", "bronze", "Just Looking", "Peek at a solution", "We won't tell. (Wassim will.)", (s) => s.solutionPeeks, 1),
+  A("peek-10", "🏺", "silver", "Answer Key Archaeologist", "Peek at 10 solutions", "You're digging in the wrong place, but a lot.", (s) => s.solutionPeeks, 10),
+  A("honest", "😇", "silver", "Honest Abe", "Mark a self-check answer as wrong", "Integrity: 100. Score: ouch.", (s) => s.selfWrong, 1),
+  A("redemption", "🌅", "gold", "Redemption Arc", "Solve an exercise right after 3+ wrong answers", "Every hero has a low point.", (s) => s.redemptions, 1),
+  A("comeback-1", "🩹", "silver", "Learned From Mistakes", "Solve an exercise you failed earlier this session", "Failure was just the tutorial.", (s) => s.comebacks, 1),
+  A("comeback-10", "🦾", "gold", "Resilient Learner", "Turn 10 failures into solves in one go", "What doesn't kill you gives you XP.", (s) => s.comebacks, 10),
+
+  // ---- practice: failures (roast mode) ----
+  A("fail-1", "💥", "shame", "Task Failed Successfully", "Submit an incorrect answer", "Welcome to the club.", (s) => s.fails, 1),
+  A("fail-5", "📉", "shame", "Learning Experience", "Submit 5 incorrect answers", "Five wrong answers. Education is happening.", (s) => s.fails, 5),
+  A("fail-10", "💡", "shame", "Ten Ways That Don't Work", "Submit 10 incorrect answers", "Edison would be proud. Edison would also read the question.", (s) => s.fails, 10),
+  A("fail-25", "🗑️", "shame", "Error Collector", "Submit 25 incorrect answers", "Gotta catch 'em all.", (s) => s.fails, 25),
+  A("fail-50", "🎪", "shame", "Failure Is an Option", "Submit 50 incorrect answers", "NASA would like a word.", (s) => s.fails, 50),
+  A("fail-100", "🖼️", "shame", "Certified Disappointment", "Submit 100 incorrect answers", "Wassim has framed this one.", (s) => s.fails, 100),
+  A("fail-250", "🏅", "shame", "Professional Failure", "Submit 250 incorrect answers", "At this point it's a career.", (s) => s.fails, 250),
+  A("fstreak-3", "🎩", "shame", "Hat Trick of Shame", "Get 3 wrong answers in a row", "Three in a row. Impressive, in the wrong direction.", (s) => s.bestFailStreak, 3),
+  A("fstreak-5", "🥶", "shame", "Cold Streak", "Get 5 wrong answers in a row", "The answer key is crying in a corner.", (s) => s.bestFailStreak, 5),
+  A("fstreak-10", "🧐", "shame", "Are You Even Reading?", "Get 10 wrong answers in a row", "The question is right above the text box.", (s) => s.bestFailStreak, 10),
+  A("sql-1", "🙅", "shame", "Syntax? Never Heard of Her", "Submit a query that throws an error", "SQLite is not impressed.", (s) => s.sqlErrors, 1),
+  A("sql-10", "🔎", "shame", "Semicolon Search Party", "Submit 10 queries that throw errors", "Have you tried looking at the commas?", (s) => s.sqlErrors, 10),
+  A("sql-25", "😱", "shame", "The Parser Fears You", "Submit 25 queries that throw errors", "SQLite has filed a formal complaint.", (s) => s.sqlErrors, 25),
+  A("same-3", "🔁", "shame", "Same Mistake, Different Day", "Fail the same exercise 3 times in a session", "The definition of insanity, allegedly.", (s) => s.maxSameFails, 3),
+  A("same-5", "🐐", "shame", "Stubborn as a Mule", "Fail the same exercise 5 times in a session", "Maybe… read the hint?", (s) => s.maxSameFails, 5),
+  A("peek-fail", "🤦", "shame", "Looked and Still Failed", "Fail an exercise after opening a hint or solution", "You had the answer on screen. And yet.", (s) => s.peekedFails, 1),
+  A("blank", "🫥", "shame", "Blank Stare", "Submit an empty SQL answer", "Technically a strategy. Technically.", (s) => s.blankSubmits, 1),
+
+  // ---- exams: bad scores (roast mode) and good ones ----
+  A("exam-bad-1", "🧯", "shame", "Failing With Style", "Score below 50% on an exam", "Failed, but make it fashion.", (s) => s.badExams, 1),
+  A("exam-bad-3", "🗓️", "shame", "Retake Specialist", "Score below 50% on 3 exams", "The resit office has your number on speed dial.", (s) => s.badExams, 3),
+  A("exam-bad-10", "🎟️", "shame", "Resit Season Pass", "Score below 50% on 10 exams", "Frequent flyer miles at the registrar.", (s) => s.badExams, 10),
+  A("exam-zero", "🥚", "shame", "Zero Hero", "Score 0 on an exam (3+ questions)", "Getting every single one wrong takes talent. Truly.", (s) => s.zeroExams, 1),
+  A("exam-guess", "🐒", "shame", "Worse Than Guessing", "Score below 25% on an exam (4+ questions)", "A monkey with a keyboard would have done better. Probably faster too.", (s) => s.guessingExams, 1),
+  A("exam-half", "⚖️", "silver", "Perfectly Balanced", "Score exactly 50% on an exam", "As all things should be.", (s) => s.halfExams, 1),
+  A("exam-scrape", "🧗", "bronze", "Pass by a Whisker", "Score 50–59% on an exam", "Technically a pass. Technically.", (s) => s.scrapeExams, 1),
+  A("exam-bstreak-2", "🎲", "shame", "Doubling Down", "Score below 50% on 2 exams in a row", "Doing the same thing and expecting different results.", (s) => s.bestBadExamStreak, 2),
+  A("exam-bstreak-3", "🪦", "shame", "Hat Trick of Regret", "Score below 50% on 3 exams in a row", "Rest in peace, GPA.", (s) => s.bestBadExamStreak, 3),
+  A("exam-decline", "⛷️", "shame", "Downhill Skiing", "Score lower on 3 exams in a row", "Weeeeeee!", (s) => s.bestDeclineStreak, 3),
+  A("exam-speed-fail", "🏃", "shame", "Speedrun Any%", "Fail a 5+ question exam in under a minute", "Reading the questions is optional, apparently.", (s) => s.speedFails, 1),
+  A("exam-blank", "📄", "shame", "Blank Page Energy", "Submit an exam with no answers", "You handed in a blank paper. Bold. Even your name is missing.", (s) => s.blankExams, 1),
+  A("exam-timeout", "⌛", "shame", "Time Waits for No One", "Let the exam timer run out", "The clock won. The clock always wins.", (s) => s.timeouts, 1),
+  A("exam-quit-1", "🏳️", "shame", "Rage Quit", "Discard an unfinished exam", "It's fine, we all flip a table sometimes.", (s) => s.discards, 1),
+  A("exam-quit-5", "🫠", "shame", "Exam? What Exam?", "Discard 5 unfinished exams", "You can't fail what you never finish.", (s) => s.discards, 5),
+  A("exam-comeback", "🚀", "gold", "Comeback Kid", "Score 80%+ right after an exam under 40%", "From the depths to the heights.", (s) => s.examComebacks, 1),
+  A("exam-speed-perfect", "😎", "platinum", "Speed Demon", "Get a perfect score using under half the time", "Did you even need the time limit?", (s) => s.speedPerfects, 1),
+];
+function customAchievements() {
+  const s = S.stats;
+  return ACH_DEFS.map((d) => {
+    const target = typeof d.target === "function" ? d.target() : d.target;
+    return {
+      id: d.id,
+      icon: d.icon,
+      tier: d.tier,
+      title: d.title,
+      detail: d.detail,
+      flavor: d.flavor,
+      secret: d.secret,
+      count: Math.max(0, Number(d.stat(s)) || 0),
+      target: Math.max(1, target),
+    };
+  });
+}
+const achExamHistory = async () => {
+  const saved = await kv.get("examHistory", []);
+  return Array.isArray(saved) ? saved : [];
+};
+
+// ---- loading, saving and checking ----
+async function achInit() {
+  try {
+    const [stats, unlocked] = await Promise.all([
+      kv.get("stats", {}),
+      kv.get("achUnlocked", null),
+    ]);
+    S.stats = {
+      ...achStatDefaults(),
+      ...(stats && typeof stats === "object" ? stats : {}),
+    };
+    S.achUnlocked =
+      unlocked && typeof unlocked === "object" && !Array.isArray(unlocked)
+        ? unlocked
+        : null;
+    if (!S.achUnlocked) {
+      // First run with popups: quietly credit what is already earned so the
+      // person isn't buried under dozens of popups at once.
+      const credited = {};
+      const now = Date.now();
+      for (const a of computeProgress(await achExamHistory()).achievements)
+        if (a.count >= a.target) credited[a.id] = now;
+      S.achUnlocked = credited;
+      await kv.set("achUnlocked", credited);
+    }
+  } catch {
+    S.achUnlocked ||= {};
+  }
+  achResolveReady();
+  achStartTicker();
+}
+let achChain = Promise.resolve();
+function achCheck(full = true) {
+  achChain = achChain
+    .then(async () => {
+      if (achFrozen || !S.achUnlocked) return;
+      const list = full
+        ? computeProgress(await achExamHistory()).achievements
+        : customAchievements();
+      const fresh = list.filter(
+        (a) => a.count >= a.target && !S.achUnlocked[a.id],
+      );
+      if (!fresh.length) return;
+      const now = Date.now();
+      fresh.forEach((a) => (S.achUnlocked[a.id] = now));
+      await kv.set("achUnlocked", S.achUnlocked);
+      fresh.forEach(achPopup);
+    })
+    .catch(() => {});
+  return achChain;
+}
+let achDirty = false;
+let achSaveTimer = 0;
+function achFlush() {
+  clearTimeout(achSaveTimer);
+  achSaveTimer = 0;
+  if (!achDirty || achFrozen) return;
+  achDirty = false;
+  return kv.set("stats", S.stats).catch(() => {});
+}
+function achMarkDirty() {
+  achDirty = true;
+  if (!achSaveTimer) achSaveTimer = setTimeout(achFlush, 2500);
+}
+addEventListener("pagehide", achFlush);
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden) achFlush();
+});
+// Every event goes through here: update counters, save, then look for
+// newly earned achievements. full=false skips the (slower) base milestones.
+async function achTrack(update, { full = true } = {}) {
+  await achReady;
+  if (achFrozen) return;
+  try {
+    update(S.stats);
+  } catch {
+    return;
+  }
+  achMarkDirty();
+  return achCheck(full);
+}
+
+// ---- event helpers ----
+const achYmd = (d) =>
+  `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+function achTouchDay(s) {
+  const now = new Date(),
+    today = achYmd(now);
+  if (s.lastDay === today) return;
+  const yesterday = new Date(now);
+  yesterday.setDate(yesterday.getDate() - 1);
+  s.dayStreak = s.lastDay === achYmd(yesterday) ? s.dayStreak + 1 : 1;
+  s.bestDayStreak = Math.max(s.bestDayStreak, s.dayStreak);
+  s.totalDays++;
+  s.lastDay = today;
+}
+function achClock(s) {
+  const d = new Date(),
+    hour = d.getHours();
+  if (hour < 5) s.nightAttempts++;
+  else if (hour < 8) s.earlyAttempts++;
+  if (d.getDay() === 0 || d.getDay() === 6) s.weekendAttempts++;
+}
+function achOnAttempt(ex, key, correct, meta, firstTime) {
+  return achTrack((s) => {
+    achTouchDay(s);
+    achClock(s);
+    if (correct) {
+      if (s.failStreak >= 3) s.redemptions++;
+      s.failStreak = 0;
+      s.correctStreak++;
+      s.bestCorrectStreak = Math.max(s.bestCorrectStreak, s.correctStreak);
+      if (achSession.fails[key]) {
+        s.comebacks++;
+        achSession.fails[key] = 0;
+      }
+      if (firstTime) s.firstTry++;
+    } else {
+      s.fails++;
+      s.failStreak++;
+      s.bestFailStreak = Math.max(s.bestFailStreak, s.failStreak);
+      s.correctStreak = 0;
+      const sameExercise = (achSession.fails[key] =
+        (achSession.fails[key] || 0) + 1);
+      s.maxSameFails = Math.max(s.maxSameFails, sameExercise);
+      if (meta?.error) s.sqlErrors++;
+      if (meta?.blank) s.blankSubmits++;
+      if (achSession.peeked.has(key)) s.peekedFails++;
+      if (ex.type === "short-answer-self-check") s.selfWrong++;
+    }
+  });
+}
+function achPeek(ex, kind) {
+  const key = keyOf(ex),
+    once = kind + ":" + key;
+  achSession.peeked.add(key);
+  if (achSession.seenPeek.has(once)) return;
+  achSession.seenPeek.add(once);
+  achTrack(
+    (s) => {
+      if (kind === "hint") s.hints++;
+      else s.solutionPeeks++;
+    },
+    { full: false },
+  );
+}
+function achOnExam({ score, gradable, usedMs, limitMs, answered, timedOut }) {
+  return achTrack((s) => {
+    achTouchDay(s);
+    achClock(s);
+    if (answered === 0) s.blankExams++;
+    if (timedOut) s.timeouts++;
+    if (gradable <= 0) return;
+    const pct = score / gradable;
+    if (pct < 0.5) {
+      s.badExams++;
+      s.badExamStreak++;
+      s.bestBadExamStreak = Math.max(s.bestBadExamStreak, s.badExamStreak);
+    } else s.badExamStreak = 0;
+    if (gradable >= 3 && score === 0) s.zeroExams++;
+    if (gradable >= 4 && pct < 0.25) s.guessingExams++;
+    if (gradable >= 4 && score * 2 === gradable) s.halfExams++;
+    if (pct >= 0.5 && pct < 0.6) s.scrapeExams++;
+    if (gradable >= 5 && pct < 0.5 && usedMs < 60_000) s.speedFails++;
+    if (gradable >= 5 && pct === 1 && usedMs < limitMs / 2) s.speedPerfects++;
+    if (s.lastExamPct >= 0) {
+      if (pct < s.lastExamPct) {
+        s.declineStreak++;
+        s.bestDeclineStreak = Math.max(s.bestDeclineStreak, s.declineStreak);
+      } else s.declineStreak = 0;
+      if (s.lastExamPct < 0.4 && pct >= 0.8) s.examComebacks++;
+    }
+    s.lastExamPct = pct;
+  });
+}
+// ---- time spent: counts only while the tab is visible and the person is
+// actually interacting (scrolling, typing, clicking, moving the pointer).
+let achLastActivity = performance.now();
+let achRefStay = 0;
+let achLastPage = "";
+for (const type of [
+  "pointerdown",
+  "pointermove",
+  "keydown",
+  "wheel",
+  "scroll",
+  "touchstart",
+])
+  addEventListener(
+    type,
+    () => {
+      achLastActivity = performance.now();
+    },
+    { passive: true, capture: true },
+  );
+const achPage = () => {
+  const page = location.hash.split("/")[1] || "reader";
+  return pages[page] ? page : "reader";
+};
+function achOnRoute(page, subject) {
+  if (page !== achLastPage) achRefStay = 0;
+  achLastPage = page;
+  if ((page === "reader" || page === "canvas") && subject)
+    achTrack(
+      (s) => {
+        const list = page === "reader" ? s.refSubjects : s.canvasSubjects;
+        if (!list.includes(subject)) list.push(subject);
+      },
+      { full: false },
+    );
+}
+let achTickerStarted = false;
+function achStartTicker() {
+  if (achTickerStarted) return;
+  achTickerStarted = true;
+  setInterval(() => {
+    if (achFrozen || document.hidden || !document.hasFocus()) return;
+    if (performance.now() - achLastActivity > 90_000) return;
+    if (wassimEggActive) return;
+    const s = S.stats,
+      page = achPage();
+    s.activeSeconds++;
+    if (page === "reader") {
+      s.refSeconds++;
+      achRefStay++;
+      s.longestRefStay = Math.max(s.longestRefStay, achRefStay);
+    } else if (page === "canvas") s.canvasSeconds++;
+    achMarkDirty();
+    if (s.activeSeconds % 5 === 0) {
+      achTouchDay(s);
+      achCheck(false);
+    }
+  }, 1000);
+}
+
+// ---- popup UI (top right, one at a time) ----
+const ACH_KICKERS = {
+  bronze: "ACHIEVEMENT UNLOCKED",
+  silver: "ACHIEVEMENT UNLOCKED",
+  gold: "ACHIEVEMENT UNLOCKED",
+  platinum: "LEGENDARY ACHIEVEMENT",
+  shame: "FAILURE UNLOCKED",
+  wassim: "[ SYS//ACHIEVEMENT_LOGGED ]",
+  secret: "SECRET UNLOCKED",
+};
+const achStack = h("div", {
+  id: "ach-stack",
+  class: "ach-stack",
+  role: "status",
+  "aria-live": "polite",
+});
+// A manual popover lives in the top layer, so popups stay visible above the
+// full-screen easter egg and above modal dialogs.
+if (typeof achStack.showPopover === "function")
+  achStack.setAttribute("popover", "manual");
+else achStack.classList.add("ach-fallback");
+document.body.append(achStack);
+const achQueue = [];
+let achShowing = false;
+function achPopup(a) {
+  achQueue.push(a);
+  achPump();
+}
+function achPump() {
+  if (achShowing || !achQueue.length) return;
+  achShowing = true;
+  const a = achQueue.shift(),
+    backlog = achQueue.length,
+    duration = backlog >= 3 ? 2800 : backlog >= 1 ? 4200 : 6200,
+    tier = ACH_KICKERS[a.tier] ? a.tier : "silver",
+    reduced = reducedMotion.matches;
+  try {
+    achStack.hidePopover();
+  } catch {}
+  try {
+    achStack.showPopover();
+  } catch {}
+  const sparks = reduced
+    ? []
+    : Array.from({ length: 18 }, (_, i) => {
+        const angle = (i / 18) * Math.PI * 2 + Math.random() * 0.35,
+          distance = 52 + Math.random() * 62;
+        return h("i", {
+          class: "ach-spark",
+          style: `--dx:${(Math.cos(angle) * distance).toFixed(1)}px;--dy:${(Math.sin(angle) * distance).toFixed(1)}px;--sd:${(Math.random() * 0.18).toFixed(2)}s;--ss:${(0.7 + Math.random() * 0.7).toFixed(2)}`,
+        });
+      });
+  let timer = 0,
+    closed = false,
+    remaining = duration,
+    armedAt = 0;
+  const finish = () => {
+    if (closed) return;
+    closed = true;
+    clearTimeout(timer);
+    const done = () => {
+      toast.remove();
+      achShowing = false;
+      setTimeout(achPump, 280);
+    };
+    toast.classList.add("ach-leaving");
+    if (reduced) setTimeout(done, 200);
+    else setTimeout(done, 480);
+  };
+  const arm = () => {
+    armedAt = performance.now();
+    timer = setTimeout(finish, remaining);
+  };
+  const toast = h(
+    "div",
+    {
+      class: `ach-toast ach-tier-${tier}`,
+      style: `--ach-dur:${duration}ms`,
+      role: "group",
+      "aria-label": `Achievement unlocked: ${a.title}`,
+    },
+    h("span", { class: "ach-glow", "aria-hidden": "true" }),
+    h(
+      "span",
+      { class: "ach-clip", "aria-hidden": "true" },
+      h("span", { class: "ach-shine" }),
+      h("span", { class: "ach-timer" }),
+    ),
+    h(
+      "div",
+      { class: "ach-medal", "aria-hidden": "true" },
+      h("span", { class: "ach-ring" }),
+      h("span", { class: "ach-ring ach-ring-2" }),
+      h("span", { class: "ach-icon" }, a.icon || "★"),
+      h("span", { class: "ach-burst" }, sparks),
+    ),
+    h(
+      "div",
+      { class: "ach-text" },
+      h("span", { class: "ach-kicker" }, ACH_KICKERS[tier]),
+      h("strong", { class: "ach-title" }, a.title),
+      h("span", { class: "ach-detail" }, a.detail),
+      a.flavor ? h("em", { class: "ach-flavor" }, a.flavor) : "",
+    ),
+    h(
+      "button",
+      {
+        type: "button",
+        class: "ach-close",
+        "aria-label": "Dismiss achievement",
+      },
+      "×",
+    ),
+  );
+  toast.addEventListener("click", finish);
+  toast.addEventListener("pointerenter", () => {
+    if (closed) return;
+    clearTimeout(timer);
+    remaining -= performance.now() - armedAt;
+    toast.classList.add("ach-paused");
+  });
+  toast.addEventListener("pointerleave", () => {
+    if (closed) return;
+    toast.classList.remove("ach-paused");
+    remaining = Math.max(remaining, 1500);
+    arm();
+  });
+  achStack.append(toast);
+  arm();
 }
 
 // ---------- content loading ----------
@@ -1710,6 +2306,7 @@ function qView(
         onclick: async () => {
           const currentRun = ++runId;
           const sql = ta.value; // capture, in case they edit while it runs
+          achTrack((s) => void s.runs++, { full: false });
           fb.replaceChildren();
           out.replaceChildren(
             loadingNote(
@@ -1739,6 +2336,7 @@ function qView(
     ta.onkeydown = (e) => {
       if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
         e.preventDefault();
+        achTrack((s) => void s.shortcuts++, { full: false });
         if (e.shiftKey && mode === "practice") {
           submitButton?.click();
           return;
@@ -1773,7 +2371,10 @@ function qView(
             // Show the result table of the submitted query, like Run does.
             out.replaceChildren(g.res ? table(g.res) : "");
             if (g.correct !== null)
-              await rec(ex, g.correct, "practice", onAttempt);
+              await rec(ex, g.correct, "practice", onAttempt, {
+                error: Boolean(g.error),
+                blank: !ta.value.trim(),
+              });
             if (currentGrading !== gradingId || !q.isConnected) return;
             if (g.correct === true) {
               markExerciseCorrect();
@@ -2051,6 +2652,7 @@ function qView(
           class: "sec",
           onclick: () => {
             const showHints = hintPanel.hidden;
+            if (showHints && mode === "practice") achPeek(ex, "hint");
             hintPanel.hidden = !showHints;
             hintPanel.replaceChildren(
               ...(showHints
@@ -2208,6 +2810,7 @@ function qView(
           "aria-expanded": "false",
           onclick: () => {
             solution.hidden = !solution.hidden;
+            if (!solution.hidden && mode === "practice") achPeek(ex, "solution");
             toggle.textContent = solution.hidden
               ? "Show solution"
               : "Hide solution";
@@ -4169,6 +4772,7 @@ async function pageExam(root, isCurrent = () => true) {
     }
     try {
       await discardExamState();
+      achTrack((s) => void s.discards++, { full: false });
     } catch (error) {
       root.append(empty("Could not discard the saved exam.", error.message));
       return;
@@ -4657,6 +5261,7 @@ async function runExam(root, st) {
     ),
     session = h("section", { class: "exam-session" }, top, workspace);
   let done = false;
+  let autoSubmitted = false;
   let autosaveTimer;
   const submit = async () => {
     if (done || st.submitted) return;
@@ -4702,6 +5307,19 @@ async function runExam(root, st) {
       cfg: st.cfg,
     });
     await kv.set("examHistory", hist);
+    achOnExam({
+      score,
+      gradable,
+      usedMs: st.startedAt ? Date.now() - st.startedAt : Infinity,
+      limitMs: (st.cfg?.mins || 0) * 60000,
+      answered: exs.filter((ex) => {
+        const a = st.answers[keyOf(ex)];
+        return Array.isArray(a)
+          ? a.length > 0
+          : a != null && String(a).trim() !== "";
+      }).length,
+      timedOut: autoSubmitted,
+    });
     st.submitted = true;
     await discardExamState();
     root.replaceChildren(
@@ -4889,6 +5507,7 @@ async function runExam(root, st) {
     if (ms <= 0) {
       timer.textContent = "00:00";
       timer.classList.add("urgent");
+      autoSubmitted = true;
       submit();
       return;
     }
@@ -4949,11 +5568,10 @@ async function runExam(root, st) {
   if (!done) show(Math.min(st.cur || 0, exs.length - 1));
 }
 
-async function pageProgress(root) {
-  const ex = S.exercises,
-    reset = resetLocalDataControl(root);
-  const savedExamHistory = await kv.get("examHistory", []);
-  const examHistory = Array.isArray(savedExamHistory) ? savedExamHistory : [];
+// Everything the Progress page and the achievement popups derive from the
+// saved results. Kept separate so both always agree on what is earned.
+function computeProgress(examHistory) {
+  const ex = S.exercises;
   const xp = Object.values(S.xpRewards).reduce(
     (sum, reward) => sum + (Number.isFinite(reward?.xp) ? reward.xp : 0),
     0,
@@ -4998,7 +5616,7 @@ async function pageProgress(root) {
   const highScoreExams = examHistory.filter(
     (exam) => exam.total > 0 && exam.score / exam.total >= 0.9,
   ).length;
-  const achievements = [
+  const baseAchievements = [
     {
       title: "First Clear",
       detail: "Solve your first exercise",
@@ -5398,6 +6016,42 @@ async function pageProgress(root) {
       },
     ]),
   ];
+  baseAchievements.forEach((a) => {
+    a.id ??= "base:" + a.title;
+    a.icon ??= "🏆";
+    a.tier ??= "silver";
+  });
+  const achievements = [...baseAchievements, ...customAchievements()];
+  return {
+    ex,
+    xp,
+    level,
+    levelXp,
+    attempts,
+    unlocked,
+    solved,
+    courseStats,
+    attemptedLatest,
+    latestAccuracy,
+    achievements,
+  };
+}
+async function pageProgress(root) {
+  const ex = S.exercises,
+    reset = resetLocalDataControl(root);
+  await achReady; // stats must be loaded before the stat-based achievements are drawn
+  const savedExamHistory = await kv.get("examHistory", []);
+  const examHistory = Array.isArray(savedExamHistory) ? savedExamHistory : [];
+  const {
+    xp,
+    level,
+    levelXp,
+    attempts,
+    unlocked,
+    solved,
+    courseStats,
+    achievements,
+  } = computeProgress(examHistory);
   const academicRank =
     level >= 20
       ? "Distinguished Scholar"
@@ -5520,29 +6174,37 @@ async function pageProgress(root) {
     );
     const earnedAchievements = achievements.filter((a) => a.count >= a.target);
     const lockedAchievements = achievements.filter((a) => a.count < a.target);
-    const nextAchievement = lockedAchievements[0];
-    const achievementCard = (a, earned) =>
-      h(
+    const nextAchievement = lockedAchievements.find((a) => !a.secret);
+    const achievementCard = (a, earned) => {
+      const hidden = a.secret && !earned,
+        title = hidden ? "Secret achievement" : a.title,
+        detail = hidden ? "Keep exploring to find this one." : a.detail,
+        value = hidden ? 0 : Math.min(a.count, a.target);
+      return h(
         "article",
-        { class: "achievement" + (earned ? " earned" : "") },
+        {
+          class: "achievement" + (earned ? " earned" : ""),
+          title: earned && a.flavor ? a.flavor : null,
+        },
         h(
           "span",
           { class: "achievement-mark", "aria-hidden": "true" },
-          earned ? "★" : "◇",
+          earned ? a.icon || "★" : hidden ? "?" : "◇",
         ),
-        h("div", {}, h("strong", {}, a.title), h("small", {}, a.detail)),
+        h("div", {}, h("strong", {}, title), h("small", {}, detail)),
         h(
           "span",
           { class: "achievement-progress" },
-          earned ? "Unlocked" : `${Math.min(a.count, a.target)} / ${a.target}`,
+          earned ? "Unlocked" : hidden ? "???" : `${value} / ${a.target}`,
         ),
         h("progress", {
           class: "achievement-meter",
           max: a.target,
-          value: Math.min(a.count, a.target),
-          "aria-label": `${a.title}: ${Math.min(a.count, a.target)} of ${a.target}`,
+          value,
+          "aria-label": `${title}: ${value} of ${a.target}`,
         }),
       );
+    };
     achievementPreview.replaceChildren(
       ...lockedAchievements.slice(0, 6).map((a) => achievementCard(a, false)),
     );
@@ -5703,10 +6365,12 @@ function resetLocalDataControl(root) {
         button.disabled = true;
         status.textContent = "Clearing saved app data…";
         try {
+          achFrozen = true; // stop saving stats while everything is wiped
           await kv.clear();
           localStorage.removeItem(ACTIVE_EXAM_CHECKPOINT);
           location.reload();
         } catch (e) {
+          achFrozen = false;
           button.disabled = false;
           status.textContent = "Could not reset saved data: " + e.message;
         }
@@ -5765,6 +6429,7 @@ function updateThemeToggle() {
   updatePlantUmlImageTheme();
 }
 themeToggle?.addEventListener("click", () => {
+  achTrack((s) => void s.themeToggles++, { full: false });
   const nextTheme = currentTheme() === "dark" ? "light" : "dark";
   document.documentElement.dataset.theme = nextTheme;
   updateThemeToggle();
@@ -5848,6 +6513,7 @@ function triggerWassimSignal() {
   if (!periodicToast) return;
 
   setTimeout(() => {
+    achTrack((s) => void s.watches++, { full: false });
     periodicToast.replaceChildren(
       h("span", { class: "periodic-toast-prefix" }, "[ SYS//MONITOR ]"),
       h(
@@ -6029,6 +6695,7 @@ async function route() {
   const view = h("div");
   main.append(view);
   routeShown = { page, subject: routeSubject(page, arg) };
+  achOnRoute(page, routeShown.subject);
   // The page functions build their markup before their first await, so the
   // view is ready to animate straight away while content keeps loading.
   const run =
@@ -6066,7 +6733,10 @@ addEventListener("hashchange", route);
 addEventListener("popstate", route);
 
 loadContent()
-  .then(route)
+  .then(() => {
+    achInit(); // loads stats and starts the achievement popups
+    return route();
+  })
   .catch((e) => {
     $("#main").textContent = "Startup error: " + e.message;
   });
@@ -6116,6 +6786,15 @@ function launchWassimEasterEgg() {
   wassimUsedMemes.add(selected.index);
 
   const meme = selected.meme;
+  const openedAt = performance.now();
+  achTrack(
+    (s) => {
+      s.eggOpens++;
+      const id = String(meme.title ?? selected.index);
+      if (!s.eggMemes.includes(id)) s.eggMemes.push(id);
+    },
+    { full: false },
+  );
   const text = {
     kicker: String(meme.kicker ?? ""),
     title: String(meme.title ?? ""),
@@ -6344,6 +7023,14 @@ function launchWassimEasterEgg() {
   }
 
   function closeEasterEgg() {
+    if (!finished)
+      achTrack(
+        (s) => {
+          s.eggSkips++;
+          if (performance.now() - openedAt < 1500) s.eggQuickSkips++;
+        },
+        { full: false },
+      );
     finishEasterEgg();
   }
 
@@ -6372,7 +7059,10 @@ function launchWassimEasterEgg() {
   overlay.focus({ preventScroll: true });
 
   // Automatic closing synchronized with the progress bar.
-  closeTimer = window.setTimeout(finishEasterEgg, closeDuration);
+  closeTimer = window.setTimeout(() => {
+    if (!finished) achTrack((s) => void s.eggFull++, { full: false });
+    finishEasterEgg();
+  }, closeDuration);
 }
 
 // Keep the rain column counter local to each launch.
@@ -6400,6 +7090,7 @@ focusButton.addEventListener("click", () => {
   const isPressed = focusButton.getAttribute("aria-pressed") === "true";
   if (!isPressed) {
     hideClickme();
+    achTrack((s) => void s.zenOn++, { full: false });
   }
   focusButton.title = focusButton.querySelector(".focus-label").textContent =
     isPressed ? "Hide distractions" : "Enable distractions";
@@ -6417,6 +7108,7 @@ wassimSign.addEventListener("click", () => {
   clearTimeout(clickTimer);
 
   if (clickCount >= 5) {
+    achTrack((s) => void s.signToggles++, { full: false });
     if (!focusButton.hidden) {
       focusButton.hidden = true;
       focusButton.setAttribute("aria-pressed", "false");
