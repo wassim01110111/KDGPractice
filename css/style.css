@@ -1386,11 +1386,10 @@ nav.reference-tabs a.reference-tab.on .reference-tab-label {
 }
 .reference-sidebar {
   position: sticky;
-  top: 5rem;
+  top: 8rem;
   display: grid;
   align-self: start;
   gap: 0.75rem;
-  max-height: calc(100dvh - 6rem);
 }
 .reference-search-panel {
   padding: 0.75rem;
@@ -1521,7 +1520,7 @@ nav.reference-tabs a.reference-tab.on .reference-tab-label {
   overflow: visible;
 }
 .reference-sidebar > .reference-toc[open] {
-  max-height: calc(100dvh - 13rem);
+  max-height: calc(100dvh - 18rem);
 }
 .reference-toc summary span {
   margin-left: auto;
@@ -6262,5 +6261,149 @@ header > #nav a:not(.reference-tab):focus-visible::after {
 
   .header-tools > #wassim-sign .maker-cursor {
     animation: none;
+  }
+}
+
+/* =========================================
+   HACKER / CYBER SCROLLBAR SYSTEM
+   ========================================= */
+
+:root {
+  --scroll-track: transparent;
+  --scroll-thumb: #315bd6;
+  --scroll-glow: rgb(49 91 214 / 35%);
+  --scroll-hover: #527cff;
+  --scroll-active: #8ba9ff;
+  --scroll-width: 12px;
+}
+
+:root[data-theme="dark"] {
+  --scroll-thumb: #527cff;
+  --scroll-glow: rgb(82 124 255 / 55%);
+  --scroll-hover: #8ba9ff;
+  --scroll-active: #c0d0ff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --scroll-thumb: #527cff;
+    --scroll-glow: rgb(82 124 255 / 55%);
+    --scroll-hover: #8ba9ff;
+    --scroll-active: #c0d0ff;
+  }
+}
+
+/* Global Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scroll-thumb) var(--scroll-track);
+}
+
+/* Global WebKit */
+*::-webkit-scrollbar {
+  width: var(--scroll-width);
+  height: var(--scroll-width);
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--scroll-track);
+  border-radius: 20px;
+  margin: 3px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    180deg,
+    var(--scroll-hover),
+    var(--scroll-thumb) 45%,
+    var(--ac-hover)
+  );
+  border: 3px solid transparent;
+  background-clip: padding-box;
+  border-radius: 20px;
+  box-shadow: inset 0 0 5px var(--scroll-glow);
+  transition:
+    background 0.25s ease,
+    box-shadow 0.25s ease,
+    border 0.2s ease;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    180deg,
+    var(--scroll-active),
+    var(--scroll-hover),
+    var(--scroll-thumb)
+  );
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  box-shadow:
+    0 0 5px var(--scroll-glow),
+    0 0 12px var(--scroll-glow),
+    inset 0 0 5px rgb(255 255 255 / 25%);
+}
+
+*::-webkit-scrollbar-thumb:active {
+  background: var(--scroll-active);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  box-shadow:
+    0 0 8px var(--scroll-glow),
+    0 0 18px var(--scroll-glow);
+}
+
+*::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-button {
+  display: none;
+}
+
+/* =========================================
+   CYBER ACCENT SCANLINE
+   ========================================= */
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Selection styling */
+::selection {
+  color: #fff;
+  background: var(--ac);
+}
+
+/* =========================================
+   INTERACTIVE SCROLL CONTAINERS
+   ========================================= */
+
+* {
+  overscroll-behavior: contain;
+}
+
+textarea,
+pre,
+.code-editor,
+.terminal,
+.terminal-output,
+.sidebar,
+.modal,
+.dropdown,
+.scroll-container {
+  scrollbar-width: thin;
+}
+
+/* =========================================
+   ACCESSIBILITY
+   ========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    transition: none;
   }
 }
