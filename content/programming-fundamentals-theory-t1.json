@@ -20,9 +20,7 @@
         "The source file only; the target computer converts it automatically without a compiler or interpreter",
         "A Java `.class` file for each architecture"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Distinguish portable source code from the machine-specific binary produced by compilation."
       ],
@@ -44,9 +42,7 @@
         "Python source code can run only on the processor on which it was written",
         "The JDK is required because Python programs execute as Java bytecode"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Think about what performs the translation/execution on the target system."
       ],
@@ -68,9 +64,7 @@
         "Java recompiles the original `.java` source on the target, even though only the `.class` file was copied",
         "The processor treats Java bytecode as ordinary native instructions"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Identify what the JVM does and what is shared between the two machines."
       ],
@@ -86,15 +80,8 @@
       "examEligible": true,
       "provenance": "M1_Basic_concepts.pdf",
       "contentVersion": 3,
-      "options": [
-        "JDK",
-        "JRE only",
-        "JVM only",
-        "IDE only"
-      ],
-      "expected": [
-        0
-      ],
+      "options": ["JDK", "JRE only", "JVM only", "IDE only"],
+      "expected": [0],
       "hints": [
         "Separate the runtime needed by users from the toolset needed by developers."
       ],
@@ -116,9 +103,7 @@
         "`javac Hello.class`, followed by `java Hello.java`",
         "`java Hello`, followed by `javac Hello.java`"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "One command compiles source into bytecode; the other starts the JVM for the compiled class."
       ],
@@ -140,9 +125,7 @@
         "Add\n```java\npackage Scanner;\n```\ninside the main method",
         "Rename the source file to `Scanner.class`"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Consider whether Scanner is automatically available in every source file or belongs to a library package."
       ],
@@ -164,9 +147,7 @@
         "In the first method in alphabetical order",
         "In whichever class contains the most attributes"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Think about the method the runtime looks for when starting a basic Java application."
       ],
@@ -188,9 +169,7 @@
         "Put all source files into one method",
         "Rename both classes to `main`"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Consider how a package relates to a group of source files and to class names."
       ],
@@ -212,9 +191,7 @@
         "Describe only the final pizza and omit the actions required to order it",
         "Convert the instruction directly to a Java class name"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Ask whether each step tells the machine exactly what information to use and what action to perform."
       ],
@@ -236,9 +213,7 @@
         "Display the sum; request the first number; calculate; request the second number",
         "Request the first number; display it as the sum; request the second number"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "A calculation cannot use values that have not yet been obtained."
       ],
@@ -261,12 +236,7 @@
         "Compute or compare values to determine the response",
         "Run the same output step exactly once and then stop"
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "expected": [0, 1, 2, 3],
       "hints": [
         "Trace one unsuccessful guess and then a successful guess. What must the algorithm do in both cases?"
       ],
@@ -288,9 +258,7 @@
         "Run Java bytecode without a JVM",
         "Store the source only and omit all translation"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Compare the course’s stated execution-speed and processor-dependency trade-offs."
       ],
@@ -312,9 +280,7 @@
         "The JRE contains only an editor; the JDK contains only bytecode",
         "The JDK is needed on every computer that runs a Java application"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Think of the execution engine, the runtime package around it, and the extra tools used to develop programs."
       ],
@@ -336,9 +302,7 @@
         "`String` for all three values",
         "`boolean` for age, `int` for distance, `double` for the lock state"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Match each value to whether it is a whole number, a potentially fractional number or a true/false state."
       ],
@@ -360,9 +324,7 @@
         "Store it in a variable named `vat` and rely on the programmer not to change it",
         "Declare it as a local variable inside every calculation"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Look for the language feature that prevents reassignment after initialization and avoids repeated literal values."
       ],
@@ -384,9 +346,7 @@
         "```java\ndouble whole = (int) price;\n```",
         "```java\nint whole = price + 0.0;\n```"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "The conversion goes from a floating-point type to an integer type, so consider an explicit cast."
       ],
@@ -408,9 +368,7 @@
         "`2.0` and `2.0`",
         "`2` and `3`"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Determine the type of the division before considering the type of the variable receiving its result."
       ],
@@ -426,15 +384,8 @@
       "examEligible": true,
       "provenance": "M2_Variables_Operators.pdf",
       "contentVersion": 3,
-      "options": [
-        "8",
-        "9",
-        "8.9",
-        "The statement cannot compile"
-      ],
-      "expected": [
-        0
-      ],
+      "options": ["8", "9", "8.9", "The statement cannot compile"],
+      "expected": [0],
       "hints": [
         "An explicit cast to an integer does not perform the same operation as rounding to the nearest integer."
       ],
@@ -456,9 +407,7 @@
         "`itemNumber % 5 == 1`",
         "`itemNumber * 5 == 0`"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "The remainder is zero exactly when the number is divisible by five."
       ],
@@ -480,9 +429,7 @@
         "`first = 4`, `second = 5`, `i = 5`",
         "`first = 5`, `second = 5`, `i = 5`"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Trace each statement separately: post-increment uses the old value first; pre-increment changes the value before it is used."
       ],
@@ -504,9 +451,7 @@
         "`total = 2`, `step = 17`",
         "`total = 17`, `step = 7`"
       ],
-      "expected": [
-        1
-      ],
+      "expected": [1],
       "hints": [
         "Rewrite each compound assignment as an ordinary calculation followed by assignment, then evaluate in order."
       ],
@@ -528,9 +473,7 @@
         "`age >= 18 || age <= 67`",
         "`age > 18 && age < 67`"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Both limits must be satisfied, and “through” means the endpoints are included."
       ],
@@ -552,9 +495,7 @@
         "`score >= 0 && score <= 100`",
         "`score == 0 || score == 100`"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "An invalid value is either below the minimum or above the maximum; it cannot be both at once."
       ],
@@ -576,9 +517,7 @@
         "```java\navailable || false\n```",
         "```java\navailable && false\n```"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the unary logical operator that reverses a boolean value."
       ],
@@ -594,18 +533,9 @@
       "examEligible": true,
       "provenance": "M2_Variables_Operators.pdf",
       "contentVersion": 3,
-      "options": [
-        "14",
-        "20",
-        "24",
-        "11"
-      ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "Multiplication has higher precedence than addition."
-      ],
+      "options": ["14", "20", "24", "11"],
+      "expected": [0],
+      "hints": ["Multiplication has higher precedence than addition."],
       "explanation": "The multiplication is evaluated first: 3 × 4 = 12. Then 2 is added, so the result is 14. Parentheses would make a different intended grouping explicit."
     },
     "pfj-026": {
@@ -624,12 +554,8 @@
         "`priceA * discountRate + priceB`",
         "`priceA + priceB / discountRate`"
       ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "The subtotal must be calculated before the rate is applied."
-      ],
+      "expected": [0],
+      "hints": ["The subtotal must be calculated before the rate is applied."],
       "explanation": "Parentheses group the two prices into one subtotal, and multiplication then applies the discount rate to that subtotal. Without the parentheses, multiplication binds more tightly than addition."
     },
     "pfj-027": {
@@ -648,12 +574,8 @@
         "`!isAdministrator && !accountActive`",
         "`isAdministrator == accountActive`"
       ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "The rule requires both independent requirements to hold."
-      ],
+      "expected": [0],
+      "hints": ["The rule requires both independent requirements to hold."],
       "explanation": "Both administrator status and active-account status are mandatory, so the conditions must be joined with logical AND (`&&`). OR would allow either one alone to grant access."
     },
     "pfj-028": {
@@ -672,9 +594,7 @@
         "```java\nsum == next;\n```",
         "```java\nsum + next;\n```"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "The operation must both calculate the sum and store it back in the original variable."
       ],
@@ -692,13 +612,11 @@
       "contentVersion": 3,
       "options": [
         "```java\nchar grade = 'B';\n```",
-        "`String grade = B;",
-        "`boolean grade = \"B\";",
-        "`int grade = \"B\";"
+        "```java\nString grade = B;\n```",
+        "```java\nboolean grade = \"B\";\n```",
+        "```java\nint grade = \"B\";\n```"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "A single character literal uses a different form from a text String."
       ],
@@ -720,9 +638,7 @@
         "```java\nSystem.out.println(Welcome to \"Java\");\n```",
         "```java\nSystem.out.println(\"Welcome to \\nJava\");\n```"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "The double quotes that delimit a String literal must be distinguished from quotes that should appear in the output."
       ],
@@ -744,9 +660,7 @@
         "```java\nString status = age >= 18 && \"adult\";\n```",
         "```java\nString status = age >= 18: \"adult\" ? \"minor\";\n```"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "A conditional expression has a condition followed by the true value and the false value, separated by `?` and `:`."
       ],
@@ -768,9 +682,7 @@
         "`(int) (score1 + score2) / 2.0`",
         "`score1 % score2`"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "At least one operand in the division must be floating point before the division takes place."
       ],
@@ -792,9 +704,7 @@
         "Use a new randomly generated limit in each method",
         "Declare a local variable with a different value in each method"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Look for a single source of truth that cannot accidentally be changed at runtime."
       ],
@@ -816,9 +726,7 @@
         "Use four independent `if` statements and allow every matching branch to run",
         "Test only whether the score is greater than zero"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "An `else if` chain executes the first matching branch, so consider what happens to a score of 95 if the lowest threshold is tested first."
       ],
@@ -834,15 +742,8 @@
       "examEligible": true,
       "provenance": "M3_FlowControl_Functions.pdf",
       "contentVersion": 3,
-      "options": [
-        "B",
-        "A",
-        "C",
-        "D"
-      ],
-      "expected": [
-        0
-      ],
+      "options": ["B", "A", "C", "D"],
+      "expected": [0],
       "hints": [
         "Check the lower boundary of each band; the band beginning at 80 includes 80."
       ],
@@ -858,15 +759,8 @@
       "examEligible": true,
       "provenance": "M3_FlowControl_Functions.pdf",
       "contentVersion": 3,
-      "options": [
-        "AB",
-        "A",
-        "B",
-        "ABC"
-      ],
-      "expected": [
-        0
-      ],
+      "options": ["AB", "A", "B", "ABC"],
+      "expected": [0],
       "hints": [
         "In a traditional switch, follow execution after the first matching label until a `break` is reached."
       ],
@@ -888,9 +782,7 @@
         "Use a separate switch statement for each month",
         "Omit the case labels and rely on the default branch"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Multiple labels can lead to the same sequence of statements when no statement separates them."
       ],
@@ -912,9 +804,7 @@
         "The switch should repeat every case in order",
         "The compiler should choose the closest numeric case"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Consider how the program can provide a defined response when no case matches."
       ],
@@ -936,9 +826,7 @@
         "Because switch expressions cannot contain String labels",
         "Because Java automatically assigns null to an uncovered case"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "The result is assigned to a variable, so consider what happens when the input does not match any listed alternative."
       ],
@@ -960,9 +848,7 @@
         "```java\ncontinue \"invalid\";\n```",
         "```java\nSystem.out.print(\"invalid\");\n```"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "A multi-statement case block in a switch expression needs an explicit value-producing statement."
       ],
@@ -984,9 +870,7 @@
         "A `do` loop with no condition",
         "A sequence of ten separate `if` statements"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Choose a loop whose continuation can be based on a condition rather than a predetermined count."
       ],
@@ -1008,9 +892,7 @@
         "`println` automatically resets the counter to zero",
         "The loop needs a `default` branch"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Trace the variable used by the condition and check whether the loop body changes it."
       ],
@@ -1032,9 +914,7 @@
         "A `for` loop with an initially false condition",
         "A switch statement"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Compare whether the condition is checked before or after the first execution of the body."
       ],
@@ -1056,9 +936,7 @@
         "```java\nfor (int i = 0; i < 5; i++)\n```",
         "```java\nfor (int i = 1; i >= 5; i++)\n```"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "The upper-bound comparison must still be true when the counter is exactly 5."
       ],
@@ -1074,15 +952,8 @@
       "examEligible": true,
       "provenance": "M3_FlowControl_Functions.pdf",
       "contentVersion": 3,
-      "options": [
-        "`2 4 6 8`",
-        "`2 4 6`",
-        "`2 3 4 5 6 7 8`",
-        "`4 6 8 10`"
-      ],
-      "expected": [
-        0
-      ],
+      "options": ["`2 4 6 8`", "`2 4 6`", "`2 3 4 5 6 7 8`", "`4 6 8 10`"],
+      "expected": [0],
       "hints": [
         "Start with the initialization, check the condition before each iteration, then apply the modification after the body."
       ],
@@ -1104,9 +975,7 @@
         "```java\nint i = 0;\nwhile (i < 4) {\n    i++;\n    System.out.println(i);\n}\n```",
         "```java\nwhile (int i = 0; i < 4; i++) {\n    System.out.println(i);\n}\n```"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Preserve the for loop’s order: initialize once, check before the body, then increment after the body."
       ],
@@ -1122,15 +991,8 @@
       "examEligible": true,
       "provenance": "M3_FlowControl_Functions.pdf",
       "contentVersion": 3,
-      "options": [
-        "`124`",
-        "`1234`",
-        "`12345`",
-        "`12`"
-      ],
-      "expected": [
-        0
-      ],
+      "options": ["`124`", "`1234`", "`12345`", "`12`"],
+      "expected": [0],
       "hints": [
         "`continue` skips the rest of the current iteration; `break` exits the loop entirely."
       ],
@@ -1152,9 +1014,7 @@
         "The first print statement cannot use `total` because it was declared outside the block",
         "The declaration of `bonus` changes the value of `total`"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "A variable declared in an outer block can be used in a nested block; a variable declared in the nested block does not escape it."
       ],
@@ -1176,9 +1036,7 @@
         "Declare `result` again after the `if` and expect the inner value to carry over",
         "Change the variable type from `int` to `double`"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "The variable must be declared in a scope that includes both the assignment and the return statement."
       ],
@@ -1200,9 +1058,7 @@
         "The second declaration automatically overwrites the first variable",
         "Local variables are shared across all methods"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Compare the visibility regions created by the two pairs of curly braces."
       ],
@@ -1224,9 +1080,7 @@
         "Place all input statements in a comment",
         "Replace the input procedure with a class name"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Look for a named block of code that can be called repeatedly from different locations."
       ],
@@ -1248,9 +1102,7 @@
         "A method with no parameters that always returns 0",
         "A method with return type `String` that changes the caller’s variables"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "The caller needs a value it can assign and use in later calculations."
       ],
@@ -1266,15 +1118,8 @@
       "examEligible": true,
       "provenance": "M3_FlowControl_Functions.pdf",
       "contentVersion": 3,
-      "options": [
-        "`void`",
-        "`int`",
-        "`double`",
-        "`boolean`"
-      ],
-      "expected": [
-        0
-      ],
+      "options": ["`void`", "`int`", "`double`", "`boolean`"],
+      "expected": [0],
       "hints": [
         "Choose a return type based on whether the method must give a value back to its caller."
       ],
@@ -1296,9 +1141,7 @@
         "```java\naverage(a, b, c) = 2;\n```",
         "```java\nSystem.out.println(void);\n```"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "A non-void method call evaluates to a value that can participate in another expression."
       ],
@@ -1320,9 +1163,7 @@
         "The fields are objects and the methods are classes",
         "The class and the particular car are the same thing"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Separate the general description shared by a type from one individual instance with its own state."
       ],
@@ -1344,9 +1185,7 @@
         "Only attributes, because objects do not have behavior",
         "Only methods, because object state is stored in the class name"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Classify each item as information about the current state or an action the object can perform."
       ],
@@ -1368,9 +1207,7 @@
         "The second declaration copies the first object automatically",
         "Both variables are primitive integers"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Each execution of `new` creates an object; a seed controls the generated sequence, not object identity."
       ],
@@ -1392,9 +1229,7 @@
         "`generator.nextInt(1, 6)`",
         "`generator.nextDouble() * 6`"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "The one-argument `nextInt` starts at zero and excludes its bound; shift the range if the die starts at one."
       ],
@@ -1416,12 +1251,8 @@
         "`generator.nextInt(100) + 50`",
         "`generator.nextInt(49, 100)`"
       ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "The origin is included and the upper bound is excluded."
-      ],
+      "expected": [0],
+      "hints": ["The origin is included and the upper bound is excluded."],
       "explanation": "`nextInt(50, 100)` can return 50 up to 99. The second argument is exclusive, so using 99 would omit 99."
     },
     "pfj-060": {
@@ -1440,9 +1271,7 @@
         "Use `nextBoolean()` instead of `nextInt()`",
         "Set the seed to a different value for each test run"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "A seeded pseudo-random generator reproduces its sequence when initialized with the same seed."
       ],
@@ -1464,9 +1293,7 @@
         "1",
         "A new Player object is created when `p1` changes"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "The second assignment copies a reference, not a separate copy of the object."
       ],
@@ -1488,9 +1315,7 @@
         "0, because changing `a` clears `b`",
         "The code does not compile because primitives cannot be assigned"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Primitive assignment copies the current value rather than creating an alias to the original variable."
       ],
@@ -1512,9 +1337,7 @@
         "The object is copied into every remaining variable",
         "The program must call `delete` on the object"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Consider whether any reference remains and whether garbage collection is immediate or automatic."
       ],
@@ -1536,9 +1359,7 @@
         "Declare a local variable named `java.util`",
         "Put the import statement inside the constructor body"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "An import makes a class name available without writing its fully qualified package name each time."
       ],
@@ -1560,9 +1381,7 @@
         "`fish`",
         "The program does not compile"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "A String method that appears to modify text may instead return a different String object."
       ],
@@ -1584,9 +1403,7 @@
         "```java\nword = word.length();\n```",
         "```java\nString combined = word.length();\n```"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Since Strings cannot be changed in place, the method’s returned String must be stored if it is needed."
       ],
@@ -1602,15 +1419,8 @@
       "examEligible": true,
       "provenance": "M4_OO_Programming_Objects.pdf",
       "contentVersion": 3,
-      "options": [
-        "`equals()`",
-        "`==`",
-        "`compareTo() == 1`",
-        "`length()`"
-      ],
-      "expected": [
-        0
-      ],
+      "options": ["`equals()`", "`==`", "`compareTo() == 1`", "`length()`"],
+      "expected": [0],
       "hints": [
         "Separate object identity from equality of the character contents."
       ],
@@ -1632,12 +1442,8 @@
         "`a == c` must be true because the contents match",
         "All three variables must refer to separate objects"
       ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "Use `equals` for the text and `==` for reference identity."
-      ],
+      "expected": [0],
+      "hints": ["Use `equals` for the text and `==` for reference identity."],
       "explanation": "The explicit `new String` creates a distinct object, so `a == c` is false. Their characters are the same, so `a.equals(c)` is true."
     },
     "pfj-069": {
@@ -1650,15 +1456,8 @@
       "examEligible": true,
       "provenance": "M4_OO_Programming_Objects.pdf",
       "contentVersion": 3,
-      "options": [
-        "`nextLine()`",
-        "`next()`",
-        "`nextInt()`",
-        "`nextBoolean()`"
-      ],
-      "expected": [
-        0
-      ],
+      "options": ["`nextLine()`", "`next()`", "`nextInt()`", "`nextBoolean()`"],
+      "expected": [0],
       "hints": [
         "One method reads only up to the next whitespace; the other reads the remainder of the line."
       ],
@@ -1680,9 +1479,7 @@
         "Call `keyboard.nextLine()` before reading the age",
         "Create a new String object before calling `nextLine()`"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "The Enter key leaves a line terminator in the input buffer after the integer has been read."
       ],
@@ -1704,9 +1501,7 @@
         "`Random`, because it stores text efficiently",
         "`Scanner`, because it combines input fragments automatically"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Consider which of the two text classes is mutable and is designed for repeated changes."
       ],
@@ -1722,15 +1517,8 @@
       "examEligible": true,
       "provenance": "M4_OO_Programming_Objects.pdf",
       "contentVersion": 3,
-      "options": [
-        "`ABC`",
-        "`A`",
-        "`BC`",
-        "`CBA`"
-      ],
-      "expected": [
-        0
-      ],
+      "options": ["`ABC`", "`A`", "`BC`", "`CBA`"],
+      "expected": [0],
       "hints": [
         "Each append adds its argument to the current end of the same builder; the calls can be chained."
       ],
@@ -1746,15 +1534,8 @@
       "examEligible": true,
       "provenance": "M4_OO_Programming_Objects.pdf",
       "contentVersion": 3,
-      "options": [
-        "`reward`",
-        "`drawer`",
-        "`draw`",
-        "`rewarddrawer`"
-      ],
-      "expected": [
-        0
-      ],
+      "options": ["`reward`", "`drawer`", "`draw`", "`rewarddrawer`"],
+      "expected": [0],
       "hints": [
         "The method reverses the order of the characters in the builder."
       ],
@@ -1776,9 +1557,7 @@
         "`10 items 10`",
         "`3 7 items 3 7`"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Before a String is reached, `+` performs numeric addition; after a String is involved, it concatenates from left to right."
       ],
@@ -1800,9 +1579,7 @@
         "```java\nSystem.out.format(...)\n```",
         "```java\nSystem.out.println(...)\n```"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Distinguish methods that display output from the method that returns a String value."
       ],
@@ -1818,15 +1595,8 @@
       "examEligible": true,
       "provenance": "M4_OO_Programming_Objects.pdf",
       "contentVersion": 3,
-      "options": [
-        "`%.2f`",
-        "`%d`",
-        "`%s`",
-        "`%c`"
-      ],
-      "expected": [
-        0
-      ],
+      "options": ["`%.2f`", "`%d`", "`%s`", "`%c`"],
+      "expected": [0],
       "hints": [
         "Choose the floating-point specifier and set the requested number of decimal places."
       ],
@@ -1842,15 +1612,8 @@
       "examEligible": true,
       "provenance": "M4_OO_Programming_Objects.pdf",
       "contentVersion": 3,
-      "options": [
-        "`%-12s`",
-        "`%12s`",
-        "`%12d`",
-        "`%.12f`"
-      ],
-      "expected": [
-        0
-      ],
+      "options": ["`%-12s`", "`%12s`", "`%12d`", "`%.12f`"],
+      "expected": [0],
       "hints": [
         "For a String, the width sets a minimum field size and the minus sign requests left alignment."
       ],
@@ -1872,9 +1635,7 @@
         "Store every Rectangle object inside the class name",
         "Put the position and dimensions only in the `main` method"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Separate the state each rectangle must retain from the calculations it can perform using that state."
       ],
@@ -1896,9 +1657,7 @@
         "Remove the width attribute and use a package name instead",
         "Make every method private so the client can change width directly"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Consider where validation can be enforced so every change to the attribute passes through the same rule."
       ],
@@ -1920,9 +1679,7 @@
         "The access succeeds whenever both classes have a main method",
         "The access is allowed only if speed is initialized to zero"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Access is determined by the declared accessibility modifier, not by which class creates the object."
       ],
@@ -1944,9 +1701,7 @@
         "The attribute defaults to null, while the local variable defaults to 0",
         "Neither variable can be used because neither was explicitly initialized"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Compare instance attributes with local variables declared inside a method."
       ],
@@ -1968,9 +1723,7 @@
         "The compiler creates an empty String automatically",
         "The call returns -1 to indicate missing text"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "An object reference field has a default value; consider whether that value supports method calls."
       ],
@@ -1992,9 +1745,7 @@
         "Java does not allow a parameter to have the same name as an attribute",
         "The assignment operator cannot be used inside a method"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "When a parameter and an attribute share a name, use the `this` reference to identify the current object’s field."
       ],
@@ -2016,9 +1767,7 @@
         "```java\npublic int setX(int x) {\n    this = x;\n}\n```",
         "```java\npublic void setX(int x) {\n    int x = this.x;\n}\n```"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "The parameter provides the new value; the object’s field is the destination."
       ],
@@ -2040,9 +1789,7 @@
         "The speed becomes 300 automatically",
         "The Car object is deleted"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Check whether 500 satisfies both the minimum and maximum constraints."
       ],
@@ -2064,9 +1811,7 @@
         "Make the identifier public so all code can update it",
         "Return the identifier only from the constructor and then delete the field"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Encapsulation does not require every attribute to be freely changeable; expose only the operations the object should support."
       ],
@@ -2088,9 +1833,7 @@
         "```java\nSystem.out.println(rect.setWidth(5));\n```",
         "```java\nrect.getWidth() = 5;\n```"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "A getter produces a value; a void setter performs an action without returning one."
       ],
@@ -2112,9 +1855,7 @@
         "```java\nprivate void report()\n```\nwith no parameters and the same signature",
         "```java\npublic void report(String unit, int speed)\n```\nreplacing the original method"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Overloading requires the same method name but a different parameter list; changing only the return type is insufficient."
       ],
@@ -2136,9 +1877,7 @@
         "It calls the two-argument constructor with zero values",
         "It creates a null Point reference"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "The compiler supplies a no-argument default constructor only when the class declares no constructor at all."
       ],
@@ -2160,9 +1899,7 @@
         "Use a getter to assign the coordinates",
         "Put the coordinates in the class name"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "A constructor runs when a new instance is created and is intended to initialize its state."
       ],
@@ -2184,9 +1921,7 @@
         "Remove the validation from the setter",
         "Call `report()` before assigning speed"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "The constructor must enforce the same state rules as later updates."
       ],
@@ -2208,9 +1943,7 @@
         "```java\npublic Circle() {\n    return this(1.0);\n}\n```",
         "```java\npublic Circle() {\n    this.radius = this(1.0);\n}\n```"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "A constructor can delegate to another constructor in the same class using `this(arguments)`; the call must be first."
       ],
@@ -2232,12 +1965,8 @@
         "A constructor cannot call another constructor",
         "The delegated constructor must have no parameters"
       ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "Recall the placement rule for constructor chaining."
-      ],
+      "expected": [0],
+      "hints": ["Recall the placement rule for constructor chaining."],
       "explanation": "Constructor chaining with `this(...)` must appear first so that the target constructor performs initialization before any other statements in the delegating constructor."
     },
     "pfj-094": {
@@ -2256,9 +1985,7 @@
         "Return the original Rectangle without creating anything",
         "Set every attribute to its default value"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "The requirement is for equal initial state but distinct object identity."
       ],
@@ -2280,9 +2007,7 @@
         "The result of the object’s constructor source code",
         "The name of the variable used to refer to the object"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Consider what the inherited Object implementation provides when a class does not override the method."
       ],
@@ -2298,15 +2023,8 @@
       "examEligible": true,
       "provenance": "M5_Classes.pdf",
       "contentVersion": 3,
-      "options": [
-        "`Answer: 42`",
-        "`Guide@42`",
-        "`guide`",
-        "`42 Answer:`"
-      ],
-      "expected": [
-        0
-      ],
+      "options": ["`Answer: 42`", "`Guide@42`", "`guide`", "`42 Answer:`"],
+      "expected": [0],
       "hints": [
         "When an object is passed to println, its String representation is obtained through toString."
       ],
@@ -2328,9 +2046,7 @@
         "`new Math(x)`, `Math.reverse(y)`, `Math.pow(a)`",
         "`Math.toString(x)`, `Math.random(y)`, `Math.square(a, b)`"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Match each mathematical operation to the corresponding utility method."
       ],
@@ -2352,9 +2068,7 @@
         "Area 11 and perimeter 24",
         "Area 24 and perimeter 11"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Area multiplies the two dimensions; perimeter adds all four sides."
       ],
@@ -2376,9 +2090,7 @@
         "`7` followed by `7`",
         "`42` followed by `42`"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "An unqualified name resolves to the local variable when one shadows the field; `this` explicitly selects the current object’s attribute."
       ],
@@ -2400,9 +2112,7 @@
         "It becomes zero",
         "The call is invalid unless the method returns the parameter"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "The method parameter is initialized with the argument value; it is a separate local variable."
       ],
@@ -2425,12 +2135,7 @@
         "The source code is not normally readable from the distributed binary",
         "The same compiled binary is automatically suitable for every processor architecture"
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "expected": [0, 1, 2, 3],
       "hints": [
         "Separate the benefits of compiling in advance from the limitation that the generated binary is target-specific."
       ],
@@ -2454,12 +2159,7 @@
         "The model guarantees compile-time checks before the program runs",
         "The source is normally hidden from people using the target system"
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "expected": [0, 1, 2, 3],
       "hints": [
         "Think about what must be installed on the target and when the source-to-execution transformation takes place."
       ],
@@ -2481,9 +2181,7 @@
         "The IDE replaces the JVM when executing bytecode",
         "The JDK compiler must be started manually for every run"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Distinguish tools that help a developer write and debug code from components required to execute bytecode."
       ],
@@ -2506,11 +2204,7 @@
         "Assigning an `int` to a `double` always loses the integer part",
         "Integer division automatically preserves a fractional result when assigned to a `double`"
       ],
-      "expected": [
-        0,
-        1,
-        2
-      ],
+      "expected": [0, 1, 2],
       "hints": [
         "Consider whether the destination can represent the source value without narrowing and when the division itself is evaluated."
       ],
@@ -2532,10 +2226,7 @@
         "`age >= 18 || age <= 67`",
         "`age > 18 && age < 67`"
       ],
-      "expected": [
-        0,
-        1
-      ],
+      "expected": [0, 1],
       "hints": [
         "One expression can state that both limits hold; another can state that neither invalid condition holds."
       ],
@@ -2557,9 +2248,7 @@
         "`3`",
         "The expression does not compile because `charAt` returns a String"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Evaluate the length check and the first-character check separately, then combine them with AND."
       ],
@@ -2582,12 +2271,7 @@
         "StringBuilder is useful when text is modified repeatedly",
         "A StringBuilder append operation always creates a new builder object"
       ],
-      "expected": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "expected": [0, 1, 2, 3],
       "hints": [
         "Compare whether each class is mutable and what happens to the object when text is appended or concatenated."
       ],
@@ -2609,9 +2293,7 @@
         "`%f` count, `%b` amount, `%s` name, `%d` character, `%c` status",
         "`%c` count, `%s` amount, `%b` name, `%f` character, `%d` status"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Match each conversion with the Java value type it is intended to format."
       ],
@@ -2633,9 +2315,7 @@
         "Declare the field `public`",
         "Declare the field `protected`"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Compare package access with private, protected and public access."
       ],
@@ -2657,9 +2337,7 @@
         "Move the class declaration into the main method",
         "Change `public` to `private` on the class"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "The file name and the public top-level class name must match, including capitalization."
       ],
@@ -2681,9 +2359,7 @@
         "```java\nSystem.out.printf(\"%%d VAT\", 21);\n```",
         "```java\nSystem.out.printf(\"%s VAT\", 21);\n```"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "In a format string, percent introduces a conversion specifier; a literal percent sign needs its own escape form."
       ],
@@ -2705,9 +2381,7 @@
         "`Math.pi()` and `Math.maximum(first, second)`",
         "`PI.Math` and `Math.max()`"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "The course presents PI as a constant and max as a static method of the Math utility class."
       ],
@@ -2729,12 +2403,8 @@
         "`generator.nextInt(1)`",
         "`generator.nextInt(1, 1)`"
       ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "Choose the Random method whose result type is boolean."
-      ],
+      "expected": [0],
+      "hints": ["Choose the Random method whose result type is boolean."],
       "explanation": "`nextBoolean()` returns either true or false. `nextDouble()` returns a number in the interval from 0 inclusive to 1 exclusive, while the integer expressions shown do not produce a two-outcome range."
     },
     "pfj-114": {
@@ -2753,9 +2423,7 @@
         "`nextBoolean()`",
         "`nextInt(1, 2)`"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Consider which method returns a floating-point value rather than an integer or boolean."
       ],
@@ -2777,9 +2445,7 @@
         "`answer.charAt(0) == 'y'`",
         "`answer.length() == 3`"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "The comparison should check the complete text while deliberately ignoring uppercase/lowercase differences."
       ],
@@ -2801,9 +2467,7 @@
         "`null`, `false`, `null`",
         "`0.0`, `null`, `false`"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Instance attributes receive defaults based on their declared types; a reference is not automatically an empty object."
       ],
@@ -2825,9 +2489,7 @@
         "`Math.abs(first, second)`",
         "`Math.sqrt(first, second)`"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Use the Math method whose purpose is to return the minimum of two values."
       ],
