@@ -1285,9 +1285,7 @@ th {
   .exam-workspace {
     grid-template-columns: minmax(0, 1fr);
   }
-  .exam-nav-panel {
-    position: static;
-  }
+
   .exam-question-grid {
     grid-template-columns: repeat(6, minmax(0, 1fr));
   }
