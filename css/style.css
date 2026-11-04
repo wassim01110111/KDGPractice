@@ -921,8 +921,8 @@ th {
   margin-top: 1rem;
 }
 .exam-session {
-  width: min(100%, 1120px);
-  margin: 0 auto;
+  width: 100%;
+  margin: 0;
 }
 .exam-topbar {
   display: grid;
@@ -1006,17 +1006,7 @@ th {
   white-space: nowrap;
 }
 .exam-workspace {
-  display: grid;
-  grid-template-columns: minmax(210px, 250px) minmax(0, 1fr);
-  gap: 1rem;
-  align-items: start;
   margin-top: 1rem;
-}
-.exam-nav-panel {
-  position: sticky;
-  top: 6rem;
-  margin: 0;
-  padding: 1rem;
 }
 .exam-nav-panel h2 {
   margin: 0;
@@ -1069,8 +1059,6 @@ th {
 }
 .exam-question-panel {
   min-width: 0;
-  margin: 0;
-  padding: clamp(1rem, 3vw, 1.6rem);
 }
 .exam-question-kicker {
   display: flex;
@@ -1281,13 +1269,6 @@ th {
   .exam-submit-button {
     grid-column: 1 / -1;
     width: 100%;
-  }
-  .exam-workspace {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .exam-nav-panel,
-  .exam-nav-panel.card {
-    position: static;
   }
   .exam-question-grid {
     grid-template-columns: repeat(6, minmax(0, 1fr));
@@ -4229,7 +4210,6 @@ pre:focus-within,
   .progress-stat:hover,
   .achievement.earned:hover,
   .quest-row:hover,
-  .exam-question-panel:hover,
   .exam-result-card:hover {
     transform: translateY(-5px) perspective(900px) rotateX(0.35deg);
     border-color: color-mix(in srgb, var(--ac) 48%, var(--bd));

@@ -6141,10 +6141,10 @@ async function runExam(root, st) {
     }),
     workspace = h(
       "div",
-      { class: "exam-workspace" },
+      { class: "cols exam-workspace" },
       h(
         "aside",
-        { class: "exam-nav-panel card" },
+        { class: "side exam-nav-panel" },
         h("h2", {}, "Questions"),
         h("p", {}, "Choose a number to jump to a question."),
         nav,
@@ -6154,7 +6154,7 @@ async function runExam(root, st) {
           "Filled = answered · outlined = flagged",
         ),
       ),
-      h("section", { class: "exam-question-panel card" }, body),
+      h("section", { class: "q exam-question-panel" }, body),
     ),
     session = h("section", { class: "exam-session" }, top, workspace);
   let done = false;
