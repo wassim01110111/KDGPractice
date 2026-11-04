@@ -92,7 +92,7 @@
       "provenance": "relational-database-term-1-ex.md; Week 2; Enterprise - Exercises on SIMPLE Selects and Fetch; Exercise 3 B",
       "contentVersion": 1,
       "datasetId": "sql-entreprise",
-      "referenceSolution": "select 'Project' as \" \", projects.project_id, 'is handled by' as \" \", projects.department_id from projects;",
+      "referenceSolution": "select 'project' as \" \", projects.project_id, 'is handled by' as \" \", projects.department_id from projects;",
       "orderMatters": false,
       "compareColumnNames": true,
       "columnOrderMatters": true,
