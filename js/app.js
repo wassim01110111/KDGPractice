@@ -6414,6 +6414,35 @@ async function runExam(root, st) {
   };
   const iv = setInterval(tick, 500);
   autosaveTimer = setInterval(save, 5000);
+  // Click/tap (or Enter/Space) the timer to blur the time; again to reveal it.
+  const timerCard = h(
+    "div",
+    {
+      class: "exam-timer-card",
+      role: "button",
+      tabindex: "0",
+      "aria-pressed": "false",
+      title: "Click to hide or show the time",
+    },
+    h("span", { class: "exam-timer-label" }, "TIME LEFT"),
+    timer,
+    h(
+      "span",
+      { class: "exam-timer-hint", "aria-hidden": "true" },
+      "Tap to show",
+    ),
+  );
+  const toggleTimerBlur = () =>
+    timerCard.setAttribute(
+      "aria-pressed",
+      String(timerCard.classList.toggle("is-blurred")),
+    );
+  timerCard.addEventListener("click", toggleTimerBlur);
+  timerCard.addEventListener("keydown", (e) => {
+    if (e.key !== "Enter" && e.key !== " ") return;
+    e.preventDefault();
+    toggleTimerBlur();
+  });
   top.append(
     h(
       "div",
@@ -6425,12 +6454,7 @@ async function runExam(root, st) {
     h(
       "div",
       { class: "exam-status" },
-      h(
-        "div",
-        { class: "exam-timer-card" },
-        h("span", { class: "exam-timer-label" }, "TIME LEFT"),
-        timer,
-      ),
+      timerCard,
       h(
         "div",
         { class: "exam-session-summary" },

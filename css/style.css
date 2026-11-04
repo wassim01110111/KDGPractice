@@ -1285,8 +1285,7 @@ th {
   .exam-workspace {
     grid-template-columns: minmax(0, 1fr);
   }
-  .exam-nav-panel,
-  .exam-nav-panel.card {
+  .exam-nav-panel {
     position: static;
   }
   .exam-question-grid {
@@ -6961,5 +6960,47 @@ pre,
 @media print {
   .ach-stack {
     display: none !important;
+  }
+}
+
+/* ---- Exam timer: click to blur / unblur ---- */
+.exam-timer-card {
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.exam-timer-card:focus-visible {
+  outline: 2px solid var(--ac, currentColor);
+  outline-offset: 2px;
+}
+.exam-timer-clock {
+  transition:
+    filter 0.2s ease,
+    opacity 0.2s ease;
+}
+.exam-timer-card.is-blurred .exam-timer-clock {
+  filter: blur(7px);
+  opacity: 0.75;
+}
+.exam-timer-hint {
+  color: var(--mut);
+  font-size: 0.68rem;
+  font-weight: 700;
+  line-height: 1;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition:
+    max-height 0.2s ease,
+    opacity 0.2s ease;
+}
+.exam-timer-card.is-blurred .exam-timer-hint {
+  max-height: 1.2em;
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .exam-timer-clock,
+  .exam-timer-hint {
+    transition: none;
   }
 }
