@@ -1335,6 +1335,25 @@ const ACH_DEFS = [
     (s) => s.speedPerfects,
     1,
   ),
+  // ---- additional academic coping mechanisms ----
+  A("night-owl-10", "🦉", "bronze", "Sleep Is a Premium Feature", "Make 10 attempts between midnight and 5 AM", "Your circadian rhythm has filed a formal complaint.", (s) => s.nightAttempts, 10),
+  A("night-owl-50", "🌚", "silver", "Nocturnal Department", "Make 50 attempts between midnight and 5 AM", "The sun is a rumour at this point.", (s) => s.nightAttempts, 50),
+  A("early-bird-10", "🐓", "bronze", "Suspiciously Functional", "Make 10 attempts before 8 AM", "Who are you and what have you done with the student?", (s) => s.earlyAttempts, 10),
+  A("weekend-10", "📆", "bronze", "Weekend? Never Heard of Her", "Make 10 attempts on weekends", "Your calendar says Saturday. Your workload says absolutely not.", (s) => s.weekendAttempts, 10),
+  A("weekend-50", "🫡", "silver", "Weekend? Not in This Economy", "Make 50 attempts on weekends", "Work-life balance has left the group chat.", (s) => s.weekendAttempts, 50),
+  A("first-try-10", "🎯", "silver", "Accidentally Competent", "Solve 10 exercises on the first try", "A suspicious run of good decisions.", (s) => s.firstTry, 10),
+  A("first-try-50", "🧠", "gold", "Read the Question? Unprecedented", "Solve 50 exercises on the first try", "The bar was low. You vaulted over it.", (s) => s.firstTry, 50),
+  A("fail-25", "🧱", "bronze", "Professional Wall Tester", "Fail 25 exercise attempts", "You have confirmed that the wall is, in fact, still there.", (s) => s.fails, 25),
+  A("fail-100", "🧯", "silver", "Error Message Collector", "Fail 100 exercise attempts", "At this point the errors are starting to recognize you.", (s) => s.fails, 100),
+  A("comeback-10", "🪃", "gold", "Recurring Comeback", "Recover from a failed attempt 10 times", "Character development, but make it repetitive.", (s) => s.comebacks, 10),
+  A("hints-25", "🛟", "bronze", "Hint Subscription", "Open hints 25 times", "The hint button is doing a lot of heavy lifting.", (s) => s.hints, 25),
+  A("solution-peeks-25", "👀", "silver", "Just One Little Peek", "Peek at 25 solutions", "You and the solution key are getting rather close.", (s) => s.solutionPeeks, 25),
+  A("sql-errors-25", "🗃️", "bronze", "SQL Crime Scene", "Trigger 25 SQL errors", "The database would like some personal space.", (s) => s.sqlErrors, 25),
+  A("blank-submits-5", "📃", "shame", "Minimalist Submission", "Submit 5 blank answers", "Bold use of negative content.", (s) => s.blankSubmits, 5),
+  A("zen-10", "🧘", "silver", "Enlightenment Buffering", "Enable Zen mode 10 times", "Inner peace. Outer procrastination.", (s) => s.zenOn, 10),
+  A("themes-10", "🎨", "bronze", "Identity Crisis", "Change the theme 10 times", "Maybe the next colour will explain the assignment.", (s) => s.themeToggles, 10),
+  A("runs-100", "▶️", "gold", "Execute First, Think Later", "Run 100 SQL queries", "The database has seen things.", (s) => s.runs, 100),
+  A("shortcuts-25", "⌨️", "silver", "Keyboard Goblin", "Use keyboard shortcuts 25 times", "The mouse has been made redundant. It knows what it did.", (s) => s.shortcuts, 25),
 ];
 function customAchievements() {
   const s = S.stats;
@@ -6575,6 +6594,18 @@ function computeProgress(examHistory) {
       target: 100,
     },
     {
+      title: "The Academic Industrial Complex",
+      detail: "Solve 500 exercises",
+      count: solved.length,
+      target: 500,
+    },
+    {
+      title: "Please Go Outside",
+      detail: "Solve 1,000 exercises",
+      count: solved.length,
+      target: 1000,
+    },
+    {
       title: "The Grand Library",
       detail: "Solve 250 exercises",
       count: solved.length,
@@ -6809,6 +6840,30 @@ function computeProgress(examHistory) {
       detail: "Earn 5,000 XP",
       count: xp,
       target: 5000,
+    },
+    {
+      title: "Rent Is Due in XP",
+      detail: "Earn 10,000 XP",
+      count: xp,
+      target: 10000,
+    },
+    {
+      title: "The XP Hoarding Problem",
+      detail: "Earn 25,000 XP",
+      count: xp,
+      target: 25000,
+    },
+    {
+      title: "Exam Factory",
+      detail: "Complete 100 exams",
+      count: examHistory.length,
+      target: 100,
+    },
+    {
+      title: "Perfectly Unemployed in Other Hobbies",
+      detail: "Get 25 perfect exam scores",
+      count: perfectExams,
+      target: 25,
     },
     {
       title: "SQL Apprentice",
