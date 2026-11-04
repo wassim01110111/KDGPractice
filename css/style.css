@@ -1285,7 +1285,8 @@ th {
   .exam-workspace {
     grid-template-columns: minmax(0, 1fr);
   }
-  .exam-nav-panel {
+  .exam-nav-panel,
+  .exam-nav-panel.card {
     position: static;
   }
   .exam-question-grid {
