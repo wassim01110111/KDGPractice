@@ -6378,10 +6378,6 @@ html {
    INTERACTIVE SCROLL CONTAINERS
    ========================================= */
 
-* {
-  overscroll-behavior: contain;
-}
-
 textarea,
 pre,
 .code-editor,
