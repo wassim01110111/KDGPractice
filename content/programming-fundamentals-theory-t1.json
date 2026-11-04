@@ -99,7 +99,7 @@
       "contentVersion": 3,
       "options": [
         "`javac Hello.java`, followed by `java Hello`",
-        "`java Hello.java`, followed by `javac Hello.clas`",
+        "`java Hello.java`, followed by `javac Hello.class`",
         "`javac Hello.class`, followed by `java Hello.java`",
         "`java Hello`, followed by `javac Hello.java`"
       ],
