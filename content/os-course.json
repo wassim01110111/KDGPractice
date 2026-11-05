@@ -2952,7 +2952,7 @@
           "^\\s*(sudo)?\\s+chage\\s+--lastday\\s+0\\s+alice\\s*$"
         ]
       },
-      "hints": ["`chage -d 0 alice`"],
+      "hints": ["`Use chage`"],
       "explanation": "`chage -d 0 alice` makes the password-change date immediately due."
     },
     "os-users-groups-172": {
