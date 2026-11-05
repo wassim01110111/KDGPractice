@@ -7633,7 +7633,7 @@ if (terminalArtifact && !reducedMotion.matches) {
 }
 function triggerWassimSignal() {
   if (document.hidden) return;
-
+  if (focusButton.getAttribute("aria-pressed") === "true") return;
   if (terminalArtifact && !reducedMotion.matches) {
     terminalArtifact.hidden = false;
     terminalArtifact.classList.add("active");
