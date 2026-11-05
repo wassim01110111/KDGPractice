@@ -2944,7 +2944,12 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
-        "accepted": ["sudo chage -d 0 alice", "chage -d 0 alice"],
+        "accepted": [
+          "sudo chage -d 0 alice",
+          "chage -d 0 alice",
+          "chage alice -d 0",
+          "sudo chage alice -d 0"
+        ],
         "patterns": [
           "^\\s*(sudo)?\\s+chage\\s+-d\\s+0\\s+alice\\s*$",
           "^\\s*chage\\s+-d\\s+0\\s+alice\\s*$",
@@ -2968,7 +2973,7 @@
       "expected": {
         "accepted": ["echo \"wassim:acs103\" | sudo chpasswd"],
         "patterns": [
-          "^\\s*echo\\s+\"wassim:acs103\"\\s+\\|\\s+(sudo)?\\s+chpasswd\\s*$",
+          "^\\s*echo\\s+\"wassim:acs103\"\\s+\\|\\s+(sudo\\s+)?chpasswd\\s*$",
           "^\\s*printf\\s+'%s\\\\n'\\s+'wassim:acs103'\\s+\\|\\s+(sudo)?\\s+chpasswd\\s*$"
         ]
       },
