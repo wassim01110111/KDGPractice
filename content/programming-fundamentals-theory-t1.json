@@ -11,7 +11,7 @@
       "instructions": "A team builds a C++ application and must distribute it to computers with two different processor architectures. The source code is unchanged. What must the team normally prepare for deployment?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M1_Basic_concepts.pdf",
       "contentVersion": 3,
       "options": [
@@ -33,7 +33,7 @@
       "instructions": "A Python program is copied from a developer’s computer to a server. The source file is present, but the program cannot start because the server lacks the required language runtime. Which explanation best fits this situation?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M1_Basic_concepts.pdf",
       "contentVersion": 3,
       "options": [
@@ -55,7 +55,7 @@
       "instructions": "A `.class` file produced on an ARM development computer is moved to an Intel computer. Both computers have a suitable Java platform installed. Why can the same bytecode run on both?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M1_Basic_concepts.pdf",
       "contentVersion": 3,
       "options": [
@@ -77,7 +77,7 @@
       "instructions": "A developer must write Java code, compile it, debug it and run the resulting program. Which installation is intended to provide the necessary development tools as well as the runtime?",
       "difficulty": "Easy",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M1_Basic_concepts.pdf",
       "contentVersion": 3,
       "options": ["JDK", "JRE only", "JVM only", "IDE only"],
@@ -94,7 +94,7 @@
       "instructions": "You have written `Hello.java` and want to compile and then run it from the command line. Which sequence is correct?",
       "difficulty": "Easy",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M1_Basic_concepts.pdf",
       "contentVersion": 3,
       "options": [
@@ -116,7 +116,7 @@
       "instructions": "A program contains\n```java\nScanner keyboard = new Scanner(System.in);\n```\nbut the compiler reports that it cannot find the symbol `Scanner`. The program has no import statements. Which change addresses the likely cause?",
       "difficulty": "Easy",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M1_Basic_concepts.pdf",
       "contentVersion": 3,
       "options": [
@@ -138,7 +138,7 @@
       "instructions": "A Java application contains several classes and many methods. When the application is launched in the basic structure taught in this course, where does execution begin?",
       "difficulty": "Easy",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M1_Basic_concepts.pdf",
       "contentVersion": 3,
       "options": [
@@ -160,7 +160,7 @@
       "instructions": "Two teams both create a class named `Report`, but the classes serve unrelated parts of a larger application. Which design choice best helps organise the code and distinguish the two classes?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M1_Basic_concepts.pdf",
       "contentVersion": 3,
       "options": [
@@ -182,7 +182,7 @@
       "instructions": "You are writing instructions for a robot that must order a pizza. The instruction “choose a suitable pizza” is too vague for the robot to carry out. What is the best next step when refining the algorithm?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M1_Basic_concepts.pdf",
       "contentVersion": 3,
       "options": [
@@ -204,7 +204,7 @@
       "instructions": "A program must ask the user for two numbers and display their sum. Which sequence of algorithmic steps is logically complete?",
       "difficulty": "Easy",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M1_Basic_concepts.pdf",
       "contentVersion": 3,
       "options": [
@@ -226,7 +226,7 @@
       "instructions": "A guessing game repeatedly asks for a number until the guess matches a stored answer. After each guess it reports whether the guess is too low or too high. Which algorithm actions are essential to this task? Select all that apply.",
       "difficulty": "Medium",
       "type": "mcq-multiple",
-      "examEligible": true,
+
       "provenance": "M1_Basic_concepts.pdf",
       "contentVersion": 3,
       "options": [
@@ -249,7 +249,7 @@
       "instructions": "A project prioritises direct execution speed and does not mind producing a different executable for each processor type. Which language-implementation approach best matches those priorities in the course comparison?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M1_Basic_concepts.pdf",
       "contentVersion": 3,
       "options": [
@@ -271,7 +271,7 @@
       "instructions": "A student says: “The JDK, JRE and JVM are three names for the same thing.” Which response is the most accurate?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M1_Basic_concepts.pdf",
       "contentVersion": 3,
       "options": [
@@ -293,7 +293,7 @@
       "instructions": "A program stores a person’s age in whole years, a measured distance that may contain decimals, and whether a door is locked. Which type choices are most suitable?",
       "difficulty": "Easy",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M2_Variables_Operators.pdf",
       "contentVersion": 3,
       "options": [
@@ -315,7 +315,7 @@
       "instructions": "A program uses the same VAT percentage in several calculations. The percentage should remain unchanged while the program runs. Which implementation best expresses that requirement?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M2_Variables_Operators.pdf",
       "contentVersion": 3,
       "options": [
@@ -337,7 +337,7 @@
       "instructions": "The following assignment does not compile:\n```java\ndouble price = 12.75;\nint whole = price;\n```\nThe programmer intentionally wants an integer conversion and accepts losing the fractional part. Which change is appropriate?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M2_Variables_Operators.pdf",
       "contentVersion": 3,
       "options": [
@@ -359,7 +359,7 @@
       "instructions": "What values are produced by the following statements, in order?\n```java\nint a = 5;\nint b = 2;\ndouble x = a / b;\ndouble y = (double) a / b;\n```",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M2_Variables_Operators.pdf",
       "contentVersion": 3,
       "options": [
@@ -381,7 +381,7 @@
       "instructions": "What is the value of `n` after this statement?\n```java\ndouble amount = 8.9;\nint n = (int) amount;\n```",
       "difficulty": "Easy",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M2_Variables_Operators.pdf",
       "contentVersion": 3,
       "options": ["8", "9", "8.9", "The statement cannot compile"],
@@ -398,7 +398,7 @@
       "instructions": "A program numbers items from zero and must perform a special action on every fifth item: item 0, 5, 10, 15, and so on. Which condition identifies those item numbers?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M2_Variables_Operators.pdf",
       "contentVersion": 3,
       "options": [
@@ -420,7 +420,7 @@
       "instructions": "What are the final values of `first`, `second` and `i`? \n```java\nint i = 4;\nint first = i++;\nint second = ++i;\n```",
       "difficulty": "Hard",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M2_Variables_Operators.pdf",
       "contentVersion": 3,
       "options": [
@@ -442,7 +442,7 @@
       "instructions": "Start with these declarations:\n```java\nint total = 12;\nint step = 5;\n```\nThen execute these statements:\n```java\ntotal += step;\nstep *= 2;\ntotal %= step;\n```\nWhat are the resulting values of `total` and `step`?",
       "difficulty": "Hard",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M2_Variables_Operators.pdf",
       "contentVersion": 3,
       "options": [
@@ -464,7 +464,7 @@
       "instructions": "A program classifies people aged from 18 through 67 inclusive as being in the active age range. Which condition correctly includes both boundary values and excludes values outside the range?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M2_Variables_Operators.pdf",
       "contentVersion": 3,
       "options": [
@@ -486,7 +486,7 @@
       "instructions": "A valid score must be between 0 and 100 inclusive. Which condition detects a score that is outside this range?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M2_Variables_Operators.pdf",
       "contentVersion": 3,
       "options": [
@@ -508,7 +508,7 @@
       "instructions": "A boolean variable `available` is true when a seat can be booked. Which expression is true exactly when the seat is not available?",
       "difficulty": "Easy",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M2_Variables_Operators.pdf",
       "contentVersion": 3,
       "options": [
@@ -530,7 +530,7 @@
       "instructions": "What value is assigned to `result`?\n```java\nint result = 2 + 3 * 4;\n```",
       "difficulty": "Easy",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M2_Variables_Operators.pdf",
       "contentVersion": 3,
       "options": ["14", "20", "24", "11"],
@@ -545,7 +545,7 @@
       "instructions": "A shop calculates a discount on the combined prices of two items. Which expression clearly applies the discount rate to the sum of both prices?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M2_Variables_Operators.pdf",
       "contentVersion": 3,
       "options": [
@@ -565,7 +565,7 @@
       "instructions": "A user may enter a command only if they are an administrator and the account is active. Which condition represents that rule?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M2_Variables_Operators.pdf",
       "contentVersion": 3,
       "options": [
@@ -585,7 +585,7 @@
       "instructions": "A running total is stored in `sum`. A newly read value is stored in `next`. Which statement adds `next` to the existing total without replacing the total with `next`?",
       "difficulty": "Easy",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M2_Variables_Operators.pdf",
       "contentVersion": 3,
       "options": [
@@ -607,7 +607,7 @@
       "instructions": "A program must store one individual character, such as the grade letter `B`, rather than an arbitrary-length name. Which declaration is most appropriate?",
       "difficulty": "Easy",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M2_Variables_Operators.pdf",
       "contentVersion": 3,
       "options": [
@@ -629,7 +629,7 @@
       "instructions": "A program must print exactly `Welcome to \"Java\"` on one line. Which statement correctly writes the quotation marks as part of the output?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M2_Variables_Operators.pdf",
       "contentVersion": 3,
       "options": [
@@ -651,7 +651,7 @@
       "instructions": "A variable `status` should receive the String `\"adult\"` when `age >= 18`, and `\"minor\"` otherwise. Which assignment expresses this compact two-way choice?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M2_Variables_Operators.pdf",
       "contentVersion": 3,
       "options": [
@@ -673,7 +673,7 @@
       "instructions": "A program calculates an average from two integer test scores and must preserve fractional results. Which expression ensures the division is performed using floating-point arithmetic?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M2_Variables_Operators.pdf",
       "contentVersion": 3,
       "options": [
@@ -695,7 +695,7 @@
       "instructions": "Several methods compare a temperature against the same maximum allowed value. Later, the value may need to change. Which design is most maintainable?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M2_Variables_Operators.pdf",
       "contentVersion": 3,
       "options": [
@@ -717,7 +717,7 @@
       "instructions": "A program assigns A for scores of at least 90, B for 80–89, C for 70–79, D for 60–69 and E below 60. Which ordering makes an `if / else if` chain work correctly?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M3_FlowControl_Functions.pdf",
       "contentVersion": 3,
       "options": [
@@ -739,7 +739,7 @@
       "instructions": "Using the grade rules A: 90 and above, B: 80–89, C: 70–79, D: 60–69, E: below 60, what grade should a score of exactly 80 receive?",
       "difficulty": "Easy",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M3_FlowControl_Functions.pdf",
       "contentVersion": 3,
       "options": ["B", "A", "C", "D"],
@@ -756,7 +756,7 @@
       "instructions": "What is printed by this code?\n```java\nint choice = 1;\nswitch (choice) {\n    case 1:\n        System.out.print(\"A\");\n    case 2:\n        System.out.print(\"B\");\n        break;\n    default:\n        System.out.print(\"C\");\n}\n```",
       "difficulty": "Hard",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M3_FlowControl_Functions.pdf",
       "contentVersion": 3,
       "options": ["AB", "A", "B", "ABC"],
@@ -773,7 +773,7 @@
       "instructions": "A program maps the month names `march`, `april` and `may` to the same result, `spring`. In a traditional switch, how can the cases share one output block without repeating the output statement?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M3_FlowControl_Functions.pdf",
       "contentVersion": 3,
       "options": [
@@ -795,7 +795,7 @@
       "instructions": "A menu program supports options 1, 2 and 3. The user may enter any integer. What should happen when the input does not match one of the supported options?",
       "difficulty": "Easy",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M3_FlowControl_Functions.pdf",
       "contentVersion": 3,
       "options": [
@@ -817,7 +817,7 @@
       "instructions": "A method assigns the result of this switch expression:\n```java\nString season = switch (month) {\n    ...\n};\n```\nSome possible month values are not handled by any listed case. Why must the switch expression provide a result for those remaining values?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M3_FlowControl_Functions.pdf",
       "contentVersion": 3,
       "options": [
@@ -839,7 +839,7 @@
       "instructions": "In a switch expression, one case contains several statements inside `{ ... }` and must produce the String `\"invalid\"` as the expression result. Which construct supplies that value?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M3_FlowControl_Functions.pdf",
       "contentVersion": 3,
       "options": [
@@ -861,7 +861,7 @@
       "instructions": "A program keeps asking a user to enter a password until the correct password is supplied. The number of attempts is unknown in advance. Which loop is a natural fit?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M3_FlowControl_Functions.pdf",
       "contentVersion": 3,
       "options": [
@@ -883,7 +883,7 @@
       "instructions": "Why does this loop never finish?\n```java\nint counter = 0;\nwhile (counter < 5) {\n    System.out.println(counter);\n}\n```",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M3_FlowControl_Functions.pdf",
       "contentVersion": 3,
       "options": [
@@ -905,7 +905,7 @@
       "instructions": "A program must display a menu at least once, then ask whether the user wants to see it again. Which loop structure directly supports the requirement that the body runs before the condition is checked?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M3_FlowControl_Functions.pdf",
       "contentVersion": 3,
       "options": [
@@ -927,7 +927,7 @@
       "instructions": "Which loop prints every integer from 1 through 5, including both endpoints?",
       "difficulty": "Easy",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M3_FlowControl_Functions.pdf",
       "contentVersion": 3,
       "options": [
@@ -949,7 +949,7 @@
       "instructions": "What sequence is printed?\n```java\nfor (int i = 2; i <= 8; i += 2) {\n    System.out.print(i + \" \");\n}\n```",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M3_FlowControl_Functions.pdf",
       "contentVersion": 3,
       "options": ["`2 4 6 8`", "`2 4 6`", "`2 3 4 5 6 7 8`", "`4 6 8 10`"],
@@ -966,7 +966,7 @@
       "instructions": "Which `while` loop is equivalent to\n```java\nfor (int i = 0; i < 4; i++) {\n    System.out.println(i);\n}\n```\n?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M3_FlowControl_Functions.pdf",
       "contentVersion": 3,
       "options": [
@@ -988,7 +988,7 @@
       "instructions": "What is printed by this code?\n```java\nfor (int i = 1; i <= 5; i++) {\n    if (i == 3) continue;\n    if (i == 5) break;\n    System.out.print(i);\n}\n```",
       "difficulty": "Hard",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M3_FlowControl_Functions.pdf",
       "contentVersion": 3,
       "options": ["`124`", "`1234`", "`12345`", "`12`"],
@@ -1005,7 +1005,7 @@
       "instructions": "Consider:\n```java\nint total = 10;\nif (total > 0) {\n    int bonus = 5;\n    System.out.println(total + bonus);\n}\nSystem.out.println(total);\n```\nWhich statement is valid?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M3_FlowControl_Functions.pdf",
       "contentVersion": 3,
       "options": [
@@ -1027,7 +1027,7 @@
       "instructions": "A method declares\n```java\nint result = 0;\n```\ninside an `if` block but tries to return `result` after the closing brace of that block. What is the simplest structural fix?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M3_FlowControl_Functions.pdf",
       "contentVersion": 3,
       "options": [
@@ -1049,7 +1049,7 @@
       "instructions": "A method contains two separate `if` blocks. Each block declares a local variable named `message`, and neither block uses the other block’s variable. Why can these declarations coexist?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M3_FlowControl_Functions.pdf",
       "contentVersion": 3,
       "options": [
@@ -1071,7 +1071,7 @@
       "instructions": "A program asks for three amounts using nearly identical input code. The same input procedure may be needed elsewhere. Which change best improves reuse and reduces duplication?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M3_FlowControl_Functions.pdf",
       "contentVersion": 3,
       "options": [
@@ -1093,7 +1093,7 @@
       "instructions": "A method receives three `double` values and calculates their average. The caller must store that average in a variable. Which method design fits the task?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M3_FlowControl_Functions.pdf",
       "contentVersion": 3,
       "options": [
@@ -1115,7 +1115,7 @@
       "instructions": "A method’s only responsibility is to display a formatted report. The caller does not need a result for further calculations. Which return type is appropriate?",
       "difficulty": "Easy",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M3_FlowControl_Functions.pdf",
       "contentVersion": 3,
       "options": ["`void`", "`int`", "`double`", "`boolean`"],
@@ -1132,7 +1132,7 @@
       "instructions": "A method `average(a, b, c)` returns a `double`. Which call can use its return value directly in a larger expression?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M3_FlowControl_Functions.pdf",
       "contentVersion": 3,
       "options": [
@@ -1154,7 +1154,7 @@
       "instructions": "A program models cars. It defines common fields such as colour, speed and direction, and methods such as start and brake. A particular red car with its own speed is created from that definition. Which statement is correct?",
       "difficulty": "Easy",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M4_OO_Programming_Objects.pdf",
       "contentVersion": 3,
       "options": [
@@ -1176,7 +1176,7 @@
       "instructions": "You are designing a `Ship` class. Which design best separates information describing a ship from actions the ship can perform?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M4_OO_Programming_Objects.pdf",
       "contentVersion": 3,
       "options": [
@@ -1198,7 +1198,7 @@
       "instructions": "A program creates two variables with these declarations:\n```java\nRandom first = new Random(10);\nRandom second = new Random(10);\n```\nWhich statement best describes the two variables?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M4_OO_Programming_Objects.pdf",
       "contentVersion": 3,
       "options": [
@@ -1220,7 +1220,7 @@
       "instructions": "A `Random` object named `generator` is already available. Which expression produces an integer die result from 1 through 6 inclusive?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M4_OO_Programming_Objects.pdf",
       "contentVersion": 3,
       "options": [
@@ -1242,7 +1242,7 @@
       "instructions": "A lottery program needs a random integer from 50 through 99 inclusive. Which expression produces exactly that range using the two-argument method?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M4_OO_Programming_Objects.pdf",
       "contentVersion": 3,
       "options": [
@@ -1262,7 +1262,7 @@
       "instructions": "A developer wants a lottery simulation to generate the same sequence of pseudo-random values every time during debugging. Which approach best supports repeatable tests?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M4_OO_Programming_Objects.pdf",
       "contentVersion": 3,
       "options": [
@@ -1284,7 +1284,7 @@
       "instructions": "After executing these statements:\n```java\nPlayer p1 = new Player(\"Ada\", 3);\nPlayer p2 = p1;\np1.extraLife();\n```\nwhat does `p2.getLives()` return, assuming `extraLife()` adds one life to the player?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M4_OO_Programming_Objects.pdf",
       "contentVersion": 3,
       "options": [
@@ -1306,7 +1306,7 @@
       "instructions": "Consider this code:\n```java\nint a = 7;\nint b = a;\na++;\n```\nWhat is the value of `b` afterward, and why?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M4_OO_Programming_Objects.pdf",
       "contentVersion": 3,
       "options": [
@@ -1328,7 +1328,7 @@
       "instructions": "A method creates a `Random` object and stores its reference in a local variable. The method ends, and no other variable refers to that object. What is the consequence?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M4_OO_Programming_Objects.pdf",
       "contentVersion": 3,
       "options": [
@@ -1350,7 +1350,7 @@
       "instructions": "A class in one package needs to use a library class named `Random` from `java.util`. Which option allows the source to refer to it by the simple name `Random`?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M4_OO_Programming_Objects.pdf",
       "contentVersion": 3,
       "options": [
@@ -1372,7 +1372,7 @@
       "instructions": "What is printed?\n```java\nString word = \"cat\";\nword.concat(\"fish\");\nSystem.out.println(word);\n```",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M4_OO_Programming_Objects.pdf",
       "contentVersion": 3,
       "options": [
@@ -1394,7 +1394,7 @@
       "instructions": "Suppose `word` is initialized as follows:\n```java\nString word = \"cat\";\n```\nThe program wants to keep `word` unchanged and also store the result of adding `\"fish\"`. Which statement creates the new result?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M4_OO_Programming_Objects.pdf",
       "contentVersion": 3,
       "options": [
@@ -1416,7 +1416,7 @@
       "instructions": "Two String variables may refer to different String objects but contain the same characters. Which method should be used to test whether their text is equal?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M4_OO_Programming_Objects.pdf",
       "contentVersion": 3,
       "options": [
@@ -1438,7 +1438,7 @@
       "instructions": "Consider these declarations:\n```java\nString a = \"abc\";\nString b = \"abc\";\nString c = new String(\"abc\");\n```\nWhich statement is correct?",
       "difficulty": "Hard",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M4_OO_Programming_Objects.pdf",
       "contentVersion": 3,
       "options": [
@@ -1458,7 +1458,7 @@
       "instructions": "A user enters the full name `Ada Lovelace`. The program must store the entire name, including the space. Which Scanner call is suitable?",
       "difficulty": "Easy",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M4_OO_Programming_Objects.pdf",
       "contentVersion": 3,
       "options": ["`nextLine()`", "`next()`", "`nextInt()`", "`nextBoolean()`"],
@@ -1475,7 +1475,7 @@
       "instructions": "A program reads an age and then a name:\n```java\nint age = keyboard.nextInt();\nString name = keyboard.nextLine();\n```\nThe name is unexpectedly empty. What is the appropriate fix?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M4_OO_Programming_Objects.pdf",
       "contentVersion": 3,
       "options": [
@@ -1497,7 +1497,7 @@
       "instructions": "A program builds a long message by appending hundreds of pieces of text inside a loop. Which class is the better fit for this pattern, and why?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M4_OO_Programming_Objects.pdf",
       "contentVersion": 3,
       "options": [
@@ -1519,7 +1519,7 @@
       "instructions": "What text is printed?\n```java\nStringBuilder builder = new StringBuilder(\"A\");\nbuilder.append(\"B\").append(\"C\");\nSystem.out.println(builder);\n```",
       "difficulty": "Easy",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M4_OO_Programming_Objects.pdf",
       "contentVersion": 3,
       "options": ["`ABC`", "`A`", "`BC`", "`CBA`"],
@@ -1536,7 +1536,7 @@
       "instructions": "What is printed?\n```java\nStringBuilder builder = new StringBuilder(\"drawer\");\nbuilder.reverse();\nSystem.out.println(builder);\n```",
       "difficulty": "Easy",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M4_OO_Programming_Objects.pdf",
       "contentVersion": 3,
       "options": ["`reward`", "`drawer`", "`draw`", "`rewarddrawer`"],
@@ -1553,7 +1553,7 @@
       "instructions": "What is printed by this statement?\n```java\nSystem.out.println(3 + 7 + \" items \" + 3 + 7);\n```",
       "difficulty": "Hard",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M4_OO_Programming_Objects.pdf",
       "contentVersion": 3,
       "options": [
@@ -1575,7 +1575,7 @@
       "instructions": "A method must return a formatted invoice line as a String so another method can store or process it later. Which call is appropriate?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M4_OO_Programming_Objects.pdf",
       "contentVersion": 3,
       "options": [
@@ -1597,7 +1597,7 @@
       "instructions": "An invoice must display a decimal amount with exactly two digits after the decimal point. Which format specifier is intended for this requirement?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M4_OO_Programming_Objects.pdf",
       "contentVersion": 3,
       "options": ["`%.2f`", "`%d`", "`%s`", "`%c`"],
@@ -1614,7 +1614,7 @@
       "instructions": "A report lists city names in a column of at least 12 character positions, with the text aligned to the left. Which specifier matches that requirement?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M4_OO_Programming_Objects.pdf",
       "contentVersion": 3,
       "options": ["`%-12s`", "`%12s`", "`%12d`", "`%.12f`"],
@@ -1631,7 +1631,7 @@
       "instructions": "A `Rectangle` object must remember its position and dimensions, and calculate its area and perimeter. Which class design best matches that responsibility?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M5_Classes.pdf",
       "contentVersion": 3,
       "options": [
@@ -1653,7 +1653,7 @@
       "instructions": "A `Rectangle` class must prevent client code from assigning a negative width directly. Which design provides the appropriate control?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M5_Classes.pdf",
       "contentVersion": 3,
       "options": [
@@ -1675,7 +1675,7 @@
       "instructions": "A field\n```java\nprivate int speed;\n```\nis declared in class `Car`. A separate application class creates a Car object and tries to read `myCar.speed`. What should happen?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M5_Classes.pdf",
       "contentVersion": 3,
       "options": [
@@ -1697,7 +1697,7 @@
       "instructions": "A class declares\n```java\nprivate int count;\n```\nand a method declares\n```java\nint result;\n```\nwithout assigning either variable. Which statement is correct?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M5_Classes.pdf",
       "contentVersion": 3,
       "options": [
@@ -1719,7 +1719,7 @@
       "instructions": "A field is declared as\n```java\nprivate String name;\n```\nand is never assigned a String object. The constructor then calls `name.length()`. What is the likely runtime result?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M5_Classes.pdf",
       "contentVersion": 3,
       "options": [
@@ -1741,7 +1741,7 @@
       "instructions": "A class contains the following field and method:\n```java\nprivate int width = 10;\npublic void setWidth(int width) {\n    width = width;\n}\n```\nWhy does this method fail to update the object’s attribute?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M5_Classes.pdf",
       "contentVersion": 3,
       "options": [
@@ -1763,7 +1763,7 @@
       "instructions": "Which implementation correctly stores the new x-coordinate in the current Rectangle object?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M5_Classes.pdf",
       "contentVersion": 3,
       "options": [
@@ -1785,7 +1785,7 @@
       "instructions": "A Car accepts speeds from -20 to 300 inclusive. Its current speed is 50. The setter checks the proposed value and updates the field only when it falls in that interval. What should happen after `setSpeed(500)`?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M5_Classes.pdf",
       "contentVersion": 3,
       "options": [
@@ -1807,7 +1807,7 @@
       "instructions": "A class stores a calculated identifier that must never change after the object is created. The application may need to display the identifier. Which public interface is the safer design?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M5_Classes.pdf",
       "contentVersion": 3,
       "options": [
@@ -1829,7 +1829,7 @@
       "instructions": "A method `getWidth()` returns an `int`, while `setWidth(int width)` returns `void`. Which statement is valid?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M5_Classes.pdf",
       "contentVersion": 3,
       "options": [
@@ -1851,7 +1851,7 @@
       "instructions": "A class has `report()` and the programmer wants a second version that reports speed in a caller-supplied unit. Which declaration is a valid overload?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M5_Classes.pdf",
       "contentVersion": 3,
       "options": [
@@ -1873,7 +1873,7 @@
       "instructions": "A class `Point` initially declares no constructors. A programmer later adds only `Point(double x, double y)`. Which statement about `new Point()` is correct?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M5_Classes.pdf",
       "contentVersion": 3,
       "options": [
@@ -1895,7 +1895,7 @@
       "instructions": "A `Point` object must be created with initial x and y coordinates. Which design best ensures those values are established as part of object creation?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M5_Classes.pdf",
       "contentVersion": 3,
       "options": [
@@ -1917,7 +1917,7 @@
       "instructions": "A Car constructor currently assigns its speed parameter directly, so `new Car(-1000)` creates an invalid object. The class already has a setter that checks the allowed speed range. What is the best change?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M5_Classes.pdf",
       "contentVersion": 3,
       "options": [
@@ -1939,7 +1939,7 @@
       "instructions": "A class has a constructor `Circle(double radius)` that performs validation. The no-argument constructor should create a circle with radius 1.0 while reusing that validation. Which implementation is appropriate?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M5_Classes.pdf",
       "contentVersion": 3,
       "options": [
@@ -1961,7 +1961,7 @@
       "instructions": "A constructor contains these statements:\n```java\nSystem.out.println(\"starting\");\nthis(5);\n```\nWhy is this structure invalid?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M5_Classes.pdf",
       "contentVersion": 3,
       "options": [
@@ -1981,7 +1981,7 @@
       "instructions": "A new Rectangle must start with the same x, y, height and width values as an existing Rectangle, but must be a separate object so later changes do not affect the original. Which approach matches that requirement?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M5_Classes.pdf",
       "contentVersion": 3,
       "options": [
@@ -2003,7 +2003,7 @@
       "instructions": "A class has no custom `toString()` method. A program executes this statement:\n```java\nSystem.out.println(myObject);\n```\nWhat kind of output should the programmer expect from the inherited default implementation?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M5_Classes.pdf",
       "contentVersion": 3,
       "options": [
@@ -2025,7 +2025,7 @@
       "instructions": "A class `Guide` defines this method:\n```java\npublic String toString() {\n    return \"Answer: \" + answer;\n}\n```\nThe field `answer` is 42. What does this statement display?\n```java\nSystem.out.println(guide);\n```",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M5_Classes.pdf",
       "contentVersion": 3,
       "options": ["`Answer: 42`", "`Guide@42`", "`guide`", "`42 Answer:`"],
@@ -2042,7 +2042,7 @@
       "instructions": "A program needs the positive magnitude of a possibly negative number, the square root of a value, and one number raised to a power. Which set of calls uses the appropriate Math methods?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M5_Classes.pdf",
       "contentVersion": 3,
       "options": [
@@ -2064,7 +2064,7 @@
       "instructions": "A Rectangle has width 8 and height 3. Which pair of results should its `getArea()` and `getPerimeter()` methods return?",
       "difficulty": "Easy",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M5_Classes.pdf",
       "contentVersion": 3,
       "options": [
@@ -2086,7 +2086,7 @@
       "instructions": "A class has the following field:\n```java\nprivate int number = 42;\n```\nIts method declares this local variable:\n```java\nint number = 7;\n```\nThe method then prints `number` followed by `this.number`. What is printed?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M5_Classes.pdf",
       "contentVersion": 3,
       "options": [
@@ -2108,7 +2108,7 @@
       "instructions": "A method receives an `int` parameter and increments that parameter. The caller passes its own variable `count`. After the method returns, what happens to the caller’s variable?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M5_Classes.pdf",
       "contentVersion": 3,
       "options": [
@@ -2130,7 +2130,7 @@
       "instructions": "A team is evaluating a traditional compiled-language workflow. Which characteristics are advantages identified for that workflow in the course comparison? Select all that apply.",
       "difficulty": "Medium",
       "type": "mcq-multiple",
-      "examEligible": true,
+
       "provenance": "M1_Basic_concepts.pdf",
       "contentVersion": 3,
       "options": [
@@ -2153,7 +2153,7 @@
       "instructions": "A team distributes a Python script to different operating systems. Which statements describe the interpreted-language model presented in the course? Select all that apply.",
       "difficulty": "Medium",
       "type": "mcq-multiple",
-      "examEligible": true,
+
       "provenance": "M1_Basic_concepts.pdf",
       "contentVersion": 3,
       "options": [
@@ -2177,7 +2177,7 @@
       "instructions": "A user only needs to run an already compiled Java application. The computer has a suitable Java runtime installed but no development environment. Which statement is correct?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M1_Basic_concepts.pdf",
       "contentVersion": 3,
       "options": [
@@ -2199,7 +2199,7 @@
       "instructions": "Which statements about the following Java conversions are correct? Select all that apply.",
       "difficulty": "Medium",
       "type": "mcq-multiple",
-      "examEligible": true,
+
       "provenance": "M2_Variables_Operators.pdf",
       "contentVersion": 3,
       "options": [
@@ -2222,7 +2222,7 @@
       "instructions": "Which expressions both test whether `age` is between 18 and 67 inclusive? Select all that apply.",
       "difficulty": "Hard",
       "type": "mcq-multiple",
-      "examEligible": true,
+
       "provenance": "M2_Variables_Operators.pdf",
       "contentVersion": 3,
       "options": [
@@ -2244,7 +2244,7 @@
       "instructions": "What is the value of `valid`?\n```java\nString code = \"A7Q\";\nboolean valid = code.length() == 3 && code.charAt(0) == 'A';\n```",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M4_OO_Programming_Objects.pdf",
       "contentVersion": 3,
       "options": [
@@ -2266,7 +2266,7 @@
       "instructions": "Which statements correctly describe the behavior of `String` and `StringBuilder` in Java? Select all that apply.",
       "difficulty": "Medium",
       "type": "mcq-multiple",
-      "examEligible": true,
+
       "provenance": "M4_OO_Programming_Objects.pdf",
       "contentVersion": 3,
       "options": [
@@ -2289,7 +2289,7 @@
       "instructions": "A report must display an integer count, a decimal amount, a name, a single character and a boolean status. Which format-specifier mapping is correct?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M4_OO_Programming_Objects.pdf",
       "contentVersion": 3,
       "options": [
@@ -2311,7 +2311,7 @@
       "instructions": "A field must be accessible to classes in the same package but not directly accessible to unrelated classes in other packages. Which declaration provides that access level?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M5_Classes.pdf",
       "contentVersion": 3,
       "options": [
@@ -2333,7 +2333,7 @@
       "instructions": "A source file is named `Shape.java`, but its public top-level class is declared as follows:\n```java\npublic class Rectangle\n```\nWhat must be corrected for the code to follow the Java file-naming rule taught in the course?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M5_Classes.pdf",
       "contentVersion": 3,
       "options": [
@@ -2355,7 +2355,7 @@
       "instructions": "A report must contain the text `21% VAT`. Which formatting call correctly uses a value for the number and prints a literal percent sign?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M4_OO_Programming_Objects.pdf",
       "contentVersion": 3,
       "options": [
@@ -2377,7 +2377,7 @@
       "instructions": "A calculation needs the Java value of pi and must choose the larger of two measurements. Which expression uses the Math class appropriately?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M5_Classes.pdf",
       "contentVersion": 3,
       "options": [
@@ -2399,7 +2399,7 @@
       "instructions": "A program must simulate a fair coin toss and store the result as a boolean. Which code can directly produce `true` or `false` with equal probability?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M4_OO_Programming_Objects.pdf",
       "contentVersion": 3,
       "options": [
@@ -2419,7 +2419,7 @@
       "instructions": "A simulation needs a random decimal value that is at least 0.0 but always less than 1.0. Which Random method directly returns a value in that interval?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M4_OO_Programming_Objects.pdf",
       "contentVersion": 3,
       "options": [
@@ -2441,7 +2441,7 @@
       "instructions": "A program should accept either `yes`, `YES` or `Yes` as confirmation. The user’s input is stored in a String named `answer`. Which test directly handles these casing variations?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M4_OO_Programming_Objects.pdf",
       "contentVersion": 3,
       "options": [
@@ -2463,7 +2463,7 @@
       "instructions": "A class declares\n```java\ndouble price;\nboolean active;\nString name;\n```\nand does not assign values in its constructor. What are the initial values of these attributes?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M5_Classes.pdf",
       "contentVersion": 3,
       "options": [
@@ -2485,7 +2485,7 @@
       "instructions": "A program must select the smaller of two measurements without writing an `if` statement. Which call does that directly?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "M5_Classes.pdf",
       "contentVersion": 3,
       "options": [

@@ -1,14 +1,106 @@
-{ "$schema": "https://json-schema.org/draft/2020-12/schema", "title": "Package (schemaVersion 1)", "type": "object",
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Package (schemaVersion 1)",
+  "type": "object",
   "required": ["schemaVersion", "packageId", "version", "exercises"],
-  "properties": { "schemaVersion": { "anyOf": [{ "const": 1 }, { "const": "1" }, { "const": "1.0" }] }, "packageId": { "type": "string" }, "version": { "type": "string" },
-    "datasets": { "type": "array", "items": { "type": "object", "required": ["id", "version", "sql"], "properties": { "id": { "type": "string" }, "version": { "type": "string" }, "title": { "type": "string" }, "sql": { "type": "string" } } } },
-    "exercises": { "type": "array", "items": { "type": "object",
-      "required": ["id", "course", "category", "title", "instructions", "difficulty", "type", "examEligible", "provenance", "contentVersion"],
-      "properties": { "id": { "type": "string" }, "course": { "type": "string", "minLength": 1 }, "difficulty": { "enum": ["Easy", "Medium", "Hard", "Extreme"] },
-        "type": { "enum": ["sql-query", "mcq-single", "mcq-multi", "mcq-multiple", "command-text", "fill-blank", "short-answer-self-check"] },
-        "examEligible": { "type": "boolean" }, "contentVersion": { "anyOf": [{ "type": "integer" }, { "type": "string" }] }, "hints": { "type": "array", "items": { "type": "string" } },
-        "options": { "type": "array", "items": { "type": "string" } }, "expected": {},
-        "datasetId": { "type": "string" }, "referenceSolution": { "type": "string" }, "orderMatters": { "type": "boolean" }, "compareColumnNames": { "type": "boolean" },
-        "columnOrderMatters": { "type": "boolean" }, "numericTolerance": { "type": "number" }, "allowedStatementKinds": { "type": "array", "items": { "enum": ["SELECT", "DML", "DDL"] } } },
-      "allOf": [ { "if": { "properties": { "course": { "const": "sql" }, "type": { "const": "sql-query" } }, "required": ["course", "type"] }, "then": { "required": ["datasetId", "referenceSolution", "orderMatters", "compareColumnNames", "columnOrderMatters"] } },
-                 { "if": { "properties": { "course": { "const": "os" } } }, "then": { "required": ["expected"], "not": { "anyOf": [ { "required": ["datasetId"] }, { "required": ["referenceSolution"] }, { "required": ["orderMatters"] } ] } } } ] } } } }
+  "properties": {
+    "schemaVersion": {
+      "anyOf": [{ "const": 1 }, { "const": "1" }, { "const": "1.0" }]
+    },
+    "packageId": { "type": "string" },
+    "version": { "type": "string" },
+    "datasets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "version", "sql"],
+        "properties": {
+          "id": { "type": "string" },
+          "version": { "type": "string" },
+          "title": { "type": "string" },
+          "sql": { "type": "string" }
+        }
+      }
+    },
+    "exercises": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "course",
+          "category",
+          "title",
+          "instructions",
+          "difficulty",
+          "type",
+          "examEligible",
+          "provenance",
+          "contentVersion"
+        ],
+        "properties": {
+          "id": { "type": "string" },
+          "course": { "type": "string", "minLength": 1 },
+          "difficulty": { "enum": ["Easy", "Medium", "Hard", "Extreme"] },
+          "type": {
+            "enum": [
+              "sql-query",
+              "mcq-single",
+              "mcq-multi",
+              "mcq-multiple",
+              "command-text",
+              "fill-blank",
+              "short-answer-self-check"
+            ]
+          },
+
+          "options": { "type": "array", "items": { "type": "string" } },
+          "expected": {},
+          "datasetId": { "type": "string" },
+          "referenceSolution": { "type": "string" },
+          "orderMatters": { "type": "boolean" },
+          "compareColumnNames": { "type": "boolean" },
+          "columnOrderMatters": { "type": "boolean" },
+          "numericTolerance": { "type": "number" },
+          "allowedStatementKinds": {
+            "type": "array",
+            "items": { "enum": ["SELECT", "DML", "DDL"] }
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "course": { "const": "sql" },
+                "type": { "const": "sql-query" }
+              },
+              "required": ["course", "type"]
+            },
+            "then": {
+              "required": [
+                "datasetId",
+                "referenceSolution",
+                "orderMatters",
+                "compareColumnNames",
+                "columnOrderMatters"
+              ]
+            }
+          },
+          {
+            "if": { "properties": { "course": { "const": "os" } } },
+            "then": {
+              "required": ["expected"],
+              "not": {
+                "anyOf": [
+                  { "required": ["datasetId"] },
+                  { "required": ["referenceSolution"] },
+                  { "required": ["orderMatters"] }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

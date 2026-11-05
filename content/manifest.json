@@ -3,23 +3,22 @@
   "packages": {
     "os1": {
       "version": "0.0.1",
-      "files": ["os-course.json"]
+      "files": [
+        "os-course.json",
+        "os-terminal-intro.json",
+        "os-term-1-canvas.json",
+        "os-learning-term-1.json"
+      ]
     },
-    "sql1": {
+    "sql": {
       "version": "0.0.1",
-      "files": ["sql-course.json"]
-    },
-    "sql1t": {
-      "version": "0.0.1",
-      "files": ["sql-theory-course.json"]
-    },
-    "sql1c": {
-      "version": "0.0.1",
-      "files": ["sql-canvas-1.json"]
-    },
-    "sql1e": {
-      "version": "0.0.1",
-      "files": ["sql-extreme-t1.json"]
+      "files": [
+        "sql-course.json",
+        "sql-theory-course.json",
+        "sql-canvas-1.json",
+        "sql-extreme-t1.json",
+        "sql-relational-learning-term-1.json"
+      ]
     },
     "prog1t": {
       "version": "0.0.1",
@@ -80,6 +79,30 @@
         {
           "file": "reference/programming-fundamentals-term-1-brownfielders.md",
           "name": "Brownfielders 1"
+        }
+      ]
+    },
+    "os": {
+      "title": "Operating Systems Fundamentals",
+      "terms": [{ "file": "reference/os-term-1-canvas.md", "name": "Term 1" }]
+    }
+  },
+  "learningFiles": {
+    "sql": {
+      "title": "Relational database",
+      "terms": [
+        {
+          "file": "reference/relational-database-term-1-learning.md",
+          "name": "Term 1"
+        }
+      ]
+    },
+    "os": {
+      "title": "Operating Systems Fundamentals",
+      "terms": [
+        {
+          "file": "reference/os-term-1-learning.md",
+          "name": "Term 1"
         }
       ]
     }

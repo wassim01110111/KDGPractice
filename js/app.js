@@ -11,6 +11,58 @@ const {
 } = Core;
 const focusButton = document.getElementById("focus-toggle");
 const headerTools = document.getElementById("header-tools");
+const terminalModuleUrl = new URL(
+  "./terminal.js",
+  document.currentScript?.src || location.href,
+).href;
+
+// Terminal views own their listeners and resources. Dispose only exercise
+// views that explicitly expose this small lifecycle hook.
+function clearTerminalExerciseStorage() {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.deleteDatabase("acs-practice-terminal");
+    request.onsuccess = () => resolve();
+    request.onerror = () =>
+      reject(request.error || new Error("Could not clear terminal workspaces"));
+    request.onblocked = () =>
+      reject(
+        new Error(
+          "Terminal storage is still open in another tab; close it and retry",
+        ),
+      );
+  });
+}
+function disposeExerciseViews(root) {
+  if (!root) return Promise.resolve();
+  const nodes = [root, ...(root.querySelectorAll?.("*") || [])];
+  const pending = root.exerciseCleanupPromise
+    ? [root.exerciseCleanupPromise]
+    : [];
+  for (const node of nodes) {
+    if (typeof node.disposeExercise !== "function") continue;
+    const dispose = node.disposeExercise;
+    node.disposeExercise = null;
+    try {
+      const result = dispose();
+      if (result && typeof result.then === "function") pending.push(result);
+    } catch (error) {
+      console.warn("Exercise cleanup failed:", error);
+    }
+  }
+  let wrapped;
+  wrapped = Promise.all(
+    pending.map((task) =>
+      task.catch((error) => {
+        console.warn("Exercise cleanup failed:", error);
+      }),
+    ),
+  ).finally(() => {
+    if (root.exerciseCleanupPromise === wrapped)
+      root.exerciseCleanupPromise = null;
+  });
+  root.exerciseCleanupPromise = wrapped;
+  return wrapped;
+}
 const $ = (s, r = document) => r.querySelector(s);
 const h = (t, a = {}, ...k) => {
   const e = document.createElement(t);
@@ -1933,7 +1985,21 @@ const compatibleManifest = (m) =>
 // { "Term 1": { file } } object (sorted naturally, "Term 2" before "Term 10")
 // and a single `file` entry (treated as "Term 1").
 function normalizeLibrary(map) {
-  return Object.entries(map || {}).map(([id, entry]) => {
+  // A single subject may be supplied directly as { title, terms }, while
+  // multi-subject libraries remain objects keyed by their subject IDs.
+  const isSingleSubject = Boolean(
+    map &&
+    typeof map === "object" &&
+    !Array.isArray(map) &&
+    typeof map.title === "string" &&
+    (Array.isArray(map.terms) ||
+      (map.terms && typeof map.terms === "object") ||
+      map.file),
+  );
+  const entries = isSingleSubject
+    ? [[map.id || map.slug || "relational-database", map]]
+    : Object.entries(map || {});
+  return entries.map(([id, entry]) => {
     let terms;
     if (Array.isArray(entry?.terms)) {
       terms = entry.terms.map((t, i) =>
@@ -1976,12 +2042,13 @@ async function loadContent() {
         `Incompatible manifest schema version ${manifest.schemaVersion}; supported: ${ctx.schemaVersion}`,
       );
 
-    // packages, referenceFiles and canvasFiles are objects keyed by ID. The
-    // last two hold per-term files: { title, terms: { "Term 1": { file } } }.
+    // Packages and the document libraries are objects keyed by ID. Each
+    // library entry contains an ordered list of per-term Markdown/HTML files.
     S.manifest = {
       ...manifest,
       referenceFiles: normalizeLibrary(manifest.referenceFiles),
       canvasFiles: normalizeLibrary(manifest.canvasFiles),
+      learningFiles: normalizeLibrary(manifest.learningFiles),
     };
 
     for (const [manifestId, entry] of Object.entries(manifest.packages || {})) {
@@ -2002,6 +2069,7 @@ async function loadContent() {
               packageId: manifestId,
               version: entry.version,
               ...pkg,
+              canvas: pkg.canvas ?? entry.canvas,
             },
           });
         } catch (e) {
@@ -2026,6 +2094,7 @@ async function loadContent() {
       packages: {},
       referenceFiles: [],
       canvasFiles: [],
+      learningFiles: [],
     };
   }
 
@@ -2182,6 +2251,8 @@ function normalizeOptionalExerciseHints(pkg) {
         )
           return [id, exercise];
 
+        // All exercise types use one shared top-level `hints` field.
+        // Terminal configuration is reserved for runtime/filesystem settings.
         const hints = exercise.hints;
         return [
           id,
@@ -2228,13 +2299,16 @@ function addPackage(f, ctx) {
     ctx.datasetIds.add(id);
   }
 
-  // `term` belongs to the package, so copy it onto every exercise to make
-  // filtering cheap and consistent for bundled and imported packages.
+  // Package-level metadata is copied onto exercises so filtering and routing
+  // stay consistent for bundled and imported packages. A per-exercise canvas
+  // value may override the package default.
   const packageTerm = Number.isInteger(pkg.term) ? pkg.term : null;
+  const packageCanvas = pkg.canvas ?? f.canvas ?? null;
   const exercises = Object.entries(pkg.exercises || {}).map(([id, ex]) => ({
     ...ex,
     id,
     term: packageTerm,
+    canvas: ex.canvas ?? packageCanvas,
     packageId: pkg.packageId,
     key: exerciseKey({ id }, pkg.packageId),
   }));
@@ -2246,6 +2320,7 @@ function addPackage(f, ctx) {
     id: pkg.packageId,
     version: pkg.version,
     term: packageTerm,
+    canvas: packageCanvas,
     n: exercises.length,
   });
 
@@ -2337,6 +2412,8 @@ function packageLoadErrorPanel() {
 // another exercise's work.
 let databaseQueue = Promise.resolve();
 const preparedDatasets = new Set();
+let activeDatabaseToken = null;
+const databaseToken = (dataset) => `${dataset.id}@${dataset.version}`;
 async function engine() {
   await (window.pgliteReady ||
     Promise.reject(new Error("PGlite worker loader missing")));
@@ -2349,6 +2426,7 @@ async function resetDatabase(db, ds) {
   await db.exec("DROP SCHEMA IF EXISTS public CASCADE; CREATE SCHEMA public;");
   await db.exec(ds.sql);
   preparedDatasets.add(ds.id + "@" + ds.version);
+  activeDatabaseToken = databaseToken(ds);
 }
 function withFreshDb(ds, task) {
   const operation = databaseQueue.then(async () => {
@@ -2358,6 +2436,18 @@ function withFreshDb(ds, task) {
   });
   // Keep the queue usable after a failed query/setup while returning the
   // original rejection to the caller.
+  databaseQueue = operation.catch(() => {});
+  return operation;
+}
+// Sandbox queries share the existing PGlite worker but keep the selected
+// dataset live between runs. Exercise queries continue to use withFreshDb().
+function withPersistentDb(ds, task, forceReset = false) {
+  const operation = databaseQueue.then(async () => {
+    const db = await engine();
+    if (forceReset || activeDatabaseToken !== databaseToken(ds))
+      await resetDatabase(db, ds);
+    return task(db);
+  });
   databaseQueue = operation.catch(() => {});
   return operation;
 }
@@ -3039,7 +3129,7 @@ const answerText = (ex, answer) => {
     ? answer || "(empty)"
     : JSON.stringify(answer ?? "(no answer)");
 };
-function schemaView(ex) {
+function schemaView(ex, options = {}) {
   const content = h(
     "div",
     { class: "schema-content" },
@@ -3051,7 +3141,11 @@ function schemaView(ex) {
   const box = h(
     "details",
     { class: "schema schema-workspace", open: true },
-    h("summary", {}, "Dataset schema"),
+    h(
+      "summary",
+      {},
+      ex.datasetTitle ? `${ex.datasetTitle} · schema` : "Dataset schema",
+    ),
     content,
   );
   // Clicking anywhere in the schema panel must not steal focus from the
@@ -3074,7 +3168,10 @@ function schemaView(ex) {
     );
     let columns, keys;
     try {
-      [columns, keys] = await withFreshDb(
+      const withDatabase = options.preserveDatabase
+        ? withPersistentDb
+        : withFreshDb;
+      [columns, keys] = await withDatabase(
         S.datasets[ex.datasetId],
         async (db) => {
           const columns = await db.query(
@@ -3163,7 +3260,7 @@ function schemaView(ex) {
         "PlantUML diagram. On desktop, scroll to zoom and drag to pan.",
     });
     const diagramImage = h("img", {
-      alt: `PlantUML entity relationship diagram for ${ex.datasetId}`,
+      alt: `PlantUML entity relationship diagram for ${ex.datasetTitle || ex.datasetId}`,
       draggable: "false",
     });
     // Hidden (but still loading) until the image arrives; a skeleton fills the
@@ -3432,9 +3529,10 @@ function qView(
   onAttempt = () => {},
   onNextExercise = null,
   hasNextExercise = () => true,
+  attemptId = mode === "exam" ? "exam" : "practice",
 ) {
-  const q = h("div", { class: "q" }),
-    out = h("div"),
+  let q = h("div", { class: "q" });
+  const out = h("div"),
     fb = h("div");
   const scrollToOutput = () =>
     out.scrollIntoView({
@@ -3463,29 +3561,39 @@ function qView(
     gradingId = 0;
   const updateAnswer = (value) => {
     const saved = set(value);
-    Promise.resolve(saved).catch((e) => {
+    return Promise.resolve(saved).catch((e) => {
       console.error("Could not save answer draft:", e);
     });
   };
   const instructions = h("div", { class: "stmt" });
   renderExerciseInstructions(instructions, ex.instructions);
-  q.append(
-    h("h3", {}, ex.title),
-    h(
-      "div",
-      { class: "meta" },
-      [
-        courseLabel(ex.course),
-        ex.packageId,
-        ex.category,
-        ex.difficulty,
-        !ex.examEligible ? "not on exam" : "",
-      ]
-        .filter(Boolean)
-        .join(" · "),
-    ),
-    instructions,
+  const exerciseHeading = h("h3", {}, ex.title);
+  const exerciseMeta = h(
+    "div",
+    { class: "meta" },
+    [courseLabel(ex.course), ex.packageId, ex.category, ex.difficulty]
+      .filter(Boolean)
+      .join(" · "),
   );
+  let terminalInstructionsPane = null;
+  if (ex.type === "terminal") {
+    terminalInstructionsPane = h(
+      "section",
+      {
+        class: "q terminal-instructions-pane",
+        "aria-label": "Exercise instructions",
+      },
+      exerciseHeading,
+      exerciseMeta,
+      instructions,
+    );
+    q = h("section", {
+      class: "q terminal-workspace-pane",
+      "aria-label": "Terminal workspace",
+    });
+  } else {
+    q.append(exerciseHeading, exerciseMeta, instructions);
+  }
   const btns = h("div");
   let readAns, resetFn, submitButton, nextExerciseButton, focusTarget;
 
@@ -3620,6 +3728,91 @@ function qView(
       );
       btns.append(submitButton);
     }
+  } else if (ex.type === "terminal") {
+    const terminalHost = h("div", { class: "terminal-exercise-host" });
+    terminalHost.append(loadingNote("Loading browser terminal…"));
+    q.append(terminalHost);
+    let terminalController = null;
+    let terminalDisposed = false;
+    let mountGeneration = 1;
+    let terminalMountPromise = null;
+    readAns = () => "terminal-workspace";
+    resetFn = () => terminalController?.reset?.();
+    q.disposeExercise = () => {
+      terminalDisposed = true;
+      mountGeneration++;
+      const controller = terminalController;
+      terminalController = null;
+      if (controller) return controller.dispose?.();
+      return terminalMountPromise;
+    };
+    const generation = mountGeneration;
+    terminalMountPromise = import(terminalModuleUrl)
+      .then(async (terminalModule) => {
+        if (
+          terminalDisposed ||
+          generation !== mountGeneration ||
+          !q.isConnected
+        )
+          return;
+        const controller = await terminalModule.mountTerminalExercise({
+          container: terminalHost,
+          exercise: ex,
+          packageId: ex.packageId,
+          exerciseId: ex.id,
+          attemptId,
+          mode,
+          onChange: async () => {
+            fb.replaceChildren();
+            await updateAnswer("terminal-workspace");
+          },
+          onGrade: async (result) => {
+            if (mode !== "practice" || terminalDisposed || !q.isConnected)
+              return;
+            await rec(ex, result.passed, "practice", onAttempt, {
+              terminal: true,
+              partialScore: result.score,
+              maxScore: result.maxScore,
+              blank: false,
+            });
+            if (result.passed) markExerciseCorrect();
+            fb.replaceChildren(
+              h(
+                "p",
+                { class: result.passed ? "ok" : "bad" },
+                `Workspace score: ${result.score} / ${result.maxScore}${result.passed ? " · All checks passed" : " · Review the failed checks above"}`,
+              ),
+            );
+            scrollToFeedback();
+            if (result.passed) focusNextExercise();
+          },
+        });
+        if (
+          terminalDisposed ||
+          generation !== mountGeneration ||
+          !q.isConnected
+        ) {
+          await controller?.dispose?.();
+          return;
+        }
+        terminalController = controller;
+        await updateAnswer("terminal-workspace");
+      })
+      .catch((error) => {
+        if (
+          terminalDisposed ||
+          generation !== mountGeneration ||
+          !q.isConnected
+        )
+          return;
+        terminalHost.replaceChildren(
+          h(
+            "div",
+            { class: "err", role: "alert" },
+            `The terminal feature could not be loaded: ${error?.message || String(error)}. Other exercises are unaffected.`,
+          ),
+        );
+      });
   } else {
     const cur =
       get() ||
@@ -3832,26 +4025,28 @@ function qView(
       );
       btns.append(nextExerciseButton);
     }
-    btns.append(
-      h(
-        "button",
-        {
-          class: "sec",
-          onclick: () => {
-            runId++;
-            gradingId++;
+    if (ex.type !== "terminal") {
+      btns.append(
+        h(
+          "button",
+          {
+            class: "sec",
+            onclick: () => {
+              runId++;
+              gradingId++;
 
-            exerciseCorrect = false;
-            updateNextExercise();
+              exerciseCorrect = false;
+              updateNextExercise();
 
-            resetFn();
-            out.replaceChildren();
-            fb.replaceChildren();
+              resetFn();
+              out.replaceChildren();
+              fb.replaceChildren();
+            },
           },
-        },
-        "Reset",
-      ),
-    );
+          "Reset",
+        ),
+      );
+    }
     const hints = Array.isArray(ex.hints)
       ? ex.hints
       : typeof ex.hints === "string"
@@ -3890,8 +4085,12 @@ function qView(
         },
         "Show hints",
       );
-      btns.append(hb);
-      q.append(hintPanel);
+      if (ex.type === "terminal") {
+        terminalInstructionsPane.append(hb, hintPanel);
+      } else {
+        btns.append(hb);
+        q.append(hintPanel);
+      }
     }
   }
   // Result snippet: shown in practice and exam, open by default.
@@ -4012,7 +4211,11 @@ function qView(
   }
   if (mode === "practice") {
     const hasSol = ex.type === "sql-query" ? !!ex.referenceSolution : true;
-    if (hasSol && ex.type !== "short-answer-self-check") {
+    if (
+      hasSol &&
+      ex.type !== "short-answer-self-check" &&
+      ex.type !== "terminal"
+    ) {
       const solution = h(
         "div",
         { class: "solution-panel", hidden: true },
@@ -4041,10 +4244,126 @@ function qView(
     }
   }
   q.append(btns, out, fb);
-  const view = schemaPanel ? sqlSplitLayout(schemaPanel, q) : q;
+  const view = schemaPanel
+    ? sqlSplitLayout(schemaPanel, q)
+    : ex.type === "terminal"
+      ? terminalSplitLayout(terminalInstructionsPane, q)
+      : q;
   view.refreshNextExercise = updateNextExercise;
   view.focusInput = () => focusTarget?.focus({ preventScroll: true });
   return view;
+}
+
+// ---------- resizable split between terminal instructions and workspace ----------
+const TERMINAL_SPLIT_KEY = "terminalInstructionsFraction";
+const TERMINAL_SPLIT_MIN = 0.22;
+const TERMINAL_SPLIT_MAX = 0.56;
+const TERMINAL_SPLIT_DEFAULT = 0.34;
+let terminalInstructionsFraction = (() => {
+  try {
+    const value = Number(localStorage.getItem(TERMINAL_SPLIT_KEY));
+    if (
+      Number.isFinite(value) &&
+      value >= TERMINAL_SPLIT_MIN &&
+      value <= TERMINAL_SPLIT_MAX
+    )
+      return value;
+  } catch {}
+  return TERMINAL_SPLIT_DEFAULT;
+})();
+function terminalSplitLayout(instructionsPanel, workspacePanel) {
+  const handle = h("div", {
+    class: "terminal-split-handle",
+    role: "separator",
+    "aria-orientation": "vertical",
+    "aria-label": "Resize terminal instructions and workspace",
+    tabindex: "0",
+    title: "Drag to resize (double-click to reset)",
+  });
+  const layout = h(
+    "div",
+    { class: "terminal-exercise-layout" },
+    workspacePanel,
+    handle,
+    instructionsPanel,
+  );
+  const apply = () => {
+    layout.style.setProperty(
+      "--terminal-instructions-col",
+      `${(terminalInstructionsFraction * 100).toFixed(2)}%`,
+    );
+    handle.setAttribute(
+      "aria-valuenow",
+      String(Math.round(terminalInstructionsFraction * 100)),
+    );
+  };
+  const set = (fraction, save = false) => {
+    terminalInstructionsFraction = Math.min(
+      TERMINAL_SPLIT_MAX,
+      Math.max(TERMINAL_SPLIT_MIN, fraction),
+    );
+    apply();
+    if (save) {
+      try {
+        localStorage.setItem(
+          TERMINAL_SPLIT_KEY,
+          String(terminalInstructionsFraction),
+        );
+      } catch {}
+    }
+  };
+  handle.setAttribute("aria-valuemin", String(TERMINAL_SPLIT_MIN * 100));
+  handle.setAttribute("aria-valuemax", String(TERMINAL_SPLIT_MAX * 100));
+  apply();
+  let dragging = false;
+  handle.addEventListener("pointerdown", (event) => {
+    if (event.button !== 0 || matchMedia("(max-width: 900px)").matches) return;
+    dragging = true;
+    handle.setPointerCapture(event.pointerId);
+    handle.classList.add("is-dragging");
+    document.body.classList.add("terminal-split-dragging");
+    event.preventDefault();
+  });
+  handle.addEventListener("pointermove", (event) => {
+    if (!dragging) return;
+    const rect = layout.getBoundingClientRect();
+    // Instructions occupy the right-hand column, so measure from the right.
+    if (rect.width) set((rect.right - event.clientX) / rect.width, false);
+  });
+  const end = () => {
+    if (!dragging) return;
+    dragging = false;
+    handle.classList.remove("is-dragging");
+    document.body.classList.remove("terminal-split-dragging");
+    try {
+      localStorage.setItem(
+        TERMINAL_SPLIT_KEY,
+        String(terminalInstructionsFraction),
+      );
+    } catch {}
+  };
+  handle.addEventListener("pointerup", end);
+  handle.addEventListener("pointercancel", end);
+  handle.addEventListener("lostpointercapture", end);
+  handle.addEventListener("dblclick", () => {
+    terminalInstructionsFraction = TERMINAL_SPLIT_DEFAULT;
+    apply();
+    try {
+      localStorage.removeItem(TERMINAL_SPLIT_KEY);
+    } catch {}
+  });
+  handle.addEventListener("keydown", (event) => {
+    const step = event.shiftKey ? 0.1 : 0.02;
+    if (event.key === "ArrowLeft")
+      set(terminalInstructionsFraction - step, true);
+    else if (event.key === "ArrowRight")
+      set(terminalInstructionsFraction + step, true);
+    else if (event.key === "Home") set(TERMINAL_SPLIT_MIN, true);
+    else if (event.key === "End") set(TERMINAL_SPLIT_MAX, true);
+    else return;
+    event.preventDefault();
+  });
+  return layout;
 }
 
 // ---------- resizable split between the question and the schema/diagram ----------
@@ -4751,6 +5070,253 @@ const libraryFileKind = (file) =>
 //   true  -> the picker is shown even when a subject has only one term
 //   false -> the picker is hidden when there is nothing to choose between
 const SHOW_TERM_PICKER_WITH_SINGLE_TERM = true;
+// Learning guides are paired with their own exercise packages. Keep these IDs
+// aligned with the packageId values in content packages; the manifest's package
+// group key (for example, "os1") is not the packageId used by practice routes.
+const LEARNING_PACKAGE_IDS = Object.freeze({
+  sql: "sql-relational-learning-term-1",
+  os: "os-learning-term-1",
+});
+
+// The Learning page is a Markdown article enhanced with live progress controls.
+// Exercise completion reuses the same XP keys as Practice/Progress; the separate
+// "section reviewed" checklist is saved through the existing IndexedDB key-value store.
+async function enhanceLearningProgress(body, term, subjectId) {
+  if (!body || !term?.file) return;
+  const headings = [...body.querySelectorAll("h2")].filter((heading) =>
+    heading.textContent.trim().startsWith("Section "),
+  );
+  if (!headings.length) return;
+
+  const storageKey = `learning-complete:${term.file}`;
+  const stored = await kv.get(storageKey, []);
+  const completed = new Set(Array.isArray(stored) ? stored : []);
+  const learningPackageId = LEARNING_PACKAGE_IDS[subjectId];
+  const packageExercises = S.exercises
+    .filter((exercise) => exercise.packageId === learningPackageId)
+    .sort((a, b) => a.id.localeCompare(b.id, undefined, { numeric: true }));
+  const solved = new Set(Object.keys(S.xpRewards || {}));
+  const modules = headings.map((heading, index) => {
+    const sectionNumber = String(index + 1).padStart(2, "0");
+    const sectionId = `s${sectionNumber}`;
+    // SQL exercises traditionally start with "s01-"; OS exercises use
+    // "os-learning-s01-001". Prefer the explicit category assigned to the
+    // exercise, while accepting either ID convention as a backwards-compatible
+    // fallback for existing learning packages.
+    const exercises = packageExercises.filter((exercise) => {
+      const category = String(exercise.category || "");
+      const categoryMatches = new RegExp(
+        `^Section\\s+${sectionNumber}\\b`,
+        "i",
+      ).test(category);
+      const idMatches = new RegExp(`(?:^|-)s${sectionNumber}-`).test(
+        String(exercise.id || ""),
+      );
+      return categoryMatches || idMatches;
+    });
+    return { heading, sectionId, exercises, index };
+  });
+  const totalExercises = modules.reduce(
+    (sum, module) => sum + module.exercises.length,
+    0,
+  );
+  const totalSolved = modules.reduce(
+    (sum, module) =>
+      sum +
+      module.exercises.filter((exercise) => solved.has(keyOf(exercise))).length,
+    0,
+  );
+  const totalComplete = modules.filter((module) =>
+    completed.has(module.sectionId),
+  ).length;
+  const overall = h(
+    "section",
+    { class: "learning-overview", "aria-label": "Learning progress" },
+    h(
+      "div",
+      { class: "learning-overview-heading" },
+      h(
+        "div",
+        {},
+        h("span", { class: "learning-kicker" }, "YOUR LEARNING PATH"),
+        h("h2", {}, "Term 1 progress"),
+        h(
+          "p",
+          { class: "learning-overview-subtitle" },
+          "Exercise clears and reviewed sections are tracked separately.",
+        ),
+      ),
+      h(
+        "div",
+        { class: "learning-overview-percent", "aria-live": "polite" },
+        `${totalExercises ? Math.round((totalSolved / totalExercises) * 100) : 0}%`,
+      ),
+    ),
+    h(
+      "div",
+      { class: "learning-overview-metrics" },
+      h(
+        "div",
+        { class: "learning-metric" },
+        h(
+          "strong",
+          { class: "learning-solved-count" },
+          `${totalSolved}/${totalExercises}`,
+        ),
+        h("span", {}, "Exercises solved"),
+      ),
+      h(
+        "div",
+        { class: "learning-metric" },
+        h(
+          "strong",
+          { class: "learning-complete-count" },
+          `${totalComplete}/${modules.length}`,
+        ),
+        h("span", {}, "Sections reviewed"),
+      ),
+    ),
+    h("progress", {
+      class: "learning-overview-bar",
+      max: Math.max(totalExercises, 1),
+      value: totalSolved,
+      "aria-label": "Exercise completion",
+    }),
+    h(
+      "div",
+      { class: "learning-overview-foot" },
+      "Correct answers are counted from your saved practice history. Review checkmarks remain saved on this device.",
+    ),
+  );
+
+  if (modules[0]?.heading) modules[0].heading.before(overall);
+  const refreshOverview = () => {
+    const solvedNow = modules.reduce(
+      (sum, module) =>
+        sum +
+        module.exercises.filter((exercise) => solved.has(keyOf(exercise)))
+          .length,
+      0,
+    );
+    overall.querySelector(".learning-solved-count").textContent =
+      `${solvedNow}/${totalExercises}`;
+    overall.querySelector(".learning-complete-count").textContent =
+      `${modules.filter((module) => completed.has(module.sectionId)).length}/${modules.length}`;
+    overall.querySelector(".learning-overview-percent").textContent =
+      `${totalExercises ? Math.round((solvedNow / totalExercises) * 100) : 0}%`;
+    overall.querySelector(".learning-overview-bar").value = solvedNow;
+  };
+
+  for (const module of modules) {
+    const { heading, sectionId, exercises, index } = module;
+    heading.classList.add("learning-module-heading");
+    const solvedCount = exercises.filter((exercise) =>
+      solved.has(keyOf(exercise)),
+    ).length;
+    const progress = h("progress", {
+      class: "learning-module-bar",
+      max: Math.max(exercises.length, 1),
+      value: solvedCount,
+      "aria-label": `Section ${index + 1} exercise progress`,
+    });
+    const status = h(
+      "span",
+      { class: "learning-module-status" },
+      `${solvedCount}/${exercises.length} exercises solved`,
+    );
+    const toggle = h(
+      "button",
+      {
+        type: "button",
+        class:
+          "learning-complete-toggle" +
+          (completed.has(sectionId) ? " is-complete" : ""),
+        "aria-pressed": String(completed.has(sectionId)),
+        onclick: async () => {
+          if (completed.has(sectionId)) completed.delete(sectionId);
+          else completed.add(sectionId);
+          const isComplete = completed.has(sectionId);
+          toggle.classList.toggle("is-complete", isComplete);
+          toggle.setAttribute("aria-pressed", String(isComplete));
+          toggle.textContent = isComplete
+            ? "✓ Section reviewed"
+            : "Mark section reviewed";
+          await kv.set(storageKey, [...completed]);
+          refreshOverview();
+        },
+      },
+      completed.has(sectionId) ? "✓ Section reviewed" : "Mark section reviewed",
+    );
+    const exerciseLinks = exercises.length
+      ? h(
+          "details",
+          { class: "learning-exercise-list" },
+          h(
+            "summary",
+            {},
+            `Open ${exercises.length} exercises in this section`,
+          ),
+          h(
+            "ol",
+            {},
+            ...exercises.map((exercise) => {
+              const done = solved.has(keyOf(exercise));
+              const readableTitle =
+                exercise.title.split(" · ").slice(2).join(" · ") ||
+                exercise.title;
+              return h(
+                "li",
+                {},
+                h(
+                  "a",
+                  {
+                    href: `#/practice/${encodeURIComponent(exercise.packageId)}/${encodeURIComponent(exercise.id)}`,
+                  },
+                  readableTitle,
+                ),
+                h(
+                  "span",
+                  {
+                    class: done
+                      ? "learning-exercise-done"
+                      : "learning-exercise-open",
+                  },
+                  done ? "Solved" : "Not solved",
+                ),
+              );
+            }),
+          ),
+        )
+      : h(
+          "p",
+          { class: "learning-no-exercises" },
+          "The exercise package is not loaded. Check the manifest integration notes.",
+        );
+    const card = h(
+      "section",
+      {
+        class: "learning-module-progress",
+        "aria-label": `Section ${index + 1} progress`,
+      },
+      h(
+        "div",
+        { class: "learning-module-progress-top" },
+        h(
+          "div",
+          {},
+          h("strong", {}, `Section ${String(index + 1).padStart(2, "0")}`),
+          status,
+        ),
+        toggle,
+      ),
+      progress,
+      exerciseLinks,
+    );
+    heading.after(card);
+  }
+  refreshOverview();
+}
+
 const LIBRARY_VIEWS = {
   reader: {
     key: "referenceFiles",
@@ -4770,11 +5336,22 @@ const LIBRARY_VIEWS = {
     empty: "No canvas files configured.",
     noun: "canvas",
   },
+  learning: {
+    key: "learningFiles",
+    route: "learning",
+    eyebrow: "GUIDED CURRICULUM",
+    title: "Learning",
+    intro: "Follow a progressive path and track each section as you learn.",
+    empty: "No learning paths configured.",
+    noun: "learning path",
+  },
 };
 const pageReader = (root, arg, term) =>
   pageLibrary(root, arg, term, LIBRARY_VIEWS.reader);
 const pageCanvas = (root, arg, term) =>
   pageLibrary(root, arg, term, LIBRARY_VIEWS.canvas);
+const pageLearning = (root, arg, term) =>
+  pageLibrary(root, arg, term, LIBRARY_VIEWS.learning);
 
 // Shared by the Summaries and Canvas pages. Each subject has several terms
 // (a slider switches between them); each term points at a .md or .html file.
@@ -5476,6 +6053,8 @@ async function pageLibrary(root, arg, termArg, view) {
       if (diagram) source.replaceWith(diagram);
       else source.classList.add("reference-code-fallback");
     });
+    if (view.route === "learning")
+      await enhanceLearningProgress(body, term, cur.id);
     return toc;
   };
   // An .html canvas runs in an iframe, so its own CSS and JS execute normally
@@ -5638,8 +6217,326 @@ let practiceFilterMemory = {
   category: "",
   difficulty: "",
   term: "",
+  exerciseTypes: ["mcq", "interactive", "other"],
   statusMode: "uncompleted",
 };
+
+// ---------- interactive Sandbox ----------
+function displayDatasetTitle(dataset, id) {
+  const title = dataset?.title || dataset?.name || dataset?.label || id;
+  return String(title)
+    .replace(/[-_]+/g, " ")
+    .replace(/\b[a-z]/g, (c) => c.toUpperCase());
+}
+
+async function pageSandbox(root) {
+  const datasets = Object.entries(S.datasets || {})
+    .filter(
+      ([, dataset]) =>
+        dataset && typeof dataset.sql === "string" && dataset.sql.trim(),
+    )
+    .sort((a, b) =>
+      displayDatasetTitle(a[1], a[0]).localeCompare(
+        displayDatasetTitle(b[1], b[0]),
+      ),
+    );
+  const page = h("section", { class: "sandbox-page" });
+  const heading = h(
+    "div",
+    { class: "card sandbox-heading" },
+    h("h2", {}, "Sandbox"),
+    h(
+      "p",
+      {},
+      "Experiment freely with the browser Linux terminal or run SQL against any database bundled with the exercise packages. Sandbox work does not affect exercise grades.",
+    ),
+  );
+  const modeBar = h("div", {
+    class: "sandbox-mode-bar",
+    role: "group",
+    "aria-label": "Sandbox environment",
+  });
+  const content = h("div", { class: "sandbox-content" });
+  const terminalMode = h(
+    "button",
+    { type: "button", class: "sec on", "aria-pressed": "true" },
+    "Terminal",
+  );
+  const sqlMode = h(
+    "button",
+    { type: "button", class: "sec", "aria-pressed": "false" },
+    "SQL",
+  );
+  modeBar.append(terminalMode, sqlMode);
+  page.append(heading, modeBar, content);
+  root.append(page);
+
+  let mode = "terminal";
+  let modeGeneration = 0;
+  let terminalController = null;
+  let selectedDatasetId = datasets[0]?.[0] || "";
+  let currentSchema = null;
+  let currentSqlTextarea = null;
+  let sqlOutput = null;
+  let sqlRunButton = null;
+  let sqlRunning = false;
+
+  const syncModes = () => {
+    terminalMode.classList.toggle("on", mode === "terminal");
+    sqlMode.classList.toggle("on", mode === "sql");
+    terminalMode.setAttribute("aria-pressed", String(mode === "terminal"));
+    sqlMode.setAttribute("aria-pressed", String(mode === "sql"));
+  };
+  const disposeTerminal = async () => {
+    const controller = terminalController;
+    terminalController = null;
+    if (controller) await controller.dispose?.();
+  };
+  root.disposeExercise = async () => {
+    modeGeneration++;
+    await disposeTerminal();
+  };
+
+  const showTerminal = async () => {
+    mode = "terminal";
+    syncModes();
+    const generation = ++modeGeneration;
+    await disposeTerminal();
+    if (generation !== modeGeneration) return;
+    content.replaceChildren(
+      loadingNote("Opening your personal terminal sandbox…"),
+    );
+    try {
+      const terminalModule = await import(terminalModuleUrl);
+      if (generation !== modeGeneration || !content.isConnected) return;
+      const host = h("div", { class: "terminal-sandbox-host" });
+      content.replaceChildren(host);
+      const controller = await terminalModule.mountTerminalSandbox({
+        container: host,
+        workspaceId: "default",
+      });
+      if (generation !== modeGeneration || !content.isConnected) {
+        await controller?.dispose?.();
+        return;
+      }
+      terminalController = controller;
+    } catch (error) {
+      if (generation !== modeGeneration) return;
+      content.replaceChildren(
+        h(
+          "div",
+          { class: "card err", role: "alert" },
+          `The terminal sandbox could not be opened: ${error?.message || String(error)}`,
+        ),
+      );
+    }
+  };
+
+  const renderSql = () => {
+    const generation = ++modeGeneration;
+    void disposeTerminal();
+    mode = "sql";
+    syncModes();
+    if (!datasets.length) {
+      content.replaceChildren(
+        h(
+          "div",
+          { class: "empty" },
+          h("strong", {}, "No SQL databases are available"),
+          h(
+            "p",
+            {},
+            "Add a dataset with a title and SQL setup script to an exercise package to make it available here.",
+          ),
+        ),
+      );
+      return;
+    }
+    if (!S.datasets[selectedDatasetId]) selectedDatasetId = datasets[0][0];
+    const database = S.datasets[selectedDatasetId];
+    const title = displayDatasetTitle(database, selectedDatasetId);
+    const titleLine = h(
+      "div",
+      { class: "sandbox-db-title" },
+      h("span", { class: "filter-label" }, "Current database"),
+      h("strong", {}, title),
+    );
+    const selector = h(
+      "select",
+      { "aria-label": "Choose database" },
+      ...datasets.map(([id, item]) =>
+        h(
+          "option",
+          { value: id, selected: id === selectedDatasetId },
+          displayDatasetTitle(item, id),
+        ),
+      ),
+    );
+    const resetDatabaseButton = h(
+      "button",
+      { type: "button", class: "sec" },
+      "Reset database",
+    );
+    const refreshSchemaButton = h(
+      "button",
+      { type: "button", class: "sec" },
+      "Refresh schema",
+    );
+    const topbar = h(
+      "div",
+      { class: "card sandbox-sql-toolbar" },
+      h(
+        "label",
+        { class: "filter-control" },
+        h("span", { class: "filter-label" }, "Load database"),
+        selector,
+      ),
+      titleLine,
+      refreshSchemaButton,
+      resetDatabaseButton,
+    );
+    const pseudoExercise = {
+      datasetId: selectedDatasetId,
+      datasetTitle: title,
+    };
+    const schemaPanel = schemaView(pseudoExercise, { preserveDatabase: true });
+    const question = h(
+      "section",
+      { class: "q sandbox-sql-question" },
+      h("h3", {}, "SQL playground"),
+      h(
+        "p",
+        { class: "muted" },
+        "Run one PostgreSQL statement per execution against the selected database. Changes persist while you experiment here; selecting another database loads that dataset's original state. Refresh the schema after creating, changing, or dropping tables.",
+      ),
+    );
+    const textarea = h("textarea", {
+      class: "editor sandbox-sql-editor",
+      rows: 12,
+      spellcheck: "false",
+      "aria-label": "Sandbox SQL editor",
+      placeholder: "SELECT * FROM …;",
+    });
+    const actions = h("div", { class: "sandbox-sql-actions" });
+    const runButton = h("button", { type: "button" }, "Run SQL (Ctrl + Enter)");
+    const clearButton = h(
+      "button",
+      { type: "button", class: "sec" },
+      "Clear editor",
+    );
+    const status = h("small", {
+      class: "sandbox-sql-status",
+      role: "status",
+      "aria-live": "polite",
+    });
+    const output = h("div", { class: "sandbox-sql-output" });
+    actions.append(runButton, clearButton, status);
+    question.append(textarea, actions, output);
+    const layout = sqlSplitLayout(schemaPanel, question);
+    const refreshSchema = () => {
+      const freshSchema = schemaView(pseudoExercise, {
+        preserveDatabase: true,
+      });
+      layout.replaceChild(freshSchema, layout.firstElementChild);
+      currentSchema = freshSchema;
+    };
+    content.replaceChildren(topbar, layout);
+    currentSchema = schemaPanel;
+    currentSqlTextarea = textarea;
+    sqlOutput = output;
+    sqlRunButton = runButton;
+
+    const runQuery = async () => {
+      const sql = textarea.value;
+      if (!sql.trim() || sqlRunning) return;
+      sqlRunning = true;
+      runButton.disabled = true;
+      resetDatabaseButton.disabled = true;
+      status.textContent = "Running against " + title + "…";
+      output.replaceChildren(loadingNote("Executing SQL…"));
+      try {
+        const result = await withPersistentDb(database, (db) =>
+          runSql(db, sql),
+        );
+        if (generation !== modeGeneration || mode !== "sql") return;
+        output.replaceChildren(table(result));
+        status.textContent = `Completed · ${result.rows?.length ?? 0} row(s)`;
+        if (/^\s*(create|alter|drop|truncate)\b/i.test(sql)) refreshSchema();
+      } catch (error) {
+        if (generation !== modeGeneration || mode !== "sql") return;
+        output.replaceChildren(
+          h("pre", { class: "err" }, describeSqlError(error, sql)),
+        );
+        status.textContent = "Query failed";
+      } finally {
+        sqlRunning = false;
+        if (generation === modeGeneration) {
+          runButton.disabled = false;
+          resetDatabaseButton.disabled = false;
+        }
+      }
+    };
+    runButton.addEventListener("click", runQuery);
+    refreshSchemaButton.addEventListener("click", () => {
+      if (sqlRunning) return;
+      refreshSchemaButton.disabled = true;
+      refreshSchemaButton.textContent = "Refreshing…";
+      refreshSchema();
+      requestAnimationFrame(() => {
+        refreshSchemaButton.disabled = false;
+        refreshSchemaButton.textContent = "Refresh schema";
+      });
+    });
+    clearButton.addEventListener("click", () => {
+      textarea.value = "";
+      textarea.focus();
+    });
+    textarea.addEventListener("keydown", (event) => {
+      if ((event.ctrlKey || event.metaKey) && event.key === "Enter") {
+        event.preventDefault();
+        runQuery();
+      }
+    });
+    selector.value = selectedDatasetId;
+    selector.addEventListener("change", () => {
+      selectedDatasetId = selector.value;
+      sqlRunning = false;
+      renderSql();
+    });
+    resetDatabaseButton.addEventListener("click", async () => {
+      if (sqlRunning) return;
+      resetDatabaseButton.disabled = true;
+      runButton.disabled = true;
+      status.textContent = "Restoring " + title + "…";
+      try {
+        await withPersistentDb(database, async () => {}, true);
+        if (generation !== modeGeneration || mode !== "sql") return;
+        // Refresh the diagram and tables from the pristine selected dataset.
+        refreshSchema();
+        output.replaceChildren(
+          h("small", {}, "Database restored to its original package state."),
+        );
+        status.textContent = "Database reset";
+      } catch (error) {
+        output.replaceChildren(h("pre", { class: "err" }, error.message));
+        status.textContent = "Reset failed";
+      } finally {
+        if (generation === modeGeneration) {
+          resetDatabaseButton.disabled = false;
+          runButton.disabled = false;
+        }
+      }
+    });
+  };
+
+  terminalMode.addEventListener("click", () => {
+    if (mode !== "terminal") showTerminal();
+  });
+  sqlMode.addEventListener("click", () => {
+    if (mode !== "sql") renderSql();
+  });
+  await showTerminal();
+}
 
 async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
   if (!S.exercises.length)
@@ -5672,6 +6569,7 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
       category: f.category,
       difficulty: f.difficulty,
       term: f.term,
+      exerciseTypes: [...selectedExerciseTypes],
       statusMode,
     };
   }
@@ -5790,6 +6688,60 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
         h("span", { class: "filter-label" }, name),
         select,
       );
+  const exerciseTypeOptions = [
+    { key: "mcq", label: "MCQ" },
+    { key: "interactive", label: "Interactive (SQL + terminal)" },
+    { key: "other", label: "Other (text / fill-in)" },
+  ];
+  const validExerciseTypeKeys = new Set(
+    exerciseTypeOptions.map((option) => option.key),
+  );
+  let selectedExerciseTypes = new Set(
+    (Array.isArray(practiceFilterMemory.exerciseTypes)
+      ? practiceFilterMemory.exerciseTypes
+      : exerciseTypeOptions.map((option) => option.key)
+    ).filter((key) => validExerciseTypeKeys.has(key)),
+  );
+  const exerciseTypeControl = h(
+    "div",
+    { class: "filter-control practice-type-filter-control" },
+    h("span", { class: "filter-label" }, "Exercise type"),
+    h(
+      "div",
+      {
+        class: "practice-type-checkboxes",
+        role: "group",
+        "aria-label": "Exercise types",
+      },
+      ...exerciseTypeOptions.map((option) => {
+        const input = h("input", {
+          type: "checkbox",
+          checked: selectedExerciseTypes.has(option.key),
+          onchange: (event) => {
+            if (event.target.checked) selectedExerciseTypes.add(option.key);
+            else selectedExerciseTypes.delete(option.key);
+            rememberPracticeFilters();
+            redraw();
+          },
+        });
+        return h(
+          "label",
+          { class: "practice-type-option" },
+          input,
+          h("span", {}, option.label),
+        );
+      }),
+    ),
+  );
+  exerciseTypeControl.addEventListener("click", () => {
+    exerciseTypeControl.classList.toggle("is-open");
+  });
+  const exerciseTypeGroup = (exercise) => {
+    if (String(exercise.type || "").startsWith("mcq")) return "mcq";
+    if (exercise.type === "terminal" || exercise.type === "sql-query")
+      return "interactive";
+    return "other";
+  };
   const statusModes = ["all", "uncompleted", "review", "saved"];
   const statusNames = [
     "Every question",
@@ -5889,6 +6841,7 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
     filterControl("Course", courseSelect),
     filterControl("Category", categorySelect),
     filterControl("Difficulty", difficultySelect),
+    exerciseTypeControl,
     statusControl,
   );
   const makeButton = (e) =>
@@ -5898,14 +6851,16 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
         class: "item" + (keyOf(e) === selectedKey ? " on" : ""),
         "aria-pressed": keyOf(e) === selectedKey,
         onclick: () => {
-          selectExercise(e, true);
+          void selectExercise(e, true).catch((error) =>
+            console.error("Could not open exercise:", error),
+          );
         },
       },
       `${S.savedForLater[keyOf(e)] ? "🔖 " : ""}${lastResults[keyOf(e)] === undefined ? "○" : lastResults[keyOf(e)] ? "✔" : "✘"} ${e.title}`,
       h(
         "small",
         {},
-        ` ${packageLabel(e.packageId)} · ${Number.isInteger(e.term) ? `Term ${e.term} · ` : ""}${e.difficulty}${e.examEligible ? "" : " · not on exam"}`,
+        ` ${packageLabel(e.packageId)} · ${Number.isInteger(e.term) ? `Term ${e.term} · ` : ""}${e.difficulty}`,
       ),
     );
   const moreRow = () =>
@@ -5947,6 +6902,7 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
     const filtered = S.exercises.filter(
       (e) =>
         Object.entries(f).every(([k, v]) => !v || String(e[k]) === v) &&
+        selectedExerciseTypes.has(exerciseTypeGroup(e)) &&
         (!query || haystack.get(e).includes(query)),
     );
     // Keep the active exercise available while filters/search change. The
@@ -6013,11 +6969,15 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
     }
     draw();
   }
-  function selectExercise(
+  let exerciseSelectionGeneration = 0;
+  async function selectExercise(
     exercise,
     addHistoryEntry,
     scrollToExercise = addHistoryEntry,
   ) {
+    const generation = ++exerciseSelectionGeneration;
+    await disposeExerciseViews(pane);
+    if (generation !== exerciseSelectionGeneration) return;
     selectedKey = keyOf(exercise);
     draw();
     const nextExerciseAfter = () => {
@@ -6032,7 +6992,10 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
       () => draw(),
       () => {
         const next = nextExerciseAfter();
-        if (next) selectExercise(next, true);
+        if (next)
+          void selectExercise(next, true).catch((error) =>
+            console.error("Could not open next exercise:", error),
+          );
       },
       () => !!nextExerciseAfter(),
     );
@@ -6128,7 +7091,10 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
     (exercise) =>
       exercise.packageId === routePackageId && exercise.id === routeExerciseId,
   );
-  if (routeExercise) selectExercise(routeExercise, false, true);
+  if (routeExercise)
+    selectExercise(routeExercise, false, true).catch((error) =>
+      console.error("Could not open selected exercise:", error),
+    );
   root.append(flt, h("div", { class: "cols" }, list, pane));
 }
 
@@ -6173,26 +7139,22 @@ async function pageExam(root, isCurrent = () => true) {
     }
   }
 
-  const eligibleExercises = S.exercises.filter((exercise) =>
-    Core.eligible(exercise),
-  );
-  if (!eligibleExercises.length)
+  const examPool = S.exercises;
+  if (!examPool.length)
     return root.append(
       empty(
-        "No exam-eligible exercises installed yet.",
-        "Ask the site maintainer to add an exam-eligible package.",
+        "No exercises installed yet.",
+        "Ask the site maintainer to add an exercise package.",
       ),
       await historyView(),
     );
 
   const courses = uniq(S.exercises, (exercise) => exercise.course);
-  // Term options come from packages that actually contain exam-eligible questions.
+  // Term options come from all installed exercise packages.
   // Sort numerically so Term 2 appears before Term 10.
   const terms = [
     ...new Set(
-      eligibleExercises
-        .map((exercise) => exercise.term)
-        .filter(Number.isInteger),
+      examPool.map((exercise) => exercise.term).filter(Number.isInteger),
     ),
   ].sort((a, b) => a - b);
 
@@ -6215,7 +7177,7 @@ async function pageExam(root, isCurrent = () => true) {
   // matching term is re-enabled.
   const preferredCourses = new Set(
     courses.filter((course) =>
-      eligibleExercises.some(
+      examPool.some(
         (exercise) =>
           exercise.course === course &&
           (!terms.length || cfg.terms.includes(exercise.term)),
@@ -6253,7 +7215,7 @@ async function pageExam(root, isCurrent = () => true) {
   });
 
   const courseHasSelectedTerm = (course) =>
-    eligibleExercises.some(
+    examPool.some(
       (exercise) =>
         exercise.course === course &&
         (!terms.length || cfg.terms.includes(exercise.term)),
@@ -6341,7 +7303,7 @@ async function pageExam(root, isCurrent = () => true) {
             h("span", {}, `Term ${term}`),
           );
         })
-      : h("small", {}, "No term numbers found in exam-eligible packages."),
+      : h("small", {}, "No term numbers found in installed packages."),
   );
 
   const courseOptions = h(
@@ -6395,7 +7357,6 @@ async function pageExam(root, isCurrent = () => true) {
     DIFF.forEach((difficulty) => {
       const available = termPool.filter(
         (exercise) =>
-          Core.eligible(exercise) &&
           cfg.courses.includes(exercise.course) &&
           exercise.difficulty === difficulty,
       ).length;
@@ -6497,7 +7458,6 @@ async function pageExam(root, isCurrent = () => true) {
                 const avail = (difficulty) =>
                   examExercises.filter(
                     (exercise) =>
-                      Core.eligible(exercise) &&
                       cfg.courses.includes(exercise.course) &&
                       exercise.difficulty === difficulty,
                   ).length;
@@ -6505,7 +7465,7 @@ async function pageExam(root, isCurrent = () => true) {
                   h(
                     "p",
                     { class: "bad" },
-                    "Not enough eligible exercises: nothing was substituted. " +
+                    "Not enough exercises: nothing was substituted. " +
                       Object.entries(r.shortage)
                         .map(
                           ([difficulty, shortage]) =>
@@ -6655,6 +7615,7 @@ async function runExam(root, st) {
     ),
     session = h("section", { class: "exam-session" }, top, workspace);
   let done = false;
+  let showGeneration = 0;
   let autoSubmitted = false;
   let autosaveTimer;
   const submit = async () => {
@@ -6662,6 +7623,8 @@ async function runExam(root, st) {
     done = true;
     clearInterval(iv);
     clearInterval(autosaveTimer);
+    showGeneration++;
+    await disposeExerciseViews(body);
     root.replaceChildren(
       h(
         "div",
@@ -6682,6 +7645,46 @@ async function runExam(root, st) {
         const g = await gradeSql(ex, a || "");
         ok = g.correct;
         rows.push({ ex, ok, a, note: g.error });
+      } else if (ex.type === "terminal") {
+        if (a !== "terminal-workspace") {
+          ok = false;
+          rows.push({
+            ex,
+            ok,
+            a,
+            note: "Terminal workspace was not opened during this exam.",
+          });
+        } else {
+          try {
+            const terminalModule = await import(terminalModuleUrl);
+            const result = await terminalModule.gradeTerminalAttempt({
+              exercise: ex,
+              packageId: ex.packageId,
+              exerciseId: ex.id,
+              attemptId: st.id,
+            });
+            ok = result.passed;
+            const failed = result.checks.filter((check) => !check.passed);
+            rows.push({
+              ex,
+              ok,
+              a,
+              note:
+                `Terminal workspace: ${result.score} / ${result.maxScore} points` +
+                (failed.length
+                  ? `\n${failed.map((check) => `${check.description}: ${check.feedback}`).join("\n")}`
+                  : ""),
+            });
+          } catch (error) {
+            ok = false;
+            rows.push({
+              ex,
+              ok,
+              a,
+              note: `Terminal grading failed: ${error?.message || String(error)}`,
+            });
+          }
+        }
       } else {
         ok = gradeOS(ex, a);
         rows.push({ ex, ok, a });
@@ -6758,35 +7761,53 @@ async function runExam(root, st) {
                 r.ok ? "Correct" : r.ok === false ? "Incorrect" : "Self-check",
               ),
             ),
-            r.note ? h("pre", { class: "err" }, r.note) : "",
-            h(
-              "details",
-              { class: "exam-answer-review" },
-              h("summary", {}, "Review answers"),
-              h(
-                "div",
-                { class: "exam-answer-comparison" },
-                h(
-                  "div",
+            r.note
+              ? h(
+                  "pre",
+                  {
+                    class:
+                      r.ex.type === "terminal" ? "exam-result-note" : "err",
+                  },
+                  r.note,
+                )
+              : "",
+            r.ex.type === "terminal"
+              ? h(
+                  "p",
                   {},
-                  h("h3", {}, "Your answer"),
-                  h("pre", {}, answerText(r.ex, r.a)),
+                  "The browser terminal workspace was graded from its final virtual filesystem state.",
+                )
+              : h(
+                  "details",
+                  { class: "exam-answer-review" },
+                  h("summary", {}, "Review answers"),
+                  h(
+                    "div",
+                    { class: "exam-answer-comparison" },
+                    h(
+                      "div",
+                      {},
+                      h("h3", {}, "Your answer"),
+                      h("pre", {}, answerText(r.ex, r.a)),
+                    ),
+                    h(
+                      "div",
+                      {},
+                      h("h3", {}, "Expected answer"),
+                      h("pre", {}, expectedText(r.ex)),
+                    ),
+                  ),
                 ),
-                h(
-                  "div",
-                  {},
-                  h("h3", {}, "Expected answer"),
-                  h("pre", {}, expectedText(r.ex)),
-                ),
-              ),
-            ),
             r.ex.explanation ? h("p", {}, r.ex.explanation) : "",
           ),
         ),
       ),
     );
   };
-  const show = (i) => {
+  const show = async (i) => {
+    const generation = ++showGeneration;
+    await disposeExerciseViews(body);
+    if (done || generation !== showGeneration) return;
     const key = keyOf(exs[i]);
     st.cur = i;
     save();
@@ -6806,6 +7827,10 @@ async function runExam(root, st) {
           save();
           updateQuestionStatus();
         },
+        () => {},
+        null,
+        () => true,
+        st.id,
       ),
       h(
         "label",
@@ -7810,17 +8835,20 @@ function resetLocalDataControl(root) {
           !(await confirmInApp({
             title: "Reset saved data?",
             message:
-              "This removes imported packages, exercise drafts and results, saved-for-later questions, XP, achievements, saved exams, and exam history from this device. This cannot be undone.",
+              "This removes imported packages, exercise drafts and results, saved-for-later questions, terminal workspaces, XP, achievements, saved exams, and exam history from this device. This cannot be undone.",
             confirmLabel: "Reset all data",
             danger: true,
           }))
         )
           return;
         button.disabled = true;
-        status.textContent = "Clearing saved app data…";
+        status.textContent = "Clearing saved app and terminal data…";
         try {
           achFrozen = true; // stop saving stats while everything is wiped
           await kv.clear();
+          // The terminal uses a separate IndexedDB database. Delete that store
+          // directly so resetting app data never imports or initializes the feature.
+          await clearTerminalExerciseStorage();
           localStorage.removeItem(ACTIVE_EXAM_CHECKPOINT);
           location.reload();
         } catch (e) {
@@ -7839,7 +8867,7 @@ function resetLocalDataControl(root) {
     h(
       "p",
       {},
-      "Remove all data this app saved on this device, including imported packages, exercise drafts and results, saved-for-later questions, XP, achievements, saved exams, and exam history. Bundled site content will remain available.",
+      "Remove all data this app saved on this device, including imported packages, exercise drafts and results, terminal workspaces, saved-for-later questions, XP, achievements, saved exams, and exam history. Bundled site content will remain available.",
     ),
     button,
     status,
@@ -7849,18 +8877,36 @@ function resetLocalDataControl(root) {
 const pages = {
   reader: pageReader,
   canvas: pageCanvas,
+  learning: pageLearning,
   practice: pagePractice,
   exam: pageExam,
   progress: pageProgress,
+  sandbox: pageSandbox,
 };
-// Add the Canvas link to the nav if index.html doesn't have it yet.
+// Add Sandbox/Canvas links if index.html comes from an older application shell.
 (() => {
   const navEl = $("#nav");
-  if (!navEl || navEl.querySelector('a[href="#/canvas"]')) return;
-  const link = h("a", { href: "#/canvas" }, "Canvas");
-  const readerLink = navEl.querySelector('a[href="#/reader"]');
-  if (readerLink) readerLink.after(link);
-  else navEl.append(link);
+  if (!navEl) return;
+  if (!navEl.querySelector('a[href="#/canvas"]')) {
+    const canvasLink = h("a", { href: "#/canvas" }, "Canvas");
+    const readerLink = navEl.querySelector('a[href="#/reader"]');
+    if (readerLink) readerLink.after(canvasLink);
+    else navEl.append(canvasLink);
+  }
+  if (!navEl.querySelector('a[href="#/learning"]')) {
+    const learningLink = h("a", { href: "#/learning" }, "Learning");
+    const canvasLink = navEl.querySelector('a[href="#/canvas"]');
+    const practiceLink = navEl.querySelector('a[href="#/practice"]');
+    if (canvasLink) canvasLink.after(learningLink);
+    else if (practiceLink) practiceLink.before(learningLink);
+    else navEl.append(learningLink);
+  }
+  if (!navEl.querySelector('a[href="#/sandbox"]')) {
+    const sandboxLink = h("a", { href: "#/sandbox" }, "Sandbox");
+    const practiceLink = navEl.querySelector('a[href="#/practice"]');
+    if (practiceLink) practiceLink.after(sandboxLink);
+    else navEl.append(sandboxLink);
+  }
 })();
 const periodicToast = $("#periodic-toast");
 const terminalArtifact = $("#terminal-artifact");
@@ -8148,6 +9194,7 @@ async function route() {
   } else if (!motion) {
     root.classList.remove("route-sliding");
   }
+  await disposeExerciseViews(main);
   main.replaceChildren();
   const view = h("div");
   main.append(view);

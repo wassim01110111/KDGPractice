@@ -1,0 +1,2257 @@
+{
+  "schemaVersion": 1,
+  "packageId": "os-term-1-canvas",
+  "version": "1.0.0",
+  "term": 1,
+  "datasets": {},
+  "exercises": {
+    "os-term-1-0201": {
+      "course": "os",
+      "category": "Command Line Basics",
+      "title": "0201 - Accessing the Command Line",
+      "instructions": "Execute the commands listed in the **Command** column in the order in which they are displayed. For feedback, compare your result with the **What to expect** column and read the explanation to understand what is happening. If you lose track, reset the exercise and start over from the first command.\n\n#### Basic Bash syntax\n\n| Command | What to expect | Explanation |\n|---|---|---|\n| `ls` | `Desktop Documents Downloads Music Pictures Videos` | Simple command, no options or arguments. |\n| `ls -a` | All entries, including hidden ones (names starting with a dot) | Simple command (`ls`) with an option (`-a`): show all files. |\n| `ls -l /etc` | A long listing, e.g. `-rw-r--r--. 1 root root 749 Aug 5 01:56 passwd` | Command: `ls`, option: `-l`, argument: `/etc`. |\n| `ls -lh /bin` | A long listing with human-readable sizes | Command: `ls`, multiple options: `-lh`, argument: `/bin`. |\n| `head -n 5 /var/log/dnf.log` | The first 5 lines of the file | The option `-n` has `5` as its value; `/var/log/dnf.log` is the argument. |\n| `tail -n 3 /var/log/dnf.log` | The last 3 lines of the file | Show the last 3 lines. |\n| `wc -l Documents/fruits.txt` | `3 Documents/fruits.txt` | Counts the lines (`-l`) in a file. |\n| `wc -w Documents/fruits.txt Documents/vegetables.txt` | `3 Documents/fruits.txt`, `3 Documents/vegetables.txt`, `6 total` | Counts the words (`-w`) in two files (two arguments). |\n\n#### Combining commands\n\n| Command | What to expect | Explanation |\n|---|---|---|\n| `date ; whoami` | The date, followed by `student` | Run two separate commands one after the other, separated by `;`. |\n| `ls -1 ; pwd` | One entry per line, followed by `/home/student` | Combine two commands, with or without options/arguments. |\n\n#### Viewing file contents\n\n| Command | What to expect | Explanation |\n|---|---|---|\n| `cat Documents/fruits.txt` | `Apples`, `Oranges`, `Bananas` | Displays the contents of `fruits.txt`. |\n| `cat Documents/fruits.txt Documents/vegetables.txt` | The fruits followed by the vegetables | Displays and concatenates both files. |\n\n#### Tab completion\n\nWhenever you see `[Tab]`, press the Tab key. If there are multiple possibilities, keep adding letters until it is unequivocal.\n\n| Command | What to expect | Explanation |\n|---|---|---|\n| `ls /etc/hostn[Tab]` | `ls /etc/hostname` | Save typing effort by using the Tab key. |\n| `cat Doc[Tab]fr[Tab]` | `cat Documents/fruits.txt` | Completes the directory and then the file. |\n| `cat Do[Tab][Tab]c[Tab]v[Tab]` | `cat Documents/vegetables.txt` | Keep typing letters until the completion is unambiguous. |\n\n#### Spreading long commands over multiple lines\n\nUse `\\` at the end of a line to split a long command over multiple lines:\n\n```bash\necho \"This is a very long command that\" \\\n\"we are splitting across\" \\\n\"multiple lines\"\n```\n\nExpected output: `This is a very long command that we are splitting across multiple lines`\n\n#### History\n\n| Command | What to expect | Explanation |\n|---|---|---|\n| `history` | A numbered list of past commands | Shows your command history. |\n| `Ctrl+R`, `tail`, `Enter` | The most recent command containing `tail` | Search backward in the history for a pattern. |\n| `!3` | Command number 3 is executed again | Re-run the command with number 3 from the list. |\n| `!!` | The last command is executed again | Repeat the last command. |\n| `date +%F` | e.g. `2025-08-12` | Shows today's formatted date. |\n| `echo -n \"Today is \" ; !!` | e.g. `Today is 2025-08-12` | Combines `echo` with the previously executed command (`date +%F`). |\n\n#### Save your results\n\nFinally, practise redirection and record your work:\n\n1. Concatenate `Documents/fruits.txt` and `Documents/vegetables.txt` with `cat` and save the output into `~/combined.txt`.\n2. Run the long `echo` command from above (split over three lines with `\\`) again, but redirect its output into `~/long_command.txt`.",
+      "hints": [
+        "Redirect the output of a command into a file with `>`.",
+        "`cat file1 file2 > combined.txt` concatenates two files into a new file.",
+        "A redirection can be placed on the last line of a command that was split with `\\`."
+      ],
+      "difficulty": "Easy",
+      "type": "terminal",
+
+      "provenance": "OSFundamentals.pdf",
+      "contentVersion": 1,
+      "terminal": {
+        "profile": "basic-linux",
+        "initialDirectory": "/home/student",
+        "initialFilesystem": [],
+        "preSetupCommands": [
+          "mkdir -p /home/student/Desktop /home/student/Downloads /home/student/Music /home/student/Pictures /home/student/Videos /home/student/Documents /var/log",
+          "printf 'Apples\\nOranges\\nBananas\\n' > /home/student/Documents/fruits.txt",
+          "printf 'Tomatoes\\nCarrots\\nOnions\\n' > /home/student/Documents/vegetables.txt",
+          "printf '2025-08-12T08:01:00Z INFO dnf log line 1\\n2025-08-12T08:02:00Z INFO dnf log line 2\\n2025-08-12T08:03:00Z INFO dnf log line 3\\n2025-08-12T08:04:00Z INFO dnf log line 4\\n2025-08-12T08:05:00Z INFO dnf log line 5\\n2025-08-12T08:06:00Z INFO dnf log line 6\\n' > /var/log/dnf.log",
+          "chown student:student /home/student/Desktop /home/student/Downloads /home/student/Music /home/student/Pictures /home/student/Videos /home/student/Documents /home/student/Documents/fruits.txt /home/student/Documents/vegetables.txt",
+          "chmod 755 /home/student/Desktop /home/student/Downloads /home/student/Music /home/student/Pictures /home/student/Videos /home/student/Documents /var/log",
+          "chmod 644 /home/student/Documents/fruits.txt /home/student/Documents/vegetables.txt /var/log/dnf.log"
+        ],
+        "checks": [
+          {
+            "id": "content-combined-txt",
+            "type": "content",
+            "path": "/home/student/combined.txt",
+            "expected": "Apples\nOranges\nBananas\nTomatoes\nCarrots\nOnions\n",
+            "points": 1,
+            "description": "`combined.txt` contains the concatenated fruits and vegetables."
+          },
+          {
+            "id": "content-long-command-txt",
+            "type": "content",
+            "path": "/home/student/long_command.txt",
+            "expected": "This is a very long command that we are splitting across multiple lines\n",
+            "points": 1,
+            "description": "`long_command.txt` contains the output of the long `echo` command."
+          }
+        ],
+        "explanation": "The correction checks the files you saved. Everything before that is practice with command syntax, history and tab completion."
+      }
+    },
+    "os-term-1-0202": {
+      "course": "os",
+      "category": "Command Line Basics",
+      "title": "0202 - Accessing the Command Line",
+      "instructions": "This is a flow-based exercise set, where each task builds on the previous one, guiding you through a realistic workflow using Linux command line fundamentals.\n\n**Scenario:** You have just logged in to a remote Linux system. You want to explore some text files related to system status and personal notes, analyze them and practice efficient command line usage.\n\n#### 1. Basic navigation\n\n- Display your current working directory by entering `pwd`, followed by ENTER.\n- List all files in your home directory using `ls`.\n\n#### 2. Viewing files\n\nThere are two files in your home directory: `system_status.log` and `meeting_notes.txt`.\n\n- View the contents of `system_status.log` using `cat`.\n- Then, display the contents of `meeting_notes.txt` using `cat`.\n\n#### 3. Viewing multiple files at once\n\n- Display the contents of both `system_status.log` and `meeting_notes.txt` in a single command, and save that output into `~/all_files.txt`.\n\n#### 4. Using head and tail to focus on parts of files\n\n- Display the first 10 lines of `system_status.log` using `head` and save them into `~/status_head.txt`.\n- Display the last 5 lines of `meeting_notes.txt` using `tail` and save them into `~/notes_tail.txt`.\n- Use options with `head` to display only the first 3 lines of `meeting_notes.txt` and save them into `~/notes_head.txt`.\n\n#### 5. Counting lines, words and bytes\n\n- Count how many lines are in `system_status.log` and save **only the number** into `~/status_lines.txt` (hint: `wc -l < file` prints only the number).\n- Count the number of words in `meeting_notes.txt` and save **only the number** into `~/notes_words.txt`.\n- Use one command to count lines and words in both files together (display only).\n\n#### 6. Combining commands\n\n- Use a command to display the last 5 lines of `system_status.log`, then immediately display the current date and time. (Hint: use `;` to combine commands.)\n- Tip: build the line step by step: write the command before the `;`, then test. If that works, write the command after the `;`. If that works as well, combine both commands with `;`.\n\n#### 7. Long commands on multiple lines\n\nConstruct and run this command to find all lines containing the word \"error\" in `system_status.log`, sort them, count duplicates, and sort numerically in descending order, breaking it over multiple lines with `\\`. Add a redirection at the end so the result is saved into `~/error_summary.txt`.\n\n```bash\ngrep -i \"error\" system_status.log | \\\nsort | \\\nuniq -c | \\\nsort -nr\n```\n\nWithout line splitting, the command would look like this; nevertheless it would work just the same:\n\n```bash\ngrep -i \"error\" system_status.log | sort | uniq -c | sort -nr\n```\n\nDon't worry if you don't understand everything in these commands. Just do your best to type these commands error-free. Try both of them.\n\n#### 8. Tab completion practice\n\n- Use tab completion to list files starting with `m` (e.g., `meeting_notes.txt`).\n- Try to autocomplete the command `cat` followed by a filename using tab completion.\n\n#### 9. Using command history\n\n- Display the last commands you typed.\n- Use `Ctrl+R` to reverse search your history for the command containing `grep`.\n- Run the command again from history, by referring to it by its number.",
+      "hints": [
+        "Use `>` to redirect output into a file.",
+        "`head -n N file` shows the first N lines, `tail -n N file` the last N lines.",
+        "`wc -l < file` prints only the number of lines, without the file name.",
+        "Put the redirection (`> ~/error_summary.txt`) after the last command of the pipeline."
+      ],
+      "difficulty": "Easy",
+      "type": "terminal",
+
+      "provenance": "OSFundamentals.pdf",
+      "contentVersion": 1,
+      "terminal": {
+        "profile": "basic-linux",
+        "initialDirectory": "/home/student",
+        "initialFilesystem": [],
+        "preSetupCommands": [
+          "printf 'INFO: system boot completed\\nERROR: disk almost full\\nINFO: network interface up\\nERROR: connection timeout\\nINFO: user student logged in\\nERROR: disk almost full\\nWARN: high memory usage\\nERROR: connection timeout\\nINFO: backup started\\nERROR: backup failed\\nERROR: disk almost full\\nINFO: backup finished\\n' > /home/student/system_status.log",
+          "printf 'Meeting notes - 12 August\\nAttendees: Alice, Bob, Carol\\nTopic 1: server migration\\nTopic 2: backup policy\\nTopic 3: user training\\nAction: Alice updates the wiki\\nAction: Bob schedules the training\\nAction: Carol reviews the backups\\n' > /home/student/meeting_notes.txt",
+          "chown student:student /home/student/system_status.log /home/student/meeting_notes.txt",
+          "chmod 644 /home/student/system_status.log /home/student/meeting_notes.txt"
+        ],
+        "checks": [
+          {
+            "id": "content-all-files-txt",
+            "type": "content",
+            "path": "/home/student/all_files.txt",
+            "expected": "INFO: system boot completed\nERROR: disk almost full\nINFO: network interface up\nERROR: connection timeout\nINFO: user student logged in\nERROR: disk almost full\nWARN: high memory usage\nERROR: connection timeout\nINFO: backup started\nERROR: backup failed\nERROR: disk almost full\nINFO: backup finished\nMeeting notes - 12 August\nAttendees: Alice, Bob, Carol\nTopic 1: server migration\nTopic 2: backup policy\nTopic 3: user training\nAction: Alice updates the wiki\nAction: Bob schedules the training\nAction: Carol reviews the backups\n",
+            "points": 1,
+            "description": "`~/all_files.txt` has the expected content."
+          },
+          {
+            "id": "content-status-head-txt",
+            "type": "content",
+            "path": "/home/student/status_head.txt",
+            "expected": "INFO: system boot completed\nERROR: disk almost full\nINFO: network interface up\nERROR: connection timeout\nINFO: user student logged in\nERROR: disk almost full\nWARN: high memory usage\nERROR: connection timeout\nINFO: backup started\nERROR: backup failed\n",
+            "points": 1,
+            "description": "`~/status_head.txt` has the expected content."
+          },
+          {
+            "id": "content-notes-tail-txt",
+            "type": "content",
+            "path": "/home/student/notes_tail.txt",
+            "expected": "Topic 2: backup policy\nTopic 3: user training\nAction: Alice updates the wiki\nAction: Bob schedules the training\nAction: Carol reviews the backups\n",
+            "points": 1,
+            "description": "`~/notes_tail.txt` has the expected content."
+          },
+          {
+            "id": "content-notes-head-txt",
+            "type": "content",
+            "path": "/home/student/notes_head.txt",
+            "expected": "Meeting notes - 12 August\nAttendees: Alice, Bob, Carol\nTopic 1: server migration\n",
+            "points": 1,
+            "description": "`~/notes_head.txt` has the expected content."
+          },
+          {
+            "id": "content-status-lines-txt",
+            "type": "content",
+            "path": "/home/student/status_lines.txt",
+            "expected": "12\n",
+            "points": 1,
+            "description": "`~/status_lines.txt` has the expected content."
+          },
+          {
+            "id": "content-notes-words-txt",
+            "type": "content",
+            "path": "/home/student/notes_words.txt",
+            "expected": "36\n",
+            "points": 1,
+            "description": "`~/notes_words.txt` has the expected content."
+          },
+          {
+            "id": "content-error-summary-txt",
+            "type": "content",
+            "path": "/home/student/error_summary.txt",
+            "expected": "      3 ERROR: disk almost full\n      2 ERROR: connection timeout\n      1 ERROR: backup failed\n",
+            "points": 1,
+            "description": "`~/error_summary.txt` has the expected content."
+          }
+        ],
+        "explanation": "The correction compares the saved files with the exact expected output of each command on the prepared log and notes files."
+      }
+    },
+    "os-term-1-0203": {
+      "course": "os",
+      "category": "Command Line Basics",
+      "title": "0203 - Accessing the Command Line",
+      "instructions": "#### 1. Command, options and arguments\n\n##### 1.1 Commands with arguments\n\nSplit the lines below into the components **command**, **option(s)/parameter(s)** and **argument(s)**. (Use a text editor or a spreadsheet program to write out the solutions, or just think them through.)\n\n| Command line | Command | Option(s) | Argument(s) |\n|---|---|---|---|\n| `cat -n /etc/passwd` | | | |\n| `ls -l /etc` | | | |\n| `ls -l -a /` | | | |\n| `ls -la /` | | | |\n| `cd /home/user` | | | |\n| `echo -n Hello World` | | | |\n| `cal 1999` | | | |\n| `cal 12 2000` | | | |\n| `head -n 3 /etc/group` | | | |\n\n##### 1.2 Commands with only options but no arguments\n\nEnter these commands at the command line, both with and without options. (What is the command, what is the option?)\n\n| Command line | Command | Option(s) |\n|---|---|---|\n| `ps -f` | | |\n| `uname -s` | | |\n| `uname --kernel-name` | | |\n| `uptime -p` | | |\n| `uptime --pretty` | | |\n| `df -h` | | |\n| `df --human-readable` | | |\n| `free -hk` | | |\n| `free --human --kibi` | | |\n\n#### 2. Command separator\n\n##### 2.1 Command separator `;`\n\nExecute the commands below and notice the different behaviour:\n\n```bash\necho Hello ls\necho Hello ; ls\n\necho aaa ; echo bbb ; echo ccc\necho aaa echo bbb echo ccc\n```\n\n##### 2.2 head and tail\n\nWhat does the command `head -n 1 /etc/group ; tail -n 1 /etc/group` do?\n\n##### 2.3 head and tail with `\\`\n\nAnd if you type the following command, pressing ENTER right after the `\\`?\n\n```bash\nhead -n 1 /etc/group ; \\\ntail -n 1 /etc/group\n```\n\n##### 2.4 File types and the file command\n\nUse the `file` command to determine the type of the file. Enter the following commands:\n\n```bash\nfile /etc/group\nfile /etc\nfile /\nfile /bin/bash\nfile /dev/null\nfile /proc/self\nfile -b /etc/hosts\nfile --brief /usr/bin/ls\n```\n\nNote: all of these different types of files will be explained shortly, e.g. symbolic link or character special file.\n\n##### 2.5 \"Headless\"\n\nAsk your favorite AI tool what percentage of servers run \"headless\". By the way, is your Windows or Mac headless?\n\n#### 3. Save your results\n\n1. Run `echo -n Hello World` and redirect its output into `~/echo_n.txt` (the `-n` option suppresses the newline, so the file contains no trailing newline).\n2. Run the three commands `echo aaa`, `echo bbb` and `echo ccc` separated by `;` and save their combined output into `~/separators.txt` (hint: group the commands with `( ... )` or `{ ...; }` and redirect the group).",
+      "hints": [
+        "`echo -n text > file` writes text without a trailing newline.",
+        "`( echo aaa ; echo bbb ; echo ccc ) > file` redirects the combined output of a group of commands.",
+        "Alternatively use `>` for the first command and `>>` to append the others."
+      ],
+      "difficulty": "Easy",
+      "type": "terminal",
+
+      "provenance": "OSFundamentals.pdf",
+      "contentVersion": 1,
+      "terminal": {
+        "profile": "basic-linux",
+        "initialDirectory": "/home/student",
+        "initialFilesystem": [],
+        "checks": [
+          {
+            "id": "content-echo-n-txt",
+            "type": "content",
+            "path": "/home/student/echo_n.txt",
+            "expected": "Hello World",
+            "points": 1,
+            "description": "`echo_n.txt` contains `Hello World` without a trailing newline."
+          },
+          {
+            "id": "content-separators-txt",
+            "type": "content",
+            "path": "/home/student/separators.txt",
+            "expected": "aaa\nbbb\nccc\n",
+            "points": 1,
+            "description": "`separators.txt` contains the three lines produced by the three `echo` commands."
+          }
+        ],
+        "explanation": "The correction checks the two files you saved, including whether the trailing newline is present or absent."
+      }
+    },
+    "os-term-1-0301": {
+      "course": "os",
+      "category": "Navigation",
+      "title": "0301 - Navigating the command line",
+      "instructions": "Execute the commands listed in the **Command** column in the order in which they are displayed. If you lose track, reset the exercise and start over from the first command. For feedback, verify with the **Which output to expect** column and read the explanation to understand what is happening.\n\n| Command | Which output to expect | Explanation |\n|---|---|---|\n| `cd ~` | prompt shows `~` | This is the student user's home directory. `cd` stands for *change directory*; `~` represents the home directory of the current user. |\n| `pwd` | `/home/student` | The full path, starting from the root directory (`/`), to the folder where you are now (*print working directory*). |\n| `ls` | `Desktop Documents Downloads Music Pictures Videos` | `ls` shows the contents of the directory where you are now. |\n| `cd Documents` | prompt shows `Documents` | Switches from your present location to the `Documents` folder. |\n| `pwd` | `/home/student/Documents` | |\n| `cd ..` | prompt shows `~` | The double dot (`..`) tells the shell to go up one level, to the parent directory. |\n| `pwd` | `/home/student` | |\n| `cd ../..` | prompt shows `/` | Go back two levels in the hierarchy. |\n| `pwd` | `/` | This is the top of the hierarchy: the root. You cannot go back further. |\n| `ls` | `bin dev etc home lib ... usr var` | The contents of `/`. |\n| `cd home` | prompt shows `home` | You went a level deeper, starting from `/`. `home` needs to be listed in the output of the previous command. |\n| `pwd` | `/home` | |\n| `ls` | `student` | The home directory lists all the users' home directories. |\n| `cd ../etc` | prompt shows `etc` | You switched up one level (to `/`), then down one level to `etc`. |\n| `pwd` | `/etc` | |\n| `cd /` | prompt shows `/` | You move at once to the folder of destination by specifying it as an argument. |\n| `ls` | *Which output would you expect?* | |\n| `cd usr` | prompt shows `usr` | `usr` is a folder one level down from `/`. |\n| `cd share` | prompt shows `share` | One more level down. |\n| `cd doc` | prompt shows `doc` | One more level down. |\n| `pwd` | `/usr/share/doc` | The `pwd` command gives the full path of the present location. |\n| `cd /var/log` | prompt shows `log` | Switch immediately to a different location by starting the argument with `/` (absolute path). |\n| `pwd` | `/var/log` | |\n| `cd -` | prompt shows `doc` | By using `-` as an argument, you switch to the previous location (`/usr/share/doc`). |\n| `pwd` | `/usr/share/doc` | Using `cd -` again switches back to `/var/log`. Do this before continuing. |\n| `cd ~` | prompt shows `~` | `~` stands for the home directory of the current user. |\n| `cd .` | prompt shows `~` | The single dot means *this directory*: no change. |\n| `pwd` | `/home/student` | |\n\n#### Save your results\n\nRecord where you are by redirecting the output of `pwd` into files in your home directory:\n\n1. Go to `/usr/share/doc` and save the output of `pwd` into `~/pwd_doc.txt`.\n2. Go to `/var/log` and save the output of `pwd` into `~/pwd_log.txt`.\n3. Go back to your home directory and save the output of `pwd` into `~/pwd_home.txt`.",
+      "hints": [
+        "`pwd > ~/file.txt` saves the current directory into a file in your home directory.",
+        "Use an absolute path such as `cd /var/log` to jump straight to a location.",
+        "`cd` without arguments (or `cd ~`) returns you to your home directory."
+      ],
+      "difficulty": "Easy",
+      "type": "terminal",
+
+      "provenance": "OSFundamentals.pdf",
+      "contentVersion": 1,
+      "terminal": {
+        "profile": "basic-linux",
+        "initialDirectory": "/home/student",
+        "initialFilesystem": [],
+        "preSetupCommands": [
+          "mkdir -p /home/student/Desktop /home/student/Documents /home/student/Downloads /home/student/Music /home/student/Pictures /home/student/Videos /usr/share/doc",
+          "chown student:student /home/student/Desktop /home/student/Documents /home/student/Downloads /home/student/Music /home/student/Pictures /home/student/Videos",
+          "chmod 755 /home/student/Desktop /home/student/Documents /home/student/Downloads /home/student/Music /home/student/Pictures /home/student/Videos /usr/share/doc"
+        ],
+        "checks": [
+          {
+            "id": "content-pwd-doc-txt",
+            "type": "content",
+            "path": "/home/student/pwd_doc.txt",
+            "expected": "/usr/share/doc\n",
+            "points": 1,
+            "description": "`~/pwd_doc.txt` has the expected content."
+          },
+          {
+            "id": "content-pwd-log-txt",
+            "type": "content",
+            "path": "/home/student/pwd_log.txt",
+            "expected": "/var/log\n",
+            "points": 1,
+            "description": "`~/pwd_log.txt` has the expected content."
+          },
+          {
+            "id": "content-pwd-home-txt",
+            "type": "content",
+            "path": "/home/student/pwd_home.txt",
+            "expected": "/home/student\n",
+            "points": 1,
+            "description": "`~/pwd_home.txt` has the expected content."
+          }
+        ],
+        "explanation": "The correction checks the three files that record your working directory at each location."
+      }
+    },
+    "os-term-1-0302": {
+      "course": "os",
+      "category": "Files and Directories",
+      "title": "0302 - Manage Files from the Command Line (guided)",
+      "instructions": "Start a terminal and execute the commands listed in the **Command** column in the order in which they are displayed. If you lose track, reset the exercise and start over from the first command. For feedback, verify with the **What output to expect** column and read the explanation to understand what is happening.\n\n| Command | What output to expect | Explanation |\n|---|---|---|\n| `cd ~` | prompt shows `~` | Puts you into your home directory, in case you are not in it. |\n| `mkdir testdir` | *(no output)* | No output generally means the command executed OK. Creates a new directory `testdir`. |\n| `cd tes[Tab]` | `cd testdir/` (press Enter) | Auto-completion with the Tab key. |\n| `touch myfile myotherfile` | *(no output)* | Creates two new empty files, `myfile` and `myotherfile`. |\n| `ls` | `myfile myotherfile` | Lists the contents of `testdir`. |\n| `cp myfile copiedfile` | *(no output)* | Copy `myfile` to a new file `copiedfile`. |\n| `ls` | `copiedfile myfile myotherfile` | There are now three (empty) files in `testdir`. **Also save this listing**: run `ls > ~/listing_copied.txt`. |\n| `mv myf[Tab] renamedfile` | *(no output)* | `mv` moves files and directories, but is also used to rename them. `my` is not enough to distinguish between `myfile` and `myotherfile`. |\n| `ls` | `copiedfile myotherfile renamedfile` | **Also save this listing**: run `ls > ~/listing_renamed.txt`. |\n| `rm rena[Tab]` | *(no output)* | The `rm` command removes the files mentioned as arguments. |\n| `cd ..` | prompt shows `~` | Go up one level. |\n| `rmdir testdir` | `rmdir: failed to remove 'testdir/': Directory not empty` | `rmdir` can only remove empty folders. Continue with the next command to empty the folder. |\n| `cd testdir` | prompt shows `testdir` | Go back to the `testdir` folder. |\n| `rm *file` | *(no output)* | Remove all files that end with the string `file`. The asterisk expands to any string of zero or more characters. This is called *globbing*. |\n| `cd ~` | prompt shows `~` | Go back to the home directory. |\n| `rmdir testdir` | *(no output)* | Remove the directory `testdir`. |\n| `ls` | The `testdir` folder should not be there any more. | |\n\nExecute the commands meticulously. At the end of the exercise the `testdir` folder must be gone and the two listing files must exist in your home directory.",
+      "hints": [
+        "Use `ls > ~/listing_copied.txt` while you are inside `testdir`, so the file ends up in your home directory.",
+        "`rm *file` removes every file in the current directory whose name ends with `file`.",
+        "`rmdir` only works on empty directories."
+      ],
+      "difficulty": "Easy",
+      "type": "terminal",
+
+      "provenance": "OSFundamentals.pdf",
+      "contentVersion": 1,
+      "terminal": {
+        "profile": "basic-linux",
+        "initialDirectory": "/home/student",
+        "initialFilesystem": [],
+        "checks": [
+          {
+            "id": "content-listing-copied-txt",
+            "type": "content",
+            "path": "/home/student/listing_copied.txt",
+            "expected": "copiedfile\nmyfile\nmyotherfile\n",
+            "points": 1,
+            "description": "`listing_copied.txt` lists the three files after the copy."
+          },
+          {
+            "id": "content-listing-renamed-txt",
+            "type": "content",
+            "path": "/home/student/listing_renamed.txt",
+            "expected": "copiedfile\nmyotherfile\nrenamedfile\n",
+            "points": 1,
+            "description": "`listing_renamed.txt` lists the files after the rename."
+          },
+          {
+            "id": "not_exists-testdir",
+            "type": "not_exists",
+            "path": "/home/student/testdir",
+            "points": 1,
+            "description": "The `testdir` directory has been fully removed."
+          }
+        ],
+        "explanation": "The correction checks the two saved listings and that `testdir` was removed at the end."
+      }
+    },
+    "os-term-1-0303": {
+      "course": "os",
+      "category": "Navigation",
+      "title": "0303 - File Navigation, Paths, Listing, and File Metadata",
+      "instructions": "#### Part 0 – Setup\n\n```bash\ncd ~/Documents\n```\n\n#### Part 1 – Absolute & relative paths\n\n**1.1 Identify absolute paths**\n\n1. What is your current working directory? (`pwd`)\n2. Use `ls` with an absolute path to list the contents of `/var/log`.\n\n**1.2 Navigate with relative paths**\n\n1. Create a directory called `test1` in your current working directory.\n2. Move into `test1` using a relative path.\n3. From inside `test1`, list the contents of the `Documents` directory using `..` in the path.\n4. Return to your home directory using an absolute path **or** the shortcut `~`.\n\n#### Part 2 – Navigating the file system\n\n**2.1 Basic navigation**\n\n1. Change to `/usr` using an absolute path.\n2. From `/usr`, move to `/usr/share/gnome` without typing `/usr/share/gnome` in full (use relative navigation).\n3. Return to your previous directory using `cd -`.\n\n**2.2 Hidden directories**\n\n1. Go to your home directory (`cd`).\n2. List all files and directories, including hidden ones, in long listing format.\n3. Which option(s) did you use with `ls`?\n\n#### Part 3 – ls exploration\n\n**3.1 Using options**\n\n1. In your `Documents` directory, create:\n\n   ```bash\n   mkdir dirA dirB\n   touch dirA/file1.txt dirA/.hiddenfile dirB/file2.txt\n   ```\n\n2. List `dirA`:\n   - normally (without options)\n   - with `-a` to see hidden files\n   - with `-l` for detailed info\n3. Use `ls -R` on `Documents`. What happens?\n\n#### Part 4 – Inspecting files with file and stat\n\n**4.1 Identifying file types** (in `~/Documents`)\n\n1. Create:\n\n   ```bash\n   echo \"Hello, Linux\" > text1.txt\n   touch emptyfile\n   mkdir somedir\n   ```\n\n2. Use the `file` command on `text1.txt`, `emptyfile` and `somedir`.\n3. How does `file` describe each?\n\n**4.2 Examining metadata with stat**\n\n1. Run `stat text1.txt`.\n2. Identify the file size (bytes), the last modification time and the permissions.\n3. Compare with `stat emptyfile` and `stat somedir`.\n\n**4.3 File changes over time**\n\n1. Record the modification time of `text1.txt`.\n2. Append: `echo \"Another line\" >> text1.txt`\n3. Run `stat` again. Which fields changed?\n\n**4.4 file vs. ls -l**\n\n1. Compare the outputs of `ls -l text1.txt` and `file text1.txt`.\n2. Which gives type info? Which shows permissions and owner?\n\n#### Part 5 – Special directories\n\n**5.1 `.`, `..` and navigation**\n\n1. From inside `dirA`, run `ls .` and `ls ..`. Compare the results from both commands.\n2. From `dirB`, list the files in `dirA` without changing directory.\n\n#### Part 6 – Challenge task (3 minutes)\n\n1. Start in your home directory.\n2. Navigate to `/etc` and list all files in long format.\n3. Go to `/var/log` without using an absolute path.\n4. From `/var/log`, list the contents of `/etc` without leaving `/var/log`.\n5. Return to the directory you were in before `/var/log`.\n6. Show your current absolute path.\n\n#### Part 7 – File detective missions\n\n**Mission 1 – Basic investigation**\n\n1. Go to your home directory (`cd`).\n2. Change to the `mystery` directory.\n3. List all files in the `mystery` directory with full details.\n4. Use `file` to determine the type of each.\n5. Which can be executed?\n6. Which is empty?\n7. Which is a directory?\n\n**Mission 2 – Metadata sleuth**\n\n1. Use `stat` to check the last modification time of each file.\n2. Identify the fields showing the file size, the number of hard links and the permissions in octal.\n3. Append to `report1.txt` using the command line below, and check the timestamps on `report1.txt` again.\n\n   ```bash\n   stat .hidden_dir binary1 report1.txt script1.sh secret_empty >> report1.txt\n   ```\n\n**Mission 3 – Cross-directory clues**\n\n1. Use an absolute path to run `file` on `/etc/passwd`.\n2. Change to `~/mystery/.hidden_dir` and run `stat` on `script1.sh` (which is in `mystery`) without changing directory.\n3. Go to `/bin` and find `bash` (`ls -l b*`). Use `file` to identify it and `stat` to see its last modification date.\n4. Return to the `mystery` directory with `cd ~/mystery`.\n\n**Mission 4 – Bonus forensics report**\n\nFor students who want to do some advanced stuff. Create a report on the terminal:\n\n```bash\ncd ~/mystery\nfor f in *; do\n      echo -e \"\\n--- $f ---\"\n      file \"$f\"\n      stat -c \"Size: %s bytes\" \"$f\"\ndone\n```\n\nThis should output each file's name, type and size to the terminal.",
+      "hints": [
+        "Create several directories at once: `mkdir dirA dirB`.",
+        "`ls -la` shows hidden files in long format.",
+        "`echo \"Another line\" >> text1.txt` appends instead of overwriting.",
+        "Everything in Parts 3 and 4 happens inside `~/Documents`."
+      ],
+      "difficulty": "Medium",
+      "type": "terminal",
+
+      "provenance": "OSFundamentals.pdf",
+      "contentVersion": 1,
+      "terminal": {
+        "profile": "basic-linux",
+        "initialDirectory": "/home/student",
+        "initialFilesystem": [],
+        "preSetupCommands": [
+          "mkdir -p /home/student/Documents /var/log /usr/share/gnome /home/student/mystery /home/student/mystery/.hidden_dir",
+          "printf 'Quarterly report\\n' > /home/student/mystery/report1.txt",
+          "printf '#!/bin/bash\\necho mystery script\\n' > /home/student/mystery/script1.sh",
+          "touch /home/student/mystery/secret_empty",
+          "printf 'ELF placeholder binary\\n' > /home/student/mystery/binary1",
+          "chown student:student /home/student/Documents /home/student/mystery /home/student/mystery/report1.txt /home/student/mystery/script1.sh /home/student/mystery/secret_empty /home/student/mystery/.hidden_dir /home/student/mystery/binary1",
+          "chmod 755 /home/student/Documents /var/log /usr/share/gnome /home/student/mystery /home/student/mystery/script1.sh /home/student/mystery/.hidden_dir /home/student/mystery/binary1",
+          "chmod 644 /home/student/mystery/report1.txt /home/student/mystery/secret_empty"
+        ],
+        "checks": [
+          {
+            "id": "directory-documents-test1",
+            "type": "directory",
+            "path": "/home/student/Documents/test1",
+            "points": 1,
+            "description": "`~/Documents/test1` exists and is a directory."
+          },
+          {
+            "id": "directory-documents-dira",
+            "type": "directory",
+            "path": "/home/student/Documents/dirA",
+            "points": 1,
+            "description": "`~/Documents/dirA` exists and is a directory."
+          },
+          {
+            "id": "directory-documents-dirb",
+            "type": "directory",
+            "path": "/home/student/Documents/dirB",
+            "points": 1,
+            "description": "`~/Documents/dirB` exists and is a directory."
+          },
+          {
+            "id": "file-documents-dira-file1-txt",
+            "type": "file",
+            "path": "/home/student/Documents/dirA/file1.txt",
+            "points": 1,
+            "description": "`~/Documents/dirA/file1.txt` exists as a regular file."
+          },
+          {
+            "id": "file-documents-dira-hiddenfile",
+            "type": "file",
+            "path": "/home/student/Documents/dirA/.hiddenfile",
+            "points": 1,
+            "description": "`~/Documents/dirA/.hiddenfile` exists as a regular file."
+          },
+          {
+            "id": "file-documents-dirb-file2-txt",
+            "type": "file",
+            "path": "/home/student/Documents/dirB/file2.txt",
+            "points": 1,
+            "description": "`~/Documents/dirB/file2.txt` exists as a regular file."
+          },
+          {
+            "id": "content-documents-text1-txt",
+            "type": "content",
+            "path": "/home/student/Documents/text1.txt",
+            "expected": "Hello, Linux\nAnother line\n",
+            "points": 1,
+            "description": "`text1.txt` contains both lines (after the append)."
+          },
+          {
+            "id": "file-documents-emptyfile",
+            "type": "file",
+            "path": "/home/student/Documents/emptyfile",
+            "points": 1,
+            "description": "`~/Documents/emptyfile` exists as a regular file."
+          },
+          {
+            "id": "directory-documents-somedir",
+            "type": "directory",
+            "path": "/home/student/Documents/somedir",
+            "points": 1,
+            "description": "`~/Documents/somedir` exists and is a directory."
+          }
+        ],
+        "explanation": "The correction checks the directories and files you create in `~/Documents`, including the appended content of `text1.txt`."
+      }
+    },
+    "os-term-1-0304": {
+      "course": "os",
+      "category": "Files and Directories",
+      "title": "0304 - Manage files and directories",
+      "instructions": "Work in your home directory (`/home/student`). The sections build on each other, so do them in order.\n\n#### 1. Creating directories with mkdir\n\n1. Create a single directory named `backup` inside your home directory (`/home/student`).\n2. Create two directories at once in your home directory: `scripts` and `configs`.\n3. Create `data/2025/linux/lab1` in one command in your home directory without manually creating each intermediate directory.\n\n#### 2. Copying files and directories with cp\n\n1. Copy `intro.txt` from `Documents` to your `backup` directory.\n2. Copy both `chapter1.txt` and `chapter2.txt` from `Documents` into `projects/alpha`.\n3. Copy the entire `Pictures` directory into `backup`.\n4. Copy both `Pictures` and `Music` directories into `projects/beta`.\n\n#### 3. Moving and renaming with mv\n\n1. Rename `chapter1.txt` in `Documents` to `chap1.txt`.\n2. Move `chap1.txt` from `Documents` to `backup`.\n3. Move `song1.mp3` and `song2.mp3` from `Music` into `backup`, showing each move with the `-v` option.\n4. Move and rename the entire `projects/beta` directory into `projects/archived`.\n\n#### 4. Removing files and directories with rm and rmdir\n\n1. Remove `intro.txt` from `backup`.\n2. Remove the empty directory `Downloads` using `rmdir`.\n3. Remove the `Music` directory and all its contents in one command.\n4. Remove everything inside `backup` without deleting the directory itself (tip: use a combination of `backup` and `*`).\n\n#### 5. Scenario 1 – Departmental resource organization\n\nYou are the IT support for a university department. They ask you to:\n\n1. Create:\n\n   ```\n   resources/\n   resources/students/\n   resources/teachers/\n   ```\n\n2. Copy all `.txt` files from `Documents` into `resources/students/`.\n3. Move all `.md` files from `projects/alpha` into `resources/teachers/`.\n\n#### 6. Scenario 2 – Cleanup operation\n\nThe `cleanup` folder (in your home directory) contains old and temporary files (`temp1.log`, `temp2.log`, `old_reports/`, `drafts/` and `old_data/`). Follow the cleanup plan:\n\n1. Move `temp1.log` and `temp2.log` into `cleanup/old_reports/`.\n2. Rename `draft1.txt` in `cleanup/drafts` to `draft_final.txt`.\n3. Copy the entire `old_data` directory so that it becomes `backup/old_archives`.\n4. Copy the entire `drafts` directory so that it becomes `backup/drafts`.\n5. Remove the directory `cleanup/drafts/`.\n6. Delete all `.zip` files inside `backup/old_archives`.",
+      "hints": [
+        "`mkdir -p a/b/c` creates all intermediate directories.",
+        "Use `cp -r` to copy directories and `rm -r` to remove directories with their contents.",
+        "`mv old new` renames a file or directory when `new` does not exist yet.",
+        "`rm -r backup/*` empties `backup` but keeps the directory itself."
+      ],
+      "difficulty": "Medium",
+      "type": "terminal",
+
+      "provenance": "OSFundamentals.pdf",
+      "contentVersion": 1,
+      "terminal": {
+        "profile": "basic-linux",
+        "initialDirectory": "/home/student",
+        "initialFilesystem": [],
+        "preSetupCommands": [
+          "mkdir -p /home/student/Documents /home/student/Music /home/student/Pictures /home/student/Downloads /home/student/projects /home/student/projects/alpha /home/student/projects/beta /home/student/cleanup /home/student/cleanup/old_reports /home/student/cleanup/drafts /home/student/cleanup/old_data",
+          "printf 'Introduction\\n' > /home/student/Documents/intro.txt",
+          "printf 'Chapter 1\\n' > /home/student/Documents/chapter1.txt",
+          "printf 'Chapter 2\\n' > /home/student/Documents/chapter2.txt",
+          "printf 'Glossary\\n' > /home/student/Documents/glossary.txt",
+          "printf 'song one\\n' > /home/student/Music/song1.mp3",
+          "printf 'song two\\n' > /home/student/Music/song2.mp3",
+          "printf 'song three\\n' > /home/student/Music/song3.mp3",
+          "printf 'photo one\\n' > /home/student/Pictures/photo1.jpg",
+          "printf 'photo two\\n' > /home/student/Pictures/photo2.jpg",
+          "printf '# Readme\\n' > /home/student/projects/alpha/readme.md",
+          "printf '# Guide\\n' > /home/student/projects/alpha/guide.md",
+          "printf 'Outline\\n' > /home/student/projects/alpha/outline.txt",
+          "printf 'temp one\\n' > /home/student/cleanup/temp1.log",
+          "printf 'temp two\\n' > /home/student/cleanup/temp2.log",
+          "printf 'Draft one\\n' > /home/student/cleanup/drafts/draft1.txt",
+          "printf 'id,value\\n1,10\\n' > /home/student/cleanup/old_data/data1.csv",
+          "printf 'zip one\\n' > /home/student/cleanup/old_data/archive1.zip",
+          "printf 'zip two\\n' > /home/student/cleanup/old_data/archive2.zip",
+          "chown student:student /home/student/Documents /home/student/Documents/intro.txt /home/student/Documents/chapter1.txt /home/student/Documents/chapter2.txt /home/student/Documents/glossary.txt /home/student/Music /home/student/Music/song1.mp3 /home/student/Music/song2.mp3 /home/student/Music/song3.mp3 /home/student/Pictures",
+          "chown student:student /home/student/Pictures/photo1.jpg /home/student/Pictures/photo2.jpg /home/student/Downloads /home/student/projects /home/student/projects/alpha /home/student/projects/alpha/readme.md /home/student/projects/alpha/guide.md /home/student/projects/alpha/outline.txt /home/student/projects/beta /home/student/cleanup",
+          "chown student:student /home/student/cleanup/temp1.log /home/student/cleanup/temp2.log /home/student/cleanup/old_reports /home/student/cleanup/drafts /home/student/cleanup/drafts/draft1.txt /home/student/cleanup/old_data /home/student/cleanup/old_data/data1.csv /home/student/cleanup/old_data/archive1.zip /home/student/cleanup/old_data/archive2.zip",
+          "chmod 755 /home/student/Documents /home/student/Music /home/student/Pictures /home/student/Downloads /home/student/projects /home/student/projects/alpha /home/student/projects/beta /home/student/cleanup /home/student/cleanup/old_reports /home/student/cleanup/drafts",
+          "chmod 755 /home/student/cleanup/old_data",
+          "chmod 644 /home/student/Documents/intro.txt /home/student/Documents/chapter1.txt /home/student/Documents/chapter2.txt /home/student/Documents/glossary.txt /home/student/Music/song1.mp3 /home/student/Music/song2.mp3 /home/student/Music/song3.mp3 /home/student/Pictures/photo1.jpg /home/student/Pictures/photo2.jpg /home/student/projects/alpha/readme.md",
+          "chmod 644 /home/student/projects/alpha/guide.md /home/student/projects/alpha/outline.txt /home/student/cleanup/temp1.log /home/student/cleanup/temp2.log /home/student/cleanup/drafts/draft1.txt /home/student/cleanup/old_data/data1.csv /home/student/cleanup/old_data/archive1.zip /home/student/cleanup/old_data/archive2.zip"
+        ],
+        "checks": [
+          {
+            "id": "directory-backup",
+            "type": "directory",
+            "path": "/home/student/backup",
+            "points": 1,
+            "description": "`~/backup` exists and is a directory."
+          },
+          {
+            "id": "directory-scripts",
+            "type": "directory",
+            "path": "/home/student/scripts",
+            "points": 1,
+            "description": "`~/scripts` exists and is a directory."
+          },
+          {
+            "id": "directory-configs",
+            "type": "directory",
+            "path": "/home/student/configs",
+            "points": 1,
+            "description": "`~/configs` exists and is a directory."
+          },
+          {
+            "id": "directory-data-2025-linux-lab1",
+            "type": "directory",
+            "path": "/home/student/data/2025/linux/lab1",
+            "points": 1,
+            "description": "`~/data/2025/linux/lab1` exists and is a directory."
+          },
+          {
+            "id": "file-projects-alpha-chapter1-txt",
+            "type": "file",
+            "path": "/home/student/projects/alpha/chapter1.txt",
+            "points": 1,
+            "description": "`~/projects/alpha/chapter1.txt` exists as a regular file."
+          },
+          {
+            "id": "file-projects-alpha-chapter2-txt",
+            "type": "file",
+            "path": "/home/student/projects/alpha/chapter2.txt",
+            "points": 1,
+            "description": "`~/projects/alpha/chapter2.txt` exists as a regular file."
+          },
+          {
+            "id": "file-projects-archived-pictures-photo1-jpg",
+            "type": "file",
+            "path": "/home/student/projects/archived/Pictures/photo1.jpg",
+            "points": 1,
+            "description": "`~/projects/archived/Pictures/photo1.jpg` exists as a regular file."
+          },
+          {
+            "id": "file-projects-archived-music-song1-mp3",
+            "type": "file",
+            "path": "/home/student/projects/archived/Music/song1.mp3",
+            "points": 1,
+            "description": "`~/projects/archived/Music/song1.mp3` exists as a regular file."
+          },
+          {
+            "id": "not_exists-projects-beta",
+            "type": "not_exists",
+            "path": "/home/student/projects/beta",
+            "points": 1,
+            "description": "`projects/beta` was moved/renamed to `projects/archived`."
+          },
+          {
+            "id": "not_exists-documents-chapter1-txt",
+            "type": "not_exists",
+            "path": "/home/student/Documents/chapter1.txt",
+            "points": 1,
+            "description": "`~/Documents/chapter1.txt` does not exist."
+          },
+          {
+            "id": "not_exists-documents-chap1-txt",
+            "type": "not_exists",
+            "path": "/home/student/Documents/chap1.txt",
+            "points": 1,
+            "description": "`~/Documents/chap1.txt` does not exist."
+          },
+          {
+            "id": "not_exists-downloads",
+            "type": "not_exists",
+            "path": "/home/student/Downloads",
+            "points": 1,
+            "description": "`~/Downloads` does not exist."
+          },
+          {
+            "id": "not_exists-music",
+            "type": "not_exists",
+            "path": "/home/student/Music",
+            "points": 1,
+            "description": "`~/Music` does not exist."
+          },
+          {
+            "id": "not_exists-backup-intro-txt",
+            "type": "not_exists",
+            "path": "/home/student/backup/intro.txt",
+            "points": 1,
+            "description": "`~/backup/intro.txt` does not exist."
+          },
+          {
+            "id": "not_exists-backup-chap1-txt",
+            "type": "not_exists",
+            "path": "/home/student/backup/chap1.txt",
+            "points": 1,
+            "description": "`~/backup/chap1.txt` does not exist."
+          },
+          {
+            "id": "not_exists-backup-pictures",
+            "type": "not_exists",
+            "path": "/home/student/backup/Pictures",
+            "points": 1,
+            "description": "`~/backup/Pictures` does not exist."
+          },
+          {
+            "id": "not_exists-backup-song1-mp3",
+            "type": "not_exists",
+            "path": "/home/student/backup/song1.mp3",
+            "points": 1,
+            "description": "`~/backup/song1.mp3` does not exist."
+          },
+          {
+            "id": "content-resources-students-intro-txt",
+            "type": "content",
+            "path": "/home/student/resources/students/intro.txt",
+            "expected": "Introduction\n",
+            "points": 1,
+            "description": "`~/resources/students/intro.txt` has the expected content."
+          },
+          {
+            "id": "content-resources-students-chapter2-txt",
+            "type": "content",
+            "path": "/home/student/resources/students/chapter2.txt",
+            "expected": "Chapter 2\n",
+            "points": 1,
+            "description": "`~/resources/students/chapter2.txt` has the expected content."
+          },
+          {
+            "id": "content-resources-students-glossary-txt",
+            "type": "content",
+            "path": "/home/student/resources/students/glossary.txt",
+            "expected": "Glossary\n",
+            "points": 1,
+            "description": "`~/resources/students/glossary.txt` has the expected content."
+          },
+          {
+            "id": "directory-resources-teachers",
+            "type": "directory",
+            "path": "/home/student/resources/teachers",
+            "points": 1,
+            "description": "`~/resources/teachers` exists and is a directory."
+          },
+          {
+            "id": "file-resources-teachers-readme-md",
+            "type": "file",
+            "path": "/home/student/resources/teachers/readme.md",
+            "points": 1,
+            "description": "`~/resources/teachers/readme.md` exists as a regular file."
+          },
+          {
+            "id": "file-resources-teachers-guide-md",
+            "type": "file",
+            "path": "/home/student/resources/teachers/guide.md",
+            "points": 1,
+            "description": "`~/resources/teachers/guide.md` exists as a regular file."
+          },
+          {
+            "id": "not_exists-projects-alpha-readme-md",
+            "type": "not_exists",
+            "path": "/home/student/projects/alpha/readme.md",
+            "points": 1,
+            "description": "`~/projects/alpha/readme.md` does not exist."
+          },
+          {
+            "id": "not_exists-projects-alpha-guide-md",
+            "type": "not_exists",
+            "path": "/home/student/projects/alpha/guide.md",
+            "points": 1,
+            "description": "`~/projects/alpha/guide.md` does not exist."
+          },
+          {
+            "id": "content-cleanup-old-reports-temp1-log",
+            "type": "content",
+            "path": "/home/student/cleanup/old_reports/temp1.log",
+            "expected": "temp one\n",
+            "points": 1,
+            "description": "`~/cleanup/old_reports/temp1.log` has the expected content."
+          },
+          {
+            "id": "content-cleanup-old-reports-temp2-log",
+            "type": "content",
+            "path": "/home/student/cleanup/old_reports/temp2.log",
+            "expected": "temp two\n",
+            "points": 1,
+            "description": "`~/cleanup/old_reports/temp2.log` has the expected content."
+          },
+          {
+            "id": "not_exists-cleanup-temp1-log",
+            "type": "not_exists",
+            "path": "/home/student/cleanup/temp1.log",
+            "points": 1,
+            "description": "`~/cleanup/temp1.log` does not exist."
+          },
+          {
+            "id": "not_exists-cleanup-temp2-log",
+            "type": "not_exists",
+            "path": "/home/student/cleanup/temp2.log",
+            "points": 1,
+            "description": "`~/cleanup/temp2.log` does not exist."
+          },
+          {
+            "id": "content-backup-drafts-draft-final-txt",
+            "type": "content",
+            "path": "/home/student/backup/drafts/draft_final.txt",
+            "expected": "Draft one\n",
+            "points": 1,
+            "description": "`~/backup/drafts/draft_final.txt` has the expected content."
+          },
+          {
+            "id": "not_exists-cleanup-drafts",
+            "type": "not_exists",
+            "path": "/home/student/cleanup/drafts",
+            "points": 1,
+            "description": "`~/cleanup/drafts` does not exist."
+          },
+          {
+            "id": "file-backup-old-archives-data1-csv",
+            "type": "file",
+            "path": "/home/student/backup/old_archives/data1.csv",
+            "points": 1,
+            "description": "`~/backup/old_archives/data1.csv` exists as a regular file."
+          },
+          {
+            "id": "not_exists-backup-old-archives-archive1-zip",
+            "type": "not_exists",
+            "path": "/home/student/backup/old_archives/archive1.zip",
+            "points": 1,
+            "description": "`~/backup/old_archives/archive1.zip` does not exist."
+          },
+          {
+            "id": "not_exists-backup-old-archives-archive2-zip",
+            "type": "not_exists",
+            "path": "/home/student/backup/old_archives/archive2.zip",
+            "points": 1,
+            "description": "`~/backup/old_archives/archive2.zip` does not exist."
+          }
+        ],
+        "explanation": "The correction inspects the final state of the home directory after all sections. Different command sequences receive the same result when the final filesystem state matches."
+      }
+    },
+    "os-term-1-0305": {
+      "course": "os",
+      "category": "Files and Directories",
+      "title": "0305 - Linking Files in Linux",
+      "instructions": "#### 1. Creating hard links\n\n**1.1 Basic hard link**\n\n1. Navigate to `~/osfundamentals/links`.\n2. Create a hard link to `report.txt` named `report_link`:\n\n   ```bash\n   ln report.txt report_link\n   ```\n\n**1.2 Verifying hard links**\n\nUse `ls -l report.txt report_link`. What do you notice about the file size, the number of links (second column) and the inode number (`ls -i`)? Verify they share the same inode.\n\n**1.3 Determining if a file has multiple hard links**\n\n1. Use `ls -l` on `report.txt`: the second column shows the number of hard links.\n2. Use `find` to list all names referring to the same inode:\n\n   ```bash\n   find . -inum $(stat -c \"%i\" report.txt)\n   ```\n\n**1.4 Delete the original hard link**\n\n1. Delete the original `report.txt`.\n2. Verify that `report_link` still contains the content (use `cat`).\n\n**1.5 Recreate report.txt**\n\n1. In `~/osfundamentals/links`, create a hard link to `report_link` named `report.txt`.\n2. Verify the inodes match (`ls -li report*`).\n\n**1.6 Create additional hard links**\n\n1. Create another hard link named `report_backup` pointing to `report.txt`.\n2. Verify all inodes match.\n3. Create a hard link named `helper_hard` pointing to `scripts/helper.sh`.\n4. Verify the inodes match (`ls -li helper_hard scripts/helper.sh`).\n\n#### 2. Creating symbolic (soft) links\n\n**2.1 Basic symbolic link**\n\n1. Create a symbolic link named `data_link.csv` pointing to `data1.csv`:\n\n   ```bash\n   ln -s data1.csv data_link.csv\n   ```\n\n2. Verify that `data_link.csv` shows the contents of `data1.csv`.\n\n**2.2 Symbolic link to a file in another directory**\n\n1. From `~/osfundamentals/links`, create a symbolic link named `runme_link` pointing to `scripts/runme.sh`.\n2. Create a symbolic link `helper_soft` pointing to `scripts/helper.sh`.\n\n**2.3 Verifying symbolic links**\n\nUse `ls -l data_link.csv runme_link`. How is the output different from hard links? In the output, what does the arrow (`→`) indicate?\n\n#### 3. Behavior differences between hard and symbolic links\n\n**3.1 Deleting the original file**\n\n1. Delete `data1.csv`.\n2. Check `data_link.csv` (use `cat`). Does it still work?\n\n**3.2 Recreating the deleted file**\n\n1. Recreate `data1.csv` with new content:\n\n   ```bash\n   echo \"Some new content\" > data1.csv\n   ```\n\n2. Does `data_link.csv` now work again?\n\n#### 4. Challenge – copy, move\n\n1. Navigate to `~/osfundamentals/challenge`.\n2. Create the following directory tree:\n\n   ```bash\n   mkdir -p work/input work/output work/links\n   ```\n\nYour tasks:\n\n1. Copy `raw_data.csv` into `work/input/`.\n2. Move `report_final.txt` into `work/output/` and rename it to `final_report.txt`.\n3. List all files recursively in `work/` using `ls -lR`.\n\n#### 5. Linking challenge\n\nUse `ls -lR` to display the locations of all the files.\n\n1. Navigate to `~/osfundamentals/challenge/work/links`.\n2. Create a hard link named `report_hard` pointing to `final_report.txt` (in `work/output`).\n3. Verify the inodes match.\n4. Create a symbolic link named `data_soft` pointing to `raw_data.csv` (the copy in `work/input`).\n5. Verify `data_soft` can be read correctly.\n6. Create a symbolic link named `analysis_link` pointing to `analysis.sh` (in `~/osfundamentals/challenge`).\n7. Check the link count for `report_hard` using `stat -c %h`.\n8. Read `data_soft` to verify the symbolic link is valid.\n\nTip: a symbolic link created with a relative target is resolved relative to the directory that contains the link, so use paths such as `../input/raw_data.csv`.",
+      "hints": [
+        "`ln target linkname` creates a hard link; `ln -s target linkname` creates a symbolic link.",
+        "`ls -li` shows the inode number in the first column.",
+        "A symbolic link breaks when its target is removed and works again when a file with that name is recreated.",
+        "For the challenge: `ln ../output/final_report.txt report_hard`, `ln -s ../input/raw_data.csv data_soft`, `ln -s ../../analysis.sh analysis_link`."
+      ],
+      "difficulty": "Medium",
+      "type": "terminal",
+
+      "provenance": "OSFundamentals.pdf",
+      "contentVersion": 1,
+      "terminal": {
+        "profile": "basic-linux",
+        "initialDirectory": "/home/student",
+        "initialFilesystem": [],
+        "preSetupCommands": [
+          "mkdir -p /home/student/osfundamentals /home/student/osfundamentals/links /home/student/osfundamentals/links/scripts /home/student/osfundamentals/challenge",
+          "printf 'Quarterly report\\n' > /home/student/osfundamentals/links/report.txt",
+          "printf 'id,value\\n1,10\\n2,20\\n' > /home/student/osfundamentals/links/data1.csv",
+          "printf '#!/bin/bash\\necho helper\\n' > /home/student/osfundamentals/links/scripts/helper.sh",
+          "printf '#!/bin/bash\\necho run\\n' > /home/student/osfundamentals/links/scripts/runme.sh",
+          "printf 'id,name\\n1,alpha\\n2,beta\\n' > /home/student/osfundamentals/challenge/raw_data.csv",
+          "printf 'Final report\\n' > /home/student/osfundamentals/challenge/report_final.txt",
+          "printf '#!/bin/bash\\necho analysing\\n' > /home/student/osfundamentals/challenge/analysis.sh",
+          "chown student:student /home/student/osfundamentals /home/student/osfundamentals/links /home/student/osfundamentals/links/report.txt /home/student/osfundamentals/links/data1.csv /home/student/osfundamentals/links/scripts /home/student/osfundamentals/links/scripts/helper.sh /home/student/osfundamentals/links/scripts/runme.sh /home/student/osfundamentals/challenge /home/student/osfundamentals/challenge/raw_data.csv /home/student/osfundamentals/challenge/report_final.txt",
+          "chown student:student /home/student/osfundamentals/challenge/analysis.sh",
+          "chmod 755 /home/student/osfundamentals /home/student/osfundamentals/links /home/student/osfundamentals/links/scripts /home/student/osfundamentals/links/scripts/helper.sh /home/student/osfundamentals/links/scripts/runme.sh /home/student/osfundamentals/challenge /home/student/osfundamentals/challenge/analysis.sh",
+          "chmod 644 /home/student/osfundamentals/links/report.txt /home/student/osfundamentals/links/data1.csv /home/student/osfundamentals/challenge/raw_data.csv /home/student/osfundamentals/challenge/report_final.txt"
+        ],
+        "checks": [
+          {
+            "id": "content-osfundamentals-links-report-txt",
+            "type": "content",
+            "path": "/home/student/osfundamentals/links/report.txt",
+            "expected": "Quarterly report\n",
+            "points": 1,
+            "description": "`~/osfundamentals/links/report.txt` has the expected content."
+          },
+          {
+            "id": "content-osfundamentals-links-report-link",
+            "type": "content",
+            "path": "/home/student/osfundamentals/links/report_link",
+            "expected": "Quarterly report\n",
+            "points": 1,
+            "description": "`~/osfundamentals/links/report_link` has the expected content."
+          },
+          {
+            "id": "content-osfundamentals-links-report-backup",
+            "type": "content",
+            "path": "/home/student/osfundamentals/links/report_backup",
+            "expected": "Quarterly report\n",
+            "points": 1,
+            "description": "`~/osfundamentals/links/report_backup` has the expected content."
+          },
+          {
+            "id": "content-osfundamentals-links-helper-hard",
+            "type": "content",
+            "path": "/home/student/osfundamentals/links/helper_hard",
+            "expected": "#!/bin/bash\necho helper\n",
+            "points": 1,
+            "description": "`helper_hard` links to `scripts/helper.sh`."
+          },
+          {
+            "id": "content-osfundamentals-links-data1-csv",
+            "type": "content",
+            "path": "/home/student/osfundamentals/links/data1.csv",
+            "expected": "Some new content\n",
+            "points": 1,
+            "description": "`data1.csv` was recreated with the new content."
+          },
+          {
+            "id": "content-osfundamentals-links-data-link-csv",
+            "type": "content",
+            "path": "/home/student/osfundamentals/links/data_link.csv",
+            "expected": "Some new content\n",
+            "points": 1,
+            "description": "`data_link.csv` is a working symbolic link to `data1.csv`."
+          },
+          {
+            "id": "content-osfundamentals-links-runme-link",
+            "type": "content",
+            "path": "/home/student/osfundamentals/links/runme_link",
+            "expected": "#!/bin/bash\necho run\n",
+            "points": 1,
+            "description": "`runme_link` is a working symbolic link to `scripts/runme.sh`."
+          },
+          {
+            "id": "content-osfundamentals-links-helper-soft",
+            "type": "content",
+            "path": "/home/student/osfundamentals/links/helper_soft",
+            "expected": "#!/bin/bash\necho helper\n",
+            "points": 1,
+            "description": "`helper_soft` is a working symbolic link to `scripts/helper.sh`."
+          },
+          {
+            "id": "directory-osfundamentals-challenge-work-input",
+            "type": "directory",
+            "path": "/home/student/osfundamentals/challenge/work/input",
+            "points": 1,
+            "description": "`~/osfundamentals/challenge/work/input` exists and is a directory."
+          },
+          {
+            "id": "directory-osfundamentals-challenge-work-output",
+            "type": "directory",
+            "path": "/home/student/osfundamentals/challenge/work/output",
+            "points": 1,
+            "description": "`~/osfundamentals/challenge/work/output` exists and is a directory."
+          },
+          {
+            "id": "directory-osfundamentals-challenge-work-links",
+            "type": "directory",
+            "path": "/home/student/osfundamentals/challenge/work/links",
+            "points": 1,
+            "description": "`~/osfundamentals/challenge/work/links` exists and is a directory."
+          },
+          {
+            "id": "content-osfundamentals-challenge-work-input-raw-data-csv",
+            "type": "content",
+            "path": "/home/student/osfundamentals/challenge/work/input/raw_data.csv",
+            "expected": "id,name\n1,alpha\n2,beta\n",
+            "points": 1,
+            "description": "`~/osfundamentals/challenge/work/input/raw_data.csv` has the expected content."
+          },
+          {
+            "id": "content-osfundamentals-challenge-raw-data-csv",
+            "type": "content",
+            "path": "/home/student/osfundamentals/challenge/raw_data.csv",
+            "expected": "id,name\n1,alpha\n2,beta\n",
+            "points": 1,
+            "description": "The original `raw_data.csv` is still there (it was copied, not moved)."
+          },
+          {
+            "id": "content-osfundamentals-challenge-work-output-final-report-txt",
+            "type": "content",
+            "path": "/home/student/osfundamentals/challenge/work/output/final_report.txt",
+            "expected": "Final report\n",
+            "points": 1,
+            "description": "`~/osfundamentals/challenge/work/output/final_report.txt` has the expected content."
+          },
+          {
+            "id": "not_exists-osfundamentals-challenge-report-final-txt",
+            "type": "not_exists",
+            "path": "/home/student/osfundamentals/challenge/report_final.txt",
+            "points": 1,
+            "description": "`~/osfundamentals/challenge/report_final.txt` does not exist."
+          },
+          {
+            "id": "content-osfundamentals-challenge-work-links-report-hard",
+            "type": "content",
+            "path": "/home/student/osfundamentals/challenge/work/links/report_hard",
+            "expected": "Final report\n",
+            "points": 1,
+            "description": "`report_hard` is a link to `final_report.txt`."
+          },
+          {
+            "id": "content-osfundamentals-challenge-work-links-data-soft",
+            "type": "content",
+            "path": "/home/student/osfundamentals/challenge/work/links/data_soft",
+            "expected": "id,name\n1,alpha\n2,beta\n",
+            "points": 1,
+            "description": "`data_soft` is a working symbolic link to `raw_data.csv`."
+          },
+          {
+            "id": "content-osfundamentals-challenge-work-links-analysis-link",
+            "type": "content",
+            "path": "/home/student/osfundamentals/challenge/work/links/analysis_link",
+            "expected": "#!/bin/bash\necho analysing\n",
+            "points": 1,
+            "description": "`analysis_link` is a working symbolic link to `analysis.sh`."
+          }
+        ],
+        "explanation": "The correction reads each link and compares its content with the target, so a link that is broken at the end fails. Hard and symbolic links receive the same result when they resolve to the right content."
+      }
+    },
+    "os-term-1-0306": {
+      "course": "os",
+      "category": "Pattern Matching",
+      "title": "0306 - Pattern Matching and Expansion",
+      "instructions": "Navigate to the directory `~/osfundamentals/patterns`. It contains a `data/` directory with sample files and an empty `work/` directory.\n\n#### Task 1 – Globbing with `*`\n\nCopy all `.txt` files from `data/` into the `work/` directory using a single `cp` command with a `*` wildcard.\n\n#### Task 2 – Globbing with `?`\n\nCopy all files from `data/` whose names start with `report` and have exactly one digit before `.txt` into `work/`.\n\n#### Task 3 – Globbing with character classes\n\nCopy all files from `data/` whose names match `notes_[a or b].txt` into `work/`.\n\n#### Task 4 – Negated character classes\n\nCopy all `.log` files from `data/` that do **not** contain `1` in their names just before `.log` into `work/`. So you do not want to copy `old_2021.log`, you do want to copy `old_2022.log`, `old_2020.log`, etc.\n\n#### Task 5 – Brace expansion\n\nIn `work/`, create the directories `project_alpha`, `project_beta`, and `project_gamma` using a single command.\n\n#### Task 6 – Tilde expansion\n\nVerify that the command `ls ~` shows your home directory contents. Save the output into a file `home_listing.txt` inside `work/`.\n\nUse output redirection (`>`) to send the output to the file `home_listing.txt` inside `work/`. The file will be created because of the redirection.\n\n#### Task 7 – Variable expansion\n\nSet a variable `SRC` to `$HOME/osfundamentals/patterns/data`:\n\n```bash\nSRC=\"$HOME/osfundamentals/patterns/data\"\n# Make sure you don't make any typing mistake!\n```\n\nUse it with `cp` to copy `draft_final.md` into `work/` without typing the full path directly.\n\n#### Task 8 – Command substitution\n\nIn `work/`, create a file called `current_date.txt` whose first line is today's date in `YYYY-MM-DD` format (use `date +%F`).\n\nUse output redirection (`>`) to send the output to the file `current_date.txt` in `work/`. The file will be created because of the redirection.\n\n#### Task 9 – Protecting arguments from expansion\n\nInside `work/`, create three empty files whose names contain characters that the shell would normally expand or interpret. These files should be created literally as named below by using correct quoting or escaping.\n\n- `project notes.txt` (space in name: requires quoting or escaping)\n- `price_$100.txt` (dollar sign: requires escaping or single quotes)\n- `wow!.txt` (exclamation mark: requires escaping or single quotes, especially with history expansion enabled)\n\n#### Task 10 – Quoting differences\n\nInside `work/`, create:\n\n- `double space file.txt` using **double quotes** around the name when creating it.\n- `single space file.txt` using **single quotes** around the name when creating it.\n\nThe point: both work to prevent splitting, but variable and command substitution inside the quotes behave differently.",
+      "hints": [
+        "`cp data/*.txt work/` copies every `.txt` file.",
+        "`?` matches exactly one character, `[ab]` matches `a` or `b`, `[!1]` matches anything except `1`.",
+        "`mkdir work/project_{alpha,beta,gamma}` uses brace expansion.",
+        "Single quotes prevent `$` and `!` from being interpreted: `touch 'price_$100.txt'`."
+      ],
+      "difficulty": "Medium",
+      "type": "terminal",
+
+      "provenance": "OSFundamentals.pdf",
+      "contentVersion": 1,
+      "terminal": {
+        "profile": "basic-linux",
+        "initialDirectory": "/home/student",
+        "initialFilesystem": [],
+        "preSetupCommands": [
+          "mkdir -p /home/student/osfundamentals /home/student/osfundamentals/patterns /home/student/osfundamentals/patterns/work /home/student/osfundamentals/patterns/data",
+          "printf 'report1.txt\\n' > /home/student/osfundamentals/patterns/data/report1.txt",
+          "printf 'report2.txt\\n' > /home/student/osfundamentals/patterns/data/report2.txt",
+          "printf 'report3.txt\\n' > /home/student/osfundamentals/patterns/data/report3.txt",
+          "printf 'report10.txt\\n' > /home/student/osfundamentals/patterns/data/report10.txt",
+          "printf 'notes_a.txt\\n' > /home/student/osfundamentals/patterns/data/notes_a.txt",
+          "printf 'notes_b.txt\\n' > /home/student/osfundamentals/patterns/data/notes_b.txt",
+          "printf 'notes_c.txt\\n' > /home/student/osfundamentals/patterns/data/notes_c.txt",
+          "printf 'summary.txt\\n' > /home/student/osfundamentals/patterns/data/summary.txt",
+          "printf 'old_2020.log\\n' > /home/student/osfundamentals/patterns/data/old_2020.log",
+          "printf 'old_2021.log\\n' > /home/student/osfundamentals/patterns/data/old_2021.log",
+          "printf 'old_2022.log\\n' > /home/student/osfundamentals/patterns/data/old_2022.log",
+          "printf 'Final draft\\n' > /home/student/osfundamentals/patterns/data/draft_final.md",
+          "chown student:student /home/student/osfundamentals /home/student/osfundamentals/patterns /home/student/osfundamentals/patterns/work /home/student/osfundamentals/patterns/data /home/student/osfundamentals/patterns/data/report1.txt /home/student/osfundamentals/patterns/data/report2.txt /home/student/osfundamentals/patterns/data/report3.txt /home/student/osfundamentals/patterns/data/report10.txt /home/student/osfundamentals/patterns/data/notes_a.txt /home/student/osfundamentals/patterns/data/notes_b.txt",
+          "chown student:student /home/student/osfundamentals/patterns/data/notes_c.txt /home/student/osfundamentals/patterns/data/summary.txt /home/student/osfundamentals/patterns/data/old_2020.log /home/student/osfundamentals/patterns/data/old_2021.log /home/student/osfundamentals/patterns/data/old_2022.log /home/student/osfundamentals/patterns/data/draft_final.md",
+          "chmod 755 /home/student/osfundamentals /home/student/osfundamentals/patterns /home/student/osfundamentals/patterns/work /home/student/osfundamentals/patterns/data",
+          "chmod 644 /home/student/osfundamentals/patterns/data/report1.txt /home/student/osfundamentals/patterns/data/report2.txt /home/student/osfundamentals/patterns/data/report3.txt /home/student/osfundamentals/patterns/data/report10.txt /home/student/osfundamentals/patterns/data/notes_a.txt /home/student/osfundamentals/patterns/data/notes_b.txt /home/student/osfundamentals/patterns/data/notes_c.txt /home/student/osfundamentals/patterns/data/summary.txt /home/student/osfundamentals/patterns/data/old_2020.log /home/student/osfundamentals/patterns/data/old_2021.log",
+          "chmod 644 /home/student/osfundamentals/patterns/data/old_2022.log /home/student/osfundamentals/patterns/data/draft_final.md"
+        ],
+        "checks": [
+          {
+            "id": "file-osfundamentals-patterns-work-report1-txt",
+            "type": "file",
+            "path": "/home/student/osfundamentals/patterns/work/report1.txt",
+            "points": 1,
+            "description": "`~/osfundamentals/patterns/work/report1.txt` exists as a regular file."
+          },
+          {
+            "id": "file-osfundamentals-patterns-work-report2-txt",
+            "type": "file",
+            "path": "/home/student/osfundamentals/patterns/work/report2.txt",
+            "points": 1,
+            "description": "`~/osfundamentals/patterns/work/report2.txt` exists as a regular file."
+          },
+          {
+            "id": "file-osfundamentals-patterns-work-report3-txt",
+            "type": "file",
+            "path": "/home/student/osfundamentals/patterns/work/report3.txt",
+            "points": 1,
+            "description": "`~/osfundamentals/patterns/work/report3.txt` exists as a regular file."
+          },
+          {
+            "id": "file-osfundamentals-patterns-work-report10-txt",
+            "type": "file",
+            "path": "/home/student/osfundamentals/patterns/work/report10.txt",
+            "points": 1,
+            "description": "`~/osfundamentals/patterns/work/report10.txt` exists as a regular file."
+          },
+          {
+            "id": "file-osfundamentals-patterns-work-notes-a-txt",
+            "type": "file",
+            "path": "/home/student/osfundamentals/patterns/work/notes_a.txt",
+            "points": 1,
+            "description": "`~/osfundamentals/patterns/work/notes_a.txt` exists as a regular file."
+          },
+          {
+            "id": "file-osfundamentals-patterns-work-notes-b-txt",
+            "type": "file",
+            "path": "/home/student/osfundamentals/patterns/work/notes_b.txt",
+            "points": 1,
+            "description": "`~/osfundamentals/patterns/work/notes_b.txt` exists as a regular file."
+          },
+          {
+            "id": "file-osfundamentals-patterns-work-summary-txt",
+            "type": "file",
+            "path": "/home/student/osfundamentals/patterns/work/summary.txt",
+            "points": 1,
+            "description": "`~/osfundamentals/patterns/work/summary.txt` exists as a regular file."
+          },
+          {
+            "id": "file-osfundamentals-patterns-work-old-2020-log",
+            "type": "file",
+            "path": "/home/student/osfundamentals/patterns/work/old_2020.log",
+            "points": 1,
+            "description": "`~/osfundamentals/patterns/work/old_2020.log` exists as a regular file."
+          },
+          {
+            "id": "file-osfundamentals-patterns-work-old-2022-log",
+            "type": "file",
+            "path": "/home/student/osfundamentals/patterns/work/old_2022.log",
+            "points": 1,
+            "description": "`~/osfundamentals/patterns/work/old_2022.log` exists as a regular file."
+          },
+          {
+            "id": "not_exists-osfundamentals-patterns-work-old-2021-log",
+            "type": "not_exists",
+            "path": "/home/student/osfundamentals/patterns/work/old_2021.log",
+            "points": 1,
+            "description": "`old_2021.log` was not copied (it contains `1` just before `.log`)."
+          },
+          {
+            "id": "directory-osfundamentals-patterns-work-project-alpha",
+            "type": "directory",
+            "path": "/home/student/osfundamentals/patterns/work/project_alpha",
+            "points": 1,
+            "description": "`~/osfundamentals/patterns/work/project_alpha` exists and is a directory."
+          },
+          {
+            "id": "directory-osfundamentals-patterns-work-project-beta",
+            "type": "directory",
+            "path": "/home/student/osfundamentals/patterns/work/project_beta",
+            "points": 1,
+            "description": "`~/osfundamentals/patterns/work/project_beta` exists and is a directory."
+          },
+          {
+            "id": "directory-osfundamentals-patterns-work-project-gamma",
+            "type": "directory",
+            "path": "/home/student/osfundamentals/patterns/work/project_gamma",
+            "points": 1,
+            "description": "`~/osfundamentals/patterns/work/project_gamma` exists and is a directory."
+          },
+          {
+            "id": "file-osfundamentals-patterns-work-home-listing-txt",
+            "type": "file",
+            "path": "/home/student/osfundamentals/patterns/work/home_listing.txt",
+            "points": 1,
+            "description": "`~/osfundamentals/patterns/work/home_listing.txt` exists as a regular file."
+          },
+          {
+            "id": "file-osfundamentals-patterns-work-current-date-txt",
+            "type": "file",
+            "path": "/home/student/osfundamentals/patterns/work/current_date.txt",
+            "points": 1,
+            "description": "`~/osfundamentals/patterns/work/current_date.txt` exists as a regular file."
+          },
+          {
+            "id": "content-osfundamentals-patterns-work-draft-final-md",
+            "type": "content",
+            "path": "/home/student/osfundamentals/patterns/work/draft_final.md",
+            "expected": "Final draft\n",
+            "points": 1,
+            "description": "`~/osfundamentals/patterns/work/draft_final.md` has the expected content."
+          },
+          {
+            "id": "file-osfundamentals-patterns-work-project-notes-txt",
+            "type": "file",
+            "path": "/home/student/osfundamentals/patterns/work/project notes.txt",
+            "points": 1,
+            "description": "`~/osfundamentals/patterns/work/project notes.txt` exists as a regular file."
+          },
+          {
+            "id": "file-osfundamentals-patterns-work-price-100-txt",
+            "type": "file",
+            "path": "/home/student/osfundamentals/patterns/work/price_$100.txt",
+            "points": 1,
+            "description": "`~/osfundamentals/patterns/work/price_$100.txt` exists as a regular file."
+          },
+          {
+            "id": "file-osfundamentals-patterns-work-wow-txt",
+            "type": "file",
+            "path": "/home/student/osfundamentals/patterns/work/wow!.txt",
+            "points": 1,
+            "description": "`~/osfundamentals/patterns/work/wow!.txt` exists as a regular file."
+          },
+          {
+            "id": "file-osfundamentals-patterns-work-double-space-file-txt",
+            "type": "file",
+            "path": "/home/student/osfundamentals/patterns/work/double space file.txt",
+            "points": 1,
+            "description": "`~/osfundamentals/patterns/work/double space file.txt` exists as a regular file."
+          },
+          {
+            "id": "file-osfundamentals-patterns-work-single-space-file-txt",
+            "type": "file",
+            "path": "/home/student/osfundamentals/patterns/work/single space file.txt",
+            "points": 1,
+            "description": "`~/osfundamentals/patterns/work/single space file.txt` exists as a regular file."
+          }
+        ],
+        "explanation": "The correction checks which files ended up in `work/`, including the one file that must not be copied, and that the specially named files exist literally."
+      }
+    },
+    "os-term-1-0399": {
+      "course": "os",
+      "category": "Capstone",
+      "title": "0399 - Capstone Lab",
+      "instructions": "This lab ties together the earlier topics: navigation, file management, linking, pattern matching, expansion and quoting/escaping.\n\n#### Capstone Lab – Linux Systems Maintenance Challenge\n\n**Scenario:** You have been hired by the IT department of a company called DataSys to help set up a new project workspace. Your tasks include navigating the filesystem, organizing files, creating backups, linking data, pattern matching, and cleanup, all using the Bash shell.\n\nYour terminal starts in `/home/student/osfundamentals/capstone`, which contains the following directory structure:\n\n```\ncapstone/\n└── workspace/\n     ├── todo.txt\n     ├── notes/\n     │     ├── meeting_jan.txt\n     │     ├── meeting_feb.txt\n     │     └── archive/\n     │          └── old_notes.txt\n     └── projects/                (empty at start)\n```\n\n#### Part 1 – Navigation and paths\n\n1. **Find your current directory:** run `pwd` to confirm you are inside `/home/student/osfundamentals/capstone`.\n2. **Relative navigation:** use `cd` to go into `workspace/notes/archive` using a relative path. Then return to the previous directory with `cd -`.\n3. **Listing:** from the `capstone` root, run `ls -l` on `workspace` to confirm the contents. Try `ls -a` to see hidden files (if any).\n\n#### Part 2 – File and directory management\n\n4. **Create directories:** in `workspace`, create a directory `projects` with a subdirectory `drafts` with one command using `mkdir -p`.\n5. **Create files:** inside `workspace/projects`, create the empty files `plan1.txt`, `plan2.txt` and `notes.md`.\n6. **Copy files:** copy both `plan1.txt` and `plan2.txt` into `workspace/projects/drafts/`.\n7. **Move and rename:** move `workspace/projects/notes.md` into `workspace/notes/` and rename it to `project_notes.md`.\n8. **Remove files/directories:** remove all `txt` files from `workspace/projects/drafts/`, then remove the empty directory `workspace/projects/drafts/`.\n\n#### Part 3 – Links\n\n9. **Hard link:** in `workspace/`, create a hard link called `todo_hardlink.txt` pointing to `workspace/todo.txt`.\n10. **Check links:** verify the link count with `ls -l workspace/todo.txt`.\n11. **Symbolic link:** in `workspace/`, create a symbolic link `latest_notes` pointing to the directory `workspace/notes/`. Check the link: is `latest_notes` pointing to the correct location? And is it showing the correct contents when you do `ls workspace/latest_notes`?\n    - Hint: if you create the link outside of the directory where you want the symbolic link to be, use the `-t` option to `ln -s`.\n\n#### Part 4 – Expansions & quoting\n\n12. **Brace expansion:** in `workspace/projects/`, create the files `draft1.txt`, `draft2.txt`, and `draft3.txt` in one command.\n13. **Variable expansion:** define a variable `MYDIR=workspace/projects`. Use it with `touch $MYDIR/var_test.txt` to create the file.\n14. **Command substitution:** in `workspace/`, create a file named `datefile_YYYYMMDD.txt` where `YYYYMMDD` is today's date, using `$(date +%Y%m%d)`.\n15. **Tilde expansion:** from anywhere, create a file `workspace/homecheck.txt` by referencing your home directory with `~`.\n16. **Protecting arguments from expansion:** create the following files in `workspace/` using quotes or escaping:\n    - `project notes.txt`\n    - `price_$100.txt`\n    - `wow!.txt`\n    - `double space file.txt` (using double quotes)\n    - `single space file.txt` (using single quotes)\n\n#### Part 5 – Challenge task\n\n17. **The one-liner: listing `.txt` files with globbing.** Your goal is to create a file that lists all `.txt` files in `workspace` and its subdirectories (including nested folders).\n    - Use globbing patterns with `ls` and redirection.\n    - Make sure the file contains **absolute paths** to each `.txt` file.\n    - Save the result into `workspace/all_txt_files.txt`.\n\n    *Tip 1:* you may need to combine several glob patterns: `workspace/*.txt`, `workspace/*/*.txt`, `workspace/*/*/*.txt`.\n\n    *Tip 2:* use output redirection (`>`) at the end of the `ls` command to send the output to the file `workspace/all_txt_files.txt` (there is no need to create the file first).",
+      "hints": [
+        "`mkdir -p workspace/projects/drafts` creates the nested directory in one command.",
+        "`ln todo.txt todo_hardlink.txt` creates a hard link, `ln -s notes latest_notes` a symbolic link.",
+        "Quote names with spaces and `$`/`!`: `touch 'price_$100.txt' \"project notes.txt\"`.",
+        "`ls -d $PWD/workspace/*.txt` prints absolute paths when the pattern starts with an absolute path."
+      ],
+      "difficulty": "Medium",
+      "type": "terminal",
+
+      "provenance": "OSFundamentals.pdf",
+      "contentVersion": 1,
+      "terminal": {
+        "profile": "basic-linux",
+        "initialDirectory": "/home/student/osfundamentals/capstone",
+        "initialFilesystem": [],
+        "preSetupCommands": [
+          "mkdir -p /home/student/osfundamentals /home/student/osfundamentals/capstone /home/student/osfundamentals/capstone/workspace /home/student/osfundamentals/capstone/workspace/notes /home/student/osfundamentals/capstone/workspace/notes/archive /home/student/osfundamentals/capstone/workspace/projects",
+          "printf 'Finish the migration\\n' > /home/student/osfundamentals/capstone/workspace/todo.txt",
+          "printf 'January meeting\\n' > /home/student/osfundamentals/capstone/workspace/notes/meeting_jan.txt",
+          "printf 'February meeting\\n' > /home/student/osfundamentals/capstone/workspace/notes/meeting_feb.txt",
+          "printf 'Old notes\\n' > /home/student/osfundamentals/capstone/workspace/notes/archive/old_notes.txt",
+          "chown student:student /home/student/osfundamentals /home/student/osfundamentals/capstone /home/student/osfundamentals/capstone/workspace /home/student/osfundamentals/capstone/workspace/todo.txt /home/student/osfundamentals/capstone/workspace/notes /home/student/osfundamentals/capstone/workspace/notes/meeting_jan.txt /home/student/osfundamentals/capstone/workspace/notes/meeting_feb.txt /home/student/osfundamentals/capstone/workspace/notes/archive /home/student/osfundamentals/capstone/workspace/notes/archive/old_notes.txt /home/student/osfundamentals/capstone/workspace/projects",
+          "chmod 755 /home/student/osfundamentals /home/student/osfundamentals/capstone /home/student/osfundamentals/capstone/workspace /home/student/osfundamentals/capstone/workspace/notes /home/student/osfundamentals/capstone/workspace/notes/archive /home/student/osfundamentals/capstone/workspace/projects",
+          "chmod 644 /home/student/osfundamentals/capstone/workspace/todo.txt /home/student/osfundamentals/capstone/workspace/notes/meeting_jan.txt /home/student/osfundamentals/capstone/workspace/notes/meeting_feb.txt /home/student/osfundamentals/capstone/workspace/notes/archive/old_notes.txt"
+        ],
+        "checks": [
+          {
+            "id": "not_exists-osfundamentals-capstone-workspace-projects-drafts",
+            "type": "not_exists",
+            "path": "/home/student/osfundamentals/capstone/workspace/projects/drafts",
+            "points": 1,
+            "description": "`projects/drafts` was removed again."
+          },
+          {
+            "id": "file-osfundamentals-capstone-workspace-projects-plan1-txt",
+            "type": "file",
+            "path": "/home/student/osfundamentals/capstone/workspace/projects/plan1.txt",
+            "points": 1,
+            "description": "`~/osfundamentals/capstone/workspace/projects/plan1.txt` exists as a regular file."
+          },
+          {
+            "id": "file-osfundamentals-capstone-workspace-projects-plan2-txt",
+            "type": "file",
+            "path": "/home/student/osfundamentals/capstone/workspace/projects/plan2.txt",
+            "points": 1,
+            "description": "`~/osfundamentals/capstone/workspace/projects/plan2.txt` exists as a regular file."
+          },
+          {
+            "id": "not_exists-osfundamentals-capstone-workspace-projects-notes-md",
+            "type": "not_exists",
+            "path": "/home/student/osfundamentals/capstone/workspace/projects/notes.md",
+            "points": 1,
+            "description": "`~/osfundamentals/capstone/workspace/projects/notes.md` does not exist."
+          },
+          {
+            "id": "file-osfundamentals-capstone-workspace-notes-project-notes-md",
+            "type": "file",
+            "path": "/home/student/osfundamentals/capstone/workspace/notes/project_notes.md",
+            "points": 1,
+            "description": "`~/osfundamentals/capstone/workspace/notes/project_notes.md` exists as a regular file."
+          },
+          {
+            "id": "content-osfundamentals-capstone-workspace-todo-txt",
+            "type": "content",
+            "path": "/home/student/osfundamentals/capstone/workspace/todo.txt",
+            "expected": "Finish the migration\n",
+            "points": 1,
+            "description": "`~/osfundamentals/capstone/workspace/todo.txt` has the expected content."
+          },
+          {
+            "id": "content-osfundamentals-capstone-workspace-todo-hardlink-txt",
+            "type": "content",
+            "path": "/home/student/osfundamentals/capstone/workspace/todo_hardlink.txt",
+            "expected": "Finish the migration\n",
+            "points": 1,
+            "description": "`todo_hardlink.txt` is a hard link to `todo.txt`."
+          },
+          {
+            "id": "file-osfundamentals-capstone-workspace-latest-notes-meeting-jan-txt",
+            "type": "file",
+            "path": "/home/student/osfundamentals/capstone/workspace/latest_notes/meeting_jan.txt",
+            "points": 1,
+            "description": "`latest_notes` is a symbolic link that resolves to the `notes` directory."
+          },
+          {
+            "id": "file-osfundamentals-capstone-workspace-projects-draft1-txt",
+            "type": "file",
+            "path": "/home/student/osfundamentals/capstone/workspace/projects/draft1.txt",
+            "points": 1,
+            "description": "`~/osfundamentals/capstone/workspace/projects/draft1.txt` exists as a regular file."
+          },
+          {
+            "id": "file-osfundamentals-capstone-workspace-projects-draft2-txt",
+            "type": "file",
+            "path": "/home/student/osfundamentals/capstone/workspace/projects/draft2.txt",
+            "points": 1,
+            "description": "`~/osfundamentals/capstone/workspace/projects/draft2.txt` exists as a regular file."
+          },
+          {
+            "id": "file-osfundamentals-capstone-workspace-projects-draft3-txt",
+            "type": "file",
+            "path": "/home/student/osfundamentals/capstone/workspace/projects/draft3.txt",
+            "points": 1,
+            "description": "`~/osfundamentals/capstone/workspace/projects/draft3.txt` exists as a regular file."
+          },
+          {
+            "id": "file-osfundamentals-capstone-workspace-projects-var-test-txt",
+            "type": "file",
+            "path": "/home/student/osfundamentals/capstone/workspace/projects/var_test.txt",
+            "points": 1,
+            "description": "`~/osfundamentals/capstone/workspace/projects/var_test.txt` exists as a regular file."
+          },
+          {
+            "id": "file-osfundamentals-capstone-workspace-homecheck-txt",
+            "type": "file",
+            "path": "/home/student/osfundamentals/capstone/workspace/homecheck.txt",
+            "points": 1,
+            "description": "`~/osfundamentals/capstone/workspace/homecheck.txt` exists as a regular file."
+          },
+          {
+            "id": "file-osfundamentals-capstone-workspace-project-notes-txt",
+            "type": "file",
+            "path": "/home/student/osfundamentals/capstone/workspace/project notes.txt",
+            "points": 1,
+            "description": "`~/osfundamentals/capstone/workspace/project notes.txt` exists as a regular file."
+          },
+          {
+            "id": "file-osfundamentals-capstone-workspace-price-100-txt",
+            "type": "file",
+            "path": "/home/student/osfundamentals/capstone/workspace/price_$100.txt",
+            "points": 1,
+            "description": "`~/osfundamentals/capstone/workspace/price_$100.txt` exists as a regular file."
+          },
+          {
+            "id": "file-osfundamentals-capstone-workspace-wow-txt",
+            "type": "file",
+            "path": "/home/student/osfundamentals/capstone/workspace/wow!.txt",
+            "points": 1,
+            "description": "`~/osfundamentals/capstone/workspace/wow!.txt` exists as a regular file."
+          },
+          {
+            "id": "file-osfundamentals-capstone-workspace-double-space-file-txt",
+            "type": "file",
+            "path": "/home/student/osfundamentals/capstone/workspace/double space file.txt",
+            "points": 1,
+            "description": "`~/osfundamentals/capstone/workspace/double space file.txt` exists as a regular file."
+          },
+          {
+            "id": "file-osfundamentals-capstone-workspace-single-space-file-txt",
+            "type": "file",
+            "path": "/home/student/osfundamentals/capstone/workspace/single space file.txt",
+            "points": 1,
+            "description": "`~/osfundamentals/capstone/workspace/single space file.txt` exists as a regular file."
+          },
+          {
+            "id": "file-osfundamentals-capstone-workspace-all-txt-files-txt",
+            "type": "file",
+            "path": "/home/student/osfundamentals/capstone/workspace/all_txt_files.txt",
+            "points": 1,
+            "description": "`~/osfundamentals/capstone/workspace/all_txt_files.txt` exists as a regular file."
+          }
+        ],
+        "explanation": "The correction checks the final state of the workspace. Files that were created and removed again (the `drafts` directory) must be gone, while the links must resolve to their targets."
+      }
+    },
+    "os-term-1-0401": {
+      "course": "os",
+      "category": "Help Systems",
+      "title": "0401 - Local Help Systems",
+      "instructions": "**Objectives:** find information in local Linux system manual pages: navigate and search man pages, and search for man pages by keyword.\n\n#### Exercise 1 – Navigating a man page\n\n- In your home directory, create the folder `manpages` inside `osfundamentals` (if it doesn't exist).\n- Navigate to `~/osfundamentals/manpages`.\n- Open the manual page for `ls`.\n- Find the option that shows hidden files (search for \"period\").\n- Save only the option name (e.g. `-a`) into the file `ls_hidden.txt`. (Use output redirection with `>` and `echo` to send your answer to `~/osfundamentals/manpages/ls_hidden.txt`.)\n\n#### Exercise 2 – Searching for commands by keyword\n\nYou forgot the command to change file permissions.\n\n- Use `man -k permission` to find the right command.\n- Save only the command name (not the description nor the number) of the command that changes file permissions into `permission_cmd.txt`.\n\n#### Exercise 3 – Searching inside all man pages\n\n- Run `man -k printf`.\n- You will see several entries for `printf`.\n- Save the section number of the page that describes the command (the one you can run in the shell) into `printf_section.txt`.\n\n#### Exercise 4 – Combine and apply\n\n- Use `man` to find the option of the `tar` command that creates a compressed archive with gzip.\n- Save the option into `tar_gzip.txt`.\n\nAll answer files go in `~/osfundamentals/manpages`.",
+      "hints": [
+        "Inside `man`, press `/` followed by a search term, then `n` for the next match; press `q` to quit.",
+        "`echo \"-a\" > ls_hidden.txt` writes the answer with a single trailing newline.",
+        "`man -k word` lists pages matching the keyword as `name (section) - description`.",
+        "Section 1 contains the commands you can run in the shell."
+      ],
+      "difficulty": "Easy",
+      "type": "terminal",
+
+      "provenance": "OSFundamentals.pdf",
+      "contentVersion": 1,
+      "terminal": {
+        "profile": "basic-linux",
+        "initialDirectory": "/home/student",
+        "initialFilesystem": [],
+        "checks": [
+          {
+            "id": "directory-osfundamentals-manpages",
+            "type": "directory",
+            "path": "/home/student/osfundamentals/manpages",
+            "points": 1,
+            "description": "`~/osfundamentals/manpages` exists and is a directory."
+          },
+          {
+            "id": "content-osfundamentals-manpages-ls-hidden-txt",
+            "type": "content",
+            "path": "/home/student/osfundamentals/manpages/ls_hidden.txt",
+            "expected": "-a\n",
+            "points": 1,
+            "description": "`~/osfundamentals/manpages/ls_hidden.txt` has the expected content."
+          },
+          {
+            "id": "content-osfundamentals-manpages-permission-cmd-txt",
+            "type": "content",
+            "path": "/home/student/osfundamentals/manpages/permission_cmd.txt",
+            "expected": "chmod\n",
+            "points": 1,
+            "description": "`~/osfundamentals/manpages/permission_cmd.txt` has the expected content."
+          },
+          {
+            "id": "content-osfundamentals-manpages-printf-section-txt",
+            "type": "content",
+            "path": "/home/student/osfundamentals/manpages/printf_section.txt",
+            "expected": "1\n",
+            "points": 1,
+            "description": "`~/osfundamentals/manpages/printf_section.txt` has the expected content."
+          },
+          {
+            "id": "content-osfundamentals-manpages-tar-gzip-txt",
+            "type": "content",
+            "path": "/home/student/osfundamentals/manpages/tar_gzip.txt",
+            "expected": "-z\n",
+            "points": 1,
+            "description": "`~/osfundamentals/manpages/tar_gzip.txt` has the expected content."
+          }
+        ],
+        "explanation": "The correction compares each answer file with the expected option, command name or section number."
+      }
+    },
+    "os-term-1-0402": {
+      "course": "os",
+      "category": "Help Systems",
+      "title": "0402 - Local Help Systems",
+      "instructions": "**Objectives:** find information in local Linux system manual pages: navigate and search man pages, and search for man pages by keyword.\n\n#### Exercise 1 – Navigating a man page\n\n- In your home directory, create the folder `manpages` inside `osfundamentals` (if it doesn't exist).\n- Navigate to `~/osfundamentals/manpages`.\n- Open the manual page for `cp`.\n- Find the option that allows preserving file attributes (mode, ownership, timestamps).\n- Save only the option into `cp_preserve.txt`.\n\n#### Exercise 2 – Searching for commands by keyword (`man -k`)\n\n- You forgot the command to change the owner of a file.\n- Use the search term `ownership` (or a related keyword).\n- Save the command name into `ownership_cmd.txt`.\n\n#### Exercise 3 – Section numbers\n\n- Run `man -k kill`.\n- You will see multiple entries.\n- Save the section number of the `kill` command you can run in the shell into `kill_section.txt`.\n\n#### Exercise 4 – Applying options\n\n- Open the manual page for `gzip`.\n- Find the option that lets you keep the original file when compressing.\n- Save only the option into `gzip_keep.txt`.\n\nAll answer files go in `~/osfundamentals/manpages`.",
+      "hints": [
+        "Use `/` inside the man page to search, for example `/preserve`.",
+        "`man -k ownership` lists commands such as `chown` and `chgrp`; you need the one that changes the owner.",
+        "`echo \"-k\" > gzip_keep.txt` writes the answer with a single trailing newline."
+      ],
+      "difficulty": "Easy",
+      "type": "terminal",
+
+      "provenance": "OSFundamentals.pdf",
+      "contentVersion": 1,
+      "terminal": {
+        "profile": "basic-linux",
+        "initialDirectory": "/home/student",
+        "initialFilesystem": [],
+        "checks": [
+          {
+            "id": "content-osfundamentals-manpages-cp-preserve-txt",
+            "type": "content",
+            "path": "/home/student/osfundamentals/manpages/cp_preserve.txt",
+            "expected": "-p\n",
+            "points": 1,
+            "description": "`~/osfundamentals/manpages/cp_preserve.txt` has the expected content."
+          },
+          {
+            "id": "content-osfundamentals-manpages-ownership-cmd-txt",
+            "type": "content",
+            "path": "/home/student/osfundamentals/manpages/ownership_cmd.txt",
+            "expected": "chown\n",
+            "points": 1,
+            "description": "`~/osfundamentals/manpages/ownership_cmd.txt` has the expected content."
+          },
+          {
+            "id": "content-osfundamentals-manpages-kill-section-txt",
+            "type": "content",
+            "path": "/home/student/osfundamentals/manpages/kill_section.txt",
+            "expected": "1\n",
+            "points": 1,
+            "description": "`~/osfundamentals/manpages/kill_section.txt` has the expected content."
+          },
+          {
+            "id": "content-osfundamentals-manpages-gzip-keep-txt",
+            "type": "content",
+            "path": "/home/student/osfundamentals/manpages/gzip_keep.txt",
+            "expected": "-k\n",
+            "points": 1,
+            "description": "`~/osfundamentals/manpages/gzip_keep.txt` has the expected content."
+          }
+        ],
+        "explanation": "The correction compares each answer file with the expected option, command name or section number."
+      }
+    },
+    "os-term-1-0501": {
+      "course": "os",
+      "category": "Redirection and Pipelines",
+      "title": "0501 - Redirection & Pipelines",
+      "instructions": "**Objectives:** redirect output and error messages into files; append new content to existing files; redirect both output and errors to the same file; build pipelines to filter and process text; use `cut`, `sort`, `uniq` and `tr` in simple data-processing tasks; use `tee` to save and view output simultaneously.\n\nMove to the working directory (already created for you):\n\n```bash\ncd ~/osfundamentals/redirection\n```\n\n#### Exercise 1 – Redirect standard output\n\nList the files in `/var/log` and save them into `varlogs.txt`.\n\n#### Exercise 2 – Redirect standard error\n\nTry to list a non-existing directory, e.g. `/doesnotexist`, and save the error message into `error.txt`.\n\n#### Exercise 3 – Redirect stdout and stderr together\n\nSave both successful output and errors from exercise 1 and 2 into one file called `combined.txt`.\n\n#### Exercise 4 – Append to a file\n\nAppend today's date to the end of `varlogs.txt`.\n\n#### Exercise 5 – Pipelines with cut and sort\n\nExtract the first column from `/etc/passwd` (usernames), sort them alphabetically, and save to `users.txt`.\n\n#### Exercise 6 – Remove duplicates with uniq\n\nUse `sort` and `uniq` on `animals.txt` to produce a list of unique animal names, and save it as `unique_animals.txt`.\n\n#### Exercise 7 – Transform characters with tr\n\nConvert all lowercase letters in `users.txt` into uppercase, and save it as `users_upper.txt`.\n\n#### Exercise 8 – Use tee with a pipeline\n\nDisplay all running processes with `ps aux`, save them in `processes.txt`, and at the same time show them on your screen.",
+      "hints": [
+        "`>` redirects stdout, `2>` redirects stderr, `>>` appends.",
+        "`command > file 2>&1` sends both stdout and stderr to the same file.",
+        "`cut -d: -f1 /etc/passwd | sort > users.txt`",
+        "`uniq` only removes adjacent duplicates, so `sort` first. `ps aux | tee processes.txt` saves and displays."
+      ],
+      "difficulty": "Easy",
+      "type": "terminal",
+
+      "provenance": "OSFundamentals.pdf",
+      "contentVersion": 1,
+      "terminal": {
+        "profile": "basic-linux",
+        "initialDirectory": "/home/student",
+        "initialFilesystem": [],
+        "preSetupCommands": [
+          "mkdir -p /home/student/osfundamentals /home/student/osfundamentals/redirection",
+          "printf 'cat\\ndog\\ncat\\nbird\\ndog\\ncat\\nfish\\n' > /home/student/osfundamentals/redirection/animals.txt",
+          "chown student:student /home/student/osfundamentals /home/student/osfundamentals/redirection /home/student/osfundamentals/redirection/animals.txt",
+          "chmod 755 /home/student/osfundamentals /home/student/osfundamentals/redirection",
+          "chmod 644 /home/student/osfundamentals/redirection/animals.txt"
+        ],
+        "checks": [
+          {
+            "id": "file-osfundamentals-redirection-varlogs-txt",
+            "type": "file",
+            "path": "/home/student/osfundamentals/redirection/varlogs.txt",
+            "points": 1,
+            "description": "`~/osfundamentals/redirection/varlogs.txt` exists as a regular file."
+          },
+          {
+            "id": "content-osfundamentals-redirection-error-txt",
+            "type": "content",
+            "path": "/home/student/osfundamentals/redirection/error.txt",
+            "expected": "ls: cannot access '/doesnotexist': No such file or directory\n",
+            "points": 1,
+            "description": "`~/osfundamentals/redirection/error.txt` has the expected content."
+          },
+          {
+            "id": "file-osfundamentals-redirection-combined-txt",
+            "type": "file",
+            "path": "/home/student/osfundamentals/redirection/combined.txt",
+            "points": 1,
+            "description": "`~/osfundamentals/redirection/combined.txt` exists as a regular file."
+          },
+          {
+            "id": "file-osfundamentals-redirection-users-txt",
+            "type": "file",
+            "path": "/home/student/osfundamentals/redirection/users.txt",
+            "points": 1,
+            "description": "`~/osfundamentals/redirection/users.txt` exists as a regular file."
+          },
+          {
+            "id": "content-osfundamentals-redirection-unique-animals-txt",
+            "type": "content",
+            "path": "/home/student/osfundamentals/redirection/unique_animals.txt",
+            "expected": "bird\ncat\ndog\nfish\n",
+            "points": 1,
+            "description": "`~/osfundamentals/redirection/unique_animals.txt` has the expected content."
+          },
+          {
+            "id": "file-osfundamentals-redirection-users-upper-txt",
+            "type": "file",
+            "path": "/home/student/osfundamentals/redirection/users_upper.txt",
+            "points": 1,
+            "description": "`~/osfundamentals/redirection/users_upper.txt` exists as a regular file."
+          },
+          {
+            "id": "file-osfundamentals-redirection-processes-txt",
+            "type": "file",
+            "path": "/home/student/osfundamentals/redirection/processes.txt",
+            "points": 1,
+            "description": "`~/osfundamentals/redirection/processes.txt` exists as a regular file."
+          }
+        ],
+        "explanation": "The correction checks that each output file exists, and compares the files whose content is fully predictable (the error message and the unique animals)."
+      }
+    },
+    "os-term-1-0502": {
+      "course": "os",
+      "category": "Vim",
+      "title": "0502 - Edit Text Files with Vim",
+      "instructions": "**Objectives:** learn the basic Vim workflow (`:w`, `:wq`, `:q!`); practice undo and delete; duplicate text using yank and paste (`yy`, `p`); use visual modes (`v`, `Shift+v`, `Ctrl+v`).\n\n#### Setup\n\nIn your home directory, create the folder structure `~/osfundamentals/vim`. Navigate to the `vim` folder inside `~/osfundamentals`.\n\n#### Exercise 1 – Create a file\n\n1. Use `vim` to open a new file with the name `notes.txt`.\n2. Enter insert mode (`i`) and write:\n\n   ```\n   My Vim Practice Notes\n   DO NOT DELETE THIS LINE\n   Apples\n   Bananas\n   Cherries\n   ```\n\n3. Save and quit: `<esc>`, `:wq`.\n\n#### Exercise 2 – Undo\n\n1. Use `vim` to open `notes.txt`.\n2. Navigate to the line `DO NOT DELETE THIS LINE`.\n3. Delete the line `DO NOT DELETE THIS LINE` using two keystrokes.\n4. Undo the deletion with one keystroke.\n5. Save and quit with `:wq`.\n\n#### Exercise 3 – Quit without saving\n\n1. Open `notes.txt`.\n2. Delete the line `Bananas` with two keystrokes.\n3. Quit without saving.\n4. Run `cat notes.txt` to confirm `Bananas` is still there.\n\n#### Exercise 4 – Yank and paste\n\n1. Open `notes.txt`.\n2. Move to the line `Cherries`.\n3. Yank the line, then paste below `Bananas`.\n4. Save and quit.\n\n`Cherries` should now appear twice.\n\n#### Exercise 5 – Visual mode\n\n1. Open `notes.txt`.\n2. Add one more line at the end: `Grapes`. Save and quit, then reopen.\n3. **Character mode:** select part of `Apples` (`ple`), yank it and paste it at the end of that same line (the line becomes `Applesple`).\n4. **Line mode:** select both the lines `Bananas` and `Cherries` (the first `Cherries`), yank and paste them below `Grapes`.\n5. **Block mode:** `Ctrl+v` select the first column of all fruit names (all lines from `Applesple` down to the end, not the two header lines) and delete it (`d`).\n\n   Now all fruit names should be missing their first letter, e.g. `Bananas` → `ananas`.\n\n6. Save and quit.",
+      "hints": [
+        "`dd` deletes a line (two keystrokes), `u` undoes, `:q!` quits without saving.",
+        "`yy` yanks the current line, `p` pastes below it. `v` and `V` select characters and lines, `Ctrl+v` selects a block.",
+        "In block mode, move down with `j` to extend the selection over the lines, then press `d`.",
+        "Final file: two header lines followed by `pplesple`, `ananas`, `herries`, `herries`, `rapes`, `ananas`, `herries`."
+      ],
+      "difficulty": "Medium",
+      "type": "terminal",
+
+      "provenance": "OSFundamentals.pdf",
+      "contentVersion": 1,
+      "terminal": {
+        "profile": "basic-linux",
+        "initialDirectory": "/home/student",
+        "initialFilesystem": [],
+        "checks": [
+          {
+            "id": "directory-osfundamentals-vim",
+            "type": "directory",
+            "path": "/home/student/osfundamentals/vim",
+            "points": 1,
+            "description": "`~/osfundamentals/vim` exists and is a directory."
+          },
+          {
+            "id": "content-osfundamentals-vim-notes-txt",
+            "type": "content",
+            "path": "/home/student/osfundamentals/vim/notes.txt",
+            "expected": "My Vim Practice Notes\nDO NOT DELETE THIS LINE\npplesple\nananas\nherries\nherries\nrapes\nananas\nherries\n",
+            "points": 1,
+            "description": "`notes.txt` has the expected final content after all five exercises."
+          }
+        ],
+        "explanation": "The correction checks the final content of `notes.txt` after all five exercises were applied in order."
+      }
+    },
+    "os-term-1-0503": {
+      "course": "os",
+      "category": "Shell Variables",
+      "title": "0503 - Shell Variables & Configuration",
+      "instructions": "**Objectives:** set shell variables to run commands; assign and retrieve values; configure programs with environment variables; set variables automatically; bash aliases; unset and unexport variables and aliases.\n\n#### Setup\n\nIn your home directory, create the folder structure `~/osfundamentals/vars`. Navigate to the `vars` folder inside `~/osfundamentals`.\n\n#### Exercise 1 – Assign and expand variables\n\n1. Create a variable called `course` with the value `osfundamentals`:\n\n   ```bash\n   course=osfundamentals\n   ```\n\n   (Don't put spaces before or after the `=` sign!)\n\n2. Echo the value with and without braces:\n\n   ```bash\n   echo $course\n   echo ${course}_linux\n   ```\n\n3. Save both outputs to a file `exercise1.txt`.\n\n#### Exercise 2 – Configure Bash with variables\n\n1. Create `~/.vars` with vim and add this line (use `Student` as the name):\n\n   ```bash\n   myname=\"Student\"\n   ```\n\n2. Reload the file: `source ~/.vars`\n3. Check that it works: `echo $myname`\n\n#### Exercise 3 – Environment variables\n\n1. Edit `~/.vars` and add this line below the first one:\n\n   ```bash\n   export project=linux101\n   ```\n\n   Then reload the `~/.vars` file with `source ~/.vars`.\n\n2. Start a new shell: `bash`\n3. Check and save the result:\n\n   ```bash\n   echo $myname\n   echo $project\n   echo $project > ~/osfundamentals/vars/exercise3.txt\n   exit\n   ```\n\n(If you omit `export`, the variable won't survive into the new shell.)\n\n#### Exercise 4 – Configure programs with environment variables\n\n1. Add this line to the end of `~/.bashrc`:\n\n   ```bash\n   export PAGER=cat\n   ```\n\n   (`PAGER` is an existing system variable, hence the uppercase letters.)\n\n2. Start a new shell (`bash`) and run `man echo`. If executed correctly, the manual dumps directly to the screen instead of using a pager. (Without `export`, programs like `man` won't see your variable in the new shell.)\n3. Exit the subshell when done.\n\n#### Exercise 5 – Aliases\n\n1. Add this line to the end of `~/.bashrc`:\n\n   ```bash\n   alias ll='ls -l'\n   ```\n\n2. Reload your shell: `source ~/.bashrc`\n3. Run (from `~/osfundamentals/vars`):\n\n   ```bash\n   ll ~/osfundamentals/vars > exercise5.txt\n   ```\n\n#### Exercise 6 – Unset and unexport\n\n1. List all current environment variables (`env`) and your own variables (`set`), among other variables and functions.\n2. In your current shell, remove a variable and an alias:\n\n   ```bash\n   unset project\n   unalias ll\n   ```\n\n3. Verify:\n\n   ```bash\n   echo $project\n   type ll\n   ```\n\n4. Enter the following code to save the commands and outputs into `exercise6.txt` (in `~/osfundamentals/vars`):\n\n   ```bash\n   {\n        echo \"unset project\"\n        echo $project\n        echo \"unalias ll\"\n        type ll\n   } > exercise6.txt 2>&1\n   ```\n\n#### Exercise 7 – Login vs non-login shells\n\n1. Create `~/.bash_profile` containing only the following line:\n\n   ```bash\n   export loginvar=\"set_in_login\"\n   ```\n\n   Save and exit the file.\n\n2. Note that just opening a new bash shell won't trigger `.bash_profile` like it triggers `.bashrc`. You need to log out and log back in. Since you are in a containerized environment, you can simulate a login shell by entering:\n\n   ```bash\n   bash --login\n   ```\n\n3. Check:\n\n   ```bash\n   echo $loginvar > ~/osfundamentals/vars/exercise7.txt\n   exit\n   exit\n   ```\n\n**Pro tips / trap alert:**\n\n- Forgetting `export` → the variable won't survive into subshells.\n- Forgetting `source ~/.bashrc` → changes won't apply until restart.\n- Aliases only expand in interactive shells, not in scripts.",
+      "hints": [
+        "`echo $course > exercise1.txt` then `echo ${course}_linux >> exercise1.txt`.",
+        "`source file` reloads a configuration file in the current shell.",
+        "Only exported variables (`export name=value`) are visible in a sub-shell started with `bash`.",
+        "`bash --login` simulates a login shell and reads `~/.bash_profile`."
+      ],
+      "difficulty": "Medium",
+      "type": "terminal",
+
+      "provenance": "OSFundamentals.pdf",
+      "contentVersion": 1,
+      "terminal": {
+        "profile": "basic-linux",
+        "initialDirectory": "/home/student",
+        "initialFilesystem": [],
+        "preSetupCommands": [
+          "rm -f /home/student/.bashrc /home/student/.bash_profile",
+          "printf '# ~/.bashrc\\n' > /home/student/.bashrc",
+          "chown student:student /home/student/.bashrc",
+          "chmod 644 /home/student/.bashrc"
+        ],
+        "checks": [
+          {
+            "id": "directory-osfundamentals-vars",
+            "type": "directory",
+            "path": "/home/student/osfundamentals/vars",
+            "points": 1,
+            "description": "`~/osfundamentals/vars` exists and is a directory."
+          },
+          {
+            "id": "content-osfundamentals-vars-exercise1-txt",
+            "type": "content",
+            "path": "/home/student/osfundamentals/vars/exercise1.txt",
+            "expected": "osfundamentals\nosfundamentals_linux\n",
+            "points": 1,
+            "description": "`~/osfundamentals/vars/exercise1.txt` has the expected content."
+          },
+          {
+            "id": "content-vars",
+            "type": "content",
+            "path": "/home/student/.vars",
+            "expected": "myname=\"Student\"\nexport project=linux101\n",
+            "points": 1,
+            "description": "`~/.vars` has the expected content."
+          },
+          {
+            "id": "content-osfundamentals-vars-exercise3-txt",
+            "type": "content",
+            "path": "/home/student/osfundamentals/vars/exercise3.txt",
+            "expected": "linux101\n",
+            "points": 1,
+            "description": "`~/osfundamentals/vars/exercise3.txt` has the expected content."
+          },
+          {
+            "id": "content-bashrc",
+            "type": "content",
+            "path": "/home/student/.bashrc",
+            "expected": "# ~/.bashrc\nexport PAGER=cat\nalias ll='ls -l'\n",
+            "points": 1,
+            "description": "`~/.bashrc` has the expected content."
+          },
+          {
+            "id": "file-osfundamentals-vars-exercise5-txt",
+            "type": "file",
+            "path": "/home/student/osfundamentals/vars/exercise5.txt",
+            "points": 1,
+            "description": "`~/osfundamentals/vars/exercise5.txt` exists as a regular file."
+          },
+          {
+            "id": "file-osfundamentals-vars-exercise6-txt",
+            "type": "file",
+            "path": "/home/student/osfundamentals/vars/exercise6.txt",
+            "points": 1,
+            "description": "`~/osfundamentals/vars/exercise6.txt` exists as a regular file."
+          },
+          {
+            "id": "content-bash-profile",
+            "type": "content",
+            "path": "/home/student/.bash_profile",
+            "expected": "export loginvar=\"set_in_login\"\n",
+            "points": 1,
+            "description": "`~/.bash_profile` has the expected content."
+          },
+          {
+            "id": "content-osfundamentals-vars-exercise7-txt",
+            "type": "content",
+            "path": "/home/student/osfundamentals/vars/exercise7.txt",
+            "expected": "set_in_login\n",
+            "points": 1,
+            "description": "`~/osfundamentals/vars/exercise7.txt` has the expected content."
+          }
+        ],
+        "explanation": "The correction checks the saved output files and the exact content of `~/.vars`, `~/.bashrc` and `~/.bash_profile`. `~/.bashrc` starts with a single comment line."
+      }
+    },
+    "os-term-1-0599": {
+      "course": "os",
+      "category": "Capstone",
+      "title": "0599 - Capstone Lab",
+      "instructions": "This lab ties together the topics from chapter 05: redirecting and piping, editing with vim, variables & environment configuration, and aliases and startup scripts.\n\n#### Setup\n\nIn your home directory, create the folder structure `~/osfundamentals/capstone`. Navigate to the `capstone` folder inside `~/osfundamentals`. All files below are created in that folder unless a path is given.\n\n#### Step 1 – Collect log data\n\n1. Use a pipeline to list all files in `/var/log` and save the names to `logfiles.txt`.\n2. Count how many files are in `/var/log` and append the count to `logfiles.txt`.\n3. View `logfiles.txt` to verify.\n\n#### Step 2 – Extended practice with redirection & pipelines\n\nWe'll create and process a list of users to practice classic text tools.\n\nCreate first a CSV-style file with multiple fields:\n\n```bash\necho -e \"name,department,score\\nalice,IT,87\\nbob,HR,92\\ncarol,IT,78\\ndave,Finance,85\" > ~/osfundamentals/capstone/students.csv\n```\n\n**A – cut:** extract only the first (name) and second (department) fields from `students.csv` using a comma delimiter and save to `students_names_departments.txt`.\n\nHints/tips on the usage of `cut`: without the `-d` option, `cut` uses the TAB character by default; without specifying fields, it cuts by character.\n\nCreate a second sample file, by entering the following command exactly as written:\n\n```bash\necho -e \"alice\\nbob\\ncarol\\nalice\\ndave\\nbob\\nerin\" > users_all.txt\n```\n\n**B – sort:** sort `users_all.txt` alphabetically and save to `users_sorted.txt`.\n\n**C – uniq:** remove duplicate names from `users_sorted.txt` and save to `users_unique.txt`.\n\n**D – tr:** convert the lowercase letters in `users_unique.txt` to uppercase and save to `users_upper.txt`.\n\n**E – head:** show only the first 3 lines of `users_upper.txt` and save to `users_top3.txt`.\n\n**F – tail:** show only the last 2 lines of `users_top3.txt` and save to `users_last2.txt`.\n\n**Challenge:** chain B → E together in one command (redirect the result, at the end of the command, to `users_chall.txt`).\n\nNow compare `users_last2.txt` and `users_chall.txt`.\n\nBonus: use the `diff` command to compare two text files:\n\n```bash\ndiff users_last2.txt users_chall.txt\n# If you see no output, then there is no difference between the two files.\n```\n\n#### Step 3 – Create and edit with vim\n\n1. Open a new file `report.txt` in vim. In insert mode, type (use `Student` as the name):\n\n   ```\n   OS Fundamentals Capstone\n   Student Name: Student\n   ```\n\n   Save and quit with `:wq`.\n\n2. Reopen `report.txt` and add these items:\n\n   ```\n   Tasks:\n   1. Log Data Collected\n   2. Environment Configured\n   ```\n\n   Save and quit again. (Use `u` to undo and `:q!` to quit without saving if you mess up.)\n\n#### Step 4 – Visual mode magic\n\n1. Open `report.txt` again.\n2. Add more tasks:\n\n   ```\n   3. Variable Set\n   4. Alias Created\n   ```\n\n3. Use visual line mode (`Shift+V`) to select tasks 3 and 4 and copy them below the existing list.\n4. Use block visual mode (`Ctrl+v`) to select the number column of all tasks and delete it, leaving just the dot, a space and the text.\n5. Save and quit.\n\n#### Step 5 – Variables & environment\n\n1. In your current shell, set:\n\n   ```bash\n   capstone_project=\"osfundamentals\"\n   # Verify that the variable has been set\n   echo $capstone_project\n   ```\n\n2. Add to the end of your `~/.bashrc`:\n\n   ```bash\n   myalias=\"capstone\"\n   export capstone_env=\"lab\"\n   alias showlogs='cat ~/osfundamentals/capstone/logfiles.txt'\n   ```\n\n3. Reload your `.bashrc` and verify:\n\n   ```bash\n   echo $capstone_env\n   showlogs\n   ```\n\n#### Step 6 – Login shell variable\n\n1. Create `~/.bash_profile` containing only:\n\n   ```bash\n   export loginvar=\"capstone_login\"\n   ```\n\n2. Start a login shell:\n\n   ```bash\n   bash -l\n   echo $loginvar > ~/osfundamentals/capstone/logincheck.txt\n   exit\n   ```\n\n#### Step 7 – PATH modification\n\n1. Create a small script in your personal bin. First, create the `bin` folder:\n\n   ```bash\n   mkdir -p ~/osfundamentals/capstone/bin\n   ```\n\n   Create the following `hello.sh` script in your personal bin (be sure to include `#!/bin/bash` as the very first line of the file, followed by an empty line):\n\n   ```bash\n   #!/bin/bash\n\n   echo \"Hello from Capstone!\"\n   ```\n\n   Make the script executable (mode `755`):\n\n   ```bash\n   chmod +x ~/osfundamentals/capstone/bin/hello.sh\n   ```\n\n2. Add this to the end of your `.bashrc` file:\n\n   ```bash\n   export PATH=$HOME/osfundamentals/capstone/bin:$PATH\n   ```\n\n3. Reload the shell and run `hello.sh`.\n\nPATH order matters: add your bin directory **before** `$PATH`.\n\n#### Step 8 – Unset and unalias\n\n1. In your current shell:\n\n   ```bash\n   unset capstone_env\n   unalias showlogs\n   ```\n\n2. Save verification output. Enter this code at the command line:\n\n   ```bash\n   {\n       echo \"unset capstone_env\"\n       echo $capstone_env\n       echo \"unalias showlogs\"\n       type showlogs\n   } > ~/osfundamentals/capstone/unsetcheck.txt 2>&1\n   ```",
+      "hints": [
+        "`ls /var/log > logfiles.txt` then `ls /var/log | wc -l >> logfiles.txt`.",
+        "`cut -d, -f1,2 students.csv > students_names_departments.txt`",
+        "`tr a-z A-Z < users_unique.txt > users_upper.txt`; `head -n 3` and `tail -n 2` select lines.",
+        "`sort users_all.txt | uniq | tr a-z A-Z | head -n 3 > users_chall.txt` chains steps B to E.",
+        "Keep the order in `.bashrc`: first the three lines of step 5, then the `PATH` line of step 7."
+      ],
+      "difficulty": "Hard",
+      "type": "terminal",
+
+      "provenance": "OSFundamentals.pdf",
+      "contentVersion": 1,
+      "terminal": {
+        "profile": "basic-linux",
+        "initialDirectory": "/home/student",
+        "initialFilesystem": [],
+        "preSetupCommands": [
+          "rm -f /home/student/.bashrc /home/student/.bash_profile",
+          "printf '# ~/.bashrc\\n' > /home/student/.bashrc",
+          "chown student:student /home/student/.bashrc",
+          "chmod 644 /home/student/.bashrc"
+        ],
+        "checks": [
+          {
+            "id": "directory-osfundamentals-capstone",
+            "type": "directory",
+            "path": "/home/student/osfundamentals/capstone",
+            "points": 1,
+            "description": "`~/osfundamentals/capstone` exists and is a directory."
+          },
+          {
+            "id": "file-osfundamentals-capstone-logfiles-txt",
+            "type": "file",
+            "path": "/home/student/osfundamentals/capstone/logfiles.txt",
+            "points": 1,
+            "description": "`~/osfundamentals/capstone/logfiles.txt` exists as a regular file."
+          },
+          {
+            "id": "content-osfundamentals-capstone-students-csv",
+            "type": "content",
+            "path": "/home/student/osfundamentals/capstone/students.csv",
+            "expected": "name,department,score\nalice,IT,87\nbob,HR,92\ncarol,IT,78\ndave,Finance,85\n",
+            "points": 1,
+            "description": "`~/osfundamentals/capstone/students.csv` has the expected content."
+          },
+          {
+            "id": "content-osfundamentals-capstone-students-names-departments-txt",
+            "type": "content",
+            "path": "/home/student/osfundamentals/capstone/students_names_departments.txt",
+            "expected": "name,department\nalice,IT\nbob,HR\ncarol,IT\ndave,Finance\n",
+            "points": 1,
+            "description": "`~/osfundamentals/capstone/students_names_departments.txt` has the expected content."
+          },
+          {
+            "id": "content-osfundamentals-capstone-users-all-txt",
+            "type": "content",
+            "path": "/home/student/osfundamentals/capstone/users_all.txt",
+            "expected": "alice\nbob\ncarol\nalice\ndave\nbob\nerin\n",
+            "points": 1,
+            "description": "`~/osfundamentals/capstone/users_all.txt` has the expected content."
+          },
+          {
+            "id": "content-osfundamentals-capstone-users-sorted-txt",
+            "type": "content",
+            "path": "/home/student/osfundamentals/capstone/users_sorted.txt",
+            "expected": "alice\nalice\nbob\nbob\ncarol\ndave\nerin\n",
+            "points": 1,
+            "description": "`~/osfundamentals/capstone/users_sorted.txt` has the expected content."
+          },
+          {
+            "id": "content-osfundamentals-capstone-users-unique-txt",
+            "type": "content",
+            "path": "/home/student/osfundamentals/capstone/users_unique.txt",
+            "expected": "alice\nbob\ncarol\ndave\nerin\n",
+            "points": 1,
+            "description": "`~/osfundamentals/capstone/users_unique.txt` has the expected content."
+          },
+          {
+            "id": "content-osfundamentals-capstone-users-upper-txt",
+            "type": "content",
+            "path": "/home/student/osfundamentals/capstone/users_upper.txt",
+            "expected": "ALICE\nBOB\nCAROL\nDAVE\nERIN\n",
+            "points": 1,
+            "description": "`~/osfundamentals/capstone/users_upper.txt` has the expected content."
+          },
+          {
+            "id": "content-osfundamentals-capstone-users-top3-txt",
+            "type": "content",
+            "path": "/home/student/osfundamentals/capstone/users_top3.txt",
+            "expected": "ALICE\nBOB\nCAROL\n",
+            "points": 1,
+            "description": "`~/osfundamentals/capstone/users_top3.txt` has the expected content."
+          },
+          {
+            "id": "content-osfundamentals-capstone-users-last2-txt",
+            "type": "content",
+            "path": "/home/student/osfundamentals/capstone/users_last2.txt",
+            "expected": "BOB\nCAROL\n",
+            "points": 1,
+            "description": "`~/osfundamentals/capstone/users_last2.txt` has the expected content."
+          },
+          {
+            "id": "content-osfundamentals-capstone-users-chall-txt",
+            "type": "content",
+            "path": "/home/student/osfundamentals/capstone/users_chall.txt",
+            "expected": "ALICE\nBOB\nCAROL\n",
+            "points": 1,
+            "description": "`users_chall.txt` is the result of chaining sort, uniq, tr and head in one command."
+          },
+          {
+            "id": "content-osfundamentals-capstone-report-txt",
+            "type": "content",
+            "path": "/home/student/osfundamentals/capstone/report.txt",
+            "expected": "OS Fundamentals Capstone\nStudent Name: Student\nTasks:\n. Log Data Collected\n. Environment Configured\n. Variable Set\n. Alias Created\n. Variable Set\n. Alias Created\n",
+            "points": 1,
+            "description": "`report.txt` has the expected final content after the vim steps."
+          },
+          {
+            "id": "content-bashrc",
+            "type": "content",
+            "path": "/home/student/.bashrc",
+            "expected": "# ~/.bashrc\nmyalias=\"capstone\"\nexport capstone_env=\"lab\"\nalias showlogs='cat ~/osfundamentals/capstone/logfiles.txt'\nexport PATH=$HOME/osfundamentals/capstone/bin:$PATH\n",
+            "points": 1,
+            "description": "`~/.bashrc` has the expected content."
+          },
+          {
+            "id": "content-bash-profile",
+            "type": "content",
+            "path": "/home/student/.bash_profile",
+            "expected": "export loginvar=\"capstone_login\"\n",
+            "points": 1,
+            "description": "`~/.bash_profile` has the expected content."
+          },
+          {
+            "id": "content-osfundamentals-capstone-logincheck-txt",
+            "type": "content",
+            "path": "/home/student/osfundamentals/capstone/logincheck.txt",
+            "expected": "capstone_login\n",
+            "points": 1,
+            "description": "`~/osfundamentals/capstone/logincheck.txt` has the expected content."
+          },
+          {
+            "id": "content-osfundamentals-capstone-bin-hello-sh",
+            "type": "content",
+            "path": "/home/student/osfundamentals/capstone/bin/hello.sh",
+            "expected": "#!/bin/bash\n\necho \"Hello from Capstone!\"\n",
+            "points": 1,
+            "description": "`~/osfundamentals/capstone/bin/hello.sh` has the expected content."
+          },
+          {
+            "id": "permissions-osfundamentals-capstone-bin-hello-sh",
+            "type": "permissions",
+            "path": "/home/student/osfundamentals/capstone/bin/hello.sh",
+            "expected": "755",
+            "points": 1,
+            "description": "`~/osfundamentals/capstone/bin/hello.sh` has permissions 755."
+          },
+          {
+            "id": "file-osfundamentals-capstone-unsetcheck-txt",
+            "type": "file",
+            "path": "/home/student/osfundamentals/capstone/unsetcheck.txt",
+            "points": 1,
+            "description": "`~/osfundamentals/capstone/unsetcheck.txt` exists as a regular file."
+          }
+        ],
+        "explanation": "The correction checks every file created in the capstone folder, the exact content of the startup files, and that `hello.sh` has mode 755. `~/.bashrc` starts with a single comment line."
+      }
+    },
+    "os-term-1-1001": {
+      "course": "os",
+      "category": "Users and Groups",
+      "title": "1001 - Switching Users and Granting sudo Access",
+      "instructions": "Work as the `student` user. The accounts `sysadmin` (password `sysadmin`) and `devops` (password `devops`) exist, the root password is `administrator`, and the group `opsadmin` exists.\n\n#### Exercise 1 – Switch user & inspect system info\n\n**Goal:** learn to switch users and inspect account information.\n\n1. Use `id student` and `id` to see your own UID, GID, and groups.\n2. Use `cat /etc/passwd` and `cat /etc/group` to explore users and groups.\n3. Use `ps -au` to view processes and identify which are owned by your account (`student`).\n4. Switch to the `sysadmin` account using `su - sysadmin` (password: `sysadmin`).\n5. Run `id` inside `sysadmin` to verify identity.\n\nReturn to the `student` account with `exit`.\n\n#### Exercise 2 – Grant sudo access to a user\n\n**Goal:** add a new user to a privileged group using `/etc/sudoers.d/`.\n\n1. Switch to root with `su -` (password: `administrator`).\n2. Create a file `/etc/sudoers.d/devops` containing:\n\n   ```\n   devops ALL=(ALL) ALL\n   ```\n\n3. Test by switching to `devops` (password: `devops`) and running `sudo whoami`. It should return `root`. Note the `devops` user still needs to enter his password.\n4. Type `exit` twice to return to the `student` prompt.\n\n#### Exercise 3 – Passwordless sudo\n\n**Goal:** configure a group with passwordless sudo.\n\n1. Switch to root with `su -`.\n2. Add `devops` to the group `opsadmin`: `usermod -aG opsadmin devops`\n3. Create `/etc/sudoers.d/opsadmin` containing:\n\n   ```\n   %opsadmin ALL=(ALL) NOPASSWD:ALL\n   ```\n\n4. Switch to `devops` and run `sudo whoami` without being prompted for a password. Note the `devops` user does not need to enter his password any longer.\n\nReturn to the `student` prompt (`exit` as often as needed).\n\n#### Save your results\n\nBack at the `student` prompt, save the group memberships of `devops` into `~/devops_groups.txt`:\n\n```bash\nid -nG devops > ~/devops_groups.txt\n```",
+      "hints": [
+        "`su - user` starts a login shell as another user; `exit` returns to the previous user.",
+        "As root: `echo 'devops ALL=(ALL) ALL' > /etc/sudoers.d/devops`.",
+        "`usermod -aG group user` adds a user to a supplementary group without removing other groups.",
+        "A group in a sudoers rule is prefixed with `%`."
+      ],
+      "difficulty": "Medium",
+      "type": "terminal",
+
+      "provenance": "OSFundamentals.pdf",
+      "contentVersion": 1,
+      "terminal": {
+        "profile": "basic-linux",
+        "initialDirectory": "/home/student",
+        "initialFilesystem": [],
+        "preSetupCommands": [
+          "groupadd -f opsadmin",
+          "useradd -m sysadmin",
+          "echo 'sysadmin:sysadmin' | chpasswd",
+          "useradd -m devops",
+          "echo 'devops:devops' | chpasswd",
+          "echo 'root:administrator' | chpasswd",
+          "mkdir -p /etc/sudoers.d"
+        ],
+        "checks": [
+          {
+            "id": "content-etc-sudoers-d-devops",
+            "type": "content",
+            "path": "/etc/sudoers.d/devops",
+            "expected": "devops ALL=(ALL) ALL\n",
+            "points": 1,
+            "description": "`/etc/sudoers.d/devops` has the expected content."
+          },
+          {
+            "id": "content-etc-sudoers-d-opsadmin",
+            "type": "content",
+            "path": "/etc/sudoers.d/opsadmin",
+            "expected": "%opsadmin ALL=(ALL) NOPASSWD:ALL\n",
+            "points": 1,
+            "description": "`/etc/sudoers.d/opsadmin` has the expected content."
+          },
+          {
+            "id": "content-devops-groups-txt",
+            "type": "content",
+            "path": "/home/student/devops_groups.txt",
+            "expected": "devops opsadmin\n",
+            "points": 1,
+            "description": "`devops_groups.txt` shows that `devops` is a member of `opsadmin`."
+          }
+        ],
+        "explanation": "The correction checks the two sudoers drop-in files and the saved group membership of `devops`."
+      }
+    },
+    "os-term-1-1002": {
+      "course": "os",
+      "category": "Users and Groups",
+      "title": "1002 - Managing User Accounts",
+      "instructions": "**Learning objectives:** create, modify, and delete local user accounts; understand and configure default account settings in `/etc/login.defs`; use `usermod` to adjust user properties such as home directory, shell, or comment; assign and remove group memberships; configure limited sudo privileges for a group or user; recognize UID/GID numbering ranges on Red Hat-based systems; distinguish between deleting only an account and deleting both the account and its files.\n\nWork as the `student` user. Root privileges are available via `sudo`.\n\n#### Background\n\nLinux is a multi-user operating system. Each user account defines ownership, permissions, and identity.\n\n| File | Description |\n|---|---|\n| `/etc/passwd` | Basic user information (UID, home, shell) |\n| `/etc/shadow` | Encrypted passwords (root-only access) |\n| `/etc/group` | Group definitions and members |\n| `/etc/login.defs` | Default values for new users (UID, GID, etc.) |\n\n#### Task 1 – Create new user accounts\n\n1. Create user `dev1` with default settings:\n\n   ```bash\n   sudo useradd dev1\n   ```\n\n2. You can create users and give them a home directory in an alternative location. Create user `dev2` with home directory `/srv/dev2`:\n\n   ```bash\n   sudo useradd -d /srv/dev2 dev2\n   ```\n\n3. Verify: `grep dev /etc/passwd`\n\nExpected:\n\n```\ndev1:x:1001:1001::/home/dev1:/bin/bash\ndev2:x:1002:1002::/srv/dev2:/bin/bash\n```\n\n#### Task 2 – Check default UID and GID ranges\n\n```bash\ngrep -E '^(UID_MIN|GID_MIN)' /etc/login.defs\n```\n\nTypical output:\n\n```\nUID_MIN 1000\nGID_MIN 1000\n```\n\nThese define where the numbering for regular user IDs begin.\n\n#### Task 3 – Create and manage a group\n\n1. Create group `developers` with a group ID of 2000:\n\n   ```bash\n   sudo groupadd -g 2000 developers\n   ```\n\n2. Check the members of the `developers` group (there should be none): `grep developers /etc/group`. Expected: `developers:x:2000:`\n3. Add both users to this group:\n\n   ```bash\n   sudo usermod -aG developers dev1\n   sudo usermod -aG developers dev2\n   ```\n\n4. Verify: `grep developers /etc/group`. Expected: `developers:x:2000:dev1,dev2`\n\nNotice how `dev1` and `dev2` are now members of this group.\n\n#### Task 4 – Modify user information\n\n1. Add a descriptive comment for `dev2`:\n\n   ```bash\n   sudo usermod -c \"Developer Two\" dev2\n   ```\n\n2. Lock account `dev1`: `sudo usermod --lock dev1`\n3. Check status: `sudo passwd -S dev1`. The output shows `LK` = locked.\n\n#### Task 5 – Set user passwords\n\nAssign the password `RedhatKdG` to `dev2`:\n\n```bash\necho \"dev2:RedhatKdG\" | sudo chpasswd\n```\n\n#### Task 6 – Configure sudo privileges\n\nAllow members of `developers` to run only `/usr/bin/dnf up` (which performs a system update).\n\n1. Create `/etc/sudoers.d/developers`: `sudo vim /etc/sudoers.d/developers`\n2. Add the following line, which allows all members of the `developers` group to perform an update of the system:\n\n   ```\n   %developers ALL=(ALL) /usr/bin/dnf up\n   ```\n\n3. Check syntax: `sudo visudo -cf /etc/sudoers.d/developers`\n4. Test:\n\n   ```bash\n   # Switch to the dev2 user:\n   sudo -i -u dev2\n   # Perform the following commands as the dev2 user:\n   sudo dnf up\n   sudo useradd testuser         # should fail\n   # Exit back to the student user when you're done\n   ```\n\n#### Task 7 – Deleting users safely\n\nYou'll now explore the difference between deleting only an account and deleting the account plus its files.\n\n**Step 1 – Create a third user for testing**\n\n```bash\nsudo useradd dev3\necho \"dev3:RedhatKdG\" | sudo chpasswd\n# Verify that the home directory has been made\nls -ld /home/dev3\n```\n\n**Step 2 – Delete `dev1` (without `-r`)**\n\n```bash\nsudo userdel dev1\n```\n\nCheck with `grep dev1 /etc/passwd` and `ls -ld /home/dev1`. The user entry is gone, the home directory still exists.\n\n**Step 3 – Delete `dev3` (with `-r`)**\n\n```bash\nsudo userdel -r dev3\n```\n\nCheck with `grep dev3 /etc/passwd` and `ls -ld /home/dev3`. Both the user and the home directory are removed.\n\n**Step 4 – Summary**\n\n| Command | Account removed | Home removed |\n|---|---|---|\n| `userdel dev1` | ✅ | ❌ |\n| `userdel -r dev3` | ✅ | ✅ |\n\n**Step 5 – Reflection:** why do you think Linux keeps user files by default? (Hint: consider multi-user servers and shared data.)\n\n#### Task 8 – Save your results\n\nAfter finishing Task 7, save the following verification output as the `student` user:\n\n```bash\ngrep developers /etc/group > ~/developers_group.txt\ngrep '^dev2:' /etc/passwd | cut -d: -f5,6 > ~/dev2_info.txt\n```\n\n#### Reflection questions\n\n1. What is the role of `/etc/login.defs` in account creation?\n2. How can you check whether an account is locked?\n3. Why is `/etc/sudoers.d/` preferred over editing `/etc/sudoers` directly?\n4. What is the safest way to add a user to an existing group?\n5. What happens if you delete a user but keep their home directory?",
+      "hints": [
+        "`useradd -d /srv/dev2 dev2` sets an alternative home directory.",
+        "`usermod -aG group user` appends a supplementary group; without `-a` the other groups would be replaced.",
+        "`userdel user` keeps the home directory, `userdel -r user` removes it too.",
+        "Save the verification output only after Task 7, so it reflects the deleted `dev1`."
+      ],
+      "difficulty": "Hard",
+      "type": "terminal",
+
+      "provenance": "OSFundamentals.pdf",
+      "contentVersion": 1,
+      "terminal": {
+        "profile": "basic-linux",
+        "initialDirectory": "/home/student",
+        "initialFilesystem": [],
+        "preSetupCommands": ["mkdir -p /etc/sudoers.d"],
+        "checks": [
+          {
+            "id": "content-etc-sudoers-d-developers",
+            "type": "content",
+            "path": "/etc/sudoers.d/developers",
+            "expected": "%developers ALL=(ALL) /usr/bin/dnf up\n",
+            "points": 1,
+            "description": "`/etc/sudoers.d/developers` has the expected content."
+          },
+          {
+            "id": "directory-home-dev1",
+            "type": "directory",
+            "path": "/home/dev1",
+            "points": 1,
+            "description": "`/home/dev1` still exists (the user was deleted without `-r`)."
+          },
+          {
+            "id": "not_exists-home-dev3",
+            "type": "not_exists",
+            "path": "/home/dev3",
+            "points": 1,
+            "description": "`/home/dev3` was removed together with the user (`userdel -r`)."
+          },
+          {
+            "id": "content-developers-group-txt",
+            "type": "content",
+            "path": "/home/student/developers_group.txt",
+            "expected": "developers:x:2000:dev2\n",
+            "points": 1,
+            "description": "`developers_group.txt` shows that only `dev2` is left in the group."
+          },
+          {
+            "id": "content-dev2-info-txt",
+            "type": "content",
+            "path": "/home/student/dev2_info.txt",
+            "expected": "Developer Two:/srv/dev2\n",
+            "points": 1,
+            "description": "`dev2_info.txt` shows the comment and home directory of `dev2`."
+          }
+        ],
+        "explanation": "The correction checks the sudoers drop-in file, the effect of `userdel` with and without `-r` on the home directories, and the two verification files you saved."
+      }
+    },
+    "os-term-1-1003": {
+      "course": "os",
+      "category": "Users and Groups",
+      "title": "1003 - Managing Groups",
+      "instructions": "In Linux, groups define collections of users who share permissions to access files, devices, or applications. This exercise teaches you to create, modify, and delete groups; manage group membership; and explore how primary and supplementary groups work.\n\n**Learning objectives:** create, rename, and delete local group accounts; assign users to primary and supplementary groups; modify group IDs and understand how they're allocated; compare primary vs. supplementary group membership; temporarily switch your primary group using `newgrp`.\n\n#### Environment\n\nWork as the `student` user. Root privileges are available via `sudo`. Your exercise environment already includes the following users and groups:\n\n| User | Home directory | Default primary group | Password |\n|---|---|---|---|\n| alice | `/home/alice` | alice | password |\n| bob | `/home/bob` | bob | password |\n| charlie | `/home/charlie` | charlie | password |\n\n| Group | GID |\n|---|---|\n| devteam | 3000 |\n| qa | 3001 |\n\n#### Task 1 – Create new groups\n\nCreate two new groups:\n\n1. `ops` – without specifying a GID (the system assigns one automatically).\n2. `engineers` – with a specific GID of 4000.\n\n```bash\nsudo groupadd ops\nsudo groupadd -g 4000 engineers\n```\n\nVerify with `grep -E 'ops|engineers' /etc/group`. You should see entries similar to:\n\n```\nops:x:3002:\nengineers:x:4000:\n```\n\n#### Task 2 – Modify existing groups\n\n1. Rename the group `qa` to `quality`:\n\n   ```bash\n   sudo groupmod -n quality qa\n   ```\n\n2. Change the GID of `devteam` to 3500:\n\n   ```bash\n   sudo groupmod -g 3500 devteam\n   ```\n\nVerify with `grep -E 'devteam|quality' /etc/group`. Expected lines:\n\n```\ndevteam:x:3500:\nquality:x:3001:\n```\n\n#### Task 3 – Change group membership\n\n1. Change alice's primary group to `engineers`:\n\n   ```bash\n   sudo usermod -g engineers alice\n   ```\n\n2. Add alice and bob to the supplementary groups `devteam` and `ops` (alice first, then bob):\n\n   ```bash\n   sudo usermod -aG devteam,ops alice\n   sudo usermod -aG devteam,ops bob\n   ```\n\nVerify with `id alice` and `id bob`. Expected (example):\n\n```\nuid=1000(alice) gid=4000(engineers) groups=4000(engineers),3500(devteam),3002(ops)\nuid=1001(bob) gid=1001(bob) groups=1001(bob),3500(devteam),3002(ops)\n```\n\n#### Task 4 – Delete and recreate groups\n\n1. Delete the `quality` group: `sudo groupdel quality`\n2. Create a system group named `infra`: `sudo groupadd -r infra`\n\nVerify with `grep 'infra' /etc/group`. System groups have GIDs below 1000, e.g. `infra:x:997:`.\n\n#### Task 5 – Temporarily change primary group\n\n1. Switch to user alice: `su - alice`\n2. Check your current groups: `id`\n3. Temporarily switch your primary group to `ops`:\n\n   ```bash\n   newgrp ops\n   id\n   ```\n\nObserve how your primary group (`gid=`) changes to `ops`. This change lasts until you log out of that shell. Return to the `student` prompt with `exit` as often as needed.\n\n#### Optional exploration\n\n- Examine `/etc/passwd` and `/etc/group` (`less /etc/passwd`, `less /etc/group`).\n- Compare how `id` reports primary vs. supplementary groups.\n- View your active groups at any moment with `groups`.\n\n#### Save your results\n\nBack as the `student` user, save the final state of the three groups you worked with into `~/verify.txt`:\n\n```bash\ngrep -E '^(devteam|ops|engineers):' /etc/group > ~/verify.txt\n```\n\n#### Recap: key commands\n\n| Purpose | Command |\n|---|---|\n| Create a group | `groupadd [groupname]` |\n| Create a group with a specific GID | `groupadd -g [GID] [groupname]` |\n| Rename a group | `groupmod -n [newname] [oldname]` |\n| Change a group's GID | `groupmod -g [newGID] [groupname]` |\n| Delete a group | `groupdel [groupname]` |\n| Change a user's primary group | `usermod -g [group] [username]` |\n| Add user to supplementary groups | `usermod -aG [groups] [username]` |\n| View user group memberships | `id [username]` |\n| Temporarily switch group | `newgrp [group]` |\n\n**Tips:** use `grep`, `id`, and `cat` often: they help you confirm what's really in the system files. If you make a mistake, you can re-run user or group commands with corrected options.",
+      "hints": [
+        "`groupadd -g 4000 engineers` creates a group with a specific GID.",
+        "`usermod -g group user` changes the primary group; `usermod -aG` adds supplementary groups.",
+        "`groupmod -n new old` renames a group, `groupmod -g GID name` changes its GID.",
+        "`newgrp` only changes the primary group of the current shell, not the stored configuration."
+      ],
+      "difficulty": "Medium",
+      "type": "terminal",
+
+      "provenance": "OSFundamentals.pdf",
+      "contentVersion": 1,
+      "terminal": {
+        "profile": "basic-linux",
+        "initialDirectory": "/home/student",
+        "initialFilesystem": [],
+        "preSetupCommands": [
+          "groupadd -g 3000 devteam",
+          "groupadd -g 3001 qa",
+          "useradd -m alice",
+          "echo 'alice:password' | chpasswd",
+          "useradd -m bob",
+          "echo 'bob:password' | chpasswd",
+          "useradd -m charlie",
+          "echo 'charlie:password' | chpasswd"
+        ],
+        "checks": [
+          {
+            "id": "content-verify-txt",
+            "type": "content",
+            "path": "/home/student/verify.txt",
+            "expected": "devteam:x:3500:alice,bob\nops:x:3002:alice,bob\nengineers:x:4000:\n",
+            "points": 1,
+            "description": "`verify.txt` shows the final state of the groups `devteam`, `ops` and `engineers`."
+          }
+        ],
+        "explanation": "The correction checks the group database content you saved after all five tasks: the changed GID of `devteam`, the members of `ops` and the new group `engineers`."
+      }
+    },
+    "os-term-1-1004": {
+      "course": "os",
+      "category": "Users and Groups",
+      "title": "1004 - Password Aging and Account Locking",
+      "instructions": "**Learning objectives:** view and interpret password aging information using `chage`; modify password aging settings (min/max age, warning days, expiry date); force users to change their password at next login; lock and unlock user accounts using `usermod -L` and `usermod -U`; restrict access using the `nologin` shell; understand how `/etc/shadow` changes with these actions.\n\nWork as the `student` user. Root privileges are available via `sudo`. The initial passwords of the users `qaeng`, `intern` and `tempuser` are `P@ssword1`.\n\n#### Task 1 – Inspect password aging\n\nUse:\n\n```bash\nsudo chage -l qaeng\n```\n\nto view the password expiration information. Then use `date \"+%Y-%m-%d\"` to note the current date.\n\n#### Task 2 – Set a password expiration policy\n\nSet the following for user `qaeng`:\n\n- Password must be changed every 45 days.\n- Password cannot be changed more than once per day.\n- User should receive a warning 7 days before expiry.\n\nCommand:\n\n```bash\nsudo chage -M 45 -m 1 -W 7 qaeng\n```\n\n(Don't forget to also consult the man page for `chage` or use `chage --help`.)\n\n#### Task 3 – Force user to change password on next login\n\nFor user `intern`, expire the password immediately:\n\n```bash\nsudo chage -d 0 intern\n```\n\nVerify that the `intern` user must change his password: `sudo chage -l intern`\n\n#### Task 4 – Lock and unlock a user account\n\nLock `tempuser` so login is not possible:\n\n```bash\nsudo usermod -L tempuser\n```\n\nVerify that it is not possible to log in as the `tempuser` user (the password of `tempuser` is `P@ssword1`):\n\n```bash\nsu - tempuser\n```\n\nExpected output: `unix_chkpwd[69]: password check failed for user (tempuser)`\n\nThen unlock it again:\n\n```bash\nsudo usermod -U tempuser\n```\n\n#### Task 5 – Restrict access using nologin\n\nFor user `intern`, change the login shell to `/sbin/nologin`:\n\n```bash\nsudo usermod -s /sbin/nologin intern\n```\n\nTo verify: `grep intern /etc/passwd`\n\n#### Task 6 – Verify results\n\nCheck `/etc/shadow` and `/etc/passwd` to confirm:\n\n- `qaeng`'s shadow line contains the proper min/max/warning settings.\n- `intern` has the shell `/sbin/nologin`.\n- `tempuser`'s password field no longer starts with `!` (after unlock).\n\nSave the verification into the file `~/verify.txt` (one line per check, in this order):\n\n```bash\nsudo grep '^qaeng:' /etc/shadow | cut -d: -f4-7 > ~/verify.txt\nsudo grep '^intern:' /etc/shadow | cut -d: -f3 >> ~/verify.txt\ngrep '^intern:' /etc/passwd | cut -d: -f7 >> ~/verify.txt\nsudo grep '^tempuser:' /etc/shadow | cut -d: -f2 | cut -c1 >> ~/verify.txt\n```\n\nThe four lines show: the minimum/maximum/warning/inactive fields of `qaeng`, the \"last changed\" field of `intern` (`0` means expired), the shell of `intern`, and the first character of the `tempuser` password hash (`$` means unlocked).",
+      "hints": [
+        "`chage -M` sets the maximum days, `-m` the minimum days and `-W` the warning days.",
+        "`chage -d 0 user` sets the last password change to day 0, forcing a change at next login.",
+        "`usermod -L` locks an account by putting `!` in front of the password hash, `usermod -U` removes it.",
+        "Do Tasks 2 to 5 first; the verification file reflects the final state."
+      ],
+      "difficulty": "Medium",
+      "type": "terminal",
+
+      "provenance": "OSFundamentals.pdf",
+      "contentVersion": 1,
+      "terminal": {
+        "profile": "basic-linux",
+        "initialDirectory": "/home/student",
+        "initialFilesystem": [],
+        "preSetupCommands": [
+          "useradd -m qaeng",
+          "echo 'qaeng:P@ssword1' | chpasswd",
+          "useradd -m intern",
+          "echo 'intern:P@ssword1' | chpasswd",
+          "useradd -m tempuser",
+          "echo 'tempuser:P@ssword1' | chpasswd"
+        ],
+        "checks": [
+          {
+            "id": "content-verify-txt",
+            "type": "content",
+            "path": "/home/student/verify.txt",
+            "expected": "1:45:7:\n0\n/sbin/nologin\n$\n",
+            "points": 1,
+            "description": "`verify.txt` shows the aging fields of `qaeng`, the expired password and nologin shell of `intern`, and the unlocked `tempuser`."
+          }
+        ],
+        "explanation": "The correction checks the verification file, which is derived from `/etc/shadow` and `/etc/passwd` after all tasks were applied."
+      }
+    },
+    "os-term-1-1101": {
+      "course": "os",
+      "category": "Permissions",
+      "title": "1101 - Managing File and Directory Permissions in Linux",
+      "instructions": "**Learning objectives:** modify file and directory permissions using both symbolic and octal notation; change ownership and group ownership of files and directories; interpret and apply directory permissions for collaborative use.\n\nWork as the `student` user. Root privileges are available via `sudo`. The users `devuser` and the group `projectteam` exist.\n\n#### Folder structure (pre-provisioned)\n\nAll files are located under `/home/student/osfundamentals/permissions/`:\n\n```\n/home/student/osfundamentals/permissions/\n├── ex1/\n│   ├── readme.txt\n│   └── project/\n│        └── notes.txt\n├── ex2/\n│   └── shared/\n│        ├── teamdoc.txt\n│        └── secret.txt\n└── ex3/\n    └── sharedir/\n         ├── file1.txt\n         └── file2.txt\n```\n\n#### Task 1 – File permissions (`ex1/`)\n\n- Use **symbolic** notation to remove write permission for \"others\" on `readme.txt`.\n\n  Expected: `rw-rw-r--`\n\n- Use **octal** notation to set `project/notes.txt` to: owner read/write, group read-only, others no access.\n\n  Expected:\n\n  ```\n  [student@ex1101 ex1]$ ls -l project/\n  total 0\n  -rw-r-----. 1 student student 0 Oct 23 11:00 notes.txt\n  ```\n\n#### Task 2 – Ownership and group management (`ex2/`)\n\n- Change ownership of `shared/teamdoc.txt` to user `devuser` and group `projectteam`.\n- Change the group of `shared/secret.txt` to `projectteam` (owner stays `student`).\n- Set permissions:\n  - `teamdoc.txt`: readable and writable by owner and group only, others have no access.\n  - `secret.txt`: readable only by the owner, group and others have no access.\n\nExpected:\n\n```\n[student@ex1101 ex2]$ ls -l shared/\ntotal 0\n-r--------. 1 student projectteam 0 Oct 23 11:00 secret.txt\n-rw-rw----. 1 devuser projectteam 0 Oct 23 11:00 teamdoc.txt\n```\n\n#### Task 3 – Directory permissions (`ex3/`)\n\n- Set the directory `sharedir` so everyone can read files but only the owner can modify contents.\n\n  Expected:\n\n  ```\n  [student@ex1101 ex3]$ ls -l\n  total 0\n  drwxr-xr-x. 2 student student 40 Oct 23 13:30 sharedir\n  ```\n\n- Ensure `file1.txt` and `file2.txt` are readable by all users (mode `644`).",
+      "hints": [
+        "Symbolic notation: `chmod o-w file`. Octal notation: `chmod 640 file`.",
+        "`sudo chown devuser:projectteam file` changes owner and group, `chgrp projectteam file` only the group.",
+        "`ls -l` shows the result; verify against the expected output.",
+        "A directory needs the execute bit to be entered; `755` lets everyone read while only the owner modifies."
+      ],
+      "difficulty": "Medium",
+      "type": "terminal",
+
+      "provenance": "OSFundamentals.pdf",
+      "contentVersion": 1,
+      "terminal": {
+        "profile": "basic-linux",
+        "initialDirectory": "/home/student",
+        "initialFilesystem": [],
+        "preSetupCommands": [
+          "groupadd -f projectteam",
+          "useradd -m devuser",
+          "mkdir -p /home/student/osfundamentals /home/student/osfundamentals/permissions /home/student/osfundamentals/permissions/ex1 /home/student/osfundamentals/permissions/ex1/project /home/student/osfundamentals/permissions/ex2 /home/student/osfundamentals/permissions/ex2/shared /home/student/osfundamentals/permissions/ex3 /home/student/osfundamentals/permissions/ex3/sharedir",
+          "touch /home/student/osfundamentals/permissions/ex1/readme.txt",
+          "touch /home/student/osfundamentals/permissions/ex1/project/notes.txt",
+          "touch /home/student/osfundamentals/permissions/ex2/shared/teamdoc.txt",
+          "touch /home/student/osfundamentals/permissions/ex2/shared/secret.txt",
+          "touch /home/student/osfundamentals/permissions/ex3/sharedir/file1.txt",
+          "touch /home/student/osfundamentals/permissions/ex3/sharedir/file2.txt",
+          "chown student:student /home/student/osfundamentals /home/student/osfundamentals/permissions /home/student/osfundamentals/permissions/ex1 /home/student/osfundamentals/permissions/ex1/readme.txt /home/student/osfundamentals/permissions/ex1/project /home/student/osfundamentals/permissions/ex1/project/notes.txt /home/student/osfundamentals/permissions/ex2 /home/student/osfundamentals/permissions/ex2/shared /home/student/osfundamentals/permissions/ex2/shared/teamdoc.txt /home/student/osfundamentals/permissions/ex2/shared/secret.txt",
+          "chown student:student /home/student/osfundamentals/permissions/ex3 /home/student/osfundamentals/permissions/ex3/sharedir /home/student/osfundamentals/permissions/ex3/sharedir/file1.txt /home/student/osfundamentals/permissions/ex3/sharedir/file2.txt",
+          "chmod 755 /home/student/osfundamentals /home/student/osfundamentals/permissions /home/student/osfundamentals/permissions/ex1 /home/student/osfundamentals/permissions/ex1/project /home/student/osfundamentals/permissions/ex2 /home/student/osfundamentals/permissions/ex2/shared /home/student/osfundamentals/permissions/ex3 /home/student/osfundamentals/permissions/ex3/sharedir",
+          "chmod 666 /home/student/osfundamentals/permissions/ex1/readme.txt /home/student/osfundamentals/permissions/ex1/project/notes.txt",
+          "chmod 644 /home/student/osfundamentals/permissions/ex2/shared/teamdoc.txt /home/student/osfundamentals/permissions/ex2/shared/secret.txt",
+          "chmod 600 /home/student/osfundamentals/permissions/ex3/sharedir/file1.txt /home/student/osfundamentals/permissions/ex3/sharedir/file2.txt"
+        ],
+        "checks": [
+          {
+            "id": "permissions-osfundamentals-permissions-ex1-readme-txt",
+            "type": "permissions",
+            "path": "/home/student/osfundamentals/permissions/ex1/readme.txt",
+            "expected": "664",
+            "points": 1,
+            "description": "`readme.txt` has `rw-rw-r--` (write removed for others)."
+          },
+          {
+            "id": "permissions-osfundamentals-permissions-ex1-project-notes-txt",
+            "type": "permissions",
+            "path": "/home/student/osfundamentals/permissions/ex1/project/notes.txt",
+            "expected": "640",
+            "points": 1,
+            "description": "`notes.txt` has `rw-r-----`."
+          },
+          {
+            "id": "permissions-osfundamentals-permissions-ex2-shared-teamdoc-txt",
+            "type": "permissions",
+            "path": "/home/student/osfundamentals/permissions/ex2/shared/teamdoc.txt",
+            "expected": "660",
+            "points": 1,
+            "description": "`teamdoc.txt` is readable and writable by owner and group only."
+          },
+          {
+            "id": "permissions-osfundamentals-permissions-ex2-shared-secret-txt",
+            "type": "permissions",
+            "path": "/home/student/osfundamentals/permissions/ex2/shared/secret.txt",
+            "expected": "400",
+            "points": 1,
+            "description": "`secret.txt` is readable only by the owner."
+          },
+          {
+            "id": "permissions-osfundamentals-permissions-ex3-sharedir",
+            "type": "permissions",
+            "path": "/home/student/osfundamentals/permissions/ex3/sharedir",
+            "expected": "755",
+            "points": 1,
+            "description": "`sharedir` has `drwxr-xr-x`."
+          },
+          {
+            "id": "permissions-osfundamentals-permissions-ex3-sharedir-file1-txt",
+            "type": "permissions",
+            "path": "/home/student/osfundamentals/permissions/ex3/sharedir/file1.txt",
+            "expected": "644",
+            "points": 1,
+            "description": "`file1.txt` is readable by all users."
+          },
+          {
+            "id": "permissions-osfundamentals-permissions-ex3-sharedir-file2-txt",
+            "type": "permissions",
+            "path": "/home/student/osfundamentals/permissions/ex3/sharedir/file2.txt",
+            "expected": "644",
+            "points": 1,
+            "description": "`file2.txt` is readable by all users."
+          }
+        ],
+        "explanation": "The correction checks the permission bits of every file and directory. The ownership changes of Task 2 are part of the exercise and should match the expected `ls -l` output."
+      }
+    },
+    "os-term-1-1102": {
+      "course": "os",
+      "category": "Permissions",
+      "title": "1102 - Special & Default Permissions",
+      "instructions": "**Section goals:** apply and verify special permissions (SGID, sticky); control default file creation permissions with `umask`; understand the practical security effects of these permissions.\n\nWork as the `student` user. Root privileges are available via `sudo`. The users `devuser` and the groups `projectteam` and `sharedgrp` exist.\n\n#### Task 1 – Sticky bit (shared directory)\n\n1. Inspect `/srv/shared/sticky_test`:\n\n   ```bash\n   ls -ld /srv/shared/sticky_test\n   ```\n\n   Expected: `drwxrwxrwt root sharedgrp /srv/shared/sticky_test/` (confirm it has the sticky bit set: a `t` at the end of the permissions).\n\n2. Verify that `student` cannot delete `/srv/shared/sticky_test/file_devuser.txt`.\n3. Confirm you can delete your own file:\n\n   ```bash\n   rm /srv/shared/sticky_test/file_student.txt\n   ```\n\n#### Task 2 – SGID directory\n\n1. Create the directory (notice how the group ownership is `student`):\n\n   ```bash\n   mkdir -p ~/osfundamentals/permissions_special/ex2/project_area\n   ```\n\n2. Apply the SGID bit and appropriate group ownership:\n\n   ```bash\n   # Change group ownership of the `project_area` folder\n   sudo chown student:projectteam ~/osfundamentals/permissions_special/ex2/project_area\n   # Apply SGID\n   chmod 2775 ~/osfundamentals/permissions_special/ex2/project_area\n   ```\n\n3. Inside it, create:\n\n   ```bash\n   echo \"report1\" > ~/osfundamentals/permissions_special/ex2/project_area/report1.txt\n   echo \"report2\" > ~/osfundamentals/permissions_special/ex2/project_area/report2.txt\n   ```\n\n4. Verify that the new files have group `projectteam` instead of `student`.\n\n#### Task 3 – umask\n\n1. Display the current umask: `umask`. Expected: `0022`\n2. Temporarily set umask: `umask 0027`\n3. Create:\n\n   ```bash\n   echo \"testing umask\" > ~/osfundamentals/permissions_special/ex3/umask_test.txt\n   ```\n\n4. Verify with `ls -l ~/osfundamentals/permissions_special/ex3/umask_test.txt`. Expected: `rw-r-----`\n5. Make the change persistent:\n\n   ```bash\n   echo \"umask 0027\" >> ~/.bashrc\n   ```",
+      "hints": [
+        "In `ls -l`, a `t` at the end of the permission string means the sticky bit; `s` in the group triplet means SGID.",
+        "`chmod 2775 dir` sets the SGID bit (leading `2`) with mode `rwxrwxr-x`.",
+        "With `umask 0027`, new files get `640` and new directories `750`.",
+        "`>>` appends to `~/.bashrc` instead of overwriting it."
+      ],
+      "difficulty": "Medium",
+      "type": "terminal",
+
+      "provenance": "OSFundamentals.pdf",
+      "contentVersion": 1,
+      "terminal": {
+        "profile": "basic-linux",
+        "initialDirectory": "/home/student",
+        "initialFilesystem": [],
+        "preSetupCommands": [
+          "groupadd -f projectteam",
+          "groupadd -f sharedgrp",
+          "useradd -m devuser",
+          "usermod -aG projectteam,sharedgrp student",
+          "rm -f /home/student/.bashrc /home/student/.bash_profile",
+          "mkdir -p /srv/shared/sticky_test /home/student/osfundamentals /home/student/osfundamentals/permissions_special /home/student/osfundamentals/permissions_special/ex3",
+          "printf '# ~/.bashrc\\n' > /home/student/.bashrc",
+          "printf 'Devuser file\\n' > /srv/shared/sticky_test/file_devuser.txt",
+          "printf 'Student file\\n' > /srv/shared/sticky_test/file_student.txt",
+          "chown root:sharedgrp /srv/shared/sticky_test",
+          "chown devuser:devuser /srv/shared/sticky_test/file_devuser.txt",
+          "chown student:student /srv/shared/sticky_test/file_student.txt",
+          "chown student:student /home/student/osfundamentals /home/student/osfundamentals/permissions_special /home/student/osfundamentals/permissions_special/ex3 /home/student/.bashrc",
+          "chmod 1777 /srv/shared/sticky_test",
+          "chmod 755 /home/student/osfundamentals /home/student/osfundamentals/permissions_special /home/student/osfundamentals/permissions_special/ex3",
+          "chmod 644 /home/student/.bashrc"
+        ],
+        "checks": [
+          {
+            "id": "file-srv-shared-sticky-test-file-devuser-txt",
+            "type": "file",
+            "path": "/srv/shared/sticky_test/file_devuser.txt",
+            "points": 1,
+            "description": "`file_devuser.txt` still exists (the student could not delete it)."
+          },
+          {
+            "id": "not_exists-srv-shared-sticky-test-file-student-txt",
+            "type": "not_exists",
+            "path": "/srv/shared/sticky_test/file_student.txt",
+            "points": 1,
+            "description": "`file_student.txt` was deleted by the student."
+          },
+          {
+            "id": "permissions-osfundamentals-permissions-special-ex2-project-area",
+            "type": "permissions",
+            "path": "/home/student/osfundamentals/permissions_special/ex2/project_area",
+            "expected": "2775",
+            "points": 1,
+            "description": "`project_area` has the SGID bit and mode `rwxrwxr-x`."
+          },
+          {
+            "id": "content-osfundamentals-permissions-special-ex2-project-area-report1-txt",
+            "type": "content",
+            "path": "/home/student/osfundamentals/permissions_special/ex2/project_area/report1.txt",
+            "expected": "report1\n",
+            "points": 1,
+            "description": "`~/osfundamentals/permissions_special/ex2/project_area/report1.txt` has the expected content."
+          },
+          {
+            "id": "content-osfundamentals-permissions-special-ex2-project-area-report2-txt",
+            "type": "content",
+            "path": "/home/student/osfundamentals/permissions_special/ex2/project_area/report2.txt",
+            "expected": "report2\n",
+            "points": 1,
+            "description": "`~/osfundamentals/permissions_special/ex2/project_area/report2.txt` has the expected content."
+          },
+          {
+            "id": "content-osfundamentals-permissions-special-ex3-umask-test-txt",
+            "type": "content",
+            "path": "/home/student/osfundamentals/permissions_special/ex3/umask_test.txt",
+            "expected": "testing umask\n",
+            "points": 1,
+            "description": "`~/osfundamentals/permissions_special/ex3/umask_test.txt` has the expected content."
+          },
+          {
+            "id": "permissions-osfundamentals-permissions-special-ex3-umask-test-txt",
+            "type": "permissions",
+            "path": "/home/student/osfundamentals/permissions_special/ex3/umask_test.txt",
+            "expected": "640",
+            "points": 1,
+            "description": "`umask_test.txt` has `rw-r-----` (created with umask 0027)."
+          },
+          {
+            "id": "content-bashrc",
+            "type": "content",
+            "path": "/home/student/.bashrc",
+            "expected": "# ~/.bashrc\numask 0027\n",
+            "points": 1,
+            "description": "`~/.bashrc` makes umask `0027` persistent."
+          }
+        ],
+        "explanation": "The correction checks the sticky-directory deletions, the SGID mode of `project_area`, the permissions of the file created under umask `0027` and the persistent umask in `~/.bashrc`."
+      }
+    },
+    "os-term-1-1199": {
+      "course": "os",
+      "category": "Permissions",
+      "title": "1199 - Capstone Lab: Advanced File Permissions and Collaboration",
+      "instructions": "**Learning outcomes:** combine SGID, sticky bit, and umask to implement secure, collaborative environments; interpret how default permissions and special bits influence file sharing and protection; verify, troubleshoot, and explain real-world filesystem permission scenarios.\n\nWork as the `student` user. Root privileges are available via `sudo`. The user `devuser` and the group `projectteam` exist, `/srv/shared/uploads` is a shared upload area, and your shell has a default umask of `0007`.\n\n#### Task 1 – Collaborative project directory (SGID)\n\n1. Create the shared project directory:\n\n   ```bash\n   mkdir -p ~/osfundamentals/permissions_capstone/team_project\n   ```\n\n2. Change ownership of the `team_project` directory: owner `student`, group owner `projectteam`.\n\n   ```bash\n   sudo chown student:projectteam ~/osfundamentals/permissions_capstone/team_project\n   ```\n\n   Expected:\n\n   ```\n   [student@ex1199 permissions_capstone]$ ls -l\n   drwxrwx---. 2 student projectteam team_project/\n   ```\n\n3. Add the SGID bit to the `team_project` directory and give \"other\" read and execute permissions, additionally:\n\n   ```bash\n   chmod 2775 ~/osfundamentals/permissions_capstone/team_project\n   ```\n\n   Expected:\n\n   ```\n   [student@ex1199 permissions_capstone]$ ls -l\n   drwxrwsr-x. 2 student projectteam team_project/\n   ```\n\n4. Create files as both users:\n\n   ```bash\n   echo \"Student contribution\" > ~/osfundamentals/permissions_capstone/team_project/student_report.txt\n   sudo -u devuser bash -c \"umask 0007; echo 'Devuser contribution' > /home/student/osfundamentals/permissions_capstone/team_project/dev_report.txt\"\n   ```\n\n5. Verify that both files belong to the `projectteam` group and are writable by it.\n\n   Expected:\n\n   ```\n   -rw-rw---- devuser projectteam dev_report.txt\n   -rw-rw---- student projectteam student_report.txt\n   ```\n\n#### Task 2 – Shared upload area (sticky bit)\n\n1. Check the existing upload area:\n\n   ```bash\n   ls -ld /srv/shared/uploads\n   ```\n\n   It should show: `drwxrwxrwt`.\n\n2. Create test files:\n\n   ```bash\n   echo \"Student file\" > /srv/shared/uploads/file_student.txt\n   sudo -u devuser bash -c \"umask 0007; echo 'Devuser file' > /srv/shared/uploads/file_devuser.txt\"\n   ```\n\n3. Test deletion behavior:\n   - `student` can delete their own file (`file_student.txt`): do this.\n   - `student` cannot delete `file_devuser.txt`: try it and observe the error.\n\n#### Task 3 – Verify default umask\n\n1. Confirm the umask: `umask`. It should return `0007`.\n2. Create a test file:\n\n   ```bash\n   mkdir -p ~/osfundamentals/permissions_capstone/umask_test\n   echo \"Testing umask\" > ~/osfundamentals/permissions_capstone/umask_test/umask_test.txt\n   ls -l ~/osfundamentals/permissions_capstone/umask_test\n   ```\n\n   Expect: `-rw-rw---- student projectteam umask_test.txt`",
+      "hints": [
+        "`chmod 2775` sets SGID (the leading `2`) plus `rwxrwxr-x`, so new files inherit the group `projectteam`.",
+        "`sudo -u devuser command` runs a command as another user; `umask 0007` in the same shell makes the file `660`.",
+        "On a sticky directory (`t`), only the owner of a file (or the directory owner/root) can delete it.",
+        "`ls -l` shows the group of the new files: it should be `projectteam`, not `student`."
+      ],
+      "difficulty": "Hard",
+      "type": "terminal",
+
+      "provenance": "OSFundamentals.pdf",
+      "contentVersion": 1,
+      "terminal": {
+        "profile": "basic-linux",
+        "initialDirectory": "/home/student",
+        "initialFilesystem": [],
+        "preSetupCommands": [
+          "groupadd -f projectteam",
+          "useradd -m devuser",
+          "usermod -aG projectteam devuser",
+          "usermod -aG projectteam student",
+          "chmod 755 /home/student",
+          "rm -f /home/student/.bashrc /home/student/.bash_profile",
+          "mkdir -p /srv/shared/uploads /home/student/osfundamentals /home/student/osfundamentals/permissions_capstone",
+          "printf '# ~/.bashrc\\numask 0007\\n' > /home/student/.bashrc",
+          "chown student:student /home/student/osfundamentals /home/student/osfundamentals/permissions_capstone /home/student/.bashrc",
+          "chmod 1777 /srv/shared/uploads",
+          "chmod 755 /home/student/osfundamentals /home/student/osfundamentals/permissions_capstone",
+          "chmod 644 /home/student/.bashrc"
+        ],
+        "checks": [
+          {
+            "id": "permissions-osfundamentals-permissions-capstone-team-project",
+            "type": "permissions",
+            "path": "/home/student/osfundamentals/permissions_capstone/team_project",
+            "expected": "2775",
+            "points": 1,
+            "description": "`team_project` has the SGID bit and mode `rwxrwxr-x`."
+          },
+          {
+            "id": "content-osfundamentals-permissions-capstone-team-project-student-report-txt",
+            "type": "content",
+            "path": "/home/student/osfundamentals/permissions_capstone/team_project/student_report.txt",
+            "expected": "Student contribution\n",
+            "points": 1,
+            "description": "`~/osfundamentals/permissions_capstone/team_project/student_report.txt` has the expected content."
+          },
+          {
+            "id": "permissions-osfundamentals-permissions-capstone-team-project-student-report-txt",
+            "type": "permissions",
+            "path": "/home/student/osfundamentals/permissions_capstone/team_project/student_report.txt",
+            "expected": "660",
+            "points": 1,
+            "description": "`student_report.txt` is `rw-rw----`."
+          },
+          {
+            "id": "content-osfundamentals-permissions-capstone-team-project-dev-report-txt",
+            "type": "content",
+            "path": "/home/student/osfundamentals/permissions_capstone/team_project/dev_report.txt",
+            "expected": "Devuser contribution\n",
+            "points": 1,
+            "description": "`~/osfundamentals/permissions_capstone/team_project/dev_report.txt` has the expected content."
+          },
+          {
+            "id": "permissions-osfundamentals-permissions-capstone-team-project-dev-report-txt",
+            "type": "permissions",
+            "path": "/home/student/osfundamentals/permissions_capstone/team_project/dev_report.txt",
+            "expected": "660",
+            "points": 1,
+            "description": "`dev_report.txt` is `rw-rw----`."
+          },
+          {
+            "id": "file-srv-shared-uploads-file-devuser-txt",
+            "type": "file",
+            "path": "/srv/shared/uploads/file_devuser.txt",
+            "points": 1,
+            "description": "`file_devuser.txt` still exists (the student could not delete it)."
+          },
+          {
+            "id": "not_exists-srv-shared-uploads-file-student-txt",
+            "type": "not_exists",
+            "path": "/srv/shared/uploads/file_student.txt",
+            "points": 1,
+            "description": "`file_student.txt` was deleted by the student."
+          },
+          {
+            "id": "content-osfundamentals-permissions-capstone-umask-test-umask-test-txt",
+            "type": "content",
+            "path": "/home/student/osfundamentals/permissions_capstone/umask_test/umask_test.txt",
+            "expected": "Testing umask\n",
+            "points": 1,
+            "description": "`~/osfundamentals/permissions_capstone/umask_test/umask_test.txt` has the expected content."
+          },
+          {
+            "id": "permissions-osfundamentals-permissions-capstone-umask-test-umask-test-txt",
+            "type": "permissions",
+            "path": "/home/student/osfundamentals/permissions_capstone/umask_test/umask_test.txt",
+            "expected": "660",
+            "points": 1,
+            "description": "`umask_test.txt` is `rw-rw----` (umask 0007)."
+          }
+        ],
+        "explanation": "The correction checks the SGID mode of `team_project`, the contents and `660` permissions of the files created by both users, the sticky-bit deletion results and the file created under umask `0007`."
+      }
+    }
+  }
+}

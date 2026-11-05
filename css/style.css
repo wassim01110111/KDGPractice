@@ -1085,9 +1085,12 @@ th {
   font-size: clamp(1.2rem, 2.5vw, 1.55rem);
   line-height: 1.3;
 }
+/* Keep exam answer fields styled consistently, but leave the virtual
+   terminal's .ot-input alone: terminal.js owns its transparent overlay input
+   and its visible background belongs to .ot-input-row. */
 .exam-session .editor,
 .exam-session .answer-blanks input,
-.exam-session .q input:not([type="checkbox"]):not([type="radio"]) {
+.exam-session .q input:not([type="checkbox"]):not([type="radio"]):not(.ot-input) {
   width: 100%;
   min-height: 3rem;
   padding: 0.8rem 0.9rem;
@@ -7346,3 +7349,670 @@ pre,
   line-height: 1.1;
   text-wrap: wrap;
 }
+
+/* ============================================================
+   SANDBOX PAGE — reuse the app's card, filter, SQL split and schema styles
+   ============================================================ */
+.sandbox-page {
+  display: grid;
+  gap: 1rem;
+  min-width: 0;
+}
+.sandbox-heading {
+  margin: 0;
+}
+.sandbox-heading h2 {
+  margin: 0 0 0.3rem;
+}
+.sandbox-heading p {
+  margin: 0;
+  color: var(--mut);
+}
+.sandbox-mode-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding: 0.25rem 0;
+}
+.sandbox-mode-bar button.on {
+  color: #fff;
+  background: var(--ac);
+  border-color: var(--ac);
+}
+.sandbox-content {
+  min-width: 0;
+}
+.sandbox-sql-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 0.8rem 1rem;
+  margin: 0 0 1rem;
+}
+.sandbox-sql-toolbar .filter-control {
+  flex: 1 1 16rem;
+  min-width: min(100%, 14rem);
+}
+.sandbox-sql-toolbar select {
+  width: 100%;
+}
+.sandbox-db-title {
+  display: grid;
+  gap: 0.1rem;
+  min-width: min(100%, 12rem);
+  flex: 1 1 12rem;
+}
+.sandbox-sql-question h3 {
+  margin-bottom: 0.35rem;
+}
+.sandbox-sql-question > p {
+  color: var(--mut);
+  margin: 0 0 0.8rem;
+}
+.sandbox-sql-editor {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  min-height: 16rem;
+  resize: vertical;
+}
+.sandbox-sql-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0.65rem 0;
+}
+.sandbox-sql-status {
+  color: var(--mut);
+}
+.sandbox-sql-output {
+  min-width: 0;
+  overflow-x: auto;
+}
+.terminal-sandbox-host {
+  min-width: 0;
+}
+@media (max-width: 700px) {
+  .sandbox-sql-toolbar {
+    align-items: stretch;
+  }
+  .sandbox-db-title {
+    flex-basis: 100%;
+  }
+  .sandbox-sql-editor {
+    min-height: 12rem;
+  }
+}
+
+/* Learning page: progress overview and per-section checkpoints */
+.learning-overview {
+  position: relative;
+  display: grid;
+  gap: 1rem;
+  margin: 1.1rem 0 1.8rem;
+  padding: 1.2rem 1.35rem;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      ellipse at 95% 0%,
+      color-mix(in srgb, var(--ac) 13%, transparent),
+      transparent 48%
+    ),
+    var(--card);
+  border: 1px solid color-mix(in srgb, var(--ac) 35%, var(--bd));
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+}
+.learning-overview-heading,
+.learning-overview-metrics,
+.learning-module-progress-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.learning-kicker {
+  display: block;
+  margin-bottom: 0.2rem;
+  color: var(--ac);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}
+.learning-overview h2 {
+  margin: 0;
+  font-size: clamp(1.2rem, 2.5vw, 1.65rem);
+  letter-spacing: -0.035em;
+}
+.learning-overview-subtitle,
+.learning-overview-foot {
+  margin: 0.25rem 0 0;
+  color: var(--mut);
+  font-size: 0.88rem;
+}
+.learning-overview-percent {
+  display: grid;
+  min-width: 4.7rem;
+  min-height: 4.7rem;
+  place-items: center;
+  padding: 0.45rem;
+  color: var(--ac);
+  background: var(--soft);
+  border: 1px solid var(--bd);
+  border-radius: 50%;
+  font-size: 1.32rem;
+  font-weight: 850;
+  font-variant-numeric: tabular-nums;
+}
+.learning-overview-metrics {
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+.learning-metric {
+  display: grid;
+  min-width: 9.5rem;
+  gap: 0.1rem;
+  padding: 0.65rem 0.8rem;
+  background: color-mix(in srgb, var(--soft) 72%, transparent);
+  border: 1px solid var(--bd);
+  border-radius: 10px;
+}
+.learning-metric strong {
+  font-size: 1.05rem;
+  font-variant-numeric: tabular-nums;
+}
+.learning-metric span {
+  color: var(--mut);
+  font-size: 0.77rem;
+}
+.learning-overview-bar,
+.learning-module-bar {
+  display: block;
+  width: 100%;
+  height: 0.7rem;
+  overflow: hidden;
+  appearance: none;
+  background: var(--soft);
+  border: 1px solid var(--bd);
+  border-radius: 99px;
+}
+.learning-overview-bar::-webkit-progress-bar,
+.learning-module-bar::-webkit-progress-bar {
+  background: var(--soft);
+  border-radius: 99px;
+}
+.learning-overview-bar::-webkit-progress-value,
+.learning-module-bar::-webkit-progress-value {
+  background: linear-gradient(
+    90deg,
+    var(--ac),
+    color-mix(in srgb, var(--ok) 58%, var(--ac))
+  );
+  border-radius: 99px;
+  transition: width 450ms ease;
+}
+.learning-overview-bar::-moz-progress-bar,
+.learning-module-bar::-moz-progress-bar {
+  background: linear-gradient(
+    90deg,
+    var(--ac),
+    color-mix(in srgb, var(--ok) 58%, var(--ac))
+  );
+  border-radius: 99px;
+}
+.learning-module-heading {
+  display: flex;
+  align-items: baseline;
+  gap: 0.65rem;
+  margin-top: 2.2rem;
+  scroll-margin-top: 7rem;
+}
+.learning-module-heading::before {
+  content: "";
+  width: 0.3rem;
+  min-width: 0.3rem;
+  height: 1.45em;
+  background: var(--ac);
+  border-radius: 99px;
+}
+.learning-module-progress {
+  display: grid;
+  gap: 0.75rem;
+  margin: -0.25rem 0 1.1rem;
+  padding: 0.9rem 1rem;
+  background: var(--card);
+  border: 1px solid var(--bd);
+  border-radius: 12px;
+  box-shadow: 0 3px 12px rgb(20 35 65 / 4%);
+}
+.learning-module-progress-top > div:first-child {
+  display: grid;
+  gap: 0.1rem;
+}
+.learning-module-progress-top > div:first-child > strong {
+  color: var(--ac);
+  font-size: 0.7rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+.learning-module-status {
+  color: var(--mut);
+  font-size: 0.82rem;
+  font-variant-numeric: tabular-nums;
+}
+.learning-complete-toggle {
+  flex: 0 0 auto;
+  min-height: 2.2rem;
+  padding: 0.45rem 0.75rem;
+  color: var(--fg);
+  background: var(--soft);
+  border: 1px solid var(--bd);
+  border-radius: 9px;
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.learning-complete-toggle:hover {
+  border-color: var(--ac);
+  color: var(--ac);
+}
+.learning-complete-toggle.is-complete {
+  color: var(--ok);
+  background: color-mix(in srgb, var(--ok) 10%, var(--card));
+  border-color: color-mix(in srgb, var(--ok) 45%, var(--bd));
+}
+.learning-exercise-list {
+  border-top: 1px solid var(--bd);
+  padding-top: 0.6rem;
+}
+.learning-exercise-list > summary {
+  width: fit-content;
+  color: var(--ac);
+  font-size: 0.84rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.learning-exercise-list ol {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0.7rem 0 0;
+  padding-left: 1.35rem;
+}
+.learning-exercise-list li {
+  padding-left: 0.15rem;
+  font-size: 0.83rem;
+}
+.learning-exercise-list li a {
+  color: var(--fg);
+  text-decoration-color: color-mix(in srgb, var(--ac) 45%, transparent);
+  text-underline-offset: 0.15em;
+}
+.learning-exercise-list li a:hover {
+  color: var(--ac);
+}
+.learning-exercise-done,
+.learning-exercise-open {
+  display: inline-block;
+  margin-left: 0.45rem;
+  color: var(--mut);
+  font-size: 0.7rem;
+  white-space: nowrap;
+}
+.learning-exercise-done {
+  color: var(--ok);
+  font-weight: 750;
+}
+.learning-no-exercises {
+  margin: 0;
+  color: var(--bad);
+  font-size: 0.85rem;
+}
+@media (max-width: 650px) {
+  .learning-overview {
+    padding: 1rem;
+  }
+  .learning-overview-heading {
+    align-items: flex-start;
+  }
+  .learning-overview-percent {
+    min-width: 3.8rem;
+    min-height: 3.8rem;
+    font-size: 1.1rem;
+  }
+  .learning-module-progress-top {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .learning-complete-toggle {
+    width: 100%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .learning-overview-bar::-webkit-progress-value,
+  .learning-module-bar::-webkit-progress-value {
+    transition: none;
+  }
+}
+.practice-filters > .practice-type-filter-control {
+  position: relative;
+  display: flex;
+  flex: 1 1 18rem;
+  flex-direction: column;
+  align-self: flex-start;
+  min-width: min(100%, 17rem);
+  gap: 0;
+  padding: 0.7rem 0.85rem;
+  background: color-mix(in srgb, var(--soft) 58%, var(--card));
+  border: 1px solid var(--bd);
+  border-radius: 11px;
+}
+
+/* Heading / disclosure row */
+.practice-type-filter-control > .filter-label {
+  position: relative;
+  display: flex;
+  min-height: 2.4rem;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 1.8rem;
+  color: var(--fg);
+  font-size: 0.76rem;
+  font-weight: 750;
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Chevron */
+.practice-type-filter-control > .filter-label::after {
+  position: absolute;
+  right: 0.2rem;
+  content: "";
+  width: 0.55rem;
+  height: 0.55rem;
+  border-right: 2px solid var(--mut);
+  border-bottom: 2px solid var(--mut);
+  transform: rotate(45deg) translateY(-2px);
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease;
+}
+
+.practice-type-filter-control.is-open > .filter-label::after {
+  transform: rotate(225deg) translate(-2px, -2px);
+  border-color: var(--ac);
+}
+
+/* Closed by default; open state becomes a vertical scrolling list. */
+.practice-type-checkboxes {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  max-height: 0;
+  margin-top: 0;
+  padding: 0 0.1rem;
+  overflow: hidden;
+  overscroll-behavior: contain;
+  opacity: 0;
+  visibility: hidden;
+  border-top: 0 solid transparent;
+  transition:
+    max-height 220ms ease,
+    margin-top 220ms ease,
+    padding 220ms ease,
+    opacity 160ms ease,
+    visibility 160ms ease;
+}
+
+.practice-type-filter-control.is-open .practice-type-checkboxes {
+  max-height: min(14rem, 45vh);
+  margin-top: 0.55rem;
+  padding: 0.6rem 0.1rem 0.1rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  opacity: 1;
+  visibility: visible;
+  border-top: 1px solid var(--bd);
+  scrollbar-width: thin;
+  scrollbar-color: var(--bd) transparent;
+}
+
+.practice-type-checkboxes::-webkit-scrollbar {
+  width: 7px;
+}
+
+.practice-type-checkboxes::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.practice-type-checkboxes::-webkit-scrollbar-thumb {
+  background: var(--bd);
+  border-radius: 999px;
+}
+
+.practice-type-checkboxes::-webkit-scrollbar-thumb:hover {
+  background: var(--mut);
+}
+
+/* Each option occupies its own full-width row — no grid layout. */
+.practice-type-option {
+  display: flex;
+  flex: 0 0 auto;
+  min-width: 0;
+  min-height: 2.45rem;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.45rem 0.65rem;
+  color: var(--mut);
+  background: var(--card);
+  border: 1px solid var(--bd);
+  border-radius: 8px;
+  cursor: pointer;
+  transition:
+    color 150ms ease,
+    background-color 150ms ease,
+    border-color 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.practice-type-option:hover {
+  color: var(--fg);
+  border-color: color-mix(in srgb, var(--ac) 55%, var(--bd));
+}
+
+.practice-type-option:has(input:checked) {
+  color: var(--fg);
+  background: color-mix(in srgb, var(--ac) 9%, var(--card));
+  border-color: var(--ac);
+  box-shadow: inset 3px 0 0 var(--ac);
+}
+
+.practice-type-option input {
+  flex: 0 0 auto;
+  width: 1.05rem;
+  height: 1.05rem;
+  margin: 0;
+  padding: 0;
+  accent-color: var(--ac);
+}
+
+.practice-type-option span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .practice-type-filter-control > .filter-label::after,
+  .practice-type-checkboxes,
+  .practice-type-option {
+    transition: none;
+  }
+}
+
+
+/* Resizable terminal exercise: terminal on the left, instructions on the right.
+   The divider is enabled only on desktop; mobile keeps a simple stacked flow. */
+.terminal-exercise-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: start;
+  min-width: 0;
+}
+
+.terminal-exercise-layout > .terminal-workspace-pane,
+.terminal-exercise-layout > .terminal-instructions-pane {
+  min-width: 0;
+  margin: 0;
+}
+
+.terminal-exercise-layout > .terminal-workspace-pane {
+  grid-row: 1;
+}
+
+.terminal-exercise-layout > .terminal-instructions-pane {
+  grid-row: 2;
+}
+
+.terminal-split-handle {
+  display: none;
+}
+
+@media (min-width: 901px) {
+  .terminal-exercise-layout {
+    grid-template-columns:
+      minmax(0, 1fr)
+      1rem
+      minmax(220px, var(--terminal-instructions-col, 34%));
+    column-gap: 0;
+    align-items: start;
+  }
+
+  .terminal-exercise-layout > .terminal-workspace-pane {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .terminal-exercise-layout > .terminal-instructions-pane {
+    grid-column: 3;
+    grid-row: 1;
+    position: sticky;
+    top: 5.5rem;
+    max-height: calc(100vh - 7rem);
+    overflow: auto;
+  }
+
+  .terminal-split-handle {
+    position: relative;
+    display: block;
+    grid-column: 2;
+    grid-row: 1;
+    align-self: stretch;
+    min-height: 100%;
+    cursor: col-resize;
+    touch-action: none;
+    outline: none;
+  }
+
+  .terminal-split-handle::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 3px;
+    min-height: 4rem;
+    border-radius: 999px;
+    background: var(--bd);
+    transform: translateX(-50%);
+  }
+
+  .terminal-split-handle:hover::before,
+  .terminal-split-handle:focus-visible::before,
+  .terminal-split-handle.is-dragging::before {
+    background: var(--ac);
+  }
+
+  .terminal-split-handle:focus-visible::before {
+    box-shadow: var(
+      --ui-glow,
+      0 0 0 3px color-mix(in srgb, var(--ac) 13%, transparent)
+    );
+  }
+
+  .terminal-exercise-layout .os-terminal {
+    margin: 0;
+  }
+}
+
+@media (min-width: 901px) and (prefers-reduced-motion: no-preference) {
+  .terminal-split-handle::before {
+    transition: background-color var(--ui-fast, 150ms) var(--ui-ease, ease);
+  }
+}
+
+body.terminal-split-dragging {
+  cursor: col-resize;
+  user-select: none;
+}
+
+@media (max-width: 900px) {
+  .terminal-exercise-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .terminal-exercise-layout > .terminal-instructions-pane {
+    order: 0;
+    position: static;
+    max-height: none;
+    overflow: visible;
+  }
+
+  .terminal-exercise-layout > .terminal-workspace-pane {
+    order: 1;
+  }
+}
+
+/* ============================================================
+   EXAM TERMINAL: match the practice terminal exercise layout.
+
+   qView() already renders the same .terminal-exercise-layout in both
+   practice and exam modes. In exams that layout sits inside an extra
+   .exam-question-panel card. Remove only that outer card when the active
+   question contains a terminal, so the two inner panes get the same width,
+   spacing, borders and surface treatment as they do in practice. Normal
+   (non-terminal) exam questions keep their existing panel styling.
+   ============================================================ */
+.exam-question-panel:has(.terminal-exercise-layout) {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  transform: none;
+}
+
+.exam-question-panel:has(.terminal-exercise-layout):focus-within,
+.exam-question-panel:has(.terminal-exercise-layout):hover {
+  border-color: transparent;
+  box-shadow: none;
+  transform: none;
+}
+
+.exam-question-panel:has(.terminal-exercise-layout)::after {
+  display: none;
+  content: none;
+}
+
+.exam-question-panel:has(.terminal-exercise-layout) .terminal-exercise-layout {
+  width: 100%;
+  min-width: 0;
+}
+

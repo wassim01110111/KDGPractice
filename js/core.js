@@ -10,6 +10,7 @@
       "command-text",
       "fill-blank",
       "short-answer-self-check",
+      "terminal",
     ];
   const NON_SQL_TYPES = OS_TYPES;
   function compatibleSchemaVersion(version, supported) {
@@ -139,20 +140,17 @@
     return packageId ? JSON.stringify([packageId, ex.id]) : ex.id;
   }
   // lastAttempt: { exerciseKey: ms }
-  function eligible(ex) {
-    return ex.examEligible === true;
-  }
+  // Every installed exercise can be selected for an exam. The old
+  // `examEligible` property is accepted as inert legacy package metadata.
   function generateExam(pool, cfg, lastAttempt = {}, rnd = Math.random) {
     const dist = cfg.dist || { Easy: 5, Medium: 5, Hard: 2, Extreme: 0 };
     const selectedCourses = Array.isArray(cfg.courses)
       ? new Set(cfg.courses)
       : null;
-    const base = pool.filter(
-      (e) =>
-        eligible(e) &&
-        (selectedCourses
-          ? selectedCourses.has(e.course)
-          : !cfg.course || e.course === cfg.course),
+    const base = pool.filter((e) =>
+      selectedCourses
+        ? selectedCourses.has(e.course)
+        : !cfg.course || e.course === cfg.course,
     );
     const shortage = {},
       picked = [];
@@ -215,7 +213,6 @@
       "instructions",
       "difficulty",
       "type",
-      "examEligible",
       "provenance",
       "contentVersion",
     ];
@@ -271,36 +268,73 @@
           if (ex[f] !== undefined)
             E(id, f, "SQL-query-only field on a non-query exercise");
         });
-        const x = ex.expected;
-        if (x === undefined) E(id, "expected", "Missing expected");
-        else if (MCQ_TYPES.includes(ex.type)) {
-          if (!Array.isArray(ex.options) || ex.options.length < 2)
-            E(id, "options", "Need at least 2 options");
-          else if (
-            !Array.isArray(x) ||
-            !x.length ||
-            x.some(
-              (i) => !Number.isInteger(i) || i < 0 || i >= ex.options.length,
+        if (ex.hints !== undefined && !(typeof ex.hints === "string" || (Array.isArray(ex.hints) && ex.hints.every((hint) => typeof hint === "string"))))
+          E(id, "hints", "Must be a string or an array of strings");
+        if (ex.type === "terminal") {
+          if (ex.course !== "os") E(id, "course", "terminal exercises must use course os");
+          const config = ex.terminal;
+          if (!config || typeof config !== "object" || Array.isArray(config)) {
+            E(id, "terminal", "Terminal exercises need a terminal configuration object");
+          } else {
+            const supportedChecks = new Set([
+              "exists", "not_exists", "file", "directory", "content", "contains",
+              "permissions", "owner", "group", "symlink", "size", "empty",
+              "executable", "file_type", "line_count", "directory_contents",
+            ]);
+            if (!Array.isArray(config.checks) || config.checks.length === 0) {
+              E(id, "terminal.checks", "Need at least one filesystem grading check");
+            } else {
+              config.checks.forEach((check, index) => {
+                const field = `terminal.checks[${index}]`;
+                if (!check || typeof check !== "object" || Array.isArray(check)) {
+                  E(id, field, "Must be an object");
+                  return;
+                }
+                if (!supportedChecks.has(check.type)) E(id, `${field}.type`, `Unsupported check type: ${check.type}`);
+                if (typeof check.path !== "string" || !check.path.trim()) E(id, `${field}.path`, "Must be a non-empty path");
+                if (["content", "contains", "permissions", "owner", "group", "symlink", "size", "file_type", "line_count", "directory_contents"].includes(check.type) && check.expected === undefined)
+                  E(id, `${field}.expected`, "Required for this check type");
+                if (check.points !== undefined && (!Number.isFinite(check.points) || check.points < 0)) E(id, `${field}.points`, "Must be a non-negative number");
+              });
+            }
+            if (Object.prototype.hasOwnProperty.call(config, "hints")) E(id, "terminal.hints", "Move hints to the exercise's top-level 'hints' field");
+            if (config.initialFilesystem !== undefined && !Array.isArray(config.initialFilesystem)) E(id, "terminal.initialFilesystem", "Must be an array");
+            if (config.preSetupCommands !== undefined && (!Array.isArray(config.preSetupCommands) || config.preSetupCommands.length > 100 || config.preSetupCommands.some((command) => typeof command !== "string" || !command.trim() || command.length > 8192))) E(id, "terminal.preSetupCommands", "Must be an array of at most 100 non-empty command strings (maximum 8192 characters each)");
+            if (config.initialDirectory !== undefined && (typeof config.initialDirectory !== "string" || !config.initialDirectory.startsWith("/"))) E(id, "terminal.initialDirectory", "Must be an absolute path");
+            if (config.profile !== undefined && !["basic-linux", "basic", "intro-linux"].includes(config.profile)) E(id, "terminal.profile", `Unsupported profile: ${config.profile}`);
+          }
+        } else {
+          const x = ex.expected;
+          if (x === undefined) E(id, "expected", "Missing expected");
+          else if (MCQ_TYPES.includes(ex.type)) {
+            if (!Array.isArray(ex.options) || ex.options.length < 2)
+              E(id, "options", "Need at least 2 options");
+            else if (
+              !Array.isArray(x) ||
+              !x.length ||
+              x.some(
+                (i) => !Number.isInteger(i) || i < 0 || i >= ex.options.length,
+              )
+            )
+              E(id, "expected", "Must be array of valid option indexes");
+            else if (ex.type === "mcq-single" && x.length !== 1)
+              E(id, "expected", "mcq-single needs exactly one index");
+          } else if (
+            ex.type === "command-text" &&
+            !(
+              (x.accepted && x.accepted.length) ||
+              (x.patterns && x.patterns.length)
             )
           )
-            E(id, "expected", "Must be array of valid option indexes");
-          else if (ex.type === "mcq-single" && x.length !== 1)
-            E(id, "expected", "mcq-single needs exactly one index");
-        } else if (
-          ex.type === "command-text" &&
-          !(
-            (x.accepted && x.accepted.length) ||
-            (x.patterns && x.patterns.length)
+            E(id, "expected", "Need accepted[] and/or patterns[]");
+          else if (
+            ex.type === "fill-blank" &&
+            !(Array.isArray(x.blanks) && x.blanks.length)
           )
-        )
-          E(id, "expected", "Need accepted[] and/or patterns[]");
-        else if (
-          ex.type === "fill-blank" &&
-          !(Array.isArray(x.blanks) && x.blanks.length)
-        )
-          E(id, "expected", "Need blanks: [[accepted,...],...]");
-        else if (ex.type === "short-answer-self-check" && typeof x !== "string")
-          E(id, "expected", "Must be a model-answer string");
+            E(id, "expected", "Need blanks: [[accepted,...],...]");
+          else if (ex.type === "short-answer-self-check" && typeof x !== "string")
+            E(id, "expected", "Must be a model-answer string");
+        }
       }
     }
     return errs;
@@ -427,7 +461,6 @@
     compatibleSchemaVersion,
     hasSimilarOSAnswer,
     highlightJava,
-    eligible,
     exerciseKey,
     cellKey,
     normNum,

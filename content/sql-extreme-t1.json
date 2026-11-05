@@ -26,7 +26,7 @@
       "instructions": "For each staffed department, report its region, manager chain root, employee count, known email count, distinct projects, logged hours and average salary. Retain departments with no staff; include only projects starting in 2024 or later when counting project activity. Keep departments whose employee count is at least 2 or whose project count is zero. Sort by region, then logged hours descending with NULL last.",
       "difficulty": "Extreme",
       "type": "sql-query",
-      "examEligible": true,
+
       "provenance": "sql-cheat-sheet(2).md; Pasted text(2).txt (requested examination specification)",
       "contentVersion": 1,
       "datasetId": "sql-enterprise-graph",
@@ -47,7 +47,7 @@
       "instructions": "List each unordered pair of employees who worked on at least one common project, have different departments, and differ in salary by no more than 20,000. Include both managers' names where present, project count, earliest common assignment date and formatted salary gap. Exclude self-pairs and show each pair once. Sort by shared project count descending, then employee IDs; return the first 12 after skipping 2.",
       "difficulty": "Extreme",
       "type": "sql-query",
-      "examEligible": true,
+
       "provenance": "sql-cheat-sheet(2).md; Pasted text(2).txt (requested examination specification)",
       "contentVersion": 1,
       "datasetId": "sql-enterprise-graph",
@@ -68,7 +68,7 @@
       "instructions": "For every course section, report course, lecturer, lecturer's supervisor and supervisor's supervisor, distinct enrolled students, grade count, average and maximum grade, total known payment, and number of enrolled students with NULL grades. Retain sections with no enrolments and keep only sections with either no grades or average grade above 78. Sort by faculty and average grade descending NULLS LAST.",
       "difficulty": "Extreme",
       "type": "sql-query",
-      "examEligible": true,
+
       "provenance": "sql-cheat-sheet(2).md; Pasted text(2).txt (requested examination specification)",
       "contentVersion": 1,
       "datasetId": "sql-campus-network",
@@ -89,7 +89,7 @@
       "instructions": "For each budget band, list qualifying projects, client region, department, project lead and the lead's manager. Include bands with no projects and projects with no assigned employees by retaining all bands and all projects in their range. Report project count, assigned headcount, known hours, average employee salary, and earliest/latest project dates. Keep bands with at least two projects or no projects. Sort by band minimum and project count descending.",
       "difficulty": "Extreme",
       "type": "sql-query",
-      "examEligible": true,
+
       "provenance": "sql-cheat-sheet(2).md; Pasted text(2).txt (requested examination specification)",
       "contentVersion": 1,
       "datasetId": "sql-enterprise-graph",
@@ -110,7 +110,7 @@
       "instructions": "For each employee-manager-manager's-manager chain with at least one project assignment, report employee identity, manager identity, senior manager identity, department, distinct assigned projects, known and missing work-log hours, earliest log date, latest log date, and formatted tenure. Include employees with no department where they have assignments. Keep chains with at least one logged hour or at least one missing log-hour value. Sort by department, project count descending, and employee name; return the first 15 rows.",
       "difficulty": "Extreme",
       "type": "sql-query",
-      "examEligible": true,
+
       "provenance": "sql-cheat-sheet(2).md; Pasted text(2).txt (requested examination specification)",
       "contentVersion": 1,
       "datasetId": "sql-enterprise-graph",
@@ -131,7 +131,7 @@
       "instructions": "Produce one row per faculty, course and section, including sections with no enrolments. Show lecturer and supervisor names, distinct student count, known grade count, average grade, minimum and maximum registration dates, total known tuition, and the number of distinct students whose mentor belongs to the lecturer's supervisory chain. Exclude sections beginning before 2025; retain groups with no students or at least two students with known grades. Sort by faculty, course code and average grade descending NULLS LAST.",
       "difficulty": "Extreme",
       "type": "sql-query",
-      "examEligible": true,
+
       "provenance": "sql-cheat-sheet(2).md; Pasted text(2).txt (requested examination specification)",
       "contentVersion": 1,
       "datasetId": "sql-campus-network",
@@ -152,7 +152,7 @@
       "instructions": "For each employee-manager-manager's-manager chain with at least one project assignment, report employee identity, manager identity, senior manager identity, department, distinct assigned projects, known and missing work-log hours, earliest log date, latest log date, and formatted tenure. Include employees with no department where they have assignments. Keep chains with at least one logged hour or at least one missing log-hour value. Sort by department, project count descending, and employee name; return the first 15 rows.",
       "difficulty": "Extreme",
       "type": "sql-query",
-      "examEligible": true,
+
       "provenance": "sql-cheat-sheet(2).md; Pasted text(2).txt (requested examination specification)",
       "contentVersion": 1,
       "datasetId": "sql-enterprise-graph",
@@ -173,7 +173,7 @@
       "instructions": "Produce one row per faculty, course and section, including sections with no enrolments. Show lecturer and supervisor names, distinct student count, known grade count, average grade, minimum and maximum registration dates, total known tuition, and the number of distinct students whose mentor belongs to the lecturer's supervisory chain. Exclude sections beginning before 2025; retain groups with no students or at least two students with known grades. Sort by faculty, course code and average grade descending NULLS LAST.",
       "difficulty": "Extreme",
       "type": "sql-query",
-      "examEligible": true,
+
       "provenance": "sql-cheat-sheet(2).md; Pasted text(2).txt (requested examination specification)",
       "contentVersion": 1,
       "datasetId": "sql-campus-network",
@@ -194,7 +194,7 @@
       "instructions": "For each employee-manager-manager's-manager chain with at least one project assignment, report employee identity, manager identity, senior manager identity, department, distinct assigned projects, known and missing work-log hours, earliest log date, latest log date, and formatted tenure. Include employees with no department where they have assignments. Keep chains with at least one logged hour or at least one missing log-hour value. Sort by department, project count descending, and employee name; return the first 15 rows.",
       "difficulty": "Extreme",
       "type": "sql-query",
-      "examEligible": true,
+
       "provenance": "sql-cheat-sheet(2).md; Pasted text(2).txt (requested examination specification)",
       "contentVersion": 1,
       "datasetId": "sql-enterprise-graph",
@@ -215,7 +215,7 @@
       "instructions": "Produce one row per faculty, course and section, including sections with no enrolments. Show lecturer and supervisor names, distinct student count, known grade count, average grade, minimum and maximum registration dates, total known tuition, and the number of distinct students whose mentor belongs to the lecturer's supervisory chain. Exclude sections beginning before 2025; retain groups with no students or at least two students with known grades. Sort by faculty, course code and average grade descending NULLS LAST.",
       "difficulty": "Extreme",
       "type": "sql-query",
-      "examEligible": true,
+
       "provenance": "sql-cheat-sheet(2).md; Pasted text(2).txt (requested examination specification)",
       "contentVersion": 1,
       "datasetId": "sql-campus-network",
@@ -236,7 +236,7 @@
       "instructions": "For each employee-manager-manager's-manager chain with at least one project assignment, report employee identity, manager identity, senior manager identity, department, distinct assigned projects, known and missing work-log hours, earliest log date, latest log date, and formatted tenure. Include employees with no department where they have assignments. Keep chains with at least one logged hour or at least one missing log-hour value. Sort by department, project count descending, and employee name; return the first 15 rows.",
       "difficulty": "Extreme",
       "type": "sql-query",
-      "examEligible": true,
+
       "provenance": "sql-cheat-sheet(2).md; Pasted text(2).txt (requested examination specification)",
       "contentVersion": 1,
       "datasetId": "sql-enterprise-graph",
@@ -257,7 +257,7 @@
       "instructions": "Produce one row per faculty, course and section, including sections with no enrolments. Show lecturer and supervisor names, distinct student count, known grade count, average grade, minimum and maximum registration dates, total known tuition, and the number of distinct students whose mentor belongs to the lecturer's supervisory chain. Exclude sections beginning before 2025; retain groups with no students or at least two students with known grades. Sort by faculty, course code and average grade descending NULLS LAST.",
       "difficulty": "Extreme",
       "type": "sql-query",
-      "examEligible": true,
+
       "provenance": "sql-cheat-sheet(2).md; Pasted text(2).txt (requested examination specification)",
       "contentVersion": 1,
       "datasetId": "sql-campus-network",
@@ -278,7 +278,7 @@
       "instructions": "For each employee-manager-manager's-manager chain with at least one project assignment, report employee identity, manager identity, senior manager identity, department, distinct assigned projects, known and missing work-log hours, earliest log date, latest log date, and formatted tenure. Include employees with no department where they have assignments. Keep chains with at least one logged hour or at least one missing log-hour value. Sort by department, project count descending, and employee name; return the first 15 rows.",
       "difficulty": "Extreme",
       "type": "sql-query",
-      "examEligible": true,
+
       "provenance": "sql-cheat-sheet(2).md; Pasted text(2).txt (requested examination specification)",
       "contentVersion": 1,
       "datasetId": "sql-enterprise-graph",
@@ -299,7 +299,7 @@
       "instructions": "Produce one row per faculty, course and section, including sections with no enrolments. Show lecturer and supervisor names, distinct student count, known grade count, average grade, minimum and maximum registration dates, total known tuition, and the number of distinct students whose mentor belongs to the lecturer's supervisory chain. Exclude sections beginning before 2025; retain groups with no students or at least two students with known grades. Sort by faculty, course code and average grade descending NULLS LAST.",
       "difficulty": "Extreme",
       "type": "sql-query",
-      "examEligible": true,
+
       "provenance": "sql-cheat-sheet(2).md; Pasted text(2).txt (requested examination specification)",
       "contentVersion": 1,
       "datasetId": "sql-campus-network",
@@ -320,7 +320,7 @@
       "instructions": "For each employee-manager-manager's-manager chain with at least one project assignment, report employee identity, manager identity, senior manager identity, department, distinct assigned projects, known and missing work-log hours, earliest log date, latest log date, and formatted tenure. Include employees with no department where they have assignments. Keep chains with at least one logged hour or at least one missing log-hour value. Sort by department, project count descending, and employee name; return the first 15 rows.",
       "difficulty": "Extreme",
       "type": "sql-query",
-      "examEligible": true,
+
       "provenance": "sql-cheat-sheet(2).md; Pasted text(2).txt (requested examination specification)",
       "contentVersion": 1,
       "datasetId": "sql-enterprise-graph",
@@ -341,7 +341,7 @@
       "instructions": "Produce one row per faculty, course and section, including sections with no enrolments. Show lecturer and supervisor names, distinct student count, known grade count, average grade, minimum and maximum registration dates, total known tuition, and the number of distinct students whose mentor belongs to the lecturer's supervisory chain. Exclude sections beginning before 2025; retain groups with no students or at least two students with known grades. Sort by faculty, course code and average grade descending NULLS LAST.",
       "difficulty": "Extreme",
       "type": "sql-query",
-      "examEligible": true,
+
       "provenance": "sql-cheat-sheet(2).md; Pasted text(2).txt (requested examination specification)",
       "contentVersion": 1,
       "datasetId": "sql-campus-network",
@@ -362,7 +362,7 @@
       "instructions": "For each employee-manager-manager's-manager chain with at least one project assignment, report employee identity, manager identity, senior manager identity, department, distinct assigned projects, known and missing work-log hours, earliest log date, latest log date, and formatted tenure. Include employees with no department where they have assignments. Keep chains with at least one logged hour or at least one missing log-hour value. Sort by department, project count descending, and employee name; return the first 15 rows.",
       "difficulty": "Extreme",
       "type": "sql-query",
-      "examEligible": true,
+
       "provenance": "sql-cheat-sheet(2).md; Pasted text(2).txt (requested examination specification)",
       "contentVersion": 1,
       "datasetId": "sql-enterprise-graph",
@@ -383,7 +383,7 @@
       "instructions": "Produce one row per faculty, course and section, including sections with no enrolments. Show lecturer and supervisor names, distinct student count, known grade count, average grade, minimum and maximum registration dates, total known tuition, and the number of distinct students whose mentor belongs to the lecturer's supervisory chain. Exclude sections beginning before 2025; retain groups with no students or at least two students with known grades. Sort by faculty, course code and average grade descending NULLS LAST.",
       "difficulty": "Extreme",
       "type": "sql-query",
-      "examEligible": true,
+
       "provenance": "sql-cheat-sheet(2).md; Pasted text(2).txt (requested examination specification)",
       "contentVersion": 1,
       "datasetId": "sql-campus-network",
@@ -404,7 +404,7 @@
       "instructions": "For each employee-manager-manager's-manager chain with at least one project assignment, report employee identity, manager identity, senior manager identity, department, distinct assigned projects, known and missing work-log hours, earliest log date, latest log date, and formatted tenure. Include employees with no department where they have assignments. Keep chains with at least one logged hour or at least one missing log-hour value. Sort by department, project count descending, and employee name; return the first 15 rows.",
       "difficulty": "Extreme",
       "type": "sql-query",
-      "examEligible": true,
+
       "provenance": "sql-cheat-sheet(2).md; Pasted text(2).txt (requested examination specification)",
       "contentVersion": 1,
       "datasetId": "sql-enterprise-graph",
@@ -425,7 +425,7 @@
       "instructions": "Produce one row per faculty, course and section, including sections with no enrolments. Show lecturer and supervisor names, distinct student count, known grade count, average grade, minimum and maximum registration dates, total known tuition, and the number of distinct students whose mentor belongs to the lecturer's supervisory chain. Exclude sections beginning before 2025; retain groups with no students or at least two students with known grades. Sort by faculty, course code and average grade descending NULLS LAST.",
       "difficulty": "Extreme",
       "type": "sql-query",
-      "examEligible": true,
+
       "provenance": "sql-cheat-sheet(2).md; Pasted text(2).txt (requested examination specification)",
       "contentVersion": 1,
       "datasetId": "sql-campus-network",
@@ -446,7 +446,7 @@
       "instructions": "For each employee-manager-manager's-manager chain with at least one project assignment, report employee identity, manager identity, senior manager identity, department, distinct assigned projects, known and missing work-log hours, earliest log date, latest log date, and formatted tenure. Include employees with no department where they have assignments. Keep chains with at least one logged hour or at least one missing log-hour value. Sort by department, project count descending, and employee name; return the first 15 rows.",
       "difficulty": "Extreme",
       "type": "sql-query",
-      "examEligible": true,
+
       "provenance": "sql-cheat-sheet(2).md; Pasted text(2).txt (requested examination specification)",
       "contentVersion": 1,
       "datasetId": "sql-enterprise-graph",
@@ -467,7 +467,7 @@
       "instructions": "Produce one row per faculty, course and section, including sections with no enrolments. Show lecturer and supervisor names, distinct student count, known grade count, average grade, minimum and maximum registration dates, total known tuition, and the number of distinct students whose mentor belongs to the lecturer's supervisory chain. Exclude sections beginning before 2025; retain groups with no students or at least two students with known grades. Sort by faculty, course code and average grade descending NULLS LAST.",
       "difficulty": "Extreme",
       "type": "sql-query",
-      "examEligible": true,
+
       "provenance": "sql-cheat-sheet(2).md; Pasted text(2).txt (requested examination specification)",
       "contentVersion": 1,
       "datasetId": "sql-campus-network",
@@ -488,7 +488,7 @@
       "instructions": "For each employee-manager-manager's-manager chain with at least one project assignment, report employee identity, manager identity, senior manager identity, department, distinct assigned projects, known and missing work-log hours, earliest log date, latest log date, and formatted tenure. Include employees with no department where they have assignments. Keep chains with at least one logged hour or at least one missing log-hour value. Sort by department, project count descending, and employee name; return the first 15 rows.",
       "difficulty": "Extreme",
       "type": "sql-query",
-      "examEligible": true,
+
       "provenance": "sql-cheat-sheet(2).md; Pasted text(2).txt (requested examination specification)",
       "contentVersion": 1,
       "datasetId": "sql-enterprise-graph",
@@ -509,7 +509,7 @@
       "instructions": "Produce one row per faculty, course and section, including sections with no enrolments. Show lecturer and supervisor names, distinct student count, known grade count, average grade, minimum and maximum registration dates, total known tuition, and the number of distinct students whose mentor belongs to the lecturer's supervisory chain. Exclude sections beginning before 2025; retain groups with no students or at least two students with known grades. Sort by faculty, course code and average grade descending NULLS LAST.",
       "difficulty": "Extreme",
       "type": "sql-query",
-      "examEligible": true,
+
       "provenance": "sql-cheat-sheet(2).md; Pasted text(2).txt (requested examination specification)",
       "contentVersion": 1,
       "datasetId": "sql-campus-network",
@@ -530,7 +530,7 @@
       "instructions": "For each employee-manager-manager's-manager chain with at least one project assignment, report employee identity, manager identity, senior manager identity, department, distinct assigned projects, known and missing work-log hours, earliest log date, latest log date, and formatted tenure. Include employees with no department where they have assignments. Keep chains with at least one logged hour or at least one missing log-hour value. Sort by department, project count descending, and employee name; return the first 15 rows.",
       "difficulty": "Extreme",
       "type": "sql-query",
-      "examEligible": true,
+
       "provenance": "sql-cheat-sheet(2).md; Pasted text(2).txt (requested examination specification)",
       "contentVersion": 1,
       "datasetId": "sql-enterprise-graph",
@@ -551,7 +551,7 @@
       "instructions": "Produce one row per faculty, course and section, including sections with no enrolments. Show lecturer and supervisor names, distinct student count, known grade count, average grade, minimum and maximum registration dates, total known tuition, and the number of distinct students whose mentor belongs to the lecturer's supervisory chain. Exclude sections beginning before 2025; retain groups with no students or at least two students with known grades. Sort by faculty, course code and average grade descending NULLS LAST.",
       "difficulty": "Extreme",
       "type": "sql-query",
-      "examEligible": true,
+
       "provenance": "sql-cheat-sheet(2).md; Pasted text(2).txt (requested examination specification)",
       "contentVersion": 1,
       "datasetId": "sql-campus-network",
@@ -572,7 +572,7 @@
       "instructions": "For each employee-manager-manager's-manager chain with at least one project assignment, report employee identity, manager identity, senior manager identity, department, distinct assigned projects, known and missing work-log hours, earliest log date, latest log date, and formatted tenure. Include employees with no department where they have assignments. Keep chains with at least one logged hour or at least one missing log-hour value. Sort by department, project count descending, and employee name; return the first 15 rows.",
       "difficulty": "Extreme",
       "type": "sql-query",
-      "examEligible": true,
+
       "provenance": "sql-cheat-sheet(2).md; Pasted text(2).txt (requested examination specification)",
       "contentVersion": 1,
       "datasetId": "sql-enterprise-graph",
@@ -593,7 +593,7 @@
       "instructions": "Produce one row per faculty, course and section, including sections with no enrolments. Show lecturer and supervisor names, distinct student count, known grade count, average grade, minimum and maximum registration dates, total known tuition, and the number of distinct students whose mentor belongs to the lecturer's supervisory chain. Exclude sections beginning before 2025; retain groups with no students or at least two students with known grades. Sort by faculty, course code and average grade descending NULLS LAST.",
       "difficulty": "Extreme",
       "type": "sql-query",
-      "examEligible": true,
+
       "provenance": "sql-cheat-sheet(2).md; Pasted text(2).txt (requested examination specification)",
       "contentVersion": 1,
       "datasetId": "sql-campus-network",
@@ -614,7 +614,7 @@
       "instructions": "For each employee-manager-manager's-manager chain with at least one project assignment, report employee identity, manager identity, senior manager identity, department, distinct assigned projects, known and missing work-log hours, earliest log date, latest log date, and formatted tenure. Include employees with no department where they have assignments. Keep chains with at least one logged hour or at least one missing log-hour value. Sort by department, project count descending, and employee name; return the first 15 rows.",
       "difficulty": "Extreme",
       "type": "sql-query",
-      "examEligible": true,
+
       "provenance": "sql-cheat-sheet(2).md; Pasted text(2).txt (requested examination specification)",
       "contentVersion": 1,
       "datasetId": "sql-enterprise-graph",
@@ -635,7 +635,7 @@
       "instructions": "Produce one row per faculty, course and section, including sections with no enrolments. Show lecturer and supervisor names, distinct student count, known grade count, average grade, minimum and maximum registration dates, total known tuition, and the number of distinct students whose mentor belongs to the lecturer's supervisory chain. Exclude sections beginning before 2025; retain groups with no students or at least two students with known grades. Sort by faculty, course code and average grade descending NULLS LAST.",
       "difficulty": "Extreme",
       "type": "sql-query",
-      "examEligible": true,
+
       "provenance": "sql-cheat-sheet(2).md; Pasted text(2).txt (requested examination specification)",
       "contentVersion": 1,
       "datasetId": "sql-campus-network",
@@ -656,7 +656,7 @@
       "instructions": "For each employee-manager-manager's-manager chain with at least one project assignment, report employee identity, manager identity, senior manager identity, department, distinct assigned projects, known and missing work-log hours, earliest log date, latest log date, and formatted tenure. Include employees with no department where they have assignments. Keep chains with at least one logged hour or at least one missing log-hour value. Sort by department, project count descending, and employee name; return the first 15 rows.",
       "difficulty": "Extreme",
       "type": "sql-query",
-      "examEligible": true,
+
       "provenance": "sql-cheat-sheet(2).md; Pasted text(2).txt (requested examination specification)",
       "contentVersion": 1,
       "datasetId": "sql-enterprise-graph",
@@ -677,7 +677,7 @@
       "instructions": "Produce one row per faculty, course and section, including sections with no enrolments. Show lecturer and supervisor names, distinct student count, known grade count, average grade, minimum and maximum registration dates, total known tuition, and the number of distinct students whose mentor belongs to the lecturer's supervisory chain. Exclude sections beginning before 2025; retain groups with no students or at least two students with known grades. Sort by faculty, course code and average grade descending NULLS LAST.",
       "difficulty": "Extreme",
       "type": "sql-query",
-      "examEligible": true,
+
       "provenance": "sql-cheat-sheet(2).md; Pasted text(2).txt (requested examination specification)",
       "contentVersion": 1,
       "datasetId": "sql-campus-network",
@@ -698,7 +698,7 @@
       "instructions": "For each employee-manager-manager's-manager chain with at least one project assignment, report employee identity, manager identity, senior manager identity, department, distinct assigned projects, known and missing work-log hours, earliest log date, latest log date, and formatted tenure. Include employees with no department where they have assignments. Keep chains with at least one logged hour or at least one missing log-hour value. Sort by department, project count descending, and employee name; return the first 15 rows.",
       "difficulty": "Extreme",
       "type": "sql-query",
-      "examEligible": true,
+
       "provenance": "sql-cheat-sheet(2).md; Pasted text(2).txt (requested examination specification)",
       "contentVersion": 1,
       "datasetId": "sql-enterprise-graph",
@@ -719,7 +719,7 @@
       "instructions": "Produce one row per faculty, course and section, including sections with no enrolments. Show lecturer and supervisor names, distinct student count, known grade count, average grade, minimum and maximum registration dates, total known tuition, and the number of distinct students whose mentor belongs to the lecturer's supervisory chain. Exclude sections beginning before 2025; retain groups with no students or at least two students with known grades. Sort by faculty, course code and average grade descending NULLS LAST.",
       "difficulty": "Extreme",
       "type": "sql-query",
-      "examEligible": true,
+
       "provenance": "sql-cheat-sheet(2).md; Pasted text(2).txt (requested examination specification)",
       "contentVersion": 1,
       "datasetId": "sql-campus-network",
@@ -740,7 +740,7 @@
       "instructions": "For each employee-manager-manager's-manager chain with at least one project assignment, report employee identity, manager identity, senior manager identity, department, distinct assigned projects, known and missing work-log hours, earliest log date, latest log date, and formatted tenure. Include employees with no department where they have assignments. Keep chains with at least one logged hour or at least one missing log-hour value. Sort by department, project count descending, and employee name; return the first 15 rows.",
       "difficulty": "Extreme",
       "type": "sql-query",
-      "examEligible": true,
+
       "provenance": "sql-cheat-sheet(2).md; Pasted text(2).txt (requested examination specification)",
       "contentVersion": 1,
       "datasetId": "sql-enterprise-graph",
@@ -761,7 +761,7 @@
       "instructions": "Produce one row per faculty, course and section, including sections with no enrolments. Show lecturer and supervisor names, distinct student count, known grade count, average grade, minimum and maximum registration dates, total known tuition, and the number of distinct students whose mentor belongs to the lecturer's supervisory chain. Exclude sections beginning before 2025; retain groups with no students or at least two students with known grades. Sort by faculty, course code and average grade descending NULLS LAST.",
       "difficulty": "Extreme",
       "type": "sql-query",
-      "examEligible": true,
+
       "provenance": "sql-cheat-sheet(2).md; Pasted text(2).txt (requested examination specification)",
       "contentVersion": 1,
       "datasetId": "sql-campus-network",
@@ -782,7 +782,7 @@
       "instructions": "For each employee-manager-manager's-manager chain with at least one project assignment, report employee identity, manager identity, senior manager identity, department, distinct assigned projects, known and missing work-log hours, earliest log date, latest log date, and formatted tenure. Include employees with no department where they have assignments. Keep chains with at least one logged hour or at least one missing log-hour value. Sort by department, project count descending, and employee name; return the first 15 rows.",
       "difficulty": "Extreme",
       "type": "sql-query",
-      "examEligible": true,
+
       "provenance": "sql-cheat-sheet(2).md; Pasted text(2).txt (requested examination specification)",
       "contentVersion": 1,
       "datasetId": "sql-enterprise-graph",
@@ -803,7 +803,7 @@
       "instructions": "Produce one row per faculty, course and section, including sections with no enrolments. Show lecturer and supervisor names, distinct student count, known grade count, average grade, minimum and maximum registration dates, total known tuition, and the number of distinct students whose mentor belongs to the lecturer's supervisory chain. Exclude sections beginning before 2025; retain groups with no students or at least two students with known grades. Sort by faculty, course code and average grade descending NULLS LAST.",
       "difficulty": "Extreme",
       "type": "sql-query",
-      "examEligible": true,
+
       "provenance": "sql-cheat-sheet(2).md; Pasted text(2).txt (requested examination specification)",
       "contentVersion": 1,
       "datasetId": "sql-campus-network",
@@ -824,7 +824,7 @@
       "instructions": "For each employee-manager-manager's-manager chain with at least one project assignment, report employee identity, manager identity, senior manager identity, department, distinct assigned projects, known and missing work-log hours, earliest log date, latest log date, and formatted tenure. Include employees with no department where they have assignments. Keep chains with at least one logged hour or at least one missing log-hour value. Sort by department, project count descending, and employee name; return the first 15 rows.",
       "difficulty": "Extreme",
       "type": "sql-query",
-      "examEligible": true,
+
       "provenance": "sql-cheat-sheet(2).md; Pasted text(2).txt (requested examination specification)",
       "contentVersion": 1,
       "datasetId": "sql-enterprise-graph",
@@ -845,7 +845,7 @@
       "instructions": "Produce one row per faculty, course and section, including sections with no enrolments. Show lecturer and supervisor names, distinct student count, known grade count, average grade, minimum and maximum registration dates, total known tuition, and the number of distinct students whose mentor belongs to the lecturer's supervisory chain. Exclude sections beginning before 2025; retain groups with no students or at least two students with known grades. Sort by faculty, course code and average grade descending NULLS LAST.",
       "difficulty": "Extreme",
       "type": "sql-query",
-      "examEligible": true,
+
       "provenance": "sql-cheat-sheet(2).md; Pasted text(2).txt (requested examination specification)",
       "contentVersion": 1,
       "datasetId": "sql-campus-network",

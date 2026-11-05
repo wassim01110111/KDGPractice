@@ -78,7 +78,7 @@
       "instructions": "Select the one correct answer. What is the primary purpose of a Database Management System (DBMS)?",
       "difficulty": "Easy",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "sql_theory.md",
       "contentVersion": 1,
       "options": [
@@ -98,7 +98,7 @@
       "instructions": "Select all correct answers. Which are benefits of the database approach described in the course?",
       "difficulty": "Easy",
       "type": "mcq-multiple",
-      "examEligible": true,
+
       "provenance": "sql_theory.md",
       "contentVersion": 1,
       "options": [
@@ -118,7 +118,7 @@
       "instructions": "Select all correct answers. Which statements describe properties of relational tables?",
       "difficulty": "Easy",
       "type": "mcq-multiple",
-      "examEligible": true,
+
       "provenance": "sql_theory.md",
       "contentVersion": 1,
       "options": [
@@ -138,7 +138,7 @@
       "instructions": "Select all correct answers. Which statements correctly describe these terms?",
       "difficulty": "Easy",
       "type": "mcq-multiple",
-      "examEligible": true,
+
       "provenance": "sql_theory.md",
       "contentVersion": 1,
       "options": [
@@ -158,7 +158,7 @@
       "instructions": "Select the one correct answer. What is the main purpose of a primary key?",
       "difficulty": "Easy",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "sql_theory.md",
       "contentVersion": 1,
       "options": [
@@ -178,7 +178,7 @@
       "instructions": "Select all correct answers. Which statements about choosing a primary key are supported by the course material?",
       "difficulty": "Medium",
       "type": "mcq-multiple",
-      "examEligible": true,
+
       "provenance": "sql_theory.md",
       "contentVersion": 1,
       "options": [
@@ -198,7 +198,7 @@
       "instructions": "Select all correct answers. Which statements about foreign keys are correct according to the course?",
       "difficulty": "Easy",
       "type": "mcq-multiple",
-      "examEligible": true,
+
       "provenance": "sql_theory.md",
       "contentVersion": 1,
       "options": [
@@ -218,7 +218,7 @@
       "instructions": "Select all correct answers. Which multiplicity definitions are correct?",
       "difficulty": "Medium",
       "type": "mcq-multiple",
-      "examEligible": true,
+
       "provenance": "sql_theory.md",
       "contentVersion": 1,
       "options": [
@@ -238,7 +238,7 @@
       "instructions": "Select the one correct answer. Which sequence follows the modeling chain presented in the course?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "sql_theory.md",
       "contentVersion": 1,
       "options": [
@@ -258,7 +258,7 @@
       "instructions": "Select all correct answers. Which statements distinguish the Logical Data Model from the Physical Data Model?",
       "difficulty": "Medium",
       "type": "mcq-multiple",
-      "examEligible": true,
+
       "provenance": "sql_theory.md",
       "contentVersion": 1,
       "options": [
@@ -278,7 +278,7 @@
       "instructions": "Select all correct answers. Which responsibilities are correctly matched to the database roles?",
       "difficulty": "Easy",
       "type": "mcq-multiple",
-      "examEligible": true,
+
       "provenance": "sql_theory.md",
       "contentVersion": 1,
       "options": [
@@ -298,7 +298,7 @@
       "instructions": "Select all correct answers. Which statements correctly describe relational database terminology?",
       "difficulty": "Medium",
       "type": "mcq-multiple",
-      "examEligible": true,
+
       "provenance": "sql_theory.md",
       "contentVersion": 1,
       "options": [
@@ -318,7 +318,7 @@
       "instructions": "Select the one correct answer. What does it mean that SQL is a declarative language?",
       "difficulty": "Easy",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "sql_theory.md",
       "contentVersion": 1,
       "options": [
@@ -338,7 +338,7 @@
       "instructions": "Select all correct answers. Which SQL commands are correctly assigned to their subcategories in the course?",
       "difficulty": "Easy",
       "type": "mcq-multiple",
-      "examEligible": true,
+
       "provenance": "sql_theory.md",
       "contentVersion": 1,
       "options": [
@@ -358,7 +358,7 @@
       "instructions": "Select all correct answers. According to the course, how can SQL be used?",
       "difficulty": "Easy",
       "type": "mcq-multiple",
-      "examEligible": true,
+
       "provenance": "sql_theory.md",
       "contentVersion": 1,
       "options": [
@@ -378,7 +378,7 @@
       "instructions": "Select the one correct answer. What can PostgreSQL do with SELECT when no FROM clause is present?",
       "difficulty": "Easy",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "sql_theory.md",
       "contentVersion": 1,
       "options": [
@@ -398,7 +398,7 @@
       "instructions": "Select all correct answers. Which statements about the logical execution order are correct?",
       "difficulty": "Medium",
       "type": "mcq-multiple",
-      "examEligible": true,
+
       "provenance": "sql_theory.md",
       "contentVersion": 1,
       "options": [
@@ -418,7 +418,7 @@
       "instructions": "Select the one correct answer. According to the course material, how are literal text comparisons evaluated?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "sql_theory.md",
       "contentVersion": 1,
       "options": [
@@ -438,7 +438,7 @@
       "instructions": "Select all correct answers. Which statements about type conversion are correct?",
       "difficulty": "Medium",
       "type": "mcq-multiple",
-      "examEligible": true,
+
       "provenance": "sql_theory.md",
       "contentVersion": 1,
       "options": [
@@ -458,7 +458,7 @@
       "instructions": "Select the one correct answer. What does the DateStyle setting influence in PostgreSQL?",
       "difficulty": "Easy",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "sql_theory.md",
       "contentVersion": 1,
       "options": [
@@ -478,7 +478,7 @@
       "instructions": "Select all correct answers. Which statements about numeric TO_CHAR format modifiers are correct?",
       "difficulty": "Medium",
       "type": "mcq-multiple",
-      "examEligible": true,
+
       "provenance": "sql_theory.md",
       "contentVersion": 1,
       "options": [
@@ -498,7 +498,7 @@
       "instructions": "Select the one correct answer. What is the main difference between ROUND() and TRUNC()?",
       "difficulty": "Easy",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "sql_theory.md",
       "contentVersion": 1,
       "options": [
@@ -518,7 +518,7 @@
       "instructions": "Select all correct answers. Which statements about ROUND() and TRUNC() are correct?",
       "difficulty": "Medium",
       "type": "mcq-multiple",
-      "examEligible": true,
+
       "provenance": "sql_theory.md",
       "contentVersion": 1,
       "options": [
@@ -538,7 +538,7 @@
       "instructions": "Select the one correct answer. What does MOD(y, x) return?",
       "difficulty": "Easy",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "sql_theory.md",
       "contentVersion": 1,
       "options": [
@@ -558,7 +558,7 @@
       "instructions": "Select the one correct answer. Table A contains 4 rows and Table B contains 3 rows. If both tables are included in the FROM clause without a join condition, how many row combinations are produced?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "sql_theory.md",
       "contentVersion": 1,
       "options": [
@@ -578,7 +578,7 @@
       "instructions": "Select all correct answers. Two joined tables both contain a column named department_id. Which statements are correct?",
       "difficulty": "Medium",
       "type": "mcq-multiple",
-      "examEligible": true,
+
       "provenance": "sql_theory.md",
       "contentVersion": 1,
       "options": [
@@ -598,7 +598,7 @@
       "instructions": "Select all correct answers. Which statements about NATURAL JOIN and USING match the course material?",
       "difficulty": "Medium",
       "type": "mcq-multiple",
-      "examEligible": true,
+
       "provenance": "sql_theory.md",
       "contentVersion": 1,
       "options": [
@@ -618,7 +618,7 @@
       "instructions": "Select the one correct answer. Why does PostgreSQL reject directly nesting aggregate functions such as AVG(MAX(salary))?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "sql_theory.md",
       "contentVersion": 1,
       "options": [

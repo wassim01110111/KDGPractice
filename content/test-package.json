@@ -17,7 +17,7 @@
       "instructions": "Show the names of all employees in the IT department, sorted alphabetically.",
       "difficulty": "Easy",
       "type": "sql-query",
-      "examEligible": true,
+
       "provenance": "test fixture, not course content",
       "contentVersion": 1,
       "datasetId": "test-people",
@@ -25,9 +25,7 @@
       "orderMatters": true,
       "compareColumnNames": false,
       "columnOrderMatters": true,
-      "hints": [
-        "Filter with WHERE, then sort with ORDER BY."
-      ],
+      "hints": ["Filter with WHERE, then sort with ORDER BY."],
       "explanation": "WHERE filters rows; ORDER BY sorts them."
     },
     "test-sql-002": {
@@ -37,7 +35,7 @@
       "instructions": "Show each department and its average salary. Departments may appear in any order.",
       "difficulty": "Medium",
       "type": "sql-query",
-      "examEligible": true,
+
       "provenance": "test fixture, not course content",
       "contentVersion": 1,
       "datasetId": "test-people",
@@ -54,18 +52,11 @@
       "instructions": "Which command lists the files in a directory?",
       "difficulty": "Easy",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "test fixture, not course content",
       "contentVersion": 1,
-      "options": [
-        "cd",
-        "ls",
-        "pwd",
-        "cat"
-      ],
-      "expected": [
-        1
-      ],
+      "options": ["cd", "ls", "pwd", "cat"],
+      "expected": [1],
       "explanation": "ls lists directory contents."
     },
     "test-os-002": {
@@ -75,16 +66,12 @@
       "instructions": "Type the command that prints the current working directory.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "test fixture, not course content",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "pwd"
-        ],
-        "patterns": [
-          "^pwd\\s+-[LP]$"
-        ]
+        "accepted": ["pwd"],
+        "patterns": ["^pwd\\s+-[LP]$"]
       }
     },
     "test-os-003": {
@@ -94,16 +81,12 @@
       "instructions": "Type a command that searches for the word 'error' in the file log.txt.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": false,
+
       "provenance": "test fixture, not course content",
       "contentVersion": 1,
       "expected": {
-        "accepted": [
-          "grep error log.txt"
-        ],
-        "patterns": [
-          "^grep\\s+(-\\w+\\s+)*['\"]?error['\"]?\\s+log\\.txt$"
-        ]
+        "accepted": ["grep error log.txt"],
+        "patterns": ["^grep\\s+(-\\w+\\s+)*['\"]?error['\"]?\\s+log\\.txt$"]
       }
     }
   }

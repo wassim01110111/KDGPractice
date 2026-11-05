@@ -12,7 +12,7 @@
       "instructions": "Write the command to print your current working directory.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -29,7 +29,7 @@
       "instructions": "Write the command that displays the effective username of the current shell session.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -50,7 +50,7 @@
       "instructions": "Write the command to display the current date and time.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -67,7 +67,7 @@
       "instructions": "Write the command to show a numbered list of previously executed commands.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -84,7 +84,7 @@
       "instructions": "Write the command to open the manual page for the `ls` command.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -101,7 +101,7 @@
       "instructions": "What type of path starts explicitly with the root slash `/`?",
       "difficulty": "Easy",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": ["Absolute path", "Relative path", "Inode path", "Shell path"],
@@ -116,7 +116,7 @@
       "instructions": "Write the command to show a long directory listing with each entry’s inode number.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -138,7 +138,7 @@
       "instructions": "In relative pathing, what symbol represents the parent directory?",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -155,7 +155,7 @@
       "instructions": "What symbol represents the current directory in relative paths?",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -172,7 +172,7 @@
       "instructions": "Write the command to list file names with their inode numbers in long format.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -193,7 +193,7 @@
       "instructions": "Write the command to print your user ID and group IDs.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -210,7 +210,7 @@
       "instructions": "Write a command to list all files (including hidden ones) in long format for the `/etc` directory by combining `-l` and `-a` into a single combined option string.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -241,7 +241,7 @@
       "instructions": "Write the shell shorthand symbol used to repeat the immediately preceding command.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -258,7 +258,7 @@
       "instructions": "Write a single-line command sequence using a semicolon to change directory to `/tmp` and then list its contents.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -275,7 +275,7 @@
       "instructions": "Write a brace expansion expression with `touch` to create three files named `log1.txt`, `log2.txt`, and `log3.txt` in one command.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -295,7 +295,7 @@
       "instructions": "Write a command using `mkdir -p` and brace expansion to create a directory structure `project/src`, `project/docs`, and `project/tests` all at once.",
       "difficulty": "Hard",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -318,7 +318,7 @@
       "instructions": "Write the command or shortcut key sequence to exit the current shell session.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -343,7 +343,7 @@
       "instructions": "In Bash, write the history expansion that reruns command number 3 from the current history list.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -360,7 +360,7 @@
       "instructions": "Write an `echo` command to print the value of a shell variable `USER`.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -381,7 +381,7 @@
       "instructions": "Write the standard prefix formatting (number of dashes) for long options in Linux commands.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -398,7 +398,7 @@
       "instructions": "Write a brace expansion expression to echo letters `a`, `b`, and `c` separated by spaces.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -418,7 +418,7 @@
       "instructions": "Write a wildcard pattern to match any filename ending in `.txt`.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -435,7 +435,7 @@
       "instructions": "Write a wildcard pattern to match `file1.txt`, `file2.txt`, etc., where exactly one single character replaces the question mark in `file?.txt`.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -452,7 +452,7 @@
       "instructions": "Write a wildcard pattern using brackets to match files starting with `a`, `b`, or `c` followed by anything.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -469,7 +469,7 @@
       "instructions": "Write a Bash filename-glob pattern that matches names whose first character is not a digit from 0 through 9.",
       "difficulty": "Hard",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -486,7 +486,7 @@
       "instructions": "Write a Bash filename-glob pattern that matches a name beginning with `log`, followed by exactly one digit, followed by `.txt`.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -506,7 +506,7 @@
       "instructions": "True or False: Standard wildcards like `*` match leading dots, so they automatically match hidden files without explicit notation.",
       "difficulty": "Easy",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": ["False", "True"],
@@ -523,7 +523,7 @@
       "instructions": "Write a brace expansion expression to generate letters `a` through `c`.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -540,7 +540,7 @@
       "instructions": "Write a brace expansion expression to generate `file1.txt` and `file2.txt`.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -560,7 +560,7 @@
       "instructions": "Write a `ls` command using a wildcard to list all `.log` files in the current directory.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -577,7 +577,7 @@
       "instructions": "Write a wildcard pattern matching any single lowercase letter from `a` to `z` followed by `.txt`.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -597,7 +597,7 @@
       "instructions": "Write an `ls` command using a wildcard to list files starting with `a`.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -614,7 +614,7 @@
       "instructions": "Write an `ls` command using `?` to list files named `fileX.txt` where `X` is any single character.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -631,7 +631,7 @@
       "instructions": "Which wildcard symbol matches any number of characters, including zero characters?",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -648,7 +648,7 @@
       "instructions": "Write the command to change your current directory to your home directory.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -670,7 +670,7 @@
       "instructions": "Write the command to return to the previous directory you were in.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -687,7 +687,7 @@
       "instructions": "Write the command to move up one directory level.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -704,7 +704,7 @@
       "instructions": "Write the `ls` command to list directory contents in long format.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -721,7 +721,7 @@
       "instructions": "Write the `ls` command that lists every entry, including hidden entries and the special `.` and `..` entries.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -738,7 +738,7 @@
       "instructions": "Write the command to list the attributes and details of the `/etc` directory itself rather than its contents.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -760,7 +760,7 @@
       "instructions": "Which `ls` option recursively lists the contents of subdirectories? Give the option only (for example, `-R`).",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -782,7 +782,7 @@
       "instructions": "Which `ls` option makes file sizes human-readable (for example, KiB or MiB) when combined with `-l`? Give the option only.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -806,7 +806,7 @@
       "instructions": "Write the `date` command option to format output as `YYYY-MM-DD` (using `%F`).",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -823,7 +823,7 @@
       "instructions": "What key do you press to quit out of a `man` manual page view?",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -840,7 +840,7 @@
       "instructions": "Which symbol/character do you type inside `man` to start searching for text?",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -857,7 +857,7 @@
       "instructions": "Write the command to change your directory to the topmost root directory `/`.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -874,7 +874,7 @@
       "instructions": "Write an `ls` command that combines long format, hidden files, and human-readable sizes.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -902,7 +902,7 @@
       "instructions": "Which `ls` option forces one entry per line? Give the option only.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -924,7 +924,7 @@
       "instructions": "Which command prints the absolute path of the current working directory?",
       "difficulty": "Easy",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": ["pwd", "cwd", "dir", "path"],
@@ -939,7 +939,7 @@
       "instructions": "Write an `ls` command to list the contents of `/var/log` in long format.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -960,7 +960,7 @@
       "instructions": "Write the command to determine the type of a file named `document.pdf`.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -980,7 +980,7 @@
       "instructions": "Write the command to display detailed metadata (size, inode, permissions, timestamps) for `notes.txt`.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -1000,7 +1000,7 @@
       "instructions": "Write the command to print the entire contents of `notes.txt` to the terminal screen.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -1020,7 +1020,7 @@
       "instructions": "Write the command to display the first 5 lines of `notes.txt`.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -1042,7 +1042,7 @@
       "instructions": "Write the command to display the last 20 lines of `logfile.txt`.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -1064,7 +1064,7 @@
       "instructions": "Which `tail` option continuously follows a growing file and prints newly appended lines? Give the option (`-f` or its long form); including `tail` is also acceptable.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -1087,7 +1087,7 @@
       "instructions": "Which command starts the `less` pager, which supports forward and backward scrolling and searching? Give the command name only; no filename is specified.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -1106,7 +1106,7 @@
       "instructions": "Write the command to count the number of lines, words, and bytes in `notes.txt`.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -1127,7 +1127,7 @@
       "instructions": "Write the command to count strictly the number of lines in `notes.txt`.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -1148,7 +1148,7 @@
       "instructions": "Which pair of `wc` options counts bytes and characters, respectively, including when text contains non-ASCII characters?",
       "difficulty": "Hard",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": [
@@ -1168,7 +1168,7 @@
       "instructions": "Write a `cat` command that combines and prints the contents of `a.txt` and `b.txt` together.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -1188,7 +1188,7 @@
       "instructions": "Write a `head` command to display the first 10 lines of `data.txt`. You may use the default line count or specify 10 explicitly.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -1214,7 +1214,7 @@
       "instructions": "Write the key pressed inside `less` or `man` to quit the view.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -1231,7 +1231,7 @@
       "instructions": "Write a `tail` command to display the last 10 lines of `data.txt`. You may use the default line count or specify 10 explicitly.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -1257,7 +1257,7 @@
       "instructions": "Which inspection command allows scrolling both forward and backward through a file?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": ["cat", "more", "less", "head"],
@@ -1272,7 +1272,7 @@
       "instructions": "Write the command to create a new directory named `archive`.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -1292,7 +1292,7 @@
       "instructions": "Which `mkdir` option creates missing parent directories and does not fail just because a directory already exists? Give the option only.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -1313,7 +1313,7 @@
       "instructions": "Write the command to create an empty file named `empty.txt` or update its timestamp.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -1333,7 +1333,7 @@
       "instructions": "Write the command to copy `source.txt` to `backup.txt`.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -1353,7 +1353,7 @@
       "instructions": "Which `cp` option enables recursive copying of a directory tree? Give the option only.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -1375,7 +1375,7 @@
       "instructions": "Which `cp` option prompts before overwriting an existing destination file? Give the option only.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -1396,7 +1396,7 @@
       "instructions": "Write the command to rename `old.txt` to `new.txt`.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -1416,7 +1416,7 @@
       "instructions": "Which `mv` option prompts before overwriting an existing destination file? Give the option only.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -1437,7 +1437,7 @@
       "instructions": "Write the command to delete a file named `temp.txt`.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -1457,7 +1457,7 @@
       "instructions": "Write the command with options to delete a directory named `old_dir` and all its contents recursively.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -1481,7 +1481,7 @@
       "instructions": "Which `rm` option forces removal without prompting and ignores nonexistent-file errors? Give the option only.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -1498,7 +1498,7 @@
       "instructions": "Write the command specifically used to remove an **empty** directory.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -1515,7 +1515,7 @@
       "instructions": "Write a `cp` command to copy `a.txt` and `b.txt` into an existing directory `backup/`.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -1536,7 +1536,7 @@
       "instructions": "Write a `mv` command to move `report.txt` into the `docs/` directory.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -1556,7 +1556,7 @@
       "instructions": "True or False: Linux command-line deletion via `rm` moves deleted files to a temporary desktop recycle bin.",
       "difficulty": "Easy",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": ["False", "True"],
@@ -1571,7 +1571,7 @@
       "instructions": "Write a `touch` command to create two empty files `one.txt` and `two.txt` simultaneously.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -1592,7 +1592,7 @@
       "instructions": "Write a `mkdir` command to create `project/src/core` in a single command.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -1612,7 +1612,7 @@
       "instructions": "Write the complete command to copy directory `dir1` to `dir2` recursively.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -1633,7 +1633,7 @@
       "instructions": "Which `rm` option asks for confirmation before removing each file? Give the option only.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -1654,7 +1654,7 @@
       "instructions": "Write a `touch` command to update the modification timestamp of `existing.txt` without changing its contents.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -1674,7 +1674,7 @@
       "instructions": "Write the `echo` command to print `Hello World` to standard output.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -1695,7 +1695,7 @@
       "instructions": "Which `echo` option enables interpretation of backslash escape sequences such as `\\n`? Give the option only.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -1712,7 +1712,7 @@
       "instructions": "Write a `cut` command to extract the first column/field from `/etc/passwd` using `:` as the delimiter.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -1739,7 +1739,7 @@
       "instructions": "Which `sort` option sorts numbers numerically instead of lexicographically? Give the option only.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -1760,7 +1760,7 @@
       "instructions": "Which `sort` option reverses the sort order? Give the option only.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -1781,7 +1781,7 @@
       "instructions": "Which `uniq` option displays each line with its occurrence count? Give the option only.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -1798,7 +1798,7 @@
       "instructions": "Which `uniq` option outputs only lines that occur more than once? Give the option only.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -1819,7 +1819,7 @@
       "instructions": "Write a `tr` command to translate all lowercase letters to uppercase from standard input.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -1840,7 +1840,7 @@
       "instructions": "Which `tr` option deletes the specified characters from the input? Give the option only.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -1857,7 +1857,7 @@
       "instructions": "Write a command using `tee` to save standard output to `output.txt` while also displaying it on screen.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -1877,7 +1877,7 @@
       "instructions": "Which `tee` option appends to the output file instead of overwriting it? Give the option only.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -1894,7 +1894,7 @@
       "instructions": "True or False: `uniq` only collapses **consecutive** duplicate lines, so sorting the input first is typically required.",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": ["True", "False"],
@@ -1909,7 +1909,7 @@
       "instructions": "Write a command to display all running processes in a user-oriented process listing.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -1926,7 +1926,7 @@
       "instructions": "Write a `sort` command to sort `numbers.txt` in numeric order.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -1947,7 +1947,7 @@
       "instructions": "Which `tr` option squeezes repeated characters into a single occurrence? Give the option only.",
       "difficulty": "Hard",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -1968,7 +1968,7 @@
       "instructions": "Write a command to redirect standard output of `ls` into `list.txt`, overwriting the file.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -1989,7 +1989,7 @@
       "instructions": "Write a command to append the output of `date` to `log.txt` without overwriting existing content.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -2010,7 +2010,7 @@
       "instructions": "Write a command that lists a path which does not exist (/doesnotexist) and saves the resulting error message in `error.txt`.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -2030,7 +2030,7 @@
       "instructions": "Write a redirection syntax to discard all standard error messages by sending them to `/dev/null`.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -2047,7 +2047,7 @@
       "instructions": "Write a Bash command that searches `/etc` for a file named `passwd` and redirects both standard output and standard error into `all_output.log`.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -2068,7 +2068,7 @@
       "instructions": "Write a command using `<` to sort contents of `unsorted.txt` and save to `sorted.txt`.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -2088,7 +2088,7 @@
       "instructions": "Write a command using a pipe to count the number of entries listed by `ls`.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -2105,7 +2105,7 @@
       "instructions": "What is the numeric file descriptor number for standard error?",
       "difficulty": "Easy",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": ["0", "1", "2", "3"],
@@ -2120,7 +2120,7 @@
       "instructions": "What special file acts as a bit bucket that discards everything written to it?",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -2137,7 +2137,7 @@
       "instructions": "Write the redirection fragment that sends standard error to the same destination as standard output.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -2154,7 +2154,7 @@
       "instructions": "True or False: A pipe (`|`) connects the stdout of one command to the stdin of another command, whereas redirection connects a command to a file.",
       "difficulty": "Easy",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": ["True", "False"],
@@ -2169,7 +2169,7 @@
       "instructions": "Write the portable command syntax to send both stdout and stderr of `cmd` to `out.txt` without using `&>`.",
       "difficulty": "Hard",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -2189,7 +2189,7 @@
       "instructions": "What is the numeric file descriptor number for standard input?",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -2206,7 +2206,7 @@
       "instructions": "What is the numeric file descriptor number for standard output?",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -2223,7 +2223,7 @@
       "instructions": "True or False: Using `>` empties the target file before the command runs.",
       "difficulty": "Easy",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": ["True", "False"],
@@ -2238,7 +2238,7 @@
       "instructions": "Write the command to create a symbolic (soft) link named `soft.txt` pointing to `target.txt`.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -2258,7 +2258,7 @@
       "instructions": "Write the command to create a hard link named `hard.txt` pointing to `target.txt`.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -2278,7 +2278,7 @@
       "instructions": "True or False: A hard link shares the exact same inode number as the original file.",
       "difficulty": "Easy",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": ["True", "False"],
@@ -2293,7 +2293,7 @@
       "instructions": "True or False: A symbolic link stores a path (text) pointing to the target, whereas a hard link points directly to an inode.",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": ["True", "False"],
@@ -2308,7 +2308,7 @@
       "instructions": "True or False: Hard links can span across different disk partitions and file systems.",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": ["True", "False"],
@@ -2323,7 +2323,7 @@
       "instructions": "True or False: Standard users can create hard links to directories.",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": ["True", "False"],
@@ -2338,7 +2338,7 @@
       "instructions": "What happens to a symbolic link if its original target file is deleted?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": [0],
@@ -2357,7 +2357,7 @@
       "instructions": "What happens to a hard link if its original filename is deleted?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": [0],
@@ -2376,7 +2376,7 @@
       "instructions": "Write a command to create a symbolic link named `hosts_link` in `/tmp/links` that points to `/etc/hosts`.",
       "difficulty": "Hard",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -2396,7 +2396,7 @@
       "instructions": "Which `ls` option displays inode numbers alongside filenames? Give the option only.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -2413,7 +2413,7 @@
       "instructions": "When listing files with `ls -l`, what letter starts the permissions string for a symbolic link?",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -2430,7 +2430,7 @@
       "instructions": "What does an inode store?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": [0],
@@ -2449,7 +2449,7 @@
       "instructions": "True or False: Single quotes `' '` prevent all shell expansions, including variable expansion and wildcards.",
       "difficulty": "Easy",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": ["True", "False"],
@@ -2464,7 +2464,7 @@
       "instructions": "True or False: Double quotes `\" \"` allow variable expansion and command substitution while preventing wildcard expansion.",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": ["True", "False"],
@@ -2479,7 +2479,7 @@
       "instructions": "Given `name=\"Alice\"`, what does `echo \"Hello $name\"` output?",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -2496,7 +2496,7 @@
       "instructions": "Given `name=\"Alice\"`, what does `echo 'Hello $name'` output?",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -2513,7 +2513,7 @@
       "instructions": "Write a command to create a single file named `my file.txt` with a space using quotes.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -2534,7 +2534,7 @@
       "instructions": "Write a command using quotes around `*` so `echo` literally prints an asterisk `*` instead of expanding filenames.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -2551,7 +2551,7 @@
       "instructions": "True or False: A single-quoted string can contain a literal single quote inside it if you just use standard typing.",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": ["True", "False"],
@@ -2566,7 +2566,7 @@
       "instructions": "Write an `echo` command that prints the text `it's` by escaping the apostrophe outside single quotes.",
       "difficulty": "Hard",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -2583,7 +2583,7 @@
       "instructions": "True or False: Command substitution `$(cmd)` is evaluated inside double quotes but not inside single quotes.",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": ["True", "False"],
@@ -2598,7 +2598,7 @@
       "instructions": "Why must pattern arguments in commands like `find -name \"*.txt\"` be quoted?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": [0],
@@ -2617,7 +2617,7 @@
       "instructions": "What is the primary purpose of quoting in the shell?",
       "difficulty": "Easy",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": [0],
@@ -2636,7 +2636,7 @@
       "instructions": "In a brief phrase, what does execute (`x`) permission on a directory allow a user to do?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 4,
       "expected": [0],
@@ -2656,7 +2656,7 @@
       "instructions": "Write the command to switch user account to `bob` starting a full login shell.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -2677,7 +2677,7 @@
       "instructions": "Write a `sudo` command to start a login shell as `bob` using your own sudo rights.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -2698,7 +2698,7 @@
       "instructions": "Which `useradd` option creates the user's home directory automatically? Give the option only.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -2719,7 +2719,7 @@
       "instructions": "Which `userdel` option also removes the user's home directory and mail spool? Give the option only.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -2736,7 +2736,7 @@
       "instructions": "Which combined `usermod` option adds supplementary groups while preserving existing supplementary memberships? Give the option only.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -2758,7 +2758,7 @@
       "instructions": "Write the command to create a new group named `developers`.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -2778,7 +2778,7 @@
       "instructions": "Write the command to display the groups to which the current user belongs.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -2795,7 +2795,7 @@
       "instructions": "Write the command that displays the current user’s UID, primary GID, and supplementary group memberships.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -2812,7 +2812,7 @@
       "instructions": "Write the command to change your own password.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -2829,7 +2829,7 @@
       "instructions": "Which file stores basic account and user information, one line per user?",
       "difficulty": "Easy",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": [
@@ -2849,7 +2849,7 @@
       "instructions": "Which file stores encrypted password hashes and aging data, readable only by root?",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -2866,7 +2866,7 @@
       "instructions": "What is the mandatory safe tool used to edit `/etc/sudoers` configuration files?",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -2883,7 +2883,7 @@
       "instructions": "Which `usermod` option locks a user's password? Give the option only.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -2900,7 +2900,7 @@
       "instructions": "Which `usermod` option unlocks a user's password? Give the option only.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -2917,7 +2917,7 @@
       "instructions": "Write the command to list password-aging and expiration information for user `alice`.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -2939,7 +2939,7 @@
       "instructions": "Write the command that forces user `alice` to change their password at the next login by setting the last-change date to zero.",
       "difficulty": "Hard",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -2966,7 +2966,7 @@
       "instructions": "Write a command using `chpasswd` to set a user (wassim in group acs103) password non-interactively via pipe.",
       "difficulty": "Hard",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -2986,7 +2986,7 @@
       "instructions": "What is the numeric User ID (UID) of the root superuser account?",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -3003,7 +3003,7 @@
       "instructions": "Which file stores group definitions and member lists?",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -3020,7 +3020,7 @@
       "instructions": "Which command starts a new shell with a different primary group active?",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -3037,7 +3037,7 @@
       "instructions": "Write a `chmod` command using octal notation to set permissions `755` on `script.sh`.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -3058,7 +3058,7 @@
       "instructions": "Write a `chmod` command using symbolic notation to add execute permission for the owner on `script.sh`.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -3078,7 +3078,7 @@
       "instructions": "Write a `chmod` command using symbolic notation to remove write permission from the group on `file.txt`.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -3098,7 +3098,7 @@
       "instructions": "In octal permission values, what numerical value represents read (`r`)?",
       "difficulty": "Easy",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": ["4", "2", "1", "0"],
@@ -3113,7 +3113,7 @@
       "instructions": "In octal permissions, what numerical value represents write (`w`)?",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -3130,7 +3130,7 @@
       "instructions": "In octal permissions, what numerical value represents execute (`x`)?",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -3147,7 +3147,7 @@
       "instructions": "Write the command to change the owner of `file.txt` to `alice`.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -3168,7 +3168,7 @@
       "instructions": "Write the command to change the owner of `file.txt` to `alice` and group to `developers` simultaneously.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -3192,7 +3192,7 @@
       "instructions": "Write the command to change only the group ownership of `file.txt` to `developers`.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -3214,7 +3214,7 @@
       "instructions": "Write the command to display the current umask value.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -3232,7 +3232,7 @@
       "instructions": "In a shared writable directory, what restriction does the sticky bit place on deleting or renaming files?",
       "difficulty": "Hard",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": [0],
@@ -3251,7 +3251,7 @@
       "instructions": "When an executable has SUID set, whose effective user privileges does the process use?",
       "difficulty": "Hard",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": [0],
@@ -3270,7 +3270,7 @@
       "instructions": "When a file is created inside an SGID directory, which group does it normally inherit?",
       "difficulty": "Hard",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": [0],
@@ -3289,7 +3289,7 @@
       "instructions": "What leading octal digit represents the sticky bit when setting permissions with `chmod` (e.g., `1777`)?",
       "difficulty": "Hard",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -3306,7 +3306,7 @@
       "instructions": "What leading octal digit represents the SUID bit?",
       "difficulty": "Hard",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -3323,7 +3323,7 @@
       "instructions": "What leading octal digit represents the SGID bit?",
       "difficulty": "Hard",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -3340,7 +3340,7 @@
       "instructions": "Write a `chmod` command to set permissions `750` recursively on `myfolder/`.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -3360,7 +3360,7 @@
       "instructions": "What octal permission mode corresponds to owner read/write access and no permissions for group or others (`rw-------`)?",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -3382,7 +3382,7 @@
       "instructions": "What three-digit octal mode corresponds to owner read, write, and execute permission and no permissions for group or others (`rwx------`)?",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -3404,7 +3404,7 @@
       "instructions": "If the umask is `022`, what default permission do new regular files receive?",
       "difficulty": "Hard",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -3426,7 +3426,7 @@
       "instructions": "If the umask is `022`, what default permission do new directories receive?",
       "difficulty": "Hard",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -3448,7 +3448,7 @@
       "instructions": "To delete a file within a directory, what permission do you need on the **parent directory**?",
       "difficulty": "Hard",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": [0],
@@ -3467,7 +3467,7 @@
       "instructions": "Write the command to set the umask to `027` for the current shell session.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -3484,7 +3484,7 @@
       "instructions": "Write a `find` command to search your home directory `~` for files named `*.txt` (ensure pattern is quoted).",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -3506,7 +3506,7 @@
       "instructions": "Write a `find` command to search the current directory `.` for directories only (`-type d`).",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -3526,7 +3526,7 @@
       "instructions": "Write a `find` command to search `/var` for regular files only (`-type f`).",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -3546,7 +3546,7 @@
       "instructions": "Write a `find` command to search `/` for filesystem entries owned by user `alice`, suppressing permission errors.",
       "difficulty": "Hard",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -3567,7 +3567,7 @@
       "instructions": "Write a `find` command to search your home directory for files modified more than 7 days ago (`-mtime +7`).",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -3587,7 +3587,7 @@
       "instructions": "Write a `find` command to search your home directory for files modified within the last 10 minutes (`-mmin -10`).",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -3607,7 +3607,7 @@
       "instructions": "Write a `find` command to search `/` for files larger than 100 MiB (`-size +100M`, hiding errors).",
       "difficulty": "Hard",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -3626,7 +3626,7 @@
       "instructions": "In `find` numeric arguments, what does `+n` mean (e.g., `-mtime +7`)?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": [
@@ -3646,7 +3646,7 @@
       "instructions": "In `find` numeric arguments, what does `-n` mean (e.g., `-mmin -10`)?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": [0],
@@ -3665,7 +3665,7 @@
       "instructions": "In the `find -type` test, which single-letter value selects regular files?",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -3682,7 +3682,7 @@
       "instructions": "In the `find -type` test, which single-letter value selects directories?",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -3699,7 +3699,7 @@
       "instructions": "Why must `-name` wildcard patterns like `\"*.txt\"` be quoted when using `find`?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": [0],
@@ -3718,7 +3718,7 @@
       "instructions": "Write a `tar` command to create a compressed gzip archive named `backup.tar.gz` from `myfolder/`.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -3740,7 +3740,7 @@
       "instructions": "Write a `tar` command to extract a gzip tar archive named `backup.tar.gz` in the current directory.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -3762,7 +3762,7 @@
       "instructions": "Write a `tar` command to list the contents of `backup.tar.gz` without extracting it.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -3783,7 +3783,7 @@
       "instructions": "Write only the `tar` option and its directory argument for extracting into `/tmp/restore` (do not write the full `tar` command).",
       "difficulty": "Hard",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -3804,7 +3804,7 @@
       "instructions": "Which `tar` option (short or long form) selects gzip compression? Give the option only.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -3821,7 +3821,7 @@
       "instructions": "Which `tar` option (short or long form) selects bzip2 compression? Give the option only.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -3838,7 +3838,7 @@
       "instructions": "Which `tar` option (short or long form) selects xz compression? Give the option only.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -3855,7 +3855,7 @@
       "instructions": "Write an `scp` command to copy a local file `report.txt` to a remote user `alice` at host `192.168.1.10` into `/home/alice/`.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -3875,7 +3875,7 @@
       "instructions": "Which `scp` option copies a directory recursively? Give the option only.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -3892,7 +3892,7 @@
       "instructions": "Which `tar` operation option creates a new archive? Give the option only.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -3909,7 +3909,7 @@
       "instructions": "Which `tar` operation option extracts an archive? Give the option only.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -3930,7 +3930,7 @@
       "instructions": "Write an `scp` command to copy a remote file `/home/alice/report.txt` from `alice@192.168.1.10` to the current local directory `.`.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -3950,7 +3950,7 @@
       "instructions": "In `tar -czf backup.tar.gz project/`, which argument is the archive filename supplied by the `-f` option?",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "hints": ["Look at the argument that follows `-f`."],
@@ -3967,7 +3967,7 @@
       "instructions": "Write a `tar` command to create an uncompressed archive named `archive.tar` from `folder/`.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -3987,7 +3987,7 @@
       "instructions": "Which capital-letter `scp` option specifies a non-default SSH port? Give the option only.",
       "difficulty": "Hard",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -4004,7 +4004,7 @@
       "instructions": "Which standard top-level directory stores system-wide configuration files?",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -4021,7 +4021,7 @@
       "instructions": "Which standard directory stores temporary files and is world-writable with the sticky bit?",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -4038,7 +4038,7 @@
       "instructions": "Which standard directory stores variable data including system logs in `/var/log`?",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -4055,7 +4055,7 @@
       "instructions": "Which standard directory contains user home directories?",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -4072,7 +4072,7 @@
       "instructions": "What is the home directory path for the `root` superuser?",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -4089,7 +4089,7 @@
       "instructions": "Which standard directory contains ordinary user command binaries in the filesystem hierarchy?",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -4106,7 +4106,7 @@
       "instructions": "Which standard directory contains device files representing hardware and special files like `/dev/null`?",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -4123,7 +4123,7 @@
       "instructions": "Which standard directory stores Linux kernel and boot loader files?",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -4140,7 +4140,7 @@
       "instructions": "Which directory stores runtime state information since boot (PID files, sockets)?",
       "difficulty": "Hard",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -4157,7 +4157,7 @@
       "instructions": "What specific file inside `/etc` stores basic user account records?",
       "difficulty": "Easy",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": ["/etc/passwd", "/etc/shadow", "/etc/group", "/etc/sudoers"],
@@ -4172,7 +4172,7 @@
       "instructions": "What does the root slash `/` represent in the Linux filesystem hierarchy?",
       "difficulty": "Easy",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": [0],
@@ -4191,7 +4191,7 @@
       "instructions": "Where are system log files typically located within `/var`?",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -4208,7 +4208,7 @@
       "instructions": "Write the shell syntax to create a local shell variable named `GREETING` with value `hello` (no spaces around `=`).",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -4229,7 +4229,7 @@
       "instructions": "Write the command to export a shell variable `GREETING` so it becomes available to child processes.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -4251,7 +4251,7 @@
       "instructions": "Write the command to display all current environment variables.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -4268,7 +4268,7 @@
       "instructions": "What environment variable defines the colon-separated list of directories searched for executable commands?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": ["PATH", "HOME", "SHELL", "USER"],
@@ -4283,7 +4283,7 @@
       "instructions": "Write a command to create an alias named `ll` that shortcuts to `ls -la`.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -4303,7 +4303,7 @@
       "instructions": "Write the command to remove an alias named `ll`.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -4320,7 +4320,7 @@
       "instructions": "What is the name of the per-user Bash configuration file located in the home directory?",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -4341,7 +4341,7 @@
       "instructions": "Write the command to reload your `~/.bashrc` configuration file in the current shell session without restarting.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -4363,7 +4363,7 @@
       "instructions": "Write a command to append a directory `~/bin` to the existing `PATH` variable correctly.",
       "difficulty": "Hard",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -4384,7 +4384,7 @@
       "instructions": "Write an `echo` command to print the contents of the `PATH` environment variable.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -4404,7 +4404,7 @@
       "instructions": "Which key pressed in Normal mode enters Insert mode so you can type text in Vim?",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -4421,7 +4421,7 @@
       "instructions": "Which key do you press to return to Normal mode from Insert mode in Vim?",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -4443,7 +4443,7 @@
       "instructions": "What command-line mode command saves changes and quits Vim simultaneously?",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -4460,7 +4460,7 @@
       "instructions": "What command-line mode command quits Vim immediately discarding any unsaved changes?",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -4477,7 +4477,7 @@
       "instructions": "What two-letter Normal mode command deletes (cuts) the current line in Vim?",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -4494,7 +4494,7 @@
       "instructions": "What two-letter Normal mode command yanks (copies) the current line in Vim?",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -4511,7 +4511,7 @@
       "instructions": "What key in Normal mode pastes previously yanked or deleted text after the cursor?",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -4528,7 +4528,7 @@
       "instructions": "What single key in Normal mode undoes the last change in Vim?",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -4545,7 +4545,7 @@
       "instructions": "What symbol typed in Normal mode starts searching forward for text in Vim?",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -4562,7 +4562,7 @@
       "instructions": "True or False: Vim is a modal editor, meaning keys perform different functions depending on whether you are in Normal mode or Insert mode.",
       "difficulty": "Easy",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": ["True", "False"],
@@ -4577,7 +4577,7 @@
       "instructions": "What command-line mode command saves (writes) changes without exiting Vim?",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -4594,7 +4594,7 @@
       "instructions": "What single Normal mode key opens a new line directly below the current line and enters Insert mode?",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -4611,7 +4611,7 @@
       "instructions": "A program needs CPU time, memory, access to a disk, and communication with hardware. Which system component coordinates these core resources?",
       "difficulty": "Easy",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": [
@@ -4631,7 +4631,7 @@
       "instructions": "Why do ordinary applications normally request hardware services through the operating-system kernel rather than accessing devices directly?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": [
@@ -4653,7 +4653,7 @@
       "instructions": "Two machines run different GNU/Linux distributions. Which statement best describes their relationship?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": [
@@ -4673,7 +4673,7 @@
       "instructions": "A developer wants to inspect the source code of a program and adapt it for a local requirement. Which free-software freedom directly supports this?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": [
@@ -4693,7 +4693,7 @@
       "instructions": "Several people log in to the same Linux server at the same time using separate accounts. Which operating-system capability does this demonstrate?",
       "difficulty": "Easy",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": [
@@ -4713,7 +4713,7 @@
       "instructions": "A Linux server runs a web service while processing a backup and accepting terminal sessions. Which capability allows these activities to make progress concurrently?",
       "difficulty": "Easy",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": [
@@ -4733,7 +4733,7 @@
       "instructions": "You open a terminal window and type `pwd`. Which component interprets the command and starts the requested program or built-in?",
       "difficulty": "Easy",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": [
@@ -4755,7 +4755,7 @@
       "instructions": "In the command `ls -l /var/log`, which part is the argument specifying the target directory?",
       "difficulty": "Easy",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": ["`ls`", "`-l`", "`/var/log`", "The space between tokens"],
@@ -4772,7 +4772,7 @@
       "instructions": "UNIX is largely written in which programming language, supporting portability across processor architectures?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": ["C", "HTML", "SQL", "CSS"],
@@ -4787,7 +4787,7 @@
       "instructions": "Which description best distinguishes GNU from Linux in the GNU/Linux system?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": [
@@ -4809,7 +4809,7 @@
       "instructions": "Which is a valid description of an IPv4 address?",
       "difficulty": "Easy",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": [
@@ -4829,7 +4829,7 @@
       "instructions": "An address contains hexadecimal groups separated by colons, such as `2001:0db8:...`. Which protocol version is it?",
       "difficulty": "Easy",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": ["IPv4", "IPv6", "SSH", "DNS"],
@@ -4844,7 +4844,7 @@
       "instructions": "A service running on your own machine must be reached through the local host interface. Which IPv4 address is the loopback address?",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -4861,7 +4861,7 @@
       "instructions": "You enter `www.kdg.be` in a browser. What does DNS provide before the browser connects to the server?",
       "difficulty": "Easy",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": [
@@ -4881,7 +4881,7 @@
       "instructions": "A web server offers ordinary HTTP and HTTPS. Which pair of default ports is used in that order?",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -4900,7 +4900,7 @@
       "instructions": "A remote Linux server accepts SSH connections using the standard port. Which port should the client normally reach?",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -4917,7 +4917,7 @@
       "instructions": "Using the modern Linux `ip` utility, write a command that displays network interfaces and their IP addresses.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -4940,7 +4940,7 @@
       "instructions": "You have the username `student` and the remote server address `server.example`. Write the command to open a remote text-shell session.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -4957,7 +4957,7 @@
       "instructions": "During the first SSH connection, the client asks you to confirm a host key fingerprint. What is the main purpose of checking it?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": [
@@ -4979,7 +4979,7 @@
       "instructions": "Where are many system-administration executable commands located in the standard filesystem hierarchy?",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -4996,7 +4996,7 @@
       "instructions": "A service stores changing data such as logs, mail queues, or databases. Which top-level directory is intended for this kind of data?",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -5013,7 +5013,7 @@
       "instructions": "A script refers to `/etc/Passwd`, but the actual file is `/etc/passwd`. What should you expect on a case-sensitive Linux filesystem?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": [
@@ -5035,7 +5035,7 @@
       "instructions": "Write a Bash path expression that refers to the home directory of user `alice`.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -5052,7 +5052,7 @@
       "instructions": "What does a trailing slash in `/var/log/` communicate about the path?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": [
@@ -5072,7 +5072,7 @@
       "instructions": "You are in `/home/alice/docs`. What absolute path does `../notes.txt` refer to?",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -5089,7 +5089,7 @@
       "instructions": "A file is named `report.txt`, but its contents are a PNG image. Which command helps identify its actual file type?",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -5108,7 +5108,7 @@
       "instructions": "Which command displays file timestamps including access, modification, status change, and birth information for the file notes.txt?",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -5129,7 +5129,7 @@
       "instructions": "Write a command to display the length of the longest line in `notes.txt`.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -5150,7 +5150,7 @@
       "instructions": "Write a command to display `/etc/passwd` with line numbers.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -5171,7 +5171,7 @@
       "instructions": "Write a command that displays `/etc/passwd` starting at line 30 and continues through the end of the file.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -5193,7 +5193,7 @@
       "instructions": "Write a command that numbers each line arriving on standard input.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -5210,7 +5210,7 @@
       "instructions": "Two files should contain identical text, but you need to see their differences. Which command compares them?",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -5227,7 +5227,7 @@
       "instructions": "Write a `sort` command that sorts `records.txt` using the second whitespace-delimited field as the sort key.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -5248,7 +5248,7 @@
       "instructions": "Which `sort` option ignores case differences when comparing text? Give the option only.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -5269,7 +5269,7 @@
       "instructions": "Why does `tr` normally appear with a pipe or input redirection when processing a file?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": [
@@ -5289,7 +5289,7 @@
       "instructions": "Write an `echo` command that prints `Ready` without adding a newline at the end.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -5311,7 +5311,7 @@
       "instructions": "Write a command to extract fields 1 and 5 from `/etc/passwd`, using the colon as the delimiter.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -5338,7 +5338,7 @@
       "instructions": "A file contains repeated animal names on separate lines. Write a pipeline that sorts the names and then removes adjacent duplicates.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -5355,7 +5355,7 @@
       "instructions": "Write a pipeline that displays all running processes, saves the same output in `processes.txt`, and leaves the stream available to continue through the pipe.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -5374,7 +5374,7 @@
       "instructions": "Write a pipeline to display a long listing of `/usr/bin` one screen at a time.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -5391,7 +5391,7 @@
       "instructions": "Write a command pipeline that counts the lines in the full process listing produced by `ps aux`.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -5408,7 +5408,7 @@
       "instructions": "You know a command name but need a short summary of its options without opening a manual page. What should you append to the command?",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -5425,7 +5425,7 @@
       "instructions": "Write the Bash command that displays built-in help for `cd`.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -5442,7 +5442,7 @@
       "instructions": "Write a command that determines whether `cd` is a shell built-in or an external executable.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -5464,7 +5464,7 @@
       "instructions": "You need documentation for the format of `/etc/passwd`, not the interactive password-changing command. Which manual page should you open?",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -5485,7 +5485,7 @@
       "instructions": "You have forgotten the command name for changing file permissions. Which command searches manual-page names and short descriptions for the keyword `permission`?",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -5506,7 +5506,7 @@
       "instructions": "Which manual section normally describes commands that users can run from the shell?",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -5527,7 +5527,7 @@
       "instructions": "A package installs README files, examples, and sample configuration files. Which standard directory should you inspect for this documentation?",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -5544,7 +5544,7 @@
       "instructions": "In a manual-page synopsis, what do square brackets around an option or argument normally indicate?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": [
@@ -5564,7 +5564,7 @@
       "instructions": "Which key quits the interactive `pinfo` reader?",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -5583,7 +5583,7 @@
       "instructions": "In an `/etc/passwd` record, which field contains the user’s login shell?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": [
@@ -5603,7 +5603,7 @@
       "instructions": "An `/etc/passwd` line contains `x` in its second field. What does that indicate?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": [
@@ -5625,7 +5625,7 @@
       "instructions": "What does the fourth colon-separated field in `/etc/group` contain?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": [
@@ -5645,7 +5645,7 @@
       "instructions": "Where is a user’s primary group ID recorded?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": [
@@ -5665,7 +5665,7 @@
       "instructions": "Which statement about Linux account ID ranges is correct?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": [
@@ -5685,7 +5685,7 @@
       "instructions": "Write a command to create user `alice` and create the user’s home directory.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -5707,7 +5707,7 @@
       "instructions": "Write a command to set user `alice`’s login shell to `/bin/bash`.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -5732,7 +5732,7 @@
       "instructions": "Write a command to change `alice`’s primary group to `engineers`.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -5757,7 +5757,7 @@
       "instructions": "Write a command to add `alice` to supplementary groups `devteam` and `ops` without removing her existing supplementary memberships.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -5787,7 +5787,7 @@
       "instructions": "Write a command to create group `engineers` with the explicitly assigned GID `4000`.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -5812,7 +5812,7 @@
       "instructions": "Write a command to create a system group named `infra`.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -5834,7 +5834,7 @@
       "instructions": "Write a command to rename the existing group `qa` to `quality`.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -5858,7 +5858,7 @@
       "instructions": "Write a command to change the GID of `devteam` to `3500`.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -5883,7 +5883,7 @@
       "instructions": "A user needs a temporary shell using group `ops` as the primary group. Which command should they run?",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -5900,7 +5900,7 @@
       "instructions": "Which command removes user `alice`’s account records while leaving the home directory on disk?",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -5920,7 +5920,7 @@
       "instructions": "Which command removes user `alice` and also removes the home directory and mail spool?",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -5944,7 +5944,7 @@
       "instructions": "Which file contains default account settings such as UID/GID ranges and the default umask?",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -5961,7 +5961,7 @@
       "instructions": "Which login shell can be assigned to a service account to prevent normal interactive logins?",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -5978,7 +5978,7 @@
       "instructions": "Write the command to display the password status of user `dev1`.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -6000,7 +6000,7 @@
       "instructions": "A user must change a password every 45 days, cannot change it more than once per day, and must receive a warning 7 days before expiry. Write the command for user `qaeng`.",
       "difficulty": "Hard",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -6028,7 +6028,7 @@
       "instructions": "In a `chage` policy, what does the `-W` option set?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": [
@@ -6048,7 +6048,7 @@
       "instructions": "Write the command to unlock the password for user `tempuser`.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -6070,7 +6070,7 @@
       "instructions": "In a sudoers rule, what does a leading percent sign in `%wheel` identify?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": [
@@ -6090,7 +6090,7 @@
       "instructions": "Write the generic command syntax for running one command with elevated privileges through `sudo`, without starting a separate root shell.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -6113,7 +6113,7 @@
       "instructions": "You remember part of a long command but not its history number. Which Bash shortcut searches command history interactively?",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -6138,7 +6138,7 @@
       "instructions": "You have typed the first few characters of an existing command or filename at the Bash prompt. Which key can complete it?",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -6160,7 +6160,7 @@
       "instructions": "Write a shell expression that prints `Today is ` followed by the output of `date +%F`.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -6187,7 +6187,7 @@
       "instructions": "Write a `touch` command that creates one file named `My File.txt` by escaping the space rather than quoting the name.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -6206,7 +6206,7 @@
       "instructions": "You need to generate the names `report1.txt`, `report2.txt`, and `report3.txt` even if none exists yet. Which shell feature creates those strings before the command runs?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": [
@@ -6228,7 +6228,7 @@
       "instructions": "Which conventional per-user Bash startup file does Bash check first for a login shell, if that file exists?",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -6247,7 +6247,7 @@
       "instructions": "Which per-user Bash file is read when an interactive, non-login Bash shell starts?",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -6270,7 +6270,7 @@
       "instructions": "Write the command that starts a new Bash login shell.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -6287,7 +6287,7 @@
       "instructions": "Write the command that removes the shell variable `project` from the current shell.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -6304,7 +6304,7 @@
       "instructions": "An alias works at an interactive prompt but not inside an ordinary shell script. Which statement explains this behavior?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": [
@@ -6324,7 +6324,7 @@
       "instructions": "A variable named `course` contains `os`. Which expression appends `_linux` to its value without treating `course_linux` as the variable name?",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -6341,7 +6341,7 @@
       "instructions": "Which command displays environment variables inherited by child processes, rather than all shell variables and functions?",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -6358,7 +6358,7 @@
       "instructions": "Write a command to determine how Bash resolves the name `ll` after an alias has been defined.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -6381,7 +6381,7 @@
       "instructions": "Which four home-row keys move the cursor left, down, up, and right, respectively, in Vim Normal mode?",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -6398,7 +6398,7 @@
       "instructions": "In Vim Normal mode, which key deletes the character under the cursor?",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -6415,7 +6415,7 @@
       "instructions": "Which Vim Normal mode key enters Insert mode at the beginning of the current line?",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -6432,7 +6432,7 @@
       "instructions": "Which Vim Normal mode key enters Insert mode at the end of the current line?",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -6449,7 +6449,7 @@
       "instructions": "Which Vim Normal mode key opens a new line above the current line and enters Insert mode?",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -6466,7 +6466,7 @@
       "instructions": "Which key starts character-wise Visual mode in Vim?",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -6483,7 +6483,7 @@
       "instructions": "Which key starts line-wise Visual mode in Vim?",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -6500,7 +6500,7 @@
       "instructions": "Which Vim shortcut starts block/column Visual mode?",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -6523,7 +6523,7 @@
       "instructions": "Write the Vim Normal mode command that yanks (copies) the current line and the next two lines.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -6540,7 +6540,7 @@
       "instructions": "Which Vim Normal mode key puts yanked or deleted text before the cursor line?",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -6557,7 +6557,7 @@
       "instructions": "After searching forward in Vim with `/term`, which key moves to the next matching occurrence?",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -6574,7 +6574,7 @@
       "instructions": "Write the Vim command-line mode command to save the current buffer as `newfile.txt` without closing Vim.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -6594,7 +6594,7 @@
       "instructions": "Which Vim command quits when there are no unsaved changes?",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -6611,7 +6611,7 @@
       "instructions": "A user has read permission on a directory but no execute permission. What can they generally do?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": [
@@ -6631,7 +6631,7 @@
       "instructions": "Why does deleting a file normally depend on write and execute permission on its parent directory?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": [
@@ -6651,7 +6651,7 @@
       "instructions": "A team directory has group `projectteam` and mode `2775`. What group ownership should newly created files normally inherit?",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -6672,7 +6672,7 @@
       "instructions": "A directory’s group-execute position is shown as lowercase `s` in `ls -l`. Which special permission does that indicate?",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -6694,7 +6694,7 @@
       "instructions": "A shared writable directory ends its permission string with `t`. Which special permission is set?",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -6716,7 +6716,7 @@
       "instructions": "In a sticky, world-writable directory such as `/tmp`, which users can delete or rename a file?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": [
@@ -6738,7 +6738,7 @@
       "instructions": "Does setting SUID on a shell script make it run with the file owner’s effective privileges in the same way as a normal executable?",
       "difficulty": "Hard",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": [
@@ -6760,7 +6760,7 @@
       "instructions": "Write a `chmod` command to set mode `2775` on `team_project`.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -6783,7 +6783,7 @@
       "instructions": "A shell has umask `0027`. What permissions will a newly created regular file normally receive?",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -6805,7 +6805,7 @@
       "instructions": "A shell has umask `0027`. What permissions will a newly created directory normally receive?",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -6827,7 +6827,7 @@
       "instructions": "A collaborative shell uses umask `0007`. What permissions will a newly created regular file normally receive?",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -6849,7 +6849,7 @@
       "instructions": "Write the command that displays the current umask in symbolic form.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -6866,7 +6866,7 @@
       "instructions": "Write a command to change the owner to `webadmin` and group to `developers` for `/var/www/html` and everything below it.",
       "difficulty": "Hard",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -6893,7 +6893,7 @@
       "instructions": "Which user normally has permission to change a file’s owner to another user?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": [
@@ -6913,7 +6913,7 @@
       "instructions": "Write a command to find symbolic links below the current directory.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -6933,7 +6933,7 @@
       "instructions": "Write a command to find files below `/home` that belong to group `projectteam`.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -6950,7 +6950,7 @@
       "instructions": "Which `find` predicate selects files whose user account no longer exists?",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -6967,7 +6967,7 @@
       "instructions": "Write a command to find files under `/home` that were accessed less than five minutes ago.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -6984,7 +6984,7 @@
       "instructions": "Write a command to find files under `/home` whose metadata/status changed less than ten minutes ago.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -7001,7 +7001,7 @@
       "instructions": "Write a command to delete files named `*.torrent` below your home directory using `find`’s own delete action.",
       "difficulty": "Hard",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -7026,7 +7026,7 @@
       "instructions": "Write a command using `find -exec` to move every filesystem entry larger than 10 MiB found under your home directory to `~/Desktop`.",
       "difficulty": "Hard",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -7047,7 +7047,7 @@
       "instructions": "You create `backup.tar` with `tar -cf`. What does the resulting archive do by itself?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": [
@@ -7067,7 +7067,7 @@
       "instructions": "Why is a tar archive useful for backups compared with simply concatenating file contents?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": [
@@ -7087,7 +7087,7 @@
       "instructions": "Write a command to list the contents of `backup.tar.gz` verbosely without extracting it.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -7108,7 +7108,7 @@
       "instructions": "Write a command to extract `backup.tar.gz` into `/tmp/restore`.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -7133,7 +7133,7 @@
       "instructions": "Why does tar normally remove a leading slash from absolute paths stored in an archive?",
       "difficulty": "Hard",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": [
@@ -7153,7 +7153,7 @@
       "instructions": "Which `tar` option preserves absolute pathnames, including their leading slash, during extraction? Give the option only.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -7174,7 +7174,7 @@
       "instructions": "Why can `scp` transfer files to a server that already accepts SSH logins without configuring a separate FTP service?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": [
@@ -7196,7 +7196,7 @@
       "instructions": "You repeatedly synchronize a large directory and only a small part changes each time. Which tool is described as transferring only modified data blocks?",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -7215,7 +7215,7 @@
       "instructions": "A Bash script must identify the interpreter that should run it. What line should appear first in the script?",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -7235,7 +7235,7 @@
       "instructions": "Write the command that adds execute permission to `hello.sh` for all users according to the exercise workflow.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -7257,7 +7257,7 @@
       "instructions": "Write a command to create a local group named `ops` without specifying its GID.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -7277,7 +7277,7 @@
       "instructions": "Write a command to delete the local group named `quality`.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -7297,7 +7297,7 @@
       "instructions": "Which `usermod` option appends supplementary group membership without replacing existing supplementary groups? Give the option only.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -7321,7 +7321,7 @@
       "instructions": "A user belongs to one primary group and several supplementary groups. Which statement is correct?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": [
@@ -7343,7 +7343,7 @@
       "instructions": "What is the name of the arrangement in which a regular user has a private primary group with the same name as the account?",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -7364,7 +7364,7 @@
       "instructions": "Which character commonly ends the Bash prompt when the current shell is running as the root superuser?",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -7381,7 +7381,7 @@
       "instructions": "Which character commonly ends the Bash prompt for a regular, non-root user?",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -7398,7 +7398,7 @@
       "instructions": "Write an `echo` command that prints the literal text `$HOME` without expanding the variable.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -7417,7 +7417,7 @@
       "instructions": "A variable named `name` should expand inside a greeting, and the greeting should remain one argument even if the value contains spaces. Which command form does this?",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -7436,7 +7436,7 @@
       "instructions": "A file named `image.txt` contains binary image data. Which statement about its type is correct on Linux?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": [
@@ -7458,7 +7458,7 @@
       "instructions": "When viewing a long file with `more`, which key advances the display by exactly one line?",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -7481,7 +7481,7 @@
       "instructions": "What numeric file descriptor represents standard input?",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -7498,7 +7498,7 @@
       "instructions": "What numeric file descriptor represents standard output?",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -7515,7 +7515,7 @@
       "instructions": "Write the redirection operator that appends a command’s standard-error output to an existing file rather than overwriting it.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -7534,7 +7534,7 @@
       "instructions": "Write the Bash redirection operator that sends both standard output and standard error to the same file.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -7551,7 +7551,7 @@
       "instructions": "Write a command to find items under `/home` modified less than ten minutes ago.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -7568,7 +7568,7 @@
       "instructions": "Write a command to find files under `/home` owned by user `andrew`.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -7585,7 +7585,7 @@
       "instructions": "Which `find` predicate identifies filesystem objects whose numeric owner has no matching user account?",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -7602,7 +7602,7 @@
       "instructions": "Write a command to find files under `/usr/bin` larger than 2 MiB and smaller than 10 MiB.",
       "difficulty": "Hard",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -7622,7 +7622,7 @@
       "instructions": "Write a `tar` command to create `backup.tar.gz` from `project/`, showing the files as they are added.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -7644,7 +7644,7 @@
       "instructions": "Which `tar` command creates an xz-compressed archive named `backup.tar.xz` from `project/`?",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -7665,7 +7665,7 @@
       "instructions": "Write an `scp` command to copy the local directory `reports/` recursively to `/home/alice/` on `alice@server.example`.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -7684,7 +7684,7 @@
       "instructions": "Write an `scp` command to copy `report.txt` to `alice@server.example:/home/alice/` using SSH port `2222`.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -7706,7 +7706,7 @@
       "instructions": "Which address is in one of the local-network IPv4 ranges identified in the course?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": [
@@ -7728,7 +7728,7 @@
       "instructions": "A client must contact the web service on a remote machine. Which pair identifies the destination described in the networking lesson?",
       "difficulty": "Medium",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": [
@@ -7750,7 +7750,7 @@
       "instructions": "Which Bash built-in displays shell variables and functions, including values that are not exported to child processes?",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -7767,7 +7767,7 @@
       "instructions": "After adding the personal `bin` directory to `PATH`, write the command used to run the executable script `hello.sh` from that directory.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -7786,7 +7786,7 @@
       "instructions": "A shell uses umask `0077`. What permissions will a newly created regular file normally receive?",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -7808,7 +7808,7 @@
       "instructions": "In the owner-execute position of an `ls -l` permission string, what does an uppercase `S` indicate?",
       "difficulty": "Hard",
       "type": "mcq-single",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "options": [
@@ -7830,7 +7830,7 @@
       "instructions": "Write a command to find items under `/home` whose metadata changed less than ten minutes ago.",
       "difficulty": "Medium",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
@@ -7847,7 +7847,7 @@
       "instructions": "Write a shell command that exports `EDITOR` with the value `vim` to child processes.",
       "difficulty": "Easy",
       "type": "command-text",
-      "examEligible": true,
+
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {

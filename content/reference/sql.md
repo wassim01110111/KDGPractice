@@ -1668,7 +1668,7 @@ Example:
 "instructions": "What is the purpose of DISTINCT in a SELECT query?",
 "difficulty": "Easy",
 "type": "mcq-single",
-"examEligible": true,
+
 "provenance": "sql_exam_cheat_sheet.md",
 "contentVersion": 1,
 "options": [
