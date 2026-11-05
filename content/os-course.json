@@ -2341,21 +2341,18 @@
       "title": "Original Deleted Soft Link",
       "instructions": "What happens to a symbolic link if its original target file is deleted?",
       "difficulty": "Medium",
-      "type": "command-text",
+      "type": "mcq-single",
       "examEligible": true,
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
-      "expected": {
-        "accepted": ["It becomes a broken link", "Dangling link"],
-        "patterns": [
-          "^\\s*It\\s+becomes\\s+a\\s+broken\\s+link\\s*$",
-          "^\\s*Dangling\\s+link\\s*$",
-          "^\\s*Dangling\\s+symbolic\\s+link\\s*$",
-          "^\\s*Broken\\s+symbolic\\s+link\\s*$"
-        ]
-      },
-      "hints": ["Becomes broken/dangling."],
-      "explanation": "Deleting the target breaks the symbolic link."
+      "expected": [0],
+      "explanation": "Deleting the target breaks the symbolic link.",
+      "options": [
+        "It becomes a broken (dangling) link.",
+        "The target file is automatically restored.",
+        "The symbolic link is automatically converted into a hard link.",
+        "The symbolic link itself is automatically deleted."
+      ]
     },
     "os-links-139": {
       "course": "os",
@@ -2363,21 +2360,18 @@
       "title": "Original Deleted Hard Link",
       "instructions": "What happens to a hard link if its original filename is deleted?",
       "difficulty": "Medium",
-      "type": "command-text",
+      "type": "mcq-single",
       "examEligible": true,
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
-      "expected": {
-        "accepted": ["The data remains accessible", "Data remains accessible"],
-        "patterns": [
-          "^\\s*The\\s+data\\s+remains\\s+accessible\\s*$",
-          "^\\s*Data\\s+remains\\s+accessible\\s*$",
-          "^\\s*The\\s+file\\s+data\\s+remains\\s+accessible\\s*$",
-          "^\\s*Data\\s+remains\\s+accessible\\s+through\\s+the\\s+other\\s+link\\s*$"
-        ]
-      },
-      "hints": ["Data remains."],
-      "explanation": "The data remains accessible via the hard link."
+      "expected": [0],
+      "explanation": "The data remains accessible via the hard link.",
+      "options": [
+        "The data remains accessible through the other hard link.",
+        "The data is immediately erased when the original filename is deleted.",
+        "All other hard links to the data are automatically deleted.",
+        "The remaining hard link is converted into a symbolic link."
+      ]
     },
     "os-links-140": {
       "course": "os",
@@ -2439,20 +2433,18 @@
       "title": "Link Definition",
       "instructions": "What does an inode store?",
       "difficulty": "Medium",
-      "type": "command-text",
+      "type": "mcq-single",
       "examEligible": true,
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
-      "expected": {
-        "accepted": ["metadata", "file metadata"],
-        "patterns": [
-          "^\\s*metadata\\s*$",
-          "^\\s*file\\s+metadata\\s*$",
-          "^\\s*file\\s+attributes\\s*$"
-        ]
-      },
-      "hints": ["Metadata."],
-      "explanation": "An inode stores file metadata."
+      "expected": [0],
+      "explanation": "An inode stores file metadata.",
+      "options": [
+        "File metadata such as permissions, ownership, size, and timestamps.",
+        "The file name and its full directory path only.",
+        "The complete text contents of the file.",
+        "A list of every symbolic link that points to the file."
+      ]
     },
     "os-quoting-144": {
       "course": "os",
@@ -2609,23 +2601,18 @@
       "title": "Wildcard Globbing Quote",
       "instructions": "Why must pattern arguments in commands like `find -name \"*.txt\"` be quoted?",
       "difficulty": "Medium",
-      "type": "command-text",
+      "type": "mcq-single",
       "examEligible": true,
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
-      "expected": {
-        "accepted": ["To prevent shell expansion", "prevent shell expansion"],
-        "patterns": [
-          "^\\s*To\\s+prevent\\s+shell\\s+expansion\\s*$",
-          "^\\s*prevent\\s+shell\\s+expansion\\s*$",
-          "^\\s*To\\s+stop\\s+pathname\\s+expansion\\s*$",
-          "^\\s*To\\s+prevent\\s+glob\\s+expansion\\s*$",
-          "^\\s*To\\s+stop\\s+the\\s+shell\\s+from\\s+expanding\\s+the\\s+wildcard\\s*$",
-          "^(?:to )?(?:prevent|stop) (?:the )?shell from (?:expanding|interpreting) (?:the )?(?:wildcard|pattern|glob)(?: pattern)?$"
-        ]
-      },
-      "hints": ["Prevent shell glob expansion."],
-      "explanation": "Quoting prevents shell expansion."
+      "expected": [0],
+      "explanation": "Quoting prevents shell expansion.",
+      "options": [
+        "To prevent the shell from expanding the wildcard before `find` receives it.",
+        "To make `find` treat the wildcard as a literal string rather than a pattern.",
+        "To make `find` include hidden files automatically.",
+        "To run the search in a separate shell process."
+      ]
     },
     "os-quoting-155": {
       "course": "os",
@@ -2633,22 +2620,38 @@
       "title": "Quote Purpose Summary",
       "instructions": "What is the primary purpose of quoting in the shell?",
       "difficulty": "Easy",
-      "type": "command-text",
+      "type": "mcq-single",
       "examEligible": true,
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
-      "expected": {
-        "accepted": ["Control shell expansions", "control expansions"],
-        "patterns": [
-          "^\\s*Control\\s+shell\\s+expansions\\s*$",
-          "^\\s*control\\s+expansions\\s*$",
-          "^\\s*Prevent\\s+unwanted\\s+expansion\\s+and\\s+word\\s+splitting\\s*$",
-          "^\\s*Control\\s+word\\s+splitting\\s+and\\s+shell\\s+expansions\\s*$",
-          "^(?:to )?(?:control|prevent|suppress) (?:unwanted )?(?:shell )?(?:word splitting|expansion|shell expansions)(?: and (?:word splitting|expansion|shell expansions))?$"
-        ]
-      },
-      "hints": ["Controlling expansions."],
-      "explanation": "Controls shell expansions."
+      "expected": [0],
+      "explanation": "Controls shell expansions.",
+      "options": [
+        "To control word splitting and shell expansions.",
+        "To make every argument execute in a separate subshell.",
+        "To force all arguments to be interpreted as filenames.",
+        "To permanently disable wildcard matching."
+      ]
+    },
+    "os-permissions-186": {
+      "course": "os",
+      "category": "Permissions",
+      "title": "Directory Execute Meaning",
+      "instructions": "In a brief phrase, what does execute (`x`) permission on a directory allow a user to do?",
+      "difficulty": "Medium",
+      "type": "mcq-single",
+      "examEligible": true,
+      "provenance": "merged.pdf; OSFundamentals(1).pdf",
+      "contentVersion": 4,
+      "expected": [0],
+      "hints": ["Traversal access."],
+      "explanation": "Execute on a directory permits entering (`cd`) and traversing it.",
+      "options": [
+        "Traverse or search the directory and access entries by name.",
+        "List all filenames in the directory.",
+        "Create, delete, and rename entries in the directory.",
+        "Read or modify the contents of every file in the directory."
+      ]
     },
     "os-users-groups-156": {
       "course": "os",
@@ -3197,13 +3200,11 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
       "expected": {
-        "accepted": [
-          "chgrp developers file.txt",
-          "sudo chgrp developers file.txt"
-        ],
+        "accepted": ["chgrp developers file.txt", "chown :developers file.txt"],
         "patterns": [
           "^\\s*chgrp\\s+developers\\s+file\\.txt\\s*$",
           "^\\s*(sudo)?\\s+chgrp\\s+developers\\s+file\\.txt\\s*$",
+          "^\\s*(sudo)?\\s+chown\\s+:developers\\s+file\\.txt\\s*$",
           "^\\s*chgrp\\s+--\\s+developers\\s+file\\.txt\\s*$"
         ]
       },
@@ -3227,60 +3228,25 @@
       "hints": ["Simple `umask` command."],
       "explanation": "`umask` displays permission mask bits subtracted from defaults."
     },
-    "os-permissions-186": {
-      "course": "os",
-      "category": "Permissions",
-      "title": "Directory Execute Meaning",
-      "instructions": "In a brief phrase, what does execute (`x`) permission on a directory allow a user to do?",
-      "difficulty": "Medium",
-      "type": "command-text",
-      "examEligible": true,
-      "provenance": "merged.pdf; OSFundamentals(1).pdf",
-      "contentVersion": 3,
-      "expected": {
-        "accepted": [
-          "Permission to enter and access items inside",
-          "enter directory"
-        ],
-        "patterns": [
-          "^\\s*Permission\\s+to\\s+enter\\s+and\\s+access\\s+items\\s+inside\\s*$",
-          "^\\s*enter\\s+directory\\s*$",
-          "^\\s*Permission\\s+to\\s+traverse\\s+the\\s+directory\\s*$",
-          "^\\s*Permission\\s+to\\s+search\\s+the\\s+directory\\s*$",
-          "^\\s*Allows\\s+entering\\s+the\\s+directory\\s*$",
-          "^\\s*Allows\\s+access\\s+to\\s+directory\\s+entries\\s*$",
-          "^(?:permission to (?:enter|traverse|search) (?:the )?directory|allows? (?:the user )?to (?:enter|traverse|search) (?:the )?directory)$"
-        ]
-      },
-      "hints": ["Traversal access."],
-      "explanation": "Execute on a directory permits entering (`cd`) and traversing it."
-    },
+
     "os-permissions-187": {
       "course": "os",
       "category": "Permissions",
       "title": "Sticky Bit Purpose",
       "instructions": "In a shared writable directory, what restriction does the sticky bit place on deleting or renaming files?",
       "difficulty": "Hard",
-      "type": "command-text",
+      "type": "mcq-single",
       "examEligible": true,
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
-      "expected": {
-        "accepted": [
-          "Prevents users from deleting files they do not own",
-          "prevent deletion of others files"
-        ],
-        "patterns": [
-          "^\\s*Prevents\\s+users\\s+from\\s+deleting\\s+files\\s+they\\s+do\\s+not\\s+own\\s*$",
-          "^\\s*prevent\\s+deletion\\s+of\\s+others\\s+files\\s*$",
-          "^\\s*Prevents\\s+users\\s+from\\s+deleting\\s+or\\s+renaming\\s+files\\s+they\\s+do\\s+not\\s+own\\s*$",
-          "^\\s*Users\\s+can\\s+delete\\s+only\\s+their\\s+own\\s+files\\s*$",
-          "^\\s*Prevents\\s+deletion\\s+of\\s+other\\s+users' files\\s*$",
-          "^(?:prevents? (?:ordinary )?users? from (?:deleting|removing|renaming) (?:files|entries) (?:that )?they do not own|users? can only (?:delete|remove|rename) their own files)$"
-        ]
-      },
-      "hints": ["Prevents users from deleting each other's files."],
-      "explanation": "The sticky bit prevents users from deleting files they do not own."
+      "expected": [0],
+      "explanation": "The sticky bit prevents users from deleting files they do not own.",
+      "options": [
+        "Users can delete or rename only entries they own, unless they are the directory owner or root.",
+        "Only the directory owner can delete or rename any entry.",
+        "Only the root user can delete or rename entries.",
+        "Any user with write permission can delete or rename every entry."
+      ]
     },
     "os-permissions-188": {
       "course": "os",
@@ -3288,26 +3254,18 @@
       "title": "SUID Bit Meaning",
       "instructions": "When an executable has SUID set, whose effective user privileges does the process use?",
       "difficulty": "Hard",
-      "type": "command-text",
+      "type": "mcq-single",
       "examEligible": true,
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
-      "expected": {
-        "accepted": [
-          "Runs with file owner privileges",
-          "file owner privileges"
-        ],
-        "patterns": [
-          "^\\s*Runs\\s+with\\s+file\\s+owner\\s+privileges\\s*$",
-          "^\\s*file\\s+owner\\s+privileges\\s*$",
-          "^\\s*Runs\\s+with\\s+the\\s+executable\\s+file\\s+owner's effective user ID\\s*$",
-          "^\\s*Uses\\s+the\\s+file\\s+owner's effective UID\\s*$",
-          "^\\s*Runs\\s+as\\s+the\\s+file\\s+owner\\s*$",
-          "^(?:(?:runs? with|uses?) (?:the )?(?:file|executable)(?:'s| owner'?s)? effective (?:user )?(?:id|uid)|runs? as (?:the )?file owner)$"
-        ]
-      },
-      "hints": ["Runs as file owner."],
-      "explanation": "SUID executes the program with the privileges of the file's owner."
+      "expected": [0],
+      "explanation": "SUID executes the program with the privileges of the file's owner.",
+      "options": [
+        "The owner of the executable file.",
+        "The user who launched the executable.",
+        "The group owner of the executable file.",
+        "The root user in every case."
+      ]
     },
     "os-permissions-189": {
       "course": "os",
@@ -3315,26 +3273,18 @@
       "title": "SGID Directory Meaning",
       "instructions": "When a file is created inside an SGID directory, which group does it normally inherit?",
       "difficulty": "Hard",
-      "type": "command-text",
+      "type": "mcq-single",
       "examEligible": true,
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
-      "expected": {
-        "accepted": [
-          "New files inherit directory group",
-          "inherit directory group"
-        ],
-        "patterns": [
-          "^\\s*New\\s+files\\s+inherit\\s+directory\\s+group\\s*$",
-          "^\\s*inherit\\s+directory\\s+group\\s*$",
-          "^\\s*New\\s+files\\s+inherit\\s+the\\s+directory's group\\s*$",
-          "^\\s*New\\s+entries\\s+inherit\\s+the\\s+directory\\s+group\\s*$",
-          "^\\s*Inherit\\s+the\\s+parent\\s+directory's group\\s*$",
-          "^(?:new (?:files|entries|subdirectories) inherit (?:the )?(?:parent )?directory(?:'s)? group|inherit (?:the )?directory group)$"
-        ]
-      },
-      "hints": ["Inherits group."],
-      "explanation": "New files inherit the directory's group owner."
+      "expected": [0],
+      "explanation": "New files inherit the directory's group owner.",
+      "options": [
+        "The group owner of the containing directory.",
+        "The creator's primary group in all cases.",
+        "The creator’s first supplementary group.",
+        "The root group, regardless of the directory."
+      ]
     },
     "os-permissions-190": {
       "course": "os",
@@ -3501,23 +3451,18 @@
       "title": "Delete File Requirement",
       "instructions": "To delete a file within a directory, what permission do you need on the **parent directory**?",
       "difficulty": "Hard",
-      "type": "command-text",
+      "type": "mcq-single",
       "examEligible": true,
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
-      "expected": {
-        "accepted": ["Write and execute", "w and x"],
-        "patterns": [
-          "^\\s*Write\\s+and\\s+execute\\s*$",
-          "^\\s*w\\s+and\\s+x\\s*$",
-          "^\\s*Write\\s+and\\s+search\\s*$",
-          "^\\s*w\\+x\\s*$",
-          "^\\s*write\\s+and\\s+execute\\s+\\(search\\)\\s*$",
-          "^(?:write and execute|write\\+execute|w\\+x|write and search|write\\+search|w\\+search)$"
-        ]
-      },
-      "hints": ["Write and execute on parent."],
-      "explanation": "Requires write and execute on parent directory."
+      "expected": [0],
+      "explanation": "Requires write and execute on parent directory.",
+      "options": [
+        "Write and execute (search) permission.",
+        "Read and execute permission only.",
+        "Write permission only.",
+        "Read and write permission, but not execute permission."
+      ]
     },
     "os-permissions-199": {
       "course": "os",
@@ -3705,23 +3650,18 @@
       "title": "Numeric Argument Minus Meaning",
       "instructions": "In `find` numeric arguments, what does `-n` mean (e.g., `-mmin -10`)?",
       "difficulty": "Medium",
-      "type": "command-text",
+      "type": "mcq-single",
       "examEligible": true,
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
-      "expected": {
-        "accepted": ["Less than n", "less than"],
-        "patterns": [
-          "^\\s*Less\\s+than\\s+n\\s*$",
-          "^\\s*less\\s+than\\s*$",
-          "^\\s*Less\\s+than\\s+the\\s+specified\\s+number\\s*$",
-          "^\\s*a\\s+value\\s+below\\s+n\\s*$",
-          "^\\s*strictly\\s+less\\s+than\\s+n\\s*$",
-          "^(?:less than|strictly less than|below) (?:the )?(?:specified )?(?:number|value|n)$"
-        ]
-      },
-      "hints": ["Minus means less than."],
-      "explanation": "`-n` means strictly less than `n`."
+      "expected": [0],
+      "explanation": "`-n` means strictly less than `n`.",
+      "options": [
+        "A value strictly less than n.",
+        "A value strictly greater than n.",
+        "A value exactly equal to n.",
+        "A value greater than or equal to n."
+      ]
     },
     "os-find-213": {
       "course": "os",
@@ -3763,23 +3703,18 @@
       "title": "Find Wildcard Quoting",
       "instructions": "Why must `-name` wildcard patterns like `\"*.txt\"` be quoted when using `find`?",
       "difficulty": "Medium",
-      "type": "command-text",
+      "type": "mcq-single",
       "examEligible": true,
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
-      "expected": {
-        "accepted": ["To prevent shell expansion", "prevent shell expansion"],
-        "patterns": [
-          "^\\s*To\\s+prevent\\s+shell\\s+expansion\\s*$",
-          "^\\s*prevent\\s+shell\\s+expansion\\s*$",
-          "^\\s*To\\s+stop\\s+pathname\\s+expansion\\s*$",
-          "^\\s*To\\s+prevent\\s+glob\\s+expansion\\s*$",
-          "^\\s*To\\s+stop\\s+the\\s+shell\\s+from\\s+expanding\\s+the\\s+wildcard\\s*$",
-          "^(?:to )?(?:prevent|stop) (?:the )?shell from (?:expanding|interpreting) (?:the )?(?:wildcard|pattern|glob)(?: pattern)?$"
-        ]
-      },
-      "hints": ["Prevent shell glob expansion."],
-      "explanation": "Quoting prevents shell expansion."
+      "expected": [0],
+      "explanation": "Quoting prevents shell expansion.",
+      "options": [
+        "To prevent the shell from expanding the wildcard before `find` receives it.",
+        "To make `find` search only for a file literally named `*.txt`.",
+        "To force `find` to include hidden files in its results.",
+        "To prevent `find` from searching recursively."
+      ]
     },
     "os-archives-216": {
       "course": "os",
@@ -4241,19 +4176,18 @@
       "title": "Root Filesystem Purpose",
       "instructions": "What does the root slash `/` represent in the Linux filesystem hierarchy?",
       "difficulty": "Easy",
-      "type": "command-text",
+      "type": "mcq-single",
       "examEligible": true,
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 3,
-      "expected": {
-        "accepted": ["Top of entire filesystem tree", "topmost root"],
-        "patterns": [
-          "^\\s*Top\\s+of\\s+entire\\s+filesystem\\s+tree\\s*$",
-          "^\\s*topmost\\s+root\\s*$"
-        ]
-      },
-      "hints": ["Topmost directory."],
-      "explanation": "`/` is the root directory."
+      "expected": [0],
+      "explanation": "`/` is the root directory.",
+      "options": [
+        "The top-level directory at the start of the entire filesystem tree.",
+        "The current user’s home directory.",
+        "The current working directory of the shell.",
+        "The parent directory of the current working directory."
+      ]
     },
     "os-directories-242": {
       "course": "os",

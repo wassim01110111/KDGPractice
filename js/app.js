@@ -198,6 +198,7 @@ const S = {
   attempts: [],
   drafts: {},
   xpRewards: {},
+  savedForLater: {},
 };
 const keyOf = (ex) => ex.key || exerciseKey(ex);
 const lastAttempt = () => {
@@ -211,6 +212,7 @@ const xpFor = (ex) =>
   ({ Easy: 25, Medium: 50, Hard: 100, Extreme: 200 })[ex.difficulty] || 25;
 async function rec(ex, correct, mode, onRecorded = () => {}, meta = {}) {
   const key = keyOf(ex),
+    prevAttempt = S.attempts.find((a) => a.key === key),
     attempt = {
       key,
       packageId: ex.packageId,
@@ -218,8 +220,11 @@ async function rec(ex, correct, mode, onRecorded = () => {}, meta = {}) {
       t: Date.now(),
       correct,
       mode,
+      // Keep this history flag even after a later correct attempt. The Needs
+      // correction filter additionally checks the latest result, so a question
+      // leaves that filter as soon as it is answered correctly.
+      everIncorrect: correct === false || Boolean(prevAttempt?.everIncorrect),
     };
-  const prevAttempt = S.attempts.find((a) => a.key === key);
   const earnedReward = correct && !S.xpRewards[key];
   if (earnedReward) {
     S.xpRewards[key] = {
@@ -2049,6 +2054,7 @@ async function loadContent() {
   const exercisesByKey = new Map(S.exercises.map((ex) => [keyOf(ex), ex]));
 
   const latest = new Map();
+  const everIncorrectByKey = new Set();
 
   for (const a of storedAttempts) {
     if (a && typeof a.id === "string") {
@@ -2060,6 +2066,9 @@ async function loadContent() {
             : null;
 
       const key = ex ? keyOf(ex) : typeof a.key === "string" ? a.key : null;
+
+      if (key && (a.correct === false || a.everIncorrect === true))
+        everIncorrectByKey.add(key);
 
       if (key && (!latest.has(key) || a.t >= latest.get(key).t)) {
         latest.set(key, {
@@ -2074,7 +2083,13 @@ async function loadContent() {
     }
   }
 
-  S.attempts = [...latest.values()];
+  S.attempts = [...latest.values()].map((attempt) => ({
+    ...attempt,
+    // Older stored data may contain multiple attempts per exercise. Preserve
+    // any past incorrect result when compacting that history to the latest row.
+    everIncorrect:
+      everIncorrectByKey.has(attempt.key) || attempt.correct === false,
+  }));
 
   const savedRewards = await kv.get("xpRewards", {});
 
@@ -2083,6 +2098,14 @@ async function loadContent() {
     typeof savedRewards === "object" &&
     !Array.isArray(savedRewards)
       ? savedRewards
+      : {};
+
+  const savedForLater = await kv.get("savedForLater", {});
+  S.savedForLater =
+    savedForLater &&
+    typeof savedForLater === "object" &&
+    !Array.isArray(savedForLater)
+      ? savedForLater
       : {};
 
   let migratedRewards = false;
@@ -2134,6 +2157,51 @@ async function loadContent() {
     }),
   );
 }
+// Hints are optional package content. Normalize them before validation so
+// packages created before hints were introduced (or deliberately omitting
+// them) remain valid. Keep malformed non-string/non-array values unchanged so
+// package validation can still report genuinely invalid data.
+function normalizeOptionalExerciseHints(pkg) {
+  if (
+    !pkg ||
+    typeof pkg !== "object" ||
+    !pkg.exercises ||
+    typeof pkg.exercises !== "object" ||
+    Array.isArray(pkg.exercises)
+  )
+    return pkg;
+
+  return {
+    ...pkg,
+    exercises: Object.fromEntries(
+      Object.entries(pkg.exercises).map(([id, exercise]) => {
+        if (
+          !exercise ||
+          typeof exercise !== "object" ||
+          Array.isArray(exercise)
+        )
+          return [id, exercise];
+
+        const hints = exercise.hints;
+        return [
+          id,
+          {
+            ...exercise,
+            hints:
+              hints == null
+                ? []
+                : Array.isArray(hints)
+                  ? hints
+                  : typeof hints === "string"
+                    ? [hints]
+                    : hints,
+          },
+        ];
+      }),
+    ),
+  };
+}
+
 function addPackage(f, ctx) {
   const c = {
     ...ctx,
@@ -2141,7 +2209,9 @@ function addPackage(f, ctx) {
     datasetIds: new Set(ctx.datasetIds),
   };
 
-  const pkg = f.pkg;
+  // A question may omit `hints`; the practice UI simply hides the hint
+  // control for an empty list.
+  const pkg = normalizeOptionalExerciseHints(f.pkg);
 
   const errs = validatePackage(pkg, f.name, c);
 
@@ -2185,6 +2255,79 @@ function addPackage(f, ctx) {
   });
 
   return [];
+}
+
+// Render package-loading and package-validation problems visibly on every page.
+// Each message is inserted as text (not HTML) so package contents cannot inject markup.
+function packageLoadErrorPanel() {
+  if (!Array.isArray(S.errors) || S.errors.length === 0) return null;
+
+  const describeError = (error) => {
+    if (typeof error === "string") {
+      return h("li", {}, h("p", {}, error));
+    }
+
+    const context = [
+      error?.file || error?.name || "",
+      error?.id && !["(file)", "(manifest)"].includes(error.id)
+        ? `Question ${error.id}`
+        : "",
+      error?.field && error.field !== "$" ? `Field ${error.field}` : "",
+    ]
+      .filter(Boolean)
+      .join(" · ");
+    const reason =
+      error?.msg ||
+      error?.message ||
+      (error == null
+        ? "The package could not be loaded for an unknown reason."
+        : "");
+
+    let fallback = "";
+    if (!reason) {
+      try {
+        fallback = JSON.stringify(error);
+      } catch {
+        fallback = String(error);
+      }
+    }
+
+    return h(
+      "li",
+      {},
+      context ? h("strong", {}, context) : "",
+      h(
+        "p",
+        {},
+        String(
+          reason ||
+            fallback ||
+            "The package could not be loaded for an unknown reason.",
+        ),
+      ),
+    );
+  };
+
+  const count = S.errors.length;
+  return h(
+    "section",
+    {
+      class: "package-load-errors",
+      role: "alert",
+      "aria-labelledby": "package-load-errors-title",
+    },
+    h(
+      "h2",
+      { id: "package-load-errors-title", class: "bad" },
+      "Some exercise packages could not be loaded",
+    ),
+    h(
+      "p",
+      {},
+      `The app loaded the available content, but ${count} package issue${count === 1 ? "" : "s"} occurred. Details:`,
+    ),
+    h("ul", {}, ...S.errors.map(describeError)),
+  );
 }
 
 // ---------- SQL engine ----------
@@ -3465,7 +3608,7 @@ function qView(
                     ),
                   ),
               g.cmp ? diffView(g.cmp) : "",
-              ex.explanation
+              g.correct && ex.explanation
                 ? h("p", {}, h("b", {}, "Explanation: "), ex.explanation)
                 : "",
             );
@@ -3643,7 +3786,7 @@ function qView(
                     "Your answer may be right, but the system can't tell for sure because it only checks against listed answers and certain patterns.",
                   )
                 : "",
-              ex.explanation
+              g && ex.explanation
                 ? h("p", {}, h("b", {}, "Explanation: "), ex.explanation)
                 : "",
             );
@@ -4368,9 +4511,7 @@ function md(src) {
 
     // Some generated summaries escape redundant inner emphasis markers:
     // **\*\*text\*\***. Collapse those pairs to the intended **text**.
-    text = text
-      .replace(/\*\*\\\*\\\*/g, "**")
-      .replace(/\\\*\\\*\*\*/g, "**");
+    text = text.replace(/\*\*\\\*\\\*/g, "**").replace(/\\\*\\\*\*\*/g, "**");
 
     // Parse links first. Their destinations may legitimately contain backticks.
     text = text.replace(
@@ -4379,9 +4520,13 @@ function md(src) {
         const safeLabel = inl(label);
         const dest = destination.trim();
         if (dest.startsWith("#"))
-          return hold(`<a href="#" data-a="${esc(dest.slice(1))}">${safeLabel}</a>`);
+          return hold(
+            `<a href="#" data-a="${esc(dest.slice(1))}">${safeLabel}</a>`,
+          );
         if (/^https?:/i.test(dest))
-          return hold(`<a href="${esc(dest).replace(/"/g, "&quot;")}" target="_blank" rel="noopener">${safeLabel}</a>`);
+          return hold(
+            `<a href="${esc(dest).replace(/"/g, "&quot;")}" target="_blank" rel="noopener">${safeLabel}</a>`,
+          );
         return whole;
       },
     );
@@ -4395,8 +4540,9 @@ function md(src) {
       .replace(/\*\*([\s\S]+?)\*\*/g, "<b>$1</b>")
       .replace(/(^|[^*\w])\*([^*\n]+)\*(?!\w)/g, "$1<i>$2</i>");
 
-    return text.replace(/\u0000MD(\d+)\u0000/g, (_, index) =>
-      protectedParts[Number(index)] ?? "",
+    return text.replace(
+      /\u0000MD(\d+)\u0000/g,
+      (_, index) => protectedParts[Number(index)] ?? "",
     );
   };
   const L = src.replace(/\r/g, "").split("\n"),
@@ -5503,7 +5649,10 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
       "aria-label": "Filter exercises",
     });
   const answers = S.drafts;
-  let showCompleted = false;
+  // Four-position practice filter. Needs correction means a question has
+  // previously been answered incorrectly and its latest result is still wrong.
+  // Saved-for-later choices are stored per exercise in IndexedDB.
+  let statusMode = "uncompleted";
   let selectedKey = "";
   let items = [];
   // Rendering 1000+ buttons at once crashes Safari on iPhone, so only a window
@@ -5608,22 +5757,50 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
         h("span", { class: "filter-label" }, name),
         select,
       );
-  const completedToggle = h(
-    "button",
-    {
-      type: "button",
-      class: "sec",
-      "aria-pressed": "false",
-      onclick: () => {
-        showCompleted = !showCompleted;
-        completedToggle.textContent = showCompleted
-          ? "Hide completed"
-          : "Show completed exercises";
-        completedToggle.setAttribute("aria-pressed", String(showCompleted));
-        redraw();
+  const statusModes = ["all", "uncompleted", "review", "saved"];
+  const statusNames = [
+    "Every question",
+    "Uncompleted",
+    "Needs correction",
+    "Saved for later",
+  ];
+  const statusButtons = statusModes.map((mode, index) =>
+    h(
+      "button",
+      {
+        type: "button",
+        class:
+          "practice-status-option" + (mode === statusMode ? " is-active" : ""),
+        "aria-pressed": String(mode === statusMode),
+        onclick: () => {
+          statusMode = mode;
+          statusSlider.dataset.status = mode;
+          statusButtons.forEach((button, buttonIndex) => {
+            const active = statusModes[buttonIndex] === mode;
+            button.classList.toggle("is-active", active);
+            button.setAttribute("aria-pressed", String(active));
+          });
+          redraw();
+        },
       },
+      statusNames[index],
+    ),
+  );
+  const statusSlider = h(
+    "div",
+    {
+      class: "practice-status-slider",
+      role: "group",
+      "aria-label": "Filter questions by status",
+      "data-status": statusMode,
     },
-    "Show completed exercises",
+    h("div", { class: "practice-status-labels" }, ...statusButtons),
+  );
+  const statusControl = h(
+    "div",
+    { class: "filter-control practice-status-control" },
+    h("span", { class: "filter-label" }, "Question status"),
+    statusSlider,
   );
   function refreshCategories() {
     const categories = [
@@ -5666,7 +5843,7 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
     filterControl("Course", courseSelect),
     filterControl("Category", categorySelect),
     filterControl("Difficulty", difficultySelect),
-    completedToggle,
+    statusControl,
   );
   const makeButton = (e) =>
     h(
@@ -5678,7 +5855,7 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
           selectExercise(e, true);
         },
       },
-      `${lastResults[keyOf(e)] === undefined ? "○" : lastResults[keyOf(e)] ? "✔" : "✘"} ${e.title}`,
+      `${S.savedForLater[keyOf(e)] ? "🔖 " : ""}${lastResults[keyOf(e)] === undefined ? "○" : lastResults[keyOf(e)] ? "✔" : "✘"} ${e.title}`,
       h(
         "small",
         {},
@@ -5733,17 +5910,25 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
     const selectedExercise = selectedKey
       ? S.exercises.find((e) => keyOf(e) === selectedKey)
       : null;
-    items = filtered.filter(
-      (e) =>
-        showCompleted || keyOf(e) === selectedKey || !S.xpRewards[keyOf(e)],
-    );
+    lastResults = {};
+    const previouslyMissed = {};
+    S.attempts.forEach((a) => {
+      lastResults[a.key] = a.correct;
+      // A past mistake only needs correction while the latest attempt remains
+      // incorrect. Correcting it removes it from this filter on the next draw.
+      if ((a.everIncorrect || a.correct === false) && a.correct !== true)
+        previouslyMissed[a.key] = true;
+    });
+    items = filtered.filter((e) => {
+      const key = keyOf(e);
+      if (key === selectedKey || statusMode === "all") return true;
+      if (statusMode === "review") return Boolean(previouslyMissed[key]);
+      if (statusMode === "saved") return Boolean(S.savedForLater[key]);
+      return !S.xpRewards[key];
+    });
     if (selectedExercise && !items.some((e) => keyOf(e) === selectedKey)) {
       items.unshift(selectedExercise);
     }
-    lastResults = {};
-    S.attempts.forEach((a) => {
-      lastResults[a.key] = a.correct;
-    });
     // Keep the list virtualized when a deep link or Next action selects an
     // exercise beyond the visible window. Show that selected row separately
     // instead of expanding the list through every preceding exercise.
@@ -5756,16 +5941,20 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
         h(
           "small",
           {},
-          filtered.length && !showCompleted
+          statusMode === "uncompleted" && filtered.length
             ? "All matching exercises are completed."
-            : "No exercises match these filters.",
+            : statusMode === "review"
+              ? "No questions currently need correction in these filters."
+              : statusMode === "saved"
+                ? "No questions have been saved for later in these filters."
+                : "No exercises match these filters.",
         ),
       );
     else if (items.length > practiceVisibleCount) nodes.push(moreRow());
     list.replaceChildren(...nodes);
     pane.firstElementChild?.refreshNextExercise?.();
   };
-  // Filter, search and completed-toggle changes start again from page one.
+  // Filter, search and status-slider changes start again from page one.
   function redraw() {
     practiceVisibleCount = PRACTICE_PAGE_SIZE;
     try {
@@ -5801,6 +5990,64 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
       },
       () => !!nextExerciseAfter(),
     );
+
+    const exerciseKey = keyOf(exercise);
+    const saveStatus = h("span", {
+      class: "practice-save-status",
+      role: "status",
+      "aria-live": "polite",
+    });
+    const saveButton = h(
+      "button",
+      {
+        type: "button",
+        class: "practice-save-button",
+        "aria-pressed": String(Boolean(S.savedForLater[exerciseKey])),
+        onclick: async () => {
+          const wasSaved = Boolean(S.savedForLater[exerciseKey]);
+          if (wasSaved) delete S.savedForLater[exerciseKey];
+          else S.savedForLater[exerciseKey] = true;
+
+          saveButton.disabled = true;
+          syncSaveButton();
+          saveStatus.textContent = "Saving…";
+          // Redraw the list immediately, but keep the currently open exercise
+          // pinned until the learner explicitly selects another one.
+          redraw();
+          try {
+            await kv.set("savedForLater", S.savedForLater);
+            saveStatus.textContent = wasSaved
+              ? "Removed from Saved for later."
+              : "Saved for later.";
+          } catch (error) {
+            if (wasSaved) S.savedForLater[exerciseKey] = true;
+            else delete S.savedForLater[exerciseKey];
+            syncSaveButton();
+            redraw();
+            saveStatus.textContent =
+              "Could not update saved status: " +
+              (error?.message || String(error));
+          } finally {
+            saveButton.disabled = false;
+          }
+        },
+      },
+      S.savedForLater[exerciseKey] ? "Saved for later" : "Save for later",
+    );
+    const syncSaveButton = () => {
+      const isSaved = Boolean(S.savedForLater[exerciseKey]);
+      saveButton.textContent = isSaved ? "Saved for later" : "Save for later";
+      saveButton.classList.toggle("is-saved", isSaved);
+      saveButton.setAttribute("aria-pressed", String(isSaved));
+    };
+    syncSaveButton();
+    const questionRoot = view.classList?.contains("q")
+      ? view
+      : view.querySelector?.(".q");
+    questionRoot?.prepend(
+      h("div", { class: "practice-exercise-actions" }, saveButton, saveStatus),
+    );
+
     pane.replaceChildren(view);
     requestAnimationFrame(() =>
       requestAnimationFrame(() => {
@@ -7517,7 +7764,7 @@ function resetLocalDataControl(root) {
           !(await confirmInApp({
             title: "Reset saved data?",
             message:
-              "This removes imported packages, exercise drafts and results, XP, achievements, saved exams, and exam history from this device. This cannot be undone.",
+              "This removes imported packages, exercise drafts and results, saved-for-later questions, XP, achievements, saved exams, and exam history from this device. This cannot be undone.",
             confirmLabel: "Reset all data",
             danger: true,
           }))
@@ -7546,7 +7793,7 @@ function resetLocalDataControl(root) {
     h(
       "p",
       {},
-      "Remove all data this app saved on this device, including imported packages, exercise drafts and results, XP, achievements, saved exams, and exam history. Bundled site content will remain available.",
+      "Remove all data this app saved on this device, including imported packages, exercise drafts and results, saved-for-later questions, XP, achievements, saved exams, and exam history. Bundled site content will remain available.",
     ),
     button,
     status,
@@ -7663,6 +7910,7 @@ function triggerWassimSignal() {
     document.documentElement.classList.add("hacking-mode");
 
     setTimeout(() => {
+      if (focusButton.getAttribute("aria-pressed") === "true") return;
       terminalArtifact.classList.remove("active");
       document.documentElement.classList.remove("hacking-mode");
       setTimeout(() => {
@@ -7674,6 +7922,7 @@ function triggerWassimSignal() {
   if (!periodicToast) return;
 
   setTimeout(() => {
+    if (focusButton.getAttribute("aria-pressed") === "true") return;
     achTrack((s) => void s.watches++, { full: false });
     periodicToast.replaceChildren(
       h("span", { class: "periodic-toast-prefix" }, "[ SYS//MONITOR ]"),
@@ -7690,6 +7939,7 @@ function triggerWassimSignal() {
     requestAnimationFrame(() => periodicToast.classList.add("show"));
 
     setTimeout(() => {
+      if (focusButton.getAttribute("aria-pressed") === "true") return;
       periodicToast.classList.remove("show");
       setTimeout(() => {
         periodicToast.hidden = true;
@@ -7855,6 +8105,8 @@ async function route() {
   main.replaceChildren();
   const view = h("div");
   main.append(view);
+  const packageErrors = packageLoadErrorPanel();
+  if (packageErrors) view.append(packageErrors);
   routeShown = { page, subject: routeSubject(page, arg) };
   achOnRoute(page, routeShown.subject);
   // The page functions build their markup before their first await, so the
@@ -8250,6 +8502,9 @@ document.addEventListener(
 focusButton.addEventListener("click", () => {
   const isPressed = focusButton.getAttribute("aria-pressed") === "true";
   if (!isPressed) {
+    periodicToast.hidden = true;
+    terminalArtifact.hidden = true;
+    document.documentElement.classList.remove("hacking-mode");
     hideClickme();
     achTrack((s) => void s.zenOn++, { full: false });
   }
