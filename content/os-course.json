@@ -16,14 +16,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "pwd"
-        ],
+        "accepted": ["pwd"],
         "patterns": []
       },
-      "hints": [
-        "Three letters."
-      ],
+      "hints": ["Three letters."],
       "explanation": "`pwd` prints the path of the current working directory."
     },
     "os-fundamentals-002": {
@@ -37,14 +33,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "whoami"
-        ],
+        "accepted": ["whoami"],
         "patterns": []
       },
-      "hints": [
-        "Starts with 'who'."
-      ],
+      "hints": ["Starts with 'who'."],
       "explanation": "`whoami` prints the effective username for the current shell session."
     },
     "os-fundamentals-003": {
@@ -58,14 +50,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "date"
-        ],
+        "accepted": ["date"],
         "patterns": []
       },
-      "hints": [
-        "Simple 4-letter command."
-      ],
+      "hints": ["Simple 4-letter command."],
       "explanation": "`date` displays the system date and time."
     },
     "os-fundamentals-004": {
@@ -79,14 +67,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "history"
-        ],
+        "accepted": ["history"],
         "patterns": []
       },
-      "hints": [
-        "Related to past actions."
-      ],
+      "hints": ["Related to past actions."],
       "explanation": "`history` displays the command history list."
     },
     "os-fundamentals-005": {
@@ -100,14 +84,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "man ls"
-        ],
+        "accepted": ["man ls"],
         "patterns": []
       },
-      "hints": [
-        "Use `man` followed by the command name."
-      ],
+      "hints": ["Use `man` followed by the command name."],
       "explanation": "`man` displays manual pages for commands."
     },
     "os-fundamentals-006": {
@@ -120,18 +100,9 @@
       "examEligible": true,
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
-      "options": [
-        "Absolute path",
-        "Relative path",
-        "Inode path",
-        "Shell path"
-      ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "It gives the full path from root."
-      ],
+      "options": ["Absolute path", "Relative path", "Inode path", "Shell path"],
+      "expected": [0],
+      "hints": ["It gives the full path from root."],
       "explanation": "An absolute path starts from the root directory `/`."
     },
     "os-fundamentals-007": {
@@ -145,15 +116,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "ls -li",
-          "ls -il"
-        ],
+        "accepted": ["ls -li", "ls -il"],
         "patterns": []
       },
-      "hints": [
-        "Use the `-i` option with `ls`."
-      ],
+      "hints": ["Use the `-i` option with `ls`."],
       "explanation": "`ls -li` combines the long listing with inode-number output."
     },
     "os-fundamentals-008": {
@@ -167,14 +133,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          ".."
-        ],
+        "accepted": [".."],
         "patterns": []
       },
-      "hints": [
-        "Two dots."
-      ],
+      "hints": ["Two dots."],
       "explanation": "`..` refers to the parent directory."
     },
     "os-fundamentals-009": {
@@ -188,14 +150,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "."
-        ],
+        "accepted": ["."],
         "patterns": []
       },
-      "hints": [
-        "A single dot."
-      ],
+      "hints": ["A single dot."],
       "explanation": "`.` represents the current working directory."
     },
     "os-fundamentals-010": {
@@ -209,14 +167,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "ls -li"
-        ],
+        "accepted": ["ls -li"],
         "patterns": []
       },
-      "hints": [
-        "Combine `-l` and `-i`."
-      ],
+      "hints": ["Combine `-l` and `-i`."],
       "explanation": "`ls -li` combines long listing with inode numbers."
     },
     "os-fundamentals-011": {
@@ -230,14 +184,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "id"
-        ],
+        "accepted": ["id"],
         "patterns": []
       },
-      "hints": [
-        "Two letter command."
-      ],
+      "hints": ["Two letter command."],
       "explanation": "`id` prints user and group IDs."
     },
     "os-shell-basics-012": {
@@ -259,9 +209,7 @@
         ],
         "patterns": []
       },
-      "hints": [
-        "Combine flags after a single dash."
-      ],
+      "hints": ["Combine flags after a single dash."],
       "explanation": "Short options can be combined after a single dash like `-la`."
     },
     "os-shell-basics-013": {
@@ -275,14 +223,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "!!"
-        ],
+        "accepted": ["!!"],
         "patterns": []
       },
-      "hints": [
-        "Two exclamation marks."
-      ],
+      "hints": ["Two exclamation marks."],
       "explanation": "`!!` repeats the last command."
     },
     "os-shell-basics-015": {
@@ -296,14 +240,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "cd /tmp; ls"
-        ],
+        "accepted": ["cd /tmp; ls"],
         "patterns": []
       },
-      "hints": [
-        "Use `;` between commands."
-      ],
+      "hints": ["Use `;` between commands."],
       "explanation": "Semicolon `;` runs multiple commands sequentially on one line."
     },
     "os-shell-basics-016": {
@@ -317,15 +257,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "touch log{1..3}.txt",
-          "touch log{1,2,3}.txt"
-        ],
+        "accepted": ["touch log{1..3}.txt", "touch log{1,2,3}.txt"],
         "patterns": []
       },
-      "hints": [
-        "Use `{1..3}` inside the filename."
-      ],
+      "hints": ["Use `{1..3}` inside the filename."],
       "explanation": "Brace expansion `{1..3}` generates sequential strings `log1.txt log2.txt log3.txt`."
     },
     "os-shell-basics-017": {
@@ -345,9 +280,7 @@
         ],
         "patterns": []
       },
-      "hints": [
-        "Use comma-separated items inside braces."
-      ],
+      "hints": ["Use comma-separated items inside braces."],
       "explanation": "`mkdir -p project/{src,docs,tests}` creates the base directory and three subdirectories simultaneously."
     },
     "os-shell-basics-020": {
@@ -361,15 +294,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "exit",
-          "Ctrl+D"
-        ],
+        "accepted": ["exit", "Ctrl+D"],
         "patterns": []
       },
-      "hints": [
-        "`exit` or `Ctrl+D`."
-      ],
+      "hints": ["`exit` or `Ctrl+D`."],
       "explanation": "Typing `exit` or pressing `Ctrl+D` exits the shell."
     },
     "os-shell-basics-021": {
@@ -383,14 +311,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "!3"
-        ],
+        "accepted": ["!3"],
         "patterns": []
       },
-      "hints": [
-        "Exclamation mark followed by the number."
-      ],
+      "hints": ["Exclamation mark followed by the number."],
       "explanation": "`!3` expands to and executes the command with history number 3."
     },
     "os-shell-basics-022": {
@@ -404,14 +328,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "echo $USER"
-        ],
+        "accepted": ["echo $USER"],
         "patterns": []
       },
-      "hints": [
-        "Precede variable with `$`."
-      ],
+      "hints": ["Precede variable with `$`."],
       "explanation": "`echo $USER` prints the value of `USER`."
     },
     "os-shell-basics-023": {
@@ -425,14 +345,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "--"
-        ],
+        "accepted": ["--"],
         "patterns": []
       },
-      "hints": [
-        "Two dashes."
-      ],
+      "hints": ["Two dashes."],
       "explanation": "Long option names start with two dashes (`--`)."
     },
     "os-shell-basics-025": {
@@ -446,14 +362,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "echo {a..c}"
-        ],
+        "accepted": ["echo {a..c}"],
         "patterns": []
       },
-      "hints": [
-        "Use `{a..c}` inside echo."
-      ],
+      "hints": ["Use `{a..c}` inside echo."],
       "explanation": "`echo {a..c}` prints `a b c` via brace expansion."
     },
     "os-wildcards-027": {
@@ -467,14 +379,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "*.txt"
-        ],
+        "accepted": ["*.txt"],
         "patterns": []
       },
-      "hints": [
-        "Use `*` for any number of characters."
-      ],
+      "hints": ["Use `*` for any number of characters."],
       "explanation": "`*` matches any number of characters, including none."
     },
     "os-wildcards-028": {
@@ -488,14 +396,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "file?.txt"
-        ],
+        "accepted": ["file?.txt"],
         "patterns": []
       },
-      "hints": [
-        "`?` matches exactly one character."
-      ],
+      "hints": ["`?` matches exactly one character."],
       "explanation": "`?` matches any single character."
     },
     "os-wildcards-029": {
@@ -509,14 +413,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "[abc]*"
-        ],
+        "accepted": ["[abc]*"],
         "patterns": []
       },
-      "hints": [
-        "Enclosed characters in brackets."
-      ],
+      "hints": ["Enclosed characters in brackets."],
       "explanation": "`[abc]*` matches names starting with `a`, `b`, or `c` followed by any characters."
     },
     "os-wildcards-030": {
@@ -530,14 +430,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "[!0-9]*"
-        ],
+        "accepted": ["[!0-9]*"],
         "patterns": []
       },
-      "hints": [
-        "Use `!` or `^` inside brackets for negation."
-      ],
+      "hints": ["Use `!` or `^` inside brackets for negation."],
       "explanation": "In Bash filename globbing, `[!0-9]` matches one character outside the digit range; the trailing `*` matches the rest of the name."
     },
     "os-wildcards-031": {
@@ -551,14 +447,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "log[0-9].txt"
-        ],
+        "accepted": ["log[0-9].txt"],
         "patterns": []
       },
-      "hints": [
-        "Range `[0-9]` matches a single digit."
-      ],
+      "hints": ["Range `[0-9]` matches a single digit."],
       "explanation": "`[0-9]` matches exactly one digit in a Bash filename glob."
     },
     "os-wildcards-032": {
@@ -571,13 +463,8 @@
       "examEligible": true,
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
-      "options": [
-        "False",
-        "True"
-      ],
-      "expected": [
-        0
-      ],
+      "options": ["False", "True"],
+      "expected": [0],
       "hints": [
         "Hidden files start with a dot '.' which is ignored by standard `*`."
       ],
@@ -594,14 +481,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "{a..c}"
-        ],
+        "accepted": ["{a..c}"],
         "patterns": []
       },
-      "hints": [
-        "Sequential letters inside braces."
-      ],
+      "hints": ["Sequential letters inside braces."],
       "explanation": "`{a..c}` expands to `a b c`."
     },
     "os-wildcards-035": {
@@ -615,14 +498,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "file{1,2}.txt"
-        ],
+        "accepted": ["file{1,2}.txt"],
         "patterns": []
       },
-      "hints": [
-        "Comma-separated items inside braces."
-      ],
+      "hints": ["Comma-separated items inside braces."],
       "explanation": "`file{1,2}.txt` generates `file1.txt file2.txt`."
     },
     "os-wildcards-036": {
@@ -636,14 +515,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "ls *.log"
-        ],
+        "accepted": ["ls *.log"],
         "patterns": []
       },
-      "hints": [
-        "`ls *.log`"
-      ],
+      "hints": ["`ls *.log`"],
       "explanation": "`ls *.log` lists all files ending in `.log`."
     },
     "os-wildcards-037": {
@@ -657,14 +532,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "[a-z].txt"
-        ],
+        "accepted": ["[a-z].txt"],
         "patterns": []
       },
-      "hints": [
-        "Use range `[a-z]`."
-      ],
+      "hints": ["Use range `[a-z]`."],
       "explanation": "`[a-z].txt` matches a single lowercase letter filename ending in `.txt`."
     },
     "os-wildcards-039": {
@@ -678,14 +549,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "ls a*"
-        ],
+        "accepted": ["ls a*"],
         "patterns": []
       },
-      "hints": [
-        "`ls a*`"
-      ],
+      "hints": ["`ls a*`"],
       "explanation": "`ls a*` lists files starting with `a`."
     },
     "os-wildcards-040": {
@@ -699,14 +566,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "ls file?.txt"
-        ],
+        "accepted": ["ls file?.txt"],
         "patterns": []
       },
-      "hints": [
-        "`ls file?.txt`"
-      ],
+      "hints": ["`ls file?.txt`"],
       "explanation": "`ls file?.txt` matches a single character position."
     },
     "os-wildcards-041": {
@@ -720,14 +583,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "*"
-        ],
+        "accepted": ["*"],
         "patterns": []
       },
-      "hints": [
-        "Asterisk."
-      ],
+      "hints": ["Asterisk."],
       "explanation": "`*` matches zero or more characters."
     },
     "os-navigation-042": {
@@ -741,15 +600,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "cd",
-          "cd ~"
-        ],
+        "accepted": ["cd", "cd ~"],
         "patterns": []
       },
-      "hints": [
-        "`cd` with no arguments or with `~`."
-      ],
+      "hints": ["`cd` with no arguments or with `~`."],
       "explanation": "`cd` or `cd ~` navigates to the user's home directory."
     },
     "os-navigation-043": {
@@ -763,14 +617,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "cd -"
-        ],
+        "accepted": ["cd -"],
         "patterns": []
       },
-      "hints": [
-        "Use a hyphen `-`."
-      ],
+      "hints": ["Use a hyphen `-`."],
       "explanation": "`cd -` switches back to the previous working directory."
     },
     "os-navigation-044": {
@@ -784,14 +634,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "cd .."
-        ],
+        "accepted": ["cd .."],
         "patterns": []
       },
-      "hints": [
-        "Use `..`."
-      ],
+      "hints": ["Use `..`."],
       "explanation": "`cd ..` moves to the parent directory."
     },
     "os-navigation-045": {
@@ -805,14 +651,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "ls -l"
-        ],
+        "accepted": ["ls -l"],
         "patterns": []
       },
-      "hints": [
-        "Use the `-l` option."
-      ],
+      "hints": ["Use the `-l` option."],
       "explanation": "`ls -l` shows permissions, link counts, owners, sizes, and timestamps."
     },
     "os-navigation-046": {
@@ -826,14 +668,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "ls -a"
-        ],
+        "accepted": ["ls -a"],
         "patterns": []
       },
-      "hints": [
-        "Use `-a` or `-A`."
-      ],
+      "hints": ["Use `-a` or `-A`."],
       "explanation": "`ls -a` includes hidden names as well as `.` and `..`."
     },
     "os-navigation-047": {
@@ -847,14 +685,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "ls -ld /etc"
-        ],
+        "accepted": ["ls -ld /etc"],
         "patterns": []
       },
-      "hints": [
-        "Combine `-l` and `-d`."
-      ],
+      "hints": ["Combine `-l` and `-d`."],
       "explanation": "`ls -d` lists the directory itself rather than its contents."
     },
     "os-navigation-048": {
@@ -868,14 +702,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "-R"
-        ],
+        "accepted": ["-R"],
         "patterns": []
       },
-      "hints": [
-        "Capital R."
-      ],
+      "hints": ["Capital R."],
       "explanation": "`ls -R` lists subdirectory contents recursively."
     },
     "os-navigation-049": {
@@ -889,14 +719,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "-h"
-        ],
+        "accepted": ["-h"],
         "patterns": []
       },
-      "hints": [
-        "Starts with 'h'."
-      ],
+      "hints": ["Starts with 'h'."],
       "explanation": "`-h` makes sizes human-readable; it is commonly combined with `-l`."
     },
     "os-navigation-051": {
@@ -910,14 +736,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "date +%F"
-        ],
+        "accepted": ["date +%F"],
         "patterns": []
       },
-      "hints": [
-        "Use `+%F` format string."
-      ],
+      "hints": ["Use `+%F` format string."],
       "explanation": "`date +%F` prints the date in ISO format (`YYYY-MM-DD`)."
     },
     "os-navigation-052": {
@@ -931,14 +753,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "q"
-        ],
+        "accepted": ["q"],
         "patterns": []
       },
-      "hints": [
-        "First letter of 'quit'."
-      ],
+      "hints": ["First letter of 'quit'."],
       "explanation": "Pressing `q` quits the `man` page viewer."
     },
     "os-navigation-053": {
@@ -952,14 +770,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "/"
-        ],
+        "accepted": ["/"],
         "patterns": []
       },
-      "hints": [
-        "Forward slash."
-      ],
+      "hints": ["Forward slash."],
       "explanation": "Typing `/` followed by search terms allows searching inside `man` and `less`."
     },
     "os-navigation-054": {
@@ -973,14 +787,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "cd /"
-        ],
+        "accepted": ["cd /"],
         "patterns": []
       },
-      "hints": [
-        "Slash `/` represents root."
-      ],
+      "hints": ["Slash `/` represents root."],
       "explanation": "`cd /` navigates to the root directory."
     },
     "os-navigation-055": {
@@ -994,15 +804,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "ls -lah",
-          "ls -alh"
-        ],
+        "accepted": ["ls -lah", "ls -alh"],
         "patterns": []
       },
-      "hints": [
-        "Combine `-l`, `-a` (or `-A`), and `-h`."
-      ],
+      "hints": ["Combine `-l`, `-a` (or `-A`), and `-h`."],
       "explanation": "`ls -lah` combines long format, all hidden files, and human-readable sizes."
     },
     "os-navigation-056": {
@@ -1016,14 +821,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "-1"
-        ],
+        "accepted": ["-1"],
         "patterns": []
       },
-      "hints": [
-        "The number one."
-      ],
+      "hints": ["The number one."],
       "explanation": "`-1` forces single-column output in `ls`."
     },
     "os-navigation-059": {
@@ -1036,18 +837,9 @@
       "examEligible": true,
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
-      "options": [
-        "pwd",
-        "cwd",
-        "dir",
-        "path"
-      ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "Print working directory."
-      ],
+      "options": ["pwd", "cwd", "dir", "path"],
+      "expected": [0],
+      "hints": ["Print working directory."],
       "explanation": "`pwd` prints the full path of the current directory."
     },
     "os-navigation-060": {
@@ -1061,14 +853,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "ls -l /var/log"
-        ],
+        "accepted": ["ls -l /var/log"],
         "patterns": []
       },
-      "hints": [
-        "`ls -l /var/log`"
-      ],
+      "hints": ["`ls -l /var/log`"],
       "explanation": "`ls -l` lists specified directory paths."
     },
     "os-file-inspection-062": {
@@ -1082,14 +870,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "file document.pdf"
-        ],
+        "accepted": ["file document.pdf"],
         "patterns": []
       },
-      "hints": [
-        "Uses the `file` command."
-      ],
+      "hints": ["Uses the `file` command."],
       "explanation": "`file` reports the classification and type of a file."
     },
     "os-file-inspection-063": {
@@ -1103,14 +887,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "stat notes.txt"
-        ],
+        "accepted": ["stat notes.txt"],
         "patterns": []
       },
-      "hints": [
-        "Short for 'status'."
-      ],
+      "hints": ["Short for 'status'."],
       "explanation": "`stat` displays detailed low-level file metadata and timestamps."
     },
     "os-file-inspection-064": {
@@ -1124,14 +904,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "cat notes.txt"
-        ],
+        "accepted": ["cat notes.txt"],
         "patterns": []
       },
-      "hints": [
-        "Short for 'concatenate'."
-      ],
+      "hints": ["Short for 'concatenate'."],
       "explanation": "`cat` outputs the complete contents of files."
     },
     "os-file-inspection-065": {
@@ -1145,14 +921,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "head -n 5 notes.txt"
-        ],
+        "accepted": ["head -n 5 notes.txt"],
         "patterns": []
       },
-      "hints": [
-        "Use `head` with `-n 5`."
-      ],
+      "hints": ["Use `head` with `-n 5`."],
       "explanation": "`head -n 5` prints the first 5 lines of a file."
     },
     "os-file-inspection-066": {
@@ -1166,14 +938,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "tail -n 20 logfile.txt"
-        ],
+        "accepted": ["tail -n 20 logfile.txt"],
         "patterns": []
       },
-      "hints": [
-        "Use `tail` with `-n 20`."
-      ],
+      "hints": ["Use `tail` with `-n 20`."],
       "explanation": "`tail -n 20` prints the final 20 lines of a file."
     },
     "os-file-inspection-067": {
@@ -1187,15 +955,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "tail -f",
-          "-f"
-        ],
+        "accepted": ["tail -f", "-f"],
         "patterns": []
       },
-      "hints": [
-        "Stands for 'follow'."
-      ],
+      "hints": ["Stands for 'follow'."],
       "explanation": "`tail -f` keeps the stream open and outputs new lines as they are appended."
     },
     "os-file-inspection-068": {
@@ -1209,15 +972,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "less filename",
-          "less"
-        ],
+        "accepted": ["less filename", "less"],
         "patterns": []
       },
-      "hints": [
-        "Opposite of `more`."
-      ],
+      "hints": ["Opposite of `more`."],
       "explanation": "`less` is a pager allowing backward and forward navigation through files."
     },
     "os-file-inspection-069": {
@@ -1231,14 +989,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "wc notes.txt"
-        ],
+        "accepted": ["wc notes.txt"],
         "patterns": []
       },
-      "hints": [
-        "Word count command."
-      ],
+      "hints": ["Word count command."],
       "explanation": "`wc` reports newline, word, and byte counts."
     },
     "os-file-inspection-070": {
@@ -1252,14 +1006,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "wc -l notes.txt"
-        ],
+        "accepted": ["wc -l notes.txt"],
         "patterns": []
       },
-      "hints": [
-        "Use `-l` flag with `wc`."
-      ],
+      "hints": ["Use `-l` flag with `wc`."],
       "explanation": "`wc -l` outputs only the line count."
     },
     "os-file-inspection-071": {
@@ -1278,12 +1028,8 @@
         "-b for bytes, -c for characters",
         "-l for bytes, -w for characters"
       ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "`-c` counts bytes, `-m` counts characters."
-      ],
+      "expected": [0],
+      "hints": ["`-c` counts bytes, `-m` counts characters."],
       "explanation": "`wc -c` counts bytes; `wc -m` counts characters."
     },
     "os-file-inspection-072": {
@@ -1297,14 +1043,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "cat a.txt b.txt"
-        ],
+        "accepted": ["cat a.txt b.txt"],
         "patterns": []
       },
-      "hints": [
-        "Pass multiple filenames to `cat`."
-      ],
+      "hints": ["Pass multiple filenames to `cat`."],
       "explanation": "`cat` can concatenate and print multiple files sequentially."
     },
     "os-file-inspection-073": {
@@ -1318,15 +1060,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "head -n 10 data.txt",
-          "head data.txt"
-        ],
+        "accepted": ["head -n 10 data.txt", "head data.txt"],
         "patterns": []
       },
-      "hints": [
-        "`head -n 10 data.txt`"
-      ],
+      "hints": ["`head -n 10 data.txt`"],
       "explanation": "`head` prints the first lines of files."
     },
     "os-file-inspection-074": {
@@ -1340,14 +1077,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "q"
-        ],
+        "accepted": ["q"],
         "patterns": []
       },
-      "hints": [
-        "Press `q`."
-      ],
+      "hints": ["Press `q`."],
       "explanation": "`q` quits `less`."
     },
     "os-file-inspection-075": {
@@ -1361,15 +1094,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "tail -n 10 data.txt",
-          "tail data.txt"
-        ],
+        "accepted": ["tail -n 10 data.txt", "tail data.txt"],
         "patterns": []
       },
-      "hints": [
-        "`tail -n 10 data.txt`"
-      ],
+      "hints": ["`tail -n 10 data.txt`"],
       "explanation": "`tail` prints the final lines of files."
     },
     "os-file-inspection-076": {
@@ -1382,18 +1110,9 @@
       "examEligible": true,
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
-      "options": [
-        "cat",
-        "more",
-        "less",
-        "head"
-      ],
-      "expected": [
-        2
-      ],
-      "hints": [
-        "Name implies it's more versatile than `more`."
-      ],
+      "options": ["cat", "more", "less", "head"],
+      "expected": [2],
+      "hints": ["Name implies it's more versatile than `more`."],
       "explanation": "`less` allows bidirectional navigation whereas `more` is mainly forward-only."
     },
     "os-file-management-077": {
@@ -1407,14 +1126,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "mkdir archive"
-        ],
+        "accepted": ["mkdir archive"],
         "patterns": []
       },
-      "hints": [
-        "Make directory."
-      ],
+      "hints": ["Make directory."],
       "explanation": "`mkdir` creates new directories."
     },
     "os-file-management-078": {
@@ -1428,14 +1143,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "-p"
-        ],
+        "accepted": ["-p"],
         "patterns": []
       },
-      "hints": [
-        "Stands for 'parents'."
-      ],
+      "hints": ["Stands for 'parents'."],
       "explanation": "`mkdir -p` creates parent directories as needed and suppresses errors if they exist."
     },
     "os-file-management-079": {
@@ -1449,14 +1160,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "touch empty.txt"
-        ],
+        "accepted": ["touch empty.txt"],
         "patterns": []
       },
-      "hints": [
-        "The `touch` command."
-      ],
+      "hints": ["The `touch` command."],
       "explanation": "`touch` creates an empty file or updates timestamps of existing files."
     },
     "os-file-management-080": {
@@ -1470,14 +1177,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "cp source.txt backup.txt"
-        ],
+        "accepted": ["cp source.txt backup.txt"],
         "patterns": []
       },
-      "hints": [
-        "The `cp` command."
-      ],
+      "hints": ["The `cp` command."],
       "explanation": "`cp` copies files from source to destination."
     },
     "os-file-management-081": {
@@ -1491,15 +1194,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "-r",
-          "-R"
-        ],
+        "accepted": ["-r", "-R"],
         "patterns": []
       },
-      "hints": [
-        "Recursive flag."
-      ],
+      "hints": ["Recursive flag."],
       "explanation": "`cp -r` copies directories recursively."
     },
     "os-file-management-082": {
@@ -1513,14 +1211,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "-i"
-        ],
+        "accepted": ["-i"],
         "patterns": []
       },
-      "hints": [
-        "Stands for 'interactive'."
-      ],
+      "hints": ["Stands for 'interactive'."],
       "explanation": "`cp -i` prompts before overwriting existing files."
     },
     "os-file-management-083": {
@@ -1534,14 +1228,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "mv old.txt new.txt"
-        ],
+        "accepted": ["mv old.txt new.txt"],
         "patterns": []
       },
-      "hints": [
-        "The `mv` command."
-      ],
+      "hints": ["The `mv` command."],
       "explanation": "`mv` moves or renames files and directories."
     },
     "os-file-management-084": {
@@ -1555,14 +1245,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "-i"
-        ],
+        "accepted": ["-i"],
         "patterns": []
       },
-      "hints": [
-        "Interactive flag."
-      ],
+      "hints": ["Interactive flag."],
       "explanation": "`mv -i` prompts before overwriting."
     },
     "os-file-management-085": {
@@ -1576,14 +1262,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "rm temp.txt"
-        ],
+        "accepted": ["rm temp.txt"],
         "patterns": []
       },
-      "hints": [
-        "Remove command."
-      ],
+      "hints": ["Remove command."],
       "explanation": "`rm` deletes files permanently."
     },
     "os-file-management-086": {
@@ -1597,15 +1279,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "rm -r old_dir",
-          "rm -rf old_dir"
-        ],
+        "accepted": ["rm -r old_dir", "rm -rf old_dir"],
         "patterns": []
       },
-      "hints": [
-        "Combine `rm` with `-r`."
-      ],
+      "hints": ["Combine `rm` with `-r`."],
       "explanation": "`rm -r` deletes directories and their contents recursively."
     },
     "os-file-management-087": {
@@ -1619,14 +1296,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "-f"
-        ],
+        "accepted": ["-f"],
         "patterns": []
       },
-      "hints": [
-        "Stands for 'force'."
-      ],
+      "hints": ["Stands for 'force'."],
       "explanation": "`rm -f` forces deletion without prompting."
     },
     "os-file-management-088": {
@@ -1640,14 +1313,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "rmdir"
-        ],
+        "accepted": ["rmdir"],
         "patterns": []
       },
-      "hints": [
-        "`rmdir` command."
-      ],
+      "hints": ["`rmdir` command."],
       "explanation": "`rmdir` removes empty directories only."
     },
     "os-file-management-089": {
@@ -1661,15 +1330,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "cp a.txt b.txt backup/",
-          "cp {a,b}.txt backup/"
-        ],
+        "accepted": ["cp a.txt b.txt backup/", "cp {a,b}.txt backup/"],
         "patterns": []
       },
-      "hints": [
-        "List sources followed by target directory."
-      ],
+      "hints": ["List sources followed by target directory."],
       "explanation": "`cp` places multiple source files into the specified destination directory."
     },
     "os-file-management-090": {
@@ -1683,14 +1347,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "mv report.txt docs/"
-        ],
+        "accepted": ["mv report.txt docs/"],
         "patterns": []
       },
-      "hints": [
-        "Destination directory at the end."
-      ],
+      "hints": ["Destination directory at the end."],
       "explanation": "`mv` moves the file into the target directory."
     },
     "os-file-management-091": {
@@ -1703,16 +1363,9 @@
       "examEligible": true,
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
-      "options": [
-        "False",
-        "True"
-      ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "Deletion is permanent."
-      ],
+      "options": ["False", "True"],
+      "expected": [0],
+      "hints": ["Deletion is permanent."],
       "explanation": "Linux command-line `rm` permanently unlinks files; there is no recycle bin."
     },
     "os-file-management-092": {
@@ -1726,15 +1379,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "touch one.txt two.txt",
-          "touch {one,two}.txt"
-        ],
+        "accepted": ["touch one.txt two.txt", "touch {one,two}.txt"],
         "patterns": []
       },
-      "hints": [
-        "Pass multiple filenames to `touch`."
-      ],
+      "hints": ["Pass multiple filenames to `touch`."],
       "explanation": "`touch` accepts multiple filenames to create or update them."
     },
     "os-file-management-093": {
@@ -1748,14 +1396,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "mkdir -p project/src/core"
-        ],
+        "accepted": ["mkdir -p project/src/core"],
         "patterns": []
       },
-      "hints": [
-        "Use `-p` option."
-      ],
+      "hints": ["Use `-p` option."],
       "explanation": "`mkdir -p` builds nested directory trees in one go."
     },
     "os-file-management-094": {
@@ -1769,15 +1413,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "cp -r dir1 dir2",
-          "cp -R dir1 dir2"
-        ],
+        "accepted": ["cp -r dir1 dir2", "cp -R dir1 dir2"],
         "patterns": []
       },
-      "hints": [
-        "Use `cp -r`."
-      ],
+      "hints": ["Use `cp -r`."],
       "explanation": "`cp -r` copies directory trees recursively."
     },
     "os-file-management-095": {
@@ -1791,14 +1430,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "-i"
-        ],
+        "accepted": ["-i"],
         "patterns": []
       },
-      "hints": [
-        "Interactive flag."
-      ],
+      "hints": ["Interactive flag."],
       "explanation": "`rm -i` prompts the user before removing files."
     },
     "os-file-management-096": {
@@ -1812,14 +1447,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "touch existing.txt"
-        ],
+        "accepted": ["touch existing.txt"],
         "patterns": []
       },
-      "hints": [
-        "`touch` updates timestamps."
-      ],
+      "hints": ["`touch` updates timestamps."],
       "explanation": "`touch` updates access and modification timestamps."
     },
     "os-text-utilities-097": {
@@ -1833,15 +1464,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "echo \"Hello World\"",
-          "echo Hello World"
-        ],
+        "accepted": ["echo \"Hello World\"", "echo Hello World"],
         "patterns": []
       },
-      "hints": [
-        "Use `echo` followed by the text."
-      ],
+      "hints": ["Use `echo` followed by the text."],
       "explanation": "`echo` prints text to standard output."
     },
     "os-text-utilities-098": {
@@ -1855,14 +1481,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "-e"
-        ],
+        "accepted": ["-e"],
         "patterns": []
       },
-      "hints": [
-        "Stands for 'escape'."
-      ],
+      "hints": ["Stands for 'escape'."],
       "explanation": "`echo -e` interprets backslash escapes like newlines and tabs."
     },
     "os-text-utilities-099": {
@@ -1883,9 +1505,7 @@
         ],
         "patterns": []
       },
-      "hints": [
-        "Use `-d:` for delimiter and `-f1` for field 1."
-      ],
+      "hints": ["Use `-d:` for delimiter and `-f1` for field 1."],
       "explanation": "`cut -d: -f1` extracts field 1 using colon delimiter."
     },
     "os-text-utilities-100": {
@@ -1899,14 +1519,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "-n"
-        ],
+        "accepted": ["-n"],
         "patterns": []
       },
-      "hints": [
-        "Stands for 'numeric'."
-      ],
+      "hints": ["Stands for 'numeric'."],
       "explanation": "`sort -n` sorts numerically so 9 comes before 10."
     },
     "os-text-utilities-101": {
@@ -1920,14 +1536,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "-r"
-        ],
+        "accepted": ["-r"],
         "patterns": []
       },
-      "hints": [
-        "Stands for 'reverse'."
-      ],
+      "hints": ["Stands for 'reverse'."],
       "explanation": "`sort -r` reverses the sorting order."
     },
     "os-text-utilities-102": {
@@ -1941,14 +1553,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "-c"
-        ],
+        "accepted": ["-c"],
         "patterns": []
       },
-      "hints": [
-        "Stands for 'count'."
-      ],
+      "hints": ["Stands for 'count'."],
       "explanation": "`uniq -c` prefixes lines with their repetition count (requires sorted input)."
     },
     "os-text-utilities-103": {
@@ -1962,14 +1570,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "-d"
-        ],
+        "accepted": ["-d"],
         "patterns": []
       },
-      "hints": [
-        "Stands for 'duplicate'."
-      ],
+      "hints": ["Stands for 'duplicate'."],
       "explanation": "`uniq -d` outputs only repeated lines."
     },
     "os-text-utilities-104": {
@@ -1983,15 +1587,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "tr \"a-z\" \"A-Z\"",
-          "tr a-z A-Z"
-        ],
+        "accepted": ["tr \"a-z\" \"A-Z\"", "tr a-z A-Z"],
         "patterns": []
       },
-      "hints": [
-        "`tr 'a-z' 'A-Z'`"
-      ],
+      "hints": ["`tr 'a-z' 'A-Z'`"],
       "explanation": "`tr` translates characters from set1 to set2."
     },
     "os-text-utilities-105": {
@@ -2005,14 +1604,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "-d"
-        ],
+        "accepted": ["-d"],
         "patterns": []
       },
-      "hints": [
-        "Stands for 'delete'."
-      ],
+      "hints": ["Stands for 'delete'."],
       "explanation": "`tr -d` deletes specified characters."
     },
     "os-text-utilities-106": {
@@ -2026,14 +1621,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "tee output.txt"
-        ],
+        "accepted": ["tee output.txt"],
         "patterns": []
       },
-      "hints": [
-        "Pass filename to `tee`."
-      ],
+      "hints": ["Pass filename to `tee`."],
       "explanation": "`tee` copies stdin to stdout and files simultaneously."
     },
     "os-text-utilities-107": {
@@ -2047,14 +1638,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "-a"
-        ],
+        "accepted": ["-a"],
         "patterns": []
       },
-      "hints": [
-        "Stands for 'append'."
-      ],
+      "hints": ["Stands for 'append'."],
       "explanation": "`tee -a` appends output to the target file."
     },
     "os-text-utilities-108": {
@@ -2067,16 +1654,9 @@
       "examEligible": true,
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
-      "options": [
-        "True",
-        "False"
-      ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "`uniq` checks adjacent lines."
-      ],
+      "options": ["True", "False"],
+      "expected": [0],
+      "hints": ["`uniq` checks adjacent lines."],
       "explanation": "`uniq` only detects adjacent duplicate lines, requiring `sort` beforehand."
     },
     "os-text-utilities-109": {
@@ -2090,14 +1670,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "ps aux"
-        ],
+        "accepted": ["ps aux"],
         "patterns": []
       },
-      "hints": [
-        "`ps aux` (no dash for BSD format)."
-      ],
+      "hints": ["`ps aux` (no dash for BSD format)."],
       "explanation": "`ps aux` displays a broad listing of running processes."
     },
     "os-text-utilities-114": {
@@ -2111,14 +1687,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "sort -n numbers.txt"
-        ],
+        "accepted": ["sort -n numbers.txt"],
         "patterns": []
       },
-      "hints": [
-        "Use `sort -n`."
-      ],
+      "hints": ["Use `sort -n`."],
       "explanation": "`sort -n` sorts numerically."
     },
     "os-text-utilities-115": {
@@ -2132,14 +1704,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "-s"
-        ],
+        "accepted": ["-s"],
         "patterns": []
       },
-      "hints": [
-        "Stands for 'squeeze'."
-      ],
+      "hints": ["Stands for 'squeeze'."],
       "explanation": "`tr -s` squeezes sequences of repeated characters."
     },
     "os-redirection-117": {
@@ -2153,14 +1721,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "ls > list.txt"
-        ],
+        "accepted": ["ls > list.txt"],
         "patterns": []
       },
-      "hints": [
-        "Use `>` operator."
-      ],
+      "hints": ["Use `>` operator."],
       "explanation": "`>` redirects stdout, overwriting the destination file."
     },
     "os-redirection-118": {
@@ -2174,14 +1738,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "date >> log.txt"
-        ],
+        "accepted": ["date >> log.txt"],
         "patterns": []
       },
-      "hints": [
-        "Use `>>` operator."
-      ],
+      "hints": ["Use `>>` operator."],
       "explanation": "`>>` appends stdout to the destination file."
     },
     "os-redirection-119": {
@@ -2195,14 +1755,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "ls /doesnotexist 2> error.txt"
-        ],
-        "patterns": []
+        "accepted": ["ls /doesnotexist 2> error.txt"],
+        "patterns": ["ls /([a-zA-Z]/?)* 2> error\\.txt"]
       },
-      "hints": [
-        "Use `2>` for file descriptor 2."
-      ],
+      "hints": ["Use `2>` for file descriptor 2."],
       "explanation": "`2>` redirects the command’s standard-error stream to `error.txt`."
     },
     "os-redirection-120": {
@@ -2216,14 +1772,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "2>/dev/null"
-        ],
+        "accepted": ["2>/dev/null"],
         "patterns": []
       },
-      "hints": [
-        "Send fd 2 to `/dev/null`."
-      ],
+      "hints": ["Send fd 2 to `/dev/null`."],
       "explanation": "`2>/dev/null` discards error output."
     },
     "os-redirection-121": {
@@ -2237,14 +1789,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "find /etc -name passwd &> all_output.log"
-        ],
+        "accepted": ["find /etc -name passwd &> all_output.log"],
         "patterns": []
       },
-      "hints": [
-        "Use `&>` operator."
-      ],
+      "hints": ["Use `&>` operator."],
       "explanation": "`&>` redirects both stdout and stderr to a file in Bash."
     },
     "os-redirection-122": {
@@ -2258,14 +1806,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "sort < unsorted.txt > sorted.txt"
-        ],
+        "accepted": ["sort < unsorted.txt > sorted.txt"],
         "patterns": []
       },
-      "hints": [
-        "Use `<` for input redirection."
-      ],
+      "hints": ["Use `<` for input redirection."],
       "explanation": "`<` redirects a file into standard input of a command."
     },
     "os-redirection-123": {
@@ -2279,14 +1823,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "ls | wc -l"
-        ],
+        "accepted": ["ls | wc -l"],
         "patterns": []
       },
-      "hints": [
-        "Pipe symbol `|` connects stdout to stdin."
-      ],
+      "hints": ["Pipe symbol `|` connects stdout to stdin."],
       "explanation": "`ls | wc -l` pipes stdout of `ls` into `wc -l` to count lines."
     },
     "os-redirection-124": {
@@ -2299,18 +1839,9 @@
       "examEligible": true,
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
-      "options": [
-        "0",
-        "1",
-        "2",
-        "3"
-      ],
-      "expected": [
-        2
-      ],
-      "hints": [
-        "Stdin is 0, stdout is 1, ..."
-      ],
+      "options": ["0", "1", "2", "3"],
+      "expected": [2],
+      "hints": ["Stdin is 0, stdout is 1, ..."],
       "explanation": "Standard error is file descriptor 2."
     },
     "os-redirection-125": {
@@ -2324,14 +1855,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "/dev/null"
-        ],
+        "accepted": ["/dev/null"],
         "patterns": []
       },
-      "hints": [
-        "`/dev/null`"
-      ],
+      "hints": ["`/dev/null`"],
       "explanation": "`/dev/null` discards all output written to it."
     },
     "os-redirection-126": {
@@ -2345,14 +1872,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "2>&1"
-        ],
+        "accepted": ["2>&1"],
         "patterns": []
       },
-      "hints": [
-        "`2>&1`"
-      ],
+      "hints": ["`2>&1`"],
       "explanation": "`2>&1` redirects file descriptor 2 (standard error) to the current destination of file descriptor 1 (standard output)."
     },
     "os-redirection-127": {
@@ -2365,16 +1888,9 @@
       "examEligible": true,
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
-      "options": [
-        "True",
-        "False"
-      ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "No hint"
-      ],
+      "options": ["True", "False"],
+      "expected": [0],
+      "hints": ["No hint"],
       "explanation": "Pipes connect commands; redirection connects files."
     },
     "os-redirection-128": {
@@ -2388,14 +1904,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "cmd > out.txt 2>&1"
-        ],
+        "accepted": ["cmd > out.txt 2>&1"],
         "patterns": []
       },
-      "hints": [
-        "`> out.txt 2>&1`"
-      ],
+      "hints": ["`> out.txt 2>&1`"],
       "explanation": "`cmd > out.txt 2>&1` is the standard portable way to redirect both streams."
     },
     "os-redirection-129": {
@@ -2409,14 +1921,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "0"
-        ],
+        "accepted": ["0"],
         "patterns": []
       },
-      "hints": [
-        "0"
-      ],
+      "hints": ["0"],
       "explanation": "Standard input is 0."
     },
     "os-redirection-130": {
@@ -2430,14 +1938,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "1"
-        ],
+        "accepted": ["1"],
         "patterns": []
       },
-      "hints": [
-        "1"
-      ],
+      "hints": ["1"],
       "explanation": "Standard output is 1."
     },
     "os-redirection-131": {
@@ -2450,16 +1954,9 @@
       "examEligible": true,
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
-      "options": [
-        "True",
-        "False"
-      ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "No hint"
-      ],
+      "options": ["True", "False"],
+      "expected": [0],
+      "hints": ["No hint"],
       "explanation": "`>` truncates the file."
     },
     "os-links-132": {
@@ -2473,14 +1970,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "ln -s target.txt soft.txt"
-        ],
+        "accepted": ["ln -s target.txt soft.txt"],
         "patterns": []
       },
-      "hints": [
-        "Use `ln -s`."
-      ],
+      "hints": ["Use `ln -s`."],
       "explanation": "`ln -s` creates a symbolic link."
     },
     "os-links-133": {
@@ -2494,14 +1987,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "ln target.txt hard.txt"
-        ],
+        "accepted": ["ln target.txt hard.txt"],
         "patterns": []
       },
-      "hints": [
-        "Use `ln` without `-s`."
-      ],
+      "hints": ["Use `ln` without `-s`."],
       "explanation": "`ln` creates a hard link sharing the same inode."
     },
     "os-links-134": {
@@ -2514,16 +2003,9 @@
       "examEligible": true,
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
-      "options": [
-        "True",
-        "False"
-      ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "Hard links point directly to the inode."
-      ],
+      "options": ["True", "False"],
+      "expected": [0],
+      "hints": ["Hard links point directly to the inode."],
       "explanation": "Hard links point directly to the underlying inode and data."
     },
     "os-links-135": {
@@ -2536,16 +2018,9 @@
       "examEligible": true,
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
-      "options": [
-        "True",
-        "False"
-      ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "No hint"
-      ],
+      "options": ["True", "False"],
+      "expected": [0],
+      "hints": ["No hint"],
       "explanation": "Symlinks store paths."
     },
     "os-links-136": {
@@ -2558,16 +2033,9 @@
       "examEligible": true,
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
-      "options": [
-        "True",
-        "False"
-      ],
-      "expected": [
-        1
-      ],
-      "hints": [
-        "No hint"
-      ],
+      "options": ["True", "False"],
+      "expected": [1],
+      "hints": ["No hint"],
       "explanation": "Hard links cannot cross filesystems."
     },
     "os-links-137": {
@@ -2580,16 +2048,9 @@
       "examEligible": true,
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
-      "options": [
-        "True",
-        "False"
-      ],
-      "expected": [
-        1
-      ],
-      "hints": [
-        "No hint"
-      ],
+      "options": ["True", "False"],
+      "expected": [1],
+      "hints": ["No hint"],
       "explanation": "Users cannot hard-link directories."
     },
     "os-links-138": {
@@ -2603,15 +2064,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "It becomes a broken link",
-          "Dangling link"
-        ],
+        "accepted": ["It becomes a broken link", "Dangling link"],
         "patterns": []
       },
-      "hints": [
-        "Becomes broken/dangling."
-      ],
+      "hints": ["Becomes broken/dangling."],
       "explanation": "Deleting the target breaks the symbolic link."
     },
     "os-links-139": {
@@ -2625,15 +2081,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "The data remains accessible",
-          "Data remains accessible"
-        ],
+        "accepted": ["The data remains accessible", "Data remains accessible"],
         "patterns": []
       },
-      "hints": [
-        "Data remains."
-      ],
+      "hints": ["Data remains."],
       "explanation": "The data remains accessible via the hard link."
     },
     "os-links-140": {
@@ -2647,14 +2098,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "ln -s /etc/hosts /tmp/links/hosts_link"
-        ],
+        "accepted": ["ln -s /etc/hosts /tmp/links/hosts_link"],
         "patterns": []
       },
-      "hints": [
-        "`ln -s -t target_dir source`"
-      ],
+      "hints": ["`ln -s -t target_dir source`"],
       "explanation": "`ln -s -t dir target` creates a symlink inside `dir`."
     },
     "os-links-141": {
@@ -2668,14 +2115,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "-i"
-        ],
+        "accepted": ["-i"],
         "patterns": []
       },
-      "hints": [
-        "Lowercase i."
-      ],
+      "hints": ["Lowercase i."],
       "explanation": "`ls -i` displays inode numbers."
     },
     "os-links-142": {
@@ -2689,14 +2132,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "l"
-        ],
+        "accepted": ["l"],
         "patterns": []
       },
-      "hints": [
-        "Letter l."
-      ],
+      "hints": ["Letter l."],
       "explanation": "Symbolic links start with `l`."
     },
     "os-links-143": {
@@ -2710,15 +2149,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "metadata",
-          "file metadata"
-        ],
+        "accepted": ["metadata", "file metadata"],
         "patterns": []
       },
-      "hints": [
-        "Metadata."
-      ],
+      "hints": ["Metadata."],
       "explanation": "An inode stores file metadata."
     },
     "os-quoting-144": {
@@ -2731,16 +2165,9 @@
       "examEligible": true,
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
-      "options": [
-        "True",
-        "False"
-      ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "Single quotes preserve literal values strictly."
-      ],
+      "options": ["True", "False"],
+      "expected": [0],
+      "hints": ["Single quotes preserve literal values strictly."],
       "explanation": "Single quotes disable variable expansion and wildcard interpretation entirely."
     },
     "os-quoting-145": {
@@ -2753,16 +2180,9 @@
       "examEligible": true,
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
-      "options": [
-        "True",
-        "False"
-      ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "No hint"
-      ],
+      "options": ["True", "False"],
+      "expected": [0],
+      "hints": ["No hint"],
       "explanation": "Double quotes permit variables."
     },
     "os-quoting-146": {
@@ -2776,14 +2196,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "Hello Alice"
-        ],
+        "accepted": ["Hello Alice"],
         "patterns": []
       },
-      "hints": [
-        "Variables expand inside double quotes."
-      ],
+      "hints": ["Variables expand inside double quotes."],
       "explanation": "Double quotes evaluate `$name` to `Alice`."
     },
     "os-quoting-147": {
@@ -2797,14 +2213,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "Hello $name"
-        ],
+        "accepted": ["Hello $name"],
         "patterns": []
       },
-      "hints": [
-        "Single quotes prevent variable expansion."
-      ],
+      "hints": ["Single quotes prevent variable expansion."],
       "explanation": "Single quotes treat `$name` literally."
     },
     "os-quoting-148": {
@@ -2818,15 +2230,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "touch \"my file.txt\"",
-          "touch 'my file.txt'"
-        ],
+        "accepted": ["touch \"my file.txt\"", "touch 'my file.txt'"],
         "patterns": []
       },
-      "hints": [
-        "Enclose the filename in quotes."
-      ],
+      "hints": ["Enclose the filename in quotes."],
       "explanation": "Quotes allow filenames containing spaces to be treated as a single argument."
     },
     "os-quoting-149": {
@@ -2840,15 +2247,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "echo \"*\"",
-          "echo '*'"
-        ],
+        "accepted": ["echo \"*\"", "echo '*'"],
         "patterns": []
       },
-      "hints": [
-        "Quote the asterisk."
-      ],
+      "hints": ["Quote the asterisk."],
       "explanation": "Quoting `*` prevents the shell from expanding it as a glob."
     },
     "os-quoting-150": {
@@ -2861,16 +2263,9 @@
       "examEligible": true,
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
-      "options": [
-        "True",
-        "False"
-      ],
-      "expected": [
-        1
-      ],
-      "hints": [
-        "No hint"
-      ],
+      "options": ["True", "False"],
+      "expected": [1],
+      "hints": ["No hint"],
       "explanation": "Cannot embed single quotes directly."
     },
     "os-quoting-151": {
@@ -2884,14 +2279,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "echo it\\'s"
-        ],
+        "accepted": ["echo it\\'s"],
         "patterns": []
       },
-      "hints": [
-        "Close quotes, insert escaped quote, reopen."
-      ],
+      "hints": ["Close quotes, insert escaped quote, reopen."],
       "explanation": "The backslash prevents the apostrophe from being treated as a quoting delimiter."
     },
     "os-quoting-152": {
@@ -2904,16 +2295,9 @@
       "examEligible": true,
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
-      "options": [
-        "True",
-        "False"
-      ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "No hint"
-      ],
+      "options": ["True", "False"],
+      "expected": [0],
+      "hints": ["No hint"],
       "explanation": "Evaluated inside double quotes."
     },
     "os-quoting-154": {
@@ -2927,15 +2311,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "To prevent shell expansion",
-          "prevent shell expansion"
-        ],
+        "accepted": ["To prevent shell expansion", "prevent shell expansion"],
         "patterns": []
       },
-      "hints": [
-        "Prevent shell glob expansion."
-      ],
+      "hints": ["Prevent shell glob expansion."],
       "explanation": "Quoting prevents shell expansion."
     },
     "os-quoting-155": {
@@ -2949,15 +2328,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "Control shell expansions",
-          "control expansions"
-        ],
+        "accepted": ["Control shell expansions", "control expansions"],
         "patterns": []
       },
-      "hints": [
-        "Controlling expansions."
-      ],
+      "hints": ["Controlling expansions."],
       "explanation": "Controls shell expansions."
     },
     "os-users-groups-156": {
@@ -2971,14 +2345,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "su - bob"
-        ],
+        "accepted": ["su - bob"],
         "patterns": []
       },
-      "hints": [
-        "Use `su -`."
-      ],
+      "hints": ["Use `su -`."],
       "explanation": "`su - bob` switches to user bob with a login shell environment."
     },
     "os-users-groups-157": {
@@ -2992,14 +2362,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "sudo -i -u bob"
-        ],
+        "accepted": ["sudo -i -u bob"],
         "patterns": []
       },
-      "hints": [
-        "Use `sudo -i -u`."
-      ],
+      "hints": ["Use `sudo -i -u`."],
       "explanation": "`sudo -i -u bob` starts a login shell as bob using sudo."
     },
     "os-users-groups-158": {
@@ -3013,14 +2379,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "-m"
-        ],
+        "accepted": ["-m"],
         "patterns": []
       },
-      "hints": [
-        "Stands for 'make home'."
-      ],
+      "hints": ["Stands for 'make home'."],
       "explanation": "`useradd -m` creates the user's home directory."
     },
     "os-users-groups-159": {
@@ -3034,14 +2396,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "-r"
-        ],
+        "accepted": ["-r"],
         "patterns": []
       },
-      "hints": [
-        "Stands for 'remove'."
-      ],
+      "hints": ["Stands for 'remove'."],
       "explanation": "`userdel -r` deletes the user account and home directory."
     },
     "os-users-groups-160": {
@@ -3055,14 +2413,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "-aG"
-        ],
+        "accepted": ["-aG"],
         "patterns": []
       },
-      "hints": [
-        "Combine `-a` (append) and `-G` (groups)."
-      ],
+      "hints": ["Combine `-a` (append) and `-G` (groups)."],
       "explanation": "`usermod -aG group user` appends supplementary groups safely."
     },
     "os-users-groups-161": {
@@ -3076,15 +2430,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "sudo groupadd developers",
-          "groupadd developers"
-        ],
+        "accepted": ["sudo groupadd developers", "groupadd developers"],
         "patterns": []
       },
-      "hints": [
-        "Group add command."
-      ],
+      "hints": ["Group add command."],
       "explanation": "`groupadd` creates a new system group."
     },
     "os-users-groups-162": {
@@ -3098,14 +2447,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "groups"
-        ],
+        "accepted": ["groups"],
         "patterns": []
       },
-      "hints": [
-        "Simple `groups` command."
-      ],
+      "hints": ["Simple `groups` command."],
       "explanation": "`groups` prints group memberships."
     },
     "os-users-groups-163": {
@@ -3119,14 +2464,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "id"
-        ],
+        "accepted": ["id"],
         "patterns": []
       },
-      "hints": [
-        "The `id` command."
-      ],
+      "hints": ["The `id` command."],
       "explanation": "`id` displays the current user’s numeric identity and group memberships."
     },
     "os-users-groups-164": {
@@ -3140,14 +2481,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "passwd"
-        ],
+        "accepted": ["passwd"],
         "patterns": []
       },
-      "hints": [
-        "Password command."
-      ],
+      "hints": ["Password command."],
       "explanation": "`passwd` updates user authentication passwords."
     },
     "os-users-groups-165": {
@@ -3166,12 +2503,8 @@
         "/etc/group",
         "/etc/login.defs"
       ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "Passwd file."
-      ],
+      "expected": [0],
+      "hints": ["Passwd file."],
       "explanation": "`/etc/passwd` stores account info readable by everyone."
     },
     "os-users-groups-166": {
@@ -3185,14 +2518,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "/etc/shadow"
-        ],
+        "accepted": ["/etc/shadow"],
         "patterns": []
       },
-      "hints": [
-        "`/etc/shadow`"
-      ],
+      "hints": ["`/etc/shadow`"],
       "explanation": "`/etc/shadow` holds hashes."
     },
     "os-users-groups-167": {
@@ -3206,14 +2535,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "visudo"
-        ],
+        "accepted": ["visudo"],
         "patterns": []
       },
-      "hints": [
-        "`visudo`"
-      ],
+      "hints": ["`visudo`"],
       "explanation": "`visudo` edits sudoers safely."
     },
     "os-users-groups-168": {
@@ -3227,14 +2552,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "-L"
-        ],
+        "accepted": ["-L"],
         "patterns": []
       },
-      "hints": [
-        "`-L`"
-      ],
+      "hints": ["`-L`"],
       "explanation": "`usermod -L` locks passwords."
     },
     "os-users-groups-169": {
@@ -3248,14 +2569,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "-U"
-        ],
+        "accepted": ["-U"],
         "patterns": []
       },
-      "hints": [
-        "`-U`"
-      ],
+      "hints": ["`-U`"],
       "explanation": "`usermod -U` unlocks passwords."
     },
     "os-users-groups-170": {
@@ -3269,15 +2586,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "sudo chage -l alice",
-          "chage -l alice"
-        ],
+        "accepted": ["sudo chage -l alice", "chage -l alice"],
         "patterns": []
       },
-      "hints": [
-        "`chage -l`"
-      ],
+      "hints": ["`chage -l`"],
       "explanation": "`chage -l alice` displays the password-aging information for that account; administrative privilege may be required."
     },
     "os-users-groups-171": {
@@ -3291,15 +2603,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "sudo chage -d 0 alice",
-          "chage -d 0 alice"
-        ],
+        "accepted": ["sudo chage -d 0 alice", "chage -d 0 alice"],
         "patterns": []
       },
-      "hints": [
-        "`chage -d 0 alice`"
-      ],
+      "hints": ["`chage -d 0 alice`"],
       "explanation": "`chage -d 0 alice` makes the password-change date immediately due."
     },
     "os-users-groups-172": {
@@ -3313,14 +2620,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "echo \"dev2:RedhatKdG\" | sudo chpasswd"
-        ],
+        "accepted": ["echo \"dev2:RedhatKdG\" | sudo chpasswd"],
         "patterns": []
       },
-      "hints": [
-        "Pipe into `chpasswd`."
-      ],
+      "hints": ["Pipe into `chpasswd`."],
       "explanation": "Updates password non-interactively."
     },
     "os-users-groups-173": {
@@ -3334,14 +2637,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "0"
-        ],
+        "accepted": ["0"],
         "patterns": []
       },
-      "hints": [
-        "0"
-      ],
+      "hints": ["0"],
       "explanation": "Root UID is 0."
     },
     "os-users-groups-174": {
@@ -3355,14 +2654,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "/etc/group"
-        ],
+        "accepted": ["/etc/group"],
         "patterns": []
       },
-      "hints": [
-        "`/etc/group`"
-      ],
+      "hints": ["`/etc/group`"],
       "explanation": "Group file path."
     },
     "os-users-groups-175": {
@@ -3376,14 +2671,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "newgrp"
-        ],
+        "accepted": ["newgrp"],
         "patterns": []
       },
-      "hints": [
-        "`newgrp`"
-      ],
+      "hints": ["`newgrp`"],
       "explanation": "Switches primary group in a new shell."
     },
     "os-permissions-176": {
@@ -3397,14 +2688,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "chmod 755 script.sh"
-        ],
+        "accepted": ["chmod 755 script.sh"],
         "patterns": []
       },
-      "hints": [
-        "`7` for rwx, `5` for r-x."
-      ],
+      "hints": ["`7` for rwx, `5` for r-x."],
       "explanation": "`chmod 755` sets owner rwx, group r-x, and others r-x."
     },
     "os-permissions-177": {
@@ -3418,14 +2705,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "chmod u+x script.sh"
-        ],
+        "accepted": ["chmod u+x script.sh"],
         "patterns": []
       },
-      "hints": [
-        "`u+x`"
-      ],
+      "hints": ["`u+x`"],
       "explanation": "`chmod u+x` adds execute permission for the user owner."
     },
     "os-permissions-178": {
@@ -3439,14 +2722,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "chmod g-w file.txt"
-        ],
+        "accepted": ["chmod g-w file.txt"],
         "patterns": []
       },
-      "hints": [
-        "`g-w`"
-      ],
+      "hints": ["`g-w`"],
       "explanation": "`chmod g-w` removes write permission from the group."
     },
     "os-permissions-179": {
@@ -3459,18 +2738,9 @@
       "examEligible": true,
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
-      "options": [
-        "4",
-        "2",
-        "1",
-        "0"
-      ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "Binary 100 is 4."
-      ],
+      "options": ["4", "2", "1", "0"],
+      "expected": [0],
+      "hints": ["Binary 100 is 4."],
       "explanation": "Read `r` equals 4, write `w` equals 2, execute `x` equals 1."
     },
     "os-permissions-180": {
@@ -3484,14 +2754,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "2"
-        ],
+        "accepted": ["2"],
         "patterns": []
       },
-      "hints": [
-        "2"
-      ],
+      "hints": ["2"],
       "explanation": "Write is 2."
     },
     "os-permissions-181": {
@@ -3505,14 +2771,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "1"
-        ],
+        "accepted": ["1"],
         "patterns": []
       },
-      "hints": [
-        "1"
-      ],
+      "hints": ["1"],
       "explanation": "Execute is 1."
     },
     "os-permissions-182": {
@@ -3526,15 +2788,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "sudo chown alice file.txt",
-          "chown alice file.txt"
-        ],
+        "accepted": ["sudo chown alice file.txt", "chown alice file.txt"],
         "patterns": []
       },
-      "hints": [
-        "The `chown` command."
-      ],
+      "hints": ["The `chown` command."],
       "explanation": "`chown` changes file ownership."
     },
     "os-permissions-183": {
@@ -3554,9 +2811,7 @@
         ],
         "patterns": []
       },
-      "hints": [
-        "Use `user:group` syntax."
-      ],
+      "hints": ["Use `user:group` syntax."],
       "explanation": "`chown user:group` updates both owner and group at once."
     },
     "os-permissions-184": {
@@ -3576,9 +2831,7 @@
         ],
         "patterns": []
       },
-      "hints": [
-        "The `chgrp` command."
-      ],
+      "hints": ["The `chgrp` command."],
       "explanation": "`chgrp` changes group ownership."
     },
     "os-permissions-185": {
@@ -3592,14 +2845,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "umask"
-        ],
+        "accepted": ["umask"],
         "patterns": []
       },
-      "hints": [
-        "Simple `umask` command."
-      ],
+      "hints": ["Simple `umask` command."],
       "explanation": "`umask` displays permission mask bits subtracted from defaults."
     },
     "os-permissions-186": {
@@ -3619,9 +2868,7 @@
         ],
         "patterns": []
       },
-      "hints": [
-        "Traversal access."
-      ],
+      "hints": ["Traversal access."],
       "explanation": "Execute on a directory permits entering (`cd`) and traversing it."
     },
     "os-permissions-187": {
@@ -3641,9 +2888,7 @@
         ],
         "patterns": []
       },
-      "hints": [
-        "Prevents users from deleting each other's files."
-      ],
+      "hints": ["Prevents users from deleting each other's files."],
       "explanation": "The sticky bit prevents users from deleting files they do not own."
     },
     "os-permissions-188": {
@@ -3663,9 +2908,7 @@
         ],
         "patterns": []
       },
-      "hints": [
-        "Runs as file owner."
-      ],
+      "hints": ["Runs as file owner."],
       "explanation": "SUID executes the program with the privileges of the file's owner."
     },
     "os-permissions-189": {
@@ -3685,9 +2928,7 @@
         ],
         "patterns": []
       },
-      "hints": [
-        "Inherits group."
-      ],
+      "hints": ["Inherits group."],
       "explanation": "New files inherit the directory's group owner."
     },
     "os-permissions-190": {
@@ -3701,14 +2942,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "1"
-        ],
+        "accepted": ["1"],
         "patterns": []
       },
-      "hints": [
-        "Value 1."
-      ],
+      "hints": ["Value 1."],
       "explanation": "Sticky bit is `1`."
     },
     "os-permissions-191": {
@@ -3722,14 +2959,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "4"
-        ],
+        "accepted": ["4"],
         "patterns": []
       },
-      "hints": [
-        "Value 4."
-      ],
+      "hints": ["Value 4."],
       "explanation": "SUID is `4`."
     },
     "os-permissions-192": {
@@ -3743,14 +2976,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "2"
-        ],
+        "accepted": ["2"],
         "patterns": []
       },
-      "hints": [
-        "Value 2."
-      ],
+      "hints": ["Value 2."],
       "explanation": "SGID is `2`."
     },
     "os-permissions-193": {
@@ -3764,14 +2993,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "chmod -R 750 myfolder/"
-        ],
+        "accepted": ["chmod -R 750 myfolder/"],
         "patterns": []
       },
-      "hints": [
-        "Use `-R` for recursive."
-      ],
+      "hints": ["Use `-R` for recursive."],
       "explanation": "`chmod -R` applies permission changes recursively."
     },
     "os-permissions-194": {
@@ -3785,14 +3010,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "600"
-        ],
+        "accepted": ["600"],
         "patterns": []
       },
-      "hints": [
-        "`600`"
-      ],
+      "hints": ["`600`"],
       "explanation": "`600` gives the owner read and write access and grants no access to group or others."
     },
     "os-permissions-195": {
@@ -3806,14 +3027,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "700"
-        ],
+        "accepted": ["700"],
         "patterns": []
       },
-      "hints": [
-        "`700`"
-      ],
+      "hints": ["`700`"],
       "explanation": "`700` grants all three permissions to the owner and none to group or others."
     },
     "os-permissions-196": {
@@ -3827,14 +3044,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "644"
-        ],
+        "accepted": ["644"],
         "patterns": []
       },
-      "hints": [
-        "`644`"
-      ],
+      "hints": ["`644`"],
       "explanation": "New files receive `644`."
     },
     "os-permissions-197": {
@@ -3848,14 +3061,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "755"
-        ],
+        "accepted": ["755"],
         "patterns": []
       },
-      "hints": [
-        "`755`"
-      ],
+      "hints": ["`755`"],
       "explanation": "New directories receive `755`."
     },
     "os-permissions-198": {
@@ -3869,15 +3078,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "Write and execute",
-          "w and x"
-        ],
+        "accepted": ["Write and execute", "w and x"],
         "patterns": []
       },
-      "hints": [
-        "Write and execute on parent."
-      ],
+      "hints": ["Write and execute on parent."],
       "explanation": "Requires write and execute on parent directory."
     },
     "os-permissions-199": {
@@ -3891,14 +3095,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "umask 027"
-        ],
+        "accepted": ["umask 027"],
         "patterns": []
       },
-      "hints": [
-        "`umask 027`"
-      ],
+      "hints": ["`umask 027`"],
       "explanation": "Sets umask."
     },
     "os-find-201": {
@@ -3912,15 +3112,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "find ~ -name \"*.txt\"",
-          "find ~ -name '*.txt'"
-        ],
+        "accepted": ["find ~ -name \"*.txt\"", "find ~ -name '*.txt'"],
         "patterns": []
       },
-      "hints": [
-        "`find ~ -name \"*.txt\"`"
-      ],
+      "hints": ["`find ~ -name \"*.txt\"`"],
       "explanation": "`find ~ -name \"*.txt\"` searches home directory for matching names."
     },
     "os-find-202": {
@@ -3934,14 +3129,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "find . -type d"
-        ],
+        "accepted": ["find . -type d"],
         "patterns": []
       },
-      "hints": [
-        "Use `-type d`."
-      ],
+      "hints": ["Use `-type d`."],
       "explanation": "`find . -type d` locates directories."
     },
     "os-find-203": {
@@ -3955,14 +3146,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "find /var -type f"
-        ],
+        "accepted": ["find /var -type f"],
         "patterns": []
       },
-      "hints": [
-        "Use `-type f`."
-      ],
+      "hints": ["Use `-type f`."],
       "explanation": "`find /var -type f` locates regular files."
     },
     "os-find-204": {
@@ -3976,14 +3163,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "find / -user alice 2>/dev/null"
-        ],
+        "accepted": ["find / -user alice 2>/dev/null"],
         "patterns": []
       },
-      "hints": [
-        "Combine `-user alice` with `2>/dev/null`."
-      ],
+      "hints": ["Combine `-user alice` with `2>/dev/null`."],
       "explanation": "`find / -user alice 2>/dev/null` searches files owned by alice."
     },
     "os-find-205": {
@@ -3997,14 +3180,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "find ~ -mtime +7"
-        ],
+        "accepted": ["find ~ -mtime +7"],
         "patterns": []
       },
-      "hints": [
-        "Use `-mtime +7`."
-      ],
+      "hints": ["Use `-mtime +7`."],
       "explanation": "`find ~ -mtime +7` finds files modified over 7 days ago."
     },
     "os-find-206": {
@@ -4018,14 +3197,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "find ~ -mmin -10"
-        ],
+        "accepted": ["find ~ -mmin -10"],
         "patterns": []
       },
-      "hints": [
-        "Use `-mmin -10`."
-      ],
+      "hints": ["Use `-mmin -10`."],
       "explanation": "`find ~ -mmin -10` finds files modified in the last 10 minutes."
     },
     "os-find-207": {
@@ -4039,14 +3214,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "find / -size +100M 2>/dev/null"
-        ],
+        "accepted": ["find / -size +100M 2>/dev/null"],
         "patterns": []
       },
-      "hints": [
-        "Use `-size +100M`."
-      ],
+      "hints": ["Use `-size +100M`."],
       "explanation": "`find / -size +100M 2>/dev/null` finds large files exceeding 100 MiB."
     },
     "os-find-211": {
@@ -4065,12 +3236,8 @@
         "Exactly n",
         "At least n minus 1"
       ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "Plus means greater than."
-      ],
+      "expected": [0],
+      "hints": ["Plus means greater than."],
       "explanation": "`+n` means strictly greater than `n`."
     },
     "os-find-212": {
@@ -4084,15 +3251,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "Less than n",
-          "less than"
-        ],
+        "accepted": ["Less than n", "less than"],
         "patterns": []
       },
-      "hints": [
-        "Minus means less than."
-      ],
+      "hints": ["Minus means less than."],
       "explanation": "`-n` means strictly less than `n`."
     },
     "os-find-213": {
@@ -4106,14 +3268,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "f"
-        ],
+        "accepted": ["f"],
         "patterns": []
       },
-      "hints": [
-        "Stands for 'file'."
-      ],
+      "hints": ["Stands for 'file'."],
       "explanation": "`-type f` specifies regular files."
     },
     "os-find-214": {
@@ -4127,14 +3285,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "d"
-        ],
+        "accepted": ["d"],
         "patterns": []
       },
-      "hints": [
-        "Stands for 'directory'."
-      ],
+      "hints": ["Stands for 'directory'."],
       "explanation": "`-type d` specifies directories."
     },
     "os-find-215": {
@@ -4148,15 +3302,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "To prevent shell expansion",
-          "prevent shell expansion"
-        ],
+        "accepted": ["To prevent shell expansion", "prevent shell expansion"],
         "patterns": []
       },
-      "hints": [
-        "Prevent shell glob expansion."
-      ],
+      "hints": ["Prevent shell glob expansion."],
       "explanation": "Quoting prevents shell expansion."
     },
     "os-archives-216": {
@@ -4170,14 +3319,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "tar -czf backup.tar.gz myfolder/"
-        ],
+        "accepted": ["tar -czf backup.tar.gz myfolder/"],
         "patterns": []
       },
-      "hints": [
-        "Use `-czf` options."
-      ],
+      "hints": ["Use `-czf` options."],
       "explanation": "`tar -czf` creates a gzip-compressed tar archive."
     },
     "os-archives-217": {
@@ -4191,15 +3336,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "tar -xzf backup.tar.gz",
-          "tar -xf backup.tar.gz"
-        ],
+        "accepted": ["tar -xzf backup.tar.gz", "tar -xf backup.tar.gz"],
         "patterns": []
       },
-      "hints": [
-        "Use `-xzf` options."
-      ],
+      "hints": ["Use `-xzf` options."],
       "explanation": "`tar -xzf` extracts a gzipped tar archive."
     },
     "os-archives-218": {
@@ -4213,14 +3353,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "tar -tf backup.tar.gz"
-        ],
+        "accepted": ["tar -tf backup.tar.gz"],
         "patterns": []
       },
-      "hints": [
-        "Use `-tf` options."
-      ],
+      "hints": ["Use `-tf` options."],
       "explanation": "`tar -tf` lists archive contents."
     },
     "os-archives-219": {
@@ -4234,14 +3370,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "-C /tmp/restore"
-        ],
+        "accepted": ["-C /tmp/restore"],
         "patterns": []
       },
-      "hints": [
-        "Use `-C` followed by directory path."
-      ],
+      "hints": ["Use `-C` followed by directory path."],
       "explanation": "`-C dir` changes directory before extracting files."
     },
     "os-archives-220": {
@@ -4255,14 +3387,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "-z"
-        ],
+        "accepted": ["-z"],
         "patterns": []
       },
-      "hints": [
-        "Stands for 'gzip'."
-      ],
+      "hints": ["Stands for 'gzip'."],
       "explanation": "`-z` compresses or decompresses using gzip."
     },
     "os-archives-221": {
@@ -4276,14 +3404,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "-j"
-        ],
+        "accepted": ["-j"],
         "patterns": []
       },
-      "hints": [
-        "Stands for 'bzip2'."
-      ],
+      "hints": ["Stands for 'bzip2'."],
       "explanation": "`-j` uses bzip2 compression."
     },
     "os-archives-222": {
@@ -4297,14 +3421,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "-J"
-        ],
+        "accepted": ["-J"],
         "patterns": []
       },
-      "hints": [
-        "Capital J for xz."
-      ],
+      "hints": ["Capital J for xz."],
       "explanation": "`-J` uses xz compression."
     },
     "os-archives-223": {
@@ -4318,14 +3438,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "scp report.txt alice@192.168.1.10:/home/alice/"
-        ],
+        "accepted": ["scp report.txt alice@192.168.1.10:/home/alice/"],
         "patterns": []
       },
-      "hints": [
-        "`user@host:path` syntax."
-      ],
+      "hints": ["`user@host:path` syntax."],
       "explanation": "`scp` copies files securely over SSH using `user@host:path` notation."
     },
     "os-archives-224": {
@@ -4339,14 +3455,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "-r"
-        ],
+        "accepted": ["-r"],
         "patterns": []
       },
-      "hints": [
-        "Recursive flag `-r`."
-      ],
+      "hints": ["Recursive flag `-r`."],
       "explanation": "`scp -r` copies directories recursively."
     },
     "os-archives-225": {
@@ -4360,14 +3472,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "-c"
-        ],
+        "accepted": ["-c"],
         "patterns": []
       },
-      "hints": [
-        "Stands for 'create'."
-      ],
+      "hints": ["Stands for 'create'."],
       "explanation": "`-c` creates a new tar archive."
     },
     "os-archives-226": {
@@ -4381,14 +3489,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "-x"
-        ],
+        "accepted": ["-x"],
         "patterns": []
       },
-      "hints": [
-        "Stands for 'extract'."
-      ],
+      "hints": ["Stands for 'extract'."],
       "explanation": "`-x` extracts files from an archive."
     },
     "os-archives-227": {
@@ -4402,14 +3506,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "scp alice@192.168.1.10:/home/alice/report.txt ."
-        ],
+        "accepted": ["scp alice@192.168.1.10:/home/alice/report.txt ."],
         "patterns": []
       },
-      "hints": [
-        "Remote source followed by local destination `.`."
-      ],
+      "hints": ["Remote source followed by local destination `.`."],
       "explanation": "`scp` supports copying from remote to local by specifying remote source first."
     },
     "os-archives-228": {
@@ -4422,14 +3522,10 @@
       "examEligible": true,
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
-      "hints": [
-        "Look at the argument that follows `-f`."
-      ],
+      "hints": ["Look at the argument that follows `-f`."],
       "explanation": "The filename immediately following `-f` is the archive file; here it is `backup.tar.gz`.",
       "expected": {
-        "accepted": [
-          "backup.tar.gz"
-        ],
+        "accepted": ["backup.tar.gz"],
         "patterns": []
       }
     },
@@ -4444,14 +3540,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "tar -cf archive.tar folder/"
-        ],
+        "accepted": ["tar -cf archive.tar folder/"],
         "patterns": []
       },
-      "hints": [
-        "Use `-cf`."
-      ],
+      "hints": ["Use `-cf`."],
       "explanation": "`tar -cf` creates an uncompressed tar archive."
     },
     "os-archives-230": {
@@ -4465,14 +3557,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "-P"
-        ],
+        "accepted": ["-P"],
         "patterns": []
       },
-      "hints": [
-        "Capital P."
-      ],
+      "hints": ["Capital P."],
       "explanation": "`-P` specifies a custom remote SSH port in `scp`."
     },
     "os-directories-231": {
@@ -4486,14 +3574,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "/etc"
-        ],
+        "accepted": ["/etc"],
         "patterns": []
       },
-      "hints": [
-        "Starts with 'e'."
-      ],
+      "hints": ["Starts with 'e'."],
       "explanation": "`/etc` holds system configuration files."
     },
     "os-directories-232": {
@@ -4507,14 +3591,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "/tmp"
-        ],
+        "accepted": ["/tmp"],
         "patterns": []
       },
-      "hints": [
-        "Three letter temp directory."
-      ],
+      "hints": ["Three letter temp directory."],
       "explanation": "`/tmp` stores temporary files."
     },
     "os-directories-233": {
@@ -4528,14 +3608,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "/var"
-        ],
+        "accepted": ["/var"],
         "patterns": []
       },
-      "hints": [
-        "Variable data directory."
-      ],
+      "hints": ["Variable data directory."],
       "explanation": "`/var` stores variable data such as logs, databases, and mail spools."
     },
     "os-directories-234": {
@@ -4549,14 +3625,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "/home"
-        ],
+        "accepted": ["/home"],
         "patterns": []
       },
-      "hints": [
-        "Home directory parent."
-      ],
+      "hints": ["Home directory parent."],
       "explanation": "`/home` contains individual user home directories."
     },
     "os-directories-235": {
@@ -4570,14 +3642,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "/root"
-        ],
+        "accepted": ["/root"],
         "patterns": []
       },
-      "hints": [
-        "Root's home."
-      ],
+      "hints": ["Root's home."],
       "explanation": "`/root` is the superuser's home directory."
     },
     "os-directories-236": {
@@ -4591,14 +3659,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "/usr/bin"
-        ],
+        "accepted": ["/usr/bin"],
         "patterns": []
       },
-      "hints": [
-        "Binaries."
-      ],
+      "hints": ["Binaries."],
       "explanation": "`/usr/bin` contains standard user executable commands; administrative binaries are commonly placed in `/usr/sbin`."
     },
     "os-directories-237": {
@@ -4612,14 +3676,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "/dev"
-        ],
+        "accepted": ["/dev"],
         "patterns": []
       },
-      "hints": [
-        "Device directory."
-      ],
+      "hints": ["Device directory."],
       "explanation": "`/dev` contains device files representing hardware and virtual streams."
     },
     "os-directories-238": {
@@ -4633,14 +3693,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "/boot"
-        ],
+        "accepted": ["/boot"],
         "patterns": []
       },
-      "hints": [
-        "Boot directory."
-      ],
+      "hints": ["Boot directory."],
       "explanation": "`/boot` stores bootloader and kernel image files."
     },
     "os-directories-239": {
@@ -4654,14 +3710,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "/run"
-        ],
+        "accepted": ["/run"],
         "patterns": []
       },
-      "hints": [
-        "Runtime directory."
-      ],
+      "hints": ["Runtime directory."],
       "explanation": "`/run` holds volatile runtime state data since system boot."
     },
     "os-directories-240": {
@@ -4674,18 +3726,9 @@
       "examEligible": true,
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
-      "options": [
-        "/etc/passwd",
-        "/etc/shadow",
-        "/etc/group",
-        "/etc/sudoers"
-      ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "Passwd file."
-      ],
+      "options": ["/etc/passwd", "/etc/shadow", "/etc/group", "/etc/sudoers"],
+      "expected": [0],
+      "hints": ["Passwd file."],
       "explanation": "`/etc/passwd` holds user account records."
     },
     "os-directories-241": {
@@ -4699,15 +3742,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "Top of entire filesystem tree",
-          "topmost root"
-        ],
+        "accepted": ["Top of entire filesystem tree", "topmost root"],
         "patterns": []
       },
-      "hints": [
-        "Topmost directory."
-      ],
+      "hints": ["Topmost directory."],
       "explanation": "`/` is the root directory."
     },
     "os-directories-242": {
@@ -4721,14 +3759,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "/var/log"
-        ],
+        "accepted": ["/var/log"],
         "patterns": []
       },
-      "hints": [
-        "`/var/log`"
-      ],
+      "hints": ["`/var/log`"],
       "explanation": "`/var/log` is the log directory."
     },
     "os-environment-243": {
@@ -4742,14 +3776,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "GREETING=hello"
-        ],
+        "accepted": ["GREETING=hello"],
         "patterns": []
       },
-      "hints": [
-        "`NAME=value`"
-      ],
+      "hints": ["`NAME=value`"],
       "explanation": "`NAME=value` assigns a local shell variable."
     },
     "os-environment-244": {
@@ -4763,15 +3793,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "export GREETING=hello",
-          "export GREETING"
-        ],
+        "accepted": ["export GREETING=hello", "export GREETING"],
         "patterns": []
       },
-      "hints": [
-        "Use `export` command."
-      ],
+      "hints": ["Use `export` command."],
       "explanation": "`export` makes variables available to child processes as environment variables."
     },
     "os-environment-245": {
@@ -4785,14 +3810,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "env"
-        ],
+        "accepted": ["env"],
         "patterns": []
       },
-      "hints": [
-        "`env` or `printenv`."
-      ],
+      "hints": ["`env` or `printenv`."],
       "explanation": "`env` displays the current environment variables."
     },
     "os-environment-246": {
@@ -4805,18 +3826,9 @@
       "examEligible": true,
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
-      "options": [
-        "PATH",
-        "HOME",
-        "SHELL",
-        "USER"
-      ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "Command search path."
-      ],
+      "options": ["PATH", "HOME", "SHELL", "USER"],
+      "expected": [0],
+      "hints": ["Command search path."],
       "explanation": "`PATH` specifies directories searched when executing commands."
     },
     "os-environment-247": {
@@ -4830,14 +3842,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "alias ll='ls -la'"
-        ],
+        "accepted": ["alias ll='ls -la'"],
         "patterns": []
       },
-      "hints": [
-        "`alias name='command'`"
-      ],
+      "hints": ["`alias name='command'`"],
       "explanation": "`alias` creates shortcut commands."
     },
     "os-environment-248": {
@@ -4851,14 +3859,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "unalias ll"
-        ],
+        "accepted": ["unalias ll"],
         "patterns": []
       },
-      "hints": [
-        "`unalias` command."
-      ],
+      "hints": ["`unalias` command."],
       "explanation": "`unalias` removes defined command aliases."
     },
     "os-environment-249": {
@@ -4872,15 +3876,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "~/.bashrc",
-          ".bashrc"
-        ],
+        "accepted": ["~/.bashrc", ".bashrc"],
         "patterns": []
       },
-      "hints": [
-        "Dot file in home."
-      ],
+      "hints": ["Dot file in home."],
       "explanation": "`~/.bashrc` is the standard per-user interactive Bash config file."
     },
     "os-environment-250": {
@@ -4894,15 +3893,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "source ~/.bashrc",
-          ". ~/.bashrc"
-        ],
+        "accepted": ["source ~/.bashrc", ". ~/.bashrc"],
         "patterns": []
       },
-      "hints": [
-        "Use `source` or `.`."
-      ],
+      "hints": ["Use `source` or `.`."],
       "explanation": "`source ~/.bashrc` re-reads and applies configuration changes immediately."
     },
     "os-environment-251": {
@@ -4916,14 +3910,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "export PATH=\"$PATH:$HOME/bin\""
-        ],
+        "accepted": ["export PATH=\"$PATH:$HOME/bin\""],
         "patterns": []
       },
-      "hints": [
-        "`export PATH=\"$PATH:$HOME/bin\"`"
-      ],
+      "hints": ["`export PATH=\"$PATH:$HOME/bin\"`"],
       "explanation": "`export PATH=\"$PATH:$HOME/bin\"` appends a directory to search paths."
     },
     "os-environment-252": {
@@ -4937,14 +3927,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "echo $PATH"
-        ],
+        "accepted": ["echo $PATH"],
         "patterns": []
       },
-      "hints": [
-        "`echo $PATH`"
-      ],
+      "hints": ["`echo $PATH`"],
       "explanation": "Prints search paths."
     },
     "os-vim-253": {
@@ -4958,14 +3944,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "i"
-        ],
+        "accepted": ["i"],
         "patterns": []
       },
-      "hints": [
-        "Stands for 'insert'."
-      ],
+      "hints": ["Stands for 'insert'."],
       "explanation": "Pressing `i` enters Insert mode in Vim."
     },
     "os-vim-254": {
@@ -4979,14 +3961,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "Esc"
-        ],
+        "accepted": ["Esc"],
         "patterns": []
       },
-      "hints": [
-        "Escape key."
-      ],
+      "hints": ["Escape key."],
       "explanation": "Pressing `Esc` returns to Normal mode."
     },
     "os-vim-255": {
@@ -5000,15 +3978,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          ":wq",
-          ":x"
-        ],
+        "accepted": [":wq", ":x"],
         "patterns": []
       },
-      "hints": [
-        "Colon followed by w and q."
-      ],
+      "hints": ["Colon followed by w and q."],
       "explanation": "`:wq` or `:x` writes the file and exits Vim."
     },
     "os-vim-256": {
@@ -5022,14 +3995,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          ":q!"
-        ],
+        "accepted": [":q!"],
         "patterns": []
       },
-      "hints": [
-        "Colon followed by q and exclamation mark."
-      ],
+      "hints": ["Colon followed by q and exclamation mark."],
       "explanation": "`:q!` forces quitting without saving changes."
     },
     "os-vim-257": {
@@ -5043,14 +4012,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "dd"
-        ],
+        "accepted": ["dd"],
         "patterns": []
       },
-      "hints": [
-        "Double d."
-      ],
+      "hints": ["Double d."],
       "explanation": "`dd` deletes the current line in Normal mode."
     },
     "os-vim-258": {
@@ -5064,14 +4029,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "yy"
-        ],
+        "accepted": ["yy"],
         "patterns": []
       },
-      "hints": [
-        "Double y."
-      ],
+      "hints": ["Double y."],
       "explanation": "`yy` copies (yanks) the current line."
     },
     "os-vim-259": {
@@ -5085,14 +4046,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "p"
-        ],
+        "accepted": ["p"],
         "patterns": []
       },
-      "hints": [
-        "Stands for 'paste'."
-      ],
+      "hints": ["Stands for 'paste'."],
       "explanation": "`p` pastes text after the cursor or on the line below."
     },
     "os-vim-260": {
@@ -5106,14 +4063,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "u"
-        ],
+        "accepted": ["u"],
         "patterns": []
       },
-      "hints": [
-        "Stands for 'undo'."
-      ],
+      "hints": ["Stands for 'undo'."],
       "explanation": "`u` undoes the previous edit."
     },
     "os-vim-263": {
@@ -5127,14 +4080,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "/"
-        ],
+        "accepted": ["/"],
         "patterns": []
       },
-      "hints": [
-        "Forward slash."
-      ],
+      "hints": ["Forward slash."],
       "explanation": "`/` initiates forward text searching in Vim."
     },
     "os-vim-264": {
@@ -5147,16 +4096,9 @@
       "examEligible": true,
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
-      "options": [
-        "True",
-        "False"
-      ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "Modes change key behavior."
-      ],
+      "options": ["True", "False"],
+      "expected": [0],
+      "hints": ["Modes change key behavior."],
       "explanation": "Vim operates using distinct modes (Normal, Insert, Command)."
     },
     "os-vim-266": {
@@ -5170,14 +4112,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          ":w"
-        ],
+        "accepted": [":w"],
         "patterns": []
       },
-      "hints": [
-        "Colon followed by w."
-      ],
+      "hints": ["Colon followed by w."],
       "explanation": "`:w` saves the file."
     },
     "os-vim-267": {
@@ -5191,14 +4129,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "o"
-        ],
+        "accepted": ["o"],
         "patterns": []
       },
-      "hints": [
-        "Lowercase o."
-      ],
+      "hints": ["Lowercase o."],
       "explanation": "`o` opens a new line below and switches to Insert mode."
     },
     "os-fundamentals-268": {
@@ -5217,12 +4151,8 @@
         "A terminal emulator",
         "A text editor"
       ],
-      "expected": [
-        1
-      ],
-      "hints": [
-        "It is the central part of the operating system."
-      ],
+      "expected": [1],
+      "hints": ["It is the central part of the operating system."],
       "explanation": "The kernel manages processes, memory, files, devices, and hardware access."
     },
     "os-fundamentals-269": {
@@ -5241,9 +4171,7 @@
         "The shell owns the physical devices",
         "Applications cannot read files"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Think about the kernel’s role as the intermediary between software and hardware."
       ],
@@ -5265,12 +4193,8 @@
         "One must be a Windows subsystem",
         "A distribution is only a desktop theme"
       ],
-      "expected": [
-        1
-      ],
-      "hints": [
-        "A distribution packages a kernel with additional software."
-      ],
+      "expected": [1],
+      "hints": ["A distribution packages a kernel with additional software."],
       "explanation": "GNU/Linux distributions vary in packaging and userland, while sharing the Linux kernel family."
     },
     "os-fundamentals-271": {
@@ -5289,12 +4213,8 @@
         "The freedom to redistribute unmodified copies only",
         "The freedom to use a graphical interface"
       ],
-      "expected": [
-        1
-      ],
-      "hints": [
-        "This freedom depends on access to the source code."
-      ],
+      "expected": [1],
+      "hints": ["This freedom depends on access to the source code."],
       "explanation": "The freedom to study how a program works and adapt it requires access to its source code."
     },
     "os-fundamentals-272": {
@@ -5313,12 +4233,8 @@
         "A separate kernel for each user",
         "File compression"
       ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "The name describes concurrent access by multiple users."
-      ],
+      "expected": [0],
+      "hints": ["The name describes concurrent access by multiple users."],
       "explanation": "A multi-user system allows several users to access the same computer at the same time."
     },
     "os-fundamentals-273": {
@@ -5337,12 +4253,8 @@
         "Hard linking",
         "DNS resolution"
       ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "This describes the handling of multiple processes."
-      ],
+      "expected": [0],
+      "hints": ["This describes the handling of multiple processes."],
       "explanation": "Multitasking is the operating system’s ability to manage multiple running tasks."
     },
     "os-fundamentals-274": {
@@ -5361,9 +4273,7 @@
         "The IP address",
         "The filesystem hierarchy standard"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "The terminal provides the interface; another component interprets your command."
       ],
@@ -5379,15 +4289,8 @@
       "examEligible": true,
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
-      "options": [
-        "`ls`",
-        "`-l`",
-        "`/var/log`",
-        "The space between tokens"
-      ],
-      "expected": [
-        2
-      ],
+      "options": ["`ls`", "`-l`", "`/var/log`", "The space between tokens"],
+      "expected": [2],
       "hints": [
         "The argument identifies the object on which the command acts."
       ],
@@ -5403,18 +4306,9 @@
       "examEligible": true,
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
-      "options": [
-        "C",
-        "HTML",
-        "SQL",
-        "CSS"
-      ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "It is a compiled systems programming language."
-      ],
+      "options": ["C", "HTML", "SQL", "CSS"],
+      "expected": [0],
+      "hints": ["It is a compiled systems programming language."],
       "explanation": "The course material notes that UNIX was mostly written in C, supporting processor independence."
     },
     "os-fundamentals-277": {
@@ -5433,9 +4327,7 @@
         "GNU is the shell prompt; Linux is the terminal",
         "They are two names for the same command"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "One supplies many userland tools; the other is the operating-system kernel."
       ],
@@ -5457,12 +4349,8 @@
         "A username followed by a hostname",
         "A port number followed by a filename"
       ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "IPv4 uses dotted-decimal notation."
-      ],
+      "expected": [0],
+      "hints": ["IPv4 uses dotted-decimal notation."],
       "explanation": "An IPv4 address consists of four decimal octets, each in the range 0–255."
     },
     "os-networking-279": {
@@ -5475,18 +4363,9 @@
       "examEligible": true,
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
-      "options": [
-        "IPv4",
-        "IPv6",
-        "SSH",
-        "DNS"
-      ],
-      "expected": [
-        1
-      ],
-      "hints": [
-        "It is the newer IP addressing format."
-      ],
+      "options": ["IPv4", "IPv6", "SSH", "DNS"],
+      "expected": [1],
+      "hints": ["It is the newer IP addressing format."],
       "explanation": "IPv6 addresses use hexadecimal groups separated by colons."
     },
     "os-networking-280": {
@@ -5500,14 +4379,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "127.0.0.1"
-        ],
+        "accepted": ["127.0.0.1"],
         "patterns": []
       },
-      "hints": [
-        "It is the familiar address in the 127.0.0.0 range."
-      ],
+      "hints": ["It is the familiar address in the 127.0.0.0 range."],
       "explanation": "`127.0.0.1` is the IPv4 loopback address and refers to the same computer."
     },
     "os-networking-281": {
@@ -5526,12 +4401,8 @@
         "The user’s password hash",
         "A compressed copy of the website"
       ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "DNS acts like a directory for network names."
-      ],
+      "expected": [0],
+      "hints": ["DNS acts like a directory for network names."],
       "explanation": "A Domain Name System server translates a domain name into an IP address."
     },
     "os-networking-282": {
@@ -5545,10 +4416,7 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "80, 443",
-          "80 443"
-        ],
+        "accepted": ["80, 443", "80 443"],
         "patterns": []
       },
       "hints": [
@@ -5567,14 +4435,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "22"
-        ],
+        "accepted": ["22"],
         "patterns": []
       },
-      "hints": [
-        "It is the standard Secure Shell port."
-      ],
+      "hints": ["It is the standard Secure Shell port."],
       "explanation": "SSH services normally listen on TCP port 22."
     },
     "os-networking-284": {
@@ -5588,15 +4452,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "ip a",
-          "ip addr"
-        ],
+        "accepted": ["ip a", "ip addr"],
         "patterns": []
       },
-      "hints": [
-        "It begins with the two-letter network utility."
-      ],
+      "hints": ["It begins with the two-letter network utility."],
       "explanation": "`ip a` displays network interfaces and their addresses; the address is shown on an `inet` line."
     },
     "os-networking-285": {
@@ -5610,14 +4469,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "ssh student@server.example"
-        ],
+        "accepted": ["ssh student@server.example"],
         "patterns": []
       },
-      "hints": [
-        "Use the secure shell client with `user@host`."
-      ],
+      "hints": ["Use the secure shell client with `user@host`."],
       "explanation": "`ssh user@address` opens a secure remote shell session when the server provides the SSH service."
     },
     "os-networking-286": {
@@ -5636,9 +4491,7 @@
         "To set the SSH port to 80",
         "To create a new home directory"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "It helps you detect that you are connecting to the intended host."
       ],
@@ -5655,14 +4508,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "/usr/sbin"
-        ],
+        "accepted": ["/usr/sbin"],
         "patterns": []
       },
-      "hints": [
-        "It is the sibling directory of `/usr/bin`."
-      ],
+      "hints": ["It is the sibling directory of `/usr/bin`."],
       "explanation": "`/usr/sbin` contains many administrative binaries, while `/usr/bin` contains ordinary user commands."
     },
     "os-directories-288": {
@@ -5676,14 +4525,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "/var"
-        ],
+        "accepted": ["/var"],
         "patterns": []
       },
-      "hints": [
-        "The directory name relates to variable data."
-      ],
+      "hints": ["The directory name relates to variable data."],
       "explanation": "`/var` stores variable data; system log files are commonly under `/var/log`."
     },
     "os-directories-289": {
@@ -5702,9 +4547,7 @@
         "Linux converts both paths to lowercase",
         "The shell searches all files for a similar name"
       ],
-      "expected": [
-        1
-      ],
+      "expected": [1],
       "hints": [
         "Uppercase and lowercase letters are not interchangeable in Linux filenames."
       ],
@@ -5721,14 +4564,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "~alice"
-        ],
+        "accepted": ["~alice"],
         "patterns": []
       },
-      "hints": [
-        "Use tilde expansion followed immediately by the username."
-      ],
+      "hints": ["Use tilde expansion followed immediately by the username."],
       "explanation": "`~alice` expands to the home directory of user `alice`."
     },
     "os-navigation-291": {
@@ -5747,12 +4586,8 @@
         "The path is relative to the current directory",
         "The final component is a symbolic link"
       ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "The slash marks the path as a directory path."
-      ],
+      "expected": [0],
+      "hints": ["The slash marks the path as a directory path."],
       "explanation": "A trailing slash indicates that the path is expected to be a directory."
     },
     "os-navigation-292": {
@@ -5766,14 +4601,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "/home/alice/notes.txt"
-        ],
+        "accepted": ["/home/alice/notes.txt"],
         "patterns": []
       },
-      "hints": [
-        "Resolve `..` before adding the filename."
-      ],
+      "hints": ["Resolve `..` before adding the filename."],
       "explanation": "`..` moves from `/home/alice/docs` to `/home/alice`, so the resolved path is `/home/alice/notes.txt`."
     },
     "os-file-inspection-293": {
@@ -5787,9 +4618,7 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "file report.txt"
-        ],
+        "accepted": ["file report.txt"],
         "patterns": []
       },
       "hints": [
@@ -5808,14 +4637,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "stat notes.txt"
-        ],
+        "accepted": ["stat notes.txt"],
         "patterns": []
       },
-      "hints": [
-        "It reports detailed metadata for a filesystem object."
-      ],
+      "hints": ["It reports detailed metadata for a filesystem object."],
       "explanation": "`stat` displays metadata such as size, inode, permissions, and timestamps."
     },
     "os-file-inspection-295": {
@@ -5829,14 +4654,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "wc -L notes.txt"
-        ],
+        "accepted": ["wc -L notes.txt"],
         "patterns": []
       },
-      "hints": [
-        "Use the line-length option of the word-count utility."
-      ],
+      "hints": ["Use the line-length option of the word-count utility."],
       "explanation": "`wc -L` reports the length of the longest line in the input file."
     },
     "os-file-inspection-296": {
@@ -5850,14 +4671,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "cat -n /etc/passwd"
-        ],
+        "accepted": ["cat -n /etc/passwd"],
         "patterns": []
       },
-      "hints": [
-        "The exercise uses the numbering option of `cat`."
-      ],
+      "hints": ["The exercise uses the numbering option of `cat`."],
       "explanation": "`cat -n` numbers the lines it displays."
     },
     "os-file-inspection-297": {
@@ -5871,9 +4688,7 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "tail -n +30 /etc/passwd"
-        ],
+        "accepted": ["tail -n +30 /etc/passwd"],
         "patterns": []
       },
       "hints": [
@@ -5892,14 +4707,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "nl"
-        ],
+        "accepted": ["nl"],
         "patterns": []
       },
-      "hints": [
-        "The utility’s name is short for numbering lines."
-      ],
+      "hints": ["The utility’s name is short for numbering lines."],
       "explanation": "`nl` adds line numbers to input lines."
     },
     "os-text-utilities-299": {
@@ -5913,14 +4724,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "diff file1.txt file2.txt"
-        ],
+        "accepted": ["diff file1.txt file2.txt"],
         "patterns": []
       },
-      "hints": [
-        "Use the comparison utility named in the capstone exercise."
-      ],
+      "hints": ["Use the comparison utility named in the capstone exercise."],
       "explanation": "`diff` compares two files and reports differences; no output indicates no differences."
     },
     "os-text-utilities-300": {
@@ -5934,14 +4741,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "sort -k 2 records.txt"
-        ],
+        "accepted": ["sort -k 2 records.txt"],
         "patterns": []
       },
-      "hints": [
-        "The field-selection option is `-k`."
-      ],
+      "hints": ["The field-selection option is `-k`."],
       "explanation": "`sort -k 2` uses the second field as the sort key."
     },
     "os-text-utilities-301": {
@@ -5955,14 +4758,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "-f"
-        ],
+        "accepted": ["-f"],
         "patterns": []
       },
-      "hints": [
-        "It is the fold-case option."
-      ],
+      "hints": ["It is the fold-case option."],
       "explanation": "`sort -f` performs case-insensitive sorting."
     },
     "os-text-utilities-302": {
@@ -5981,12 +4780,8 @@
         "It edits a file in place by default",
         "It requires an archive as input"
       ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "Think about where the utility receives its input stream."
-      ],
+      "expected": [0],
+      "hints": ["Think about where the utility receives its input stream."],
       "explanation": "`tr` reads from standard input and writes transformed text to standard output."
     },
     "os-text-utilities-303": {
@@ -6000,9 +4795,7 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "echo -n Ready"
-        ],
+        "accepted": ["echo -n Ready"],
         "patterns": []
       },
       "hints": [
@@ -6043,14 +4836,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "sort animals.txt | uniq"
-        ],
+        "accepted": ["sort animals.txt | uniq"],
         "patterns": []
       },
-      "hints": [
-        "`uniq` only detects adjacent duplicate lines."
-      ],
+      "hints": ["`uniq` only detects adjacent duplicate lines."],
       "explanation": "Sorting first groups equal lines together; `uniq` then removes the adjacent duplicates."
     },
     "os-text-utilities-306": {
@@ -6064,9 +4853,7 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "ps aux | tee processes.txt"
-        ],
+        "accepted": ["ps aux | tee processes.txt"],
         "patterns": []
       },
       "hints": [
@@ -6085,14 +4872,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "ls -l /usr/bin | less"
-        ],
+        "accepted": ["ls -l /usr/bin | less"],
         "patterns": []
       },
-      "hints": [
-        "The second command should be the bidirectional pager."
-      ],
+      "hints": ["The second command should be the bidirectional pager."],
       "explanation": "The pipe sends the listing to `less`, allowing screen-by-screen navigation."
     },
     "os-text-utilities-308": {
@@ -6106,14 +4889,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "ps aux | wc -l"
-        ],
+        "accepted": ["ps aux | wc -l"],
         "patterns": []
       },
-      "hints": [
-        "Count the lines in the process-listing stream."
-      ],
+      "hints": ["Count the lines in the process-listing stream."],
       "explanation": "`ps aux` generates the listing and `wc -l` counts its lines."
     },
     "os-help-309": {
@@ -6127,14 +4906,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "--help"
-        ],
+        "accepted": ["--help"],
         "patterns": []
       },
-      "hints": [
-        "It is the standard long option for a brief help summary."
-      ],
+      "hints": ["It is the standard long option for a brief help summary."],
       "explanation": "Many executable commands support `--help` to display a concise option summary."
     },
     "os-help-310": {
@@ -6148,14 +4923,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "help cd"
-        ],
+        "accepted": ["help cd"],
         "patterns": []
       },
-      "hints": [
-        "Use the shell’s built-in help command."
-      ],
+      "hints": ["Use the shell’s built-in help command."],
       "explanation": "`help cd` displays help for the Bash built-in command `cd`."
     },
     "os-help-311": {
@@ -6169,14 +4940,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "type cd"
-        ],
+        "accepted": ["type cd"],
         "patterns": []
       },
-      "hints": [
-        "Use the command-type inspection utility."
-      ],
+      "hints": ["Use the command-type inspection utility."],
       "explanation": "`type cd` reports that `cd` is a shell built-in."
     },
     "os-help-312": {
@@ -6190,14 +4957,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "man 5 passwd"
-        ],
+        "accepted": ["man 5 passwd"],
         "patterns": []
       },
-      "hints": [
-        "File formats are documented in manual section 5."
-      ],
+      "hints": ["File formats are documented in manual section 5."],
       "explanation": "`man 5 passwd` opens the manual page describing the passwd file format; section 1 covers user commands."
     },
     "os-help-313": {
@@ -6211,15 +4974,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "man -k permission",
-          "apropos permission"
-        ],
+        "accepted": ["man -k permission", "apropos permission"],
         "patterns": []
       },
-      "hints": [
-        "This is a keyword search of the manual-page index."
-      ],
+      "hints": ["This is a keyword search of the manual-page index."],
       "explanation": "`man -k` and `apropos` search manual-page names and short descriptions."
     },
     "os-help-314": {
@@ -6233,14 +4991,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "1"
-        ],
+        "accepted": ["1"],
         "patterns": []
       },
-      "hints": [
-        "The first section is for user commands."
-      ],
+      "hints": ["The first section is for user commands."],
       "explanation": "Manual section 1 documents user commands; section 5 documents file formats."
     },
     "os-help-315": {
@@ -6254,14 +5008,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "/usr/share/doc"
-        ],
+        "accepted": ["/usr/share/doc"],
         "patterns": []
       },
-      "hints": [
-        "It is the shared documentation directory."
-      ],
+      "hints": ["It is the shared documentation directory."],
       "explanation": "Package documentation is commonly installed under `/usr/share/doc/<package>-<version>/`."
     },
     "os-help-316": {
@@ -6280,12 +5030,8 @@
         "The item is a filename extension",
         "The item is a pipeline"
       ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "Brackets show whether a part can be omitted."
-      ],
+      "expected": [0],
+      "hints": ["Brackets show whether a part can be omitted."],
       "explanation": "Square brackets in a command synopsis indicate optional syntax."
     },
     "os-help-317": {
@@ -6299,9 +5045,7 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "q"
-        ],
+        "accepted": ["q"],
         "patterns": []
       },
       "hints": [
@@ -6325,12 +5069,8 @@
         "The sixth field",
         "The seventh field"
       ],
-      "expected": [
-        3
-      ],
-      "hints": [
-        "The shell is the final field in the seven-field record."
-      ],
+      "expected": [3],
+      "hints": ["The shell is the final field in the seven-field record."],
       "explanation": "The seven fields are username, password placeholder, UID, primary GID, comment, home directory, and login shell."
     },
     "os-users-groups-319": {
@@ -6349,9 +5089,7 @@
         "The user’s primary group is disabled",
         "The account is a system service"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "The actual password hash is stored in a more restricted file."
       ],
@@ -6373,12 +5111,8 @@
         "The group owner’s home directory",
         "The group password hash for each user"
       ],
-      "expected": [
-        1
-      ],
-      "hints": [
-        "It records users who are supplementary members of the group."
-      ],
+      "expected": [1],
+      "hints": ["It records users who are supplementary members of the group."],
       "explanation": "An `/etc/group` record is group name, password field, GID, and supplementary member list."
     },
     "os-users-groups-321": {
@@ -6397,12 +5131,8 @@
         "In the user’s home directory name",
         "In `/etc/hostname`"
       ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "The primary GID is one of the seven passwd fields."
-      ],
+      "expected": [0],
+      "hints": ["The primary GID is one of the seven passwd fields."],
       "explanation": "The primary GID is recorded in `/etc/passwd`; the `/etc/group` member list contains supplementary memberships."
     },
     "os-users-groups-322": {
@@ -6421,12 +5151,8 @@
         "All accounts share UID 0",
         "Regular users must have UIDs below 100"
       ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "The superuser has a special fixed UID."
-      ],
+      "expected": [0],
+      "hints": ["The superuser has a special fixed UID."],
       "explanation": "Root uses UID 0; the account ranges described for the system place service accounts below 1000 and regular users from 1000 upward."
     },
     "os-users-groups-323": {
@@ -6440,15 +5166,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "sudo useradd -m alice",
-          "useradd -m alice"
-        ],
+        "accepted": ["sudo useradd -m alice", "useradd -m alice"],
         "patterns": []
       },
-      "hints": [
-        "Use the option that creates the home directory."
-      ],
+      "hints": ["Use the option that creates the home directory."],
       "explanation": "`useradd -m alice` creates the account and its home directory."
     },
     "os-users-groups-324": {
@@ -6468,9 +5189,7 @@
         ],
         "patterns": []
       },
-      "hints": [
-        "Modify the account and specify its shell."
-      ],
+      "hints": ["Modify the account and specify its shell."],
       "explanation": "`usermod -s` changes the login shell for an existing user."
     },
     "os-users-groups-325": {
@@ -6490,9 +5209,7 @@
         ],
         "patterns": []
       },
-      "hints": [
-        "Use the lowercase group option for the primary group."
-      ],
+      "hints": ["Use the lowercase group option for the primary group."],
       "explanation": "`usermod -g engineers alice` assigns `engineers` as the primary group."
     },
     "os-users-groups-326": {
@@ -6534,9 +5251,7 @@
         ],
         "patterns": []
       },
-      "hints": [
-        "Use the group-add command with its numeric-ID option."
-      ],
+      "hints": ["Use the group-add command with its numeric-ID option."],
       "explanation": "`groupadd -g 4000 engineers` creates the group with GID 4000."
     },
     "os-users-groups-328": {
@@ -6550,15 +5265,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "sudo groupadd -r infra",
-          "groupadd -r infra"
-        ],
+        "accepted": ["sudo groupadd -r infra", "groupadd -r infra"],
         "patterns": []
       },
-      "hints": [
-        "The option marks the group as a system group."
-      ],
+      "hints": ["The option marks the group as a system group."],
       "explanation": "`groupadd -r` creates a system group."
     },
     "os-users-groups-329": {
@@ -6572,10 +5282,7 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "sudo groupmod -n quality qa",
-          "groupmod -n quality qa"
-        ],
+        "accepted": ["sudo groupmod -n quality qa", "groupmod -n quality qa"],
         "patterns": []
       },
       "hints": [
@@ -6600,9 +5307,7 @@
         ],
         "patterns": []
       },
-      "hints": [
-        "The group modification command accepts a numeric GID option."
-      ],
+      "hints": ["The group modification command accepts a numeric GID option."],
       "explanation": "`groupmod -g 3500 devteam` changes the group’s numeric ID."
     },
     "os-users-groups-331": {
@@ -6616,14 +5321,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "newgrp ops"
-        ],
+        "accepted": ["newgrp ops"],
         "patterns": []
       },
-      "hints": [
-        "This starts a new shell with the selected group active."
-      ],
+      "hints": ["This starts a new shell with the selected group active."],
       "explanation": "`newgrp ops` starts a new shell with `ops` as the active primary group until that shell ends."
     },
     "os-users-groups-332": {
@@ -6637,14 +5338,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "sudo userdel alice"
-        ],
+        "accepted": ["sudo userdel alice"],
         "patterns": []
       },
-      "hints": [
-        "Do not add the recursive home-removal option."
-      ],
+      "hints": ["Do not add the recursive home-removal option."],
       "explanation": "`userdel alice` removes the account records but leaves the home directory."
     },
     "os-users-groups-333": {
@@ -6658,9 +5355,7 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "sudo userdel -r alice"
-        ],
+        "accepted": ["sudo userdel -r alice"],
         "patterns": []
       },
       "hints": [
@@ -6679,14 +5374,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "/etc/login.defs"
-        ],
+        "accepted": ["/etc/login.defs"],
         "patterns": []
       },
-      "hints": [
-        "It is the system-wide login defaults file."
-      ],
+      "hints": ["It is the system-wide login defaults file."],
       "explanation": "`/etc/login.defs` stores defaults used by account-management tools."
     },
     "os-users-groups-335": {
@@ -6700,14 +5391,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "/sbin/nologin"
-        ],
+        "accepted": ["/sbin/nologin"],
         "patterns": []
       },
-      "hints": [
-        "It is a non-login shell path."
-      ],
+      "hints": ["It is a non-login shell path."],
       "explanation": "`/sbin/nologin` prevents an account from opening a normal interactive login shell."
     },
     "os-users-groups-336": {
@@ -6721,15 +5408,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "sudo passwd -S dev1",
-          "passwd -S dev1"
-        ],
+        "accepted": ["sudo passwd -S dev1", "passwd -S dev1"],
         "patterns": []
       },
-      "hints": [
-        "Use the status option of `passwd`."
-      ],
+      "hints": ["Use the status option of `passwd`."],
       "explanation": "`passwd -S` reports account password status, including a locked status indicator."
     },
     "os-users-groups-337": {
@@ -6749,9 +5431,7 @@
         ],
         "patterns": []
       },
-      "hints": [
-        "Use maximum age, minimum age, and warning options together."
-      ],
+      "hints": ["Use maximum age, minimum age, and warning options together."],
       "explanation": "`-M 45` sets maximum age, `-m 1` sets minimum age, and `-W 7` sets the warning period."
     },
     "os-users-groups-338": {
@@ -6770,12 +5450,8 @@
         "The maximum password lifetime",
         "The user’s primary group"
       ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "The letter refers to a warning."
-      ],
+      "expected": [0],
+      "hints": ["The letter refers to a warning."],
       "explanation": "`chage -W` sets the number of days before password expiry when the user is warned."
     },
     "os-users-groups-339": {
@@ -6789,15 +5465,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "sudo usermod -U tempuser",
-          "usermod -U tempuser"
-        ],
+        "accepted": ["sudo usermod -U tempuser", "usermod -U tempuser"],
         "patterns": []
       },
-      "hints": [
-        "Use the uppercase unlock option."
-      ],
+      "hints": ["Use the uppercase unlock option."],
       "explanation": "`usermod -U` unlocks the user’s password."
     },
     "os-users-groups-340": {
@@ -6816,12 +5487,8 @@
         "A hostname",
         "A command alias"
       ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "The symbol distinguishes a group from a single user."
-      ],
+      "expected": [0],
+      "hints": ["The symbol distinguishes a group from a single user."],
       "explanation": "A leading `%` in sudoers identifies a group."
     },
     "os-users-groups-341": {
@@ -6835,9 +5502,7 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "sudo command"
-        ],
+        "accepted": ["sudo command"],
         "patterns": []
       },
       "hints": [
@@ -6856,15 +5521,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "Ctrl+r",
-          "Ctrl+R"
-        ],
+        "accepted": ["Ctrl+r", "Ctrl+R"],
         "patterns": []
       },
-      "hints": [
-        "Hold Control and press the key used for reverse search."
-      ],
+      "hints": ["Hold Control and press the key used for reverse search."],
       "explanation": "`Ctrl+r` starts an interactive reverse search through Bash history."
     },
     "os-shell-syntax-343": {
@@ -6878,14 +5538,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "Tab"
-        ],
+        "accepted": ["Tab"],
         "patterns": []
       },
-      "hints": [
-        "It is the standard shell-completion key."
-      ],
+      "hints": ["It is the standard shell-completion key."],
       "explanation": "Pressing Tab requests command or filename completion in Bash."
     },
     "os-shell-syntax-347": {
@@ -6921,9 +5577,7 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "touch My\\ File.txt"
-        ],
+        "accepted": ["touch My\\ File.txt"],
         "patterns": []
       },
       "hints": [
@@ -6947,9 +5601,7 @@
         "A symbolic link",
         "Command history expansion"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "One feature generates a list of strings without checking the filesystem."
       ],
@@ -6966,15 +5618,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "~/.bash_profile",
-          ".bash_profile"
-        ],
+        "accepted": ["~/.bash_profile", ".bash_profile"],
         "patterns": []
       },
-      "hints": [
-        "It is distinct from `.bashrc`."
-      ],
+      "hints": ["It is distinct from `.bashrc`."],
       "explanation": "`~/.bash_profile` contains per-user login-shell configuration."
     },
     "os-environment-351": {
@@ -6988,10 +5635,7 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "~/.bashrc",
-          ".bashrc"
-        ],
+        "accepted": ["~/.bashrc", ".bashrc"],
         "patterns": []
       },
       "hints": [
@@ -7010,14 +5654,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "bash --login"
-        ],
+        "accepted": ["bash --login"],
         "patterns": []
       },
-      "hints": [
-        "Use Bash’s long login option."
-      ],
+      "hints": ["Use Bash’s long login option."],
       "explanation": "`bash --login` starts Bash as a login shell, reading the login configuration."
     },
     "os-environment-353": {
@@ -7031,14 +5671,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "unset project"
-        ],
+        "accepted": ["unset project"],
         "patterns": []
       },
-      "hints": [
-        "Use the shell built-in for removing a variable."
-      ],
+      "hints": ["Use the shell built-in for removing a variable."],
       "explanation": "`unset project` removes the variable from the current shell environment."
     },
     "os-environment-355": {
@@ -7057,12 +5693,8 @@
         "Scripts cannot run external commands",
         "Aliases only work for root"
       ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "Consider where Bash performs alias expansion."
-      ],
+      "expected": [0],
+      "hints": ["Consider where Bash performs alias expansion."],
       "explanation": "The course material notes that aliases expand in interactive shells and do not normally expand in scripts."
     },
     "os-environment-356": {
@@ -7076,14 +5708,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "${course}_linux"
-        ],
+        "accepted": ["${course}_linux"],
         "patterns": []
       },
-      "hints": [
-        "Use braces to mark the variable-name boundary."
-      ],
+      "hints": ["Use braces to mark the variable-name boundary."],
       "explanation": "`${course}_linux` expands the variable `course` and then appends the literal suffix."
     },
     "os-environment-357": {
@@ -7097,14 +5725,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "env"
-        ],
+        "accepted": ["env"],
         "patterns": []
       },
-      "hints": [
-        "The command has the same name as the concept being queried."
-      ],
+      "hints": ["The command has the same name as the concept being queried."],
       "explanation": "`env` displays exported environment variables; `set` also includes shell variables and functions."
     },
     "os-environment-358": {
@@ -7118,9 +5742,7 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "type ll"
-        ],
+        "accepted": ["type ll"],
         "patterns": []
       },
       "hints": [
@@ -7139,14 +5761,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "h j k l"
-        ],
+        "accepted": ["h j k l"],
         "patterns": []
       },
-      "hints": [
-        "They are four adjacent home-row letters."
-      ],
+      "hints": ["They are four adjacent home-row letters."],
       "explanation": "In Normal mode, `h`, `j`, `k`, and `l` move left, down, up, and right."
     },
     "os-vim-360": {
@@ -7160,14 +5778,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "x"
-        ],
+        "accepted": ["x"],
         "patterns": []
       },
-      "hints": [
-        "It is a single key used for character deletion."
-      ],
+      "hints": ["It is a single key used for character deletion."],
       "explanation": "`x` deletes the character under the cursor in Normal mode."
     },
     "os-vim-361": {
@@ -7181,14 +5795,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "I"
-        ],
+        "accepted": ["I"],
         "patterns": []
       },
-      "hints": [
-        "It is the uppercase form of the insert-before-cursor key."
-      ],
+      "hints": ["It is the uppercase form of the insert-before-cursor key."],
       "explanation": "`I` enters Insert mode at the beginning of the current line."
     },
     "os-vim-362": {
@@ -7202,14 +5812,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "A"
-        ],
+        "accepted": ["A"],
         "patterns": []
       },
-      "hints": [
-        "It is the uppercase append command."
-      ],
+      "hints": ["It is the uppercase append command."],
       "explanation": "`A` enters Insert mode at the end of the current line."
     },
     "os-vim-363": {
@@ -7223,14 +5829,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "O"
-        ],
+        "accepted": ["O"],
         "patterns": []
       },
-      "hints": [
-        "It is the uppercase counterpart of opening a line below."
-      ],
+      "hints": ["It is the uppercase counterpart of opening a line below."],
       "explanation": "`O` opens a new line above the cursor and enters Insert mode."
     },
     "os-vim-364": {
@@ -7244,14 +5846,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "v"
-        ],
+        "accepted": ["v"],
         "patterns": []
       },
-      "hints": [
-        "Use the lowercase Visual-mode key."
-      ],
+      "hints": ["Use the lowercase Visual-mode key."],
       "explanation": "`v` begins character-wise Visual selection."
     },
     "os-vim-365": {
@@ -7265,14 +5863,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "V"
-        ],
+        "accepted": ["V"],
         "patterns": []
       },
-      "hints": [
-        "Use the uppercase Visual-mode key."
-      ],
+      "hints": ["Use the uppercase Visual-mode key."],
       "explanation": "`V` begins line-wise Visual selection."
     },
     "os-vim-366": {
@@ -7286,15 +5880,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "Ctrl+v",
-          "Ctrl+V"
-        ],
+        "accepted": ["Ctrl+v", "Ctrl+V"],
         "patterns": []
       },
-      "hints": [
-        "It uses Control with the Visual-mode key."
-      ],
+      "hints": ["It uses Control with the Visual-mode key."],
       "explanation": "`Ctrl+v` begins block-wise Visual selection."
     },
     "os-vim-367": {
@@ -7308,14 +5897,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "3yy"
-        ],
+        "accepted": ["3yy"],
         "patterns": []
       },
-      "hints": [
-        "Put the count before the line-yank command."
-      ],
+      "hints": ["Put the count before the line-yank command."],
       "explanation": "`3yy` yanks three lines beginning with the current line."
     },
     "os-vim-368": {
@@ -7329,14 +5914,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "P"
-        ],
+        "accepted": ["P"],
         "patterns": []
       },
-      "hints": [
-        "It is the uppercase paste key."
-      ],
+      "hints": ["It is the uppercase paste key."],
       "explanation": "`P` puts the text before the cursor; lowercase `p` puts it after/below."
     },
     "os-vim-369": {
@@ -7350,14 +5931,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "n"
-        ],
+        "accepted": ["n"],
         "patterns": []
       },
-      "hints": [
-        "It means “next”."
-      ],
+      "hints": ["It means “next”."],
       "explanation": "`n` moves to the next match for the most recent search."
     },
     "os-vim-370": {
@@ -7371,14 +5948,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          ":w newfile.txt"
-        ],
+        "accepted": [":w newfile.txt"],
         "patterns": []
       },
-      "hints": [
-        "Use the write command followed by the destination filename."
-      ],
+      "hints": ["Use the write command followed by the destination filename."],
       "explanation": "`:w newfile.txt` writes the current buffer to a file with that name."
     },
     "os-vim-371": {
@@ -7392,14 +5965,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          ":q"
-        ],
+        "accepted": [":q"],
         "patterns": []
       },
-      "hints": [
-        "It is the ordinary quit command, without a force marker."
-      ],
+      "hints": ["It is the ordinary quit command, without a force marker."],
       "explanation": "`:q` exits Vim when there are no unsaved changes."
     },
     "os-permissions-372": {
@@ -7418,12 +5987,8 @@
         "Execute every program in the directory",
         "Change the directory owner"
       ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "Directory read and execute have different roles."
-      ],
+      "expected": [0],
+      "hints": ["Directory read and execute have different roles."],
       "explanation": "Read permission allows listing names; execute permission is needed to traverse/search the directory."
     },
     "os-permissions-373": {
@@ -7442,12 +6007,8 @@
         "The file must be owned by root",
         "The parent directory must be read-only"
       ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "Removing a file changes the directory’s list of names."
-      ],
+      "expected": [0],
+      "hints": ["Removing a file changes the directory’s list of names."],
       "explanation": "Write permission allows changing directory entries; execute permission allows accessing/traversing the directory."
     },
     "os-permissions-374": {
@@ -7461,14 +6022,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "projectteam"
-        ],
+        "accepted": ["projectteam"],
         "patterns": []
       },
-      "hints": [
-        "The set-group-ID bit on a directory affects new entries."
-      ],
+      "hints": ["The set-group-ID bit on a directory affects new entries."],
       "explanation": "With SGID set on a directory, new files and subdirectories inherit the directory’s group."
     },
     "os-permissions-375": {
@@ -7482,14 +6039,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "SGID"
-        ],
+        "accepted": ["SGID"],
         "patterns": []
       },
-      "hints": [
-        "It is the special bit used for shared group directories."
-      ],
+      "hints": ["It is the special bit used for shared group directories."],
       "explanation": "A lowercase `s` in the group-execute position indicates SGID is set and group execute is enabled."
     },
     "os-permissions-376": {
@@ -7503,14 +6056,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "Sticky bit"
-        ],
+        "accepted": ["Sticky bit"],
         "patterns": []
       },
-      "hints": [
-        "It restricts deletion in shared directories."
-      ],
+      "hints": ["It restricts deletion in shared directories."],
       "explanation": "A trailing `t` indicates the sticky bit."
     },
     "os-permissions-377": {
@@ -7529,9 +6078,7 @@
         "Only members of the file’s group",
         "Any user with read permission on the directory"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "The sticky bit restricts removal to a small set of owners/administrators."
       ],
@@ -7553,9 +6100,7 @@
         "It forces the script to run in Vim",
         "It changes the script into a directory"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "The material distinguishes ordinary executables from shell scripts."
       ],
@@ -7572,9 +6117,7 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "chmod 2775 team_project"
-        ],
+        "accepted": ["chmod 2775 team_project"],
         "patterns": []
       },
       "hints": [
@@ -7593,14 +6136,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "640"
-        ],
+        "accepted": ["640"],
         "patterns": []
       },
-      "hints": [
-        "Regular files start from requested mode `0666`."
-      ],
+      "hints": ["Regular files start from requested mode `0666`."],
       "explanation": "Applying umask `0027` to the regular-file base mode `0666` leaves `0640` (`rw-r-----`)."
     },
     "os-permissions-381": {
@@ -7614,14 +6153,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "750"
-        ],
+        "accepted": ["750"],
         "patterns": []
       },
-      "hints": [
-        "Directories start from requested mode `0777`."
-      ],
+      "hints": ["Directories start from requested mode `0777`."],
       "explanation": "Applying umask `0027` to the directory base mode `0777` leaves `0750` (`rwxr-x---`)."
     },
     "os-permissions-382": {
@@ -7635,14 +6170,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "660"
-        ],
+        "accepted": ["660"],
         "patterns": []
       },
-      "hints": [
-        "Begin with the regular-file base mode `0666`."
-      ],
+      "hints": ["Begin with the regular-file base mode `0666`."],
       "explanation": "Umask `0007` removes all permissions for others, leaving `0660` (`rw-rw----`)."
     },
     "os-permissions-383": {
@@ -7656,14 +6187,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "umask -S"
-        ],
+        "accepted": ["umask -S"],
         "patterns": []
       },
-      "hints": [
-        "Use the symbolic-output option."
-      ],
+      "hints": ["Use the symbolic-output option."],
       "explanation": "`umask -S` displays the mask using symbolic permission notation."
     },
     "os-permissions-384": {
@@ -7704,12 +6231,8 @@
         "Only a member of the file’s group",
         "Any user with execute permission"
       ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "Changing ownership is a privileged operation."
-      ],
+      "expected": [0],
+      "hints": ["Changing ownership is a privileged operation."],
       "explanation": "Changing a file’s owner requires root privileges in the course’s permission model."
     },
     "os-find-386": {
@@ -7723,14 +6246,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "find . -type l"
-        ],
+        "accepted": ["find . -type l"],
         "patterns": []
       },
-      "hints": [
-        "The file-type code for symbolic links is a lowercase letter."
-      ],
+      "hints": ["The file-type code for symbolic links is a lowercase letter."],
       "explanation": "`find . -type l` selects symbolic links recursively below the current directory."
     },
     "os-find-387": {
@@ -7744,14 +6263,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "find /home -group projectteam"
-        ],
+        "accepted": ["find /home -group projectteam"],
         "patterns": []
       },
-      "hints": [
-        "Use the group-owner predicate."
-      ],
+      "hints": ["Use the group-owner predicate."],
       "explanation": "`find -group` selects filesystem objects owned by the specified group."
     },
     "os-find-388": {
@@ -7765,14 +6280,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "-nouser"
-        ],
+        "accepted": ["-nouser"],
         "patterns": []
       },
-      "hints": [
-        "It identifies objects without a matching user account."
-      ],
+      "hints": ["It identifies objects without a matching user account."],
       "explanation": "`-nouser` matches files whose numeric owner has no corresponding user account."
     },
     "os-find-389": {
@@ -7786,14 +6297,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "find /home -amin -5"
-        ],
+        "accepted": ["find /home -amin -5"],
         "patterns": []
       },
-      "hints": [
-        "Access time uses the letter `a`; `-5` means less than five."
-      ],
+      "hints": ["Access time uses the letter `a`; `-5` means less than five."],
       "explanation": "`-amin -5` matches objects accessed less than five minutes ago."
     },
     "os-find-390": {
@@ -7807,14 +6314,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "find /home -cmin -10"
-        ],
+        "accepted": ["find /home -cmin -10"],
         "patterns": []
       },
-      "hints": [
-        "Status-change time uses the letter `c`."
-      ],
+      "hints": ["Status-change time uses the letter `c`."],
       "explanation": "`-cmin -10` selects objects whose status-change time is less than ten minutes ago."
     },
     "os-find-391": {
@@ -7834,9 +6337,7 @@
         ],
         "patterns": []
       },
-      "hints": [
-        "Use the native delete action after the name test."
-      ],
+      "hints": ["Use the native delete action after the name test."],
       "explanation": "`-delete` removes each matching filesystem entry; verify the search criteria before using it."
     },
     "os-find-392": {
@@ -7850,14 +6351,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "find ~ -size +10M -exec mv {} ~/Desktop \\;"
-        ],
+        "accepted": ["find ~ -size +10M -exec mv {} ~/Desktop \\;"],
         "patterns": []
       },
-      "hints": [
-        "`{}` is replaced by each match and `\\;` ends the action."
-      ],
+      "hints": ["`{}` is replaced by each match and `\\;` ends the action."],
       "explanation": "`find -exec` runs the given command for each match; `{}` represents the current path and `\\;` terminates the action."
     },
     "os-archives-393": {
@@ -7876,12 +6373,8 @@
         "Encrypts files using SSH",
         "Synchronizes only changed blocks"
       ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "Archiving and compression are separate operations."
-      ],
+      "expected": [0],
+      "hints": ["Archiving and compression are separate operations."],
       "explanation": "`tar` bundles files and directories; compression is requested separately with an option such as `-z`, `-j`, or `-J`."
     },
     "os-archives-394": {
@@ -7900,12 +6393,8 @@
         "It stores only filenames",
         "It converts every file to plain text"
       ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "A backup needs more than the raw contents of files."
-      ],
+      "expected": [0],
+      "hints": ["A backup needs more than the raw contents of files."],
       "explanation": "The archive preserves filesystem metadata such as ownership, permissions, timestamps, and directory structure."
     },
     "os-archives-395": {
@@ -7919,14 +6408,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "tar -tvf backup.tar.gz"
-        ],
+        "accepted": ["tar -tvf backup.tar.gz"],
         "patterns": []
       },
-      "hints": [
-        "Use the list operation and verbose output."
-      ],
+      "hints": ["Use the list operation and verbose output."],
       "explanation": "`tar -tvf` lists archive contents in detail without extracting them."
     },
     "os-archives-396": {
@@ -7946,9 +6431,7 @@
         ],
         "patterns": []
       },
-      "hints": [
-        "Use extract and change-directory options."
-      ],
+      "hints": ["Use extract and change-directory options."],
       "explanation": "`-C /tmp/restore` makes tar extract into that directory; modern tar detects gzip during extraction."
     },
     "os-archives-397": {
@@ -7967,12 +6450,8 @@
         "To convert symbolic links to hard links",
         "To set every file to mode 777"
       ],
-      "expected": [
-        0
-      ],
-      "hints": [
-        "Think about what happens if an archive is extracted as root."
-      ],
+      "expected": [0],
+      "hints": ["Think about what happens if an archive is extracted as root."],
       "explanation": "Removing the leading slash makes paths extract relative to the current directory, reducing the risk of overwriting system files."
     },
     "os-archives-398": {
@@ -7986,14 +6465,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "-P"
-        ],
+        "accepted": ["-P"],
         "patterns": []
       },
-      "hints": [
-        "It stands for absolute names."
-      ],
+      "hints": ["It stands for absolute names."],
       "explanation": "`-P` preserves absolute pathnames and can be dangerous when extracting untrusted archives."
     },
     "os-archives-399": {
@@ -8012,9 +6487,7 @@
         "SCP uses the web server’s port 80",
         "SCP stores files in `/etc`"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "The protocol name includes “secure” and shares the remote-shell transport."
       ],
@@ -8031,9 +6504,7 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "rsync"
-        ],
+        "accepted": ["rsync"],
         "patterns": []
       },
       "hints": [
@@ -8052,14 +6523,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "#!/bin/bash"
-        ],
+        "accepted": ["#!/bin/bash"],
         "patterns": []
       },
-      "hints": [
-        "It begins with the interpreter directive marker."
-      ],
+      "hints": ["It begins with the interpreter directive marker."],
       "explanation": "`#!/bin/bash` is the shebang that selects Bash as the script interpreter."
     },
     "os-shell-scripts-402": {
@@ -8073,10 +6540,7 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "chmod +x hello.sh",
-          "chmod a+x hello.sh"
-        ],
+        "accepted": ["chmod +x hello.sh", "chmod a+x hello.sh"],
         "patterns": []
       },
       "hints": [
@@ -8095,15 +6559,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "sudo groupadd ops",
-          "groupadd ops"
-        ],
+        "accepted": ["sudo groupadd ops", "groupadd ops"],
         "patterns": []
       },
-      "hints": [
-        "Do not provide the numeric-ID option."
-      ],
+      "hints": ["Do not provide the numeric-ID option."],
       "explanation": "`groupadd ops` creates the group and lets the system assign its GID."
     },
     "os-users-groups-404": {
@@ -8117,15 +6576,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "sudo groupdel quality",
-          "groupdel quality"
-        ],
+        "accepted": ["sudo groupdel quality", "groupdel quality"],
         "patterns": []
       },
-      "hints": [
-        "Use the group account deletion utility."
-      ],
+      "hints": ["Use the group account deletion utility."],
       "explanation": "`groupdel quality` removes the group record."
     },
     "os-users-groups-405": {
@@ -8139,9 +6593,7 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "-aG"
-        ],
+        "accepted": ["-aG"],
         "patterns": []
       },
       "hints": [
@@ -8165,9 +6617,7 @@
         "A user may have no primary group but must have five supplementary groups",
         "All memberships are stored in `/etc/hostname`"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "Compare the GID field in the user record with the member list in a group record."
       ],
@@ -8184,14 +6634,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "User Private Group"
-        ],
+        "accepted": ["User Private Group"],
         "patterns": []
       },
-      "hints": [
-        "The abbreviation is UPG."
-      ],
+      "hints": ["The abbreviation is UPG."],
       "explanation": "The user-private-group model creates a matching primary group for an account."
     },
     "os-shell-syntax-408": {
@@ -8205,14 +6651,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "#"
-        ],
+        "accepted": ["#"],
         "patterns": []
       },
-      "hints": [
-        "The regular-user prompt uses a different single character."
-      ],
+      "hints": ["The regular-user prompt uses a different single character."],
       "explanation": "A root Bash prompt commonly ends in `#`; a regular user prompt commonly ends in `$`."
     },
     "os-shell-syntax-409": {
@@ -8226,14 +6668,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "$"
-        ],
+        "accepted": ["$"],
         "patterns": []
       },
-      "hints": [
-        "The root prompt uses the hash character instead."
-      ],
+      "hints": ["The root prompt uses the hash character instead."],
       "explanation": "A regular-user Bash prompt commonly ends in `$`; a root prompt commonly ends in `#`."
     },
     "os-shell-syntax-410": {
@@ -8247,9 +6685,7 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "echo '$HOME'"
-        ],
+        "accepted": ["echo '$HOME'"],
         "patterns": []
       },
       "hints": [
@@ -8268,9 +6704,7 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "echo \"Hello $name\""
-        ],
+        "accepted": ["echo \"Hello $name\""],
         "patterns": []
       },
       "hints": [
@@ -8294,9 +6728,7 @@
         "Linux renames it automatically",
         "The shell treats every `.txt` file as plain text"
       ],
-      "expected": [
-        1
-      ],
+      "expected": [1],
       "hints": [
         "Linux commonly inspects file contents rather than trusting the suffix."
       ],
@@ -8313,14 +6745,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "Enter"
-        ],
+        "accepted": ["Enter"],
         "patterns": []
       },
-      "hints": [
-        "It is the key used to submit a command at a prompt."
-      ],
+      "hints": ["It is the key used to submit a command at a prompt."],
       "explanation": "In `more`, Space advances by a page and Enter advances by one line."
     },
     "os-redirection-414": {
@@ -8334,14 +6762,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "0"
-        ],
+        "accepted": ["0"],
         "patterns": []
       },
-      "hints": [
-        "It is the first of the three standard streams."
-      ],
+      "hints": ["It is the first of the three standard streams."],
       "explanation": "Standard input is file descriptor 0; standard output is 1 and standard error is 2."
     },
     "os-redirection-415": {
@@ -8355,14 +6779,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "1"
-        ],
+        "accepted": ["1"],
         "patterns": []
       },
-      "hints": [
-        "It is the stream used for normal command output."
-      ],
+      "hints": ["It is the stream used for normal command output."],
       "explanation": "Standard output is file descriptor 1."
     },
     "os-redirection-416": {
@@ -8376,9 +6796,7 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "2>>"
-        ],
+        "accepted": ["2>>"],
         "patterns": []
       },
       "hints": [
@@ -8397,14 +6815,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "&>"
-        ],
+        "accepted": ["&>"],
         "patterns": []
       },
-      "hints": [
-        "It combines an ampersand with the overwrite operator."
-      ],
+      "hints": ["It combines an ampersand with the overwrite operator."],
       "explanation": "`&>` redirects both standard output and standard error in Bash."
     },
     "os-find-418": {
@@ -8418,14 +6832,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "find /home -mmin -10"
-        ],
+        "accepted": ["find /home -mmin -10"],
         "patterns": []
       },
-      "hints": [
-        "Modification time in minutes uses the letter `m`."
-      ],
+      "hints": ["Modification time in minutes uses the letter `m`."],
       "explanation": "`-mmin -10` matches items modified less than ten minutes ago."
     },
     "os-find-419": {
@@ -8439,14 +6849,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "find /home -user andrew"
-        ],
+        "accepted": ["find /home -user andrew"],
         "patterns": []
       },
-      "hints": [
-        "Use the owner predicate, not the group predicate."
-      ],
+      "hints": ["Use the owner predicate, not the group predicate."],
       "explanation": "`-user andrew` selects objects owned by that user."
     },
     "os-find-420": {
@@ -8460,14 +6866,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "-nouser"
-        ],
+        "accepted": ["-nouser"],
         "patterns": []
       },
-      "hints": [
-        "The predicate name states that the user record is absent."
-      ],
+      "hints": ["The predicate name states that the user record is absent."],
       "explanation": "`-nouser` finds filesystem objects whose owner ID does not map to a user account."
     },
     "os-find-421": {
@@ -8481,14 +6883,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "find /usr/bin -size +2M -size -10M"
-        ],
+        "accepted": ["find /usr/bin -size +2M -size -10M"],
         "patterns": []
       },
-      "hints": [
-        "Combine a greater-than and a less-than size test."
-      ],
+      "hints": ["Combine a greater-than and a less-than size test."],
       "explanation": "The two `-size` predicates restrict results to the requested size interval."
     },
     "os-archives-422": {
@@ -8502,14 +6900,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "tar -czvf backup.tar.gz project/"
-        ],
+        "accepted": ["tar -czvf backup.tar.gz project/"],
         "patterns": []
       },
-      "hints": [
-        "Combine create, gzip, verbose, and filename options."
-      ],
+      "hints": ["Combine create, gzip, verbose, and filename options."],
       "explanation": "`-c` creates, `-z` uses gzip, `-v` lists processed files, and `-f` names the archive."
     },
     "os-archives-423": {
@@ -8523,14 +6917,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "tar -cJf backup.tar.xz project/"
-        ],
+        "accepted": ["tar -cJf backup.tar.xz project/"],
         "patterns": []
       },
-      "hints": [
-        "The xz option uses an uppercase letter."
-      ],
+      "hints": ["The xz option uses an uppercase letter."],
       "explanation": "`tar -cJf` creates an archive using xz compression."
     },
     "os-archives-424": {
@@ -8544,14 +6934,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "scp -r reports/ alice@server.example:/home/alice/"
-        ],
+        "accepted": ["scp -r reports/ alice@server.example:/home/alice/"],
         "patterns": []
       },
-      "hints": [
-        "Use the recursive option and the `user@host:path` form."
-      ],
+      "hints": ["Use the recursive option and the `user@host:path` form."],
       "explanation": "`scp -r` copies a directory tree over SSH."
     },
     "os-archives-425": {
@@ -8570,9 +6956,7 @@
         ],
         "patterns": []
       },
-      "hints": [
-        "The scp port option is uppercase."
-      ],
+      "hints": ["The scp port option is uppercase."],
       "explanation": "`scp -P` specifies the SSH port used for the transfer."
     },
     "os-networking-500": {
@@ -8591,9 +6975,7 @@
         "2a06:efc0::94",
         "127.0.0.1"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "The course uses the `192.168.x.x` and `10.x.x.x` ranges as local-network examples."
       ],
@@ -8615,9 +6997,7 @@
         "The file name and inode",
         "The DNS resolver and the local home directory"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "The server address identifies the computer; the port identifies the service."
       ],
@@ -8634,14 +7014,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "set"
-        ],
+        "accepted": ["set"],
         "patterns": []
       },
-      "hints": [
-        "It displays more than the exported environment."
-      ],
+      "hints": ["It displays more than the exported environment."],
       "explanation": "`set` displays shell variables and functions; `env` displays exported environment variables."
     },
     "os-shell-scripts-503": {
@@ -8655,9 +7031,7 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "hello.sh"
-        ],
+        "accepted": ["hello.sh"],
         "patterns": []
       },
       "hints": [
@@ -8676,14 +7050,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "600"
-        ],
+        "accepted": ["600"],
         "patterns": []
       },
-      "hints": [
-        "Regular files start from requested mode `0666`."
-      ],
+      "hints": ["Regular files start from requested mode `0666`."],
       "explanation": "Applying umask `0077` to `0666` leaves `0600`, so only the owner can read and write the new file."
     },
     "os-permissions-505": {
@@ -8702,9 +7072,7 @@
         "The sticky bit is set",
         "The file is a symbolic link"
       ],
-      "expected": [
-        0
-      ],
+      "expected": [0],
       "hints": [
         "It is the SUID marker when the ordinary execute bit is absent."
       ],
@@ -8721,14 +7089,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "find /home -cmin -10"
-        ],
+        "accepted": ["find /home -cmin -10"],
         "patterns": []
       },
-      "hints": [
-        "Status-change time uses `c` and the minute suffix."
-      ],
+      "hints": ["Status-change time uses `c` and the minute suffix."],
       "explanation": "`-cmin -10` selects items whose metadata/status changed within the last ten minutes."
     },
     "os-users-groups-507": {
@@ -8742,14 +7106,10 @@
       "provenance": "merged.pdf; OSFundamentals(1).pdf",
       "contentVersion": 2,
       "expected": {
-        "accepted": [
-          "export EDITOR=vim"
-        ],
+        "accepted": ["export EDITOR=vim"],
         "patterns": []
       },
-      "hints": [
-        "Use `export` with the variable assignment."
-      ],
+      "hints": ["Use `export` with the variable assignment."],
       "explanation": "`export EDITOR=vim` makes the variable part of the environment inherited by child processes."
     }
   }

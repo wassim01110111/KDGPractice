@@ -8247,11 +8247,7 @@ wassimSign.addEventListener("click", () => {
 
   if (clickCount >= 5) {
     achTrack((s) => void s.signToggles++, { full: false });
-    if (!focusButton.hidden) {
-      focusButton.hidden = true;
-    } else {
-      focusButton.hidden = false;
-    }
+    focusButton.hidden = !focusButton.hidden;
 
     clickCount = 0;
     return;
