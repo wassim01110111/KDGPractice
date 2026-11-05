@@ -2968,8 +2968,8 @@
       "expected": {
         "accepted": ["echo \"wassim:acs103\" | sudo chpasswd"],
         "patterns": [
-          "^\\s*echo\\s+\"wassim:acs103\"\\s+\\|\\s+sudo\\s+chpasswd\\s*$",
-          "^\\s*printf\\s+'%s\\\\n'\\s+'wassim:acs103'\\s+\\|\\s+sudo\\s+chpasswd\\s*$"
+          "^\\s*echo\\s+\"wassim:acs103\"\\s+\\|\\s+(sudo)?\\s+chpasswd\\s*$",
+          "^\\s*printf\\s+'%s\\\\n'\\s+'wassim:acs103'\\s+\\|\\s+(sudo)?\\s+chpasswd\\s*$"
         ]
       },
       "hints": ["Pipe into `chpasswd`."],
