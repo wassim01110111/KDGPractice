@@ -122,11 +122,9 @@ Quick reference to the commands and tools mentioned in this summary. The command
 
 | Command / tool | Brief explanation                           | Go to section                                            |
 | -------------- | ------------------------------------------- | -------------------------------------------------------- |
-| `cal`          | Displays a calendar.                        | [Go to section](#43-system-information-commands)         |
 | `date`         | Displays or formats the date and time.      | [Go to section](#41-navigation-and-information-commands) |
 | `cd`           | Changes the current directory.              | [Go to section](#41-navigation-and-information-commands) |
 | `df`           | Shows available and used disk space.        | [Go to section](#43-system-information-commands)         |
-| `free`         | Displays memory usage.                      | [Go to section](#43-system-information-commands)         |
 | `hostname`     | Displays or sets the system hostname.       | [Go to section](#41-navigation-and-information-commands) |
 | `id`           | Displays user and group IDs.                | [Go to section](#41-navigation-and-information-commands) |
 | `last`         | Shows recent login history.                 | [Go to section](#41-navigation-and-information-commands) |
