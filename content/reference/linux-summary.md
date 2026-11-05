@@ -4,6 +4,17 @@
 
 - [Operating System Fundamentals Summary](#operating-system-fundamentals-summary)
   - [Table of contents](#table-of-contents)
+  - [Commands](#commands)
+    - [Shell basics and patterns](#shell-basics-and-patterns)
+    - [Navigation and system information](#navigation-and-system-information)
+    - [Viewing and inspecting files](#viewing-and-inspecting-files)
+    - [Creating, copying, moving, deleting, and linking](#creating-copying-moving-deleting-and-linking)
+    - [Text processing and pipelines](#text-processing-and-pipelines)
+    - [Users, groups, passwords, and privileges](#users-groups-passwords-and-privileges)
+    - [Permissions and file searching](#permissions-and-file-searching)
+    - [Archiving and remote file transfer](#archiving-and-remote-file-transfer)
+    - [Help and documentation](#help-and-documentation)
+    - [Networking and remote access](#networking-and-remote-access)
   - [1. Key Definitions](#1-key-definitions)
   - [2. Shell Basics and Syntax](#2-shell-basics-and-syntax)
     - [2.1 Anatomy of a command](#21-anatomy-of-a-command)
@@ -84,6 +95,125 @@
     - [18.3 Reading a SYNOPSIS](#183-reading-a-synopsis)
     - [18.4 Options you look up in the exercises (ex0401, ex0402)](#184-options-you-look-up-in-the-exercises-ex0401-ex0402)
   - [19. Networking and Remote Access (SSH)](#19-networking-and-remote-access-ssh)
+
+---
+
+## Commands
+
+Quick index of the commands used in this summary. Select a command to jump to the section where it is explained or demonstrated. Commands that appear in multiple places link to the most relevant command reference.
+
+### Shell basics and patterns
+
+- [bash](#16-shell-environment)
+- [cal](#43-system-information-commands)
+- [clear](#24-history-completion-and-keyboard-shortcuts)
+- [date](#41-navigation-and-information-commands)
+- [echo](#71-commands)
+- [exit](#24-history-completion-and-keyboard-shortcuts)
+- [history](#24-history-completion-and-keyboard-shortcuts)
+- [source](#16-shell-environment)
+- [type](#182-quick-help-and-built-ins)
+- [unalias](#16-shell-environment)
+- [unset](#16-shell-environment)
+- [export](#16-shell-environment)
+- [env](#16-shell-environment)
+- [set](#16-shell-environment)
+- [alias](#16-shell-environment)
+
+### Navigation and system information
+
+- [cd](#41-navigation-and-information-commands)
+- [df](#43-system-information-commands)
+- [free](#43-system-information-commands)
+- [hostname](#41-navigation-and-information-commands)
+- [id](#41-navigation-and-information-commands)
+- [last](#41-navigation-and-information-commands)
+- [ls](#41-navigation-and-information-commands)
+- [ps](#43-system-information-commands)
+- [pwd](#41-navigation-and-information-commands)
+- [uname](#43-system-information-commands)
+- [uptime](#43-system-information-commands)
+- [who](#41-navigation-and-information-commands)
+- [whoami](#41-navigation-and-information-commands)
+
+### Viewing and inspecting files
+
+- [cat](#51-commands)
+- [file](#51-commands)
+- [head](#51-commands)
+- [less](#51-commands)
+- [more](#51-commands)
+- [stat](#51-commands)
+- [tail](#51-commands)
+- [wc](#51-commands)
+
+### Creating, copying, moving, deleting, and linking
+
+- [cp](#61-commands)
+- [ln](#91-comparison)
+- [mkdir](#61-commands)
+- [mv](#61-commands)
+- [rm](#61-commands)
+- [rmdir](#61-commands)
+- [touch](#61-commands)
+
+### Text processing and pipelines
+
+- [cut](#71-commands)
+- [diff](#71-commands)
+- [nl](#71-commands)
+- [sort](#71-commands)
+- [tee](#71-commands)
+- [tr](#71-commands)
+- [uniq](#71-commands)
+
+### Users, groups, passwords, and privileges
+
+- [chage](#115-passwords-and-aging)
+- [chgrp](#127-ownership-and-default-permissions)
+- [chpasswd](#115-passwords-and-aging)
+- [chown](#127-ownership-and-default-permissions)
+- [groups](#114-groups)
+- [groupadd](#114-groups)
+- [groupdel](#114-groups)
+- [groupmod](#114-groups)
+- [newgrp](#114-groups)
+- [passwd](#115-passwords-and-aging)
+- [su](#111-switching-users)
+- [sudo](#111-switching-users)
+- [useradd](#112-creating-and-deleting-users)
+- [userdel](#112-creating-and-deleting-users)
+- [usermod](#113-modifying-users)
+- [visudo](#116-sudo-configuration)
+
+### Permissions and file searching
+
+- [chmod](#126-changing-permissions-with-chmod)
+- [find](#131-syntax-and-common-tests)
+- [umask](#127-ownership-and-default-permissions)
+
+### Archiving and remote file transfer
+
+- [scp](#142-scp)
+- [tar](#141-tar)
+
+### Help and documentation
+
+- [apropos](#181-manual-pages)
+- [help](#182-quick-help-and-built-ins)
+- [info](#182-quick-help-and-built-ins)
+- [man](#181-manual-pages)
+- [mandb](#181-manual-pages)
+- [pinfo](#182-quick-help-and-built-ins)
+
+### Networking and remote access
+
+- [curl](#19-networking-and-remote-access-ssh)
+- [ifconfig](#19-networking-and-remote-access-ssh)
+- [ip](#19-networking-and-remote-access-ssh)
+- [ipconfig](#19-networking-and-remote-access-ssh)
+- [ping](#19-networking-and-remote-access-ssh)
+- [ssh](#19-networking-and-remote-access-ssh)
 
 ---
 
