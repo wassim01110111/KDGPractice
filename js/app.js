@@ -5632,6 +5632,14 @@ function readPracticeVisibleCount() {
   }
 }
 let practiceVisibleCount = readPracticeVisibleCount();
+let practiceFilterMemory = {
+  search: "",
+  course: "",
+  category: "",
+  difficulty: "",
+  term: "",
+  statusMode: "uncompleted",
+};
 
 async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
   if (!S.exercises.length)
@@ -5641,7 +5649,12 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
         "Ask the site maintainer to add an exercise package.",
       ),
     );
-  const f = { course: "", category: "", difficulty: "", term: "" },
+  const f = {
+      course: practiceFilterMemory.course,
+      category: practiceFilterMemory.category,
+      difficulty: practiceFilterMemory.difficulty,
+      term: practiceFilterMemory.term,
+    },
     list = h("div", { class: "side" }),
     pane = h("div"),
     flt = h("div", {
@@ -5649,10 +5662,23 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
       "aria-label": "Filter exercises",
     });
   const answers = S.drafts;
+  // Keep these values in page memory while the learner switches tabs. This
+  // helper must live inside pagePractice because search, f and statusMode are
+  // local to this page instance.
+  function rememberPracticeFilters() {
+    practiceFilterMemory = {
+      search: search.value,
+      course: f.course,
+      category: f.category,
+      difficulty: f.difficulty,
+      term: f.term,
+      statusMode,
+    };
+  }
   // Four-position practice filter. Needs correction means a question has
   // previously been answered incorrectly and its latest result is still wrong.
   // Saved-for-later choices are stored per exercise in IndexedDB.
-  let statusMode = "uncompleted";
+  let statusMode = practiceFilterMemory.statusMode || "uncompleted";
   let selectedKey = "";
   let items = [];
   // Rendering 1000+ buttons at once crashes Safari on iPhone, so only a window
@@ -5687,7 +5713,10 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
       type: "search",
       placeholder: "Search titles",
       "aria-label": "Search questions",
-      oninput: () => redraw(),
+      oninput: () => {
+        rememberPracticeFilters();
+        redraw();
+      },
     }),
     searchControl = h(
       "label",
@@ -5702,6 +5731,7 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
           f.term = e.target.value;
           f.category = "";
           refreshCategories();
+          rememberPracticeFilters();
           redraw();
         },
       },
@@ -5717,6 +5747,7 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
           f.course = e.target.value;
           f.category = "";
           refreshCategories();
+          rememberPracticeFilters();
           redraw();
         },
       },
@@ -5734,6 +5765,7 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
           courseSelect.value = f.course;
         }
         refreshCategories();
+        rememberPracticeFilters();
         redraw();
       },
     }),
@@ -5742,6 +5774,7 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
       {
         onchange: (e) => {
           f.difficulty = e.target.value;
+          rememberPracticeFilters();
           redraw();
         },
       },
@@ -5780,6 +5813,7 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
             button.classList.toggle("is-active", active);
             button.setAttribute("aria-pressed", String(active));
           });
+          rememberPracticeFilters();
           redraw();
         },
       },
@@ -5836,6 +5870,18 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
       ? JSON.stringify([f.course, f.category])
       : "";
   }
+  // Restore values before the controls are attached to the page. The category
+  // options depend on the selected course and term, so refresh them last.
+  search.value = practiceFilterMemory.search || "";
+  termSelect.value = f.term;
+  courseSelect.value = f.course;
+  difficultySelect.value = f.difficulty;
+  statusSlider.dataset.status = statusMode;
+  statusButtons.forEach((button, index) => {
+    const active = statusModes[index] === statusMode;
+    button.classList.toggle("is-active", active);
+    button.setAttribute("aria-pressed", String(active));
+  });
   refreshCategories();
   flt.append(
     searchControl,
@@ -8499,18 +8545,51 @@ document.addEventListener(
   true,
 );
 
-focusButton.addEventListener("click", () => {
-  const isPressed = focusButton.getAttribute("aria-pressed") === "true";
-  if (!isPressed) {
+// Remember distraction mode across page refreshes.
+const FOCUS_MODE_KEY = "practice-site-focus-mode";
+
+function setFocusMode(isPressed, recordAchievement = false) {
+  if (isPressed) {
     periodicToast.hidden = true;
     terminalArtifact.hidden = true;
     document.documentElement.classList.remove("hacking-mode");
     hideClickme();
-    achTrack((s) => void s.zenOn++, { full: false });
+
+    if (recordAchievement) {
+      achTrack((s) => void s.zenOn++, { full: false });
+    }
   }
+
+  const label = isPressed ? "Enable distractions" : "Hide distractions";
+
   focusButton.title = focusButton.querySelector(".focus-label").textContent =
-    isPressed ? "Hide distractions" : "Enable distractions";
-  focusButton.setAttribute("aria-pressed", String(!isPressed));
+    label;
+
+  focusButton.setAttribute("aria-pressed", String(isPressed));
+
+  try {
+    localStorage.setItem(FOCUS_MODE_KEY, String(isPressed));
+  } catch (error) {
+    console.warn("Could not save distraction setting:", error);
+  }
+}
+
+// Restore the previous setting when the page loads.
+let savedFocusMode = false;
+
+try {
+  savedFocusMode = localStorage.getItem(FOCUS_MODE_KEY) === "true";
+} catch (error) {
+  console.warn("Could not restore distraction setting:", error);
+}
+
+setFocusMode(savedFocusMode);
+
+// Toggle distraction mode.
+focusButton.addEventListener("click", () => {
+  const isPressed = focusButton.getAttribute("aria-pressed") === "true";
+
+  setFocusMode(!isPressed, !isPressed);
 });
 
 let clickCount = 0;

@@ -7305,49 +7305,6 @@ pre,
   color: var(--bad);
 }
 
-/* =========================================================
-   RESPONSIVE LAYOUT
-   ========================================================= */
-
-@media (max-width: 680px) {
-  .practice-status-slider {
-    padding: 3px;
-    border-radius: 12px;
-  }
-
-  .practice-status-slider::before {
-    top: 3px;
-    bottom: 3px;
-    left: 3px;
-    width: calc((100% - 6px) / 4);
-    border-radius: 8px;
-  }
-
-  .practice-status-labels > .practice-status-option {
-    min-height: 48px;
-    padding: 6px 3px;
-    font-size: 0.67rem;
-  }
-}
-
-@media (max-width: 390px) {
-  .practice-status-control {
-    gap: 7px;
-  }
-
-  .practice-status-labels > .practice-status-option {
-    min-height: 50px;
-    padding: 5px 2px;
-    font-size: 0.62rem;
-    letter-spacing: -0.015em;
-  }
-
-  .practice-exercise-actions {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .practice-status-slider,
   .practice-status-slider::before,
@@ -7358,46 +7315,34 @@ pre,
   }
 }
 
-/* =========================================================
-   DESKTOP WIDTH FIX — keep all four option labels on one line
-   Give the status control a full filter row and a minimum
-   usable width, while preserving the equal-width sliding tab.
-   ========================================================= */
-@media (min-width: 681px) {
-  /* The status control gets its own row instead of competing
-     for width with the course/category/difficulty filters. */
-  .practice-filters > .practice-status-control {
-    flex: 1 0 100%;
-    grid-column: 1 / -1;
-    width: 100%;
-    min-width: 0;
-  }
+.practice-filters > .practice-status-control {
+  flex: 1 0 100%;
+  grid-column: 1 / -1;
+  width: 100%;
+  min-width: 0;
+}
 
-  .practice-status-control {
-    width: 100%;
-    min-width: 0;
-  }
+.practice-status-control {
+  width: 100%;
+  min-width: 0;
+}
 
-  .practice-status-slider {
-    width: 100%;
-    min-width: 500px;
-  }
+.practice-status-slider {
+  width: 100%;
+}
 
-  .practice-status-labels {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 3px;
-    width: 100%;
-    min-width: 0;
-  }
+.practice-status-labels {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 3px;
+  width: 100%;
+  min-width: 0;
+}
 
-  .practice-status-labels > .practice-status-option {
-    min-width: 0;
-    padding-inline: 10px;
-    font-size: 0.76rem;
-    line-height: 1.1;
-    white-space: nowrap;
-    overflow-wrap: normal;
-    word-break: keep-all;
-  }
+.practice-status-labels > .practice-status-option {
+  min-width: 0;
+  padding-inline: 10px;
+  font-size: 0.76rem;
+  line-height: 1.1;
+  text-wrap: wrap;
 }
