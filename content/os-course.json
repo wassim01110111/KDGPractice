@@ -2035,11 +2035,7 @@
       "contentVersion": 3,
       "expected": {
         "accepted": ["2>/dev/null"],
-        "patterns": [
-          "^\\s*2>/dev/null\\s*$",
-          "^\\s*2>\\s+/dev/null\\s*$",
-          "^2\\s*>\\s*/dev/null$"
-        ]
+        "patterns": ["^2\\s*>\\s*/dev/null$"]
       },
       "hints": ["Send fd 2 to `/dev/null`."],
       "explanation": "`2>/dev/null` discards error output."
@@ -3556,9 +3552,9 @@
       "expected": {
         "accepted": ["find / -user alice 2>/dev/null"],
         "patterns": [
-          "^\\s*find\\s+/\\s+-user\\s+alice\\s+2>/dev/null\\s*$",
-          "^\\s*find\\s+/\\s+-user\\s+alice\\s+-type\\s+f\\s+2>/dev/null\\s*$",
-          "^\\s*find\\s+/\\s+-type\\s+f\\s+-user\\s+alice\\s+2>/dev/null\\s*$"
+          "^\\s*find\\s+/\\s+-user\\s+alice\\s+2>\\s*/dev/null\\s*$",
+          "^\\s*find\\s+/\\s+-user\\s+alice\\s+-type\\s+f\\s+2>\\s*/dev/null\\s*$",
+          "^\\s*find\\s+/\\s+-type\\s+f\\s+-user\\s+alice\\s+2>\\s*/dev/null\\s*$"
         ]
       },
       "hints": ["Combine `-user alice` with `2>/dev/null`."],
@@ -3617,8 +3613,7 @@
       "expected": {
         "accepted": ["find / -size +100M 2>/dev/null"],
         "patterns": [
-          "^\\s*find\\s+/\\s+-size\\s+\\+100M\\s+2>/dev/null\\s*$",
-          "^\\s*find\\s+/\\s+-size\\s+\\+100M\\s+2>\\s+/dev/null\\s*$"
+          "^\\s*find\\s+/\\s+-size\\s+\\+100M\\s+2>\\s*/dev/null\\s*$"
         ]
       },
       "hints": ["Use `-size +100M`."],
