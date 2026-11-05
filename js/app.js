@@ -4354,25 +4354,51 @@ function md(src) {
       .replace(/[^\p{L}\p{N}\s_-]/gu, "")
       .trim()
       .replace(/\s/g, "-");
-  const inl = (s) =>
-    s
-      .split(/(`[^`]+`)/)
-      .map((p, i) =>
-        i % 2
-          ? "<code>" + esc(p.slice(1, -1)) + "</code>"
-          : esc(p)
-              .replace(/\*\*([^*]+)\*\*/g, "<b>$1</b>")
-              .replace(/(^|[^*\w])\*([^*\n]+)\*(?!\w)/g, "$1<i>$2</i>")
-              .replace(
-                /\[([^\]]+)\]\(#([^)]+)\)/g,
-                '<a href="#" data-a="$2">$1</a>',
-              )
-              .replace(
-                /\[([^\]]+)\]\((https?:[^)]+)\)/g,
-                '<a href="$2" target="_blank" rel="noopener">$1</a>',
-              ),
-      )
-      .join("");
+  // Inline Markdown renderer. Protect code spans and links before escaping
+  // or applying emphasis, so backticks inside link destinations cannot split
+  // the surrounding Markdown syntax.
+  const inl = (s) => {
+    const protectedParts = [];
+    const hold = (html) => {
+      const key = `\u0000MD${protectedParts.length}\u0000`;
+      protectedParts.push(html);
+      return key;
+    };
+    let text = String(s);
+
+    // Some generated summaries escape redundant inner emphasis markers:
+    // **\*\*text\*\***. Collapse those pairs to the intended **text**.
+    text = text
+      .replace(/\*\*\\\*\\\*/g, "**")
+      .replace(/\\\*\\\*\*\*/g, "**");
+
+    // Parse links first. Their destinations may legitimately contain backticks.
+    text = text.replace(
+      /\[([^\]]+)\]\(([^)\s]*(?:\s+[^)]*)?)\)/g,
+      (whole, label, destination) => {
+        const safeLabel = inl(label);
+        const dest = destination.trim();
+        if (dest.startsWith("#"))
+          return hold(`<a href="#" data-a="${esc(dest.slice(1))}">${safeLabel}</a>`);
+        if (/^https?:/i.test(dest))
+          return hold(`<a href="${esc(dest).replace(/"/g, "&quot;")}" target="_blank" rel="noopener">${safeLabel}</a>`);
+        return whole;
+      },
+    );
+
+    // Protect inline code before escaping Markdown punctuation.
+    text = text.replace(/`([^`]+)`/g, (_, code) =>
+      hold("<code>" + esc(code) + "</code>"),
+    );
+
+    text = esc(text)
+      .replace(/\*\*([\s\S]+?)\*\*/g, "<b>$1</b>")
+      .replace(/(^|[^*\w])\*([^*\n]+)\*(?!\w)/g, "$1<i>$2</i>");
+
+    return text.replace(/\u0000MD(\d+)\u0000/g, (_, index) =>
+      protectedParts[Number(index)] ?? "",
+    );
+  };
   const L = src.replace(/\r/g, "").split("\n"),
     o = [],
     st = [],
