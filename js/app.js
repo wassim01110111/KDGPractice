@@ -2880,10 +2880,7 @@ const expectedText = (ex) =>
     : ex.type.startsWith("mcq")
       ? ex.expected.map((i) => ex.options[i]).join("; ")
       : ex.type === "command-text"
-        ? [
-            ...(ex.expected.accepted || []),
-            ...(ex.expected.patterns || []).map((p) => "/" + p + "/"),
-          ].join("\n")
+        ? [...(ex.expected.accepted || [])].join("\n")
         : ex.type === "fill-blank"
           ? ex.expected.blanks.map((b) => b[0]).join(", ")
           : ex.expected;
