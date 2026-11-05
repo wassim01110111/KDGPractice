@@ -4630,7 +4630,7 @@
       "course": "os",
       "category": "File Inspection",
       "title": "Access Modify Change Birth Times",
-      "instructions": "Which command displays file timestamps including access, modification, status change, and birth information?",
+      "instructions": "Which command displays file timestamps including access, modification, status change, and birth information for the file notes.txt?",
       "difficulty": "Easy",
       "type": "command-text",
       "examEligible": true,
