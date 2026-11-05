@@ -4,17 +4,6 @@
 
 - [Operating System Fundamentals Summary](#operating-system-fundamentals-summary)
   - [Table of contents](#table-of-contents)
-  - [Commands](#commands)
-    - [Shell basics and patterns](#shell-basics-and-patterns)
-    - [Navigation and system information](#navigation-and-system-information)
-    - [Viewing and inspecting files](#viewing-and-inspecting-files)
-    - [Creating, copying, moving, deleting, and linking](#creating-copying-moving-deleting-and-linking)
-    - [Text processing and pipelines](#text-processing-and-pipelines)
-    - [Users, groups, passwords, and privileges](#users-groups-passwords-and-privileges)
-    - [Permissions and file searching](#permissions-and-file-searching)
-    - [Archiving and remote file transfer](#archiving-and-remote-file-transfer)
-    - [Help and documentation](#help-and-documentation)
-    - [Networking and remote access](#networking-and-remote-access)
   - [1. Key Definitions](#1-key-definitions)
   - [2. Shell Basics and Syntax](#2-shell-basics-and-syntax)
     - [2.1 Anatomy of a command](#21-anatomy-of-a-command)
@@ -100,121 +89,148 @@
 
 ## Commands
 
-Quick index of the commands used in this summary. Select a command to jump to the section where it is explained or demonstrated. Commands that appear in multiple places link to the most relevant command reference.
+Quick reference to the commands and tools mentioned in this summary. The command names are not links; use **Go to section** to jump to their explanation or example.
 
-### Shell basics and patterns
+### Shell and environment
 
-- [bash](#16-shell-environment)
-- [cal](#43-system-information-commands)
-- [clear](#24-history-completion-and-keyboard-shortcuts)
-- [date](#41-navigation-and-information-commands)
-- [echo](#71-commands)
-- [exit](#24-history-completion-and-keyboard-shortcuts)
-- [history](#24-history-completion-and-keyboard-shortcuts)
-- [source](#16-shell-environment)
-- [type](#182-quick-help-and-built-ins)
-- [unalias](#16-shell-environment)
-- [unset](#16-shell-environment)
-- [export](#16-shell-environment)
-- [env](#16-shell-environment)
-- [set](#16-shell-environment)
-- [alias](#16-shell-environment)
+| Command / tool | Brief explanation | Go to section |
+|---|---|---|
+| `bash` | Runs commands in the Bash shell. | [Go to section](#16-shell-environment) |
+| `clear` | Clears the terminal screen. | [Go to section](#24-history-completion-and-keyboard-shortcuts) |
+| `exit` | Closes the current shell session. | [Go to section](#24-history-completion-and-keyboard-shortcuts) |
+| `history` | Lists previously entered commands. | [Go to section](#24-history-completion-and-keyboard-shortcuts) |
+| `source` | Runs a file in the current shell. | [Go to section](#16-shell-environment) |
+| `type` | Shows how the shell interprets a command name. | [Go to section](#182-quick-help-and-built-ins) |
+| `unalias` | Removes an alias. | [Go to section](#16-shell-environment) |
+| `unset` | Removes a variable or function. | [Go to section](#16-shell-environment) |
+| `export` | Makes a variable available to child processes. | [Go to section](#16-shell-environment) |
+| `env` | Displays or runs commands with environment variables. | [Go to section](#16-shell-environment) |
+| `set` | Displays or changes shell options and positional parameters. | [Go to section](#16-shell-environment) |
+| `alias` | Creates or displays command shortcuts. | [Go to section](#16-shell-environment) |
 
 ### Navigation and system information
 
-- [cd](#41-navigation-and-information-commands)
-- [df](#43-system-information-commands)
-- [free](#43-system-information-commands)
-- [hostname](#41-navigation-and-information-commands)
-- [id](#41-navigation-and-information-commands)
-- [last](#41-navigation-and-information-commands)
-- [ls](#41-navigation-and-information-commands)
-- [ps](#43-system-information-commands)
-- [pwd](#41-navigation-and-information-commands)
-- [uname](#43-system-information-commands)
-- [uptime](#43-system-information-commands)
-- [who](#41-navigation-and-information-commands)
-- [whoami](#41-navigation-and-information-commands)
+| Command / tool | Brief explanation | Go to section |
+|---|---|---|
+| `cal` | Displays a calendar. | [Go to section](#43-system-information-commands) |
+| `date` | Displays or formats the date and time. | [Go to section](#41-navigation-and-information-commands) |
+| `cd` | Changes the current directory. | [Go to section](#41-navigation-and-information-commands) |
+| `df` | Shows available and used disk space. | [Go to section](#43-system-information-commands) |
+| `free` | Displays memory usage. | [Go to section](#43-system-information-commands) |
+| `hostname` | Displays or sets the system hostname. | [Go to section](#41-navigation-and-information-commands) |
+| `id` | Displays user and group IDs. | [Go to section](#41-navigation-and-information-commands) |
+| `last` | Shows recent login history. | [Go to section](#41-navigation-and-information-commands) |
+| `ls` | Lists files and directories. | [Go to section](#41-navigation-and-information-commands) |
+| `ps` | Displays running processes. | [Go to section](#43-system-information-commands) |
+| `pwd` | Prints the current directory path. | [Go to section](#41-navigation-and-information-commands) |
+| `uname` | Displays system and kernel information. | [Go to section](#43-system-information-commands) |
+| `uptime` | Shows how long the system has been running. | [Go to section](#43-system-information-commands) |
+| `who` | Shows users currently logged in. | [Go to section](#41-navigation-and-information-commands) |
+| `whoami` | Displays the current username. | [Go to section](#41-navigation-and-information-commands) |
 
 ### Viewing and inspecting files
 
-- [cat](#51-commands)
-- [file](#51-commands)
-- [head](#51-commands)
-- [less](#51-commands)
-- [more](#51-commands)
-- [stat](#51-commands)
-- [tail](#51-commands)
-- [wc](#51-commands)
+| Command / tool | Brief explanation | Go to section |
+|---|---|---|
+| `cat` | Displays or combines file contents. | [Go to section](#51-commands) |
+| `file` | Identifies a file type. | [Go to section](#51-commands) |
+| `head` | Displays the beginning of a file. | [Go to section](#51-commands) |
+| `less` | Views file contents one screen at a time. | [Go to section](#51-commands) |
+| `more` | Views file contents page by page. | [Go to section](#51-commands) |
+| `stat` | Displays file or filesystem metadata. | [Go to section](#51-commands) |
+| `tail` | Displays the end of a file. | [Go to section](#51-commands) |
+| `wc` | Counts lines, words, and bytes or characters. | [Go to section](#51-commands) |
 
-### Creating, copying, moving, deleting, and linking
+### Creating, copying, moving and deleting
 
-- [cp](#61-commands)
-- [ln](#91-comparison)
-- [mkdir](#61-commands)
-- [mv](#61-commands)
-- [rm](#61-commands)
-- [rmdir](#61-commands)
-- [touch](#61-commands)
+| Command / tool | Brief explanation | Go to section |
+|---|---|---|
+| `cp` | Copies files and directories. | [Go to section](#61-commands) |
+| `mkdir` | Creates directories. | [Go to section](#61-commands) |
+| `mv` | Moves or renames files and directories. | [Go to section](#61-commands) |
+| `rm` | Removes files or directories. | [Go to section](#61-commands) |
+| `rmdir` | Removes empty directories. | [Go to section](#61-commands) |
+| `touch` | Creates an empty file or updates timestamps. | [Go to section](#61-commands) |
 
-### Text processing and pipelines
+### Text processing
 
-- [cut](#71-commands)
-- [diff](#71-commands)
-- [nl](#71-commands)
-- [sort](#71-commands)
-- [tee](#71-commands)
-- [tr](#71-commands)
-- [uniq](#71-commands)
+| Command / tool | Brief explanation | Go to section |
+|---|---|---|
+| `echo` | Prints text or variable values. | [Go to section](#71-commands) |
+| `cut` | Extracts selected fields or columns from each line. | [Go to section](#71-commands) |
+| `diff` | Compares files line by line. | [Go to section](#71-commands) |
+| `nl` | Numbers the lines of a file. | [Go to section](#71-commands) |
+| `sort` | Sorts lines of text. | [Go to section](#71-commands) |
+| `tee` | Writes input to a file and passes it onward. | [Go to section](#71-commands) |
+| `tr` | Translates or deletes characters. | [Go to section](#71-commands) |
+| `uniq` | Filters or counts adjacent repeated lines. | [Go to section](#71-commands) |
 
-### Users, groups, passwords, and privileges
+### Users, groups and permissions
 
-- [chage](#115-passwords-and-aging)
-- [chgrp](#127-ownership-and-default-permissions)
-- [chpasswd](#115-passwords-and-aging)
-- [chown](#127-ownership-and-default-permissions)
-- [groups](#114-groups)
-- [groupadd](#114-groups)
-- [groupdel](#114-groups)
-- [groupmod](#114-groups)
-- [newgrp](#114-groups)
-- [passwd](#115-passwords-and-aging)
-- [su](#111-switching-users)
-- [sudo](#111-switching-users)
-- [useradd](#112-creating-and-deleting-users)
-- [userdel](#112-creating-and-deleting-users)
-- [usermod](#113-modifying-users)
-- [visudo](#116-sudo-configuration)
+| Command / tool | Brief explanation | Go to section |
+|---|---|---|
+| `chage` | Changes password expiry and aging information. | [Go to section](#115-passwords-and-aging) |
+| `chgrp` | Changes a file’s group ownership. | [Go to section](#127-ownership-and-default-permissions) |
+| `chpasswd` | Updates passwords from standard input. | [Go to section](#115-passwords-and-aging) |
+| `chown` | Changes file ownership. | [Go to section](#127-ownership-and-default-permissions) |
+| `groups` | Displays a user’s group memberships. | [Go to section](#114-groups) |
+| `groupadd` | Creates a group. | [Go to section](#114-groups) |
+| `groupdel` | Deletes a group. | [Go to section](#114-groups) |
+| `groupmod` | Modifies a group. | [Go to section](#114-groups) |
+| `newgrp` | Starts a shell with a different active group. | [Go to section](#114-groups) |
+| `passwd` | Changes a user password. | [Go to section](#115-passwords-and-aging) |
+| `su` | Switches to another user account. | [Go to section](#111-switching-users) |
+| `sudo` | Runs a command with elevated privileges. | [Go to section](#111-switching-users) |
+| `useradd` | Creates a user account. | [Go to section](#112-creating-and-deleting-users) |
+| `userdel` | Deletes a user account. | [Go to section](#112-creating-and-deleting-users) |
+| `usermod` | Modifies a user account. | [Go to section](#113-modifying-users) |
+| `visudo` | Safely edits the sudoers configuration. | [Go to section](#116-sudo-configuration) |
+| `chmod` | Changes file or directory permissions. | [Go to section](#126-changing-permissions-with-chmod) |
+| `umask` | Sets the default permission mask for new files and directories. | [Go to section](#127-ownership-and-default-permissions) |
 
-### Permissions and file searching
+### Searching, archiving and file transfer
 
-- [chmod](#126-changing-permissions-with-chmod)
-- [find](#131-syntax-and-common-tests)
-- [umask](#127-ownership-and-default-permissions)
-
-### Archiving and remote file transfer
-
-- [scp](#142-scp)
-- [tar](#141-tar)
+| Command / tool | Brief explanation | Go to section |
+|---|---|---|
+| `ln` | Creates hard links or symbolic links. | [Go to section](#91-comparison) |
+| `find` | Searches for files and directories matching criteria. | [Go to section](#131-syntax-and-common-tests) |
+| `scp` | Copies files securely between computers over SSH. | [Go to section](#142-scp) |
+| `tar` | Creates or extracts archive files. | [Go to section](#141-tar) |
+| `borgbackup` | Creates deduplicated, compressed backups. | [Go to section](#142-scp) |
+| `rsync` | Synchronizes files and directories, locally or remotely. | [Go to section](#142-scp) |
+| `sshfs` | Mounts a remote filesystem over SSH. | [Go to section](#142-scp) |
+| `rdiff-backup` | Creates incremental backups while preserving older versions. | [Go to section](#142-scp) |
 
 ### Help and documentation
 
-- [apropos](#181-manual-pages)
-- [help](#182-quick-help-and-built-ins)
-- [info](#182-quick-help-and-built-ins)
-- [man](#181-manual-pages)
-- [mandb](#181-manual-pages)
-- [pinfo](#182-quick-help-and-built-ins)
+| Command / tool | Brief explanation | Go to section |
+|---|---|---|
+| `apropos` | Searches manual-page descriptions by keyword. | [Go to section](#181-manual-pages) |
+| `help` | Shows help for shell built-ins. | [Go to section](#182-quick-help-and-built-ins) |
+| `info` | Opens the Info documentation system. | [Go to section](#182-quick-help-and-built-ins) |
+| `man` | Displays a command’s manual page. | [Go to section](#181-manual-pages) |
+| `mandb` | Creates or updates the manual-page index cache. | [Go to section](#181-manual-pages) |
+| `pinfo` | Views documentation in an Info-style interface. | [Go to section](#182-quick-help-and-built-ins) |
 
 ### Networking and remote access
 
-- [curl](#19-networking-and-remote-access-ssh)
-- [ifconfig](#19-networking-and-remote-access-ssh)
-- [ip](#19-networking-and-remote-access-ssh)
-- [ipconfig](#19-networking-and-remote-access-ssh)
-- [ping](#19-networking-and-remote-access-ssh)
-- [ssh](#19-networking-and-remote-access-ssh)
+| Command / tool | Brief explanation | Go to section |
+|---|---|---|
+| `curl` | Transfers data to or from a URL. | [Go to section](#19-networking-and-remote-access-ssh) |
+| `ifconfig` | Displays or configures network interfaces (legacy tool). | [Go to section](#19-networking-and-remote-access-ssh) |
+| `ip` | Displays or configures network interfaces, addresses, and routes. | [Go to section](#19-networking-and-remote-access-ssh) |
+| `ipconfig` | Displays or manages IP configuration on Windows. | [Go to section](#19-networking-and-remote-access-ssh) |
+| `ping` | Tests reachability to another host. | [Go to section](#19-networking-and-remote-access-ssh) |
+| `ssh` | Connects securely to a remote system. | [Go to section](#19-networking-and-remote-access-ssh) |
 
+### Text editors and graphical transfer tools
+
+| Command / tool | Brief explanation | Go to section |
+|---|---|---|
+| `vim` | Edits text files in a terminal. | [Go to section](#17-vim-cheat-sheet) |
+| `WinSCP` | Transfers files between Windows and remote systems. | [Go to section](#142-scp) |
+| `FileZilla` | Transfers files using a graphical FTP/SFTP client. | [Go to section](#142-scp) |
+| `Cyberduck` | Connects to remote storage and transfers files. | [Go to section](#142-scp) |
 ---
 
 ## 1. Key Definitions
