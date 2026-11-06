@@ -7201,7 +7201,7 @@ export async function mountTerminalExercise({
 
   input.autocomplete = "off";
   input.setAttribute("autocorrect", "off");
-  input.setAttribute("autocapitalize", "none");
+  input.setAttribute("autocapitalize", "off");
   input.setAttribute("spellcheck", "false");
 
   input.setAttribute("aria-label", "Terminal command input");
