@@ -174,16 +174,21 @@
     "os-learning-s01-006": {
       "id": "os-learning-s01-006",
       "category": "Section 01 — Linux, the terminal and your first commands",
-      "title": "Read and revisit command history",
-      "instructions": "Run at least three harmless commands, then use `history` to display your recent commands. Save a short note in `history-practice.txt` explaining that history is a numbered list and that `!!` repeats the previous command.",
+      "title": "Use and reuse command history",
+      "instructions": "Practise navigating and reusing your shell history.\n\nRun the following commands in exactly this order:\n\n1. pwd\n2. whoami\n3. date\n4. echo HISTORY_REPEAT_PREVIOUS\n5. !!\n\nThe !! shortcut should repeat your previous command. You should therefore see HISTORY_REPEAT_PREVIOUS printed twice.\n\nContinue with:\n\n6. echo HISTORY_BY_NUMBER\n7. history\n\nLook at the numbered history output and find the number belonging to the command echo HISTORY_BY_NUMBER.\n\n8. Use !n to execute that command again. Replace n with its actual history number. For example, if the command is numbered 12, enter !12.\n\nFinally:\n\n9. Run history > history-practice.txt to redirect your command history into a file.\n10. Run cat history-practice.txt to inspect the saved history.\n\nYour file must contain evidence of the commands being executed in the correct order.",
       "hints": [
-        "`history` displays numbered commands from the current shell.",
-        "Use `echo` or `printf` to save your note."
+        "!! repeats the immediately preceding command.",
+        "history displays your commands with their corresponding numbers.",
+        "!n executes a command using its history number. Replace n with the actual number shown by history.",
+        "The history number changes depending on how many commands you have executed.",
+        "The > operator redirects output into a file, overwriting its previous contents.",
+        "Use cat history-practice.txt to inspect the saved history.",
+        "Do not clear your history during this exercise."
       ],
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 1,
+      "contentVersion": 4,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -191,14 +196,22 @@
         "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
-            "id": "history-note",
-            "type": "content",
+            "id": "history-file",
+            "type": "file",
             "path": "/home/student/history-practice.txt",
-            "points": 1,
-            "expected": "History is numbered; !! repeats the previous command.\n"
+            "points": 2
+          },
+          {
+            "id": "history-command-sequence",
+            "type": "contains",
+            "path": "/home/student/history-practice.txt",
+            "regex": true,
+            "expected": "^[ \\t]*\\d+[ \\t]+pwd[ \\t]*$[\\s\\S]*^[ \\t]*\\d+[ \\t]+whoami[ \\t]*$[\\s\\S]*^[ \\t]*\\d+[ \\t]+date[ \\t]*$[\\s\\S]*^[ \\t]*\\d+[ \\t]+echo HISTORY_REPEAT_PREVIOUS[ \\t]*$[\\s\\S]*^[ \\t]*\\d+[ \\t]+(?:!!|echo HISTORY_REPEAT_PREVIOUS)[ \\t]*$[\\s\\S]*^[ \\t]*\\d+[ \\t]+echo HISTORY_BY_NUMBER[ \\t]*$[\\s\\S]*^[ \\t]*\\d+[ \\t]+history[ \\t]*$[\\s\\S]*^[ \\t]*\\d+[ \\t]+(?:![0-9]+|echo HISTORY_BY_NUMBER)[ \\t]*$",
+            "flags": "m",
+            "points": 8
           }
         ],
-        "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced."
+        "explanation": "The grader checks that the history file exists and contains the required commands in the correct order. The regular expression supports history implementations that record either the original history expansion or its expanded command. Additional commands between required entries are permitted."
       },
       "course": "os"
     },
