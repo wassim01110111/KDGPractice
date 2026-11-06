@@ -12,7 +12,13 @@
       "short-answer-self-check",
       "terminal",
     ];
-  const NON_SQL_TYPES = OS_TYPES;
+  const JAVA_TYPES = ["java-ex"];
+  const NON_SQL_TYPES = [...OS_TYPES, ...JAVA_TYPES];
+  const JAVA_CHECK_TYPES = new Set([
+    "stdout", "stderr", "classExists", "fieldExists", "fieldModifier",
+    "fieldValue", "methodExists", "methodModifier", "methodReturn",
+    "constructorExists", "classModifier", "inheritance", "instanceOf",
+  ]);
   function compatibleSchemaVersion(version, supported) {
     const match = String(version).match(/^(\d+)(?:\.0+)*$/);
     return Boolean(match && Number(match[1]) === supported);
@@ -303,7 +309,58 @@
             if (config.initialDirectory !== undefined && (typeof config.initialDirectory !== "string" || !config.initialDirectory.startsWith("/"))) E(id, "terminal.initialDirectory", "Must be an absolute path");
             if (config.profile !== undefined && !["basic-linux", "basic", "intro-linux"].includes(config.profile)) E(id, "terminal.profile", `Unsupported profile: ${config.profile}`);
           }
+        } else if (ex.type === "java-ex") {
+          if (ex.course !== "java") E(id, "course", "java-ex exercises must use course java");
+          const config = ex.java;
+          if (!isMap(config)) {
+            E(id, "java", "Java exercises need a java configuration object");
+          } else {
+            if (typeof config.sourceFile !== "string" || !config.sourceFile.trim() || !config.sourceFile.endsWith(".java"))
+              E(id, "java.sourceFile", "Must be a non-empty .java file name");
+            if (typeof config.preCode !== "string") E(id, "java.preCode", "Must be a starter-code string");
+            if (config.solution !== undefined && typeof config.solution !== "string")
+              E(id, "java.solution", "Must be a Java source-code string when supplied");
+            if (config.mainClass !== undefined && (typeof config.mainClass !== "string" || !config.mainClass.trim()))
+              E(id, "java.mainClass", "Must be a non-empty class name when supplied");
+            if (config.stdin !== undefined && typeof config.stdin !== "string") E(id, "java.stdin", "Must be a string");
+            if (config.explanation !== undefined && typeof config.explanation !== "string") E(id, "java.explanation", "Must be a string");
+            if (config.timeoutMs !== undefined && (!Number.isInteger(config.timeoutMs) || config.timeoutMs < 1000 || config.timeoutMs > 30000))
+              E(id, "java.timeoutMs", "Must be an integer between 1000 and 30000 milliseconds");
+            if (config.additionalSources !== undefined && !(isMap(config.additionalSources) || (Array.isArray(config.additionalSources) && config.additionalSources.every((item) => isMap(item) && typeof item.name === "string" && typeof item.code === "string"))))
+              E(id, "java.additionalSources", "Must be a filename-to-source object or an array of { name, code } objects");
+            if (!Array.isArray(config.checks)) {
+              E(id, "java.checks", "Must be an array of automatic checks");
+            } else {
+              config.checks.forEach((check, index) => {
+                const field = `java.checks[${index}]`;
+                if (!isMap(check)) {
+                  E(id, field, "Must be an object");
+                  return;
+                }
+                if (!JAVA_CHECK_TYPES.has(check.type)) E(id, `${field}.type`, `Unsupported Java check type: ${check.type}`);
+                if (check.id !== undefined && (typeof check.id !== "string" || !check.id.trim())) E(id, `${field}.id`, "Must be a non-empty string");
+                if (check.description !== undefined && typeof check.description !== "string") E(id, `${field}.description`, "Must be a string");
+                if (check.points !== undefined && (!Number.isFinite(check.points) || check.points < 0)) E(id, `${field}.points`, "Must be a non-negative number");
+                if (["stdout", "stderr", "methodReturn", "fieldValue", "fieldModifier", "methodModifier", "classModifier"].includes(check.type) && check.expected === undefined) E(id, `${field}.expected`, "Required for this check type");
+                if (check.type === "inheritance" && check.superclass === undefined && check.expected === undefined && !(Array.isArray(check.interfaces) && check.interfaces.length)) E(id, field, "Specify a superclass and/or at least one implemented interface");
+                if (check.type === "instanceOf" && (typeof (check.expectedType ?? check.expected) !== "string" || !(check.expectedType ?? check.expected).trim())) E(id, `${field}.expectedType`, "Must specify the expected class or interface name");
+                if (["fieldExists", "fieldModifier", "fieldValue"].includes(check.type) && (typeof check.fieldName !== "string" || !check.fieldName.trim())) E(id, `${field}.fieldName`, "Must be a non-empty field name");
+                if (["methodExists", "methodModifier", "methodReturn"].includes(check.type) && (typeof check.method !== "string" || !check.method.trim())) E(id, `${field}.method`, "Must be a non-empty method name");
+                if (["classExists", "fieldExists", "fieldModifier", "fieldValue", "methodExists", "methodModifier", "methodReturn", "constructorExists", "classModifier", "inheritance", "instanceOf"].includes(check.type) && (typeof check.className !== "string" || !check.className.trim())) E(id, `${field}.className`, "Must be a non-empty class name");
+                if (check.parameterTypes !== undefined && (!Array.isArray(check.parameterTypes) || check.parameterTypes.some((item) => typeof item !== "string" || !item.trim()))) E(id, `${field}.parameterTypes`, "Must be an array of Java type names");
+                if (check.args !== undefined && !Array.isArray(check.args)) E(id, `${field}.args`, "Must be an array");
+                if (check.matcher !== undefined && !["exact", "regex", "contains"].includes(check.matcher)) E(id, `${field}.matcher`, "Must be exact, regex or contains");
+                if (check.flags !== undefined && !(typeof check.flags === "string" || (Array.isArray(check.flags) && check.flags.every((flag) => typeof flag === "string")))) E(id, `${field}.flags`, "Must be a string or array of regex flags");
+                if (check.fullMatch !== undefined && typeof check.fullMatch !== "boolean") E(id, `${field}.fullMatch`, "Must be true or false");
+                if (check.input !== undefined && typeof check.input !== "string") E(id, `${field}.input`, "Must be a string");
+              });
+            }
+          }
+          ["terminal", "expected", "options", "referenceSolution", "datasetId"].forEach((f) => {
+            if (ex[f] !== undefined) E(id, f, `Not used by java-ex exercises; use the dedicated 'java' configuration`);
+          });
         } else {
+          if (ex.java !== undefined) E(id, "java", "Java configuration is only valid for java-ex exercises");
           const x = ex.expected;
           if (x === undefined) E(id, "expected", "Missing expected");
           else if (MCQ_TYPES.includes(ex.type)) {
@@ -469,6 +526,7 @@
     SQL_TYPES,
     MCQ_TYPES,
     OS_TYPES,
+    JAVA_TYPES,
   };
   if (typeof module !== "undefined") module.exports = api;
   else root.Core = api;

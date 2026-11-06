@@ -22,7 +22,15 @@
     },
     "prog1t": {
       "version": "0.0.1",
-      "files": ["programming-fundamentals-theory-t1.json"]
+      "files": [
+        "programming-fundamentals-theory-t1.json"
+      ]
+    },
+    "javaPlayground": {
+      "version": "1.0.0",
+      "files": [
+        "java-playground-smoke-test.json"
+      ]
     }
   },
   "referenceFiles": {
@@ -64,7 +72,6 @@
         }
       ]
     },
-
     "programming_fundamentals": {
       "title": "Programming Fundamentals",
       "terms": [
@@ -84,7 +91,12 @@
     },
     "os": {
       "title": "Operating Systems Fundamentals",
-      "terms": [{ "file": "reference/os-term-1-canvas.md", "name": "Term 1" }]
+      "terms": [
+        {
+          "file": "reference/os-term-1-canvas.md",
+          "name": "Term 1"
+        }
+      ]
     }
   },
   "learningFiles": {

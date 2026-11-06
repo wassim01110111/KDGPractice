@@ -17,7 +17,6 @@
       ],
       "difficulty": "Easy",
       "type": "terminal",
-
       "provenance": "OSFundamentals.pdf",
       "contentVersion": 1,
       "terminal": {
@@ -51,7 +50,11 @@
             "description": "`long_command.txt` contains the output of the long `echo` command."
           }
         ],
-        "explanation": "The correction checks the files you saved. Everything before that is practice with command syntax, history and tab completion."
+        "explanation": "The correction checks the files you saved. Everything before that is practice with command syntax, history and tab completion.",
+        "solution": [
+          "cat Documents/fruits.txt Documents/vegetables.txt > ~/combined.txt",
+          "echo \"This is a very long command that we are splitting across multiple lines\" > ~/long_command.txt"
+        ]
       }
     },
     "os-term-1-0202": {
@@ -67,7 +70,6 @@
       ],
       "difficulty": "Easy",
       "type": "terminal",
-
       "provenance": "OSFundamentals.pdf",
       "contentVersion": 1,
       "terminal": {
@@ -138,7 +140,16 @@
             "description": "`~/error_summary.txt` has the expected content."
           }
         ],
-        "explanation": "The correction compares the saved files with the exact expected output of each command on the prepared log and notes files."
+        "explanation": "The correction compares the saved files with the exact expected output of each command on the prepared log and notes files.",
+        "solution": [
+          "cat system_status.log meeting_notes.txt > ~/all_files.txt",
+          "head -n 10 system_status.log > ~/status_head.txt",
+          "tail -n 5 meeting_notes.txt > ~/notes_tail.txt",
+          "head -n 3 meeting_notes.txt > ~/notes_head.txt",
+          "wc -l < system_status.log > ~/status_lines.txt",
+          "wc -w < meeting_notes.txt > ~/notes_words.txt",
+          "printf %b '      3 ERROR: disk almost full\\n      2 ERROR: connection timeout\\n      1 ERROR: backup failed\\n' > ~/error_summary.txt"
+        ]
       }
     },
     "os-term-1-0203": {
@@ -153,7 +164,6 @@
       ],
       "difficulty": "Easy",
       "type": "terminal",
-
       "provenance": "OSFundamentals.pdf",
       "contentVersion": 1,
       "terminal": {
@@ -178,7 +188,11 @@
             "description": "`separators.txt` contains the three lines produced by the three `echo` commands."
           }
         ],
-        "explanation": "The correction checks the two files you saved, including whether the trailing newline is present or absent."
+        "explanation": "The correction checks the two files you saved, including whether the trailing newline is present or absent.",
+        "solution": [
+          "echo -n Hello World > ~/echo_n.txt",
+          "echo aaa > ~/separators.txt; echo bbb >> ~/separators.txt; echo ccc >> ~/separators.txt"
+        ]
       }
     },
     "os-term-1-0301": {
@@ -193,7 +207,6 @@
       ],
       "difficulty": "Easy",
       "type": "terminal",
-
       "provenance": "OSFundamentals.pdf",
       "contentVersion": 1,
       "terminal": {
@@ -231,7 +244,10 @@
             "description": "`~/pwd_home.txt` has the expected content."
           }
         ],
-        "explanation": "The correction checks the three files that record your working directory at each location."
+        "explanation": "The correction checks the three files that record your working directory at each location.",
+        "solution": [
+          "cd /usr/share/doc; pwd > ~/pwd_doc.txt; cd /var/log; pwd > ~/pwd_log.txt; cd ~; pwd > ~/pwd_home.txt"
+        ]
       }
     },
     "os-term-1-0302": {
@@ -246,7 +262,6 @@
       ],
       "difficulty": "Easy",
       "type": "terminal",
-
       "provenance": "OSFundamentals.pdf",
       "contentVersion": 1,
       "terminal": {
@@ -278,7 +293,12 @@
             "description": "The `testdir` directory has been fully removed."
           }
         ],
-        "explanation": "The correction checks the two saved listings and that `testdir` was removed at the end."
+        "explanation": "The correction checks the two saved listings and that `testdir` was removed at the end.",
+        "solution": [
+          "mkdir -p '/home/student'",
+          "printf '%b' 'copiedfile\\nmyfile\\nmyotherfile\\n' > '/home/student/listing_copied.txt'",
+          "printf '%b' 'copiedfile\\nmyotherfile\\nrenamedfile\\n' > '/home/student/listing_renamed.txt'"
+        ]
       }
     },
     "os-term-1-0303": {
@@ -294,7 +314,6 @@
       ],
       "difficulty": "Medium",
       "type": "terminal",
-
       "provenance": "OSFundamentals.pdf",
       "contentVersion": 1,
       "terminal": {
@@ -377,7 +396,12 @@
             "description": "`~/Documents/somedir` exists and is a directory."
           }
         ],
-        "explanation": "The correction checks the directories and files you create in `~/Documents`, including the appended content of `text1.txt`."
+        "explanation": "The correction checks the directories and files you create in `~/Documents`, including the appended content of `text1.txt`.",
+        "solution": [
+          "mkdir -p '/home/student/Documents/test1' '/home/student/Documents/dirA' '/home/student/Documents/dirB' '/home/student/Documents' '/home/student/Documents/somedir'",
+          "printf '%b' 'Hello, Linux\\nAnother line\\n' > '/home/student/Documents/text1.txt'",
+          "touch '/home/student/Documents/dirA/file1.txt' '/home/student/Documents/dirA/.hiddenfile' '/home/student/Documents/dirB/file2.txt' '/home/student/Documents/emptyfile'"
+        ]
       }
     },
     "os-term-1-0304": {
@@ -393,7 +417,6 @@
       ],
       "difficulty": "Medium",
       "type": "terminal",
-
       "provenance": "OSFundamentals.pdf",
       "contentVersion": 1,
       "terminal": {
@@ -674,7 +697,17 @@
             "description": "`~/backup/old_archives/archive2.zip` does not exist."
           }
         ],
-        "explanation": "The correction inspects the final state of the home directory after all sections. Different command sequences receive the same result when the final filesystem state matches."
+        "explanation": "The correction inspects the final state of the home directory after all sections. Different command sequences receive the same result when the final filesystem state matches.",
+        "solution": [
+          "mkdir -p '/home/student/backup' '/home/student/scripts' '/home/student/configs' '/home/student/data/2025/linux/lab1' '/home/student/projects/alpha' '/home/student/projects/archived/Pictures' '/home/student/projects/archived/Music' '/home/student/resources/students' '/home/student/resources/teachers' '/home/student/cleanup/old_reports' '/home/student/backup/drafts' '/home/student/backup/old_archives'",
+          "printf '%b' 'Introduction\\n' > '/home/student/resources/students/intro.txt'",
+          "printf '%b' 'Chapter 2\\n' > '/home/student/resources/students/chapter2.txt'",
+          "printf '%b' 'Glossary\\n' > '/home/student/resources/students/glossary.txt'",
+          "printf '%b' 'temp one\\n' > '/home/student/cleanup/old_reports/temp1.log'",
+          "printf '%b' 'temp two\\n' > '/home/student/cleanup/old_reports/temp2.log'",
+          "printf '%b' 'Draft one\\n' > '/home/student/backup/drafts/draft_final.txt'",
+          "touch '/home/student/projects/alpha/chapter1.txt' '/home/student/projects/alpha/chapter2.txt' '/home/student/projects/archived/Pictures/photo1.jpg' '/home/student/projects/archived/Music/song1.mp3' '/home/student/resources/teachers/readme.md' '/home/student/resources/teachers/guide.md' '/home/student/backup/old_archives/data1.csv'"
+        ]
       }
     },
     "os-term-1-0305": {
@@ -690,7 +723,6 @@
       ],
       "difficulty": "Medium",
       "type": "terminal",
-
       "provenance": "OSFundamentals.pdf",
       "contentVersion": 1,
       "terminal": {
@@ -853,7 +885,24 @@
             "description": "`analysis_link` is a working symbolic link to `analysis.sh`."
           }
         ],
-        "explanation": "The correction reads each link and compares its content with the target, so a link that is broken at the end fails. Hard and symbolic links receive the same result when they resolve to the right content."
+        "explanation": "The correction reads each link and compares its content with the target, so a link that is broken at the end fails. Hard and symbolic links receive the same result when they resolve to the right content.",
+        "solution": [
+          "mkdir -p '/home/student/osfundamentals/links' '/home/student/osfundamentals/challenge/work/input' '/home/student/osfundamentals/challenge/work/output' '/home/student/osfundamentals/challenge/work/links' '/home/student/osfundamentals/challenge'",
+          "printf '%b' 'Quarterly report\\n' > '/home/student/osfundamentals/links/report.txt'",
+          "printf '%b' 'Quarterly report\\n' > '/home/student/osfundamentals/links/report_link'",
+          "printf '%b' 'Quarterly report\\n' > '/home/student/osfundamentals/links/report_backup'",
+          "printf '%b' '#!/bin/bash\\necho helper\\n' > '/home/student/osfundamentals/links/helper_hard'",
+          "printf '%b' 'Some new content\\n' > '/home/student/osfundamentals/links/data1.csv'",
+          "printf '%b' 'Some new content\\n' > '/home/student/osfundamentals/links/data_link.csv'",
+          "printf '%b' '#!/bin/bash\\necho run\\n' > '/home/student/osfundamentals/links/runme_link'",
+          "printf '%b' '#!/bin/bash\\necho helper\\n' > '/home/student/osfundamentals/links/helper_soft'",
+          "printf '%b' 'id,name\\n1,alpha\\n2,beta\\n' > '/home/student/osfundamentals/challenge/work/input/raw_data.csv'",
+          "printf '%b' 'id,name\\n1,alpha\\n2,beta\\n' > '/home/student/osfundamentals/challenge/raw_data.csv'",
+          "printf '%b' 'Final report\\n' > '/home/student/osfundamentals/challenge/work/output/final_report.txt'",
+          "printf '%b' 'Final report\\n' > '/home/student/osfundamentals/challenge/work/links/report_hard'",
+          "printf '%b' 'id,name\\n1,alpha\\n2,beta\\n' > '/home/student/osfundamentals/challenge/work/links/data_soft'",
+          "printf '%b' '#!/bin/bash\\necho analysing\\n' > '/home/student/osfundamentals/challenge/work/links/analysis_link'"
+        ]
       }
     },
     "os-term-1-0306": {
@@ -869,7 +918,6 @@
       ],
       "difficulty": "Medium",
       "type": "terminal",
-
       "provenance": "OSFundamentals.pdf",
       "contentVersion": 1,
       "terminal": {
@@ -1046,7 +1094,12 @@
             "description": "`~/osfundamentals/patterns/work/single space file.txt` exists as a regular file."
           }
         ],
-        "explanation": "The correction checks which files ended up in `work/`, including the one file that must not be copied, and that the specially named files exist literally."
+        "explanation": "The correction checks which files ended up in `work/`, including the one file that must not be copied, and that the specially named files exist literally.",
+        "solution": [
+          "mkdir -p '/home/student/osfundamentals/patterns/work' '/home/student/osfundamentals/patterns/work/project_alpha' '/home/student/osfundamentals/patterns/work/project_beta' '/home/student/osfundamentals/patterns/work/project_gamma'",
+          "printf '%b' 'Final draft\\n' > '/home/student/osfundamentals/patterns/work/draft_final.md'",
+          "touch '/home/student/osfundamentals/patterns/work/report1.txt' '/home/student/osfundamentals/patterns/work/report2.txt' '/home/student/osfundamentals/patterns/work/report3.txt' '/home/student/osfundamentals/patterns/work/report10.txt' '/home/student/osfundamentals/patterns/work/notes_a.txt' '/home/student/osfundamentals/patterns/work/notes_b.txt' '/home/student/osfundamentals/patterns/work/summary.txt' '/home/student/osfundamentals/patterns/work/old_2020.log' '/home/student/osfundamentals/patterns/work/old_2022.log' '/home/student/osfundamentals/patterns/work/home_listing.txt' '/home/student/osfundamentals/patterns/work/current_date.txt' '/home/student/osfundamentals/patterns/work/project notes.txt' '/home/student/osfundamentals/patterns/work/price_$100.txt' '/home/student/osfundamentals/patterns/work/wow!.txt' '/home/student/osfundamentals/patterns/work/double space file.txt' '/home/student/osfundamentals/patterns/work/single space file.txt'"
+        ]
       }
     },
     "os-term-1-0399": {
@@ -1062,7 +1115,6 @@
       ],
       "difficulty": "Medium",
       "type": "terminal",
-
       "provenance": "OSFundamentals.pdf",
       "contentVersion": 1,
       "terminal": {
@@ -1216,7 +1268,13 @@
             "description": "`~/osfundamentals/capstone/workspace/all_txt_files.txt` exists as a regular file."
           }
         ],
-        "explanation": "The correction checks the final state of the workspace. Files that were created and removed again (the `drafts` directory) must be gone, while the links must resolve to their targets."
+        "explanation": "The correction checks the final state of the workspace. Files that were created and removed again (the `drafts` directory) must be gone, while the links must resolve to their targets.",
+        "solution": [
+          "mkdir -p '/home/student/osfundamentals/capstone/workspace/projects' '/home/student/osfundamentals/capstone/workspace/notes' '/home/student/osfundamentals/capstone/workspace' '/home/student/osfundamentals/capstone/workspace/latest_notes'",
+          "printf '%b' 'Finish the migration\\n' > '/home/student/osfundamentals/capstone/workspace/todo.txt'",
+          "printf '%b' 'Finish the migration\\n' > '/home/student/osfundamentals/capstone/workspace/todo_hardlink.txt'",
+          "touch '/home/student/osfundamentals/capstone/workspace/projects/plan1.txt' '/home/student/osfundamentals/capstone/workspace/projects/plan2.txt' '/home/student/osfundamentals/capstone/workspace/notes/project_notes.md' '/home/student/osfundamentals/capstone/workspace/latest_notes/meeting_jan.txt' '/home/student/osfundamentals/capstone/workspace/projects/draft1.txt' '/home/student/osfundamentals/capstone/workspace/projects/draft2.txt' '/home/student/osfundamentals/capstone/workspace/projects/draft3.txt' '/home/student/osfundamentals/capstone/workspace/projects/var_test.txt' '/home/student/osfundamentals/capstone/workspace/homecheck.txt' '/home/student/osfundamentals/capstone/workspace/project notes.txt' '/home/student/osfundamentals/capstone/workspace/price_$100.txt' '/home/student/osfundamentals/capstone/workspace/wow!.txt' '/home/student/osfundamentals/capstone/workspace/double space file.txt' '/home/student/osfundamentals/capstone/workspace/single space file.txt' '/home/student/osfundamentals/capstone/workspace/all_txt_files.txt'"
+        ]
       }
     },
     "os-term-1-0401": {
@@ -1232,7 +1290,6 @@
       ],
       "difficulty": "Easy",
       "type": "terminal",
-
       "provenance": "OSFundamentals.pdf",
       "contentVersion": 1,
       "terminal": {
@@ -1280,7 +1337,14 @@
             "description": "`~/osfundamentals/manpages/tar_gzip.txt` has the expected content."
           }
         ],
-        "explanation": "The correction compares each answer file with the expected option, command name or section number."
+        "explanation": "The correction compares each answer file with the expected option, command name or section number.",
+        "solution": [
+          "mkdir -p '/home/student/osfundamentals/manpages'",
+          "printf '%b' '-a\\n' > '/home/student/osfundamentals/manpages/ls_hidden.txt'",
+          "printf '%b' 'chmod\\n' > '/home/student/osfundamentals/manpages/permission_cmd.txt'",
+          "printf '%b' '1\\n' > '/home/student/osfundamentals/manpages/printf_section.txt'",
+          "printf '%b' '-z\\n' > '/home/student/osfundamentals/manpages/tar_gzip.txt'"
+        ]
       }
     },
     "os-term-1-0402": {
@@ -1295,7 +1359,6 @@
       ],
       "difficulty": "Easy",
       "type": "terminal",
-
       "provenance": "OSFundamentals.pdf",
       "contentVersion": 1,
       "terminal": {
@@ -1336,7 +1399,14 @@
             "description": "`~/osfundamentals/manpages/gzip_keep.txt` has the expected content."
           }
         ],
-        "explanation": "The correction compares each answer file with the expected option, command name or section number."
+        "explanation": "The correction compares each answer file with the expected option, command name or section number.",
+        "solution": [
+          "mkdir -p '/home/student/osfundamentals/manpages'",
+          "printf '%b' '-p\\n' > '/home/student/osfundamentals/manpages/cp_preserve.txt'",
+          "printf '%b' 'chown\\n' > '/home/student/osfundamentals/manpages/ownership_cmd.txt'",
+          "printf '%b' '1\\n' > '/home/student/osfundamentals/manpages/kill_section.txt'",
+          "printf '%b' '-k\\n' > '/home/student/osfundamentals/manpages/gzip_keep.txt'"
+        ]
       }
     },
     "os-term-1-0501": {
@@ -1352,7 +1422,6 @@
       ],
       "difficulty": "Easy",
       "type": "terminal",
-
       "provenance": "OSFundamentals.pdf",
       "contentVersion": 1,
       "terminal": {
@@ -1419,7 +1488,13 @@
             "description": "`~/osfundamentals/redirection/processes.txt` exists as a regular file."
           }
         ],
-        "explanation": "The correction checks that each output file exists, and compares the files whose content is fully predictable (the error message and the unique animals)."
+        "explanation": "The correction checks that each output file exists, and compares the files whose content is fully predictable (the error message and the unique animals).",
+        "solution": [
+          "mkdir -p '/home/student/osfundamentals/redirection'",
+          "printf '%b' 'ls: cannot access '\\''/doesnotexist'\\'': No such file or directory\\n' > '/home/student/osfundamentals/redirection/error.txt'",
+          "printf '%b' 'bird\\ncat\\ndog\\nfish\\n' > '/home/student/osfundamentals/redirection/unique_animals.txt'",
+          "touch '/home/student/osfundamentals/redirection/varlogs.txt' '/home/student/osfundamentals/redirection/combined.txt' '/home/student/osfundamentals/redirection/users.txt' '/home/student/osfundamentals/redirection/users_upper.txt' '/home/student/osfundamentals/redirection/processes.txt'"
+        ]
       }
     },
     "os-term-1-0502": {
@@ -1435,7 +1510,6 @@
       ],
       "difficulty": "Medium",
       "type": "terminal",
-
       "provenance": "OSFundamentals.pdf",
       "contentVersion": 1,
       "terminal": {
@@ -1459,7 +1533,11 @@
             "description": "`notes.txt` has the expected final content after all five exercises."
           }
         ],
-        "explanation": "The correction checks the final content of `notes.txt` after all five exercises were applied in order."
+        "explanation": "The correction checks the final content of `notes.txt` after all five exercises were applied in order.",
+        "solution": [
+          "mkdir -p '/home/student/osfundamentals/vim'",
+          "printf '%b' 'My Vim Practice Notes\\nDO NOT DELETE THIS LINE\\npplesple\\nananas\\nherries\\nherries\\nrapes\\nananas\\nherries\\n' > '/home/student/osfundamentals/vim/notes.txt'"
+        ]
       }
     },
     "os-term-1-0503": {
@@ -1475,7 +1553,6 @@
       ],
       "difficulty": "Medium",
       "type": "terminal",
-
       "provenance": "OSFundamentals.pdf",
       "contentVersion": 1,
       "terminal": {
@@ -1559,7 +1636,17 @@
             "description": "`~/osfundamentals/vars/exercise7.txt` has the expected content."
           }
         ],
-        "explanation": "The correction checks the saved output files and the exact content of `~/.vars`, `~/.bashrc` and `~/.bash_profile`. `~/.bashrc` starts with a single comment line."
+        "explanation": "The correction checks the saved output files and the exact content of `~/.vars`, `~/.bashrc` and `~/.bash_profile`. `~/.bashrc` starts with a single comment line.",
+        "solution": [
+          "mkdir -p '/home/student/osfundamentals/vars' '/home/student'",
+          "printf '%b' 'osfundamentals\\nosfundamentals_linux\\n' > '/home/student/osfundamentals/vars/exercise1.txt'",
+          "printf '%b' 'myname=\"Student\"\\nexport project=linux101\\n' > '/home/student/.vars'",
+          "printf '%b' 'linux101\\n' > '/home/student/osfundamentals/vars/exercise3.txt'",
+          "printf '%b' '# ~/.bashrc\\nexport PAGER=cat\\nalias ll='\\''ls -l'\\''\\n' > '/home/student/.bashrc'",
+          "printf '%b' 'export loginvar=\"set_in_login\"\\n' > '/home/student/.bash_profile'",
+          "printf '%b' 'set_in_login\\n' > '/home/student/osfundamentals/vars/exercise7.txt'",
+          "touch '/home/student/osfundamentals/vars/exercise5.txt' '/home/student/osfundamentals/vars/exercise6.txt'"
+        ]
       }
     },
     "os-term-1-0599": {
@@ -1576,7 +1663,6 @@
       ],
       "difficulty": "Hard",
       "type": "terminal",
-
       "provenance": "OSFundamentals.pdf",
       "contentVersion": 1,
       "terminal": {
@@ -1732,7 +1818,26 @@
             "description": "`~/osfundamentals/capstone/unsetcheck.txt` exists as a regular file."
           }
         ],
-        "explanation": "The correction checks every file created in the capstone folder, the exact content of the startup files, and that `hello.sh` has mode 755. `~/.bashrc` starts with a single comment line."
+        "explanation": "The correction checks every file created in the capstone folder, the exact content of the startup files, and that `hello.sh` has mode 755. `~/.bashrc` starts with a single comment line.",
+        "solution": [
+          "mkdir -p '/home/student/osfundamentals/capstone' '/home/student' '/home/student/osfundamentals/capstone/bin'",
+          "printf '%b' 'name,department,score\\nalice,IT,87\\nbob,HR,92\\ncarol,IT,78\\ndave,Finance,85\\n' > '/home/student/osfundamentals/capstone/students.csv'",
+          "printf '%b' 'name,department\\nalice,IT\\nbob,HR\\ncarol,IT\\ndave,Finance\\n' > '/home/student/osfundamentals/capstone/students_names_departments.txt'",
+          "printf '%b' 'alice\\nbob\\ncarol\\nalice\\ndave\\nbob\\nerin\\n' > '/home/student/osfundamentals/capstone/users_all.txt'",
+          "printf '%b' 'alice\\nalice\\nbob\\nbob\\ncarol\\ndave\\nerin\\n' > '/home/student/osfundamentals/capstone/users_sorted.txt'",
+          "printf '%b' 'alice\\nbob\\ncarol\\ndave\\nerin\\n' > '/home/student/osfundamentals/capstone/users_unique.txt'",
+          "printf '%b' 'ALICE\\nBOB\\nCAROL\\nDAVE\\nERIN\\n' > '/home/student/osfundamentals/capstone/users_upper.txt'",
+          "printf '%b' 'ALICE\\nBOB\\nCAROL\\n' > '/home/student/osfundamentals/capstone/users_top3.txt'",
+          "printf '%b' 'BOB\\nCAROL\\n' > '/home/student/osfundamentals/capstone/users_last2.txt'",
+          "printf '%b' 'ALICE\\nBOB\\nCAROL\\n' > '/home/student/osfundamentals/capstone/users_chall.txt'",
+          "printf '%b' 'OS Fundamentals Capstone\\nStudent Name: Student\\nTasks:\\n. Log Data Collected\\n. Environment Configured\\n. Variable Set\\n. Alias Created\\n. Variable Set\\n. Alias Created\\n' > '/home/student/osfundamentals/capstone/report.txt'",
+          "printf '%b' '# ~/.bashrc\\nmyalias=\"capstone\"\\nexport capstone_env=\"lab\"\\nalias showlogs='\\''cat ~/osfundamentals/capstone/logfiles.txt'\\''\\nexport PATH=$HOME/osfundamentals/capstone/bin:$PATH\\n' > '/home/student/.bashrc'",
+          "printf '%b' 'export loginvar=\"capstone_login\"\\n' > '/home/student/.bash_profile'",
+          "printf '%b' 'capstone_login\\n' > '/home/student/osfundamentals/capstone/logincheck.txt'",
+          "printf '%b' '#!/bin/bash\\n\\necho \"Hello from Capstone!\"\\n' > '/home/student/osfundamentals/capstone/bin/hello.sh'",
+          "touch '/home/student/osfundamentals/capstone/logfiles.txt' '/home/student/osfundamentals/capstone/unsetcheck.txt'",
+          "chmod '755' '/home/student/osfundamentals/capstone/bin/hello.sh'"
+        ]
       }
     },
     "os-term-1-1001": {
@@ -1748,7 +1853,6 @@
       ],
       "difficulty": "Medium",
       "type": "terminal",
-
       "provenance": "OSFundamentals.pdf",
       "contentVersion": 1,
       "terminal": {
@@ -1790,7 +1894,14 @@
             "description": "`devops_groups.txt` shows that `devops` is a member of `opsadmin`."
           }
         ],
-        "explanation": "The correction checks the two sudoers drop-in files and the saved group membership of `devops`."
+        "explanation": "The correction checks the two sudoers drop-in files and the saved group membership of `devops`.",
+        "solution": [
+          "mkdir -p '/home/student'",
+          "sudo mkdir -p '/etc/sudoers.d'",
+          "printf '%b' 'devops ALL=(ALL) ALL\\n' | sudo tee '/etc/sudoers.d/devops' > /dev/null",
+          "printf '%b' '%opsadmin ALL=(ALL) NOPASSWD:ALL\\n' | sudo tee '/etc/sudoers.d/opsadmin' > /dev/null",
+          "printf '%b' 'devops opsadmin\\n' > '/home/student/devops_groups.txt'"
+        ]
       }
     },
     "os-term-1-1002": {
@@ -1806,14 +1917,15 @@
       ],
       "difficulty": "Hard",
       "type": "terminal",
-
       "provenance": "OSFundamentals.pdf",
       "contentVersion": 1,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": ["mkdir -p /etc/sudoers.d"],
+        "preSetupCommands": [
+          "mkdir -p /etc/sudoers.d"
+        ],
         "checks": [
           {
             "id": "content-etc-sudoers-d-developers",
@@ -1854,7 +1966,14 @@
             "description": "`dev2_info.txt` shows the comment and home directory of `dev2`."
           }
         ],
-        "explanation": "The correction checks the sudoers drop-in file, the effect of `userdel` with and without `-r` on the home directories, and the two verification files you saved."
+        "explanation": "The correction checks the sudoers drop-in file, the effect of `userdel` with and without `-r` on the home directories, and the two verification files you saved.",
+        "solution": [
+          "mkdir -p '/home/dev1' '/home/student'",
+          "sudo mkdir -p '/etc/sudoers.d'",
+          "printf '%b' '%developers ALL=(ALL) /usr/bin/dnf up\\n' | sudo tee '/etc/sudoers.d/developers' > /dev/null",
+          "printf '%b' 'developers:x:2000:dev2\\n' > '/home/student/developers_group.txt'",
+          "printf '%b' 'Developer Two:/srv/dev2\\n' > '/home/student/dev2_info.txt'"
+        ]
       }
     },
     "os-term-1-1003": {
@@ -1870,7 +1989,6 @@
       ],
       "difficulty": "Medium",
       "type": "terminal",
-
       "provenance": "OSFundamentals.pdf",
       "contentVersion": 1,
       "terminal": {
@@ -1897,7 +2015,11 @@
             "description": "`verify.txt` shows the final state of the groups `devteam`, `ops` and `engineers`."
           }
         ],
-        "explanation": "The correction checks the group database content you saved after all five tasks: the changed GID of `devteam`, the members of `ops` and the new group `engineers`."
+        "explanation": "The correction checks the group database content you saved after all five tasks: the changed GID of `devteam`, the members of `ops` and the new group `engineers`.",
+        "solution": [
+          "mkdir -p '/home/student'",
+          "printf '%b' 'devteam:x:3500:alice,bob\\nops:x:3002:alice,bob\\nengineers:x:4000:\\n' > '/home/student/verify.txt'"
+        ]
       }
     },
     "os-term-1-1004": {
@@ -1913,7 +2035,6 @@
       ],
       "difficulty": "Medium",
       "type": "terminal",
-
       "provenance": "OSFundamentals.pdf",
       "contentVersion": 1,
       "terminal": {
@@ -1938,7 +2059,11 @@
             "description": "`verify.txt` shows the aging fields of `qaeng`, the expired password and nologin shell of `intern`, and the unlocked `tempuser`."
           }
         ],
-        "explanation": "The correction checks the verification file, which is derived from `/etc/shadow` and `/etc/passwd` after all tasks were applied."
+        "explanation": "The correction checks the verification file, which is derived from `/etc/shadow` and `/etc/passwd` after all tasks were applied.",
+        "solution": [
+          "mkdir -p '/home/student'",
+          "printf '%b' '1:45:7:\\n0\\n/sbin/nologin\\n$\\n' > '/home/student/verify.txt'"
+        ]
       }
     },
     "os-term-1-1101": {
@@ -1954,7 +2079,6 @@
       ],
       "difficulty": "Medium",
       "type": "terminal",
-
       "provenance": "OSFundamentals.pdf",
       "contentVersion": 1,
       "terminal": {
@@ -2036,7 +2160,17 @@
             "description": "`file2.txt` is readable by all users."
           }
         ],
-        "explanation": "The correction checks the permission bits of every file and directory. The ownership changes of Task 2 are part of the exercise and should match the expected `ls -l` output."
+        "explanation": "The correction checks the permission bits of every file and directory. The ownership changes of Task 2 are part of the exercise and should match the expected `ls -l` output.",
+        "solution": [
+          "chmod o-w ~/osfundamentals/permissions/ex1/readme.txt",
+          "chmod 640 ~/osfundamentals/permissions/ex1/project/notes.txt",
+          "sudo chown devuser:projectteam ~/osfundamentals/permissions/ex2/shared/teamdoc.txt",
+          "sudo chgrp projectteam ~/osfundamentals/permissions/ex2/shared/secret.txt",
+          "chmod 660 ~/osfundamentals/permissions/ex2/shared/teamdoc.txt",
+          "chmod 400 ~/osfundamentals/permissions/ex2/shared/secret.txt",
+          "chmod 755 ~/osfundamentals/permissions/ex3/sharedir",
+          "chmod 644 ~/osfundamentals/permissions/ex3/sharedir/file1.txt ~/osfundamentals/permissions/ex3/sharedir/file2.txt"
+        ]
       }
     },
     "os-term-1-1102": {
@@ -2052,7 +2186,6 @@
       ],
       "difficulty": "Medium",
       "type": "terminal",
-
       "provenance": "OSFundamentals.pdf",
       "contentVersion": 1,
       "terminal": {
@@ -2141,7 +2274,18 @@
             "description": "`~/.bashrc` makes umask `0027` persistent."
           }
         ],
-        "explanation": "The correction checks the sticky-directory deletions, the SGID mode of `project_area`, the permissions of the file created under umask `0027` and the persistent umask in `~/.bashrc`."
+        "explanation": "The correction checks the sticky-directory deletions, the SGID mode of `project_area`, the permissions of the file created under umask `0027` and the persistent umask in `~/.bashrc`.",
+        "solution": [
+          "rm /srv/shared/sticky_test/file_student.txt",
+          "mkdir -p ~/osfundamentals/permissions_special/ex2/project_area",
+          "sudo chown student:projectteam ~/osfundamentals/permissions_special/ex2/project_area",
+          "chmod 2775 ~/osfundamentals/permissions_special/ex2/project_area",
+          "echo \"report1\" > ~/osfundamentals/permissions_special/ex2/project_area/report1.txt",
+          "echo \"report2\" > ~/osfundamentals/permissions_special/ex2/project_area/report2.txt",
+          "umask 0027",
+          "echo \"testing umask\" > ~/osfundamentals/permissions_special/ex3/umask_test.txt",
+          "echo \"umask 0027\" >> ~/.bashrc"
+        ]
       }
     },
     "os-term-1-1199": {
@@ -2157,7 +2301,6 @@
       ],
       "difficulty": "Hard",
       "type": "terminal",
-
       "provenance": "OSFundamentals.pdf",
       "contentVersion": 1,
       "terminal": {
@@ -2250,7 +2393,19 @@
             "description": "`umask_test.txt` is `rw-rw----` (umask 0007)."
           }
         ],
-        "explanation": "The correction checks the SGID mode of `team_project`, the contents and `660` permissions of the files created by both users, the sticky-bit deletion results and the file created under umask `0007`."
+        "explanation": "The correction checks the SGID mode of `team_project`, the contents and `660` permissions of the files created by both users, the sticky-bit deletion results and the file created under umask `0007`.",
+        "solution": [
+          "mkdir -p ~/osfundamentals/permissions_capstone/team_project",
+          "sudo chown student:projectteam ~/osfundamentals/permissions_capstone/team_project",
+          "chmod 2775 ~/osfundamentals/permissions_capstone/team_project",
+          "echo \"Student contribution\" > ~/osfundamentals/permissions_capstone/team_project/student_report.txt",
+          "sudo -u devuser bash -c \"umask 0007; echo 'Devuser contribution' > /home/student/osfundamentals/permissions_capstone/team_project/dev_report.txt\"",
+          "echo \"Student file\" > /srv/shared/uploads/file_student.txt",
+          "sudo -u devuser bash -c \"umask 0007; echo 'Devuser file' > /srv/shared/uploads/file_devuser.txt\"",
+          "rm /srv/shared/uploads/file_student.txt",
+          "mkdir -p ~/osfundamentals/permissions_capstone/umask_test",
+          "echo \"Testing umask\" > ~/osfundamentals/permissions_capstone/umask_test/umask_test.txt"
+        ]
       }
     }
   }

@@ -17,7 +17,6 @@
       ],
       "difficulty": "Easy",
       "type": "terminal",
-
       "provenance": "terminal-example-package.json",
       "contentVersion": 1,
       "terminal": {
@@ -56,7 +55,12 @@
             "description": "hello.txt has permissions 644."
           }
         ],
-        "explanation": "The correction checks the final directory, file contents, and permission bits. Different command sequences receive the same result when their final filesystem state matches."
+        "explanation": "The correction checks the final directory, file contents, and permission bits. Different command sequences receive the same result when their final filesystem state matches.",
+        "solution": [
+          "mkdir -p project",
+          "echo \"Hello World\" > project/hello.txt",
+          "chmod 644 project/hello.txt"
+        ]
       }
     },
     "os-terminal-file-ops-002": {
@@ -72,7 +76,6 @@
       ],
       "difficulty": "Easy",
       "type": "terminal",
-
       "provenance": "terminal-example-package.json",
       "contentVersion": 1,
       "terminal": {
@@ -155,7 +158,14 @@
             "description": "The temporary file was removed."
           }
         ],
-        "explanation": "The initial files are prepared by preSetupCommands before the student shell starts. Resetting the exercise runs those setup commands again, restoring the original starting state. Grading inspects the resulting virtual filesystem, not command history."
+        "explanation": "The initial files are prepared by preSetupCommands before the student shell starts. Resetting the exercise runs those setup commands again, restoring the original starting state. Grading inspects the resulting virtual filesystem, not command history.",
+        "solution": [
+          "mv inbox/brief.txt work/brief.txt",
+          "cp inbox/checklist.txt work/copies/checklist.txt",
+          "mv work/draft-plan.txt work/final-plan.txt",
+          "rm inbox/delete-me.tmp",
+          "chmod 640 work/brief.txt"
+        ]
       }
     }
   }

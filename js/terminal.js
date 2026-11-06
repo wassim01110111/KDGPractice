@@ -2002,6 +2002,7 @@ class Shell {
     this.exported = new Set(Object.keys(this.env));
     this.aliases = new Map();
     this.history = [];
+    this.commandRecords = [];
     this.lastStatus = 0;
     this.positionals = [];
     this.zero = "bash";
@@ -2309,6 +2310,34 @@ class Shell {
     return { body, op: m[1], path: m[2], merge: Boolean(m[3]) };
   }
   async executeLine(line, options = {}) {
+    const source = String(line ?? "");
+    const shouldRecord = !options.fromSource && Boolean(source.trim());
+    const record =
+      shouldRecord
+        ? { command: source, output: "", outputCaptured: false, status: null }
+        : null;
+    if (record) {
+      this.commandRecords.push(record);
+      if (this.commandRecords.length > 500) this.commandRecords.shift();
+    }
+    try {
+      const result = await this.executeLineCore(source, options);
+      if (record) {
+        record.output = (safeText(result?.stdout) + safeText(result?.stderr)).slice(0, 8192);
+        record.outputCaptured = true;
+        record.status = Number.isInteger(result?.status) ? result.status : 0;
+      }
+      return result;
+    } catch (error) {
+      if (record) {
+        record.output = `${safeText(error?.message || error)}\n`.slice(0, 8192);
+        record.outputCaptured = true;
+        record.status = 1;
+      }
+      throw error;
+    }
+  }
+  async executeLineCore(line, options = {}) {
     const source = String(line ?? "");
     if (!options.fromSource && source.trim()) {
       this.history.push(source);
@@ -5747,6 +5776,12 @@ wtmp begins ${new Date(Date.now() - 86400000).toDateString()} (simulated)\n`);
       exported: [...this.exported],
       aliases: [...this.aliases],
       history: this.history.slice(-500),
+      commandRecords: this.commandRecords.slice(-500).map((record) => ({
+        command: safeText(record.command).slice(0, 8192),
+        output: safeText(record.output).slice(0, 8192),
+        outputCaptured: Boolean(record.outputCaptured),
+        status: Number.isInteger(record.status) ? record.status : null,
+      })),
       lastStatus: this.lastStatus,
       positionals: this.positionals,
       zero: this.zero,
@@ -5787,6 +5822,28 @@ wtmp begins ${new Date(Date.now() - 86400000).toDateString()} (simulated)\n`);
       this.history = data.history
         .filter((x) => typeof x === "string")
         .slice(-500);
+    if (Array.isArray(data.commandRecords))
+      this.commandRecords = data.commandRecords
+        .filter(
+          (record) =>
+            ownPlain(record) &&
+            typeof record.command === "string" &&
+            typeof record.output === "string",
+        )
+        .slice(-500)
+        .map((record) => ({
+          command: record.command.slice(0, 8192),
+          output: record.output.slice(0, 8192),
+          outputCaptured: record.outputCaptured === true,
+          status: Number.isInteger(record.status) ? record.status : null,
+        }));
+    else if (Array.isArray(data.history))
+      this.commandRecords = this.history.map((command) => ({
+        command,
+        output: "",
+        outputCaptured: false,
+        status: null,
+      }));
     if (Number.isInteger(data.lastStatus)) this.lastStatus = data.lastStatus;
     if (Array.isArray(data.positionals))
       this.positionals = data.positionals.map(String);
@@ -5935,7 +5992,12 @@ function restoreArchiveNode(fs, raw, targetPath) {
   parent.children.set(name, build(raw, parent, name));
 }
 
-function gradeFilesystem(fs, checks, baseDirectory = "/home/student") {
+function gradeFilesystem(
+  fs,
+  checks,
+  baseDirectory = "/home/student",
+  commandRecords = [],
+) {
   const previousUid = fs.currentUid;
   fs.currentUid = 0; // the checker inspects metadata as a privileged internal operation
   try {
@@ -5943,9 +6005,11 @@ function gradeFilesystem(fs, checks, baseDirectory = "/home/student") {
     let score = 0,
       maxScore = 0;
     for (const check of checks) {
-      const checkPath = String(check.path).startsWith("/")
-        ? String(check.path)
-        : `${String(baseDirectory).replace(/\/$/, "")}/${check.path}`;
+      const checkPath = check.path
+        ? String(check.path).startsWith("/")
+          ? String(check.path)
+          : `${String(baseDirectory).replace(/\/$/, "")}/${check.path}`
+        : null;
       const points =
         Number.isFinite(check.points) && check.points >= 0 ? check.points : 1;
       maxScore += points;
@@ -6017,26 +6081,85 @@ function gradeFilesystem(fs, checks, baseDirectory = "/home/student") {
                   }
                 }
                 break;
-              case "contains":
+              case "contains": {
                 if (actualType !== "file") {
                   feedback = `Expected a regular file, found ${actualType}.`;
-                } else if (check.regex !== undefined) {
+                  break;
+                }
+
+                let contentPassed = false;
+                if (check.regex !== undefined) {
                   try {
                     const regex = new RegExp(check.expected, check.flags || "");
-                    passed = regex.test(entry.content);
-                    if (!passed) {
+                    contentPassed = regex.test(entry.content);
+                    if (!contentPassed)
                       feedback = `File content did not match the required pattern: ${check.expected}`;
-                    }
                   } catch (error) {
                     feedback = `Invalid check regex: ${error.message}`;
                   }
                 } else {
-                  passed = entry.content.includes(String(check.expected ?? ""));
-                  if (!passed) {
+                  contentPassed = entry.content.includes(String(check.expected ?? ""));
+                  if (!contentPassed)
                     feedback = "Required text was not found in the file.";
+                }
+
+                // Optional command-history assertion piggybacks on the existing
+                // `contains` check type so package loaders with a fixed check-type
+                // list continue to accept the exercise. The command and its output
+                // must match the same recorded invocation.
+                passed = contentPassed;
+                if (contentPassed && check.commandExpected !== undefined) {
+                  try {
+                    const commandRegex = new RegExp(
+                      check.commandExpected,
+                      check.commandFlags || "",
+                    );
+                    const outputRegex =
+                      check.intendedOutput === undefined
+                        ? null
+                        : new RegExp(
+                            check.intendedOutput,
+                            check.intendedOutputFlags || "",
+                          );
+                    let commandWasRun = false;
+                    let commandOutputCaptured = false;
+                    let commandAndOutputMatched = false;
+
+                    for (const record of commandRecords) {
+                      commandRegex.lastIndex = 0;
+                      if (!commandRegex.test(safeText(record.command))) continue;
+                      commandWasRun = true;
+                      if (!outputRegex) {
+                        commandAndOutputMatched = true;
+                        break;
+                      }
+                      if (!record.outputCaptured) continue;
+                      commandOutputCaptured = true;
+                      outputRegex.lastIndex = 0;
+                      if (outputRegex.test(safeText(record.output))) {
+                        commandAndOutputMatched = true;
+                        break;
+                      }
+                    }
+
+                    passed = commandAndOutputMatched;
+                    if (!passed) {
+                      if (!commandWasRun)
+                        feedback = `No command-history entry matched: ${check.commandExpected}`;
+                      else if (outputRegex && !commandOutputCaptured)
+                        feedback = "The command was found in history, but its output was not captured. Run it again to verify intendedOutput.";
+                      else if (outputRegex)
+                        feedback = `The command was run, but its output did not match: ${check.intendedOutput}`;
+                      else
+                        feedback = "The command-history requirement was not met.";
+                    }
+                  } catch (error) {
+                    passed = false;
+                    feedback = `Invalid command-history regex: ${error.message}`;
                   }
                 }
                 break;
+              }
               case "permissions": {
                 const expected = String(check.expected)
                   .replace(/^0o/, "")
@@ -6193,6 +6316,20 @@ function validateExercise(exercise) {
   if (!Array.isArray(config.checks) || config.checks.length === 0)
     throw new Error("terminal.checks must contain at least one grading check");
   if (
+    config.solution !== undefined &&
+    (!Array.isArray(config.solution) ||
+      config.solution.length > 100 ||
+      config.solution.some(
+        (command) =>
+          typeof command !== "string" ||
+          !command.trim() ||
+          command.length > 8192,
+      ))
+  )
+    throw new Error(
+      "terminal.solution must be an array of non-empty command strings (maximum 8192 characters each)",
+    );
+  if (
     config.initialFilesystem !== undefined &&
     !Array.isArray(config.initialFilesystem)
   )
@@ -6238,6 +6375,49 @@ function validateExercise(exercise) {
       );
     if (typeof check.path !== "string" || !check.path.trim())
       throw new Error(`terminal.checks[${i}].path must be a non-empty string`);
+    if (check.commandExpected !== undefined) {
+      if (check.type !== "contains")
+        throw new Error(
+          `terminal.checks[${i}].commandExpected is only supported on contains checks`,
+        );
+      if (typeof check.commandExpected !== "string" || !check.commandExpected)
+        throw new Error(
+          `terminal.checks[${i}].commandExpected must be a command-history regex string`,
+        );
+      if (check.commandExpected.length > 2048)
+        throw new Error(`terminal.checks[${i}].commandExpected regex is too long`);
+      if (check.commandFlags !== undefined && typeof check.commandFlags !== "string")
+        throw new Error(`terminal.checks[${i}].commandFlags must be a string`);
+      if (
+        check.intendedOutput !== undefined &&
+        (typeof check.intendedOutput !== "string" ||
+          check.intendedOutput.length > 2048)
+      )
+        throw new Error(
+          `terminal.checks[${i}].intendedOutput must be a regex string (maximum 2048 characters)`);
+      if (
+        check.intendedOutputFlags !== undefined &&
+        typeof check.intendedOutputFlags !== "string"
+      )
+        throw new Error(
+          `terminal.checks[${i}].intendedOutputFlags must be a string`,
+        );
+      try {
+        new RegExp(check.commandExpected, check.commandFlags || "");
+        if (check.intendedOutput !== undefined)
+          new RegExp(check.intendedOutput, check.intendedOutputFlags || "");
+      } catch (error) {
+        throw new Error(`terminal.checks[${i}] has an invalid command-history regex: ${error.message}`);
+      }
+    } else if (
+      check.intendedOutput !== undefined ||
+      check.intendedOutputFlags !== undefined ||
+      check.commandFlags !== undefined
+    ) {
+      throw new Error(
+        `terminal.checks[${i}] requires commandExpected when command-history options are supplied`,
+      );
+    }
     if (
       [
         "content",
@@ -6962,7 +7142,7 @@ export async function mountTerminalExercise({
     .os-terminal .ot-keys{display:flex;gap:.35rem;flex-wrap:wrap;margin-top:.55rem}.os-terminal .ot-keys button{font-size:.82rem;min-width:2.6rem;padding:.38rem .55rem}
     .os-terminal .ot-grade{margin-top:.75rem;padding:.8rem;border:1px solid var(--bd);border-radius:9px;background:var(--card)}.os-terminal .ot-grade h4{margin:.1rem 0 .55rem}.os-terminal .ot-checks{display:grid;gap:.35rem;margin:.5rem 0 0;padding:0;list-style:none}.os-terminal .ot-check{display:grid;grid-template-columns:1.3rem minmax(0,1fr);gap:.4rem;align-items:start}.os-terminal .ot-check-pass{color:var(--ok);font-weight:700}.os-terminal .ot-check-fail{color:var(--bad);font-weight:700}.os-terminal .ot-feedback{display:block;color:var(--mut);font-size:.88rem}.os-terminal .ot-actions{display:flex;flex-wrap:wrap;gap:.5rem;margin:.7rem 0}.os-terminal .ot-actions button{margin:0}.os-terminal .ot-editor{margin:.75rem 0;padding:.75rem;border:1px solid var(--bd);border-radius:9px;background:var(--card)}.os-terminal .ot-editor textarea{display:block;width:100%;min-height:14rem;font:14px/1.5 ui-monospace,monospace}
     .os-terminal .ot-editor-title{display:block;margin-bottom:.35rem;font-family:ui-monospace,monospace}.os-terminal .ot-editor-mode{display:inline-block;font:700 .72rem ui-monospace,monospace;color:var(--ac);margin:.25rem 0}.os-terminal .ot-editor-textarea{min-height:18rem;resize:vertical;tab-size:4}.os-terminal .ot-editor-status{min-height:1.6rem;padding:.25rem .4rem;background:var(--soft);font:12px ui-monospace,monospace;overflow-wrap:anywhere}.os-terminal .ot-editor-command-row{display:flex;gap:.35rem;align-items:center;font:14px ui-monospace,monospace;margin:.35rem 0}.os-terminal .ot-editor-command{flex:1;min-width:0;font:inherit}
-    .os-terminal .ot-error{color:var(--bad);padding:.65rem;border:1px solid var(--bad);border-radius:8px}.os-terminal .ot-notice{font-size:.88rem;color:var(--mut);margin:.5rem 0}
+    .os-terminal .ot-solution{margin:.75rem 0;padding:.85rem;border:1px solid var(--bd);border-radius:9px;background:var(--card)}.os-terminal .ot-solution h4{margin:.1rem 0 .35rem}.os-terminal .ot-solution-intro{margin:.25rem 0 .65rem;color:var(--mut);font-size:.88rem}.os-terminal .ot-solution-list{margin:.4rem 0 0;padding-left:1.65rem}.os-terminal .ot-solution-list li{padding:.18rem 0 .35rem .15rem}.os-terminal .ot-solution-list code{display:block;white-space:pre-wrap;overflow-wrap:anywhere;padding:.45rem .55rem;border-radius:6px;background:var(--soft);font: .85rem/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;color:var(--fg)}.os-terminal .ot-error{color:var(--bad);padding:.65rem;border:1px solid var(--bad);border-radius:8px}.os-terminal .ot-notice{font-size:.88rem;color:var(--mut);margin:.5rem 0}
     @media(max-width:600px){.os-terminal .ot-screen{height:42vh;min-height:13rem;font-size:13px;padding:.65rem}.os-terminal .ot-input-row{padding:.7rem .55rem}.os-terminal .ot-prompt{font-size:12px}.os-terminal .ot-toolbar{gap:.3rem;padding:.55rem}.os-terminal .ot-keys button{min-height:2.55rem}}
     @media(prefers-reduced-motion:reduce){.os-terminal .ot-input-row{transition:none}}
   `;
@@ -7032,24 +7212,156 @@ export async function mountTerminalExercise({
     keyBar.append(button);
   }
   const actions = createElement("div", "ot-actions");
+  const solutionCommands = Array.isArray(config.solution)
+    ? config.solution.map((command) => String(command))
+    : [];
+  const solutionButton = createElement("button", "sec", "Show solution");
+  solutionButton.type = "button";
+  solutionButton.hidden =
+    mode !== "practice" || solutionCommands.length === 0;
+  solutionButton.setAttribute("aria-expanded", "false");
+  const solutionArea = createElement("section", "ot-solution");
+  solutionArea.hidden = true;
+  const solutionHeading = createElement("h4", "", "Minimal solution");
+  const solutionIntro = createElement(
+    "p",
+    "ot-solution-intro",
+    "These commands satisfy the configured grading checks. They may skip extra practice steps that are described but not graded.",
+  );
+  const solutionList = createElement("ol", "ot-solution-list");
+  for (const command of solutionCommands) {
+    const item = createElement("li");
+    const code = createElement("code", "", command);
+    item.append(code);
+    solutionList.append(item);
+  }
+  solutionArea.append(solutionHeading, solutionIntro, solutionList);
   const gradeArea = createElement("div", "ot-grade");
   gradeArea.hidden = true;
   const editorArea = createElement("div", "ot-editor");
   editorArea.hidden = true;
   const notice = createElement("p", "ot-notice");
   notice.hidden = true;
-  instance.append(
-    style,
-    toolbar,
-    screen,
-    inputRow,
-    keyBar,
-    notice,
-    editorArea,
+
+  // On desktop, keep the terminal workspace as the main column and place
+  // exercise actions in a compact side panel. display:contents on mobile
+  // preserves the original stacked order and spacing.
+  const workbench = createElement("div", "ot-workbench");
+  const workspaceMain = createElement("div", "ot-workspace-main");
+  const controlSidebar = createElement("aside", "ot-control-sidebar");
+  controlSidebar.setAttribute("aria-label", "Exercise controls");
+  const controlHeading = createElement("h4", "ot-control-heading", "Exercise controls");
+  const nextExerciseSlot = createElement("div", "ot-next-slot");
+  nextExerciseSlot.hidden = true;
+  workspaceMain.append(toolbar, screen, inputRow, keyBar, notice, editorArea);
+  controlSidebar.append(
+    controlHeading,
+    nextExerciseSlot,
     actions,
+    solutionArea,
     gradeArea,
   );
+  workbench.append(workspaceMain, controlSidebar);
+  instance.append(style, workbench);
   container.replaceChildren(instance);
+
+  // The host app owns the Next exercise control. When it is present alongside
+  // this exercise, temporarily move that same live control into the desktop
+  // side panel. A placeholder lets us restore it to its original position on
+  // mobile or when this terminal unmounts; its existing click handler remains.
+  let nextExerciseControl = null;
+  let nextExercisePlaceholder = null;
+  let nextExerciseOriginalParent = null;
+  let nextExerciseOriginalSibling = null;
+  let nextExerciseObserver = null;
+  const desktopLayoutQuery =
+    typeof window !== "undefined" && window.matchMedia
+      ? window.matchMedia("(min-width: 901px)")
+      : null;
+  const restoreNextExerciseControl = () => {
+    if (!nextExerciseControl) return;
+    if (nextExercisePlaceholder?.parentNode) {
+      nextExercisePlaceholder.parentNode.insertBefore(
+        nextExerciseControl,
+        nextExercisePlaceholder,
+      );
+      nextExercisePlaceholder.remove();
+    } else if (nextExerciseOriginalParent?.isConnected) {
+      const reference =
+        nextExerciseOriginalSibling?.parentNode === nextExerciseOriginalParent
+          ? nextExerciseOriginalSibling
+          : null;
+      nextExerciseOriginalParent.insertBefore(nextExerciseControl, reference);
+    }
+    nextExerciseSlot.hidden = true;
+    nextExerciseControl.classList.remove("ot-next-exercise-control");
+  };
+  const syncNextExerciseControlPlacement = () => {
+    if (!nextExerciseControl) return;
+    if (desktopLayoutQuery?.matches) {
+      nextExerciseSlot.hidden = false;
+      nextExerciseSlot.append(nextExerciseControl);
+    } else {
+      restoreNextExerciseControl();
+    }
+  };
+  const locateNextExerciseControl = () => {
+    if (nextExerciseControl || !instance.isConnected) return;
+    let root = container.parentElement;
+    for (let depth = 0; root && depth < 6; depth++, root = root.parentElement) {
+      const candidates = root.querySelectorAll(
+        'button, a[href], [role="button"]',
+      );
+      for (const candidate of candidates) {
+        if (instance.contains(candidate) || candidate.hidden) continue;
+        const visibleText = safeText(candidate.textContent).trim().replace(/\s+/g, " ");
+        const accessibleText = [
+          candidate.getAttribute("aria-label"),
+          candidate.getAttribute("title"),
+          candidate.getAttribute("data-action"),
+        ]
+          .filter(Boolean)
+          .join(" ");
+        const matchesNext = (value) =>
+          /^next(?:\s+(?:exercise|question))?(?:\s*[›»→>].*)?$/i.test(
+            safeText(value).trim().replace(/\s+/g, " "),
+          ) || /next[-_\s]*(?:exercise|question)/i.test(safeText(value));
+        if (!matchesNext(visibleText) && !matchesNext(accessibleText)) continue;
+        nextExerciseControl = candidate;
+        nextExerciseOriginalParent = candidate.parentNode;
+        nextExerciseOriginalSibling = candidate.nextSibling;
+        nextExercisePlaceholder = document.createComment(
+          "next exercise control position",
+        );
+        nextExerciseOriginalParent.insertBefore(
+          nextExercisePlaceholder,
+          candidate,
+        );
+        candidate.classList.add("ot-next-exercise-control");
+        syncNextExerciseControlPlacement();
+        return;
+      }
+    }
+  };
+  if (desktopLayoutQuery) {
+    desktopLayoutQuery.addEventListener?.(
+      "change",
+      syncNextExerciseControlPlacement,
+    );
+    // Older browsers expose addListener instead of addEventListener.
+    if (!desktopLayoutQuery.addEventListener)
+      desktopLayoutQuery.addListener?.(syncNextExerciseControlPlacement);
+  }
+  locateNextExerciseControl();
+  const nextSearchRoot =
+    container.closest(".terminal-exercise-layout") || container.parentElement;
+  if (typeof MutationObserver !== "undefined" && nextSearchRoot) {
+    nextExerciseObserver = new MutationObserver(locateNextExerciseControl);
+    nextExerciseObserver.observe(nextSearchRoot, {
+      childList: true,
+      subtree: true,
+    });
+  }
 
   let commandHistory = [],
     historyIndex = 0,
@@ -7688,6 +8000,7 @@ export async function mountTerminalExercise({
       fs,
       config.checks || [],
       config.initialDirectory || "/home/student",
+      shell?.commandRecords || [],
     );
     lastGrade = result;
     renderGrade(result);
@@ -7786,6 +8099,13 @@ export async function mountTerminalExercise({
     pendingCommand = resetWorkspace().catch(() => {});
   });
   actions.append(resetButton);
+  if (!solutionButton.hidden) actions.append(solutionButton);
+  solutionButton.addEventListener("click", () => {
+    const show = solutionArea.hidden;
+    solutionArea.hidden = !show;
+    solutionButton.textContent = show ? "Hide solution" : "Show solution";
+    solutionButton.setAttribute("aria-expanded", String(show));
+  });
   if (mode !== "practice") {
     checkButton.hidden = true;
   }
@@ -8115,6 +8435,16 @@ export async function mountTerminalExercise({
     }
     const connection = db;
     db = null;
+    nextExerciseObserver?.disconnect();
+    if (desktopLayoutQuery) {
+      desktopLayoutQuery.removeEventListener?.(
+        "change",
+        syncNextExerciseControlPlacement,
+      );
+      if (!desktopLayoutQuery.removeEventListener)
+        desktopLayoutQuery.removeListener?.(syncNextExerciseControlPlacement);
+    }
+    restoreNextExerciseControl();
     instance.replaceChildren();
     return (async () => {
       try {
@@ -8192,8 +8522,8 @@ export function mountTerminalSandbox({ container, workspaceId = "default" }) {
   });
 }
 
-// Used by the host exam grader. It reads the same persisted virtual filesystem
-// that the mounted shell edits; no command-history reconstruction is involved.
+// Used by the host exam grader. It reads the same persisted filesystem and
+// shell command/output records that the mounted terminal has saved.
 export async function gradeTerminalAttempt({
   exercise,
   packageId,
@@ -8209,11 +8539,17 @@ export async function gradeTerminalAttempt({
   const db = await makeIdb();
   try {
     let fs = null;
+    let commandRecords = [];
     const saved = await idbRequest(db, "readonly", (store) => store.get(key));
     if (saved && saved.version === TERMINAL_VERSION) {
       try {
         fs = VirtualFS.restore(saved.filesystem);
+        const savedShell = new Shell(fs, {});
+        savedShell.restore(saved.shell);
+        commandRecords = savedShell.commandRecords;
       } catch {
+        fs = null;
+        commandRecords = [];
         /* fall back to a clean attempt below */
       }
     }
@@ -8229,6 +8565,7 @@ export async function gradeTerminalAttempt({
       fs,
       config.checks || [],
       config.initialDirectory || "/home/student",
+      commandRecords,
     );
   } finally {
     db.close();

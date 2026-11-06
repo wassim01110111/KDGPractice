@@ -2105,6 +2105,26 @@ button.schema-view-toggle.on {
 .solution-panel pre {
   margin-bottom: 0;
 }
+.java-solution-panel {
+  margin-top: 0.55rem;
+}
+.java-solution-panel pre {
+  max-height: min(28rem, 55vh);
+  overflow: auto;
+  white-space: pre;
+  tab-size: 4;
+}
+.java-solution-panel pre code {
+  display: block;
+  min-width: max-content;
+  line-height: 1.55;
+}
+.java-solution-note {
+  display: block;
+  margin-top: 0.55rem;
+  color: var(--mut);
+  line-height: 1.4;
+}
 .sql-result-panel {
   display: grid;
   gap: 0.4rem;
@@ -8016,3 +8036,577 @@ body.terminal-split-dragging {
   min-width: 0;
 }
 
+
+/* Browser-based Java exercise workspace (CheerpJ 5 worker + CodeMirror). */
+.java-exercise-host,
+.java-exercise {
+  min-width: 0;
+  width: 100%;
+}
+.java-exercise {
+  display: grid;
+  gap: 0.85rem;
+}
+.java-panel {
+  min-width: 0;
+  padding: 0.85rem;
+  background: var(--card);
+  border: 1px solid var(--bd);
+  border-radius: 10px;
+}
+.java-panel-heading,
+.java-score-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.45rem 0.8rem;
+}
+.java-panel-heading h4 {
+  margin: 0;
+  font-size: 0.98rem;
+}
+.java-panel-heading small,
+.java-help,
+.java-console-meta,
+.java-score-heading span {
+  color: var(--mut);
+  font-size: 0.82rem;
+}
+.java-codemirror-host {
+  width: 100%;
+  min-width: 0;
+  margin-top: 0.7rem;
+  overflow: hidden;
+  border: 1px solid var(--bd);
+  border-radius: 8px;
+  background: var(--card);
+}
+.java-codemirror-host .cm-editor {
+  min-height: 19rem;
+  max-height: 64vh;
+}
+.java-codemirror-host .cm-scroller {
+  overflow: auto;
+}
+.java-codemirror-host .cm-content {
+  min-height: 19rem;
+}
+.java-codemirror-host .cm-line {
+  padding-left: 0.25rem;
+}
+.java-editor-loading {
+  margin: 0.6rem 0 0;
+  color: var(--mut);
+  font-size: 0.85rem;
+}
+.java-editor-error {
+  color: var(--hint-fg);
+  background: var(--hint-bg);
+  border-left: 3px solid var(--hint-border);
+  padding: 0.5rem 0.7rem;
+  border-radius: 4px;
+  overflow-wrap: anywhere;
+}
+.java-editor-fallback {
+  display: block;
+  width: 100%;
+  min-height: 19rem;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  resize: vertical;
+  font: 0.9rem/1.55 ui-monospace, "SFMono-Regular", Consolas, monospace;
+  tab-size: 4;
+}
+.java-input-panel label {
+  display: grid;
+  gap: 0.4rem;
+  font-weight: 650;
+}
+.java-input {
+  display: block;
+  width: 100%;
+  min-height: 4.5rem;
+  resize: vertical;
+  font: 0.9rem/1.5 ui-monospace, "SFMono-Regular", Consolas, monospace;
+  tab-size: 4;
+}
+.java-help {
+  display: block;
+  margin-top: 0.45rem;
+  line-height: 1.4;
+}
+.java-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: center;
+}
+.java-controls button {
+  margin: 0;
+  min-width: 4.6rem;
+}
+.java-controls button[hidden] {
+  display: none;
+}
+.java-runtime-status {
+  margin: 0;
+  padding: 0.55rem 0.75rem;
+  color: var(--mut);
+  background: var(--soft);
+  border-radius: 7px;
+  font-size: 0.87rem;
+  overflow-wrap: anywhere;
+}
+.java-runtime-status[data-status="ready"] {
+  color: var(--ok);
+}
+.java-runtime-status[data-status="error"],
+.java-runtime-status[data-status="timeout"] {
+  color: var(--bad);
+}
+.java-panel-summary {
+  cursor: pointer;
+  font-weight: 700;
+}
+.java-console-content,
+.java-results-content {
+  min-width: 0;
+  padding-top: 0.7rem;
+}
+.java-console-content {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.7rem;
+}
+.java-console-stream {
+  min-width: 0;
+}
+.java-console-stream h4 {
+  margin: 0 0 0.35rem;
+  font-size: 0.82rem;
+}
+.java-console-text {
+  min-height: 4rem;
+  max-height: 24rem;
+  margin: 0;
+  padding: 0.7rem;
+  overflow: auto;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+  color: var(--fg);
+  background: var(--bg);
+  border: 1px solid var(--bd);
+  border-radius: 7px;
+  font: 0.84rem/1.5 ui-monospace, "SFMono-Regular", Consolas, monospace;
+}
+.java-stderr {
+  color: var(--bad);
+}
+.java-console-meta {
+  grid-column: 1 / -1;
+}
+.java-runtime-exception,
+.java-diagnostics {
+  grid-column: 1 / -1;
+  min-width: 0;
+  padding: 0.65rem;
+  background: var(--soft);
+  border-radius: 7px;
+}
+.java-runtime-exception summary,
+.java-diagnostics summary,
+.java-check-actual summary {
+  cursor: pointer;
+  font-weight: 650;
+}
+.java-runtime-exception pre {
+  margin-bottom: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.java-diagnostics ul {
+  margin: 0.6rem 0 0;
+  padding-left: 1.1rem;
+}
+.java-diagnostic {
+  display: flex;
+  align-items: baseline;
+  gap: 0.55rem;
+  margin: 0.3rem 0;
+  overflow-wrap: anywhere;
+  font-size: 0.83rem;
+}
+.java-diagnostic-kind {
+  flex: 0 0 auto;
+  font-weight: 750;
+  font-size: 0.72rem;
+}
+.java-diagnostic-kind.error {
+  color: var(--bad);
+}
+.java-diagnostic-kind.warning {
+  color: var(--hint-border);
+}
+.java-execution-error,
+.java-pending {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: var(--mut);
+  overflow-wrap: anywhere;
+}
+.java-execution-error {
+  color: var(--bad);
+}
+.java-execution-error.timeout {
+  padding: 0.65rem;
+  border-left: 3px solid var(--bad);
+  background: var(--soft);
+}
+.java-score-heading {
+  justify-content: flex-start;
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid var(--bd);
+}
+.java-score-heading strong {
+  font-size: 1.05rem;
+}
+.java-check-list {
+  display: grid;
+  gap: 0.55rem;
+  margin: 0.7rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+.java-check {
+  display: grid;
+  grid-template-columns: 1.4rem minmax(0, 1fr);
+  align-items: start;
+  gap: 0.5rem;
+  padding: 0.65rem;
+  border: 1px solid var(--bd);
+  border-radius: 8px;
+}
+.java-check-icon {
+  display: grid;
+  width: 1.35rem;
+  height: 1.35rem;
+  place-items: center;
+  border-radius: 50%;
+  font-weight: 800;
+}
+.java-check.passed .java-check-icon {
+  color: var(--ok);
+  background: color-mix(in srgb, var(--ok) 12%, transparent);
+}
+.java-check.failed .java-check-icon {
+  color: var(--bad);
+  background: color-mix(in srgb, var(--bad) 12%, transparent);
+}
+.java-check-content {
+  min-width: 0;
+}
+.java-check-content strong {
+  display: block;
+}
+.java-check-content small {
+  color: var(--mut);
+}
+.java-check-content p {
+  margin: 0.25rem 0 0;
+  font-size: 0.88rem;
+  overflow-wrap: anywhere;
+}
+.java-check-actual {
+  grid-column: 2;
+  min-width: 0;
+  font-size: 0.82rem;
+}
+.java-check-actual pre {
+  max-width: 100%;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.java-explanation {
+  margin-bottom: 0;
+  color: var(--mut);
+}
+@media (max-width: 640px) {
+  .java-panel {
+    padding: 0.7rem;
+  }
+  .java-codemirror-host .cm-editor,
+  .java-codemirror-host .cm-content,
+  .java-editor-fallback {
+    min-height: 15rem;
+  }
+  .java-codemirror-host .cm-editor {
+    max-height: 52vh;
+  }
+  .java-console-content {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .java-console-meta,
+  .java-runtime-exception,
+  .java-diagnostics {
+    grid-column: 1;
+  }
+  .java-controls button {
+    flex: 1 1 calc(50% - 0.4rem);
+    min-height: 2.7rem;
+  }
+}
+
+/* ============================================================
+   Java exercise split workspace.
+   Desktop: editor on the left; instructions and all Java tools on the right.
+   Mobile: stack the instructions/tools and editor without horizontal overflow.
+   ============================================================ */
+.java-exercise-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: start;
+  min-width: 0;
+}
+.java-exercise-layout > .java-workspace-pane,
+.java-exercise-layout > .java-instructions-pane {
+  min-width: 0;
+  margin: 0;
+}
+.java-exercise-layout > .java-workspace-pane {
+  order: 1;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+.java-exercise-layout > .java-instructions-pane {
+  order: 0;
+}
+.java-split-handle {
+  display: none;
+}
+.java-instructions-pane > .java-exercise-host {
+  margin-top: 0.85rem;
+}
+.java-workspace-pane .java-editor-panel {
+  margin: 0;
+}
+
+@media (min-width: 901px) {
+  .java-exercise-layout {
+    grid-template-columns:
+      minmax(320px, 1fr)
+      1rem
+      minmax(320px, var(--java-side-col, 46%));
+    column-gap: 0;
+    align-items: start;
+  }
+  .java-exercise-layout > .java-workspace-pane {
+    grid-column: 1;
+    grid-row: 1;
+    position: sticky;
+    top: 5.5rem;
+    max-height: calc(100vh - 7rem);
+    overflow: auto;
+  }
+  .java-exercise-layout > .java-instructions-pane {
+    grid-column: 3;
+    grid-row: 1;
+    position: sticky;
+    top: 5.5rem;
+    max-height: calc(100vh - 7rem);
+    overflow: auto;
+  }
+  .java-split-handle {
+    position: relative;
+    display: block;
+    grid-column: 2;
+    grid-row: 1;
+    align-self: stretch;
+    min-height: 100%;
+    cursor: col-resize;
+    touch-action: none;
+    outline: none;
+  }
+  .java-split-handle::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 3px;
+    min-height: 4rem;
+    border-radius: 999px;
+    background: var(--bd);
+    transform: translateX(-50%);
+  }
+  .java-split-handle:hover::before,
+  .java-split-handle:focus-visible::before,
+  .java-split-handle.is-dragging::before {
+    background: var(--ac);
+  }
+  .java-split-handle:focus-visible::before {
+    box-shadow: var(
+      --ui-glow,
+      0 0 0 3px color-mix(in srgb, var(--ac) 13%, transparent)
+    );
+  }
+  .java-codemirror-host .cm-editor {
+    min-height: 25rem;
+    max-height: calc(100vh - 12rem);
+  }
+  .java-codemirror-host .cm-content {
+    min-height: 25rem;
+  }
+}
+
+@media (min-width: 901px) and (prefers-reduced-motion: no-preference) {
+  .java-split-handle::before {
+    transition: background-color var(--ui-fast, 150ms) var(--ui-ease, ease);
+  }
+}
+
+body.java-split-dragging {
+  cursor: col-resize;
+  user-select: none;
+}
+
+@media (max-width: 900px) {
+  .java-exercise-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .java-exercise-layout > .java-instructions-pane {
+    order: 0;
+    position: static;
+    max-height: none;
+    overflow: visible;
+  }
+  .java-exercise-layout > .java-workspace-pane {
+    order: 1;
+    position: static;
+    max-height: none;
+    overflow: visible;
+  }
+}
+
+/* Exam questions use the same two-pane Java layout as practice. */
+.exam-question-panel:has(.java-exercise-layout) {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  transform: none;
+}
+.exam-question-panel:has(.java-exercise-layout):focus-within,
+.exam-question-panel:has(.java-exercise-layout):hover {
+  border-color: transparent;
+  box-shadow: none;
+  transform: none;
+}
+.exam-question-panel:has(.java-exercise-layout)::after {
+  display: none;
+  content: none;
+}
+.exam-question-panel:has(.java-exercise-layout) .java-exercise-layout {
+  width: 100%;
+  min-width: 0;
+}
+
+
+/* ============================================================
+   Terminal desktop action rail.
+   Desktop: terminal stays on the left; solution, reset and the host app's
+   Next exercise control sit in a dedicated rail on the right.
+   Mobile: display:contents keeps the previous stacked terminal layout.
+   ============================================================ */
+.os-terminal .ot-workbench,
+.os-terminal .ot-workspace-main {
+  min-width: 0;
+}
+.os-terminal .ot-control-sidebar {
+  display: contents;
+}
+.os-terminal .ot-control-heading,
+.os-terminal .ot-next-slot {
+  display: none;
+}
+
+@media (min-width: 901px) {
+  .os-terminal .ot-workbench {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(12rem, 14.5rem);
+    gap: 0.85rem;
+    align-items: start;
+    padding: 0.75rem;
+  }
+  .os-terminal .ot-workspace-main {
+    min-width: 0;
+  }
+  .os-terminal .ot-control-sidebar {
+    position: sticky;
+    top: 5.5rem;
+    display: grid;
+    min-width: 0;
+    gap: 0.65rem;
+    align-content: start;
+    padding: 0.75rem;
+    background: var(--card);
+    border: 1px solid var(--bd);
+    border-radius: 10px;
+  }
+  .os-terminal .ot-control-heading {
+    display: block;
+    margin: 0;
+    font-size: 0.9rem;
+  }
+  .os-terminal .ot-next-slot:not(:empty) {
+    display: grid;
+    gap: 0.4rem;
+  }
+  .os-terminal .ot-control-sidebar .ot-actions {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.5rem;
+    margin: 0;
+  }
+  .os-terminal .ot-control-sidebar .ot-actions button,
+  .os-terminal .ot-next-slot > button,
+  .os-terminal .ot-next-slot > a,
+  .os-terminal .ot-next-slot > [role="button"] {
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    text-align: center;
+    overflow-wrap: anywhere;
+  }
+  .os-terminal .ot-control-sidebar .ot-solution {
+    max-height: min(48vh, 24rem);
+    overflow: auto;
+    margin: 0;
+  }
+  .os-terminal .ot-control-sidebar .ot-solution-list {
+    padding-left: 1.35rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .os-terminal .ot-workbench {
+    display: block;
+    padding: 0;
+  }
+  .os-terminal .ot-workspace-main,
+  .os-terminal .ot-control-sidebar {
+    display: contents;
+  }
+  .os-terminal .ot-control-heading,
+  .os-terminal .ot-next-slot {
+    display: none !important;
+  }
+}

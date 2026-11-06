@@ -1,0 +1,162 @@
+{
+  "schemaVersion": 1,
+  "packageId": "java-playground-smoke-test",
+  "version": "1.0.0",
+  "term": 1,
+  "datasets": {},
+  "exercises": {
+    "java-scanner-input-001": {
+      "course": "java",
+      "category": "Input and Output",
+      "title": "Read and display a user's age",
+      "instructions": "Use `Scanner` to read an integer from `System.in` and display it using the format `Age: <age>`. The automatic tests provide different input values.",
+      "hints": [
+        "Import java.util.Scanner.",
+        "Create a Scanner using System.in.",
+        "Read an integer using nextInt().",
+        "Use System.out.println() to display the result."
+      ],
+      "difficulty": "Easy",
+      "type": "java-ex",
+      "provenance": "java-playground-smoke-test",
+      "contentVersion": 1,
+      "java": {
+        "sourceFile": "Main.java",
+        "mainClass": "Main",
+        "preCode": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        // TODO: Read an integer from System.in and print Age: <age>\n    }\n}\n",
+        "stdin": "25\n",
+        "checks": [
+          {
+            "id": "age-25",
+            "type": "stdout",
+            "input": "25\n",
+            "expected": "Age: 25\n",
+            "matcher": "exact",
+            "points": 1,
+            "description": "The program reads and displays the age 25."
+          },
+          {
+            "id": "age-41",
+            "type": "stdout",
+            "input": "41\n",
+            "expected": "Age:\\s*41",
+            "matcher": "regex",
+            "points": 1,
+            "description": "The program correctly handles another input value."
+          }
+        ],
+        "explanation": "The tests provide different inputs through System.in and inspect the actual System.out output. This verifies that the program reads values rather than hardcoding one result.",
+        "solution": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        int age = scanner.nextInt();\n        System.out.println(\"Age: \" + age);\n    }\n}"
+      }
+    },
+    "java-animal-class-002": {
+      "course": "java",
+      "category": "Classes and Objects",
+      "title": "Create an Animal class",
+      "instructions": "Create an `Animal` class with a private `String` attribute named `name`. Implement a public constructor that receives the animal's name and a public `eat()` method that returns the text `'<name> is eating'`.",
+      "hints": [
+        "Declare the name attribute as private.",
+        "Use the constructor to initialize the attribute.",
+        "Use this.name to refer to the instance attribute.",
+        "The eat() method must return a String."
+      ],
+      "difficulty": "Easy",
+      "type": "java-ex",
+      "provenance": "java-playground-smoke-test",
+      "contentVersion": 1,
+      "java": {
+        "sourceFile": "Animal.java",
+        "preCode": "public class Animal {\n    // TODO: Declare a private String attribute named name.\n\n    public Animal(String name) {\n        // TODO: Store the supplied name.\n    }\n\n    public String eat() {\n        // TODO: Return '<name> is eating'.\n        return \"\";\n    }\n}\n",
+        "checks": [
+          {
+            "id": "animal-class",
+            "type": "classExists",
+            "className": "Animal",
+            "points": 1,
+            "description": "The Animal class exists."
+          },
+          {
+            "id": "name-field",
+            "type": "fieldExists",
+            "className": "Animal",
+            "fieldName": "name",
+            "expectedType": "java.lang.String",
+            "points": 1,
+            "description": "The name field exists and has type String."
+          },
+          {
+            "id": "private-name",
+            "type": "fieldModifier",
+            "className": "Animal",
+            "fieldName": "name",
+            "expected": "private",
+            "points": 1,
+            "description": "The name attribute is private."
+          },
+          {
+            "id": "animal-constructor",
+            "type": "constructorExists",
+            "className": "Animal",
+            "parameterTypes": [
+              "java.lang.String"
+            ],
+            "points": 1,
+            "description": "The class has a constructor accepting a String."
+          },
+          {
+            "id": "public-eat",
+            "type": "methodModifier",
+            "className": "Animal",
+            "method": "eat",
+            "parameterTypes": [],
+            "expected": "public",
+            "points": 1,
+            "description": "The eat method is public."
+          },
+          {
+            "id": "dog-eat",
+            "type": "methodReturn",
+            "className": "Animal",
+            "constructor": {
+              "parameterTypes": [
+                "java.lang.String"
+              ],
+              "args": [
+                "Dog"
+              ]
+            },
+            "method": "eat",
+            "parameterTypes": [],
+            "args": [],
+            "matcher": "exact",
+            "expected": "Dog is eating",
+            "points": 1,
+            "description": "The eat method returns the correct text for a dog."
+          },
+          {
+            "id": "cat-eat",
+            "type": "methodReturn",
+            "className": "Animal",
+            "constructor": {
+              "parameterTypes": [
+                "java.lang.String"
+              ],
+              "args": [
+                "Cat"
+              ]
+            },
+            "method": "eat",
+            "parameterTypes": [],
+            "args": [],
+            "matcher": "regex",
+            "expected": "^Cat\\s+is\\s+eating$",
+            "points": 1,
+            "description": "The eat method also works for another animal name."
+          }
+        ],
+        "explanation": "The grader uses reflection to verify the compiled class structure, access modifiers, constructor signature and actual method return values. It creates separate Animal objects to test different constructor arguments.",
+        "solution": "public class Animal {\n    private String name;\n\n    public Animal(String name) {\n        this.name = name;\n    }\n\n    public String eat() {\n        return name + \" is eating\";\n    }\n}"
+      }
+    }
+  }
+}

@@ -15,6 +15,10 @@ const terminalModuleUrl = new URL(
   "./terminal.js",
   document.currentScript?.src || location.href,
 ).href;
+const javaModuleUrl = new URL(
+  "./java.js",
+  document.currentScript?.src || location.href,
+).href;
 
 // Terminal views own their listeners and resources. Dispose only exercise
 // views that explicitly expose this small lifecycle hook.
@@ -3108,15 +3112,17 @@ function renderExerciseInstructions(target, source) {
 }
 
 const expectedText = (ex) =>
-  ex.type === "sql-query"
-    ? formatSQL(ex.referenceSolution)
-    : ex.type.startsWith("mcq")
-      ? ex.expected.map((i) => ex.options[i]).join("; ")
-      : ex.type === "command-text"
-        ? [...(ex.expected.accepted || [])].join("\n")
-        : ex.type === "fill-blank"
-          ? ex.expected.blanks.map((b) => b[0]).join(", ")
-          : ex.expected;
+  ex.type === "java-ex"
+    ? `Your edited Java source is checked against ${Array.isArray(ex.java?.checks) ? ex.java.checks.length : 0} automatic tests.`
+    : ex.type === "sql-query"
+      ? formatSQL(ex.referenceSolution)
+      : ex.type.startsWith("mcq")
+        ? ex.expected.map((i) => ex.options[i]).join("; ")
+        : ex.type === "command-text"
+          ? [...(ex.expected.accepted || [])].join("\n")
+          : ex.type === "fill-blank"
+            ? ex.expected.blanks.map((b) => b[0]).join(", ")
+            : ex.expected;
 const answerText = (ex, answer) => {
   if (ex.type.startsWith("mcq")) {
     if (!Array.isArray(answer)) return "(no answer)";
@@ -3576,6 +3582,7 @@ function qView(
       .join(" · "),
   );
   let terminalInstructionsPane = null;
+  let javaInstructionsPane = null;
   if (ex.type === "terminal") {
     terminalInstructionsPane = h(
       "section",
@@ -3590,6 +3597,21 @@ function qView(
     q = h("section", {
       class: "q terminal-workspace-pane",
       "aria-label": "Terminal workspace",
+    });
+  } else if (ex.type === "java-ex") {
+    javaInstructionsPane = h(
+      "section",
+      {
+        class: "q java-instructions-pane",
+        "aria-label": "Java exercise instructions and tools",
+      },
+      exerciseHeading,
+      exerciseMeta,
+      instructions,
+    );
+    q = h("section", {
+      class: "q java-workspace-pane",
+      "aria-label": "Java code editor",
     });
   } else {
     q.append(exerciseHeading, exerciseMeta, instructions);
@@ -3728,6 +3750,87 @@ function qView(
       );
       btns.append(submitButton);
     }
+  } else if (ex.type === "java-ex") {
+    const javaHost = h("div", { class: "java-exercise-host" });
+    javaHost.append(loadingNote("Loading the Java playground…"));
+    javaInstructionsPane.append(javaHost);
+    let javaController = null;
+    let javaDisposed = false;
+    let javaMountPromise = null;
+    let javaMountGeneration = 1;
+    const savedCode = get();
+    const initialCode =
+      savedCode === undefined || savedCode === null
+        ? String(ex.java?.preCode ?? "")
+        : String(savedCode);
+    // Persist the visible starter text too, so a saved exam always contains
+    // the exact source that will be graded even when the student never edits it.
+    updateAnswer(initialCode);
+    readAns = () => javaController?.getSource?.() ?? initialCode;
+    resetFn = () => javaController?.reset?.();
+    q.disposeExercise = () => {
+      javaDisposed = true;
+      javaMountGeneration++;
+      const controller = javaController;
+      javaController = null;
+      if (controller) return controller.dispose?.();
+      return javaMountPromise?.then((mounted) => mounted?.dispose?.());
+    };
+    const generation = javaMountGeneration;
+    javaMountPromise = import(javaModuleUrl)
+      .then(async (javaModule) => {
+        if (
+          javaDisposed ||
+          generation !== javaMountGeneration ||
+          !q.isConnected
+        )
+          return null;
+        const controller = await javaModule.mountJavaExercise({
+          container: javaHost,
+          editorContainer: q,
+          exercise: ex,
+          initialCode,
+          mode,
+          onChange: (code) => updateAnswer(code),
+          onGrade: async (result) => {
+            if (mode !== "practice" || javaDisposed || !q.isConnected) return;
+            const passed = result?.success === true;
+            const score = result?.score || {};
+            await rec(ex, passed, "practice", onAttempt, {
+              java: true,
+              partialScore: score.earned ?? 0,
+              maxScore: score.total ?? 0,
+              error:
+                result?.status === "compile-error" ||
+                result?.status === "runtime-error",
+              blank: !readAns().trim(),
+            });
+            if (passed) markExerciseCorrect();
+          },
+        });
+        if (
+          javaDisposed ||
+          generation !== javaMountGeneration ||
+          !q.isConnected
+        ) {
+          controller?.dispose?.();
+          return null;
+        }
+        javaController = controller;
+        return controller;
+      })
+      .catch((error) => {
+        if (!javaDisposed && q.isConnected) {
+          javaHost.replaceChildren(
+            h(
+              "div",
+              { class: "err", role: "alert" },
+              `The Java playground could not be loaded: ${error?.message || String(error)}. Other exercise types are unaffected.`,
+            ),
+          );
+        }
+        return null;
+      });
   } else if (ex.type === "terminal") {
     const terminalHost = h("div", { class: "terminal-exercise-host" });
     terminalHost.append(loadingNote("Loading browser terminal…"));
@@ -4025,7 +4128,7 @@ function qView(
       );
       btns.append(nextExerciseButton);
     }
-    if (ex.type !== "terminal") {
+    if (ex.type !== "terminal" && ex.type !== "java-ex") {
       btns.append(
         h(
           "button",
@@ -4087,6 +4190,8 @@ function qView(
       );
       if (ex.type === "terminal") {
         terminalInstructionsPane.append(hb, hintPanel);
+      } else if (ex.type === "java-ex") {
+        javaInstructionsPane.append(hb, hintPanel);
       } else {
         btns.append(hb);
         q.append(hintPanel);
@@ -4214,7 +4319,8 @@ function qView(
     if (
       hasSol &&
       ex.type !== "short-answer-self-check" &&
-      ex.type !== "terminal"
+      ex.type !== "terminal" &&
+      ex.type !== "java-ex"
     ) {
       const solution = h(
         "div",
@@ -4243,12 +4349,58 @@ function qView(
       q.append(solution);
     }
   }
-  q.append(btns, out, fb);
+  // Java source solutions live in the Java-specific configuration, keeping
+  // them separate from SQL reference queries and terminal exercise data.
+  // As with the other exercise types, solutions are only revealed in practice.
+  if (
+    mode === "practice" &&
+    ex.type === "java-ex" &&
+    typeof ex.java?.solution === "string" &&
+    ex.java.solution.trim()
+  ) {
+    const solutionCode = h("code", {});
+    solutionCode.innerHTML = Core.highlightJava(ex.java.solution);
+    const solution = h(
+      "div",
+      { class: "solution-panel java-solution-panel", hidden: true },
+      h("b", {}, "One possible solution"),
+      h("div", { class: "stmt" }, h("pre", {}, solutionCode)),
+      h(
+        "small",
+        { class: "java-solution-note" },
+        "This is one possible implementation. Revealing it does not replace your code in the editor.",
+      ),
+    );
+    const toggle = h(
+      "button",
+      {
+        class: "sec",
+        "aria-expanded": "false",
+        onclick: () => {
+          solution.hidden = !solution.hidden;
+          if (!solution.hidden) achPeek(ex, "solution");
+          toggle.textContent = solution.hidden
+            ? "Show solution"
+            : "Hide solution";
+          toggle.setAttribute("aria-expanded", String(!solution.hidden));
+        },
+      },
+      "Show solution",
+    );
+    javaInstructionsPane.append(toggle, solution);
+  }
+  if (ex.type === "java-ex") {
+    javaInstructionsPane.append(btns, out, fb);
+  } else {
+    q.append(btns, out, fb);
+  }
   const view = schemaPanel
     ? sqlSplitLayout(schemaPanel, q)
     : ex.type === "terminal"
       ? terminalSplitLayout(terminalInstructionsPane, q)
-      : q;
+      : ex.type === "java-ex"
+        ? javaSplitLayout(q, javaInstructionsPane)
+        : q;
   view.refreshNextExercise = updateNextExercise;
   view.focusInput = () => focusTarget?.focus({ preventScroll: true });
   return view;
@@ -4360,6 +4512,111 @@ function terminalSplitLayout(instructionsPanel, workspacePanel) {
       set(terminalInstructionsFraction + step, true);
     else if (event.key === "Home") set(TERMINAL_SPLIT_MIN, true);
     else if (event.key === "End") set(TERMINAL_SPLIT_MAX, true);
+    else return;
+    event.preventDefault();
+  });
+  return layout;
+}
+
+// ---------- resizable Java editor / instructions-and-tools split ----------
+// The editor stays on the left; exercise instructions and all Java controls,
+// input, console output, hints and grading results share the right pane.
+const JAVA_SPLIT_KEY = "javaSideFraction";
+const JAVA_SPLIT_MIN = 0.3;
+const JAVA_SPLIT_MAX = 0.64;
+const JAVA_SPLIT_DEFAULT = 0.46;
+let javaSideFraction = (() => {
+  try {
+    const value = Number(localStorage.getItem(JAVA_SPLIT_KEY));
+    if (
+      Number.isFinite(value) &&
+      value >= JAVA_SPLIT_MIN &&
+      value <= JAVA_SPLIT_MAX
+    )
+      return value;
+  } catch {}
+  return JAVA_SPLIT_DEFAULT;
+})();
+function javaSplitLayout(editorPanel, instructionsPanel) {
+  const handle = h("div", {
+    class: "java-split-handle",
+    role: "separator",
+    "aria-orientation": "vertical",
+    "aria-label": "Resize Java editor and exercise tools",
+    tabindex: "0",
+    title: "Drag to resize (double-click to reset)",
+  });
+  const layout = h(
+    "div",
+    { class: "java-exercise-layout" },
+    editorPanel,
+    handle,
+    instructionsPanel,
+  );
+  const apply = () => {
+    layout.style.setProperty(
+      "--java-side-col",
+      `${(javaSideFraction * 100).toFixed(2)}%`,
+    );
+    handle.setAttribute(
+      "aria-valuenow",
+      String(Math.round(javaSideFraction * 100)),
+    );
+  };
+  const set = (fraction, save = false) => {
+    javaSideFraction = Math.min(
+      JAVA_SPLIT_MAX,
+      Math.max(JAVA_SPLIT_MIN, fraction),
+    );
+    apply();
+    if (save) {
+      try {
+        localStorage.setItem(JAVA_SPLIT_KEY, String(javaSideFraction));
+      } catch {}
+    }
+  };
+  handle.setAttribute("aria-valuemin", String(JAVA_SPLIT_MIN * 100));
+  handle.setAttribute("aria-valuemax", String(JAVA_SPLIT_MAX * 100));
+  apply();
+  let dragging = false;
+  handle.addEventListener("pointerdown", (event) => {
+    if (event.button !== 0 || matchMedia("(max-width: 900px)").matches) return;
+    dragging = true;
+    handle.setPointerCapture(event.pointerId);
+    handle.classList.add("is-dragging");
+    document.body.classList.add("java-split-dragging");
+    event.preventDefault();
+  });
+  handle.addEventListener("pointermove", (event) => {
+    if (!dragging) return;
+    const rect = layout.getBoundingClientRect();
+    if (rect.width) set((rect.right - event.clientX) / rect.width, false);
+  });
+  const end = () => {
+    if (!dragging) return;
+    dragging = false;
+    handle.classList.remove("is-dragging");
+    document.body.classList.remove("java-split-dragging");
+    try {
+      localStorage.setItem(JAVA_SPLIT_KEY, String(javaSideFraction));
+    } catch {}
+  };
+  handle.addEventListener("pointerup", end);
+  handle.addEventListener("pointercancel", end);
+  handle.addEventListener("lostpointercapture", end);
+  handle.addEventListener("dblclick", () => {
+    javaSideFraction = JAVA_SPLIT_DEFAULT;
+    apply();
+    try {
+      localStorage.removeItem(JAVA_SPLIT_KEY);
+    } catch {}
+  });
+  handle.addEventListener("keydown", (event) => {
+    const step = event.shiftKey ? 0.1 : 0.02;
+    if (event.key === "ArrowLeft") set(javaSideFraction - step, true);
+    else if (event.key === "ArrowRight") set(javaSideFraction + step, true);
+    else if (event.key === "Home") set(JAVA_SPLIT_MIN, true);
+    else if (event.key === "End") set(JAVA_SPLIT_MAX, true);
     else return;
     event.preventDefault();
   });
@@ -6229,6 +6486,37 @@ function displayDatasetTitle(dataset, id) {
     .replace(/\b[a-z]/g, (c) => c.toUpperCase());
 }
 
+const SANDBOX_JAVA_STORAGE_KEY = "sandboxJavaCode";
+const SANDBOX_JAVA_STARTER = `public class Main {
+    public static void main(String[] args) {
+        System.out.println("Hello, Java!");
+    }
+}
+`;
+// Minimal exercise descriptor: a runnable Main class, no automatic checks
+// (so the Check button and test results stay hidden) and no instructions.
+const SANDBOX_JAVA_EXERCISE = {
+  java: {
+    sourceFile: "Main.java",
+    mainClass: "Main",
+    preCode: SANDBOX_JAVA_STARTER,
+    stdin: "",
+    checks: [],
+  },
+};
+function readSandboxJavaCode() {
+  try {
+    const saved = localStorage.getItem(SANDBOX_JAVA_STORAGE_KEY);
+    if (saved !== null) return saved;
+  } catch {}
+  return SANDBOX_JAVA_STARTER;
+}
+function saveSandboxJavaCode(code) {
+  try {
+    localStorage.setItem(SANDBOX_JAVA_STORAGE_KEY, String(code ?? ""));
+  } catch {}
+}
+
 async function pageSandbox(root) {
   const datasets = Object.entries(S.datasets || {})
     .filter(
@@ -6248,7 +6536,7 @@ async function pageSandbox(root) {
     h(
       "p",
       {},
-      "Experiment freely with the browser Linux terminal or run SQL against any database bundled with the exercise packages. Sandbox work does not affect exercise grades.",
+      "Experiment freely with the browser Linux terminal, run SQL against any database bundled with the exercise packages, or write and run Java code. Sandbox work does not affect exercise grades.",
     ),
   );
   const modeBar = h("div", {
@@ -6267,13 +6555,20 @@ async function pageSandbox(root) {
     { type: "button", class: "sec", "aria-pressed": "false" },
     "SQL",
   );
-  modeBar.append(terminalMode, sqlMode);
+  const javaMode = h(
+    "button",
+    { type: "button", class: "sec", "aria-pressed": "false" },
+    "Java",
+  );
+  modeBar.append(terminalMode, sqlMode, javaMode);
   page.append(heading, modeBar, content);
   root.append(page);
 
   let mode = "terminal";
   let modeGeneration = 0;
   let terminalController = null;
+  let javaController = null;
+  let javaSandboxCode = readSandboxJavaCode();
   let selectedDatasetId = datasets[0]?.[0] || "";
   let currentSchema = null;
   let currentSqlTextarea = null;
@@ -6284,24 +6579,34 @@ async function pageSandbox(root) {
   const syncModes = () => {
     terminalMode.classList.toggle("on", mode === "terminal");
     sqlMode.classList.toggle("on", mode === "sql");
+    javaMode.classList.toggle("on", mode === "java");
     terminalMode.setAttribute("aria-pressed", String(mode === "terminal"));
     sqlMode.setAttribute("aria-pressed", String(mode === "sql"));
+    javaMode.setAttribute("aria-pressed", String(mode === "java"));
   };
   const disposeTerminal = async () => {
     const controller = terminalController;
     terminalController = null;
     if (controller) await controller.dispose?.();
   };
+  const disposeJava = async () => {
+    const controller = javaController;
+    javaController = null;
+    if (controller) await controller.dispose?.();
+  };
+  const disposeActive = async () => {
+    await Promise.all([disposeTerminal(), disposeJava()]);
+  };
   root.disposeExercise = async () => {
     modeGeneration++;
-    await disposeTerminal();
+    await disposeActive();
   };
 
   const showTerminal = async () => {
     mode = "terminal";
     syncModes();
     const generation = ++modeGeneration;
-    await disposeTerminal();
+    await disposeActive();
     if (generation !== modeGeneration) return;
     content.replaceChildren(
       loadingNote("Opening your personal terminal sandbox…"),
@@ -6332,9 +6637,60 @@ async function pageSandbox(root) {
     }
   };
 
+  const showJava = async () => {
+    mode = "java";
+    syncModes();
+    const generation = ++modeGeneration;
+    await disposeActive();
+    if (generation !== modeGeneration) return;
+    content.replaceChildren(loadingNote("Loading the Java playground…"));
+    try {
+      const javaModule = await import(javaModuleUrl);
+      if (generation !== modeGeneration || !content.isConnected) return;
+      // Same two-pane layout as a Java practice exercise: editor on the left,
+      // input / controls / console on the right (no instructions pane content).
+      const editorPane = h("section", {
+        class: "q java-workspace-pane",
+        "aria-label": "Java code editor",
+      });
+      const toolsPane = h("section", {
+        class: "q java-instructions-pane",
+        "aria-label": "Java tools",
+      });
+      const host = h("div", { class: "java-exercise-host" });
+      toolsPane.append(host);
+      content.replaceChildren(javaSplitLayout(editorPane, toolsPane));
+      const controller = await javaModule.mountJavaExercise({
+        container: host,
+        editorContainer: editorPane,
+        exercise: SANDBOX_JAVA_EXERCISE,
+        initialCode: javaSandboxCode,
+        mode: "sandbox",
+        onChange: (code) => {
+          javaSandboxCode = code;
+          saveSandboxJavaCode(code);
+        },
+      });
+      if (generation !== modeGeneration || !content.isConnected) {
+        await controller?.dispose?.();
+        return;
+      }
+      javaController = controller;
+    } catch (error) {
+      if (generation !== modeGeneration) return;
+      content.replaceChildren(
+        h(
+          "div",
+          { class: "card err", role: "alert" },
+          `The Java sandbox could not be opened: ${error?.message || String(error)}`,
+        ),
+      );
+    }
+  };
+
   const renderSql = () => {
     const generation = ++modeGeneration;
-    void disposeTerminal();
+    void disposeActive();
     mode = "sql";
     syncModes();
     if (!datasets.length) {
@@ -6534,6 +6890,9 @@ async function pageSandbox(root) {
   });
   sqlMode.addEventListener("click", () => {
     if (mode !== "sql") renderSql();
+  });
+  javaMode.addEventListener("click", () => {
+    if (mode !== "java") showJava();
   });
   await showTerminal();
 }
@@ -7645,6 +8004,37 @@ async function runExam(root, st) {
         const g = await gradeSql(ex, a || "");
         ok = g.correct;
         rows.push({ ex, ok, a, note: g.error });
+      } else if (ex.type === "java-ex") {
+        const submittedSource =
+          typeof a === "string" ? a : String(ex.java?.preCode ?? "");
+        try {
+          const javaModule = await import(javaModuleUrl);
+          const result = await javaModule.checkJavaExercise({
+            exercise: ex,
+            source: submittedSource,
+          });
+          ok = result.success === true;
+          const failed = (result.checks || []).filter((check) => !check.passed);
+          const score = result.score || { earned: 0, total: 0 };
+          rows.push({
+            ex,
+            ok,
+            a: submittedSource,
+            note:
+              `Java automatic checks: ${score.earned ?? 0} / ${score.total ?? 0} points` +
+              (failed.length
+                ? `\n${failed.map((check) => `${check.description}: ${check.feedback}`).join("\n")}`
+                : ""),
+          });
+        } catch (error) {
+          ok = false;
+          rows.push({
+            ex,
+            ok,
+            a: submittedSource,
+            note: `Java grading failed: ${error?.message || String(error)}`,
+          });
+        }
       } else if (ex.type === "terminal") {
         if (a !== "terminal-workspace") {
           ok = false;
@@ -7766,7 +8156,9 @@ async function runExam(root, st) {
                   "pre",
                   {
                     class:
-                      r.ex.type === "terminal" ? "exam-result-note" : "err",
+                      r.ex.type === "terminal" || r.ex.type === "java-ex"
+                        ? "exam-result-note"
+                        : "err",
                   },
                   r.note,
                 )
