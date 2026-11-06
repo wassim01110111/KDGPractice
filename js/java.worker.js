@@ -3,7 +3,17 @@
 
 const LOADER_URL = "https://cjrtnc.leaningtech.com/5.0/loader.js";
 const RUNNER_CLASS = "learning.java.ExerciseRunner";
-const RUNNER_JAR = "/KDGPractice/content/java/ExerciseRunner.jar";
+
+// Resolve the JAR relative to this classic worker. This preserves the
+// GitHub Pages repository prefix (for example /KDGPractice/) automatically.
+const RUNNER_JAR_URL = new URL(
+  "./content/java/ExerciseRunner.jar",
+  self.location.href,
+).href;
+
+// Stage the downloaded JAR in CheerpJ's Java-readable /str filesystem.
+const RUNNER_JAR = "/str/ExerciseRunner.jar";
+let runnerJarReady = null;
 let runtimeReady = false;
 let initialization = null;
 let workQueue = Promise.resolve();
@@ -13,17 +23,38 @@ let workQueue = Promise.resolve();
  * It must be packaged as learning/java/ExerciseRunner.class inside
  * /app/content/java/ExerciseRunner.jar.
  */
-async function runExerciseRunner(...args) {
-  try {
-    // Fail early with a useful message if the deployed JAR is not present.
-    await cjFileBlob(RUNNER_JAR);
-  } catch (error) {
-    throw new Error(
-      `Java exercise runner JAR is missing or unreadable at ${RUNNER_JAR}. ` +
-        `Deploy ExerciseRunner.jar there; it must contain ` +
-        `learning/java/ExerciseRunner.class. Original error: ${error?.message || error}`,
-    );
+async function ensureRunnerJar() {
+  if (!runnerJarReady) {
+    runnerJarReady = (async () => {
+      const response = await fetch(RUNNER_JAR_URL, { cache: "no-cache" });
+      if (!response.ok) {
+        throw new Error(
+          `Could not download ExerciseRunner.jar from ${RUNNER_JAR_URL} ` +
+          `(HTTP ${response.status}). Ensure it exists at content/java/ExerciseRunner.jar ` +
+          `relative to java.worker.js.`,
+        );
+      }
+
+      const bytes = new Uint8Array(await response.arrayBuffer());
+      if (bytes.length < 4 || bytes[0] !== 0x50 || bytes[1] !== 0x4b) {
+        throw new Error(`The response from ${RUNNER_JAR_URL} is not a valid JAR/ZIP file.`);
+      }
+
+      cheerpOSAddStringFile(RUNNER_JAR, bytes);
+      const staged = await cjFileBlob(RUNNER_JAR);
+      if (!staged || staged.size === 0) {
+        throw new Error(`ExerciseRunner.jar could not be staged at ${RUNNER_JAR}.`);
+      }
+    })().catch((error) => {
+      runnerJarReady = null;
+      throw error;
+    });
   }
+  return runnerJarReady;
+}
+
+async function runExerciseRunner(...args) {
+  await ensureRunnerJar();
 
   try {
     return await cheerpjRunMain(RUNNER_CLASS, RUNNER_JAR, ...args);
