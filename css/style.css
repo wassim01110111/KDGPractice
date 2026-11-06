@@ -1090,7 +1090,9 @@ th {
    and its visible background belongs to .ot-input-row. */
 .exam-session .editor,
 .exam-session .answer-blanks input,
-.exam-session .q input:not([type="checkbox"]):not([type="radio"]):not(.ot-input) {
+.exam-session
+  .q
+  input:not([type="checkbox"]):not([type="radio"]):not(.ot-input) {
   width: 100%;
   min-height: 3rem;
   padding: 0.8rem 0.9rem;
@@ -7873,7 +7875,6 @@ pre,
   }
 }
 
-
 /* Resizable terminal exercise: terminal on the left, instructions on the right.
    The divider is enabled only on desktop; mobile keeps a simple stacked flow. */
 .terminal-exercise-layout {
@@ -8036,7 +8037,6 @@ body.terminal-split-dragging {
   min-width: 0;
 }
 
-
 /* Browser-based Java exercise workspace (CheerpJ 5 worker + CodeMirror). */
 .java-exercise-host,
 .java-exercise {
@@ -8116,7 +8116,11 @@ body.terminal-split-dragging {
   border: 0;
   border-radius: 0;
   resize: vertical;
-  font: 0.9rem/1.55 ui-monospace, "SFMono-Regular", Consolas, monospace;
+  font:
+    0.9rem/1.55 ui-monospace,
+    "SFMono-Regular",
+    Consolas,
+    monospace;
   tab-size: 4;
 }
 .java-input-panel label {
@@ -8129,7 +8133,11 @@ body.terminal-split-dragging {
   width: 100%;
   min-height: 4.5rem;
   resize: vertical;
-  font: 0.9rem/1.5 ui-monospace, "SFMono-Regular", Consolas, monospace;
+  font:
+    0.9rem/1.5 ui-monospace,
+    "SFMono-Regular",
+    Consolas,
+    monospace;
   tab-size: 4;
 }
 .java-help {
@@ -8199,7 +8207,11 @@ body.terminal-split-dragging {
   background: var(--bg);
   border: 1px solid var(--bd);
   border-radius: 7px;
-  font: 0.84rem/1.5 ui-monospace, "SFMono-Regular", Consolas, monospace;
+  font:
+    0.84rem/1.5 ui-monospace,
+    "SFMono-Regular",
+    Consolas,
+    monospace;
 }
 .java-stderr {
   color: var(--bad);
@@ -8519,7 +8531,6 @@ body.java-split-dragging {
   min-width: 0;
 }
 
-
 /* ============================================================
    Terminal desktop action rail.
    Desktop: terminal stays on the left; solution, reset and the host app's
@@ -8540,8 +8551,6 @@ body.java-split-dragging {
 
 @media (min-width: 901px) {
   .os-terminal .ot-workbench {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(12rem, 14.5rem);
     gap: 0.85rem;
     align-items: start;
     padding: 0.75rem;

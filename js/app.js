@@ -3888,6 +3888,7 @@ function qView(
           exerciseId: ex.id,
           attemptId,
           mode,
+          controlsContainer: terminalInstructionsPane,
           onChange: async () => {
             fb.replaceChildren();
             await updateAnswer("terminal-workspace");

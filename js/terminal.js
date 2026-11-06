@@ -7043,6 +7043,7 @@ export async function mountTerminalExercise({
   mode = "practice",
   onGrade = () => {},
   onChange = () => {},
+  controlsContainer = null,
 }) {
   if (!(container instanceof Element))
     throw new Error("A valid terminal mount element is required");
@@ -7172,7 +7173,6 @@ export async function mountTerminalExercise({
     colorLegend,
     focusButton,
     clearButton,
-    checkButton,
   );
   const screen = createElement("div", "ot-screen");
   screen.setAttribute("role", "log");
@@ -7249,6 +7249,9 @@ export async function mountTerminalExercise({
   const workbench = createElement("div", "ot-workbench");
   const workspaceMain = createElement("div", "ot-workspace-main");
   const controlSidebar = createElement("aside", "ot-control-sidebar");
+  // The instruction pane can host this panel while retaining the terminal's
+  // scoped styling and color variables.
+  if (controlsContainer) controlSidebar.classList.add("os-terminal");
   controlSidebar.setAttribute("aria-label", "Exercise controls");
   const controlHeading = createElement("h4", "ot-control-heading", "Exercise controls");
   const nextExerciseSlot = createElement("div", "ot-next-slot");
@@ -7261,7 +7264,12 @@ export async function mountTerminalExercise({
     solutionArea,
     gradeArea,
   );
-  workbench.append(workspaceMain, controlSidebar);
+  workbench.append(workspaceMain);
+  if (controlsContainer instanceof Element) {
+    controlsContainer.append(controlSidebar);
+  } else {
+    workbench.append(controlSidebar);
+  }
   instance.append(style, workbench);
   container.replaceChildren(instance);
 
@@ -8098,6 +8106,7 @@ export async function mountTerminalExercise({
   resetButton.addEventListener("click", () => {
     pendingCommand = resetWorkspace().catch(() => {});
   });
+  if (mode === "practice") actions.append(checkButton);
   actions.append(resetButton);
   if (!solutionButton.hidden) actions.append(solutionButton);
   solutionButton.addEventListener("click", () => {
