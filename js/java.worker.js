@@ -8,6 +8,38 @@ let runtimeReady = false;
 let initialization = null;
 let workQueue = Promise.resolve();
 
+/*
+ * ExerciseRunner is infrastructure, not the student's Main class.
+ * It must be packaged as learning/java/ExerciseRunner.class inside
+ * /app/content/java/ExerciseRunner.jar.
+ */
+async function runExerciseRunner(...args) {
+  try {
+    // Fail early with a useful message if the deployed JAR is not present.
+    await cjFileBlob(RUNNER_JAR);
+  } catch (error) {
+    throw new Error(
+      `Java exercise runner JAR is missing or unreadable at ${RUNNER_JAR}. ` +
+      `Deploy ExerciseRunner.jar there; it must contain ` +
+      `learning/java/ExerciseRunner.class. Original error: ${error?.message || error}`
+    );
+  }
+
+  try {
+    return await cheerpjRunMain(RUNNER_CLASS, RUNNER_JAR, ...args);
+  } catch (error) {
+    const message = error?.message || String(error);
+    if (/Could not find or load main class|ClassNotFoundException/i.test(message)) {
+      throw new Error(
+        `Java exercise runner class "${RUNNER_CLASS}" was not found in ${RUNNER_JAR}. ` +
+        `Rebuild the JAR with package learning.java and ensure it contains ` +
+        `learning/java/ExerciseRunner.class. Original error: ${message}`
+      );
+    }
+    throw error;
+  }
+}
+
 function status(requestId, value, detail = "") {
   self.postMessage({ type: "STATUS", requestId, status: value, detail });
 }
@@ -72,9 +104,7 @@ function safeRemoveStringFile(path) {
 
 async function cleanupRequestFiles(configPath, resultPath, classesPath) {
   try {
-    await cheerpjRunMain(
-      RUNNER_CLASS,
-      RUNNER_JAR,
+    await runExerciseRunner(
       "cleanup",
       "-",
       configPath,
@@ -103,9 +133,7 @@ async function execute(message) {
     cheerpOSAddStringFile(configPath, JSON.stringify(config));
 
     status(requestId, "COMPILING", "Compiling your Java source code…");
-    const compileExit = await cheerpjRunMain(
-      RUNNER_CLASS,
-      RUNNER_JAR,
+    const compileExit = await runExerciseRunner(
       "compile",
       sourcesPath,
       configPath,
@@ -121,9 +149,7 @@ async function execute(message) {
     const command = operation === "check" ? "check" : "run";
     status(requestId, command === "check" ? "TESTING" : "RUNNING",
       command === "check" ? "Running the automatic checks…" : "Running your Java program…");
-    const executionExit = await cheerpjRunMain(
-      RUNNER_CLASS,
-      RUNNER_JAR,
+    const executionExit = await runExerciseRunner(
       command,
       "-",
       configPath,
