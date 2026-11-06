@@ -22,9 +22,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "orientation-file",
@@ -48,7 +46,7 @@
       "id": "os-learning-s01-002",
       "category": "Section 01 — Linux, the terminal and your first commands",
       "title": "Create a first command transcript",
-      "instructions": "Use `echo` to print the phrase `Linux is case-sensitive`. Save it to `first-note.txt`, then display the file with `cat`. The saved file must contain exactly that phrase followed by one newline.",
+      "instructions": "Use `echo` to print the phrase `Linux is case-sensitive`. Save it to `first-note.txt`, then display the file with `cat`. The saved file must contain exactly that phrase.",
       "hints": [
         "Use `echo \"Linux is case-sensitive\" > first-note.txt`.",
         "`cat first-note.txt` displays the saved contents."
@@ -61,9 +59,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "note-file",
@@ -100,9 +96,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "sequence",
@@ -133,9 +127,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "types-file",
@@ -165,9 +157,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "after-clear",
@@ -198,9 +188,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "history-note",
@@ -231,9 +219,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "parent-marker",
@@ -264,9 +250,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "status-results",
@@ -297,9 +281,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "anatomy",
@@ -330,9 +312,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "machine-profile",
@@ -362,9 +342,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "orientation-report",
@@ -394,9 +372,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "definitions",
@@ -462,9 +438,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "home-again",
@@ -655,9 +629,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "date-report",
@@ -687,9 +659,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "system-identity",
@@ -720,9 +690,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "disk-space",
@@ -765,9 +733,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "ps-full",
@@ -803,9 +769,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "who-report",
@@ -841,9 +805,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "snapshot-dir",
@@ -1085,9 +1047,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "src",
@@ -1122,7 +1082,7 @@
       "id": "os-learning-s03-007",
       "category": "Section 03 — Shell syntax, wildcards, quotes and expansion",
       "title": "Quote a filename containing spaces",
-      "instructions": "Create a file named `my first notes.txt` with the exact content `spaces stay together` followed by a newline.",
+      "instructions": "Create a file named `my first notes.txt` with the exact content `spaces stay together`.",
       "hints": [
         "Quote the complete filename.",
         "Use `echo \"spaces stay together\" > \"my first notes.txt\"`."
@@ -1135,9 +1095,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "spaced-file",
@@ -1168,9 +1126,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "quote-demo",
@@ -1201,9 +1157,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "literal-dollar",
@@ -1234,9 +1188,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "variable-name",
@@ -1267,9 +1219,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "home-note",
@@ -1746,9 +1696,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "inspection-decisions",
@@ -1779,9 +1727,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "nested-lab",
@@ -1811,9 +1757,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "todo",
@@ -2261,9 +2205,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "safety-checklist",
@@ -2281,11 +2223,8 @@
       "id": "os-learning-s06-001",
       "category": "Section 06 — Text processing foundations",
       "title": "Print text with echo",
-      "instructions": "Use `echo` to create `greeting.txt` containing `Welcome to text processing` followed by a newline.",
-      "hints": [
-        "`echo` prints text and normally adds a newline.",
-        "Redirect with `>`."
-      ],
+      "instructions": "Use `echo` to create `greeting.txt` containing `Welcome to text processing`.",
+      "hints": ["`echo` prints text.", "Redirect with `>`."],
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
@@ -2294,9 +2233,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "greeting",
@@ -2327,9 +2264,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "formatted",
@@ -3751,10 +3686,7 @@
       "category": "Section 09 — Searching with find",
       "title": "Filter by file type",
       "instructions": "Use `find findlab -type f` and `find findlab -type d` to save regular files and directories to separate reports.",
-      "hints": [
-        "`f` means regular file.",
-        "`d` means directory."
-      ],
+      "hints": ["`f` means regular file.", "`d` means directory."],
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
@@ -6028,9 +5960,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "archive-safety",
@@ -7175,10 +7105,7 @@
       "category": "Section 16 — Editing configuration files with Vim",
       "title": "Delete a line and undo it",
       "instructions": "In Vim, open `vimlab/notes.txt`, delete the second line with `dd`, then undo with `u`. Quit without saving changes.",
-      "hints": [
-        "`dd` deletes the current line.",
-        "`u` undoes the last edit."
-      ],
+      "hints": ["`dd` deletes the current line.", "`u` undoes the last edit."],
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
@@ -8050,10 +7977,7 @@
       "category": "Section 18 — Integrated operating-system capstone",
       "title": "Capstone 07 — archive the completed workspace",
       "instructions": "Create a gzip tarball `capstone/archive/workspace.tgz` from `capstone/work/`. List its contents into `capstone/archive/workspace-members.txt`.",
-      "hints": [
-        "Use `tar -czf` to create.",
-        "Use `tar -tf` to list."
-      ],
+      "hints": ["Use `tar -czf` to create.", "Use `tar -tf` to list."],
       "difficulty": "Medium",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
