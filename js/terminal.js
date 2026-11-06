@@ -2312,10 +2312,9 @@ class Shell {
   async executeLine(line, options = {}) {
     const source = String(line ?? "");
     const shouldRecord = !options.fromSource && Boolean(source.trim());
-    const record =
-      shouldRecord
-        ? { command: source, output: "", outputCaptured: false, status: null }
-        : null;
+    const record = shouldRecord
+      ? { command: source, output: "", outputCaptured: false, status: null }
+      : null;
     if (record) {
       this.commandRecords.push(record);
       if (this.commandRecords.length > 500) this.commandRecords.shift();
@@ -2323,7 +2322,9 @@ class Shell {
     try {
       const result = await this.executeLineCore(source, options);
       if (record) {
-        record.output = (safeText(result?.stdout) + safeText(result?.stderr)).slice(0, 8192);
+        record.output = (
+          safeText(result?.stdout) + safeText(result?.stderr)
+        ).slice(0, 8192);
         record.outputCaptured = true;
         record.status = Number.isInteger(result?.status) ? result.status : 0;
       }
@@ -6098,7 +6099,9 @@ function gradeFilesystem(
                     feedback = `Invalid check regex: ${error.message}`;
                   }
                 } else {
-                  contentPassed = entry.content.includes(String(check.expected ?? ""));
+                  contentPassed = entry.content.includes(
+                    String(check.expected ?? ""),
+                  );
                   if (!contentPassed)
                     feedback = "Required text was not found in the file.";
                 }
@@ -6127,7 +6130,8 @@ function gradeFilesystem(
 
                     for (const record of commandRecords) {
                       commandRegex.lastIndex = 0;
-                      if (!commandRegex.test(safeText(record.command))) continue;
+                      if (!commandRegex.test(safeText(record.command)))
+                        continue;
                       commandWasRun = true;
                       if (!outputRegex) {
                         commandAndOutputMatched = true;
@@ -6147,11 +6151,13 @@ function gradeFilesystem(
                       if (!commandWasRun)
                         feedback = `No command-history entry matched: ${check.commandExpected}`;
                       else if (outputRegex && !commandOutputCaptured)
-                        feedback = "The command was found in history, but its output was not captured. Run it again to verify intendedOutput.";
+                        feedback =
+                          "The command was found in history, but its output was not captured. Run it again to verify intendedOutput.";
                       else if (outputRegex)
                         feedback = `The command was run, but its output did not match: ${check.intendedOutput}`;
                       else
-                        feedback = "The command-history requirement was not met.";
+                        feedback =
+                          "The command-history requirement was not met.";
                     }
                   } catch (error) {
                     passed = false;
@@ -6385,8 +6391,13 @@ function validateExercise(exercise) {
           `terminal.checks[${i}].commandExpected must be a command-history regex string`,
         );
       if (check.commandExpected.length > 2048)
-        throw new Error(`terminal.checks[${i}].commandExpected regex is too long`);
-      if (check.commandFlags !== undefined && typeof check.commandFlags !== "string")
+        throw new Error(
+          `terminal.checks[${i}].commandExpected regex is too long`,
+        );
+      if (
+        check.commandFlags !== undefined &&
+        typeof check.commandFlags !== "string"
+      )
         throw new Error(`terminal.checks[${i}].commandFlags must be a string`);
       if (
         check.intendedOutput !== undefined &&
@@ -6394,7 +6405,8 @@ function validateExercise(exercise) {
           check.intendedOutput.length > 2048)
       )
         throw new Error(
-          `terminal.checks[${i}].intendedOutput must be a regex string (maximum 2048 characters)`);
+          `terminal.checks[${i}].intendedOutput must be a regex string (maximum 2048 characters)`,
+        );
       if (
         check.intendedOutputFlags !== undefined &&
         typeof check.intendedOutputFlags !== "string"
@@ -6407,7 +6419,9 @@ function validateExercise(exercise) {
         if (check.intendedOutput !== undefined)
           new RegExp(check.intendedOutput, check.intendedOutputFlags || "");
       } catch (error) {
-        throw new Error(`terminal.checks[${i}] has an invalid command-history regex: ${error.message}`);
+        throw new Error(
+          `terminal.checks[${i}] has an invalid command-history regex: ${error.message}`,
+        );
       }
     } else if (
       check.intendedOutput !== undefined ||
@@ -7167,13 +7181,7 @@ export async function mountTerminalExercise({
   const checkButton = createElement("button", "", "Check exercise");
   checkButton.type = "button";
   checkButton.hidden = mode !== "practice";
-  toolbar.append(
-    label,
-    status,
-    colorLegend,
-    focusButton,
-    clearButton,
-  );
+  toolbar.append(label, status, colorLegend, focusButton, clearButton);
   const screen = createElement("div", "ot-screen");
   screen.setAttribute("role", "log");
   screen.setAttribute("aria-label", "Terminal output");
@@ -7190,11 +7198,15 @@ export async function mountTerminalExercise({
   inputHighlight.append(inputHighlightContent);
   const input = createElement("input", "ot-input");
   input.type = "text";
+
   input.autocomplete = "off";
-  input.autocapitalize = "off";
-  input.spellcheck = false;
+  input.setAttribute("autocorrect", "off");
+  input.setAttribute("autocapitalize", "none");
+  input.setAttribute("spellcheck", "false");
+
   input.setAttribute("aria-label", "Terminal command input");
   input.placeholder = "Type a command and press Enter";
+
   inputWrap.append(inputHighlight, input);
   inputRow.append(prompt, inputWrap);
   const keyBar = createElement("div", "ot-keys");
@@ -7217,8 +7229,7 @@ export async function mountTerminalExercise({
     : [];
   const solutionButton = createElement("button", "sec", "Show solution");
   solutionButton.type = "button";
-  solutionButton.hidden =
-    mode !== "practice" || solutionCommands.length === 0;
+  solutionButton.hidden = mode !== "practice" || solutionCommands.length === 0;
   solutionButton.setAttribute("aria-expanded", "false");
   const solutionArea = createElement("section", "ot-solution");
   solutionArea.hidden = true;
@@ -7253,7 +7264,11 @@ export async function mountTerminalExercise({
   // scoped styling and color variables.
   if (controlsContainer) controlSidebar.classList.add("os-terminal");
   controlSidebar.setAttribute("aria-label", "Exercise controls");
-  const controlHeading = createElement("h4", "ot-control-heading", "Exercise controls");
+  const controlHeading = createElement(
+    "h4",
+    "ot-control-heading",
+    "Exercise controls",
+  );
   const nextExerciseSlot = createElement("div", "ot-next-slot");
   nextExerciseSlot.hidden = true;
   workspaceMain.append(toolbar, screen, inputRow, keyBar, notice, editorArea);
@@ -7322,7 +7337,9 @@ export async function mountTerminalExercise({
       );
       for (const candidate of candidates) {
         if (instance.contains(candidate) || candidate.hidden) continue;
-        const visibleText = safeText(candidate.textContent).trim().replace(/\s+/g, " ");
+        const visibleText = safeText(candidate.textContent)
+          .trim()
+          .replace(/\s+/g, " ");
         const accessibleText = [
           candidate.getAttribute("aria-label"),
           candidate.getAttribute("title"),
