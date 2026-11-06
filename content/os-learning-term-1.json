@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "packageId": "os-learning-term-1",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "term": 1,
   "datasets": {},
   "exercises": {
@@ -9,15 +9,15 @@
       "id": "os-learning-s01-001",
       "category": "Section 01 — Linux, the terminal and your first commands",
       "title": "Recognise your starting point",
-      "instructions": "Run `pwd` and `whoami`. Then create `orientation.txt` in your home directory containing your current directory and username on separate lines. Use command substitution so the values are produced by the commands rather than typed as guesses.",
+      "instructions": "Run `pwd` and `whoami`. Save the current directory and username on separate lines in `orientation.txt`. Use output redirection: overwrite the file with `pwd`, then append the `whoami` result. Finish by displaying the file with `cat`.",
       "hints": [
-        "Use `$(pwd)` and `$(whoami)` inside a `printf` or `echo` command.",
-        "Redirect the two-line result to `orientation.txt`."
+        "Use `pwd > orientation.txt` for the first line.",
+        "Use `whoami >> orientation.txt` to append the username."
       ],
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 1,
+      "contentVersion": 3,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -175,7 +175,7 @@
       "id": "os-learning-s01-006",
       "category": "Section 01 — Linux, the terminal and your first commands",
       "title": "Use and reuse command history",
-      "instructions": "Practise navigating and reusing your shell history.\n\nRun the following commands in exactly this order:\n\n1. pwd\n2. whoami\n3. date\n4. echo HISTORY_REPEAT_PREVIOUS\n5. !!\n\nThe !! shortcut should repeat your previous command. You should therefore see HISTORY_REPEAT_PREVIOUS printed twice.\n\nContinue with:\n\n6. echo HISTORY_BY_NUMBER\n7. history\n\nLook at the numbered history output and find the number belonging to the command echo HISTORY_BY_NUMBER.\n\n8. Use !n to execute that command again. Replace n with its actual history number. For example, if the command is numbered 12, enter !12.\n\nFinally:\n\n9. Run history > history-practice.txt to redirect your command history into a file.\n10. Run cat history-practice.txt to inspect the saved history.\n\nYour file must contain evidence of the commands being executed in the correct order.",
+      "instructions": "Practise navigating and reusing your shell history.\n\nRun the following commands in exactly this order:\n\n1. pwd\n2. whoami\n3. date\n4. echo HISTORY_REPEAT_PREVIOUS\n5. !!\n\nThe !! shortcut should repeat your previous command. You should therefore see HISTORY_REPEAT_PREVIOUS printed twice.\n\nContinue with:\n\n6. echo HISTORY_BY_NUMBER\n7. history\n\nLook at the numbered history output and find the number belonging to the command echo HISTORY_BY_NUMBER.\n\n8. Use !n to execute that command again. Replace n with its actual history number. For example, when the command is numbered 12, enter !12.\n\nFinally:\n\n9. Run history > history-practice.txt to redirect your command history into a file.\n10. Run cat history-practice.txt to inspect the saved history.\n\nYour file must contain evidence of the commands being executed in the correct order.",
       "hints": [
         "!! repeats the immediately preceding command.",
         "history displays your commands with their corresponding numbers.",
@@ -188,7 +188,7 @@
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 4,
+      "contentVersion": 5,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -246,50 +246,20 @@
       },
       "course": "os"
     },
-    "os-learning-s01-008": {
-      "id": "os-learning-s01-008",
-      "category": "Section 01 — Linux, the terminal and your first commands",
-      "title": "Compare successful and unsuccessful command results",
-      "instructions": "Use the `true` and `false` commands in `if` statements. Write `true succeeded` when `true` is tested and `false failed as expected` in the `else` branch for `false`. Save both lines in `status-results.txt`.",
-      "hints": [
-        "`true` exits successfully; `false` exits with a failure status.",
-        "Use `if true; then ...; fi` and `if false; then ...; else ...; fi`."
-      ],
-      "difficulty": "Easy",
-      "type": "terminal",
-      "provenance": "os-learning-term-1.json",
-      "contentVersion": 1,
-      "terminal": {
-        "profile": "basic-linux",
-        "initialDirectory": "/home/student",
-        "initialFilesystem": [],
-        "preSetupCommands": ["mkdir -p /home/student"],
-        "checks": [
-          {
-            "id": "status-results",
-            "type": "content",
-            "path": "/home/student/status-results.txt",
-            "points": 1,
-            "expected": "true succeeded\nfalse failed as expected\n"
-          }
-        ],
-        "explanation": "The two small commands communicate success or failure through their exit status. This is a short shell-basics supplement: the source summary names neither command."
-      },
-      "course": "os"
-    },
+
     "os-learning-s01-009": {
       "id": "os-learning-s01-009",
       "category": "Section 01 — Linux, the terminal and your first commands",
       "title": "Understand the command shape",
       "instructions": "Create `command-anatomy.txt` containing the line `command [options] [arguments]`. Then add one example line showing `ls -l /home/student` and label its command, option and argument.",
       "hints": [
-        "Use `printf` with `\n` to create two readable lines.",
-        "The command is `ls`, option is `-l`, and argument is `/home/student`."
+        "Use `echo \"command [options] [arguments]\" > command-anatomy.txt` for the first line.",
+        "Use a second `echo` command with `>>` to append the labelled `ls -l /home/student` example."
       ],
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 1,
+      "contentVersion": 2,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -631,13 +601,13 @@
       "title": "Format the date",
       "instructions": "Write three date formats to `date-report.txt`: ISO date with `date +%F`, 24-hour time with `date +%R`, and weekday with `date +%A`.",
       "hints": [
-        "Use `printf` labels and command substitution, or redirect/appending output from each `date` call.",
-        "The format string starts with `+`."
+        "Save `date +%F` with `>`; use `>>` to append the `date +%R` and `date +%A` results.",
+        "Each `date` format begins with `+` and produces one line."
       ],
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 1,
+      "contentVersion": 2,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -688,17 +658,16 @@
     "os-learning-s02-009": {
       "id": "os-learning-s02-009",
       "category": "Section 02 — Navigation and system information",
-      "title": "Inspect disks and memory",
-      "instructions": "Run `df -h` and `free -h`, saving their outputs separately as `disk-space.txt` and `memory.txt`. Also run `cal` and save the calendar to `calendar.txt`. If `free` is not installed in the target image, record that limitation in `memory.txt` after attempting it.",
+      "title": "Inspect disk space and inode usage",
+      "instructions": "Run `df -h` to inspect filesystem space and save the output to `disk-space.txt`. Then run `df -i` to inspect inode usage and save the output to `inode-usage.txt`.",
       "hints": [
-        "`df -h` reports filesystem usage.",
-        "`free -h` reports memory in human-readable units; it is mentioned in the summary even though it is not in the required command list.",
-        "`cal` prints a calendar; it is included as an additional summary command."
+        "`df -h` reports filesystem capacity in human-readable units.",
+        "`df -i` reports inode usage, including used and available inodes."
       ],
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 1,
+      "contentVersion": 2,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -712,17 +681,10 @@
             "points": 1
           },
           {
-            "id": "memory-report",
+            "id": "inode-usage",
             "type": "file",
-            "path": "/home/student/memory.txt",
+            "path": "/home/student/inode-usage.txt",
             "points": 1
-          },
-          {
-            "id": "calendar",
-            "type": "file",
-            "path": "/home/student/calendar.txt",
-            "points": 1,
-            "description": "The calendar output was saved."
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced."
@@ -1258,7 +1220,7 @@
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 1,
+      "contentVersion": 2,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -1281,9 +1243,15 @@
             "points": 1
           },
           {
-            "id": "final-not-copied",
-            "type": "not_exists",
-            "path": "/home/student/pattern-backup/numbered/report-final.txt",
+            "id": "numbered-directory-contents",
+            "type": "directory_contents",
+            "path": "/home/student/pattern-backup/numbered",
+            "expected": [
+              "report1.txt",
+              "report2.txt",
+              "report3.txt",
+              "report4.txt"
+            ],
             "points": 1
           }
         ],
@@ -1659,16 +1627,16 @@
     "os-learning-s04-011": {
       "id": "os-learning-s04-011",
       "category": "Section 04 — Viewing and inspecting files",
-      "title": "Section 04 integration — make an inspection report",
-      "instructions": "For every file in `inspect/`, produce a report that includes the filename, file type, size in bytes, and total line count. Save the report as `inspection-report.txt`. Use a shell loop if comfortable; otherwise inspect the supplied files one by one.",
+      "title": "Build a file inspection summary",
+      "instructions": "Create `inspection-report.txt` with four lines about `inspect/colors.txt`: the filename, the file type reported by `file`, the byte size reported by `stat -c %s`, and the line count reported by `wc -l`. Use the commands separately and append each result to the report. Do not use shell loops or conditional statements.",
       "hints": [
-        "A loop can use `for f in inspect/*; do ...; done`.",
-        "Combine `file`, `stat -c %s`, and `wc -l`."
+        "Start with `echo \"File: inspect/colors.txt\" > inspection-report.txt`.",
+        "Append the results from `file inspect/colors.txt`, `stat -c %s inspect/colors.txt`, and `wc -l < inspect/colors.txt` with `>>`."
       ],
       "difficulty": "Medium",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 1,
+      "contentVersion": 2,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -1807,7 +1775,7 @@
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 1,
+      "contentVersion": 2,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -1829,9 +1797,10 @@
             "points": 1
           },
           {
-            "id": "old-path",
-            "type": "not_exists",
-            "path": "/home/student/ops/inbox/brief.txt",
+            "id": "inbox-after-move",
+            "type": "directory_contents",
+            "path": "/home/student/ops/inbox",
+            "expected": ["checklist.txt", "remove.tmp"],
             "points": 1
           }
         ],
@@ -1895,7 +1864,7 @@
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 1,
+      "contentVersion": 2,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -1917,9 +1886,10 @@
             "points": 1
           },
           {
-            "id": "draft-gone",
-            "type": "not_exists",
-            "path": "/home/student/ops/work/draft.txt",
+            "id": "work-after-rename",
+            "type": "directory_contents",
+            "path": "/home/student/ops/work",
+            "expected": ["copies", "final.txt"],
             "points": 1
           }
         ],
@@ -1939,7 +1909,7 @@
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 1,
+      "contentVersion": 2,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -1955,9 +1925,10 @@
         ],
         "checks": [
           {
-            "id": "removed",
-            "type": "not_exists",
-            "path": "/home/student/ops/inbox/remove.tmp",
+            "id": "inbox-after-delete",
+            "type": "directory_contents",
+            "path": "/home/student/ops/inbox",
+            "expected": ["brief.txt", "checklist.txt"],
             "points": 1
           }
         ],
@@ -1977,7 +1948,7 @@
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 1,
+      "contentVersion": 2,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -1993,9 +1964,10 @@
         ],
         "checks": [
           {
-            "id": "empty-dir-gone",
-            "type": "not_exists",
-            "path": "/home/student/ops/empty-dir",
+            "id": "ops-after-rmdir",
+            "type": "directory_contents",
+            "path": "/home/student/ops",
+            "expected": ["inbox", "work"],
             "points": 1
           },
           {
@@ -2115,7 +2087,7 @@
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 1,
+      "contentVersion": 2,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -2133,9 +2105,10 @@
         ],
         "checks": [
           {
-            "id": "safe-delete-gone",
-            "type": "not_exists",
-            "path": "/home/student/ops/safe-delete.tmp",
+            "id": "ops-after-interactive-delete",
+            "type": "directory_contents",
+            "path": "/home/student/ops",
+            "expected": ["empty-dir", "inbox", "work"],
             "points": 1
           }
         ],
@@ -2155,7 +2128,7 @@
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 1,
+      "contentVersion": 2,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -2179,21 +2152,16 @@
             "points": 1
           },
           {
-            "id": "old-main",
-            "type": "not_exists",
-            "path": "/home/student/organised-project/src/main.txt",
+            "id": "src-after-rename-and-cleanup",
+            "type": "directory_contents",
+            "path": "/home/student/organised-project/src",
+            "expected": ["app.txt"],
             "points": 1
           },
           {
             "id": "backup-readme",
             "type": "file",
             "path": "/home/student/organised-project/backup/readme.txt",
-            "points": 1
-          },
-          {
-            "id": "scratch-gone",
-            "type": "not_exists",
-            "path": "/home/student/organised-project/src/scratch.tmp",
             "points": 1
           }
         ],
@@ -2207,13 +2175,13 @@
       "title": "Review destructive command safety",
       "instructions": "Create `safety-checklist.txt` with these exact rules: `rm is permanent`, `rm -i asks first`, `rmdir requires an empty directory`, and `inspect wildcards before deletion`.",
       "hints": [
-        "Use `printf` with newline escapes.",
-        "This reinforces the warning that there is no recycle bin."
+        "Use one `echo` command with `>` for the first rule.",
+        "Use three more `echo` commands with `>>` to append the remaining rules in order."
       ],
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 1,
+      "contentVersion": 2,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -2263,16 +2231,16 @@
     "os-learning-s06-002": {
       "id": "os-learning-s06-002",
       "category": "Section 06 — Text processing foundations",
-      "title": "Use printf for exact formatting",
-      "instructions": "Create `formatted.txt` with exactly three lines: `Name: Ada`, `Course: Linux`, and `Status: Ready`. Use `printf` and explicit newline escapes.",
+      "title": "Build an exact multi-line text file with echo",
+      "instructions": "Create `formatted.txt` with exactly three lines: `Name: Ada`, `Course: Linux`, and `Status: Ready`. Use `echo` with one overwrite followed by two appends.",
       "hints": [
-        "`printf` interprets `\n` in its format string.",
-        "Separate values from the format string."
+        "Use `echo \"Name: Ada\" > formatted.txt` for the first line.",
+        "Append the other two lines with `echo \"Course: Linux\" >> formatted.txt` and `echo \"Status: Ready\" >> formatted.txt`."
       ],
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 1,
+      "contentVersion": 2,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -2942,15 +2910,15 @@
       "id": "os-learning-s07-008",
       "category": "Section 07 — Standard streams, redirection and pipelines",
       "title": "Append through tee",
-      "instructions": "Pipe the text `first` and `second` through `tee -a` into `iolab/tee-log.txt`. The file must have both lines.",
+      "instructions": "Use `echo` to create `iolab/tee-input.txt` with the lines `first` and `second`. Then use `cat` to send that file through `tee -a` into `iolab/tee-log.txt`. The log must contain both lines in the same order.",
       "hints": [
-        "Use `printf` to generate the two-line input.",
-        "`tee -a` appends rather than overwriting."
+        "Create the two-line input with one `echo` command and an append using `>>`.",
+        "Run `cat iolab/tee-input.txt | tee -a iolab/tee-log.txt`."
       ],
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 1,
+      "contentVersion": 2,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -3291,7 +3259,7 @@
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 1,
+      "contentVersion": 2,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -3303,9 +3271,10 @@
         ],
         "checks": [
           {
-            "id": "target-removed",
-            "type": "not_exists",
-            "path": "/home/student/linklab/temporary.txt",
+            "id": "linklab-after-target-removal",
+            "type": "directory_contents",
+            "path": "/home/student/linklab",
+            "expected": ["dangling.txt", "original.txt"],
             "points": 1
           },
           {
@@ -3331,7 +3300,7 @@
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 1,
+      "contentVersion": 2,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -3350,9 +3319,10 @@
             "expected": "original data\n"
           },
           {
-            "id": "original-name-gone",
-            "type": "not_exists",
-            "path": "/home/student/linklab/original.txt",
+            "id": "linklab-after-hardlink-removal",
+            "type": "directory_contents",
+            "path": "/home/student/linklab",
+            "expected": ["kept-name.txt"],
             "points": 1
           }
         ],
@@ -3549,7 +3519,7 @@
       "difficulty": "Medium",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 1,
+      "contentVersion": 2,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -3567,9 +3537,10 @@
             "expected": "team notes\n"
           },
           {
-            "id": "original-gone",
-            "type": "not_exists",
-            "path": "/home/student/linklab/share/notes.txt",
+            "id": "share-after-link-test",
+            "type": "directory_contents",
+            "path": "/home/student/linklab/share",
+            "expected": ["latest.txt", "link-report.txt", "notes-backup.txt"],
             "points": 1
           },
           {
@@ -3981,7 +3952,7 @@
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 1,
+      "contentVersion": 2,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -3998,9 +3969,9 @@
         ],
         "checks": [
           {
-            "id": "tmp-deleted",
-            "type": "not_exists",
-            "path": "/home/student/findlab/scratch/remove.tmp",
+            "id": "scratch-is-empty",
+            "type": "empty",
+            "path": "/home/student/findlab/scratch",
             "points": 1
           },
           {
@@ -4419,15 +4390,15 @@
       "id": "os-learning-s10-010",
       "category": "Section 10 — Users and groups",
       "title": "Delete a disposable user",
-      "instructions": "Create a disposable account `oslearn_temp` with `-m`, then delete it with `userdel -r`. Verify its home directory no longer exists.",
+      "instructions": "Create the disposable account `oslearn_temp` with a home directory using `useradd -m`. Confirm the account with `id oslearn_temp`, then remove it and its home directory with `userdel -r oslearn_temp`. Finally create `account-lab/deletion-result.txt` containing `oslearn_temp and its home directory removed`.",
       "hints": [
-        "`userdel -r` removes both the account and its home directory.",
-        "Use a disposable lab username only."
+        "Use `useradd -m oslearn_temp` to create the temporary account.",
+        "Use `userdel -r oslearn_temp` to remove both the account and its home directory, then write the completion note with `echo`."
       ],
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 1,
+      "contentVersion": 3,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -4442,13 +4413,21 @@
         ],
         "checks": [
           {
-            "id": "temp-home-gone",
-            "type": "not_exists",
-            "path": "/home/oslearn_temp",
-            "points": 1
+            "id": "deletion-result",
+            "type": "content",
+            "path": "/home/student/account-lab/deletion-result.txt",
+            "points": 1,
+            "expected": "oslearn_temp and its home directory removed\n"
+          },
+          {
+            "id": "home-directory-after-userdel",
+            "type": "directory_contents",
+            "path": "/home",
+            "points": 1,
+            "expected": ["oslearn_alex", "student"]
           }
         ],
-        "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced."
+        "explanation": "The grader checks the completion note and the final /home directory entries. The setup creates the student and oslearn_alex home directories; the expected listing confirms oslearn_temp no longer has a home directory."
       },
       "course": "os"
     },
@@ -5513,7 +5492,7 @@
     },
     "os-learning-s13-001": {
       "id": "os-learning-s13-001",
-      "category": "Section 13 — Archives and secure copy",
+      "category": "Section 13 — Archives and extraction",
       "title": "Create a plain tar archive",
       "instructions": "Create `archlab/project.tar` containing the `archlab/source/` directory. Use `tar -cf`.",
       "hints": [
@@ -5523,7 +5502,7 @@
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 1,
+      "contentVersion": 2,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -5550,7 +5529,7 @@
     },
     "os-learning-s13-002": {
       "id": "os-learning-s13-002",
-      "category": "Section 13 — Archives and secure copy",
+      "category": "Section 13 — Archives and extraction",
       "title": "Create a gzip-compressed tarball",
       "instructions": "Create `archlab/project.tar.gz` using `tar -czf`.",
       "hints": [
@@ -5560,7 +5539,7 @@
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 1,
+      "contentVersion": 2,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -5587,7 +5566,7 @@
     },
     "os-learning-s13-003": {
       "id": "os-learning-s13-003",
-      "category": "Section 13 — Archives and secure copy",
+      "category": "Section 13 — Archives and extraction",
       "title": "Create bzip2 and xz archives",
       "instructions": "Create `project.tar.bz2` with `-j` and `project.tar.xz` with `-J`.",
       "hints": [
@@ -5597,7 +5576,7 @@
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 1,
+      "contentVersion": 2,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -5630,7 +5609,7 @@
     },
     "os-learning-s13-004": {
       "id": "os-learning-s13-004",
-      "category": "Section 13 — Archives and secure copy",
+      "category": "Section 13 — Archives and extraction",
       "title": "List archive contents before extraction",
       "instructions": "Use `tar -tf archlab/project.tar.gz` and save the member list to `archive-members.txt`. Do not extract yet.",
       "hints": [
@@ -5640,7 +5619,7 @@
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 1,
+      "contentVersion": 2,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -5668,7 +5647,7 @@
     },
     "os-learning-s13-005": {
       "id": "os-learning-s13-005",
-      "category": "Section 13 — Archives and secure copy",
+      "category": "Section 13 — Archives and extraction",
       "title": "Inspect verbose archive metadata",
       "instructions": "Use `tar -tvf` on `archlab/project.tar` and save the detailed listing to `archive-details.txt`.",
       "hints": [
@@ -5678,7 +5657,7 @@
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 1,
+      "contentVersion": 2,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -5706,7 +5685,7 @@
     },
     "os-learning-s13-006": {
       "id": "os-learning-s13-006",
-      "category": "Section 13 — Archives and secure copy",
+      "category": "Section 13 — Archives and extraction",
       "title": "Extract into a chosen directory",
       "instructions": "Extract `archlab/project.tar.gz` into `archlab/restore/` using `tar -xzf` and `-C`.",
       "hints": [
@@ -5716,7 +5695,7 @@
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 1,
+      "contentVersion": 2,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -5751,7 +5730,7 @@
     },
     "os-learning-s13-007": {
       "id": "os-learning-s13-007",
-      "category": "Section 13 — Archives and secure copy",
+      "category": "Section 13 — Archives and extraction",
       "title": "Use tar to archive from a chosen base",
       "instructions": "Create `archlab/docs-only.tar` containing only the `docs/` directory from the source tree. Use `-C` to choose the base path so the archive stores a clean relative path.",
       "hints": [
@@ -5761,7 +5740,7 @@
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 1,
+      "contentVersion": 2,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -5788,7 +5767,7 @@
     },
     "os-learning-s13-008": {
       "id": "os-learning-s13-008",
-      "category": "Section 13 — Archives and secure copy",
+      "category": "Section 13 — Archives and extraction",
       "title": "Preserve and verify file metadata",
       "instructions": "Create a tarball from `archlab/source/`, extract it into `archlab/restore-meta/`, and compare the mode of the restored script with the original.",
       "hints": [
@@ -5798,7 +5777,7 @@
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 1,
+      "contentVersion": 2,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -5827,17 +5806,17 @@
     },
     "os-learning-s13-009": {
       "id": "os-learning-s13-009",
-      "category": "Section 13 — Archives and secure copy",
-      "title": "Copy a file with scp locally",
-      "instructions": "Use `scp` to copy `archlab/source/README.txt` to `archlab/scp-copy.txt` on the same machine. Verify that the copy retains the contents.",
+      "category": "Section 13 — Archives and extraction",
+      "title": "Create an archive containing one selected file",
+      "instructions": "Create `archlab/readme-only.tar` containing only `README.txt` from `archlab/source/`. Use `tar -C` so the archive stores the member as `README.txt`, not as a long absolute or home-directory path. Save the member listing to `archlab/readme-only-members.txt`.",
       "hints": [
-        "`scp` is normally used for SSH-based remote copies; this beginner task uses its local-to-local form if the installed client supports it.",
-        "Remote syntax is `scp file user@host:/path` or `scp user@host:/path file`."
+        "Use `tar -cf archlab/readme-only.tar -C archlab/source README.txt`.",
+        "Use `tar -tf archlab/readme-only.tar` and redirect the listing to the members file."
       ],
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 1,
+      "contentVersion": 2,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -5852,30 +5831,36 @@
         ],
         "checks": [
           {
-            "id": "scp-copy",
+            "id": "readme-only-archive",
+            "type": "file",
+            "path": "/home/student/archlab/readme-only.tar",
+            "points": 1
+          },
+          {
+            "id": "readme-only-member",
             "type": "content",
-            "path": "/home/student/archlab/scp-copy.txt",
+            "path": "/home/student/archlab/readme-only-members.txt",
             "points": 1,
-            "expected": "Project overview\n"
+            "expected": "README.txt\n"
           }
         ],
-        "explanation": "The uploaded summary focuses on tar and does not explain scp. This exercise adds the requested secure-copy command as a small companion topic; a remote SSH host is not assumed to exist in the basic-linux sandbox."
+        "explanation": "The grader checks that the archive exists and that its listing contains exactly the selected relative member path."
       },
       "course": "os"
     },
     "os-learning-s13-010": {
       "id": "os-learning-s13-010",
-      "category": "Section 13 — Archives and secure copy",
-      "title": "Copy a directory tree with scp recursively",
-      "instructions": "Use `scp -r archlab/source archlab/scp-source-copy` to make a local recursive copy. Verify that `README.txt` and `docs/install.txt` exist in the new tree.",
+      "category": "Section 13 — Archives and extraction",
+      "title": "Archive selected files and restore them",
+      "instructions": "Create `archlab/selected-files.tar` containing `README.txt` and `docs/install.txt` from `archlab/source/`. Create `archlab/selected-restore/`, extract the archive there with `tar -xf` and `-C`, and verify that both files are present.",
       "hints": [
-        "`-r` copies directories recursively.",
-        "The local-to-local form may depend on the installed OpenSSH client."
+        "Pass both selected member paths after `-C archlab/source` when creating the archive.",
+        "Use `tar -xf archlab/selected-files.tar -C archlab/selected-restore` to extract."
       ],
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 1,
+      "contentVersion": 2,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -5890,15 +5875,15 @@
         ],
         "checks": [
           {
-            "id": "scp-readme",
+            "id": "selected-readme",
             "type": "file",
-            "path": "/home/student/archlab/scp-source-copy/README.txt",
+            "path": "/home/student/archlab/selected-restore/README.txt",
             "points": 1
           },
           {
-            "id": "scp-doc",
+            "id": "selected-guide",
             "type": "file",
-            "path": "/home/student/archlab/scp-source-copy/docs/install.txt",
+            "path": "/home/student/archlab/selected-restore/docs/install.txt",
             "points": 1
           }
         ],
@@ -5908,17 +5893,17 @@
     },
     "os-learning-s13-011": {
       "id": "os-learning-s13-011",
-      "category": "Section 13 — Archives and secure copy",
-      "title": "Section 13 integration — package and restore a project",
-      "instructions": "Create a gzip tarball of `archlab/source/`, list its contents, and extract it into `archlab/final-restore/`. Then use `scp` to copy the restored README into `archlab/final-readme.txt`.",
+      "category": "Section 13 — Archives and extraction",
+      "title": "Section 13 integration — package, restore and compare a project",
+      "instructions": "Create a gzip archive at `archlab/final-project.tgz` using `tar -C archlab source` so the archive contains a top-level `source/` directory. List its members, create `archlab/final-restore/`, and extract the archive there. Use `cp` to copy the restored `README.txt` to `archlab/final-readme.txt`, then use `diff` to compare the original and copied README files.",
       "hints": [
-        "Create with `tar -czf`, list with `tar -tf`, extract with `tar -xzf -C`.",
-        "Use `scp` for the final local copy if it is available."
+        "Create with `tar -czf archlab/final-project.tgz -C archlab source`, then list with `tar -tf archlab/final-project.tgz`.",
+        "Extract with `tar -xzf archlab/final-project.tgz -C archlab/final-restore`; the restored README is under `archlab/final-restore/source/`."
       ],
       "difficulty": "Medium",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 1,
+      "contentVersion": 3,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -5952,13 +5937,13 @@
             "expected": "Project overview\n"
           }
         ],
-        "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced."
+        "explanation": "The grader verifies the archive, one restored member, and the copied README contents."
       },
       "course": "os"
     },
     "os-learning-s13-012": {
       "id": "os-learning-s13-012",
-      "category": "Section 13 — Archives and secure copy",
+      "category": "Section 13 — Archives and extraction",
       "title": "Review archive safety",
       "instructions": "Create `archive-safety.txt` with three warnings: inspect an unfamiliar archive with `tar -tvf`; avoid extracting absolute paths with `-P`; and choose the destination with `-C`.",
       "hints": [
@@ -5968,7 +5953,7 @@
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 1,
+      "contentVersion": 2,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -6825,15 +6810,15 @@
       "id": "os-learning-s15-012",
       "category": "Section 15 — Bash environment and shell customisation",
       "title": "Section 15 integration — construct a portable shell setup",
-      "instructions": "Create `envlab/profile.sh` that exports `EDITOR=vim`, sets `PAGER=cat`, creates an alias `ll='ls -la'`, and prepends `$HOME/envlab/bin` to PATH. Source it, then save the outputs of `type ll`, `echo \"$EDITOR\"`, `echo \"$PAGER\"`, and `echo \"$PATH\"` in `envlab/profile-check.txt`.",
+      "instructions": "Create `envlab/profile.sh` using `echo` commands with `>` and `>>`. The script must export `EDITOR=vim` and `PAGER=cat`, create the alias `ll='ls -la'`, and prepend `$HOME/envlab/bin` to PATH. Source the script, then save the outputs of `type ll`, `echo \"$EDITOR\"`, `echo \"$PAGER\"`, and `echo \"$PATH\"` in `envlab/profile-check.txt`.",
       "hints": [
-        "Use `printf` to create a shell script with one statement per line.",
-        "Remember to quote `$PATH` when appending it to the existing value."
+        "Write each script line with a separate `echo` command; use single quotes around lines that must keep `$HOME` and `$PATH` for later expansion.",
+        "The PATH line in the script should be `PATH=\"$HOME/envlab/bin:$PATH\"`; then use `source envlab/profile.sh`."
       ],
       "difficulty": "Medium",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 1,
+      "contentVersion": 3,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -7472,15 +7457,15 @@
       "id": "os-learning-s17-006",
       "category": "Section 17 — Getting help and reading documentation",
       "title": "Use man keyword search and section filtering",
-      "instructions": "Run `man -k printf` and `man -s 1 -k passwd`, saving the outputs to separate files.",
+      "instructions": "Run `man -k directory` and `man -s 1 -k passwd`, saving the outputs to separate files.",
       "hints": [
-        "`-k` searches page titles and short descriptions.",
-        "`-s 1` limits the search to section 1."
+        "`-k` searches manual-page titles and short descriptions for a keyword.",
+        "`-s 1` limits the keyword search to section 1."
       ],
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 1,
+      "contentVersion": 2,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -7492,9 +7477,9 @@
         ],
         "checks": [
           {
-            "id": "printf-search",
+            "id": "directory-search",
             "type": "file",
-            "path": "/home/student/helplab/man-k-printf.txt",
+            "path": "/home/student/helplab/man-k-directory.txt",
             "points": 1
           },
           {
@@ -7649,15 +7634,15 @@
       "id": "os-learning-s17-011",
       "category": "Section 17 — Getting help and reading documentation",
       "title": "Use type to distinguish built-ins and programs",
-      "instructions": "Run `type cd`, `type printf`, and `type ls`, and save the results in `helplab/type-report.txt`.",
+      "instructions": "Use `type` to inspect the command names `cd`, `printf`, and `ls`, and save the results in `helplab/type-report.txt`. This exercise only inspects how the shell resolves the names; do not run the `printf` command.",
       "hints": [
-        "`type` distinguishes aliases, built-ins, and executable programs.",
-        "Run one `type` command per name."
+        "`type` distinguishes aliases, shell built-ins, and executable programs.",
+        "Run one `type` command for each name; this does not execute the inspected commands."
       ],
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 1,
+      "contentVersion": 2,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -7763,7 +7748,7 @@
       "difficulty": "Medium",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 1,
+      "contentVersion": 2,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -7797,9 +7782,10 @@
             "points": 1
           },
           {
-            "id": "scratch-gone",
-            "type": "not_exists",
-            "path": "/home/student/capstone/incoming/scratch.tmp",
+            "id": "incoming-after-cleanup",
+            "type": "directory_contents",
+            "path": "/home/student/capstone/incoming",
+            "expected": ["hours.csv"],
             "points": 1
           }
         ],
@@ -8116,13 +8102,13 @@
       "title": "Capstone 10 — review permissions and account identity",
       "instructions": "Save `whoami`, `id`, `groups`, `umask`, and `ls -ld capstone/work/reports` outputs in `capstone/work/reports/access-review.txt`. Ensure that the report directory remains group-writable and executable.",
       "hints": [
-        "Use `printf` labels with command substitutions, or append each command output.",
-        "Check the final group-directory mode."
+        "Use `>` for the first command output and `>>` to append each remaining command output.",
+        "Save the outputs in this order: `whoami`, `id`, `groups`, `umask`, then `ls -ld capstone/work/reports`."
       ],
       "difficulty": "Medium",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 1,
+      "contentVersion": 2,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
