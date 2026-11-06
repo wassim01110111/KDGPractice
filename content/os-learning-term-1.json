@@ -22,9 +22,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "orientation-file",
@@ -66,9 +64,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "note-file",
@@ -119,9 +115,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "sequence",
@@ -155,9 +149,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "types-file",
@@ -190,9 +182,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "after-clear",
@@ -203,9 +193,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "clear; echo \"The terminal is ready\" > after-clear.txt"
-        ]
+        "solution": ["clear; echo \"The terminal is ready\" > after-clear.txt"]
       },
       "course": "os"
     },
@@ -231,9 +219,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "history-file",
@@ -276,9 +262,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "parent-marker",
@@ -315,16 +299,16 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "anatomy",
-            "type": "content",
+            "type": "contains",
             "path": "/home/student/command-anatomy.txt",
+            "regex": true,
             "points": 1,
-            "expected": "command [options] [arguments]\nls -l /home/student — command: ls; option: -l; argument: /home/student\n"
+
+            "expected": "^command \\[options\\] \\[arguments\\]\\r?\n(?=[^\\r\\n]*ls -l /home/student)(?=[\\s\\S]*?command.*ls)(?=[\\s\\S]*?argument.*/home/student)(?=[\\s\\S]*?option.*-l)[^\\r\\n]*\\r?\n$"
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
@@ -352,9 +336,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "machine-profile",
@@ -389,9 +371,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "orientation-report",
@@ -424,9 +404,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "definitions",
@@ -475,10 +453,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "cd nav/start/child",
-          "pwd > current-location.txt"
-        ]
+        "solution": ["cd nav/start/child", "pwd > current-location.txt"]
       },
       "course": "os"
     },
@@ -499,9 +474,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "home-again",
@@ -512,11 +485,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "cd ..",
-          "cd ~",
-          "pwd > home-again.txt"
-        ]
+        "solution": ["cd ..", "cd ~", "pwd > home-again.txt"]
       },
       "course": "os"
     },
@@ -644,10 +613,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "ls -lhR nav/",
-          "ls -l nav/start > nav-listing.txt"
-        ]
+        "solution": ["ls -lhR nav/", "ls -l nav/start > nav-listing.txt"]
       },
       "course": "os"
     },
@@ -714,9 +680,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "date-report",
@@ -751,9 +715,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "system-identity",
@@ -788,9 +750,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "disk-space",
@@ -806,10 +766,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "df -h > disk-space.txt",
-          "df -i > inode-usage.txt"
-        ]
+        "solution": ["df -h > disk-space.txt", "df -i > inode-usage.txt"]
       },
       "course": "os"
     },
@@ -830,9 +787,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "ps-full",
@@ -848,10 +803,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "ps -f > processes-full.txt",
-          "ps aux > processes-all.txt"
-        ]
+        "solution": ["ps -f > processes-full.txt", "ps aux > processes-all.txt"]
       },
       "course": "os"
     },
@@ -872,9 +824,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "who-report",
@@ -890,10 +840,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "who > current-logins.txt",
-          "last > login-history.txt"
-        ]
+        "solution": ["who > current-logins.txt", "last > login-history.txt"]
       },
       "course": "os"
     },
@@ -914,9 +861,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "snapshot-dir",
@@ -994,11 +939,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "cd patterns",
-          "ls *.txt > ~/txt-files.txt",
-          "cd ~"
-        ]
+        "solution": ["cd patterns", "ls *.txt > ~/txt-files.txt", "cd ~"]
       },
       "course": "os"
     },
@@ -1168,9 +1109,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "touch brace-lab/draft-{1..5}.txt"
-        ]
+        "solution": ["touch brace-lab/draft-{1..5}.txt"]
       },
       "course": "os"
     },
@@ -1191,9 +1130,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "src",
@@ -1221,9 +1158,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "mkdir -p brace-project/{src,bin,docs,config}"
-        ]
+        "solution": ["mkdir -p brace-project/{src,bin,docs,config}"]
       },
       "course": "os"
     },
@@ -1244,9 +1179,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "spaced-file",
@@ -1257,9 +1190,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "echo \"spaces stay together\" > \"my first notes.txt\""
-        ]
+        "solution": ["echo \"spaces stay together\" > \"my first notes.txt\""]
       },
       "course": "os"
     },
@@ -1280,9 +1211,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "quote-demo",
@@ -1318,9 +1247,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "literal-dollar",
@@ -1331,9 +1258,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "echo 'price list' > 'price_$100.txt'"
-        ]
+        "solution": ["echo 'price list' > 'price_$100.txt'"]
       },
       "course": "os"
     },
@@ -1354,9 +1279,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "variable-name",
@@ -1392,9 +1315,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "home-note",
@@ -1500,9 +1421,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "cat inspect/colors.txt > cat-copy.txt"
-        ]
+        "solution": ["cat inspect/colors.txt > cat-copy.txt"]
       },
       "course": "os"
     },
@@ -1539,9 +1458,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "cat -n inspect/colors.txt > numbered-colors.txt"
-        ]
+        "solution": ["cat -n inspect/colors.txt > numbered-colors.txt"]
       },
       "course": "os"
     },
@@ -1618,9 +1535,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "head -n 3 inspect/colors.txt > first-three.txt"
-        ]
+        "solution": ["head -n 3 inspect/colors.txt > first-three.txt"]
       },
       "course": "os"
     },
@@ -1658,9 +1573,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "tail -n 2 inspect/colors.txt > last-two.txt"
-        ]
+        "solution": ["tail -n 2 inspect/colors.txt > last-two.txt"]
       },
       "course": "os"
     },
@@ -1698,9 +1611,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "tail -n +4 inspect/colors.txt > from-fourth.txt"
-        ]
+        "solution": ["tail -n +4 inspect/colors.txt > from-fourth.txt"]
       },
       "course": "os"
     },
@@ -1737,9 +1648,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "stat inspect/colors.txt > colors-stat.txt"
-        ]
+        "solution": ["stat inspect/colors.txt > colors-stat.txt"]
       },
       "course": "os"
     },
@@ -1815,9 +1724,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "wc inspect/words.txt > word-counts.txt"
-        ]
+        "solution": ["wc inspect/words.txt > word-counts.txt"]
       },
       "course": "os"
     },
@@ -1922,9 +1829,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "inspection-decisions",
@@ -1958,9 +1863,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "nested-lab",
@@ -1970,9 +1873,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "mkdir -p ops-new/year1/term1/lab"
-        ]
+        "solution": ["mkdir -p ops-new/year1/term1/lab"]
       },
       "course": "os"
     },
@@ -1993,9 +1894,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "todo",
@@ -2061,17 +1960,12 @@
             "id": "inbox-after-move",
             "type": "directory_contents",
             "path": "/home/student/ops/inbox",
-            "expected": [
-              "checklist.txt",
-              "remove.tmp"
-            ],
+            "expected": ["checklist.txt", "remove.tmp"],
             "points": 1
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "mv ops/inbox/brief.txt ops/work/brief.txt"
-        ]
+        "solution": ["mv ops/inbox/brief.txt ops/work/brief.txt"]
       },
       "course": "os"
     },
@@ -2116,9 +2010,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "cp ops/inbox/checklist.txt ops/work/copies/checklist.txt"
-        ]
+        "solution": ["cp ops/inbox/checklist.txt ops/work/copies/checklist.txt"]
       },
       "course": "os"
     },
@@ -2159,17 +2051,12 @@
             "id": "work-after-rename",
             "type": "directory_contents",
             "path": "/home/student/ops/work",
-            "expected": [
-              "copies",
-              "final.txt"
-            ],
+            "expected": ["copies", "final.txt"],
             "points": 1
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "mv ops/work/draft.txt ops/work/final.txt"
-        ]
+        "solution": ["mv ops/work/draft.txt ops/work/final.txt"]
       },
       "course": "os"
     },
@@ -2204,17 +2091,12 @@
             "id": "inbox-after-delete",
             "type": "directory_contents",
             "path": "/home/student/ops/inbox",
-            "expected": [
-              "brief.txt",
-              "checklist.txt"
-            ],
+            "expected": ["brief.txt", "checklist.txt"],
             "points": 1
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "rm ops/inbox/remove.tmp"
-        ]
+        "solution": ["rm ops/inbox/remove.tmp"]
       },
       "course": "os"
     },
@@ -2249,10 +2131,7 @@
             "id": "ops-after-rmdir",
             "type": "directory_contents",
             "path": "/home/student/ops",
-            "expected": [
-              "inbox",
-              "work"
-            ],
+            "expected": ["inbox", "work"],
             "points": 1
           },
           {
@@ -2263,9 +2142,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "rmdir ops/empty-dir"
-        ]
+        "solution": ["rmdir ops/empty-dir"]
       },
       "course": "os"
     },
@@ -2316,9 +2193,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "cp -r ops/inbox ops/inbox-backup"
-        ]
+        "solution": ["cp -r ops/inbox ops/inbox-backup"]
       },
       "course": "os"
     },
@@ -2403,11 +2278,7 @@
             "id": "ops-after-interactive-delete",
             "type": "directory_contents",
             "path": "/home/student/ops",
-            "expected": [
-              "empty-dir",
-              "inbox",
-              "work"
-            ],
+            "expected": ["empty-dir", "inbox", "work"],
             "points": 1
           }
         ],
@@ -2458,9 +2329,7 @@
             "id": "src-after-rename-and-cleanup",
             "type": "directory_contents",
             "path": "/home/student/organised-project/src",
-            "expected": [
-              "app.txt"
-            ],
+            "expected": ["app.txt"],
             "points": 1
           },
           {
@@ -2500,9 +2369,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "safety-checklist",
@@ -2527,10 +2394,7 @@
       "category": "Section 06 — Text processing foundations",
       "title": "Print text with echo",
       "instructions": "Use `echo` to create `greeting.txt` containing `Welcome to text processing`.",
-      "hints": [
-        "`echo` prints text.",
-        "Redirect with `>`."
-      ],
+      "hints": ["`echo` prints text.", "Redirect with `>`."],
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
@@ -2539,9 +2403,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "greeting",
@@ -2552,9 +2414,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "echo \"Welcome to text processing\" > greeting.txt"
-        ]
+        "solution": ["echo \"Welcome to text processing\" > greeting.txt"]
       },
       "course": "os"
     },
@@ -2575,9 +2435,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "formatted",
@@ -2631,9 +2489,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "cut -d, -f1,3 textlab/people.csv > names-scores.csv"
-        ]
+        "solution": ["cut -d, -f1,3 textlab/people.csv > names-scores.csv"]
       },
       "course": "os"
     },
@@ -2672,9 +2528,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "cut -d: -f1,3 textlab/colon.txt > colon-fields.txt"
-        ]
+        "solution": ["cut -d: -f1,3 textlab/colon.txt > colon-fields.txt"]
       },
       "course": "os"
     },
@@ -2713,9 +2567,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "sort textlab/fruits.txt > fruits-sorted.txt"
-        ]
+        "solution": ["sort textlab/fruits.txt > fruits-sorted.txt"]
       },
       "course": "os"
     },
@@ -2754,9 +2606,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "sort -n textlab/numbers.txt > numbers-sorted.txt"
-        ]
+        "solution": ["sort -n textlab/numbers.txt > numbers-sorted.txt"]
       },
       "course": "os"
     },
@@ -2795,9 +2645,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "sort textlab/fruits.txt | uniq > unique-fruits.txt"
-        ]
+        "solution": ["sort textlab/fruits.txt | uniq > unique-fruits.txt"]
       },
       "course": "os"
     },
@@ -2835,9 +2683,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "sort textlab/fruits.txt | uniq -c > fruit-counts.txt"
-        ]
+        "solution": ["sort textlab/fruits.txt | uniq -c > fruit-counts.txt"]
       },
       "course": "os"
     },
@@ -2876,9 +2722,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "tr 'a-z' 'A-Z' < textlab/colon.txt > uppercase.txt"
-        ]
+        "solution": ["tr 'a-z' 'A-Z' < textlab/colon.txt > uppercase.txt"]
       },
       "course": "os"
     },
@@ -3061,9 +2905,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "date +%F > iolab/run-date.txt"
-        ]
+        "solution": ["date +%F > iolab/run-date.txt"]
       },
       "course": "os"
     },
@@ -3214,9 +3056,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "sort < iolab/unsorted.txt > iolab/sorted-from-stdin.txt"
-        ]
+        "solution": ["sort < iolab/unsorted.txt > iolab/sorted-from-stdin.txt"]
       },
       "course": "os"
     },
@@ -3251,9 +3091,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "ls iolab | wc -l > iolab/entry-count.txt"
-        ]
+        "solution": ["ls iolab | wc -l > iolab/entry-count.txt"]
       },
       "course": "os"
     },
@@ -3670,9 +3508,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "ln -s docs linklab/docs-shortcut"
-        ]
+        "solution": ["ln -s docs linklab/docs-shortcut"]
       },
       "course": "os"
     },
@@ -3703,10 +3539,7 @@
             "id": "linklab-after-target-removal",
             "type": "directory_contents",
             "path": "/home/student/linklab",
-            "expected": [
-              "dangling.txt",
-              "original.txt"
-            ],
+            "expected": ["dangling.txt", "original.txt"],
             "points": 1
           },
           {
@@ -3760,9 +3593,7 @@
             "id": "linklab-after-hardlink-removal",
             "type": "directory_contents",
             "path": "/home/student/linklab",
-            "expected": [
-              "kept-name.txt"
-            ],
+            "expected": ["kept-name.txt"],
             "points": 1
           }
         ],
@@ -3807,9 +3638,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "ln -s ../original.txt linklab/links/notes-link.txt"
-        ]
+        "solution": ["ln -s ../original.txt linklab/links/notes-link.txt"]
       },
       "course": "os"
     },
@@ -4004,11 +3833,7 @@
             "id": "share-after-link-test",
             "type": "directory_contents",
             "path": "/home/student/linklab/share",
-            "expected": [
-              "latest.txt",
-              "link-report.txt",
-              "notes-backup.txt"
-            ],
+            "expected": ["latest.txt", "link-report.txt", "notes-backup.txt"],
             "points": 1
           },
           {
@@ -4063,9 +3888,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "find findlab -name tiny.txt > find-exact.txt"
-        ]
+        "solution": ["find findlab -name tiny.txt > find-exact.txt"]
       },
       "course": "os"
     },
@@ -4103,9 +3926,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "find findlab -name \"*.txt\" > find-text-files.txt"
-        ]
+        "solution": ["find findlab -name \"*.txt\" > find-text-files.txt"]
       },
       "course": "os"
     },
@@ -4154,10 +3975,7 @@
       "category": "Section 09 — Searching with find",
       "title": "Filter by file type",
       "instructions": "Use `find findlab -type f` and `find findlab -type d` to save regular files and directories to separate reports.",
-      "hints": [
-        "`f` means regular file.",
-        "`d` means directory."
-      ],
+      "hints": ["`f` means regular file.", "`d` means directory."],
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
@@ -4230,9 +4048,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "find findlab -type f -size -1k > small-files.txt"
-        ]
+        "solution": ["find findlab -type f -size -1k > small-files.txt"]
       },
       "course": "os"
     },
@@ -4270,9 +4086,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "find findlab -type f -size +1c > non-empty-files.txt"
-        ]
+        "solution": ["find findlab -type f -size +1c > non-empty-files.txt"]
       },
       "course": "os"
     },
@@ -4310,9 +4124,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "find findlab -type f -mmin -10 > recent-files.txt"
-        ]
+        "solution": ["find findlab -type f -mmin -10 > recent-files.txt"]
       },
       "course": "os"
     },
@@ -4986,10 +4798,7 @@
             "type": "directory_contents",
             "path": "/home",
             "points": 1,
-            "expected": [
-              "oslearn_alex",
-              "student"
-            ]
+            "expected": ["oslearn_alex", "student"]
           }
         ],
         "explanation": "The grader checks the completion note and the final /home directory entries. The setup creates the student and oslearn_alex home directories; the expected listing confirms oslearn_temp no longer has a home directory.",
@@ -5127,9 +4936,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "sudo passwd -S oslearn_pass > password-lab/status.txt"
-        ]
+        "solution": ["sudo passwd -S oslearn_pass > password-lab/status.txt"]
       },
       "course": "os"
     },
@@ -5676,9 +5483,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "chmod 640 perm-lab/shared/readme.txt"
-        ]
+        "solution": ["chmod 640 perm-lab/shared/readme.txt"]
       },
       "course": "os"
     },
@@ -5720,9 +5525,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "chmod 600 perm-lab/private/key.txt"
-        ]
+        "solution": ["chmod 600 perm-lab/private/key.txt"]
       },
       "course": "os"
     },
@@ -5764,9 +5567,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "chmod 755 perm-lab/shared/"
-        ]
+        "solution": ["chmod 755 perm-lab/shared/"]
       },
       "course": "os"
     },
@@ -5810,9 +5611,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "chmod u+x,o-w perm-lab/runme.sh"
-        ]
+        "solution": ["chmod u+x,o-w perm-lab/runme.sh"]
       },
       "course": "os"
     },
@@ -6214,9 +6013,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "tar -cf archlab/project.tar archlab/source/"
-        ]
+        "solution": ["tar -cf archlab/project.tar archlab/source/"]
       },
       "course": "os"
     },
@@ -6254,9 +6051,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "tar -czf archlab/project.tar.gz archlab/source/"
-        ]
+        "solution": ["tar -czf archlab/project.tar.gz archlab/source/"]
       },
       "course": "os"
     },
@@ -6342,9 +6137,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "tar -tf archlab/project.tar.gz > archive-members.txt"
-        ]
+        "solution": ["tar -tf archlab/project.tar.gz > archive-members.txt"]
       },
       "course": "os"
     },
@@ -6383,9 +6176,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "tar -tvf archlab/project.tar > archive-details.txt"
-        ]
+        "solution": ["tar -tvf archlab/project.tar > archive-details.txt"]
       },
       "course": "os"
     },
@@ -6472,9 +6263,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "tar -cf archlab/docs-only.tar -C archlab/source docs"
-        ]
+        "solution": ["tar -cf archlab/docs-only.tar -C archlab/source docs"]
       },
       "course": "os"
     },
@@ -6692,9 +6481,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": [
-          "mkdir -p /home/student"
-        ],
+        "preSetupCommands": ["mkdir -p /home/student"],
         "checks": [
           {
             "id": "archive-safety",
@@ -6866,9 +6653,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "cut -d: -f1,3,4 /etc/group > fsmap/group-fields.txt"
-        ]
+        "solution": ["cut -d: -f1,3,4 /etc/group > fsmap/group-fields.txt"]
       },
       "course": "os"
     },
@@ -7023,10 +6808,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "ls -ld /tmp",
-          "stat -c %a /tmp > fsmap/tmp-mode.txt"
-        ]
+        "solution": ["ls -ld /tmp", "stat -c %a /tmp > fsmap/tmp-mode.txt"]
       },
       "course": "os"
     },
@@ -7842,9 +7624,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "cp vimlab/notes.txt vimlab/notes-copy.txt"
-        ]
+        "solution": ["cp vimlab/notes.txt vimlab/notes-copy.txt"]
       },
       "course": "os"
     },
@@ -7961,9 +7741,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "vim vimlab/replace.txt"
-        ]
+        "solution": ["vim vimlab/replace.txt"]
       },
       "course": "os"
     },
@@ -7972,10 +7750,7 @@
       "category": "Section 16 — Editing configuration files with Vim",
       "title": "Delete a line and undo it",
       "instructions": "In Vim, open `vimlab/notes.txt`, delete the second line with `dd`, then undo with `u`. Quit without saving changes.",
-      "hints": [
-        "`dd` deletes the current line.",
-        "`u` undoes the last edit."
-      ],
+      "hints": ["`dd` deletes the current line.", "`u` undoes the last edit."],
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
@@ -8000,9 +7775,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "vim vimlab/notes.txt"
-        ]
+        "solution": ["vim vimlab/notes.txt"]
       },
       "course": "os"
     },
@@ -8039,9 +7812,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "vim vimlab/notes.txt"
-        ]
+        "solution": ["vim vimlab/notes.txt"]
       },
       "course": "os"
     },
@@ -8077,9 +7848,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "vim vimlab/notes.txt"
-        ]
+        "solution": ["vim vimlab/notes.txt"]
       },
       "course": "os"
     },
@@ -8116,9 +7885,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "vim vimlab/notes.txt"
-        ]
+        "solution": ["vim vimlab/notes.txt"]
       },
       "course": "os"
     },
@@ -8355,9 +8122,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "apropos permission > helplab/apropos-permission.txt"
-        ]
+        "solution": ["apropos permission > helplab/apropos-permission.txt"]
       },
       "course": "os"
     },
@@ -8436,10 +8201,7 @@
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
-        "solution": [
-          "sudo mandb",
-          "apropos chmod > helplab/apropos-chmod.txt"
-        ]
+        "solution": ["sudo mandb", "apropos chmod > helplab/apropos-chmod.txt"]
       },
       "course": "os"
     },
@@ -8725,9 +8487,7 @@
             "id": "incoming-after-cleanup",
             "type": "directory_contents",
             "path": "/home/student/capstone/incoming",
-            "expected": [
-              "hours.csv"
-            ],
+            "expected": ["hours.csv"],
             "points": 1
           }
         ],
@@ -8939,10 +8699,7 @@
       "category": "Section 18 — Integrated operating-system capstone",
       "title": "Capstone 07 — archive the completed workspace",
       "instructions": "Create a gzip tarball `capstone/archive/workspace.tgz` from `capstone/work/`. List its contents into `capstone/archive/workspace-members.txt`.",
-      "hints": [
-        "Use `tar -czf` to create.",
-        "Use `tar -tf` to list."
-      ],
+      "hints": ["Use `tar -czf` to create.", "Use `tar -tf` to list."],
       "difficulty": "Medium",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
