@@ -1,5 +1,6 @@
 # Programming Fundamentals: Term 1 Brownfielders
 
+**Single-file browser implementation:** Each exercise is submitted as one Java source file named `Main.java`. Do not add a `package` declaration or create additional `.java` files. When a task needs several classes, declare them as package-private classes in the same source file as `public class Main`.
 Solutions are hidden by default. Expand **\***Show solution**\*** to view the Java code.
 
 🔗 [Original exercise sheet](https://studentkdg.sharepoint.com/sites/MedewerkersTIFlexACS/INF_Curriculum/Forms/AllItems.aspx?id=%2Fsites%2FMedewerkersTIFlexACS%2FINF%5FCurriculum%2Fdomain%20%2D%20Software%2FY1%20%2D%20Programming%20Fundamentals%2FCurrent%2F2%2E%20Course%20material%2FExtra%2FOefeningen%20voor%20Brownfielders%2FACS%2FChallenges%20for%20Brownfielders%2Epdf&parent=%2Fsites%2FMedewerkersTIFlexACS%2FINF%5FCurriculum%2Fdomain%20%2D%20Software%2FY1%20%2D%20Programming%20Fundamentals%2FCurrent%2F2%2E%20Course%20material%2FExtra%2FOefeningen%20voor%20Brownfielders%2FACS&p=true&ga=1)
@@ -18,56 +19,75 @@ Solutions are hidden by default. Expand **\***Show solution**\*** to view the Ja
 
 **Coding tip:** A winning strategy is `(number - 1) % (maxNumber + 1)`.
 
+<a class="try-exercise-button" href="#/practice/programming-fundamentals-term-1-canvas/pf-term1-bf-t1w2-nimb">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
-**t1w2.java**
-
 ```java
-package t1w2;
-
 import java.util.Random;
 import java.util.Scanner;
 
-public class t1w2 {
-    public static void main() {
+public class Main {
+    public static void main(String[] args) {
         Scanner keyboard = new Scanner(System.in);
-        boolean playAgain = true;
         Random random = new Random();
-        while (playAgain) {
-            int maxNumber = random.nextInt(5) + 2;
-            int initialNumber = (random.nextInt(3) + 5) * maxNumber;
-            boolean playerTurn = random.nextBoolean();
-            while (initialNumber > 0) {
-                System.out.println("%d matches left!".formatted(initialNumber));
-                playerTurn = !playerTurn;
-                int playerChoice = 0;
-                int matchesTaken;
-                if (playerTurn) {
-                    while (playerChoice <= 0 || playerChoice > maxNumber) {
-                        System.out.println("Pick a number between 1 and %d".formatted(maxNumber));
-                        playerChoice = keyboard.nextInt();
-                    }
-                    matchesTaken = playerChoice;
+        boolean playAgain;
+
+        do {
+            int maxNumber = 3;
+            int matches = 21;
+            System.out.print("Use random extended settings? (y/n): ");
+            if (keyboard.next().equalsIgnoreCase("y")) {
+                maxNumber = random.nextInt(5) + 2;
+                matches = (random.nextInt(3) + 5) * maxNumber;
+            }
+
+            System.out.printf("There are %d matches. You may take 1 to %d.%n", matches, maxNumber);
+            System.out.print("Who starts? (1 = you, 2 = computer, 3 = random): ");
+            int starter = keyboard.nextInt();
+            while (starter < 1 || starter > 3) {
+                System.out.print("Choose 1, 2, or 3: ");
+                starter = keyboard.nextInt();
+            }
+            boolean humanTurn = starter == 1 || (starter == 3 && random.nextBoolean());
+
+            while (matches > 0) {
+                System.out.printf("%d matches left.%n", matches);
+                int taken;
+                if (humanTurn) {
+                    int choice;
+                    do {
+                        System.out.printf("Take 1 to %d matches: ", Math.min(maxNumber, matches));
+                        choice = keyboard.nextInt();
+                    } while (choice < 1 || choice > maxNumber || choice > matches);
+                    taken = choice;
+                    System.out.printf("You take %d match(es).%n", taken);
                 } else {
-                    matchesTaken = (initialNumber - 1) % (maxNumber + 1);
-                    System.out.println("The bot picked %d matches".formatted(matchesTaken));
-
+                    // Leave a losing position (1 modulo maxNumber + 1) to the human.
+                    taken = (matches - 1) % (maxNumber + 1);
+                    // If the current position is already losing, no winning move exists.
+                    // Taking one is legal and, importantly, prevents a zero-move loop.
+                    if (taken == 0) {
+                        taken = 1;
+                    }
+                    taken = Math.min(taken, matches);
+                    System.out.printf("The computer takes %d match(es).%n", taken);
                 }
-                initialNumber -= matchesTaken;
+                matches -= taken;
+                if (matches == 0) {
+                    System.out.println(humanTurn
+                            ? "You took the last match. You lose!"
+                            : "The computer took the last match. You win!");
+                    break;
+                }
+                humanTurn = !humanTurn;
             }
-            if (playerTurn) {
-                System.out.println("You lost!! :(");
-            } else {
-                System.out.println("You won!! :)");
-            }
-            System.out.println("Do you want to play again? (y/n)");
-            String answer = keyboard.next();
 
-            playAgain = answer.equalsIgnoreCase("y");
-        }
+            System.out.print("Do you want to play again? (y/n): ");
+            playAgain = keyboard.next().equalsIgnoreCase("y");
+        } while (playAgain);
         keyboard.close();
-
     }
 }
 ```
@@ -86,82 +106,71 @@ public class t1w2 {
 - Use a die with a different number of sides (8, 10, etc.) and a different target score.
 - Ask whether the player wants to play again after each game.
 
+<a class="try-exercise-button" href="#/practice/programming-fundamentals-term-1-canvas/pf-term1-bf-t1w3-101">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
-**t1w3.java**
-
 ```java
-package t1w3;
-
 import java.util.Random;
 import java.util.Scanner;
 
-public class t1w3 {
-    static Random random = new Random();
-    static int dieSide = 8;
-    static Scanner keyboard = new Scanner(System.in);
+public class Main {
+    private static final int TARGET_SCORE = 101;
+    private static final int DIE_SIDES = 6;
+    private static final Random RANDOM = new Random();
 
-    public static void main() {
-        int botPoint = 0;
-        int userPoint = 0;
-        boolean playerTurn = random.nextBoolean();
-        boolean playAgain = true;
-        while (playAgain) {
-            while (userPoint < 101 && botPoint < 101) {
+    public static void main(String[] args) {
+        Scanner keyboard = new Scanner(System.in);
+        boolean playAgain;
+        do {
+            int humanScore = 0;
+            int computerScore = 0;
+            boolean humanTurn = RANDOM.nextBoolean();
+            System.out.printf("First to reach %d points wins.%n", TARGET_SCORE);
+            System.out.println(humanTurn ? "You start." : "The computer starts.");
 
-                playerTurn = !playerTurn;
-                if (playerTurn) {
-                    int score = rollingDice(true, userPoint);
-                    if (score != 0) {
-                        userPoint = score;
-                        if (userPoint > 101) {
-                            break;
-                        }
-                    }
+            while (humanScore < TARGET_SCORE && computerScore < TARGET_SCORE) {
+                if (humanTurn) {
+                    humanScore = takeTurn(true, humanScore, keyboard);
+                    System.out.printf("Your score: %d | Computer: %d%n", humanScore, computerScore);
                 } else {
-                    int score = rollingDice(false, botPoint);
-                    if (score != 0) {
-                        botPoint = score;
-                        if (botPoint > 101) {
-                            break;
-                        }
-                    }
+                    computerScore = takeTurn(false, computerScore, keyboard);
+                    System.out.printf("Computer score: %d | You: %d%n", computerScore, humanScore);
                 }
+                humanTurn = !humanTurn;
             }
-            if (botPoint > 101) {
-                System.out.println("The bot has over 101 points, you lost :(");
-            } else {
-                System.out.println("You have over 101 points, you won :)");
-            }
-            System.out.println("Do you want to play again? (y/n)");
-            String answer = keyboard.next();
 
-            playAgain = answer.equalsIgnoreCase("y");
-        }
+            if (humanScore >= TARGET_SCORE) {
+                System.out.println("You reached 101 points. You win!");
+            } else {
+                System.out.println("The computer reached 101 points. You lose.");
+            }
+            System.out.print("Do you want to play again? (y/n): ");
+            playAgain = keyboard.next().equalsIgnoreCase("y");
+        } while (playAgain);
+        keyboard.close();
     }
 
-    public static int rollingDice(boolean user, int res) {
-        boolean rolling = true;
-        while (rolling) {
-            int roll = random.nextInt(dieSide) + 1;
+    private static int takeTurn(boolean human, int bankedScore, Scanner keyboard) {
+        int turnScore = 0;
+        boolean continueRolling = true;
+        while (continueRolling) {
+            int roll = RANDOM.nextInt(DIE_SIDES) + 1;
             if (roll == 6) {
-                System.out.println("%s rolled a 6, no score this turn".formatted(user ? "You" : "The bot"));
-                return 0;
+                System.out.printf("%s rolled a 6. The turn points are lost.%n", human ? "You" : "The computer");
+                return bankedScore;
             }
-            res += roll;
-            if (user) {
-                System.out.println(
-                        "You rolled %d, for a total of %d, would you like to roll again? (y/n)".formatted(roll, res));
-                String answer = keyboard.next();
-                rolling = answer.equalsIgnoreCase("y");
+            turnScore += roll;
+            System.out.printf("%s rolled %d; turn total: %d.%n", human ? "You" : "The computer", roll, turnScore);
+            if (human) {
+                System.out.print("Roll again? (y/n): ");
+                continueRolling = keyboard.next().equalsIgnoreCase("y");
             } else {
-                rolling = random.nextBoolean();
-                System.out.println(
-                        "The bot rolled %d, for a total of %d".formatted(roll, res));
+                continueRolling = RANDOM.nextBoolean();
             }
         }
-        return res;
+        return bankedScore + turnScore;
     }
 }
 ```
@@ -183,104 +192,110 @@ Each player rolls a die three times to create a three-digit house number (betwee
 
 **Expansion:** Use a different-sided die (4-, 8-, or 10-sided).
 
+<a class="try-exercise-button" href="#/practice/programming-fundamentals-term-1-canvas/pf-term1-bf-t1w4-highest-house-number">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
-**t1w4.java**
-
 ```java
-package t1w4;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
 import java.util.Scanner;
+import java.util.Random;
 
-public class t1w4 {
-    static int dieSide = 6;
-    static Random random = new Random();
-    static Scanner keyboard = new Scanner(System.in);
+public class Main {
+    private static final int DIE_SIDES = 6; // Try 4, 8 or 10 for the extension.
+    private static final Random RANDOM = new Random();
 
-    public static void main() {
-        boolean playAgain = true;
-        while (playAgain) {
-            StringBuilder botScore = new StringBuilder("XXX");
-            StringBuilder userScore = new StringBuilder("XXX");
-            Map<Character, Integer> placement = new HashMap<>();
-            int halfThreshold = '0' + (dieSide / 2);
-            int upperHalf = '0' + (dieSide * 2 / 3);
-            int bigThreshold = upperHalf + 1;
-            placement.put('o', 2);
-            placement.put('t', 1);
-            placement.put('h', 0);
-            int placementLeft = 3;
-            for (int i = 0; i < 2; i++) {
-                char score = dieThrow();
-                char choice = 'X';
-                while (!placement.containsKey(choice)) {
-                    System.out.println(
-                            "You got %d, would you like to place it in %s%s%s%s?".formatted(charToInt(score),
-                                    userScore.charAt(2) == 'X' ? "the once (o)" : "",
-                                    userScore.charAt(2) == 'X' && userScore.charAt(1) == 'X' ? ", " : "",
-                                    userScore.charAt(1) == 'X' ? "the ten (t)" : "",
-                                    userScore.charAt(0) == 'X' ? ", the hundred (h)" : ""));
-                    choice = keyboard.next().charAt(0);
+    public static void main(String[] args) {
+        Scanner keyboard = new Scanner(System.in);
+        boolean playAgain;
+        do {
+            int[] human = {-1, -1, -1};
+            int[] computer = {-1, -1, -1};
+
+            for (int rollNumber = 1; rollNumber <= 3; rollNumber++) {
+                int roll = rollDie();
+                int position;
+                if (rollNumber < 3) {
+                    System.out.printf("You rolled %d. Available positions: %s%s%s%n", roll,
+                            human[0] < 0 ? "hundreds (h) " : "",
+                            human[1] < 0 ? "tens (t) " : "",
+                            human[2] < 0 ? "units (u)" : "");
+                    String choice;
+                    do {
+                        System.out.print("Choose h, t, or u: ");
+                        choice = keyboard.next().toLowerCase();
+                        position = switch (choice) {
+                            case "h" -> 0;
+                            case "t" -> 1;
+                            case "u" -> 2;
+                            default -> -1;
+                        };
+                    } while (position < 0 || human[position] >= 0);
+                } else {
+                    position = firstEmpty(human);
                 }
-                placementLeft -= placement.get(choice);
-                userScore.setCharAt(placement.get(choice), score);
-                placement.remove(choice);
+                human[position] = roll;
             }
-            char score = dieThrow();
-            userScore.setCharAt(placementLeft, score);
-            System.err.println("You got %d, your final score is %s".formatted(charToInt(score), userScore.toString()));
-            placementLeft = 3;
+            System.out.println("Your house number is " + formatHouse(human) + ".");
 
-            char firstThrow = dieThrow();
-            int botPosition;
-            if (firstThrow >= bigThreshold) {
+            int first = rollDie();
+            int botPosition = first >= Math.max(5, (DIE_SIDES * 5 / 6)) ? 0
+                    : first <= Math.max(2, DIE_SIDES / 3) ? 2 : 1;
+            computer[botPosition] = first;
+
+            int second = rollDie();
+            if (second >= (DIE_SIDES * 2 / 3) && computer[0] < 0) {
                 botPosition = 0;
-            } else if (firstThrow >= halfThreshold) {
+            } else if (computer[1] < 0) {
                 botPosition = 1;
             } else {
-                botPosition = 2;
+                botPosition = firstEmpty(computer);
             }
-            placementLeft -= botPosition;
-            botScore.setCharAt(botPosition, firstThrow);
-            char secondThrow = dieThrow();
-            if (secondThrow >= upperHalf && botScore.charAt(0) == 'X') {
-                botPosition = 0;
-            } else if ((secondThrow >= upperHalf && botScore.charAt(1) == 'X') || botScore.charAt(2) != 'X') {
-                botPosition = 1;
-            } else {
-                botPosition = 2;
-            }
-            placementLeft -= botPosition;
-            botScore.setCharAt(botPosition, secondThrow);
+            computer[botPosition] = second;
+            computer[firstEmpty(computer)] = rollDie();
 
-            char lastThrow = dieThrow();
-            botScore.setCharAt(placementLeft, lastThrow);
-            int finalBot = Integer.parseInt(botScore.toString());
-            int finalUser = Integer.parseInt(userScore.toString());
-            System.out.println("The bot got %d".formatted(finalBot));
-            if (finalUser > finalBot) {
-                System.out.println("You win!!! :))");
+            System.out.println("The computer's house number is " + formatHouse(computer) + ".");
+            int comparison = compareHouseNumbers(human, computer);
+            if (comparison > 0) {
+                System.out.println("You win!");
+            } else if (comparison < 0) {
+                System.out.println("The computer wins.");
             } else {
-                System.out.println("You lost!!! :))");
+                System.out.println("It's a draw.");
             }
-            System.out.println("Do you want to play again? (y/n)");
-            String answer = keyboard.next();
+            System.out.print("Do you want to play again? (y/n): ");
+            playAgain = keyboard.next().equalsIgnoreCase("y");
+        } while (playAgain);
+        keyboard.close();
+    }
 
-            playAgain = answer.equalsIgnoreCase("y");
+    private static int rollDie() {
+        return RANDOM.nextInt(DIE_SIDES) + 1;
+    }
+
+    private static int firstEmpty(int[] slots) {
+        for (int i = 0; i < slots.length; i++) {
+            if (slots[i] < 0) {
+                return i;
+            }
         }
+        throw new IllegalStateException("No empty digit position remains.");
     }
 
-    public static char dieThrow() {
-        int score = random.nextInt(dieSide) + 1;
-        return (char) ('0' + score);
+    private static int compareHouseNumbers(int[] first, int[] second) {
+        for (int i = 0; i < first.length; i++) {
+            if (first[i] != second[i]) {
+                return Integer.compare(first[i], second[i]);
+            }
+        }
+        return 0;
     }
 
-    public static int charToInt(char number) {
-        return number - '0';
+    private static String formatHouse(int[] slots) {
+        if (DIE_SIDES <= 9) {
+            return "" + slots[0] + slots[1] + slots[2];
+        }
+        return slots[0] + "-" + slots[1] + "-" + slots[2];
     }
 }
 ```
@@ -309,135 +324,155 @@ Play against the computer, so there are two players.
 
 **Expansion:** Track for each player how many letters they deleted themselves, deleted with help from their neighbor, added to their note, and drew when the letter did not appear in the word.
 
+<a class="try-exercise-button" href="#/practice/programming-fundamentals-term-1-canvas/pf-term1-bf-t1w5-word-hut-game">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
-**t1w5.java**
-
 ```java
-package t1w5;
-
 import java.util.Random;
 import java.util.Scanner;
 
-public class t1w5 {
-    static Scanner keyboard = new Scanner(System.in);
-    static LetterBag letterBag = new LetterBag();
+public class Main {
+    public static void main(String[] args) {
+        Scanner keyboard = new Scanner(System.in);
+        boolean playAgain;
+        do {
+            String word;
+            do {
+                System.out.print("Enter a word containing at least one letter: ");
+                word = keyboard.nextLine().trim().toLowerCase().replaceAll("[^a-z]", "");
+            } while (word.isEmpty());
 
-    public static void main() {
-        boolean playAgain = true;
-        while (playAgain) {
-            System.out.println("Type out a word: ");
-            String word = keyboard.nextLine();
-            word = word.toLowerCase().replaceAll("[^a-z]", "");
-            Player user = new Player(word, "the player");
-            Player bot = new Player(word, "the computer");
-            Player[] playerTurn = { user, bot };
+            LetterBag letterBag = new LetterBag();
+            Player human = new Player(word, "You");
+            Player computer = new Player(word, "The computer");
+            Player[] players = {human, computer};
             int currentPlayer = 0;
-            while (!user.note.allLettersDeleted() && !bot.note.allLettersDeleted()) {
-                char newLetter = letterBag.newLetter();
-                Player temp = playerTurn[currentPlayer];
-                Player opps = playerTurn[1 - currentPlayer];
-                System.out.println("%s drew %s! Your current word is: %s. The computer's is: %s"
-                        .formatted(temp.name, String.valueOf(newLetter), user.note.tostring(),
-                                bot.note.tostring()));
-                if (temp.note.letterInWord(newLetter)) {
-                    System.out.println("%s has the letter, deleting it".formatted(temp.name));
-                    temp.note.deleteLetter(newLetter, false);
-                } else if (opps.note.letterInWord(newLetter)) {
-                    temp.note.notAppeared++;
-                    System.out.println("%s doesn't have the letter, but %s has it, deleting it"
-                            .formatted(temp.name, opps.name));
-                    opps.note.deleteLetter(newLetter, true);
+            int turns = 0;
 
+            while (!human.note.isEmpty() && !computer.note.isEmpty()) {
+                Player current = players[currentPlayer];
+                Player neighbor = players[1 - currentPlayer];
+                char letter = letterBag.newLetter();
+                turns++;
+                System.out.printf("%s draws '%c'. Your note: %s | Computer's note: %s%n",
+                        current.name, letter, human.note, computer.note);
+
+                if (current.note.contains(letter)) {
+                    current.note.deleteOne(letter, false);
+                    System.out.printf("%s deletes one '%c' from their own note.%n", current.name, letter);
+                } else if (neighbor.note.contains(letter)) {
+                    neighbor.note.deleteOne(letter, true);
+                    current.note.notInOwnNote++;
+                    System.out.printf("%s has no '%c'; the other player deletes one.%n", current.name, letter);
                 } else {
-                    temp.note.notAppeared++;
-                    System.out.println("Neither have the letter, adding it to %s".formatted(temp.name));
-                    temp.note.addLetter(newLetter);
+                    current.note.add(letter);
+                    current.note.notInOwnNote++;
+                    System.out.printf("Neither note contains '%c'; %s adds it.%n", letter, current.name);
                 }
+
                 currentPlayer = 1 - currentPlayer;
-
-                System.out.println("Press enter to continue");
+                System.out.println("Press Enter to continue.");
                 keyboard.nextLine();
-
             }
 
-            if (user.note.allLettersDeleted()) {
-                System.out.println("You ran out of letters, you win! :))");
-            } else {
-                System.out.println("The computer ran out of letters first, you lose! :((");
-            }
-            System.out.println("Do you want to play again? (y/n)");
-            String answer = keyboard.next();
-            playAgain = answer.equalsIgnoreCase("y");
+            Player winner = human.note.isEmpty() ? human : computer;
+            System.out.printf("%s wins after %d turns!%n", winner.name, turns);
+            System.out.println("\nStatistics:");
+            System.out.println(human.name + ":\n" + human.note.statistics());
+            System.out.println(computer.name + ":\n" + computer.note.statistics());
 
-        }
+            System.out.print("Do you want to play again? (y/n): ");
+            playAgain = keyboard.nextLine().equalsIgnoreCase("y");
+        } while (playAgain);
+        keyboard.close();
     }
 }
 
 class LetterBag {
-    static Random random = new Random();
+    private final char[] letters = new char[26];
+    private final Random random = new Random();
+    private int nextIndex = 26;
 
     char newLetter() {
-        return (char) ('a' + random.nextInt(26));
+        if (nextIndex == letters.length) {
+            refillAndShuffle();
+        }
+        return letters[nextIndex++];
+    }
+
+    private void refillAndShuffle() {
+        for (int i = 0; i < letters.length; i++) {
+            letters[i] = (char) ('a' + i);
+        }
+        for (int i = letters.length - 1; i > 0; i--) {
+            int j = random.nextInt(i + 1);
+            char temporary = letters[i];
+            letters[i] = letters[j];
+            letters[j] = temporary;
+        }
+        nextIndex = 0;
     }
 }
 
 class Note {
-    StringBuilder theWord;
-    int lettersDeleted = 0;
-    int neighborHelp = 0;
-    int lettersAdded = 0;
-    int notAppeared = 0;
+    private final StringBuilder word;
+    int deletedFromOwnNote;
+    int deletedWithNeighborHelp;
+    int lettersAdded;
+    int notInOwnNote;
 
     Note(String initialWord) {
-        theWord = new StringBuilder(initialWord);
+        word = new StringBuilder(initialWord);
     }
 
-    boolean letterInWord(char letter) {
-        for (int i = 0; i < theWord.length(); i++) {
-            if (letter == theWord.charAt((i))) {
-                return true;
-            }
+    boolean contains(char letter) {
+        return word.indexOf(String.valueOf(letter)) >= 0;
+    }
+
+    void deleteOne(char letter, boolean withNeighborHelp) {
+        int index = word.indexOf(String.valueOf(letter));
+        if (index < 0) {
+            throw new IllegalArgumentException("The letter is not in this note.");
         }
-        return false;
-    }
-
-    void deleteLetter(char letter, boolean neighbor) {
-        for (int i = 0; i < theWord.length(); i++) {
-            if (letter == theWord.charAt((i))) {
-                theWord.deleteCharAt(i);
-                if (neighbor) {
-                    neighborHelp++;
-                } else {
-                    lettersDeleted++;
-                }
-                return;
-            }
+        word.deleteCharAt(index);
+        if (withNeighborHelp) {
+            deletedWithNeighborHelp++;
+        } else {
+            deletedFromOwnNote++;
         }
     }
 
-    void addLetter(char letter) {
+    void add(char letter) {
+        word.append(letter);
         lettersAdded++;
-        theWord.append(letter);
     }
 
-    boolean allLettersDeleted() {
-        return theWord.length() == 0;
+    boolean isEmpty() {
+        return word.length() == 0;
     }
 
-    String tostring() {
-        return theWord.toString();
+    String statistics() {
+        return "Deleted from own note: " + deletedFromOwnNote
+                + "\nDeleted with neighbor's help: " + deletedWithNeighborHelp
+                + "\nLetters added: " + lettersAdded
+                + "\nDraws absent from own note: " + notInOwnNote;
+    }
+
+    @Override
+    public String toString() {
+        return word.toString();
     }
 }
 
 class Player {
-    Note note;
-    String name;
+    final Note note;
+    final String name;
 
-    Player(String initialWord, String userName) {
-        note = new Note(initialWord);
-        name = userName;
+    Player(String word, String name) {
+        note = new Note(word);
+        this.name = name;
     }
 }
 ```
@@ -461,307 +496,133 @@ Simulate the game for multiple numbers of players and use an array to manage the
 
 **Coding tip:** Create classes such as `Dice`, `Jar`, `Player` (with a `numberOfCoins` attribute), `GameTable` (with `jar` and `players` attributes), and `Simulation` (with a `main` method).
 
+<a class="try-exercise-button" href="#/practice/programming-fundamentals-term-1-canvas/pf-term1-bf-t2w1-simulation">Try exercise</a>
+
 <details>
 <summary>***Show solution***</summary>
 
-**t2w1.java**
-
 ```java
-package t2w1;
-
-import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
-public class t2w1 {
-    static Scanner keyboard = new Scanner(System.in);
-
-    public static void main() {
-        boolean playAgain = true;
-
-        while (playAgain) {
-            System.out.println("\n========== NEW GAME ==========");
-
-            Simulation simulation = new Simulation(10);
-            simulation.main();
-
-            System.out.println("\nDo you want to play again? (y/n)");
-            String answer = keyboard.next();
-            playAgain = answer.equalsIgnoreCase("y");
-        }
-
+public class Main {
+    public static void main(String[] args) {
+        Scanner keyboard = new Scanner(System.in);
+        boolean playAgain;
+        do {
+            System.out.print("How many players (at least 2)? ");
+            int numberOfPlayers = keyboard.nextInt();
+            while (numberOfPlayers < 2) {
+                System.out.print("Enter at least 2 players: ");
+                numberOfPlayers = keyboard.nextInt();
+            }
+            Simulation simulation = new Simulation(numberOfPlayers, 10);
+            simulation.play();
+            System.out.print("Simulate another game with a possibly different number of players? (y/n): ");
+            playAgain = keyboard.next().equalsIgnoreCase("y");
+        } while (playAgain);
         keyboard.close();
-        System.out.println("Program ended.");
     }
 }
 
 class Dice {
-    Random random = new Random();
-    int dieSide = 6;
+    private final Random random = new Random();
 
     int roll() {
-        int result = random.nextInt(dieSide) + 1;
-        System.out.println(String.format("[DICE] Rolled: %d", result));
-        return result;
+        return random.nextInt(6) + 1;
     }
 }
 
 class Jar {
-    int stolenCoins = 0;
+    int coins;
 }
 
 class Player {
     int numberOfCoins;
 
-    Player(int iniCoins) {
-        numberOfCoins = iniCoins;
+    Player(int startingCoins) {
+        numberOfCoins = startingCoins;
     }
 }
 
 class GameTable {
-    Jar jar = new Jar();
-    ArrayList<Player> players;
+    final Jar jar = new Jar();
+    final Player[] players;
+    int playerCount;
 
-    GameTable(int numberOfPlayers, int iniCoins) {
-        players = new ArrayList<>();
-
+    GameTable(int numberOfPlayers, int startingCoins) {
+        players = new Player[numberOfPlayers];
+        playerCount = numberOfPlayers;
         for (int i = 0; i < numberOfPlayers; i++) {
-            players.add(new Player(iniCoins));
-        }
-
-        System.out.println(String.format(
-                "[TABLE] Created %d players with %d coins each.",
-                numberOfPlayers,
-                iniCoins));
-    }
-
-    void giveCoin(int index, int receiver) {
-        System.out.println(String.format(
-                "[COIN] Player %d gives 1 coin to Player %d",
-                index,
-                receiver));
-
-        System.out.println(String.format(
-                "[COIN] Before: Player %d = %d, Player %d = %d",
-                index,
-                players.get(index).numberOfCoins,
-                receiver,
-                players.get(receiver).numberOfCoins));
-
-        players.get(index).numberOfCoins--;
-        players.get(receiver).numberOfCoins++;
-
-        System.out.println(String.format(
-                "[COIN] After: Player %d = %d, Player %d = %d",
-                index,
-                players.get(index).numberOfCoins,
-                receiver,
-                players.get(receiver).numberOfCoins));
-    }
-
-    void toJar(int index) {
-        System.out.println(String.format(
-                "[JAR] Player %d puts 1 coin in the jar.",
-                index));
-
-        players.get(index).numberOfCoins--;
-        jar.stolenCoins++;
-
-        System.out.println(String.format(
-                "[JAR] Player %d now has %d coins.",
-                index,
-                players.get(index).numberOfCoins));
-
-        System.out.println(String.format(
-                "[JAR] Jar contains %d coins.",
-                jar.stolenCoins));
-
-        if (players.get(index).numberOfCoins <= 0) {
-            System.out.println(String.format(
-                    "[JAR] Player %d has no coins left!",
-                    index));
-
-            System.out.println(String.format(
-                    "[JAR] Returning %d jar coins to Player %d.",
-                    jar.stolenCoins,
-                    index));
-
-            players.get(index).numberOfCoins = jar.stolenCoins;
-            jar.stolenCoins = 0;
-
-            System.out.println(String.format(
-                    "[JAR] Player %d now has %d coins.",
-                    index,
-                    players.get(index).numberOfCoins));
+            players[i] = new Player(startingCoins);
         }
     }
 
-    boolean removeBroke(int index) {
-        if (players.get(index).numberOfCoins > 0) {
-            System.out.println(String.format(
-                    "[CHECK] Player %d still has %d coins.",
-                    index,
-                    players.get(index).numberOfCoins));
+    void transferCoin(int from, int to) {
+        players[from].numberOfCoins--;
+        players[to].numberOfCoins++;
+        System.out.printf("Player %d gives one coin to player %d.%n", from + 1, to + 1);
+    }
 
-            return true;
-        } else {
-            System.out.println(String.format(
-                    "[REMOVE] Player %d is broke and is removed!",
-                    index));
+    void putCoinInJar(int playerIndex) {
+        players[playerIndex].numberOfCoins--;
+        jar.coins++;
+        System.out.printf("Player %d puts one coin in the jar (jar: %d).%n", playerIndex + 1, jar.coins);
+        if (players[playerIndex].numberOfCoins == 0) {
+            players[playerIndex].numberOfCoins += jar.coins;
+            System.out.printf("Player %d used their last coin and receives the %d coin(s) in the jar.%n",
+                    playerIndex + 1, jar.coins);
+            jar.coins = 0;
+        }
+    }
 
-            players.remove(index);
-
-            System.out.println(String.format(
-                    "[REMOVE] Players remaining: %d",
-                    players.size()));
-
+    boolean eliminateIfBroke(int playerIndex) {
+        if (players[playerIndex].numberOfCoins > 0) {
             return false;
         }
+        System.out.printf("Player %d is eliminated.%n", playerIndex + 1);
+        for (int i = playerIndex; i < playerCount - 1; i++) {
+            players[i] = players[i + 1];
+        }
+        players[playerCount - 1] = null;
+        playerCount--;
+        return true;
     }
 }
 
 class Simulation {
-    int playerCount = 5;
-    Dice dice = new Dice();
-    int initialCoins;
+    private final GameTable table;
+    private final Dice dice = new Dice();
 
-    Simulation(int iniCoins) {
-        initialCoins = iniCoins;
+    Simulation(int numberOfPlayers, int startingCoins) {
+        table = new GameTable(numberOfPlayers, startingCoins);
     }
 
-    void main() {
-        int prevPlayer = playerCount - 1;
+    void play() {
         int currentPlayer = 0;
-        int nextPlayer = 1;
-
-        GameTable gameTable = new GameTable(playerCount, initialCoins);
-
-        System.out.println(String.format(
-                "[GAME] Starting game with %d players.",
-                playerCount));
-
-        while (playerCount > 1) {
-
-            System.out.println("\n----------------------------");
-
-            System.out.println(String.format(
-                    "[TURN] Current player: %d",
-                    currentPlayer));
-
-            System.out.println(String.format(
-                    "[TURN] Previous player: %d",
-                    prevPlayer));
-
-            System.out.println(String.format(
-                    "[TURN] Next player: %d",
-                    nextPlayer));
-
-            System.out.println(String.format(
-                    "[TURN] Players in game: %d",
-                    playerCount));
-
+        while (table.playerCount > 1) {
+            currentPlayer %= table.playerCount;
+            int left = (currentPlayer - 1 + table.playerCount) % table.playerCount;
+            int right = (currentPlayer + 1) % table.playerCount;
             int roll = dice.roll();
+            System.out.printf("Player %d rolls %d. Coins: %d; jar: %d.%n", currentPlayer + 1, roll,
+                    table.players[currentPlayer].numberOfCoins, table.jar.coins);
 
-            boolean checkCoin = false;
-
-            if (roll == 4) {
-                System.out.println(
-                        "[ACTION] Roll = 4 -> give coin to previous player.");
-
-                gameTable.giveCoin(currentPlayer, prevPlayer);
-                checkCoin = true;
-
-            } else if (roll == 5) {
-                System.out.println(
-                        "[ACTION] Roll = 5 -> give coin to next player.");
-
-                gameTable.giveCoin(currentPlayer, nextPlayer);
-                checkCoin = true;
-
-            } else if (roll == 6) {
-                System.out.println(
-                        "[ACTION] Roll = 6 -> put coin in jar.");
-
-                gameTable.toJar(currentPlayer);
-                checkCoin = true;
-
-            } else {
-                System.out.println(String.format(
-                        "[ACTION] Roll = %d -> nothing happens.",
-                        roll));
+            switch (roll) {
+                case 1, 2, 3 -> System.out.println("Nothing happens.");
+                case 4 -> table.transferCoin(currentPlayer, left);
+                case 5 -> table.transferCoin(currentPlayer, right);
+                case 6 -> table.putCoinInJar(currentPlayer);
+                default -> throw new IllegalStateException("Unexpected die roll.");
             }
 
-            System.out.println(String.format(
-                    "[STATE] checkCoin = %b",
-                    checkCoin));
-
-            if (checkCoin && !gameTable.removeBroke(currentPlayer)) {
-
-                System.out.println(String.format(
-                        "[GAME] Player %d was removed.",
-                        currentPlayer));
-
-                playerCount--;
-
-                System.out.println(String.format(
-                        "[GAME] Player count is now: %d",
-                        playerCount));
-
-                if (prevPlayer >= playerCount) {
-                    System.out.println(
-                            "[INDEX] Adjusting previous player.");
-
-                    prevPlayer--;
-                }
-
-                currentPlayer = prevPlayer + 1;
-
-                if (currentPlayer >= playerCount) {
-                    currentPlayer = 0;
-                }
-
-                nextPlayer = currentPlayer + 1;
-
-                if (nextPlayer >= playerCount) {
-                    nextPlayer = 0;
-                }
-
-                System.out.println(String.format(
-                        "[INDEX] After removal: Previous = %d, Current = %d, Next = %d",
-                        prevPlayer,
-                        currentPlayer,
-                        nextPlayer));
-
-            } else {
-
-                System.out.println("[TURN] Moving to next player.");
-
-                prevPlayer = currentPlayer;
-                currentPlayer = nextPlayer;
-
-                nextPlayer++;
-
-                if (nextPlayer >= playerCount) {
-                    nextPlayer = 0;
-                }
-
-                System.out.println(String.format(
-                        "[INDEX] After turn: Previous = %d, Current = %d, Next = %d",
-                        prevPlayer, currentPlayer, nextPlayer));
+            boolean eliminated = (roll == 4 || roll == 5) && table.eliminateIfBroke(currentPlayer);
+            if (!eliminated && table.playerCount > 0) {
+                currentPlayer = (currentPlayer + 1) % table.playerCount;
             }
         }
-
-        System.out.println("\n========== GAME OVER ==========");
-
-        System.out.println(String.format(
-                "[GAME] Remaining players: %d",
-                playerCount));
-
-        if (gameTable.players.size() == 1) {
-            System.out.println(String.format(
-                    "[GAME] Winner has %d coins.",
-                    gameTable.players.get(0).numberOfCoins));
-        }
+        System.out.printf("Game over. Player 1 in the remaining array is the winner with %d coin(s).%n",
+                table.players[0].numberOfCoins);
     }
 }
 ```

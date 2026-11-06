@@ -310,7 +310,8 @@
             if (config.profile !== undefined && !["basic-linux", "basic", "intro-linux"].includes(config.profile)) E(id, "terminal.profile", `Unsupported profile: ${config.profile}`);
           }
         } else if (ex.type === "java-ex") {
-          if (ex.course !== "java") E(id, "course", "java-ex exercises must use course java");
+          if (!["java", "programming_fundamentals"].includes(ex.course))
+            E(id, "course", "java-ex exercises must use course java or programming_fundamentals");
           const config = ex.java;
           if (!isMap(config)) {
             E(id, "java", "Java exercises need a java configuration object");

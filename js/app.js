@@ -112,7 +112,13 @@ const loadingSkeleton = (text, sub = "") =>
 const uniq = (arr, f) =>
   [...new Set(arr.map(f).filter((x) => x !== undefined && x !== ""))].sort();
 const courseLabel = (course) =>
-  course === "sql" ? "SQL" : course === "os" ? "OS" : course;
+  course === "sql"
+    ? "SQL"
+    : course === "os"
+      ? "OS"
+      : ["java", "programming_fundamentals"].includes(course)
+        ? "Programming Fundamentals"
+        : course;
 let activeConfirmDialog = null;
 let confirmDialogId = 0;
 function confirmInApp({
@@ -2009,11 +2015,16 @@ function normalizeLibrary(map) {
       terms = entry.terms.map((t, i) =>
         typeof t === "string"
           ? { label: `Term ${i + 1}`, file: t }
-          : { label: t?.name ?? t?.label ?? `Term ${i + 1}`, file: t?.file },
+          : {
+              ...t,
+              label: t?.name ?? t?.label ?? `Term ${i + 1}`,
+              file: t?.file,
+            },
       );
     } else if (entry?.terms && typeof entry.terms === "object") {
       terms = Object.entries(entry.terms)
         .map(([label, t]) => ({
+          ...(t && typeof t === "object" && !Array.isArray(t) ? t : {}),
           label,
           file: typeof t === "string" ? t : t?.file,
         }))
@@ -2021,6 +2032,13 @@ function normalizeLibrary(map) {
           x.label.localeCompare(y.label, undefined, { numeric: true }),
         );
     } else terms = entry?.file ? [{ label: "Term 1", file: entry.file }] : [];
+    // A learning entry may link one exercise package for every term, or
+    // define a default packageId inherited by terms that do not override it.
+    const defaultPackageId = entry?.packageId ?? entry?.exercisePackageId;
+    terms = terms.map((t) => ({
+      ...t,
+      packageId: t.packageId ?? t.exercisePackageId ?? defaultPackageId,
+    }));
     return { ...entry, id, terms: terms.filter((t) => t.file) };
   });
 }
@@ -2311,6 +2329,11 @@ function addPackage(f, ctx) {
   const exercises = Object.entries(pkg.exercises || {}).map(([id, ex]) => ({
     ...ex,
     id,
+    // Java is a programming-fundamentals subject, not a separate course tab.
+    course:
+      ex.type === "java-ex" && ex.course === "java"
+        ? "programming_fundamentals"
+        : ex.course,
     term: packageTerm,
     canvas: ex.canvas ?? packageCanvas,
     packageId: pkg.packageId,
@@ -5327,10 +5350,10 @@ const libraryFileKind = (file) =>
 //   true  -> the picker is shown even when a subject has only one term
 //   false -> the picker is hidden when there is nothing to choose between
 const SHOW_TERM_PICKER_WITH_SINGLE_TERM = true;
-// Learning guides are paired with their own exercise packages. Keep these IDs
-// aligned with the packageId values in content packages; the manifest's package
-// group key (for example, "os1") is not the packageId used by practice routes.
-const LEARNING_PACKAGE_IDS = Object.freeze({
+// Older manifests may omit learning package IDs. New manifests should set
+// `packageId` on each learning term (or on its subject entry); that value is
+// matched against the package's own packageId, not the manifest package-group key.
+const LEGACY_LEARNING_PACKAGE_IDS = Object.freeze({
   sql: "sql-relational-learning-term-1",
   os: "os-learning-term-1",
 });
@@ -5338,7 +5361,7 @@ const LEARNING_PACKAGE_IDS = Object.freeze({
 // The Learning page is a Markdown article enhanced with live progress controls.
 // Exercise completion reuses the same XP keys as Practice/Progress; the separate
 // "section reviewed" checklist is saved through the existing IndexedDB key-value store.
-async function enhanceLearningProgress(body, term, subjectId) {
+async function enhanceLearningProgress(body, term, subject) {
   if (!body || !term?.file) return;
   const headings = [...body.querySelectorAll("h2")].filter((heading) =>
     heading.textContent.trim().startsWith("Section "),
@@ -5348,7 +5371,12 @@ async function enhanceLearningProgress(body, term, subjectId) {
   const storageKey = `learning-complete:${term.file}`;
   const stored = await kv.get(storageKey, []);
   const completed = new Set(Array.isArray(stored) ? stored : []);
-  const learningPackageId = LEARNING_PACKAGE_IDS[subjectId];
+  const learningPackageId =
+    term?.packageId ??
+    term?.exercisePackageId ??
+    subject?.packageId ??
+    subject?.exercisePackageId ??
+    LEGACY_LEARNING_PACKAGE_IDS[subject?.id];
   const packageExercises = S.exercises
     .filter((exercise) => exercise.packageId === learningPackageId)
     .sort((a, b) => a.id.localeCompare(b.id, undefined, { numeric: true }));
@@ -5366,9 +5394,12 @@ async function enhanceLearningProgress(body, term, subjectId) {
         `^Section\\s+${sectionNumber}\\b`,
         "i",
       ).test(category);
-      const idMatches = new RegExp(`(?:^|-)s${sectionNumber}-`).test(
-        String(exercise.id || ""),
-      );
+      const id = String(exercise.id || "");
+
+      const idMatches =
+        new RegExp(`(?:^|-)s${sectionNumber}-`).test(id) ||
+        new RegExp(`(?:^|-)t\\d+-${sectionNumber}-\\d+$`).test(id);
+
       return categoryMatches || idMatches;
     });
     return { heading, sectionId, exercises, index };
@@ -6311,7 +6342,7 @@ async function pageLibrary(root, arg, termArg, view) {
       else source.classList.add("reference-code-fallback");
     });
     if (view.route === "learning")
-      await enhanceLearningProgress(body, term, cur.id);
+      await enhanceLearningProgress(body, term, cur);
     return toc;
   };
   // An .html canvas runs in an iframe, so its own CSS and JS execute normally
@@ -7048,8 +7079,8 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
         select,
       );
   const exerciseTypeOptions = [
-    { key: "mcq", label: "MCQ" },
-    { key: "interactive", label: "Interactive (SQL + terminal)" },
+    { key: "mcq", label: "Multiple choice questions" },
+    { key: "interactive", label: "Interactive" },
     { key: "other", label: "Other (text / fill-in)" },
   ];
   const validExerciseTypeKeys = new Set(
@@ -7097,7 +7128,11 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
   });
   const exerciseTypeGroup = (exercise) => {
     if (String(exercise.type || "").startsWith("mcq")) return "mcq";
-    if (exercise.type === "terminal" || exercise.type === "sql-query")
+    if (
+      exercise.type === "terminal" ||
+      exercise.type === "sql-query" ||
+      exercise.type == "java-ex"
+    )
       return "interactive";
     return "other";
   };
