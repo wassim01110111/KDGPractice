@@ -403,9 +403,13 @@ export async function mountJavaExercise({ container, editorContainer = null, exe
   inputPanel.append(inputLabel, element("small", "java-help", "Enter the text your program should read. Include line breaks when the program expects multiple values."));
 
   const controls = element("div", "java-controls");
-  const runButton = element("button", "", "Run");
+  const runButton = element("button", "", "Run (Ctrl+Enter)");
+  runButton.setAttribute("aria-keyshortcuts", "Control+Enter");
+  runButton.title = "Run Java (Ctrl+Enter)";
   runButton.hidden = !config.mainClass;
-  const checkButton = element("button", "", "Check");
+  const checkButton = element("button", "", "Check (Ctrl+Shift+Enter)");
+  checkButton.setAttribute("aria-keyshortcuts", "Control+Shift+Enter");
+  checkButton.title = "Run automatic checks (Ctrl+Shift+Enter)";
   const resetButton = element("button", "sec", "Reset");
   const stopButton = element("button", "sec", "Stop");
   stopButton.disabled = true;
@@ -520,6 +524,21 @@ export async function mountJavaExercise({ container, editorContainer = null, exe
 
   runButton.addEventListener("click", () => execute("run"));
   checkButton.addEventListener("click", () => execute("check"));
+  // The editor can be mounted in a separate pane outside `root`, so listen
+  // directly on editorHost. Capture the shortcut before CodeMirror or the
+  // surrounding page can consume it, then prevent it escaping to browser/page
+  // handlers (for example, form submission).
+  editorHost.addEventListener("keydown", (event) => {
+    if (!(event.ctrlKey || event.metaKey) || event.key !== "Enter" || event.altKey) return;
+    event.preventDefault();
+    event.stopPropagation();
+    event.stopImmediatePropagation();
+    if (event.shiftKey) {
+      if (!checkButton.hidden && !checkButton.disabled) execute("check");
+    } else if (!runButton.hidden && !runButton.disabled) {
+      execute("run");
+    }
+  }, true);
   resetButton.addEventListener("click", () => {
     if (running) return;
     setSource(originalCode);
@@ -560,7 +579,19 @@ export async function mountJavaExercise({ container, editorContainer = null, exe
     editorView = new EditorView({
       doc: source,
       parent: editorHost,
-      extensions: [basicSetup, java(), theme, EditorView.updateListener.of((update) => {
+      extensions: [basicSetup, java(), theme, EditorView.domEventHandlers({
+        keydown(event, view) {
+          if (event.key !== "Tab" || event.shiftKey || event.altKey || event.ctrlKey || event.metaKey) return false;
+          event.preventDefault();
+          const selection = view.state.selection.main;
+          const spaces = "    ";
+          view.dispatch({
+            changes: { from: selection.from, to: selection.to, insert: spaces },
+            selection: { anchor: selection.from + spaces.length },
+          });
+          return true;
+        },
+      }), EditorView.updateListener.of((update) => {
         if (update.docChanged) {
           source = update.state.doc.toString();
           onChange(source);
@@ -576,6 +607,15 @@ export async function mountJavaExercise({ container, editorContainer = null, exe
       fallback.spellcheck = false;
       fallback.setAttribute("aria-label", "Java source code");
       fallback.addEventListener("input", () => {
+        source = fallback.value;
+        onChange(source);
+      });
+      fallback.addEventListener("keydown", (event) => {
+        if (event.key !== "Tab" || event.shiftKey || event.altKey || event.ctrlKey || event.metaKey) return;
+        event.preventDefault();
+        const start = fallback.selectionStart;
+        const end = fallback.selectionEnd;
+        fallback.setRangeText("    ", start, end, "end");
         source = fallback.value;
         onChange(source);
       });
