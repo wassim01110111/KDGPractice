@@ -2081,6 +2081,9 @@ button.schema-view-toggle.on {
   color: var(--mut);
   font-size: 0.65rem;
 }
+.stmt code {
+  color: #d9a806;
+}
 .schema-relations {
   margin-top: 0.65rem;
 }
