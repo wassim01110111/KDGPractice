@@ -4427,6 +4427,14 @@ function qView(
         : q;
   view.refreshNextExercise = updateNextExercise;
   view.focusInput = () => focusTarget?.focus({ preventScroll: true });
+  // Where outside callers may attach extra controls. Java owns its editor pane
+  // (java.js replaces its children on mount), so use the instructions pane.
+  view.actionsRoot =
+    ex.type === "java-ex"
+      ? javaInstructionsPane
+      : ex.type === "terminal"
+        ? terminalInstructionsPane
+        : q;
   return view;
 }
 
@@ -7445,9 +7453,9 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
       saveButton.setAttribute("aria-pressed", String(isSaved));
     };
     syncSaveButton();
-    const questionRoot = view.classList?.contains("q")
-      ? view
-      : view.querySelector?.(".q");
+    const questionRoot =
+      view.actionsRoot ??
+      (view.classList?.contains("q") ? view : view.querySelector?.(".q"));
     questionRoot?.prepend(
       h("div", { class: "practice-exercise-actions" }, saveButton, saveStatus),
     );

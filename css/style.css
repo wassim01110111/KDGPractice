@@ -8555,67 +8555,181 @@ body.java-split-dragging {
     align-items: start;
     padding: 0.75rem;
   }
+
   .os-terminal .ot-workspace-main {
     min-width: 0;
   }
+
+  /* Control sidebar */
+  .os-terminal.ot-control-sidebar,
   .os-terminal .ot-control-sidebar {
+    margin-top: 1rem;
     position: sticky;
     top: 5.5rem;
     display: grid;
+    grid-template-columns: minmax(0, 1fr);
     min-width: 0;
+    width: 100%;
     gap: 0.65rem;
     align-content: start;
+    align-self: start;
+    box-sizing: border-box;
     padding: 0.75rem;
     background: var(--card);
     border: 1px solid var(--bd);
     border-radius: 10px;
   }
-  .os-terminal .ot-control-heading {
+
+  /* Sidebar heading */
+  .os-terminal.ot-control-sidebar .ot-control-heading,
+  .os-terminal .ot-control-sidebar .ot-control-heading {
     display: block;
     margin: 0;
     font-size: 0.9rem;
+    line-height: 1.4;
   }
-  .os-terminal .ot-next-slot:not(:empty) {
+
+  /* Next action slot */
+  .os-terminal.ot-control-sidebar .ot-next-slot:not(:empty),
+  .os-terminal .ot-control-sidebar .ot-next-slot:not(:empty) {
     display: grid;
+    grid-template-columns: minmax(0, 1fr);
     gap: 0.4rem;
+    min-width: 0;
   }
+
+  /* Action buttons */
+  .os-terminal.ot-control-sidebar .ot-actions,
   .os-terminal .ot-control-sidebar .ot-actions {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     gap: 0.5rem;
-    margin: 0;
-  }
-  .os-terminal .ot-control-sidebar .ot-actions button,
-  .os-terminal .ot-next-slot > button,
-  .os-terminal .ot-next-slot > a,
-  .os-terminal .ot-next-slot > [role="button"] {
-    width: 100%;
     min-width: 0;
     margin: 0;
+  }
+
+  .os-terminal.ot-control-sidebar .ot-actions button,
+  .os-terminal .ot-control-sidebar .ot-actions button,
+  .os-terminal.ot-control-sidebar .ot-next-slot > button,
+  .os-terminal .ot-control-sidebar .ot-next-slot > button,
+  .os-terminal.ot-control-sidebar .ot-next-slot > a,
+  .os-terminal .ot-control-sidebar .ot-next-slot > a,
+  .os-terminal.ot-control-sidebar .ot-next-slot > [role="button"],
+  .os-terminal .ot-control-sidebar .ot-next-slot > [role="button"] {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    margin: 0;
+    box-sizing: border-box;
     text-align: center;
     overflow-wrap: anywhere;
   }
+
+  /* Solution panel */
+  .os-terminal.ot-control-sidebar .ot-solution,
   .os-terminal .ot-control-sidebar .ot-solution {
+    min-width: 0;
+    max-width: 100%;
     max-height: min(48vh, 24rem);
     overflow: auto;
+    overscroll-behavior: contain;
     margin: 0;
+    box-sizing: border-box;
   }
+
+  .os-terminal.ot-control-sidebar .ot-solution-list,
   .os-terminal .ot-control-sidebar .ot-solution-list {
     padding-left: 1.35rem;
+    overflow-wrap: anywhere;
+  }
+
+  .os-terminal.ot-control-sidebar .ot-solution-list code,
+  .os-terminal .ot-control-sidebar .ot-solution-list code {
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
   }
 }
 
 @media (max-width: 900px) {
   .os-terminal .ot-workbench {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 0.75rem;
+  }
+
+  .os-terminal .ot-workspace-main {
     display: block;
-    padding: 0;
+    min-width: 0;
+    width: 100%;
   }
-  .os-terminal .ot-workspace-main,
+
+  /* Mobile control sidebar */
+  .os-terminal.ot-control-sidebar,
   .os-terminal .ot-control-sidebar {
-    display: contents;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    gap: 0.65rem;
+    margin-top: 1rem;
+    padding: 0.75rem;
+    position: static;
+    background: var(--card);
+    border: 1px solid var(--bd);
+    border-radius: 10px;
   }
-  .os-terminal .ot-control-heading,
-  .os-terminal .ot-next-slot {
-    display: none !important;
+
+  .os-terminal .ot-control-heading {
+    display: block;
+    margin: 0;
+    font-size: 0.9rem;
+  }
+
+  .os-terminal .ot-next-slot:not(:empty) {
+    display: grid;
+    gap: 0.4rem;
+  }
+
+  .os-terminal .ot-actions {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.5rem;
+    margin: 0;
+    min-width: 0;
+  }
+
+  .os-terminal .ot-control-sidebar .ot-actions button,
+  .os-terminal .ot-control-sidebar .ot-next-slot > button,
+  .os-terminal .ot-control-sidebar .ot-next-slot > a,
+  .os-terminal .ot-control-sidebar .ot-next-slot > [role="button"] {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    margin: 0;
+    box-sizing: border-box;
+    text-align: center;
+    overflow-wrap: anywhere;
+  }
+
+  .os-terminal .ot-solution {
+    max-height: 40vh;
+    overflow: auto;
+    overscroll-behavior: contain;
+    margin: 0;
+    min-width: 0;
+  }
+
+  .os-terminal .ot-solution-list {
+    padding-left: 1.35rem;
+  }
+
+  .os-terminal .ot-solution-list code {
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
   }
 }
