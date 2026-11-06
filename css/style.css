@@ -8487,6 +8487,9 @@ body.java-split-dragging {
 }
 
 @media (max-width: 900px) {
+  .java-workspace-pane {
+    max-width: 100%;
+  }
   .java-exercise-layout {
     display: flex;
     flex-direction: column;
