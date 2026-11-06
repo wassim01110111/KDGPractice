@@ -376,12 +376,19 @@ export function resetJavaRuntime() {
 }
 
 async function loadCodeMirror() {
-  const [core, language, javaLanguage] = await Promise.all([
+  const [core, language, javaLanguage, oneDark] = await Promise.all([
     import("https://esm.sh/codemirror@6.0.2"),
     import("https://esm.sh/@codemirror/language"),
     import("https://esm.sh/@codemirror/lang-java@6.0.2"),
+    import("https://esm.sh/@codemirror/theme-one-dark"),
   ]);
-  return { ...core, ...language, ...javaLanguage };
+
+  return {
+    ...core,
+    ...language,
+    ...javaLanguage,
+    ...oneDark,
+  };
 }
 
 function element(tag, className, children = []) {
@@ -825,8 +832,8 @@ export async function mountJavaExercise({
   });
 
   try {
-    const { basicSetup, EditorView, java, indentUnit } = await loadCodeMirror();
-    if (disposed) return { dispose() {}, getSource };
+    const { basicSetup, EditorView, java, indentUnit, oneDark } =
+      await loadCodeMirror();
     const theme = EditorView.theme(
       {
         "&": {
@@ -866,7 +873,7 @@ export async function mountJavaExercise({
         basicSetup,
         java(),
         indentUnit.of("    "),
-        theme,
+        oneDark,
         EditorView.domEventHandlers({
           keydown(event, view) {
             if (
