@@ -3,7 +3,7 @@
 
 const LOADER_URL = "https://cjrtnc.leaningtech.com/5.0/loader.js";
 const RUNNER_CLASS = "learning.java.ExerciseRunner";
-const RUNNER_JAR = "/app/content/java/ExerciseRunner.jar";
+const RUNNER_JAR = "/KDGPractice/content/java/ExerciseRunner.jar";
 let runtimeReady = false;
 let initialization = null;
 let workQueue = Promise.resolve();
@@ -20,8 +20,8 @@ async function runExerciseRunner(...args) {
   } catch (error) {
     throw new Error(
       `Java exercise runner JAR is missing or unreadable at ${RUNNER_JAR}. ` +
-      `Deploy ExerciseRunner.jar there; it must contain ` +
-      `learning/java/ExerciseRunner.class. Original error: ${error?.message || error}`
+        `Deploy ExerciseRunner.jar there; it must contain ` +
+        `learning/java/ExerciseRunner.class. Original error: ${error?.message || error}`,
     );
   }
 
@@ -29,11 +29,13 @@ async function runExerciseRunner(...args) {
     return await cheerpjRunMain(RUNNER_CLASS, RUNNER_JAR, ...args);
   } catch (error) {
     const message = error?.message || String(error);
-    if (/Could not find or load main class|ClassNotFoundException/i.test(message)) {
+    if (
+      /Could not find or load main class|ClassNotFoundException/i.test(message)
+    ) {
       throw new Error(
         `Java exercise runner class "${RUNNER_CLASS}" was not found in ${RUNNER_JAR}. ` +
-        `Rebuild the JAR with package learning.java and ensure it contains ` +
-        `learning/java/ExerciseRunner.class. Original error: ${message}`
+          `Rebuild the JAR with package learning.java and ensure it contains ` +
+          `learning/java/ExerciseRunner.class. Original error: ${message}`,
       );
     }
     throw error;
@@ -49,7 +51,10 @@ function errorPayload(error, phase = "worker") {
     type: "ERROR",
     phase,
     message: error && error.message ? error.message : String(error),
-    stack: error && error.stack ? String(error.stack).split("\n").slice(0, 8).join("\n") : "",
+    stack:
+      error && error.stack
+        ? String(error.stack).split("\n").slice(0, 8).join("\n")
+        : "",
   };
 }
 
@@ -67,11 +72,19 @@ async function initialize(requestId) {
   if (!initialization) {
     initialization = (async () => {
       if (typeof cheerpjInit !== "function") {
-        throw new Error("The CheerpJ 5.0 loader did not expose cheerpjInit inside the worker.");
+        throw new Error(
+          "The CheerpJ 5.0 loader did not expose cheerpjInit inside the worker.",
+        );
       }
       await cheerpjInit({ version: 21, status: "none" });
-      if (typeof cheerpjRunMain !== "function" || typeof cheerpOSAddStringFile !== "function" || typeof cjFileBlob !== "function") {
-        throw new Error("CheerpJ initialized, but one or more required runtime APIs are unavailable.");
+      if (
+        typeof cheerpjRunMain !== "function" ||
+        typeof cheerpOSAddStringFile !== "function" ||
+        typeof cjFileBlob !== "function"
+      ) {
+        throw new Error(
+          "CheerpJ initialized, but one or more required runtime APIs are unavailable.",
+        );
       }
       runtimeReady = true;
     })().catch((error) => {
@@ -79,7 +92,11 @@ async function initialize(requestId) {
       throw error;
     });
   }
-  status(requestId, "INITIALIZING", "Starting the Java 21 runtime for the first time…");
+  status(
+    requestId,
+    "INITIALIZING",
+    "Starting the Java 21 runtime for the first time…",
+  );
   await initialization;
   self.postMessage({ type: "READY", requestId, javaVersion: 21 });
 }
@@ -90,13 +107,16 @@ async function readJson(path) {
   try {
     return JSON.parse(text);
   } catch (error) {
-    throw new Error(`The Java runner returned invalid JSON at ${path}: ${error.message}`);
+    throw new Error(
+      `The Java runner returned invalid JSON at ${path}: ${error.message}`,
+    );
   }
 }
 
 function safeRemoveStringFile(path) {
   try {
-    if (typeof cheerpOSRemoveStringFile === "function") cheerpOSRemoveStringFile(path);
+    if (typeof cheerpOSRemoveStringFile === "function")
+      cheerpOSRemoveStringFile(path);
   } catch (_) {
     // /str/ is transient and disappears with the worker; cleanup is best effort.
   }
@@ -141,14 +161,23 @@ async function execute(message) {
       classesPath,
     );
     const compilation = await readJson(compileResultPath);
-    if (!compilation.compiled || compilation.success !== true || compileExit !== 0) {
+    if (
+      !compilation.compiled ||
+      compilation.success !== true ||
+      compileExit !== 0
+    ) {
       self.postMessage({ type: "RESULT", requestId, result: compilation });
       return;
     }
 
     const command = operation === "check" ? "check" : "run";
-    status(requestId, command === "check" ? "TESTING" : "RUNNING",
-      command === "check" ? "Running the automatic checks…" : "Running your Java program…");
+    status(
+      requestId,
+      command === "check" ? "TESTING" : "RUNNING",
+      command === "check"
+        ? "Running the automatic checks…"
+        : "Running your Java program…",
+    );
     const executionExit = await runExerciseRunner(
       command,
       "-",
@@ -163,7 +192,11 @@ async function execute(message) {
     if (executionExit !== 0 && result.success === true) result.success = false;
     self.postMessage({ type: "RESULT", requestId, result });
   } finally {
-    await cleanupRequestFiles(configPath, `${basePath}/cleanup-result.json`, classesPath);
+    await cleanupRequestFiles(
+      configPath,
+      `${basePath}/cleanup-result.json`,
+      classesPath,
+    );
     safeRemoveStringFile(sourcesPath);
     safeRemoveStringFile(configPath);
   }
@@ -173,7 +206,11 @@ self.onmessage = (event) => {
   const message = event.data || {};
   if (message.type === "INIT") {
     initialize(message.requestId).catch((error) => {
-      self.postMessage({ type: "INIT_ERROR", requestId: message.requestId, ...errorPayload(error, "initialization") });
+      self.postMessage({
+        type: "INIT_ERROR",
+        requestId: message.requestId,
+        ...errorPayload(error, "initialization"),
+      });
     });
     return;
   }
@@ -181,7 +218,11 @@ self.onmessage = (event) => {
     workQueue = workQueue
       .then(() => execute(message))
       .catch((error) => {
-        self.postMessage({ type: "REQUEST_ERROR", requestId: message.requestId, ...errorPayload(error, "execution") });
+        self.postMessage({
+          type: "REQUEST_ERROR",
+          requestId: message.requestId,
+          ...errorPayload(error, "execution"),
+        });
       });
   }
 };
