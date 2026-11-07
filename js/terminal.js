@@ -7333,7 +7333,8 @@ function shellLineContinuationIndex(source) {
 }
 
 export async function mountTerminalExercise({
-  container,
+  workspaceContainer = null,
+  container = null,
   exercise,
   packageId,
   exerciseId,
@@ -7341,10 +7342,13 @@ export async function mountTerminalExercise({
   mode = "practice",
   onGrade = () => {},
   onChange = () => {},
-  controlsContainer = null,
+  actionsContainer = null,
+  feedbackContainer = null,
 }) {
-  if (!(container instanceof Element))
-    throw new Error("A valid terminal mount element is required");
+  const workspaceHost =
+    workspaceContainer instanceof Element ? workspaceContainer : container;
+  if (!(workspaceHost instanceof Element))
+    throw new Error("A valid terminal workspace element is required");
   const config = validateExercise(exercise);
   const key = [
     String(packageId || "package"),
@@ -7361,90 +7365,6 @@ export async function mountTerminalExercise({
     activePromptMode = null,
     editorResolve = null;
   const instance = createElement("section", "os-terminal");
-  const style = createElement("style");
-  style.textContent = `
-    .os-terminal {
-      --ot-bg:#fbfcfe; --ot-panel:#ffffff; --ot-input-bg:#f4f7fb; --ot-caret:#087f6b;
-      --ot-fg:#1e293b; --ot-muted:#64748b; --ot-border:#cbd5e1;
-      --ot-green:#167344; --ot-red:#b42332; --ot-cmd:#087f6b;
-      --ot-flag:#946200; --ot-string:#267a39; --ot-path:#245fc2;
-      --ot-var:#7848a8; --ot-op:#087e8b; --ot-comment:#738096;
-      --ot-escape:#a33b76; --ot-substitution:#a33b76;
-      --ot-ansi-black:#343a46; --ot-ansi-red:#b42332; --ot-ansi-green:#167044;
-      --ot-ansi-yellow:#865b00; --ot-ansi-blue:#225db2; --ot-ansi-magenta:#8b48a8;
-      --ot-ansi-cyan:#087e8b; --ot-ansi-white:#334155;
-      --ot-ansi-bright-black:#687386; --ot-ansi-bright-red:#c43b4b;
-      --ot-ansi-bright-green:#23864f; --ot-ansi-bright-yellow:#9a6b00;
-      --ot-ansi-bright-blue:#3477d1; --ot-ansi-bright-magenta:#a266c8;
-      --ot-ansi-bright-cyan:#0f91a0; --ot-ansi-bright-white:#0f172a;
-      color:var(--fg); margin:1rem 0; min-width:0; background:var(--ot-panel);
-      border:1px solid var(--ot-border); border-radius:12px; overflow:hidden;
-      box-shadow:0 7px 22px rgb(15 23 42 / 7%);
-    }
-    :root[data-theme="dark"] .os-terminal {
-      --ot-bg:#101923; --ot-panel:#172231; --ot-input-bg:#1d2a3b; --ot-caret:#93e5a3;
-      --ot-fg:#e7edf5; --ot-muted:#a8b4c4; --ot-border:#344256;
-      --ot-green:#93e5a3; --ot-red:#ff9a9a; --ot-cmd:#83d6c5;
-      --ot-flag:#e8c17a; --ot-string:#a6d995; --ot-path:#8ebcff;
-      --ot-var:#c4a7e7; --ot-op:#7edce5; --ot-comment:#8190a4;
-      --ot-escape:#f0a6ca; --ot-substitution:#f0a6ca;
-      --ot-ansi-black:#778296; --ot-ansi-red:#ff8f9b; --ot-ansi-green:#93d7a6;
-      --ot-ansi-yellow:#e9c982; --ot-ansi-blue:#89b4fa; --ot-ansi-magenta:#cba6f7;
-      --ot-ansi-cyan:#83dce5; --ot-ansi-white:#dce5f2;
-      --ot-ansi-bright-black:#97a2b4; --ot-ansi-bright-red:#ffabb4;
-      --ot-ansi-bright-green:#b3e8bd; --ot-ansi-bright-yellow:#f4dfaa;
-      --ot-ansi-bright-blue:#accaff; --ot-ansi-bright-magenta:#dfc0ff;
-      --ot-ansi-bright-cyan:#a8edf2; --ot-ansi-bright-white:#ffffff;
-    }
-    @media(prefers-color-scheme:dark) {
-      :root:not([data-theme]) .os-terminal {
-        --ot-bg:#101923; --ot-panel:#172231; --ot-input-bg:#1d2a3b; --ot-caret:#93e5a3;
-        --ot-fg:#e7edf5; --ot-muted:#a8b4c4; --ot-border:#344256;
-        --ot-green:#93e5a3; --ot-red:#ff9a9a; --ot-cmd:#83d6c5;
-        --ot-flag:#e8c17a; --ot-string:#a6d995; --ot-path:#8ebcff;
-        --ot-var:#c4a7e7; --ot-op:#7edce5; --ot-comment:#8190a4;
-        --ot-escape:#f0a6ca; --ot-substitution:#f0a6ca;
-        --ot-ansi-black:#778296; --ot-ansi-red:#ff8f9b; --ot-ansi-green:#93d7a6;
-        --ot-ansi-yellow:#e9c982; --ot-ansi-blue:#89b4fa; --ot-ansi-magenta:#cba6f7;
-        --ot-ansi-cyan:#83dce5; --ot-ansi-white:#dce5f2;
-        --ot-ansi-bright-black:#97a2b4; --ot-ansi-bright-red:#ffabb4;
-        --ot-ansi-bright-green:#b3e8bd; --ot-ansi-bright-yellow:#f4dfaa;
-        --ot-ansi-bright-blue:#accaff; --ot-ansi-bright-magenta:#dfc0ff;
-        --ot-ansi-bright-cyan:#a8edf2; --ot-ansi-bright-white:#ffffff;
-      }
-    }
-    .os-terminal *{box-sizing:border-box}
-    .os-terminal .ot-toolbar{min-height:2.8rem}
-    .os-terminal .ot-toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:.45rem;padding:.65rem .8rem;background:linear-gradient(180deg,var(--soft),color-mix(in srgb,var(--soft) 72%,var(--ot-panel)));border:0;border-bottom:1px solid var(--ot-border);border-radius:0}
-    .os-terminal .ot-label{font-size:.82rem;font-weight:700;margin-right:.3rem;letter-spacing:.01em}
-    .os-terminal .ot-label:before{content:"";display:inline-block;width:.55rem;height:.55rem;margin-right:.5rem;border-radius:50%;background:#22a06b;box-shadow:0 0 0 3px color-mix(in srgb,#22a06b 16%,transparent);vertical-align:1px}
-    .os-terminal .ot-state{font-size:.75rem;color:var(--mut);margin-right:auto}
-    .os-terminal .ot-color-legend{display:flex;flex-wrap:wrap;gap:.5rem;font:600 .68rem ui-monospace,SFMono-Regular,Consolas,monospace;color:var(--ot-muted)}
-    .os-terminal .ot-color-legend span{white-space:nowrap}.os-terminal .ot-color-legend .cmd{color:var(--ot-cmd)}.os-terminal .ot-color-legend .flag{color:var(--ot-flag)}.os-terminal .ot-color-legend .string{color:var(--ot-string)}.os-terminal .ot-color-legend .path{color:var(--ot-path)}
-    .os-terminal .ot-screen{height:min(48vh,31rem);min-height:16rem;overflow:auto;overscroll-behavior:contain;padding:.95rem 1rem;background:var(--ot-bg);color:var(--ot-fg);border:0;font:14px/1.55 ui-monospace,SFMono-Regular,Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere;cursor:text}
-    .os-terminal .os-term-line{min-height:1.4em;white-space:pre-wrap;overflow-wrap:anywhere}.os-terminal .os-term-line.err{color:var(--ot-red)}.os-terminal .ot-command-echo{color:var(--ot-fg)}.os-terminal .ot-echo-prompt{color:var(--ot-green);font-weight:700}
-    .os-terminal .ot-syntax-command{color:var(--ot-cmd);font-weight:700}.os-terminal .ot-syntax-flag{color:var(--ot-flag)}.os-terminal .ot-syntax-string{color:var(--ot-string)}.os-terminal .ot-syntax-path{color:var(--ot-path)}.os-terminal .ot-syntax-variable{color:var(--ot-var)}.os-terminal .ot-syntax-assignment{color:var(--ot-var)}.os-terminal .ot-syntax-operator{color:var(--ot-op);font-weight:700}.os-terminal .ot-syntax-comment{color:var(--ot-comment);font-style:italic}.os-terminal .ot-syntax-escape{color:var(--ot-escape)}.os-terminal .ot-syntax-substitution{color:var(--ot-substitution)}
-    .os-terminal .ot-prompt{flex:0 0 auto;white-space:nowrap}.os-terminal .ot-prompt-user{color:var(--ot-green);font-weight:700}.os-terminal .ot-prompt-at{color:var(--ot-muted)}.os-terminal .ot-prompt-host{color:var(--ot-op)}.os-terminal .ot-prompt-path{color:var(--ot-path)}.os-terminal .ot-prompt-marker{color:var(--ot-flag);font-weight:700}.os-terminal .ot-continuation-prompt{color:var(--ot-flag);font-weight:700;min-width:1ch}
-    .os-terminal .ot-input-row{display:flex;align-items:center;gap:.7rem;min-height:3.2rem;padding:.55rem .95rem;background:var(--ot-input-bg);border:0;border-top:1px solid var(--ot-border);border-radius:0;font:14px/1.55 ui-monospace,SFMono-Regular,Consolas,monospace;transition:background .15s,border-color .15s,box-shadow .15s}
-    .os-terminal .ot-input-row.is-continuing{background:color-mix(in srgb,var(--ot-input-bg) 84%,#d69a25 16%)}.os-terminal .ot-input-row.is-continuing .ot-continuation-prompt{color:var(--ot-flag)}
-    .os-terminal:focus-within .ot-input-row{background:color-mix(in srgb,var(--ot-input-bg) 84%,var(--ac));box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ac) 35%,transparent)}
-    .os-terminal .ot-input-wrap{position:relative;flex:1;min-width:0;min-height:1.65rem;overflow:hidden;align-self:stretch;display:flex;align-items:center}
-    .os-terminal .ot-input-highlight{position:absolute;inset:0;overflow:hidden;pointer-events:none;white-space:pre;padding:.35rem .15rem;font:inherit;line-height:1.4;color:var(--ot-fg)}.os-terminal .ot-input-highlight-content{display:inline-block;min-width:100%;white-space:pre}.os-terminal .ot-input-placeholder{color:var(--ot-muted)}
-    .os-terminal .ot-input{position:relative;z-index:1;min-width:0;width:100%;padding:.35rem .15rem;color:transparent;-webkit-text-fill-color:transparent;caret-color:var(--ot-caret);cursor:text;background:transparent;border:0;border-radius:0;outline:none;box-shadow:none;font:inherit;line-height:1.4}
-    .os-terminal .ot-input:focus{outline:0}.os-terminal .ot-input:focus-visible{caret-color:var(--ot-caret)}.os-terminal .ot-input::selection{background:color-mix(in srgb,var(--ac) 24%,transparent);color:transparent;-webkit-text-fill-color:transparent}.os-terminal .ot-input::placeholder{color:transparent;opacity:0;-webkit-text-fill-color:transparent}
-    .os-terminal .ot-focus{background:transparent;color:var(--ac);border-color:var(--ac);margin:0}.os-terminal .ot-focus:hover{background:color-mix(in srgb,var(--ac) 8%,transparent)}
-    .os-terminal .ot-ansi-bold{font-weight:700}.os-terminal .ot-ansi-dim{opacity:.72}.os-terminal .ot-ansi-italic{font-style:italic}.os-terminal .ot-ansi-underline{text-decoration:underline}
-    .os-terminal .ot-ansi-fg-black{color:var(--ot-ansi-black)}.os-terminal .ot-ansi-fg-red{color:var(--ot-ansi-red)}.os-terminal .ot-ansi-fg-green{color:var(--ot-ansi-green)}.os-terminal .ot-ansi-fg-yellow{color:var(--ot-ansi-yellow)}.os-terminal .ot-ansi-fg-blue{color:var(--ot-ansi-blue)}.os-terminal .ot-ansi-fg-magenta{color:var(--ot-ansi-magenta)}.os-terminal .ot-ansi-fg-cyan{color:var(--ot-ansi-cyan)}.os-terminal .ot-ansi-fg-white{color:var(--ot-ansi-white)}
-    .os-terminal .ot-ansi-fg-bright-black{color:var(--ot-ansi-bright-black)}.os-terminal .ot-ansi-fg-bright-red{color:var(--ot-ansi-bright-red)}.os-terminal .ot-ansi-fg-bright-green{color:var(--ot-ansi-bright-green)}.os-terminal .ot-ansi-fg-bright-yellow{color:var(--ot-ansi-bright-yellow)}.os-terminal .ot-ansi-fg-bright-blue{color:var(--ot-ansi-bright-blue)}.os-terminal .ot-ansi-fg-bright-magenta{color:var(--ot-ansi-bright-magenta)}.os-terminal .ot-ansi-fg-bright-cyan{color:var(--ot-ansi-bright-cyan)}.os-terminal .ot-ansi-fg-bright-white{color:var(--ot-ansi-bright-white)}
-    .os-terminal .ot-ansi-bg-black{background:#303947}.os-terminal .ot-ansi-bg-red{background:#6e303a}.os-terminal .ot-ansi-bg-green{background:#315a43}.os-terminal .ot-ansi-bg-yellow{background:#66512a}.os-terminal .ot-ansi-bg-blue{background:#294d78}.os-terminal .ot-ansi-bg-magenta{background:#56386e}.os-terminal .ot-ansi-bg-cyan{background:#285d66}.os-terminal .ot-ansi-bg-white{background:#dce5f2;color:#172033}
-    .os-terminal .ot-ansi-bg-bright-black{background:#566174}.os-terminal .ot-ansi-bg-bright-red{background:#a84d5a}.os-terminal .ot-ansi-bg-bright-green{background:#4d815f}.os-terminal .ot-ansi-bg-bright-yellow{background:#97753b}.os-terminal .ot-ansi-bg-bright-blue{background:#4778b5}.os-terminal .ot-ansi-bg-bright-magenta{background:#80569f}.os-terminal .ot-ansi-bg-bright-cyan{background:#438b96}.os-terminal .ot-ansi-bg-bright-white{background:#fff;color:#172033}
-    .os-terminal .ot-keys{display:flex;gap:.35rem;flex-wrap:wrap;margin-top:.55rem}.os-terminal .ot-keys button{font-size:.82rem;min-width:2.6rem;padding:.38rem .55rem}
-    .os-terminal .ot-grade{margin-top:.75rem;padding:.8rem;border:1px solid var(--bd);border-radius:9px;background:var(--card)}.os-terminal .ot-grade h4{margin:.1rem 0 .55rem}.os-terminal .ot-checks{display:grid;gap:.35rem;margin:.5rem 0 0;padding:0;list-style:none}.os-terminal .ot-check{display:grid;grid-template-columns:1.3rem minmax(0,1fr);gap:.4rem;align-items:start}.os-terminal .ot-check-pass{color:var(--ok);font-weight:700}.os-terminal .ot-check-fail{color:var(--bad);font-weight:700}.os-terminal .ot-feedback{display:block;color:var(--mut);font-size:.88rem}.os-terminal .ot-actions{display:flex;flex-wrap:wrap;gap:.5rem;margin:.7rem 0}.os-terminal .ot-actions button{margin:0}.os-terminal .ot-editor{margin:.75rem 0;padding:.75rem;border:1px solid var(--bd);border-radius:9px;background:var(--card)}.os-terminal .ot-editor textarea{display:block;width:100%;min-height:14rem;font:14px/1.5 ui-monospace,monospace}
-    .os-terminal .ot-editor-title{display:block;margin-bottom:.35rem;font-family:ui-monospace,monospace}.os-terminal .ot-editor-mode{display:inline-block;font:700 .72rem ui-monospace,monospace;color:var(--ac);margin:.25rem 0}.os-terminal .ot-editor-textarea{min-height:18rem;resize:vertical;tab-size:4}.os-terminal .ot-editor-status{min-height:1.6rem;padding:.25rem .4rem;background:var(--soft);font:12px ui-monospace,monospace;overflow-wrap:anywhere}.os-terminal .ot-editor-command-row{display:flex;gap:.35rem;align-items:center;font:14px ui-monospace,monospace;margin:.35rem 0}.os-terminal .ot-editor-command{flex:1;min-width:0;font:inherit}
-    .os-terminal .ot-solution{margin:.75rem 0;padding:.85rem;border:1px solid var(--bd);border-radius:9px;background:var(--card)}.os-terminal .ot-solution h4{margin:.1rem 0 .35rem}.os-terminal .ot-solution-intro{margin:.25rem 0 .65rem;color:var(--mut);font-size:.88rem}.os-terminal .ot-solution-list{margin:.4rem 0 0;padding-left:1.65rem}.os-terminal .ot-solution-list li{padding:.18rem 0 .35rem .15rem}.os-terminal .ot-solution-list code{display:block;white-space:pre-wrap;overflow-wrap:anywhere;padding:.45rem .55rem;border-radius:6px;background:var(--soft);font: .85rem/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;color:var(--fg)}.os-terminal .ot-error{color:var(--bad);padding:.65rem;border:1px solid var(--bad);border-radius:8px}.os-terminal .ot-notice{font-size:.88rem;color:var(--mut);margin:.5rem 0}
-    @media(max-width:600px){.os-terminal .ot-screen{height:42vh;min-height:13rem;font-size:13px;padding:.65rem}.os-terminal .ot-input-row{padding:.7rem .55rem}.os-terminal .ot-prompt{font-size:12px}.os-terminal .ot-toolbar{gap:.3rem;padding:.55rem}.os-terminal .ot-keys button{min-height:2.55rem}}
-    @media(prefers-reduced-motion:reduce){.os-terminal .ot-input-row{transition:none}}
-  `;
   const toolbar = createElement("div", "ot-toolbar");
   const label = createElement("strong", "ot-label", "Browser Linux terminal");
   const status = createElement("span", "ot-state", "Loading workspace…");
@@ -7507,7 +7427,6 @@ export async function mountTerminalExercise({
     button.dataset.key = key;
     keyBar.append(button);
   }
-  const actions = createElement("div", "ot-actions");
   const solutionCommands = Array.isArray(config.solution)
     ? config.solution.map((command) => String(command))
     : [];
@@ -7538,24 +7457,28 @@ export async function mountTerminalExercise({
   const notice = createElement("p", "ot-notice");
   notice.hidden = true;
 
-  // The host application owns exercise navigation. Keep terminal-specific
-  // Run/Check/Reset/Solution controls inside the shared action group, and
-  // never search for, move, or restyle the app-owned Previous/Next buttons.
+  // The host owns layout and navigation. This module fills the workspace slot,
+  // contributes actions to the shared action group, and reports grade details
+  // through the shared feedback slot.
   const workbench = createElement("div", "ot-workbench");
   const workspaceMain = createElement("div", "ot-workspace-main");
-  const controlSidebar = createElement("aside", "ot-control-sidebar");
-  if (controlsContainer) controlSidebar.classList.add("os-terminal");
-  controlSidebar.setAttribute("aria-label", "Exercise actions");
-  workspaceMain.append(toolbar, screen, inputRow, keyBar, notice, editorArea);
-  controlSidebar.append(actions, solutionArea, gradeArea);
-  workbench.append(workspaceMain);
-  if (controlsContainer instanceof Element) {
-    controlsContainer.append(controlSidebar);
-  } else {
-    workbench.append(controlSidebar);
+  const externalActionsContainer =
+    actionsContainer instanceof Element ? actionsContainer : null;
+  const localActionsContainer = externalActionsContainer
+    ? null
+    : createElement("div", "exercise-action-buttons");
+  const actionTarget = externalActionsContainer || localActionsContainer;
+  if (localActionsContainer) {
+    localActionsContainer.setAttribute("role", "group");
+    localActionsContainer.setAttribute("aria-label", "Exercise actions");
   }
-  instance.append(style, workbench);
-  container.replaceChildren(instance);
+  workspaceMain.append(toolbar, screen, inputRow, keyBar, notice, editorArea);
+  workbench.append(workspaceMain);
+  if (localActionsContainer) workbench.append(localActionsContainer);
+  if (feedbackContainer instanceof Element) feedbackContainer.append(gradeArea);
+  else workbench.append(gradeArea);
+  instance.append(workbench);
+  workspaceHost.replaceChildren(instance);
 
   let commandHistory = [],
     historyIndex = 0,
@@ -8292,9 +8215,10 @@ export async function mountTerminalExercise({
   resetButton.addEventListener("click", () => {
     pendingCommand = resetWorkspace().catch(() => {});
   });
-  if (mode === "practice") actions.append(checkButton);
-  actions.append(resetButton);
-  if (!solutionButton.hidden) actions.append(solutionButton);
+  if (mode === "practice") actionTarget.append(checkButton);
+  actionTarget.append(resetButton);
+  if (!solutionButton.hidden) actionTarget.append(solutionButton);
+  actionTarget.append(solutionArea);
   solutionButton.addEventListener("click", () => {
     const show = solutionArea.hidden;
     solutionArea.hidden = !show;

@@ -543,15 +543,20 @@ function renderCheckResults(target, result) {
 }
 
 export async function mountJavaExercise({
-  container,
+  toolsContainer = null,
+  container = null,
+  workspaceContainer = null,
   editorContainer = null,
+  actionsContainer = null,
   exercise,
   initialCode,
   onChange = () => {},
   onGrade = () => {},
-  onNext = null,
   mode = "practice",
 }) {
+  const toolsHost = toolsContainer instanceof Element ? toolsContainer : container;
+  if (!(toolsHost instanceof Element))
+    throw new Error("A valid Java tools container is required");
   const config = exercise?.java || {};
   const originalCode = String(config.preCode ?? "");
   let source =
@@ -596,7 +601,10 @@ export async function mountJavaExercise({
     ),
   );
 
-  const controls = element("div", "java-controls");
+  const actionButtons =
+    actionsContainer instanceof Element
+      ? actionsContainer
+      : element("div", "exercise-action-buttons");
   const runButton = element("button", "", "Run (Ctrl+Enter)");
   runButton.setAttribute("aria-keyshortcuts", "Control+Enter");
   runButton.title = "Run Java (Ctrl+Enter)";
@@ -609,7 +617,7 @@ export async function mountJavaExercise({
   stopButton.disabled = true;
   checkButton.hidden =
     !Array.isArray(config.checks) || config.checks.length === 0;
-  controls.append(runButton, checkButton, resetButton, stopButton);
+  actionButtons.append(runButton, checkButton, resetButton, stopButton);
 
   const statusLine = element(
     "p",
@@ -643,15 +651,18 @@ export async function mountJavaExercise({
   resultsEnd.style.cssText = "height:0;overflow:hidden;";
   resultsPanel.append(resultsContent, resultsEnd);
 
-  // In the split exercise view the code editor is mounted into the left pane,
-  // while input, controls, status, console and grading results remain together
-  // in the right-hand tools pane. The single-container fallback keeps this
-  // module reusable in any other host.
-  if (editorContainer) editorContainer.replaceChildren(editorPanel);
+  // The app supplies workspace and tools slots. The editor mounts in the
+  // workspace slot; runtime panels mount in the tools slot; action buttons are
+  // contributed directly to the app-owned shared action group. The fallback
+  // keeps this module usable outside the exercise-page layout.
+  const editorHostContainer = workspaceContainer || editorContainer;
+  if (editorHostContainer) editorHostContainer.replaceChildren(editorPanel);
   else root.append(editorPanel);
-  root.append(inputPanel, controls, statusLine, consolePanel);
+  root.append(inputPanel);
+  if (!(actionsContainer instanceof Element)) root.append(actionButtons);
+  root.append(statusLine, consolePanel);
   if (!checkButton.hidden) root.append(resultsPanel);
-  container.replaceChildren(root);
+  toolsHost.replaceChildren(root);
 
   const getSource = () =>
     editorView ? editorView.state.doc.toString() : source;
@@ -693,24 +704,7 @@ export async function mountJavaExercise({
     });
   };
 
-  // Shown after the test results once every automatic test has passed. The host
-  // page moves to the next exercise through the onNext callback; a bubbling
-  // "java-exercise-next" event is also dispatched for hosts that prefer events.
-  const renderNextButton = () => {
-    const nextButton = element("button", "java-next-button", "Next exercise →");
-    nextButton.type = "button";
-    nextButton.addEventListener("click", () => {
-      if (typeof onNext === "function") onNext({ exercise, result: latestResult });
-      root.dispatchEvent(
-        new CustomEvent("java-exercise-next", {
-          bubbles: true,
-          detail: { exercise, result: latestResult },
-        }),
-      );
-    });
-    resultsContent.append(element("div", "java-next-row", nextButton));
-    return nextButton;
-  };
+  // Navigation is owned by app.js; this module reports grading only.
 
   const handleStatus = ({ status, detail }) => {
     if (disposed) return;
@@ -782,7 +776,6 @@ export async function mountJavaExercise({
         } catch (error) {
           console.warn("Could not record Java exercise grade:", error);
         }
-        if (result.success) renderNextButton();
       }
       statusLine.textContent =
         result.status === "compile-error"
@@ -1025,7 +1018,7 @@ export async function mountJavaExercise({
       if (running) stopJavaExecution("Java exercise closed.");
       editor?.destroy?.();
       root.remove();
-      if (editorContainer) editorPanel.remove();
+      if (editorHostContainer) editorPanel.remove();
     },
   };
 }

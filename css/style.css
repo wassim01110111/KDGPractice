@@ -1077,7 +1077,7 @@ th {
   background: color-mix(in srgb, var(--ac) 7%, var(--soft));
 }
 .exercise-index-button.flagged {
-  box-shadow: inset 0 -3px 0 #e69b25;
+  box-shadow: inset 0 -3px 0 #e69b25 !important;
 }
 .exercise-index-button.current {
   color: #fff;
@@ -1323,10 +1323,16 @@ th {
   font-size: 0.74rem;
   font-weight: 750;
 }
-.exam-history-result.is-correct { color: var(--ok); }
-.exam-history-result.is-incorrect { color: var(--bad); }
+.exam-history-result.is-correct {
+  color: var(--ok);
+}
+.exam-history-result.is-incorrect {
+  color: var(--bad);
+}
 .exam-history-result.is-self-check,
-.exam-history-result.is-legacy { color: var(--mut); }
+.exam-history-result.is-legacy {
+  color: var(--mut);
+}
 .exam-history-answer,
 .exam-history-feedback {
   min-width: 0;
@@ -1348,9 +1354,16 @@ th {
   overflow: auto;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
-  font: 0.82rem/1.55 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font:
+    0.82rem/1.55 ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Consolas,
+    monospace;
 }
-.exam-history-feedback p { margin: 0; }
+.exam-history-feedback p {
+  margin: 0;
+}
 .exam-history-question-meta {
   display: flex;
   flex-wrap: wrap;
@@ -1364,7 +1377,9 @@ th {
   background: var(--soft);
   border-radius: 999px;
 }
-.exam-history-question-meta .is-flagged { color: #b87914; }
+.exam-history-question-meta .is-flagged {
+  color: #b87914;
+}
 .exam-history-practice-link {
   display: inline-flex;
   font: inherit;
@@ -1397,7 +1412,9 @@ th {
   .exam-history-question-heading {
     align-items: flex-start;
   }
-  .exam-history-question { padding: 0.7rem; }
+  .exam-history-question {
+    padding: 0.7rem;
+  }
 }
 
 .exam-results {
@@ -8009,7 +8026,7 @@ pre,
 }
 
 /* Browser-based Java exercise workspace (CheerpJ 5 worker + CodeMirror). */
-.java-exercise-host,
+.exercise-module-host,
 .java-exercise {
   min-width: 0;
   width: 100%;
@@ -8115,19 +8132,6 @@ pre,
   display: block;
   margin-top: 0.45rem;
   line-height: 1.4;
-}
-.java-controls {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  align-items: center;
-}
-.java-controls button {
-  margin: 0;
-  min-width: 4.6rem;
-}
-.java-controls button[hidden] {
-  display: none;
 }
 .java-runtime-status {
   margin: 0;
@@ -8315,7 +8319,7 @@ pre,
   margin-bottom: 0;
   color: var(--mut);
 }
-@media (max-width: 640px) {
+@media (max-width: 900px) {
   .java-panel {
     padding: 0.7rem;
   }
@@ -8335,26 +8339,18 @@ pre,
   .java-diagnostics {
     grid-column: 1;
   }
-  .java-controls button {
-    flex: 1 1 calc(50% - 0.4rem);
-    min-height: 2.7rem;
-  }
 }
 
-/* Terminal workspace sizing remains independent from the action controls. */
+/* Terminal workspace internals never define the page's split layout. */
 .os-terminal .ot-workbench,
 .os-terminal .ot-workspace-main {
   min-width: 0;
 }
-.os-terminal .ot-workbench {
-  gap: 0.85rem;
-  align-items: start;
-}
-.os-terminal .ot-workspace-main {
-  min-width: 0;
+.exercise-split-layout .os-terminal {
+  margin: 0;
 }
 
-/* One consistent action area for practice and exam controls across all types. */
+/* The app owns one action group for built-in and module-provided controls. */
 .exercise-action-buttons {
   display: flex;
   flex-wrap: wrap;
@@ -8362,37 +8358,17 @@ pre,
   gap: 0.55rem;
   min-width: 0;
   margin-top: 1rem;
-  padding: 0.85rem 0 0;
+  padding-top: 0.85rem;
   border-top: 1px solid var(--bd);
 }
-.exercise-action-buttons > button,
-.exercise-action-buttons .ot-actions button,
-.exercise-action-buttons .java-controls button,
-.exercise-action-buttons .ot-control-sidebar button,
-.exercise-action-buttons .exercise-action-buttons__module-controls button {
+.exercise-action-buttons > button {
   min-height: 2.35rem;
   margin: 0;
 }
-.exercise-action-buttons > .ot-control-sidebar,
-.exercise-action-buttons .exercise-action-buttons__module-controls {
-  display: contents !important;
-  min-width: 0;
+.exercise-action-buttons .exercise-review-flag {
   margin: 0;
-  padding: 0;
-  background: transparent;
-  border: 0;
-  box-shadow: none;
 }
-.exercise-action-buttons .ot-control-heading {
-  display: none !important;
-}
-/* Flatten module wrappers so every Run/Check/Reset/Stop/Hint/Solution/Flag
-   control participates in this same flex row. */
-.exercise-action-buttons .ot-actions,
-.exercise-action-buttons .java-controls {
-  display: contents;
-}
-.exercise-action-buttons .ot-solution {
+.exercise-action-buttons > .ot-solution {
   flex: 1 0 100%;
   min-width: 0;
   max-width: 100%;
@@ -8409,17 +8385,10 @@ pre,
   overflow-wrap: anywhere;
   word-break: break-word;
 }
-.exercise-action-buttons .ot-actions button,
-.exercise-action-buttons .java-controls button,
-.exercise-action-buttons .ot-control-sidebar button,
-.exercise-action-buttons .exercise-action-buttons__module-controls button,
-.exercise-action-buttons .exercise-review-flag {
-  margin: 0;
-}
 
-/* Instructions stay readable: consistent vertical rhythm in the supporting pane. */
-.terminal-instructions-pane,
-.java-instructions-pane {
+/* Shared right-hand pane rhythm for instructions and supporting content. */
+.exercise-instruction-panel,
+.exercise-module-panel {
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -8427,47 +8396,35 @@ pre,
   min-width: 0;
   padding: 1rem;
 }
-.terminal-instructions-pane > *,
-.java-instructions-pane > * {
+.exercise-instruction-panel > *,
+.exercise-module-panel > * {
   min-width: 0;
+  max-width: 100%;
 }
-.terminal-instructions-pane .stmt,
-.java-instructions-pane .stmt {
-  line-height: 1.6;
-}
-.terminal-instructions-pane > h3,
-.java-instructions-pane > h3 {
+.exercise-instruction-panel > h3 {
   margin: 0;
   line-height: 1.3;
 }
-.terminal-instructions-pane > .meta,
-.java-instructions-pane > .meta {
+.exercise-instruction-panel > .meta {
   margin: -0.35rem 0 0;
 }
-.terminal-instructions-pane > .stmt,
-.java-instructions-pane > .stmt {
+.exercise-instruction-panel > .stmt {
   margin: 0;
   min-width: 0;
+  line-height: 1.6;
 }
-.terminal-instructions-pane > .hint-panel,
-.java-instructions-pane > .hint-panel,
-.java-instructions-pane > .solution-panel {
-  margin: 0;
-}
-.terminal-instructions-pane > .exercise-action-buttons,
-.java-instructions-pane > .exercise-action-buttons {
+.exercise-instruction-panel > .exercise-action-buttons {
   margin-top: 0;
 }
-@media (max-width: 650px) {
+@media (max-width: 900px) {
   .exercise-action-buttons {
     gap: 0.5rem;
   }
-  .exercise-action-buttons > button,
-  .exercise-action-buttons .ot-actions button,
-  .exercise-action-buttons .java-controls button,
-  .exercise-action-buttons .ot-control-sidebar button,
-  .terminal-instructions-pane,
-  .java-instructions-pane {
+  .exercise-action-buttons > button {
+    min-height: 2.65rem;
+  }
+  .exercise-instruction-panel,
+  .exercise-module-panel {
     padding: 0.85rem;
   }
 }
@@ -8547,7 +8504,7 @@ button.learning-continue-button {
   .learning-module-actions .learning-complete-toggle {
     width: 100%;
   }
-  }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .learning-continue-button {
@@ -8556,36 +8513,28 @@ button.learning-continue-button {
 }
 
 /* ========================================================================
-   STANDARD EXERCISE SPLIT LAYOUT
-   Reuse these three classes for any desktop exercise with a main workspace
-   on the left and supporting instructions / diagram / PlantUML on the right:
-     .exercise-split-layout  -> grid wrapper
-     .exercise-split-main    -> left-hand primary content
-     .exercise-split-side    -> right-hand supporting content
-   Add .exercise-split-handle to an optional resize divider. Keep the semantic
-   exercise classes only for feature-specific styling, not layout structure.
-   Mobile intentionally disables the split and divider; the panes stack.
+   SHARED EXERCISE WORKSPACE LAYOUT
+   app.js registers a type and supplies size constraints as custom properties.
+   Modules only fill the main workspace and optional shared side containers.
    ======================================================================== */
 .exercise-split-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
+  display: flex;
+  flex-direction: column;
   gap: 0.75rem;
-  align-items: start;
+  align-items: stretch;
   min-width: 0;
+  width: 100%;
 }
 .exercise-split-layout > .exercise-split-main,
 .exercise-split-layout > .exercise-split-side {
   min-width: 0;
+  max-width: 100%;
   margin: 0;
 }
 .exercise-split-layout > .exercise-split-main {
-  grid-column: 1;
-  grid-row: 1;
   order: 1;
 }
 .exercise-split-layout > .exercise-split-side {
-  grid-column: 1;
-  grid-row: 2;
   order: 0;
   position: static;
   max-height: none;
@@ -8596,10 +8545,14 @@ button.learning-continue-button {
 }
 @media (min-width: 901px) {
   .exercise-split-layout {
+    display: grid;
     grid-template-columns:
-      minmax(0, 1fr)
-      1rem
-      minmax(220px, var(--exercise-split-side-width, 34%));
+      minmax(var(--exercise-split-main-min, 0px), 1fr)
+      12px
+      minmax(
+        var(--exercise-split-side-min, 220px),
+        var(--exercise-split-side-width, 34%)
+      );
     column-gap: 0;
     row-gap: 0;
     align-items: start;
@@ -8618,18 +8571,6 @@ button.learning-continue-button {
     top: 5.5rem;
     max-height: calc(100vh - 7rem);
     overflow: auto;
-  }
-  .exercise-split-layout--java {
-    grid-template-columns:
-      minmax(320px, 1fr)
-      1rem
-      minmax(320px, var(--exercise-split-side-width, 46%));
-  }
-  .exercise-split-layout--sql {
-    grid-template-columns:
-      minmax(0, 1fr)
-      1rem
-      minmax(250px, var(--exercise-split-side-width, 0.7fr));
   }
   .exercise-split-handle {
     position: relative;
@@ -8660,35 +8601,25 @@ button.learning-continue-button {
     background: var(--ac);
   }
   .exercise-split-handle:focus-visible::before {
-    box-shadow: var(--ui-glow, 0 0 0 3px color-mix(in srgb, var(--ac) 13%, transparent));
+    box-shadow: var(
+      --ui-glow,
+      0 0 0 3px color-mix(in srgb, var(--ac) 13%, transparent)
+    );
   }
-  .exercise-split-layout--terminal .os-terminal { margin: 0; }
-  .exercise-split-layout--java .java-workspace-pane {
-    padding: 0;
-    background: transparent;
-    border: 0;
-    box-shadow: none;
+  .exercise-split-layout:has(> .learning-path-navigator) > .exercise-split-main,
+  .exercise-split-layout:has(> .learning-path-navigator) > .exercise-split-side,
+  .exercise-split-layout:has(> .learning-path-navigator)
+    > .exercise-split-handle {
+    grid-row: 2;
   }
 }
 @media (max-width: 900px) {
-  .exercise-split-layout {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-  .exercise-split-layout > .exercise-split-side {
-    order: 0;
-    position: static;
-    max-height: none;
-    overflow: visible;
-  }
-  .exercise-split-layout > .exercise-split-main {
-    order: 1;
-  }
   .exercise-split-main {
     max-width: 100%;
   }
-  .exercise-split-handle { display: none !important; }
+  .exercise-split-handle {
+    display: none !important;
+  }
 }
 @media (min-width: 901px) and (prefers-reduced-motion: no-preference) {
   .exercise-split-handle::before {
@@ -8709,20 +8640,20 @@ body.exercise-split-dragging {
   white-space: nowrap;
 }
 @media (max-width: 650px) {
-  .learning-overview-heading { flex-wrap: wrap; }
-  .learning-course-continue { width: 100%; }
+  .learning-overview-heading {
+    flex-wrap: wrap;
+  }
+  .learning-course-continue {
+    width: 100%;
+  }
 }
 
-/* Guided Learning navigator: all layout and spacing are defined in CSS. */
-/* When a path navigator is inside a split exercise, let it span both panes. */
-.exercise-split-layout > .learning-path-navigator {
-  grid-column: 1 / -1;
-  grid-row: 1;
-}
-.exercise-split-layout:has(> .learning-path-navigator) > .exercise-split-main,
-.exercise-split-layout:has(> .learning-path-navigator) > .exercise-split-side,
-.exercise-split-layout:has(> .learning-path-navigator) > .exercise-split-handle {
-  grid-row: 2;
+/* Guided Learning navigator spans the full split layout on desktop. */
+@media (min-width: 901px) {
+  .exercise-split-layout > .learning-path-navigator {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
 }
 
 .learning-path-navigator {
@@ -8766,14 +8697,701 @@ body.exercise-split-dragging {
 
 /* Exam cards use the same neutral outer wrapper for every shared split layout. */
 .exercise-question-panel:has(.exercise-split-layout) {
-  margin: 0; padding: 0; background: transparent; border: 0;
-  border-radius: 0; box-shadow: none; transform: none;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  transform: none;
 }
 .exercise-question-panel:has(.exercise-split-layout):focus-within,
 .exercise-question-panel:has(.exercise-split-layout):hover {
-  border-color: transparent; box-shadow: none; transform: none;
+  border-color: transparent;
+  box-shadow: none;
+  transform: none;
 }
-.exercise-question-panel:has(.exercise-split-layout)::after { display: none; content: none; }
+.exercise-question-panel:has(.exercise-split-layout)::after {
+  display: none;
+  content: none;
+}
 .exercise-question-panel:has(.exercise-split-layout) > .exercise-split-layout {
-  width: 100%; min-width: 0;
+  width: 100%;
+  min-width: 0;
+}
+
+/* Terminal emulator presentation (kept in the shared stylesheet). */
+.os-terminal {
+  --ot-bg: #fbfcfe;
+  --ot-panel: #ffffff;
+  --ot-input-bg: #f4f7fb;
+  --ot-caret: #087f6b;
+  --ot-fg: #1e293b;
+  --ot-muted: #64748b;
+  --ot-border: #cbd5e1;
+  --ot-green: #167344;
+  --ot-red: #b42332;
+  --ot-cmd: #087f6b;
+  --ot-flag: #946200;
+  --ot-string: #267a39;
+  --ot-path: #245fc2;
+  --ot-var: #7848a8;
+  --ot-op: #087e8b;
+  --ot-comment: #738096;
+  --ot-escape: #a33b76;
+  --ot-substitution: #a33b76;
+  --ot-ansi-black: #343a46;
+  --ot-ansi-red: #b42332;
+  --ot-ansi-green: #167044;
+  --ot-ansi-yellow: #865b00;
+  --ot-ansi-blue: #225db2;
+  --ot-ansi-magenta: #8b48a8;
+  --ot-ansi-cyan: #087e8b;
+  --ot-ansi-white: #334155;
+  --ot-ansi-bright-black: #687386;
+  --ot-ansi-bright-red: #c43b4b;
+  --ot-ansi-bright-green: #23864f;
+  --ot-ansi-bright-yellow: #9a6b00;
+  --ot-ansi-bright-blue: #3477d1;
+  --ot-ansi-bright-magenta: #a266c8;
+  --ot-ansi-bright-cyan: #0f91a0;
+  --ot-ansi-bright-white: #0f172a;
+  color: var(--fg);
+  margin: 1rem 0;
+  min-width: 0;
+  background: var(--ot-panel);
+  border: 1px solid var(--ot-border);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 7px 22px rgb(15 23 42 / 7%);
+}
+:root[data-theme="dark"] .os-terminal {
+  --ot-bg: #101923;
+  --ot-panel: #172231;
+  --ot-input-bg: #1d2a3b;
+  --ot-caret: #93e5a3;
+  --ot-fg: #e7edf5;
+  --ot-muted: #a8b4c4;
+  --ot-border: #344256;
+  --ot-green: #93e5a3;
+  --ot-red: #ff9a9a;
+  --ot-cmd: #83d6c5;
+  --ot-flag: #e8c17a;
+  --ot-string: #a6d995;
+  --ot-path: #8ebcff;
+  --ot-var: #c4a7e7;
+  --ot-op: #7edce5;
+  --ot-comment: #8190a4;
+  --ot-escape: #f0a6ca;
+  --ot-substitution: #f0a6ca;
+  --ot-ansi-black: #778296;
+  --ot-ansi-red: #ff8f9b;
+  --ot-ansi-green: #93d7a6;
+  --ot-ansi-yellow: #e9c982;
+  --ot-ansi-blue: #89b4fa;
+  --ot-ansi-magenta: #cba6f7;
+  --ot-ansi-cyan: #83dce5;
+  --ot-ansi-white: #dce5f2;
+  --ot-ansi-bright-black: #97a2b4;
+  --ot-ansi-bright-red: #ffabb4;
+  --ot-ansi-bright-green: #b3e8bd;
+  --ot-ansi-bright-yellow: #f4dfaa;
+  --ot-ansi-bright-blue: #accaff;
+  --ot-ansi-bright-magenta: #dfc0ff;
+  --ot-ansi-bright-cyan: #a8edf2;
+  --ot-ansi-bright-white: #ffffff;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .os-terminal {
+    --ot-bg: #101923;
+    --ot-panel: #172231;
+    --ot-input-bg: #1d2a3b;
+    --ot-caret: #93e5a3;
+    --ot-fg: #e7edf5;
+    --ot-muted: #a8b4c4;
+    --ot-border: #344256;
+    --ot-green: #93e5a3;
+    --ot-red: #ff9a9a;
+    --ot-cmd: #83d6c5;
+    --ot-flag: #e8c17a;
+    --ot-string: #a6d995;
+    --ot-path: #8ebcff;
+    --ot-var: #c4a7e7;
+    --ot-op: #7edce5;
+    --ot-comment: #8190a4;
+    --ot-escape: #f0a6ca;
+    --ot-substitution: #f0a6ca;
+    --ot-ansi-black: #778296;
+    --ot-ansi-red: #ff8f9b;
+    --ot-ansi-green: #93d7a6;
+    --ot-ansi-yellow: #e9c982;
+    --ot-ansi-blue: #89b4fa;
+    --ot-ansi-magenta: #cba6f7;
+    --ot-ansi-cyan: #83dce5;
+    --ot-ansi-white: #dce5f2;
+    --ot-ansi-bright-black: #97a2b4;
+    --ot-ansi-bright-red: #ffabb4;
+    --ot-ansi-bright-green: #b3e8bd;
+    --ot-ansi-bright-yellow: #f4dfaa;
+    --ot-ansi-bright-blue: #accaff;
+    --ot-ansi-bright-magenta: #dfc0ff;
+    --ot-ansi-bright-cyan: #a8edf2;
+    --ot-ansi-bright-white: #ffffff;
+  }
+}
+.os-terminal * {
+  box-sizing: border-box;
+}
+.os-terminal .ot-toolbar {
+  display: flex;
+  min-height: 2.8rem;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.65rem 0.8rem;
+  background: linear-gradient(
+    180deg,
+    var(--soft),
+    color-mix(in srgb, var(--soft) 72%, var(--ot-panel))
+  );
+  border: 0;
+  border-bottom: 1px solid var(--ot-border);
+  border-radius: 0;
+}
+.os-terminal .ot-label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  margin-right: 0.3rem;
+  letter-spacing: 0.01em;
+}
+.os-terminal .ot-label:before {
+  content: "";
+  display: inline-block;
+  width: 0.55rem;
+  height: 0.55rem;
+  margin-right: 0.5rem;
+  border-radius: 50%;
+  background: #22a06b;
+  box-shadow: 0 0 0 3px color-mix(in srgb, #22a06b 16%, transparent);
+  vertical-align: 1px;
+}
+.os-terminal .ot-state {
+  font-size: 0.75rem;
+  color: var(--mut);
+  margin-right: auto;
+}
+.os-terminal .ot-color-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  font:
+    600 0.68rem ui-monospace,
+    SFMono-Regular,
+    Consolas,
+    monospace;
+  color: var(--ot-muted);
+}
+.os-terminal .ot-color-legend span {
+  white-space: nowrap;
+}
+.os-terminal .ot-color-legend .cmd {
+  color: var(--ot-cmd);
+}
+.os-terminal .ot-color-legend .flag {
+  color: var(--ot-flag);
+}
+.os-terminal .ot-color-legend .string {
+  color: var(--ot-string);
+}
+.os-terminal .ot-color-legend .path {
+  color: var(--ot-path);
+}
+.os-terminal .ot-screen {
+  height: min(48vh, 31rem);
+  min-height: 16rem;
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: 0.95rem 1rem;
+  background: var(--ot-bg);
+  color: var(--ot-fg);
+  border: 0;
+  font:
+    14px/1.55 ui-monospace,
+    SFMono-Regular,
+    Consolas,
+    monospace;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  cursor: text;
+}
+.os-terminal .os-term-line {
+  min-height: 1.4em;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.os-terminal .os-term-line.err {
+  color: var(--ot-red);
+}
+.os-terminal .ot-command-echo {
+  color: var(--ot-fg);
+}
+.os-terminal .ot-echo-prompt {
+  color: var(--ot-green);
+  font-weight: 700;
+}
+.os-terminal .ot-syntax-command {
+  color: var(--ot-cmd);
+  font-weight: 700;
+}
+.os-terminal .ot-syntax-flag {
+  color: var(--ot-flag);
+}
+.os-terminal .ot-syntax-string {
+  color: var(--ot-string);
+}
+.os-terminal .ot-syntax-path {
+  color: var(--ot-path);
+}
+.os-terminal .ot-syntax-variable {
+  color: var(--ot-var);
+}
+.os-terminal .ot-syntax-assignment {
+  color: var(--ot-var);
+}
+.os-terminal .ot-syntax-operator {
+  color: var(--ot-op);
+  font-weight: 700;
+}
+.os-terminal .ot-syntax-comment {
+  color: var(--ot-comment);
+  font-style: italic;
+}
+.os-terminal .ot-syntax-escape {
+  color: var(--ot-escape);
+}
+.os-terminal .ot-syntax-substitution {
+  color: var(--ot-substitution);
+}
+.os-terminal .ot-prompt {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+.os-terminal .ot-prompt-user {
+  color: var(--ot-green);
+  font-weight: 700;
+}
+.os-terminal .ot-prompt-at {
+  color: var(--ot-muted);
+}
+.os-terminal .ot-prompt-host {
+  color: var(--ot-op);
+}
+.os-terminal .ot-prompt-path {
+  color: var(--ot-path);
+}
+.os-terminal .ot-prompt-marker {
+  color: var(--ot-flag);
+  font-weight: 700;
+}
+.os-terminal .ot-continuation-prompt {
+  color: var(--ot-flag);
+  font-weight: 700;
+  min-width: 1ch;
+}
+.os-terminal .ot-input-row {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  min-height: 3.2rem;
+  padding: 0.55rem 0.95rem;
+  background: var(--ot-input-bg);
+  border: 0;
+  border-top: 1px solid var(--ot-border);
+  border-radius: 0;
+  font:
+    14px/1.55 ui-monospace,
+    SFMono-Regular,
+    Consolas,
+    monospace;
+  transition:
+    background 0.15s,
+    border-color 0.15s,
+    box-shadow 0.15s;
+}
+.os-terminal .ot-input-row.is-continuing {
+  background: color-mix(in srgb, var(--ot-input-bg) 84%, #d69a25 16%);
+}
+.os-terminal .ot-input-row.is-continuing .ot-continuation-prompt {
+  color: var(--ot-flag);
+}
+.os-terminal:focus-within .ot-input-row {
+  background: color-mix(in srgb, var(--ot-input-bg) 84%, var(--ac));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ac) 35%, transparent);
+}
+.os-terminal .ot-input-wrap {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  min-height: 1.65rem;
+  overflow: hidden;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+}
+.os-terminal .ot-input-highlight {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  white-space: pre;
+  padding: 0.35rem 0.15rem;
+  font: inherit;
+  line-height: 1.4;
+  color: var(--ot-fg);
+}
+.os-terminal .ot-input-highlight-content {
+  display: inline-block;
+  min-width: 100%;
+  white-space: pre;
+}
+.os-terminal .ot-input-placeholder {
+  color: var(--ot-muted);
+}
+.os-terminal .ot-input {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  width: 100%;
+  padding: 0.35rem 0.15rem;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  caret-color: var(--ot-caret);
+  cursor: text;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  outline: none;
+  box-shadow: none;
+  font: inherit;
+  line-height: 1.4;
+}
+.os-terminal .ot-input:focus {
+  outline: 0;
+}
+.os-terminal .ot-input:focus-visible {
+  caret-color: var(--ot-caret);
+}
+.os-terminal .ot-input::selection {
+  background: color-mix(in srgb, var(--ac) 24%, transparent);
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+.os-terminal .ot-input::placeholder {
+  color: transparent;
+  opacity: 0;
+  -webkit-text-fill-color: transparent;
+}
+.os-terminal .ot-focus {
+  background: transparent;
+  color: var(--ac);
+  border-color: var(--ac);
+  margin: 0;
+}
+.os-terminal .ot-focus:hover {
+  background: color-mix(in srgb, var(--ac) 8%, transparent);
+}
+.os-terminal .ot-ansi-bold {
+  font-weight: 700;
+}
+.os-terminal .ot-ansi-dim {
+  opacity: 0.72;
+}
+.os-terminal .ot-ansi-italic {
+  font-style: italic;
+}
+.os-terminal .ot-ansi-underline {
+  text-decoration: underline;
+}
+.os-terminal .ot-ansi-fg-black {
+  color: var(--ot-ansi-black);
+}
+.os-terminal .ot-ansi-fg-red {
+  color: var(--ot-ansi-red);
+}
+.os-terminal .ot-ansi-fg-green {
+  color: var(--ot-ansi-green);
+}
+.os-terminal .ot-ansi-fg-yellow {
+  color: var(--ot-ansi-yellow);
+}
+.os-terminal .ot-ansi-fg-blue {
+  color: var(--ot-ansi-blue);
+}
+.os-terminal .ot-ansi-fg-magenta {
+  color: var(--ot-ansi-magenta);
+}
+.os-terminal .ot-ansi-fg-cyan {
+  color: var(--ot-ansi-cyan);
+}
+.os-terminal .ot-ansi-fg-white {
+  color: var(--ot-ansi-white);
+}
+.os-terminal .ot-ansi-fg-bright-black {
+  color: var(--ot-ansi-bright-black);
+}
+.os-terminal .ot-ansi-fg-bright-red {
+  color: var(--ot-ansi-bright-red);
+}
+.os-terminal .ot-ansi-fg-bright-green {
+  color: var(--ot-ansi-bright-green);
+}
+.os-terminal .ot-ansi-fg-bright-yellow {
+  color: var(--ot-ansi-bright-yellow);
+}
+.os-terminal .ot-ansi-fg-bright-blue {
+  color: var(--ot-ansi-bright-blue);
+}
+.os-terminal .ot-ansi-fg-bright-magenta {
+  color: var(--ot-ansi-bright-magenta);
+}
+.os-terminal .ot-ansi-fg-bright-cyan {
+  color: var(--ot-ansi-bright-cyan);
+}
+.os-terminal .ot-ansi-fg-bright-white {
+  color: var(--ot-ansi-bright-white);
+}
+.os-terminal .ot-ansi-bg-black {
+  background: #303947;
+}
+.os-terminal .ot-ansi-bg-red {
+  background: #6e303a;
+}
+.os-terminal .ot-ansi-bg-green {
+  background: #315a43;
+}
+.os-terminal .ot-ansi-bg-yellow {
+  background: #66512a;
+}
+.os-terminal .ot-ansi-bg-blue {
+  background: #294d78;
+}
+.os-terminal .ot-ansi-bg-magenta {
+  background: #56386e;
+}
+.os-terminal .ot-ansi-bg-cyan {
+  background: #285d66;
+}
+.os-terminal .ot-ansi-bg-white {
+  background: #dce5f2;
+  color: #172033;
+}
+.os-terminal .ot-ansi-bg-bright-black {
+  background: #566174;
+}
+.os-terminal .ot-ansi-bg-bright-red {
+  background: #a84d5a;
+}
+.os-terminal .ot-ansi-bg-bright-green {
+  background: #4d815f;
+}
+.os-terminal .ot-ansi-bg-bright-yellow {
+  background: #97753b;
+}
+.os-terminal .ot-ansi-bg-bright-blue {
+  background: #4778b5;
+}
+.os-terminal .ot-ansi-bg-bright-magenta {
+  background: #80569f;
+}
+.os-terminal .ot-ansi-bg-bright-cyan {
+  background: #438b96;
+}
+.os-terminal .ot-ansi-bg-bright-white {
+  background: #fff;
+  color: #172033;
+}
+.os-terminal .ot-keys {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+  margin-top: 0.55rem;
+}
+.os-terminal .ot-keys button {
+  font-size: 0.82rem;
+  min-width: 2.6rem;
+  padding: 0.38rem 0.55rem;
+}
+.ot-grade {
+  margin-top: 0.75rem;
+  padding: 0.8rem;
+  border: 1px solid var(--bd);
+  border-radius: 9px;
+  background: var(--card);
+}
+.ot-grade h4 {
+  margin: 0.1rem 0 0.55rem;
+}
+.ot-checks {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0.5rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+.ot-check {
+  display: grid;
+  grid-template-columns: 1.3rem minmax(0, 1fr);
+  gap: 0.4rem;
+  align-items: start;
+}
+.ot-check-pass {
+  color: var(--ok);
+  font-weight: 700;
+}
+.ot-check-fail {
+  color: var(--bad);
+  font-weight: 700;
+}
+.ot-feedback {
+  display: block;
+  color: var(--mut);
+  font-size: 0.88rem;
+}
+.os-terminal .ot-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.7rem 0;
+}
+.os-terminal .ot-actions button {
+  margin: 0;
+}
+.os-terminal .ot-editor {
+  margin: 0.75rem 0;
+  padding: 0.75rem;
+  border: 1px solid var(--bd);
+  border-radius: 9px;
+  background: var(--card);
+}
+.os-terminal .ot-editor textarea {
+  display: block;
+  width: 100%;
+  min-height: 14rem;
+  font:
+    14px/1.5 ui-monospace,
+    monospace;
+}
+.os-terminal .ot-editor-title {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-family: ui-monospace, monospace;
+}
+.os-terminal .ot-editor-mode {
+  display: inline-block;
+  font:
+    700 0.72rem ui-monospace,
+    monospace;
+  color: var(--ac);
+  margin: 0.25rem 0;
+}
+.os-terminal .ot-editor-textarea {
+  min-height: 18rem;
+  resize: vertical;
+  tab-size: 4;
+}
+.os-terminal .ot-editor-status {
+  min-height: 1.6rem;
+  padding: 0.25rem 0.4rem;
+  background: var(--soft);
+  font:
+    12px ui-monospace,
+    monospace;
+  overflow-wrap: anywhere;
+}
+.os-terminal .ot-editor-command-row {
+  display: flex;
+  gap: 0.35rem;
+  align-items: center;
+  font:
+    14px ui-monospace,
+    monospace;
+  margin: 0.35rem 0;
+}
+.os-terminal .ot-editor-command {
+  flex: 1;
+  min-width: 0;
+  font: inherit;
+}
+.ot-solution {
+  margin: 0;
+  padding: 0.85rem;
+  border: 1px solid var(--bd);
+  border-radius: 9px;
+  background: var(--card);
+}
+.ot-solution h4 {
+  margin: 0.1rem 0 0.35rem;
+}
+.ot-solution-intro {
+  margin: 0.25rem 0 0.65rem;
+  color: var(--mut);
+  font-size: 0.88rem;
+}
+.ot-solution-list {
+  margin: 0.4rem 0 0;
+  padding-left: 1.65rem;
+}
+.ot-solution-list li {
+  padding: 0.18rem 0 0.35rem 0.15rem;
+}
+.ot-solution-list code {
+  display: block;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  padding: 0.45rem 0.55rem;
+  border-radius: 6px;
+  background: var(--soft);
+  font:
+    0.85rem/1.5 ui-monospace,
+    SFMono-Regular,
+    Consolas,
+    monospace;
+  color: var(--fg);
+}
+.os-terminal .ot-error {
+  color: var(--bad);
+  padding: 0.65rem;
+  border: 1px solid var(--bad);
+  border-radius: 8px;
+}
+.ot-notice {
+  font-size: 0.88rem;
+  color: var(--mut);
+  margin: 0.5rem 0;
+}
+@media (max-width: 900px) {
+  .os-terminal .ot-screen {
+    height: 42vh;
+    min-height: 13rem;
+    font-size: 13px;
+    padding: 0.65rem;
+  }
+  .os-terminal .ot-input-row {
+    padding: 0.7rem 0.55rem;
+  }
+  .os-terminal .ot-prompt {
+    font-size: 12px;
+  }
+  .os-terminal .ot-toolbar {
+    gap: 0.3rem;
+    padding: 0.55rem;
+  }
+  .os-terminal .ot-keys button {
+    min-height: 2.55rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .os-terminal .ot-input-row {
+    transition: none;
+  }
 }

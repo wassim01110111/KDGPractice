@@ -25,13 +25,48 @@ const loadTerminalModule = () =>
   (terminalModulePromise ||= import(terminalModuleUrl));
 const loadJavaModule = () => (javaModulePromise ||= import(javaModuleUrl));
 
-// Keep every desktop two-pane exercise type in this one registry. The same
-// layout factory is used in Practice, Guided Learning, and Exam mode.
-const DESKTOP_SPLIT_EXERCISE_TYPES = Object.freeze([
-  "terminal",
-  "java-ex",
-  "sql-query",
-]);
+// One registry defines every desktop split exercise. Adding a new workspace
+// type requires one entry here and the shared workspace/action-container
+// contract; no feature-specific split CSS or wrapper is needed.
+const EXERCISE_LAYOUTS = Object.freeze({
+  terminal: {
+    storageKey: "terminalInstructionsFraction",
+    min: 0.22,
+    max: 0.56,
+    defaultFraction: 0.34,
+    mainMin: "320px",
+    sideMin: "280px",
+    label: "Resize workspace and instructions",
+    sidePanel: "instructions",
+    module: "terminal",
+    workspaceLabel: "Terminal workspace",
+  },
+  "java-ex": {
+    storageKey: "javaSideFraction",
+    min: 0.3,
+    max: 0.64,
+    defaultFraction: 0.46,
+    mainMin: "320px",
+    sideMin: "320px",
+    label: "Resize workspace and instructions",
+    sidePanel: "instructions",
+    module: "java",
+    workspaceLabel: "Java editor",
+  },
+  "sql-query": {
+    storageKey: "sqlSchemaFraction",
+    min: 0.25,
+    max: 0.65,
+    defaultFraction: null,
+    mainMin: "0px",
+    sideMin: "250px",
+    label: "Resize SQL editor and schema",
+    sidePanel: "schema",
+  },
+});
+const DESKTOP_SPLIT_EXERCISE_TYPES = Object.freeze(
+  Object.keys(EXERCISE_LAYOUTS),
+);
 
 // Terminal views own their listeners and resources. Dispose only exercise
 // views that explicitly expose this small lifecycle hook.
@@ -334,7 +369,7 @@ function saveDraft(id, answer) {
 //  - "base" milestones are computed from solved exercises, XP and exam history
 //    (see computeProgress, which the Progress page also uses);
 //  - "x:" achievements are driven by the small counters in S.stats below
-//    (easter eggs, Wassim sightings, reading time, failures, bad exams…).
+//    (easter eggs, Wassim sightings, reading time, failures, bad exams\u2026).
 // Unlocked ids are stored under "achUnlocked" and stats under "stats", so a
 // popup fires exactly once per achievement.
 const achStatDefaults = () => ({
@@ -424,7 +459,7 @@ const ACH_DEFS = [
   // ---- the Wassim easter egg ----
   A(
     "egg-1",
-    "🥚",
+    "\u{1F95A}",
     "wassim",
     "Curious Clicker",
     "Open the Wassim easter egg",
@@ -434,7 +469,7 @@ const ACH_DEFS = [
   ),
   A(
     "egg-5",
-    "🔓",
+    "\u{1F513}",
     "wassim",
     "Logo Enthusiast",
     "Open the easter egg 5 times",
@@ -444,7 +479,7 @@ const ACH_DEFS = [
   ),
   A(
     "egg-10",
-    "🖱️",
+    "\u{1F5B1}\uFE0F",
     "wassim",
     "Compulsive Clicker",
     "Open the easter egg 10 times",
@@ -454,7 +489,7 @@ const ACH_DEFS = [
   ),
   A(
     "egg-25",
-    "💻",
+    "\u{1F4BB}",
     "wassim",
     "Root Access Regular",
     "Open the easter egg 25 times",
@@ -464,7 +499,7 @@ const ACH_DEFS = [
   ),
   A(
     "egg-50",
-    "👑",
+    "\u{1F451}",
     "wassim",
     "Wassim's Biggest Fan",
     "Open the easter egg 50 times",
@@ -474,7 +509,7 @@ const ACH_DEFS = [
   ),
   A(
     "egg-100",
-    "🌱",
+    "\u{1F331}",
     "platinum",
     "Please Touch Grass",
     "Open the easter egg 100 times",
@@ -484,7 +519,7 @@ const ACH_DEFS = [
   ),
   A(
     "egg-memes",
-    "🎞️",
+    "\u{1F39E}\uFE0F",
     "gold",
     "Seen Every Secret",
     "See every different easter egg message",
@@ -494,7 +529,7 @@ const ACH_DEFS = [
   ),
   A(
     "egg-full",
-    "⏳",
+    "\u23F3",
     "wassim",
     "Stayed for the Self-Destruct",
     "Let an easter egg play all the way through",
@@ -504,7 +539,7 @@ const ACH_DEFS = [
   ),
   A(
     "egg-full-10",
-    "🍿",
+    "\u{1F37F}",
     "wassim",
     "Front Row Seat",
     "Watch 10 easter eggs play through",
@@ -514,7 +549,7 @@ const ACH_DEFS = [
   ),
   A(
     "egg-skip",
-    "⏭️",
+    "\u23ED\uFE0F",
     "bronze",
     "Skip Intro",
     "Close an easter egg early",
@@ -524,7 +559,7 @@ const ACH_DEFS = [
   ),
   A(
     "egg-quick",
-    "🐟",
+    "\u{1F41F}",
     "shame",
     "Goldfish Attention Span",
     "Close an easter egg within 1.5 seconds",
@@ -534,7 +569,7 @@ const ACH_DEFS = [
   ),
   A(
     "sign",
-    "🤝",
+    "\u{1F91D}",
     "secret",
     "Secret Handshake",
     "Find the hidden distractions switch",
@@ -545,7 +580,7 @@ const ACH_DEFS = [
   ),
   A(
     "zen-1",
-    "🔕",
+    "\u{1F515}",
     "wassim",
     "Do Not Disturb",
     "Turn the distractions off",
@@ -555,7 +590,7 @@ const ACH_DEFS = [
   ),
   A(
     "zen-10",
-    "🧘",
+    "\u{1F9D8}",
     "silver",
     "Hermit Mode",
     "Turn the distractions off 10 times",
@@ -565,17 +600,17 @@ const ACH_DEFS = [
   ),
   A(
     "theme-5",
-    "💡",
+    "\u{1F4A1}",
     "silver",
     "Light Switch Enthusiast",
     "Toggle the theme 5 times",
-    "Dark mode, light mode, dark mode…",
+    "Dark mode, light mode, dark mode\u2026",
     (s) => s.themeToggles,
     5,
   ),
   A(
     "theme-25",
-    "🌗",
+    "\u{1F317}",
     "bronze",
     "Cannot Decide",
     "Toggle the theme 25 times",
@@ -587,7 +622,7 @@ const ACH_DEFS = [
   // ---- WassimGPT is watching ----
   A(
     "watch-1",
-    "👁️",
+    "\u{1F441}\uFE0F",
     "wassim",
     "Under Surveillance",
     "Get caught by WassimGPT's monitor",
@@ -597,7 +632,7 @@ const ACH_DEFS = [
   ),
   A(
     "watch-3",
-    "🕵️",
+    "\u{1F575}\uFE0F",
     "wassim",
     "Familiar Face",
     "Get watched by Wassim 3 times",
@@ -607,7 +642,7 @@ const ACH_DEFS = [
   ),
   A(
     "watch-5",
-    "🎯",
+    "\u{1F3AF}",
     "wassim",
     "Person of Interest",
     "Get watched by Wassim 5 times",
@@ -617,7 +652,7 @@ const ACH_DEFS = [
   ),
   A(
     "watch-10",
-    "📹",
+    "\u{1F4F9}",
     "wassim",
     "Wassim's Favorite Subject",
     "Get watched by Wassim 10 times",
@@ -627,7 +662,7 @@ const ACH_DEFS = [
   ),
   A(
     "watch-25",
-    "🏠",
+    "\u{1F3E0}",
     "wassim",
     "Live-in Roommate",
     "Get watched by Wassim 25 times",
@@ -637,7 +672,7 @@ const ACH_DEFS = [
   ),
   A(
     "watch-50",
-    "🛰️",
+    "\u{1F6F0}\uFE0F",
     "platinum",
     "Property of Wassim",
     "Get watched by Wassim 50 times",
@@ -649,7 +684,7 @@ const ACH_DEFS = [
   // ---- time spent in the summaries ----
   A(
     "ref-1m",
-    "📖",
+    "\u{1F4D6}",
     "bronze",
     "Quick Skim",
     "Spend 1 minute in the summaries",
@@ -659,7 +694,7 @@ const ACH_DEFS = [
   ),
   A(
     "ref-5m",
-    "📄",
+    "\u{1F4C4}",
     "bronze",
     "Page Turner",
     "Spend 5 minutes in the summaries",
@@ -669,7 +704,7 @@ const ACH_DEFS = [
   ),
   A(
     "ref-15m",
-    "📑",
+    "\u{1F4D1}",
     "silver",
     "Chapter Closer",
     "Spend 15 minutes in the summaries",
@@ -679,7 +714,7 @@ const ACH_DEFS = [
   ),
   A(
     "ref-30m",
-    "🐛",
+    "\u{1F41B}",
     "silver",
     "Bookworm",
     "Spend 30 minutes in the summaries",
@@ -689,7 +724,7 @@ const ACH_DEFS = [
   ),
   A(
     "ref-1h",
-    "🏛️",
+    "\u{1F3DB}\uFE0F",
     "gold",
     "Library Resident",
     "Spend 1 hour in the summaries",
@@ -699,7 +734,7 @@ const ACH_DEFS = [
   ),
   A(
     "ref-3h",
-    "🛏️",
+    "\u{1F6CF}\uFE0F",
     "gold",
     "Has a Bed in the Library",
     "Spend 3 hours in the summaries",
@@ -709,7 +744,7 @@ const ACH_DEFS = [
   ),
   A(
     "ref-10h",
-    "🧙",
+    "\u{1F9D9}",
     "platinum",
     "summary Hermit",
     "Spend 10 hours in the summaries",
@@ -719,7 +754,7 @@ const ACH_DEFS = [
   ),
   A(
     "stay-10",
-    "🤿",
+    "\u{1F93F}",
     "silver",
     "Deep Dive",
     "Stay 10 minutes in the summaries without leaving",
@@ -729,7 +764,7 @@ const ACH_DEFS = [
   ),
   A(
     "stay-30",
-    "😴",
+    "\u{1F634}",
     "gold",
     "Unbothered",
     "Stay 30 minutes in the summaries without leaving",
@@ -739,7 +774,7 @@ const ACH_DEFS = [
   ),
   A(
     "subjects-3",
-    "🦘",
+    "\u{1F998}",
     "bronze",
     "Subject Hopper",
     "Open 3 different summary subjects",
@@ -749,7 +784,7 @@ const ACH_DEFS = [
   ),
   A(
     "subjects-all",
-    "🎫",
+    "\u{1F3AB}",
     "gold",
     "Library Card, Fully Stamped",
     "Open every summary subject",
@@ -759,7 +794,7 @@ const ACH_DEFS = [
   ),
   A(
     "canvas-5m",
-    "🎨",
+    "\u{1F3A8}",
     "bronze",
     "Canvas Visitor",
     "Spend 5 minutes in Canvas",
@@ -769,7 +804,7 @@ const ACH_DEFS = [
   ),
   A(
     "canvas-30m",
-    "🖼️",
+    "\u{1F5BC}\uFE0F",
     "silver",
     "Canvas Resident",
     "Spend 30 minutes in Canvas",
@@ -781,7 +816,7 @@ const ACH_DEFS = [
   // ---- stamina and habits ----
   A(
     "time-1h",
-    "⏱️",
+    "\u23F1\uFE0F",
     "bronze",
     "Settling In",
     "Spend 1 active hour on the site",
@@ -791,7 +826,7 @@ const ACH_DEFS = [
   ),
   A(
     "time-5h",
-    "📚",
+    "\u{1F4DA}",
     "silver",
     "Dedicated",
     "Spend 5 active hours on the site",
@@ -801,7 +836,7 @@ const ACH_DEFS = [
   ),
   A(
     "time-24h",
-    "🏕️",
+    "\u{1F3D5}\uFE0F",
     "platinum",
     "Lives Here Now",
     "Spend 24 active hours on the site",
@@ -811,7 +846,7 @@ const ACH_DEFS = [
   ),
   A(
     "days-3",
-    "🔥",
+    "\u{1F525}",
     "bronze",
     "Three-Day Streak",
     "Study 3 days in a row",
@@ -821,7 +856,7 @@ const ACH_DEFS = [
   ),
   A(
     "days-7",
-    "📅",
+    "\u{1F4C5}",
     "silver",
     "Weekly Habit",
     "Study 7 days in a row",
@@ -831,7 +866,7 @@ const ACH_DEFS = [
   ),
   A(
     "days-14",
-    "🌋",
+    "\u{1F30B}",
     "gold",
     "Fortnight of Focus",
     "Study 14 days in a row",
@@ -841,7 +876,7 @@ const ACH_DEFS = [
   ),
   A(
     "days-30",
-    "🏆",
+    "\u{1F3C6}",
     "platinum",
     "Habit Formed",
     "Study 30 days in a row",
@@ -851,7 +886,7 @@ const ACH_DEFS = [
   ),
   A(
     "night",
-    "🦉",
+    "\u{1F989}",
     "silver",
     "Night Owl",
     "Answer a question between midnight and 5 am",
@@ -861,7 +896,7 @@ const ACH_DEFS = [
   ),
   A(
     "night-25",
-    "🧛",
+    "\u{1F9DB}",
     "gold",
     "Vampire Hours",
     "Answer 25 questions between midnight and 5 am",
@@ -871,7 +906,7 @@ const ACH_DEFS = [
   ),
   A(
     "early",
-    "🐦",
+    "\u{1F426}",
     "silver",
     "Early Bird",
     "Answer a question between 5 and 8 am",
@@ -881,7 +916,7 @@ const ACH_DEFS = [
   ),
   A(
     "weekend",
-    "🛡️",
+    "\u{1F6E1}\uFE0F",
     "silver",
     "Weekend Warrior",
     "Answer a question on a weekend",
@@ -893,7 +928,7 @@ const ACH_DEFS = [
   // ---- practice: wins ----
   A(
     "first-try-1",
-    "🎯",
+    "\u{1F3AF}",
     "bronze",
     "First Try",
     "Solve an exercise on the first attempt",
@@ -903,7 +938,7 @@ const ACH_DEFS = [
   ),
   A(
     "first-try-10",
-    "🏹",
+    "\u{1F3F9}",
     "silver",
     "Sharpshooter",
     "Solve 10 exercises on the first attempt",
@@ -913,7 +948,7 @@ const ACH_DEFS = [
   ),
   A(
     "first-try-25",
-    "🥷",
+    "\u{1F977}",
     "gold",
     "Sniper Elite",
     "Solve 25 exercises on the first attempt",
@@ -923,7 +958,7 @@ const ACH_DEFS = [
   ),
   A(
     "streak-5",
-    "✨",
+    "\u2728",
     "bronze",
     "Warming Up",
     "Get 5 correct answers in a row",
@@ -933,7 +968,7 @@ const ACH_DEFS = [
   ),
   A(
     "streak-10",
-    "🔥",
+    "\u{1F525}",
     "silver",
     "Hot Streak",
     "Get 10 correct answers in a row",
@@ -943,7 +978,7 @@ const ACH_DEFS = [
   ),
   A(
     "streak-20",
-    "⚡",
+    "\u26A1",
     "platinum",
     "Unstoppable",
     "Get 20 correct answers in a row",
@@ -953,7 +988,7 @@ const ACH_DEFS = [
   ),
   A(
     "run-1",
-    "▶️",
+    "\u25B6\uFE0F",
     "bronze",
     "Hello, Database",
     "Run your first SQL query",
@@ -963,7 +998,7 @@ const ACH_DEFS = [
   ),
   A(
     "run-25",
-    "🔍",
+    "\u{1F50D}",
     "silver",
     "Query Enthusiast",
     "Run 25 SQL queries",
@@ -973,7 +1008,7 @@ const ACH_DEFS = [
   ),
   A(
     "run-100",
-    "🗃️",
+    "\u{1F5C3}\uFE0F",
     "gold",
     "SELECT * FROM life",
     "Run 100 SQL queries",
@@ -983,7 +1018,7 @@ const ACH_DEFS = [
   ),
   A(
     "shortcut-10",
-    "⌨️",
+    "\u2328\uFE0F",
     "silver",
     "Keyboard Warrior",
     "Use Ctrl+Enter 10 times",
@@ -993,7 +1028,7 @@ const ACH_DEFS = [
   ),
   A(
     "hint-1",
-    "💡",
+    "\u{1F4A1}",
     "bronze",
     "Hint Taker",
     "Open a hint",
@@ -1003,7 +1038,7 @@ const ACH_DEFS = [
   ),
   A(
     "hint-10",
-    "🆘",
+    "\u{1F198}",
     "silver",
     "Hint Addict",
     "Open hints on 10 exercises",
@@ -1013,7 +1048,7 @@ const ACH_DEFS = [
   ),
   A(
     "peek-1",
-    "👀",
+    "\u{1F440}",
     "bronze",
     "Just Looking",
     "Peek at a solution",
@@ -1023,7 +1058,7 @@ const ACH_DEFS = [
   ),
   A(
     "peek-10",
-    "🏺",
+    "\u{1F3FA}",
     "silver",
     "Answer Key Archaeologist",
     "Peek at 10 solutions",
@@ -1033,7 +1068,7 @@ const ACH_DEFS = [
   ),
   A(
     "honest",
-    "😇",
+    "\u{1F607}",
     "silver",
     "Honest Abe",
     "Mark a self-check answer as wrong",
@@ -1043,7 +1078,7 @@ const ACH_DEFS = [
   ),
   A(
     "redemption",
-    "🌅",
+    "\u{1F305}",
     "gold",
     "Redemption Arc",
     "Solve an exercise right after 3+ wrong answers",
@@ -1053,7 +1088,7 @@ const ACH_DEFS = [
   ),
   A(
     "comeback-1",
-    "🩹",
+    "\u{1FA79}",
     "silver",
     "Learned From Mistakes",
     "Solve an exercise you failed earlier this session",
@@ -1063,7 +1098,7 @@ const ACH_DEFS = [
   ),
   A(
     "comeback-10",
-    "🦾",
+    "\u{1F9BE}",
     "gold",
     "Resilient Learner",
     "Turn 10 failures into solves in one go",
@@ -1075,7 +1110,7 @@ const ACH_DEFS = [
   // ---- practice: failures (roast mode) ----
   A(
     "fail-1",
-    "💥",
+    "\u{1F4A5}",
     "shame",
     "Task Failed Successfully",
     "Submit an incorrect answer",
@@ -1085,7 +1120,7 @@ const ACH_DEFS = [
   ),
   A(
     "fail-5",
-    "📉",
+    "\u{1F4C9}",
     "shame",
     "Learning Experience",
     "Submit 5 incorrect answers",
@@ -1095,7 +1130,7 @@ const ACH_DEFS = [
   ),
   A(
     "fail-10",
-    "💡",
+    "\u{1F4A1}",
     "shame",
     "Ten Ways That Don't Work",
     "Submit 10 incorrect answers",
@@ -1105,7 +1140,7 @@ const ACH_DEFS = [
   ),
   A(
     "fail-25",
-    "🗑️",
+    "\u{1F5D1}\uFE0F",
     "shame",
     "Error Collector",
     "Submit 25 incorrect answers",
@@ -1115,7 +1150,7 @@ const ACH_DEFS = [
   ),
   A(
     "fail-50",
-    "🎪",
+    "\u{1F3AA}",
     "shame",
     "Failure Is an Option",
     "Submit 50 incorrect answers",
@@ -1125,7 +1160,7 @@ const ACH_DEFS = [
   ),
   A(
     "fail-100",
-    "🖼️",
+    "\u{1F5BC}\uFE0F",
     "shame",
     "Certified Disappointment",
     "Submit 100 incorrect answers",
@@ -1135,7 +1170,7 @@ const ACH_DEFS = [
   ),
   A(
     "fail-250",
-    "🏅",
+    "\u{1F3C5}",
     "shame",
     "Professional Failure",
     "Submit 250 incorrect answers",
@@ -1145,7 +1180,7 @@ const ACH_DEFS = [
   ),
   A(
     "fstreak-3",
-    "🎩",
+    "\u{1F3A9}",
     "shame",
     "Hat Trick of Shame",
     "Get 3 wrong answers in a row",
@@ -1155,7 +1190,7 @@ const ACH_DEFS = [
   ),
   A(
     "fstreak-5",
-    "🥶",
+    "\u{1F976}",
     "shame",
     "Cold Streak",
     "Get 5 wrong answers in a row",
@@ -1165,7 +1200,7 @@ const ACH_DEFS = [
   ),
   A(
     "fstreak-10",
-    "🧐",
+    "\u{1F9D0}",
     "shame",
     "Are You Even Reading?",
     "Get 10 wrong answers in a row",
@@ -1175,7 +1210,7 @@ const ACH_DEFS = [
   ),
   A(
     "sql-1",
-    "🙅",
+    "\u{1F645}",
     "shame",
     "Syntax? Never Heard of Her",
     "Submit a query that throws an error",
@@ -1185,7 +1220,7 @@ const ACH_DEFS = [
   ),
   A(
     "sql-10",
-    "🔎",
+    "\u{1F50E}",
     "shame",
     "Semicolon Search Party",
     "Submit 10 queries that throw errors",
@@ -1195,7 +1230,7 @@ const ACH_DEFS = [
   ),
   A(
     "sql-25",
-    "😱",
+    "\u{1F631}",
     "shame",
     "The Parser Fears You",
     "Submit 25 queries that throw errors",
@@ -1205,7 +1240,7 @@ const ACH_DEFS = [
   ),
   A(
     "same-3",
-    "🔁",
+    "\u{1F501}",
     "shame",
     "Same Mistake, Different Day",
     "Fail the same exercise 3 times in a session",
@@ -1215,17 +1250,17 @@ const ACH_DEFS = [
   ),
   A(
     "same-5",
-    "🐐",
+    "\u{1F410}",
     "shame",
     "Stubborn as a Mule",
     "Fail the same exercise 5 times in a session",
-    "Maybe… read the hint?",
+    "Maybe\u2026 read the hint?",
     (s) => s.maxSameFails,
     5,
   ),
   A(
     "peek-fail",
-    "🤦",
+    "\u{1F926}",
     "shame",
     "Looked and Still Failed",
     "Fail an exercise after opening a hint or solution",
@@ -1235,7 +1270,7 @@ const ACH_DEFS = [
   ),
   A(
     "blank",
-    "🫥",
+    "\u{1FAE5}",
     "shame",
     "Blank Stare",
     "Submit an empty SQL answer",
@@ -1247,7 +1282,7 @@ const ACH_DEFS = [
   // ---- exams: bad scores (roast mode) and good ones ----
   A(
     "exam-bad-1",
-    "🧯",
+    "\u{1F9EF}",
     "shame",
     "Failing With Style",
     "Score below 50% on an exam",
@@ -1257,7 +1292,7 @@ const ACH_DEFS = [
   ),
   A(
     "exam-bad-3",
-    "🗓️",
+    "\u{1F5D3}\uFE0F",
     "shame",
     "Retake Specialist",
     "Score below 50% on 3 exams",
@@ -1267,7 +1302,7 @@ const ACH_DEFS = [
   ),
   A(
     "exam-bad-10",
-    "🎟️",
+    "\u{1F39F}\uFE0F",
     "shame",
     "Resit Season Pass",
     "Score below 50% on 10 exams",
@@ -1277,7 +1312,7 @@ const ACH_DEFS = [
   ),
   A(
     "exam-zero",
-    "🥚",
+    "\u{1F95A}",
     "shame",
     "Zero Hero",
     "Score 0 on an exam (3+ questions)",
@@ -1287,7 +1322,7 @@ const ACH_DEFS = [
   ),
   A(
     "exam-guess",
-    "🐒",
+    "\u{1F412}",
     "shame",
     "Worse Than Guessing",
     "Score below 25% on an exam (4+ questions)",
@@ -1297,7 +1332,7 @@ const ACH_DEFS = [
   ),
   A(
     "exam-half",
-    "⚖️",
+    "\u2696\uFE0F",
     "silver",
     "Perfectly Balanced",
     "Score exactly 50% on an exam",
@@ -1307,17 +1342,17 @@ const ACH_DEFS = [
   ),
   A(
     "exam-scrape",
-    "🧗",
+    "\u{1F9D7}",
     "bronze",
     "Pass by a Whisker",
-    "Score 50–59% on an exam",
+    "Score 50\u201359% on an exam",
     "Technically a pass. Technically.",
     (s) => s.scrapeExams,
     1,
   ),
   A(
     "exam-bstreak-2",
-    "🎲",
+    "\u{1F3B2}",
     "shame",
     "Doubling Down",
     "Score below 50% on 2 exams in a row",
@@ -1327,7 +1362,7 @@ const ACH_DEFS = [
   ),
   A(
     "exam-bstreak-3",
-    "🪦",
+    "\u{1FAA6}",
     "shame",
     "Hat Trick of Regret",
     "Score below 50% on 3 exams in a row",
@@ -1337,7 +1372,7 @@ const ACH_DEFS = [
   ),
   A(
     "exam-decline",
-    "⛷️",
+    "\u26F7\uFE0F",
     "shame",
     "Downhill Skiing",
     "Score lower on 3 exams in a row",
@@ -1347,7 +1382,7 @@ const ACH_DEFS = [
   ),
   A(
     "exam-speed-fail",
-    "🏃",
+    "\u{1F3C3}",
     "shame",
     "Speedrun Any%",
     "Fail a 5+ question exam in under a minute",
@@ -1357,7 +1392,7 @@ const ACH_DEFS = [
   ),
   A(
     "exam-blank",
-    "📄",
+    "\u{1F4C4}",
     "shame",
     "Blank Page Energy",
     "Submit an exam with no answers",
@@ -1367,7 +1402,7 @@ const ACH_DEFS = [
   ),
   A(
     "exam-timeout",
-    "⌛",
+    "\u231B",
     "shame",
     "Time Waits for No One",
     "Let the exam timer run out",
@@ -1377,7 +1412,7 @@ const ACH_DEFS = [
   ),
   A(
     "exam-quit-1",
-    "🏳️",
+    "\u{1F3F3}\uFE0F",
     "shame",
     "Rage Quit",
     "Discard an unfinished exam",
@@ -1387,7 +1422,7 @@ const ACH_DEFS = [
   ),
   A(
     "exam-quit-5",
-    "🫠",
+    "\u{1FAE0}",
     "shame",
     "Exam? What Exam?",
     "Discard 5 unfinished exams",
@@ -1397,7 +1432,7 @@ const ACH_DEFS = [
   ),
   A(
     "exam-comeback",
-    "🚀",
+    "\u{1F680}",
     "gold",
     "Comeback Kid",
     "Score 80%+ right after an exam under 40%",
@@ -1407,7 +1442,7 @@ const ACH_DEFS = [
   ),
   A(
     "exam-speed-perfect",
-    "😎",
+    "\u{1F60E}",
     "platinum",
     "Speed Demon",
     "Get a perfect score using under half the time",
@@ -1418,7 +1453,7 @@ const ACH_DEFS = [
   // ---- additional academic coping mechanisms ----
   A(
     "night-owl-10",
-    "🦉",
+    "\u{1F989}",
     "bronze",
     "Sleep Is a Premium Feature",
     "Make 10 attempts between midnight and 5 AM",
@@ -1428,7 +1463,7 @@ const ACH_DEFS = [
   ),
   A(
     "night-owl-50",
-    "🌚",
+    "\u{1F31A}",
     "silver",
     "Nocturnal Department",
     "Make 50 attempts between midnight and 5 AM",
@@ -1438,7 +1473,7 @@ const ACH_DEFS = [
   ),
   A(
     "early-bird-10",
-    "🐓",
+    "\u{1F413}",
     "bronze",
     "Suspiciously Functional",
     "Make 10 attempts before 8 AM",
@@ -1448,7 +1483,7 @@ const ACH_DEFS = [
   ),
   A(
     "weekend-10",
-    "📆",
+    "\u{1F4C6}",
     "bronze",
     "Weekend? Never Heard of Her",
     "Make 10 attempts on weekends",
@@ -1458,7 +1493,7 @@ const ACH_DEFS = [
   ),
   A(
     "weekend-50",
-    "🫡",
+    "\u{1FAE1}",
     "silver",
     "Weekend? Not in This Economy",
     "Make 50 attempts on weekends",
@@ -1468,7 +1503,7 @@ const ACH_DEFS = [
   ),
   A(
     "first-try-10",
-    "🎯",
+    "\u{1F3AF}",
     "silver",
     "Accidentally Competent",
     "Solve 10 exercises on the first try",
@@ -1478,7 +1513,7 @@ const ACH_DEFS = [
   ),
   A(
     "first-try-50",
-    "🧠",
+    "\u{1F9E0}",
     "gold",
     "Read the Question? Unprecedented",
     "Solve 50 exercises on the first try",
@@ -1488,7 +1523,7 @@ const ACH_DEFS = [
   ),
   A(
     "fail-25",
-    "🧱",
+    "\u{1F9F1}",
     "bronze",
     "Professional Wall Tester",
     "Fail 25 exercise attempts",
@@ -1498,7 +1533,7 @@ const ACH_DEFS = [
   ),
   A(
     "fail-100",
-    "🧯",
+    "\u{1F9EF}",
     "silver",
     "Error Message Collector",
     "Fail 100 exercise attempts",
@@ -1508,7 +1543,7 @@ const ACH_DEFS = [
   ),
   A(
     "comeback-10",
-    "🪃",
+    "\u{1FA83}",
     "gold",
     "Recurring Comeback",
     "Recover from a failed attempt 10 times",
@@ -1518,7 +1553,7 @@ const ACH_DEFS = [
   ),
   A(
     "hints-25",
-    "🛟",
+    "\u{1F6DF}",
     "bronze",
     "Hint Subscription",
     "Open hints 25 times",
@@ -1528,7 +1563,7 @@ const ACH_DEFS = [
   ),
   A(
     "solution-peeks-25",
-    "👀",
+    "\u{1F440}",
     "silver",
     "Just One Little Peek",
     "Peek at 25 solutions",
@@ -1538,7 +1573,7 @@ const ACH_DEFS = [
   ),
   A(
     "sql-errors-25",
-    "🗃️",
+    "\u{1F5C3}\uFE0F",
     "bronze",
     "SQL Crime Scene",
     "Trigger 25 SQL errors",
@@ -1548,7 +1583,7 @@ const ACH_DEFS = [
   ),
   A(
     "blank-submits-5",
-    "📃",
+    "\u{1F4C3}",
     "shame",
     "Minimalist Submission",
     "Submit 5 blank answers",
@@ -1558,7 +1593,7 @@ const ACH_DEFS = [
   ),
   A(
     "zen-10",
-    "🧘",
+    "\u{1F9D8}",
     "silver",
     "Enlightenment Buffering",
     "Enable Zen mode 10 times",
@@ -1568,7 +1603,7 @@ const ACH_DEFS = [
   ),
   A(
     "themes-10",
-    "🎨",
+    "\u{1F3A8}",
     "bronze",
     "Identity Crisis",
     "Change the theme 10 times",
@@ -1578,7 +1613,7 @@ const ACH_DEFS = [
   ),
   A(
     "runs-100",
-    "▶️",
+    "\u25B6\uFE0F",
     "gold",
     "Execute First, Think Later",
     "Run 100 SQL queries",
@@ -1588,7 +1623,7 @@ const ACH_DEFS = [
   ),
   A(
     "shortcuts-25",
-    "⌨️",
+    "\u2328\uFE0F",
     "silver",
     "Keyboard Goblin",
     "Use keyboard shortcuts 25 times",
@@ -1959,7 +1994,7 @@ function achPump() {
       { class: "ach-medal", "aria-hidden": "true" },
       h("span", { class: "ach-ring" }),
       h("span", { class: "ach-ring ach-ring-2" }),
-      h("span", { class: "ach-icon" }, a.icon || "★"),
+      h("span", { class: "ach-icon" }, a.icon || "\u2605"),
       h("span", { class: "ach-burst" }, sparks),
     ),
     h(
@@ -1977,7 +2012,7 @@ function achPump() {
         class: "ach-close",
         "aria-label": "Dismiss achievement",
       },
-      "×",
+      "\u00D7",
     ),
   );
   toast.addEventListener("click", finish);
@@ -2390,7 +2425,7 @@ function packageLoadErrorPanel() {
       error?.field && error.field !== "$" ? `Field ${error.field}` : "",
     ]
       .filter(Boolean)
-      .join(" · ");
+      .join(" \u00B7 ");
     const reason =
       error?.msg ||
       error?.message ||
@@ -2647,7 +2682,10 @@ async function gradeSqlBatch(items, onProgress = () => {}) {
     const key = keyOf(ex);
     const sql = typeof item.answer === "string" ? item.answer : "";
     if (!sql.trim()) {
-      grades.set(key, { correct: false, error: "No SQL answer was submitted." });
+      grades.set(key, {
+        correct: false,
+        error: "No SQL answer was submitted.",
+      });
       continue;
     }
     try {
@@ -2658,7 +2696,10 @@ async function gradeSqlBatch(items, onProgress = () => {}) {
     }
     const ds = S.datasets[ex.datasetId];
     if (!ds) {
-      grades.set(key, { correct: false, error: "The SQL dataset is unavailable." });
+      grades.set(key, {
+        correct: false,
+        error: "The SQL dataset is unavailable.",
+      });
       continue;
     }
     const groupKey = databaseToken(ds);
@@ -2667,7 +2708,10 @@ async function gradeSqlBatch(items, onProgress = () => {}) {
   }
 
   let completed = 0;
-  const total = [...groups.values()].reduce((sum, group) => sum + group.items.length, 0);
+  const total = [...groups.values()].reduce(
+    (sum, group) => sum + group.items.length,
+    0,
+  );
   for (const { ds, items: groupItems } of groups.values()) {
     try {
       const startedAt = performance.now();
@@ -2994,7 +3038,7 @@ const formatCanvasSQL = (block) => {
 
 // Syntax colouring for fenced code blocks in the markdown pages (Canvas and
 // Summaries). One small tokenizer, configured per language in CODE_LANGS.
-// Output is <span class="tok-…"> markup; colours are injected once (light+dark).
+// Output is <span class="tok-\u2026"> markup; colours are injected once (light+dark).
 const CODE_LANGS = {};
 (() => {
   const R = String.raw;
@@ -3298,7 +3342,9 @@ const answerText = (ex, answer) => {
     return choices.length ? choices.join("\n") : "(no answer)";
   }
   if (ex.type === "fill-blank" && Array.isArray(answer))
-    return answer.map((value, index) => `${index + 1}. ${value || "(empty)"}`).join("\n");
+    return answer
+      .map((value, index) => `${index + 1}. ${value || "(empty)"}`)
+      .join("\n");
   return typeof answer === "string"
     ? answer || "(empty)"
     : JSON.stringify(answer ?? "(no answer)");
@@ -3308,7 +3354,7 @@ function schemaView(ex, options = {}) {
     "div",
     { class: "schema-content" },
     loadingSkeleton(
-      "Loading the relationship diagram…",
+      "Loading the relationship diagram\u2026",
       "Open to build the sample database",
     ),
   );
@@ -3318,7 +3364,7 @@ function schemaView(ex, options = {}) {
     h(
       "summary",
       {},
-      ex.datasetTitle ? `${ex.datasetTitle} · schema` : "Dataset schema",
+      ex.datasetTitle ? `${ex.datasetTitle} \u00B7 schema` : "Dataset schema",
     ),
     content,
   );
@@ -3336,7 +3382,7 @@ function schemaView(ex, options = {}) {
     box.dataset.loaded = "true";
     content.replaceChildren(
       loadingSkeleton(
-        "Creating the sample database…",
+        "Creating the sample database\u2026",
         dbIsWarm(ex) ? "" : "The first time takes a few seconds",
       ),
     );
@@ -3425,7 +3471,7 @@ function schemaView(ex, options = {}) {
     }
     for (const rel of relations)
       uml.push(
-        `${aliases.get(rel.from)} }o--|| ${aliases.get(rel.to)} : ${umlText(rel.column)}\\n→ ${umlText(rel.targetColumn)}`,
+        `${aliases.get(rel.from)} }o--|| ${aliases.get(rel.to)} : ${umlText(rel.column)}\\n\u2192 ${umlText(rel.targetColumn)}`,
       );
     uml.push("@enduml");
     const diagramViewer = h("div", {
@@ -3441,7 +3487,7 @@ function schemaView(ex, options = {}) {
     // space meanwhile. The PlantUML server can be slow, so say so after a while.
     diagramImage.style.display = "none";
     const diagramPlaceholder = loadingSkeleton(
-      "Rendering the PlantUML diagram…",
+      "Rendering the PlantUML diagram\u2026",
     );
     const slowTimer = setTimeout(() => {
       diagramPlaceholder.append(
@@ -3602,7 +3648,7 @@ function schemaView(ex, options = {}) {
                       class: "schema-relation-arrow",
                       "aria-label": "references",
                     },
-                    " → ",
+                    " \u2192 ",
                   ),
                   h("code", {}, `${rel.to}.${rel.targetColumn}`),
                 ),
@@ -3694,43 +3740,11 @@ async function plantumlEncode(source) {
   return encoded;
 }
 
-// Normalize controls supplied by exercise modules so their buttons share the
-// same visual and semantic action group as hints, solutions, flags, and Next.
-// Moving the original nodes preserves their event listeners and module state.
-function normalizeExerciseActionControls(actionGroup) {
-  if (!actionGroup) return;
-
-  // The app owns Previous/Next navigation. Exercise modules provide actions
-  // only; they must not inject navigation placeholders into this group.
-
-  actionGroup
-    .querySelectorAll(".ot-control-sidebar, .java-controls")
-    .forEach((controls) => {
-      controls
-        .querySelectorAll(".ot-control-heading, h1, h2, h3, [role=heading]")
-        .forEach((heading) => {
-          const label = (heading.textContent || "").trim();
-          if (
-            heading.classList.contains("ot-control-heading") ||
-            /^exercise controls$/i.test(label)
-          ) {
-            heading.remove();
-          }
-        });
-      controls.setAttribute("role", "group");
-      controls.setAttribute("aria-label", "Exercise actions");
-      controls.classList.add("exercise-action-buttons__module-controls");
-    });
-}
-
-function moveMountedExerciseActions(source, actionGroup, selector) {
-  if (!source || !actionGroup) return;
-  source.querySelectorAll(selector).forEach((controls) => {
-    if (controls !== actionGroup && !actionGroup.contains(controls))
-      actionGroup.append(controls);
-  });
-  normalizeExerciseActionControls(actionGroup);
-}
+// Exercise modules receive these app-owned containers directly:
+// - workspace container: the main/left pane
+// - actions container: the shared action button group
+// - feedback container: grading feedback below the action group
+// Modules must not create their own navigation or split-layout wrappers.
 
 // Question view. Practice and exam share the same panels, split layout, and
 // exercise-action-buttons container; only mode-specific actions differ.
@@ -3787,39 +3801,24 @@ function qView(
     { class: "meta" },
     [courseLabel(ex.course), ex.packageId, ex.category, ex.difficulty]
       .filter(Boolean)
-      .join(" · "),
+      .join(" \u00B7 "),
   );
-  let terminalInstructionsPane = null;
-  let javaInstructionsPane = null;
-  if (ex.type === "terminal") {
-    terminalInstructionsPane = h(
+  let instructionPanel = null;
+  if (EXERCISE_LAYOUTS[ex.type]?.sidePanel === "instructions") {
+    instructionPanel = h(
       "section",
       {
-        class: "q terminal-instructions-pane",
-        "aria-label": "Exercise instructions",
+        class: "q exercise-instruction-panel",
+        "aria-label": "Exercise instructions and actions",
       },
       exerciseHeading,
       exerciseMeta,
       instructions,
     );
     q = h("section", {
-      class: "q terminal-workspace-pane",
-      "aria-label": "Terminal workspace",
-    });
-  } else if (ex.type === "java-ex") {
-    javaInstructionsPane = h(
-      "section",
-      {
-        class: "q java-instructions-pane",
-        "aria-label": "Java exercise instructions and tools",
-      },
-      exerciseHeading,
-      exerciseMeta,
-      instructions,
-    );
-    q = h("section", {
-      class: "q java-workspace-pane",
-      "aria-label": "Java code editor",
+      class: "q exercise-workspace-panel",
+      "aria-label":
+        EXERCISE_LAYOUTS[ex.type]?.workspaceLabel || "Exercise workspace",
     });
   } else {
     q.append(exerciseHeading, exerciseMeta, instructions);
@@ -3881,8 +3880,8 @@ function qView(
           out.replaceChildren(
             loadingNote(
               dbIsWarm(ex)
-                ? "Running…"
-                : "Setting up the database (first run takes a few seconds)…",
+                ? "Running\u2026"
+                : "Setting up the database (first run takes a few seconds)\u2026",
             ),
           );
           try {
@@ -3932,8 +3931,8 @@ function qView(
             fb.replaceChildren(
               loadingNote(
                 dbIsWarm(ex)
-                  ? "Grading…"
-                  : "Setting up the database and grading…",
+                  ? "Grading\u2026"
+                  : "Setting up the database and grading\u2026",
               ),
             );
             const g = await gradeSql(ex, ta.value);
@@ -3955,7 +3954,7 @@ function qView(
                 : h(
                     "p",
                     { class: g.correct ? "ok" : "bad" },
-                    g.correct ? "✔ Correct" : "✘ Incorrect",
+                    g.correct ? "\u2714 Correct" : "\u2718 Incorrect",
                     h(
                       "small",
                       {},
@@ -3975,10 +3974,10 @@ function qView(
       );
       btns.append(submitButton);
     }
-  } else if (ex.type === "java-ex") {
-    const javaHost = h("div", { class: "java-exercise-host" });
-    javaHost.append(loadingNote("Loading the Java playground…"));
-    javaInstructionsPane.append(javaHost);
+  } else if (EXERCISE_LAYOUTS[ex.type]?.module === "java") {
+    const javaHost = h("div", { class: "exercise-module-host" });
+    javaHost.append(loadingNote("Loading the Java playground\u2026"));
+    instructionPanel.append(javaHost);
     let javaController = null;
     let javaDisposed = false;
     let javaMountPromise = null;
@@ -4011,8 +4010,9 @@ function qView(
         )
           return null;
         const controller = await javaModule.mountJavaExercise({
-          container: javaHost,
-          editorContainer: q,
+          toolsContainer: javaHost,
+          workspaceContainer: q,
+          actionsContainer: btns,
           exercise: ex,
           initialCode,
           mode,
@@ -4042,7 +4042,6 @@ function qView(
           return null;
         }
         javaController = controller;
-        moveMountedExerciseActions(javaHost, btns, ".java-controls");
         return controller;
       })
       .catch((error) => {
@@ -4057,9 +4056,9 @@ function qView(
         }
         return null;
       });
-  } else if (ex.type === "terminal") {
-    const terminalHost = h("div", { class: "terminal-exercise-host" });
-    terminalHost.append(loadingNote("Loading browser terminal…"));
+  } else if (EXERCISE_LAYOUTS[ex.type]?.module === "terminal") {
+    const terminalHost = h("div", { class: "exercise-module-host" });
+    terminalHost.append(loadingNote("Loading browser terminal\u2026"));
     q.append(terminalHost);
     let terminalController = null;
     let terminalDisposed = false;
@@ -4085,15 +4084,24 @@ function qView(
         )
           return;
         const controller = await terminalModule.mountTerminalExercise({
-          container: terminalHost,
+          workspaceContainer: terminalHost,
           exercise: ex,
           packageId: ex.packageId,
           exerciseId: ex.id,
           attemptId,
           mode,
-          controlsContainer: btns,
+          actionsContainer: btns,
+          feedbackContainer: fb,
           onChange: async () => {
-            fb.replaceChildren();
+            // Keep the terminal module's persistent per-check result panel;
+            // clear only the app-owned summary feedback.
+            [...fb.children]
+              .filter(
+                (child) =>
+                  !child.classList.contains("ot-grade") &&
+                  !child.classList.contains("terminal-grade-summary"),
+              )
+              .forEach((child) => child.remove());
             await updateAnswer("terminal-workspace");
           },
           onGrade: async (result) => {
@@ -4106,11 +4114,13 @@ function qView(
               blank: false,
             });
             if (result.passed) markExerciseCorrect();
-            fb.replaceChildren(
+            fb.append(
               h(
                 "p",
-                { class: result.passed ? "ok" : "bad" },
-                `Workspace score: ${result.score} / ${result.maxScore}${result.passed ? " · All checks passed" : " · Review the failed checks above"}`,
+                {
+                  class: `terminal-grade-summary ${result.passed ? "ok" : "bad"}`,
+                },
+                `Workspace score: ${result.score} / ${result.maxScore}${result.passed ? " \u00B7 All checks passed" : " \u00B7 Review the failed checks above"}`,
               ),
             );
             scrollToFeedback();
@@ -4126,7 +4136,6 @@ function qView(
           return;
         }
         terminalController = controller;
-        normalizeExerciseActionControls(btns);
         updateNextExercise();
         await updateAnswer("terminal-workspace", { source: "workspace-open" });
       })
@@ -4302,7 +4311,7 @@ function qView(
               h(
                 "p",
                 { class: g ? "ok" : "bad" },
-                g ? "✔ Correct" : "✘ Incorrect",
+                g ? "\u2714 Correct" : "\u2718 Incorrect",
               ),
               !g && hasSimilarOSAnswer(ex, readAns())
                 ? h(
@@ -4438,8 +4447,8 @@ function qView(
         h("strong", {}, "Expected result preview"),
         loadingNote(
           dbIsWarm(ex)
-            ? "Loading the first five result rows…"
-            : "Setting up the database and loading the first five rows…",
+            ? "Loading the first five result rows\u2026"
+            : "Setting up the database and loading the first five rows\u2026",
         ),
       );
     };
@@ -4616,15 +4625,23 @@ function qView(
   }
   if (DESKTOP_SPLIT_EXERCISE_TYPES.includes(ex.type)) {
     const sidePanel =
-      ex.type === "terminal"
-        ? terminalInstructionsPane
-        : ex.type === "java-ex"
-          ? javaInstructionsPane
-          : schemaPanel;
-    if (sidePanel && ex.type !== "sql-query")
-      sidePanel.append(btns, ...supplementalPanels, out, fb);
-    else
-      q.append(btns, ...supplementalPanels, out, fb);
+      EXERCISE_LAYOUTS[ex.type]?.sidePanel === "instructions"
+        ? instructionPanel
+        : schemaPanel;
+    const actionPanel = instructionPanel || q;
+    actionPanel.append(btns, ...supplementalPanels);
+    if (instructionPanel) {
+      const moduleHost = instructionPanel.querySelector(
+        ":scope > .exercise-module-host",
+      );
+      instructionPanel.insertBefore(btns, moduleHost);
+      supplementalPanels.forEach((panel) =>
+        instructionPanel.insertBefore(panel, moduleHost),
+      );
+      instructionPanel.append(out, fb);
+    } else {
+      q.append(out, fb);
+    }
     const view = createExerciseSplitLayout(ex.type, q, sidePanel);
     view.refreshNextExercise = updateNextExercise;
     view.hideInlineNextExercise = () => {
@@ -4639,7 +4656,7 @@ function qView(
     };
     view.focusInput = () => focusTarget?.focus({ preventScroll: true });
     updateNextExercise();
-    view.actionsRoot = sidePanel && ex.type !== "sql-query" ? sidePanel : q;
+    view.actionsRoot = actionPanel;
     return view;
   }
   q.append(btns, ...supplementalPanels, out, fb);
@@ -4662,62 +4679,59 @@ function qView(
   return view;
 }
 
-// Shared desktop split layout. Every registered exercise keeps the workspace
-// on the left, supporting instructions/schema on the right, and uses the same
-// resize handle, persisted sizing, keyboard controls, and mobile stacking.
-const EXERCISE_SPLIT_CONFIG = Object.freeze({
-  terminal: {
-    storageKey: "terminalInstructionsFraction", min: 0.22, max: 0.56,
-    defaultFraction: 0.34, label: "Resize terminal workspace and instructions",
-  },
-  "java-ex": {
-    storageKey: "javaSideFraction", min: 0.3, max: 0.64,
-    defaultFraction: 0.46, label: "Resize Java editor and instructions",
-  },
-  "sql-query": {
-    storageKey: "sqlSchemaFraction", min: 0.25, max: 0.65,
-    defaultFraction: null, label: "Resize SQL workspace and schema",
-  },
-});
-
+// Shared desktop split layout. The app owns its structure for Practice,
+// Guided Learning, Exam, and the Java sandbox. Exercise modules only fill the
+// workspace and optional action/feedback containers.
 function createExerciseSplitLayout(type, mainPanel, sidePanel) {
-  const config = EXERCISE_SPLIT_CONFIG[type];
-  if (!config || !DESKTOP_SPLIT_EXERCISE_TYPES.includes(type) || !sidePanel)
-    return mainPanel;
+  const config = EXERCISE_LAYOUTS[type];
+  if (!config || !sidePanel) return mainPanel;
 
   let fraction = config.defaultFraction;
   try {
     const stored = Number(localStorage.getItem(config.storageKey));
-    if (localStorage.getItem(config.storageKey) !== null &&
-        Number.isFinite(stored) && stored >= config.min && stored <= config.max)
+    if (
+      localStorage.getItem(config.storageKey) !== null &&
+      Number.isFinite(stored) &&
+      stored >= config.min &&
+      stored <= config.max
+    )
       fraction = stored;
   } catch {}
 
   const handle = h("div", {
-    class: "exercise-split-handle", role: "separator",
-    "aria-orientation": "vertical", "aria-label": config.label,
-    tabindex: "0", title: "Drag to resize (double-click to reset)",
+    class: "exercise-split-handle",
+    role: "separator",
+    "aria-orientation": "vertical",
+    "aria-label": config.label,
+    tabindex: "0",
+    title: "Drag to resize (double-click to reset)",
   });
   mainPanel.classList.add("exercise-split-main");
   sidePanel.classList.add("exercise-split-side");
   const layout = h(
     "div",
-    { class: `exercise-split-layout exercise-split-layout--${type}` },
-    mainPanel, handle, sidePanel,
+    { class: "exercise-split-layout", "data-exercise-type": type },
+    mainPanel,
+    handle,
+    sidePanel,
   );
+  layout.style.setProperty("--exercise-split-main-min", config.mainMin);
+  layout.style.setProperty("--exercise-split-side-min", config.sideMin);
   const apply = () => {
     if (fraction == null) {
       layout.style.removeProperty("--exercise-split-side-width");
       handle.removeAttribute("aria-valuenow");
       return;
     }
-    layout.style.setProperty("--exercise-split-side-width", `${(fraction * 100).toFixed(2)}%`);
+    layout.style.setProperty(
+      "--exercise-split-side-width",
+      `${(fraction * 100).toFixed(2)}%`,
+    );
     handle.setAttribute("aria-valuenow", String(Math.round(fraction * 100)));
   };
   const set = (next, save = false) => {
-    fraction = next == null
-      ? null
-      : Math.min(config.max, Math.max(config.min, next));
+    fraction =
+      next == null ? null : Math.min(config.max, Math.max(config.min, next));
     apply();
     if (!save) return;
     try {
@@ -4726,8 +4740,9 @@ function createExerciseSplitLayout(type, mainPanel, sidePanel) {
     } catch {}
   };
   const currentFraction = () =>
-    fraction ?? (sidePanel.getBoundingClientRect().width /
-      (layout.getBoundingClientRect().width || 1));
+    fraction ??
+    sidePanel.getBoundingClientRect().width /
+      (layout.getBoundingClientRect().width || 1);
 
   handle.setAttribute("aria-valuemin", String(config.min * 100));
   handle.setAttribute("aria-valuemax", String(config.max * 100));
@@ -5310,7 +5325,7 @@ function md(src) {
     const hm = l.match(/^(#{1,6})\s+(.*)/);
     if (hm) {
       fl();
-      // Headings can contain markdown links ("[Title](https://…)"); the
+      // Headings can contain markdown links ("[Title](https://\u2026)"); the
       // contents list and the anchor id should only use the visible text.
       const plain = hm[2]
         .replace(/!?\[([^\]]*)\]\([^)]*\)/g, "$1")
@@ -5530,23 +5545,29 @@ async function enhanceLearningProgress(body, term, subject) {
   const firstResumeTarget = () => {
     for (const module of modules) {
       if (completed.has(module.sectionId)) continue;
-      const exercise = module.exercises.find((item) => !solved.has(keyOf(item)));
+      const exercise = module.exercises.find(
+        (item) => !solved.has(keyOf(item)),
+      );
       if (exercise) return { module, exercise };
     }
     return null;
   };
   const hasAnyLearningProgress = () =>
-    modules.some((module) =>
-      module.exercises.some((exercise) => {
-        const key = keyOf(exercise);
-        return solved.has(key) ||
-          S.attempts.some((attempt) => attempt.key === key) ||
-          Object.prototype.hasOwnProperty.call(S.drafts, key);
-      }) || completed.has(module.sectionId),
+    modules.some(
+      (module) =>
+        module.exercises.some((exercise) => {
+          const key = keyOf(exercise);
+          return (
+            solved.has(key) ||
+            S.attempts.some((attempt) => attempt.key === key) ||
+            Object.prototype.hasOwnProperty.call(S.drafts, key)
+          );
+        }) || completed.has(module.sectionId),
     );
   const courseResume = h("a", {
     class: "learning-continue-button learning-course-continue",
-    "aria-label": "Continue the learning path from the first unfinished section and exercise",
+    "aria-label":
+      "Continue the learning path from the first unfinished section and exercise",
   });
   const syncCourseResume = () => {
     const target = firstResumeTarget();
@@ -5554,16 +5575,19 @@ async function enhanceLearningProgress(body, term, subject) {
       courseResume.href = `#/practice/${encodeURIComponent(target.exercise.packageId)}/${encodeURIComponent(target.exercise.id)}`;
       courseResume.classList.remove("is-disabled");
       courseResume.removeAttribute("aria-disabled");
-      courseResume.textContent = hasAnyLearningProgress() ? "Continue learning →" : "Start learning →";
+      courseResume.textContent = hasAnyLearningProgress()
+        ? "Continue learning \u2192"
+        : "Start learning \u2192";
       courseResume.onclick = () => saveLearningPathSession(target.exercise);
-      courseResume.title = `Section ${String(target.module.index + 1).padStart(2, "0")} · ${target.exercise.title}`;
+      courseResume.title = `Section ${String(target.module.index + 1).padStart(2, "0")} \u00B7 ${target.exercise.title}`;
     } else {
       courseResume.removeAttribute("href");
       courseResume.classList.add("is-disabled");
       courseResume.setAttribute("aria-disabled", "true");
       courseResume.textContent = "Learning path completed";
       courseResume.onclick = (event) => event.preventDefault();
-      courseResume.title = "Every section is reviewed or every exercise is complete.";
+      courseResume.title =
+        "Every section is reviewed or every exercise is complete.";
     }
   };
   overall.querySelector(".learning-overview-heading").append(courseResume);
@@ -5616,7 +5640,9 @@ async function enhanceLearningProgress(body, term, subject) {
         Object.prototype.hasOwnProperty.call(S.drafts, exerciseKey)
       );
     });
-    const continueLabel = hasProgress ? "Continue →" : "Start section →";
+    const continueLabel = hasProgress
+      ? "Continue \u2192"
+      : "Start section \u2192";
     const continueControl = h(
       "a",
       {
@@ -5684,8 +5710,7 @@ async function enhanceLearningProgress(body, term, subject) {
       {
         type: "button",
         class:
-          "learning-complete-toggle" +
-          (sectionReviewed ? " is-complete" : ""),
+          "learning-complete-toggle" + (sectionReviewed ? " is-complete" : ""),
         "aria-pressed": String(sectionReviewed),
         onclick: async () => {
           if (completed.has(sectionId)) completed.delete(sectionId);
@@ -5694,7 +5719,7 @@ async function enhanceLearningProgress(body, term, subject) {
           toggle.classList.toggle("is-complete", sectionReviewed);
           toggle.setAttribute("aria-pressed", String(sectionReviewed));
           toggle.textContent = sectionReviewed
-            ? "✓ Section reviewed"
+            ? "\u2713 Section reviewed"
             : "Mark section reviewed";
           syncContinueControl();
           await kv.set(storageKey, [...completed]);
@@ -5702,7 +5727,7 @@ async function enhanceLearningProgress(body, term, subject) {
           refreshOverview();
         },
       },
-      sectionReviewed ? "✓ Section reviewed" : "Mark section reviewed",
+      sectionReviewed ? "\u2713 Section reviewed" : "Mark section reviewed",
     );
     const moduleActions = h(
       "div",
@@ -5725,7 +5750,7 @@ async function enhanceLearningProgress(body, term, subject) {
             ...exercises.map((exercise) => {
               const done = solved.has(keyOf(exercise));
               const readableTitle =
-                exercise.title.split(" · ").slice(2).join(" · ") ||
+                exercise.title.split(" \u00B7 ").slice(2).join(" \u00B7 ") ||
                 exercise.title;
               return h(
                 "li",
@@ -5871,7 +5896,7 @@ async function pageLibrary(root, arg, termArg, view) {
             "aria-label": `Close ${view.noun} search`,
             title: "Close search",
           },
-          "×",
+          "\u00D7",
         ),
       ),
       h(
@@ -5888,7 +5913,7 @@ async function pageLibrary(root, arg, termArg, view) {
             title: "Previous mention (Shift+Enter)",
             disabled: true,
           },
-          "↑",
+          "\u2191",
         ),
         h(
           "button",
@@ -5899,7 +5924,7 @@ async function pageLibrary(root, arg, termArg, view) {
             title: "Next mention (Enter)",
             disabled: true,
           },
-          "↓",
+          "\u2193",
         ),
       ),
     ),
@@ -5911,7 +5936,7 @@ async function pageLibrary(root, arg, termArg, view) {
         "aria-label": `Search this ${view.noun}`,
         "aria-expanded": "false",
       },
-      h("span", { "aria-hidden": "true" }, "⌕"),
+      h("span", { "aria-hidden": "true" }, "\u2315"),
       " Find",
     );
   const tabs = h(
@@ -6530,7 +6555,7 @@ async function pageLibrary(root, arg, termArg, view) {
     if (token !== loadToken) return null;
     const f = h("iframe", {
       class: "canvas-frame",
-      title: `${cur.title} – ${term.label}`,
+      title: `${cur.title} \u2013 ${term.label}`,
       sandbox:
         "allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads",
       src: "content/" + term.file,
@@ -6607,8 +6632,10 @@ async function pageLibrary(root, arg, termArg, view) {
     forgetHighlights();
     teardownFrame();
     body.className = "md";
-    body.replaceChildren(h("p", { class: "reference-loading" }, "Loading…"));
-    // If the next page is slow, stop hiding the card so "Loading…" shows.
+    body.replaceChildren(
+      h("p", { class: "reference-loading" }, "Loading\u2026"),
+    );
+    // If the next page is slow, stop hiding the card so "Loading\u2026" shows.
     const reveal = slide
       ? setTimeout(() => token === loadToken && stopSlide(), 260)
       : 0;
@@ -6816,7 +6843,7 @@ async function pageSandbox(root) {
     await disposeActive();
     if (generation !== modeGeneration) return;
     content.replaceChildren(
-      loadingNote("Opening your personal terminal sandbox…"),
+      loadingNote("Opening your personal terminal sandbox\u2026"),
     );
     try {
       const terminalModule = await loadTerminalModule();
@@ -6850,26 +6877,28 @@ async function pageSandbox(root) {
     const generation = ++modeGeneration;
     await disposeActive();
     if (generation !== modeGeneration) return;
-    content.replaceChildren(loadingNote("Loading the Java playground…"));
+    content.replaceChildren(loadingNote("Loading the Java playground\u2026"));
     try {
       const javaModule = await loadJavaModule();
       if (generation !== modeGeneration || !content.isConnected) return;
       // Same two-pane layout as a Java practice exercise: editor on the left,
       // input / controls / console on the right (no instructions pane content).
       const editorPane = h("section", {
-        class: "q java-workspace-pane",
+        class: "q exercise-workspace-panel",
         "aria-label": "Java code editor",
       });
       const toolsPane = h("section", {
-        class: "q java-instructions-pane",
+        class: "q exercise-module-panel",
         "aria-label": "Java tools",
       });
-      const host = h("div", { class: "java-exercise-host" });
+      const host = h("div", { class: "exercise-module-host" });
       toolsPane.append(host);
-      content.replaceChildren(createExerciseSplitLayout("java-ex", editorPane, toolsPane));
+      content.replaceChildren(
+        createExerciseSplitLayout("java-ex", editorPane, toolsPane),
+      );
       const controller = await javaModule.mountJavaExercise({
-        container: host,
-        editorContainer: editorPane,
+        toolsContainer: host,
+        workspaceContainer: editorPane,
         exercise: SANDBOX_JAVA_EXERCISE,
         initialCode: javaSandboxCode,
         mode: "sandbox",
@@ -6978,7 +7007,7 @@ async function pageSandbox(root) {
       rows: 12,
       spellcheck: "false",
       "aria-label": "Sandbox SQL editor",
-      placeholder: "SELECT * FROM …;",
+      placeholder: "SELECT * FROM \u2026;",
     });
     const actions = h("div", { class: "sandbox-sql-actions" });
     const runButton = h("button", { type: "button" }, "Run SQL (Ctrl + Enter)");
@@ -6995,7 +7024,11 @@ async function pageSandbox(root) {
     const output = h("div", { class: "sandbox-sql-output" });
     actions.append(runButton, clearButton, status);
     question.append(textarea, actions, output);
-    const layout = createExerciseSplitLayout("sql-query", question, schemaPanel);
+    const layout = createExerciseSplitLayout(
+      "sql-query",
+      question,
+      schemaPanel,
+    );
     const refreshSchema = () => {
       const freshSchema = schemaView(pseudoExercise, {
         preserveDatabase: true,
@@ -7015,15 +7048,15 @@ async function pageSandbox(root) {
       sqlRunning = true;
       runButton.disabled = true;
       resetDatabaseButton.disabled = true;
-      status.textContent = "Running against " + title + "…";
-      output.replaceChildren(loadingNote("Executing SQL…"));
+      status.textContent = "Running against " + title + "\u2026";
+      output.replaceChildren(loadingNote("Executing SQL\u2026"));
       try {
         const result = await withPersistentDb(database, (db) =>
           runSql(db, sql),
         );
         if (generation !== modeGeneration || mode !== "sql") return;
         output.replaceChildren(table(result));
-        status.textContent = `Completed · ${result.rows?.length ?? 0} row(s)`;
+        status.textContent = `Completed \u00B7 ${result.rows?.length ?? 0} row(s)`;
         if (/^\s*(create|alter|drop|truncate)\b/i.test(sql)) refreshSchema();
       } catch (error) {
         if (generation !== modeGeneration || mode !== "sql") return;
@@ -7043,7 +7076,7 @@ async function pageSandbox(root) {
     refreshSchemaButton.addEventListener("click", () => {
       if (sqlRunning) return;
       refreshSchemaButton.disabled = true;
-      refreshSchemaButton.textContent = "Refreshing…";
+      refreshSchemaButton.textContent = "Refreshing\u2026";
       refreshSchema();
       requestAnimationFrame(() => {
         refreshSchemaButton.disabled = false;
@@ -7070,7 +7103,7 @@ async function pageSandbox(root) {
       if (sqlRunning) return;
       resetDatabaseButton.disabled = true;
       runButton.disabled = true;
-      status.textContent = "Restoring " + title + "…";
+      status.textContent = "Restoring " + title + "\u2026";
       try {
         await withPersistentDb(database, async () => {}, true);
         if (generation !== modeGeneration || mode !== "sql") return;
@@ -7414,25 +7447,41 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
     exerciseTypeControl,
     statusControl,
   );
-  const makeButton = (e) =>
-    h(
+  const makeButton = (e) => {
+    const key = keyOf(e);
+    const completedBefore = Boolean(S.xpRewards[key]);
+    return h(
       "button",
       {
-        class: "item" + (keyOf(e) === selectedKey ? " on" : ""),
-        "aria-pressed": keyOf(e) === selectedKey,
+        class: "item" + (key === selectedKey ? " on" : ""),
+        "aria-pressed": key === selectedKey,
         onclick: () => {
           void selectExercise(e, true).catch((error) =>
             console.error("Could not open exercise:", error),
           );
         },
       },
-      `${S.savedForLater[keyOf(e)] ? "🔖 " : ""}${lastResults[keyOf(e)] === undefined ? "○" : lastResults[keyOf(e)] ? "✔" : "✘"} ${e.title}`,
+      `${S.savedForLater[key] ? "\u{1F516} " : ""}${lastResults[key] === undefined ? "\u25CB" : lastResults[key] ? "\u2714" : "\u2718"} ${e.title}`,
+      completedBefore
+        ? h(
+            "span",
+            {
+              class: "exercise-completed-flag",
+              title: "This exercise has been completed successfully before.",
+              "aria-label": "Completed before",
+              style:
+                "display:inline-flex;align-items:center;margin:0.2rem 0 0 0.45rem;padding:0.12rem 0.48rem;border:1px solid rgba(34,197,94,.42);border-radius:999px;background:rgba(34,197,94,.12);color:var(--success-color, #15803d);font-size:.72em;font-weight:700;line-height:1.4;vertical-align:middle;white-space:nowrap;",
+            },
+            "\u2713 Completed before",
+          )
+        : null,
       h(
         "small",
         {},
-        ` ${packageLabel(e.packageId)} · ${Number.isInteger(e.term) ? `Term ${e.term} · ` : ""}${e.difficulty}`,
+        ` ${packageLabel(e.packageId)} \u00B7 ${Number.isInteger(e.term) ? `Term ${e.term} \u00B7 ` : ""}${e.difficulty}`,
       ),
     );
+  };
   const moreRow = () =>
     h(
       "div",
@@ -7486,17 +7535,26 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
     const previouslyMissed = {};
     S.attempts.forEach((a) => {
       lastResults[a.key] = a.correct;
-      // A past mistake only needs correction while the latest attempt remains
-      // incorrect. Correcting it removes it from this filter on the next draw.
-      if ((a.everIncorrect || a.correct === false) && a.correct !== true)
+      // Needs correction is only for exercises that have never been completed.
+      // A previous successful completion is permanent, even if a later retry
+      // is incorrect; such an exercise must not be re-flagged for correction.
+      const completedBefore = Boolean(S.xpRewards[a.key]);
+      if (
+        !completedBefore &&
+        (a.everIncorrect || a.correct === false) &&
+        a.correct !== true
+      )
         previouslyMissed[a.key] = true;
     });
     items = filtered.filter((e) => {
       const key = keyOf(e);
+      const completedBefore = Boolean(S.xpRewards[key]);
+      const needsCorrection = Boolean(previouslyMissed[key]);
       if (key === selectedKey || statusMode === "all") return true;
-      if (statusMode === "review") return Boolean(previouslyMissed[key]);
+      if (statusMode === "review") return needsCorrection;
       if (statusMode === "saved") return Boolean(S.savedForLater[key]);
-      return !S.xpRewards[key];
+      // Needs-correction exercises are a subset of uncompleted exercises.
+      return !completedBefore || needsCorrection;
     });
     if (selectedExercise && !items.some((e) => keyOf(e) === selectedKey)) {
       items.unshift(selectedExercise);
@@ -7589,7 +7647,7 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
 
           saveButton.disabled = true;
           syncSaveButton();
-          saveStatus.textContent = "Saving…";
+          saveStatus.textContent = "Saving\u2026";
           // Redraw the list immediately, but keep the currently open exercise
           // pinned until the learner explicitly selects another one.
           redraw();
@@ -7661,12 +7719,12 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
       const previousPathButton = h(
         "button",
         { type: "button", class: "sec", disabled: true },
-        "← Previous",
+        "\u2190 Previous",
       );
       const nextPathButton = h(
         "button",
         { type: "button", class: "sec" },
-        "Next exercise →",
+        "Next exercise \u2192",
       );
       const findPathExercise = (direction) => {
         for (
@@ -7677,7 +7735,11 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
           const candidate = learningPathExercises[index];
           if (reviewedSections.has(candidate.sectionId)) continue;
           const candidateKey = `${candidate.packageId}:${candidate.exerciseId}`;
-          if (direction > 0 && (S.xpRewards?.[candidateKey] || S.xpRewards?.[candidate.exerciseId])) continue;
+          if (
+            direction > 0 &&
+            (S.xpRewards?.[candidateKey] || S.xpRewards?.[candidate.exerciseId])
+          )
+            continue;
           const found = S.exercises.find(
             (item) =>
               item.packageId === candidate.packageId &&
@@ -7703,9 +7765,9 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
         () => Boolean(nextPathExercise),
       );
       pathPosition.textContent =
-        `Learning path · Exercise ${learningPathIndex + 1} of ${learningPathExercises.length}` +
+        `Learning path \u00B7 Exercise ${learningPathIndex + 1} of ${learningPathExercises.length}` +
         (reviewedSections.size
-          ? ` · ${reviewedSections.size} section${reviewedSections.size === 1 ? "" : "s"} marked done`
+          ? ` \u00B7 ${reviewedSections.size} section${reviewedSections.size === 1 ? "" : "s"} marked done`
           : "");
       previousPathButton.addEventListener("click", () => {
         if (previousPathExercise)
@@ -7809,7 +7871,7 @@ async function pageExam(root, isCurrent = () => true) {
     const shouldContinue = await confirmInApp({
       title: "Exam in progress",
       message:
-        "There’s an unfinished exam saved on this device. Would you like to continue where you left off?",
+        "There\u2019s an unfinished exam saved on this device. Would you like to continue where you left off?",
       confirmLabel: "Continue exam",
       cancelLabel: "Discard exam",
       danger: true,
@@ -7937,7 +7999,7 @@ async function pageExam(root, isCurrent = () => true) {
       h(
         "span",
         {},
-        `${selectedTerms} · ${selectedCourses} · ${cfg.mins} minutes`,
+        `${selectedTerms} \u00B7 ${selectedCourses} \u00B7 ${cfg.mins} minutes`,
       ),
     );
   };
@@ -8193,7 +8255,7 @@ async function pageExam(root, isCurrent = () => true) {
               runExam(root, st);
             },
           },
-          h("span", { "aria-hidden": "true" }, "▶"),
+          h("span", { "aria-hidden": "true" }, "\u25B6"),
           " Start exam",
         ),
         h("small", {}, "Your answers save automatically during the exam."),
@@ -8208,15 +8270,20 @@ async function historyView() {
   const hist = Array.isArray(savedHistory) ? savedHistory : [];
   const resolveExercise = (id) => {
     const normalizedId = typeof id === "string" ? id : id?.id || id?.key || "";
-    return S.exercises.find((exercise) => keyOf(exercise) === normalizedId) ||
-      (S.exercises.filter((exercise) => exercise.id === normalizedId).length === 1
+    return (
+      S.exercises.find((exercise) => keyOf(exercise) === normalizedId) ||
+      (S.exercises.filter((exercise) => exercise.id === normalizedId).length ===
+      1
         ? S.exercises.find((exercise) => exercise.id === normalizedId)
-        : null);
+        : null)
+    );
   };
   const practiceLink = (question, exercise) => {
     const id = question.id || question.key || "";
-    const packageId = exercise?.packageId || question.packageId || id.split(":")[0];
-    const exerciseId = exercise?.id || question.exerciseId || id.split(":").slice(1).join(":");
+    const packageId =
+      exercise?.packageId || question.packageId || id.split(":")[0];
+    const exerciseId =
+      exercise?.id || question.exerciseId || id.split(":").slice(1).join(":");
     if (!packageId || !exerciseId || !exercise) return "";
     return h(
       "button",
@@ -8234,11 +8301,15 @@ async function historyView() {
     const id = question.id || question.key || "";
     const exercise = resolveExercise(id);
     const title = question.title || exercise?.title || `Question ${index + 1}`;
-    const answerAvailable = Object.prototype.hasOwnProperty.call(question, "answer");
+    const answerAvailable = Object.prototype.hasOwnProperty.call(
+      question,
+      "answer",
+    );
     const legacyRecord = question.legacy === true;
     let learnerAnswer = "No answer was entered for this question.";
     if (legacyRecord && !answerAvailable) {
-      learnerAnswer = "This exam was saved before per-question answers were recorded. The overall exam result is preserved, but this question's answer and visit state are unavailable.";
+      learnerAnswer =
+        "This exam was saved before per-question answers were recorded. The overall exam result is preserved, but this question's answer and visit state are unavailable.";
     } else if (question.type === "terminal" || exercise?.type === "terminal") {
       learnerAnswer = question.answered
         ? "Terminal workspace changes were saved and graded from the final state."
@@ -8280,8 +8351,14 @@ async function historyView() {
       h(
         "div",
         { class: "exam-history-question-heading" },
-        h("div", {},
-          h("span", { class: "exam-history-question-number" }, `QUESTION ${String(index + 1).padStart(2, "0")}`),
+        h(
+          "div",
+          {},
+          h(
+            "span",
+            { class: "exam-history-question-number" },
+            `QUESTION ${String(index + 1).padStart(2, "0")}`,
+          ),
           h("h4", {}, title),
         ),
         h("span", { class: `exam-history-result ${resultClass}` }, resultLabel),
@@ -8317,7 +8394,9 @@ async function historyView() {
         legacyRecord
           ? ""
           : h("span", {}, question.answered ? "Answered" : "Unanswered"),
-        question.flagged ? h("span", { class: "is-flagged" }, "Flagged for review") : "",
+        question.flagged
+          ? h("span", { class: "is-flagged" }, "Flagged for review")
+          : "",
       ),
       practiceLink(question, exercise),
     );
@@ -8329,119 +8408,154 @@ async function historyView() {
     h(
       "div",
       { class: "exam-history-section-heading" },
-      h("div", {},
+      h(
+        "div",
+        {},
         h("p", { class: "eyebrow" }, "YOUR PAST SESSIONS"),
         h("h2", {}, "Exam history"),
       ),
-      h("span", { class: "exam-history-count" }, `${hist.length} exam${hist.length === 1 ? "" : "s"}`),
+      h(
+        "span",
+        { class: "exam-history-count" },
+        `${hist.length} exam${hist.length === 1 ? "" : "s"}`,
+      ),
     ),
     hist.length
       ? h(
           "div",
           { class: "exam-history-list" },
-          ...hist.slice().reverse().map((exam, examIndex) => {
-            const legacyIds = Array.isArray(exam.ids)
-              ? exam.ids
-              : Array.isArray(exam.exerciseIds)
-                ? exam.exerciseIds
-                : [];
-            const rawQuestions = Array.isArray(exam.questions)
-              ? exam.questions
-              : legacyIds.map((rawId, index) => {
-                  const id = typeof rawId === "string"
-                    ? rawId
-                    : rawId?.id || rawId?.key ||
-                      (rawId?.packageId && rawId?.exerciseId
-                        ? `${rawId.packageId}:${rawId.exerciseId}`
-                        : "");
-                  const exercise = resolveExercise(id);
-                  const legacyAnswer = exam.answers?.[id] ??
+          ...hist
+            .slice()
+            .reverse()
+            .map((exam, examIndex) => {
+              const legacyIds = Array.isArray(exam.ids)
+                ? exam.ids
+                : Array.isArray(exam.exerciseIds)
+                  ? exam.exerciseIds
+                  : [];
+              const rawQuestions = Array.isArray(exam.questions)
+                ? exam.questions
+                : legacyIds.map((rawId, index) => {
+                    const id =
+                      typeof rawId === "string"
+                        ? rawId
+                        : rawId?.id ||
+                          rawId?.key ||
+                          (rawId?.packageId && rawId?.exerciseId
+                            ? `${rawId.packageId}:${rawId.exerciseId}`
+                            : "");
+                    const exercise = resolveExercise(id);
+                    const legacyAnswer =
+                      exam.answers?.[id] ??
+                      (exercise ? exam.answers?.[exercise.id] : undefined) ??
+                      exam.answers?.[index];
+                    const legacyQuestion = { id, legacy: true };
+                    if (legacyAnswer !== undefined) {
+                      legacyQuestion.answer = legacyAnswer;
+                      legacyQuestion.answered = true;
+                    }
+                    return legacyQuestion;
+                  });
+              const savedQuestions = rawQuestions.map((rawQuestion, index) => {
+                if (typeof rawQuestion === "string")
+                  rawQuestion = { id: rawQuestion, legacy: true };
+                const question =
+                  rawQuestion && typeof rawQuestion === "object"
+                    ? { ...rawQuestion }
+                    : { legacy: true };
+                question.id ||=
+                  question.key ||
+                  (question.packageId && question.exerciseId
+                    ? `${question.packageId}:${question.exerciseId}`
+                    : "");
+                if (!Object.prototype.hasOwnProperty.call(question, "answer")) {
+                  const exercise = resolveExercise(question.id);
+                  const legacyAnswer =
+                    exam.answers?.[question.id] ??
                     (exercise ? exam.answers?.[exercise.id] : undefined) ??
                     exam.answers?.[index];
-                  const legacyQuestion = { id, legacy: true };
                   if (legacyAnswer !== undefined) {
-                    legacyQuestion.answer = legacyAnswer;
-                    legacyQuestion.answered = true;
+                    question.answer = legacyAnswer;
+                    if (question.answered == null) question.answered = true;
                   }
-                  return legacyQuestion;
-                });
-            const savedQuestions = rawQuestions.map((rawQuestion, index) => {
-              if (typeof rawQuestion === "string")
-                rawQuestion = { id: rawQuestion, legacy: true };
-              const question = rawQuestion && typeof rawQuestion === "object"
-                ? { ...rawQuestion }
-                : { legacy: true };
-              question.id ||= question.key ||
-                (question.packageId && question.exerciseId
-                  ? `${question.packageId}:${question.exerciseId}`
-                  : "");
-              if (!Object.prototype.hasOwnProperty.call(question, "answer")) {
-                const exercise = resolveExercise(question.id);
-                const legacyAnswer = exam.answers?.[question.id] ??
-                  (exercise ? exam.answers?.[exercise.id] : undefined) ??
-                  exam.answers?.[index];
-                if (legacyAnswer !== undefined) {
-                  question.answer = legacyAnswer;
-                  if (question.answered == null) question.answered = true;
                 }
-              }
-              return question;
-            });
-            const hasSnapshots = savedQuestions.some((question) =>
-              ["visited", "answered", "flagged", "correct", "feedback", "checkComment"]
-                .some((field) => Object.prototype.hasOwnProperty.call(question, field)),
-            );
-            if (!hasSnapshots)
-              savedQuestions.forEach((question) => { question.legacy = true; });
-            const dateLabel = exam.date
-              ? new Date(exam.date).toLocaleString()
-              : `Exam ${hist.length - examIndex}`;
-            const visitedCount = savedQuestions.filter((question) => question.visited).length;
-            const answeredCount = savedQuestions.filter((question) => question.answered).length;
-            const sessionMeta = hasSnapshots
-              ? `${savedQuestions.length} questions · ${visitedCount} visited · ${answeredCount} answered · ${Math.round(exam.cfg?.mins || 0)} min`
-              : `${savedQuestions.length} questions · ${Math.round(exam.cfg?.mins || 0)} min`;
-            return h(
-              "article",
-              { class: "exam-history-card" },
-              h(
-                "div",
-                { class: "exam-history-card-heading" },
-                h("div", {},
-                  h("strong", {}, dateLabel),
-                  h("small", {}, sessionMeta),
+                return question;
+              });
+              const hasSnapshots = savedQuestions.some((question) =>
+                [
+                  "visited",
+                  "answered",
+                  "flagged",
+                  "correct",
+                  "feedback",
+                  "checkComment",
+                ].some((field) =>
+                  Object.prototype.hasOwnProperty.call(question, field),
                 ),
-                h(
-                  "span",
-                  { class: "exam-history-score" },
-                  `${exam.score ?? 0} / ${exam.total ?? 0}`,
-                ),
-              ),
-              h(
-                "details",
-                { class: "exam-history-details" },
-                h("summary", {}, "Review questions and your answers"),
+              );
+              if (!hasSnapshots)
+                savedQuestions.forEach((question) => {
+                  question.legacy = true;
+                });
+              const dateLabel = exam.date
+                ? new Date(exam.date).toLocaleString()
+                : `Exam ${hist.length - examIndex}`;
+              const visitedCount = savedQuestions.filter(
+                (question) => question.visited,
+              ).length;
+              const answeredCount = savedQuestions.filter(
+                (question) => question.answered,
+              ).length;
+              const sessionMeta = hasSnapshots
+                ? `${savedQuestions.length} questions \u00B7 ${visitedCount} visited \u00B7 ${answeredCount} answered \u00B7 ${Math.round(exam.cfg?.mins || 0)} min`
+                : `${savedQuestions.length} questions \u00B7 ${Math.round(exam.cfg?.mins || 0)} min`;
+              return h(
+                "article",
+                { class: "exam-history-card" },
                 h(
                   "div",
-                  {},
-                  hasSnapshots
-                    ? ""
-                    : h(
-                        "p",
-                        { class: "exam-history-older-note" },
-                        "This exam was taken before question-level answers and visit status were saved. The overall score is preserved; available questions can still be opened in Practice.",
-                      ),
+                  { class: "exam-history-card-heading" },
                   h(
                     "div",
-                    { class: "exam-history-questions" },
-                    ...savedQuestions.map(questionCard),
+                    {},
+                    h("strong", {}, dateLabel),
+                    h("small", {}, sessionMeta),
+                  ),
+                  h(
+                    "span",
+                    { class: "exam-history-score" },
+                    `${exam.score ?? 0} / ${exam.total ?? 0}`,
                   ),
                 ),
-              ),
-            );
-          }),
+                h(
+                  "details",
+                  { class: "exam-history-details" },
+                  h("summary", {}, "Review questions and your answers"),
+                  h(
+                    "div",
+                    {},
+                    hasSnapshots
+                      ? ""
+                      : h(
+                          "p",
+                          { class: "exam-history-older-note" },
+                          "This exam was taken before question-level answers and visit status were saved. The overall score is preserved; available questions can still be opened in Practice.",
+                        ),
+                    h(
+                      "div",
+                      { class: "exam-history-questions" },
+                      ...savedQuestions.map(questionCard),
+                    ),
+                  ),
+                ),
+              );
+            }),
         )
-      : h("p", { class: "exam-history-empty" }, "No completed exams yet. Your question-by-question reviews will appear here after you submit an exam."),
+      : h(
+          "p",
+          { class: "exam-history-empty" },
+          "No completed exams yet. Your question-by-question reviews will appear here after you submit an exam.",
+        ),
   );
 }
 async function runExam(root, st) {
@@ -8450,18 +8564,21 @@ async function runExam(root, st) {
     : Array.isArray(st.exerciseIds)
       ? st.exerciseIds
       : Array.isArray(st.questions)
-        ? st.questions.map((question) =>
-            question?.id || question?.key ||
-            (question?.packageId && question?.exerciseId
-              ? `${question.packageId}:${question.exerciseId}`
-              : null),
+        ? st.questions.map(
+            (question) =>
+              question?.id ||
+              question?.key ||
+              (question?.packageId && question?.exerciseId
+                ? `${question.packageId}:${question.exerciseId}`
+                : null),
           )
         : [];
   st.ids = storedIds
     .map((value) =>
       typeof value === "string"
         ? value
-        : value?.id || value?.key ||
+        : value?.id ||
+          value?.key ||
           (value?.packageId && value?.exerciseId
             ? `${value.packageId}:${value.exerciseId}`
             : null),
@@ -8502,7 +8619,7 @@ async function runExam(root, st) {
   const oldValue = (record, ex, index) =>
     Array.isArray(record)
       ? record[index]
-      : record?.[keyOf(ex)] ?? record?.[ex.id] ?? record?.[index];
+      : (record?.[keyOf(ex)] ?? record?.[ex.id] ?? record?.[index]);
   st.answers = Object.fromEntries(
     exs
       .map((ex, index) => [keyOf(ex), oldValue(oldAnswers, ex, index)])
@@ -8524,18 +8641,27 @@ async function runExam(root, st) {
     // their ability to be graded against the saved virtual workspace.
     if (ex.type === "terminal") return answer === "terminal-workspace";
     if (ex.type === "java-ex")
-      return typeof answer === "string" && answer !== String(ex.java?.preCode ?? "");
+      return (
+        typeof answer === "string" && answer !== String(ex.java?.preCode ?? "")
+      );
     if (Array.isArray(answer))
       return answer.some((value) => String(value ?? "").trim() !== "");
     if (answer && typeof answer === "object")
-      return Object.values(answer).some((value) => String(value ?? "").trim() !== "");
+      return Object.values(answer).some(
+        (value) => String(value ?? "").trim() !== "",
+      );
     return answer != null && String(answer).trim() !== "";
   };
   st.touched = Object.fromEntries(
     exs.map((ex, index) => {
       const key = keyOf(ex);
       const saved = oldValue(oldTouched, ex, index);
-      return [key, saved === undefined ? inferTouched(ex, st.answers[key]) : Boolean(saved)];
+      return [
+        key,
+        saved === undefined
+          ? inferTouched(ex, st.answers[key])
+          : Boolean(saved),
+      ];
     }),
   );
   st.ids = exs.map(keyOf);
@@ -8578,7 +8704,7 @@ async function runExam(root, st) {
         h(
           "small",
           { class: "exercise-index-legend" },
-          "Tinted = visited · filled = answered · orange = flagged",
+          "Tinted = visited \u00B7 filled = answered \u00B7 orange = flagged",
         ),
       ),
       h("section", { class: "q exercise-question-panel" }, body),
@@ -8598,14 +8724,14 @@ async function runExam(root, st) {
     const gradingProgress = h(
       "p",
       {},
-      "Preparing submitted answers and reusing each SQL dataset where possible…",
+      "Preparing submitted answers and reusing each SQL dataset where possible\u2026",
     );
     root.replaceChildren(
       h(
         "div",
         { class: "exam-grading card", role: "status" },
         h("span", { class: "exam-grading-spinner", "aria-hidden": "true" }),
-        h("h2", {}, "Grading your exam…"),
+        h("h2", {}, "Grading your exam\u2026"),
         gradingProgress,
       ),
     );
@@ -8618,15 +8744,17 @@ async function runExam(root, st) {
     const sqlGrades = await gradeSqlBatch(
       sqlItems.map(({ exercise, answer }) => ({ ex: exercise, answer })),
       ({ phase, exercise, completed, total }) => {
-        gradingProgress.textContent = phase === "prepare"
-          ? `Preparing one SQL dataset for ${total} submitted question${total === 1 ? "" : "s"}…`
-          : `Checking SQL question: ${exercise?.title || "SQL exercise"} (${completed + 1} of ${total})…`;
+        gradingProgress.textContent =
+          phase === "prepare"
+            ? `Preparing one SQL dataset for ${total} submitted question${total === 1 ? "" : "s"}\u2026`
+            : `Checking SQL question: ${exercise?.title || "SQL exercise"} (${completed + 1} of ${total})\u2026`;
       },
     );
     let javaModule = null;
     let terminalModule = null;
     const javaWork = exs.some(
-      (exercise) => exercise.type === "java-ex" && st.touched?.[keyOf(exercise)],
+      (exercise) =>
+        exercise.type === "java-ex" && st.touched?.[keyOf(exercise)],
     );
     const terminalWork = exs.some(
       (exercise) =>
@@ -8635,15 +8763,25 @@ async function runExam(root, st) {
     );
     const moduleLoads = [];
     if (javaWork) {
-      gradingProgress.textContent = "Loading the Java checker…";
-      moduleLoads.push(loadJavaModule().then((module) => { javaModule = module; }));
+      gradingProgress.textContent = "Loading the Java checker\u2026";
+      moduleLoads.push(
+        loadJavaModule().then((module) => {
+          javaModule = module;
+        }),
+      );
     }
     if (terminalWork) {
-      gradingProgress.textContent = "Loading the terminal checker…";
-      moduleLoads.push(loadTerminalModule().then((module) => { terminalModule = module; }));
+      gradingProgress.textContent = "Loading the terminal checker\u2026";
+      moduleLoads.push(
+        loadTerminalModule().then((module) => {
+          terminalModule = module;
+        }),
+      );
     }
     const moduleResults = await Promise.allSettled(moduleLoads);
-    const moduleLoadError = moduleResults.find((result) => result.status === "rejected");
+    const moduleLoadError = moduleResults.find(
+      (result) => result.status === "rejected",
+    );
     if (moduleLoadError) {
       // Individual rows below retain a readable per-question module error.
       gradingProgress.textContent = `Loading an exercise grader failed: ${moduleLoadError.reason?.message || String(moduleLoadError.reason)}`;
@@ -8661,12 +8799,16 @@ async function runExam(root, st) {
         };
         ok = g.correct;
         rows.push({
-          ex, ok, a,
-          note: g.error || (g.correct === true
-            ? "SQL automatic checks passed."
-            : g.correct === false
-              ? "The SQL result did not match the expected output."
-              : "This SQL question is not automatically graded."),
+          ex,
+          ok,
+          a,
+          note:
+            g.error ||
+            (g.correct === true
+              ? "SQL automatic checks passed."
+              : g.correct === false
+                ? "The SQL result did not match the expected output."
+                : "This SQL question is not automatically graded."),
         });
       } else if (ex.type === "java-ex") {
         const submittedSource =
@@ -8698,7 +8840,7 @@ async function runExam(root, st) {
               note:
                 `Java automatic checks: ${javaScore.earned ?? 0} / ${javaScore.total ?? 0} points` +
                 (checks.length
-                  ? `\n${checks.map((check) => `${check.passed ? "✓" : "✗"} ${check.description}: ${check.feedback || (check.passed ? "Passed" : "Failed")}`).join("\n")}`
+                  ? `\n${checks.map((check) => `${check.passed ? "\u2713" : "\u2717"} ${check.description}: ${check.feedback || (check.passed ? "Passed" : "Failed")}`).join("\n")}`
                   : ""),
             });
           } catch (error) {
@@ -8740,7 +8882,7 @@ async function runExam(root, st) {
               note:
                 `Terminal workspace: ${result.score} / ${result.maxScore} points` +
                 (checks.length
-                  ? `\n${checks.map((check) => `${check.passed ? "✓" : "✗"} ${check.description}: ${check.feedback || (check.passed ? "Passed" : "Failed")}`).join("\n")}`
+                  ? `\n${checks.map((check) => `${check.passed ? "\u2713" : "\u2717"} ${check.description}: ${check.feedback || (check.passed ? "Passed" : "Failed")}`).join("\n")}`
                   : ""),
             });
           } catch (error) {
@@ -8772,7 +8914,7 @@ async function runExam(root, st) {
     // Preserve generated grading details and any authored exercise-level
     // check comment. A Set prevents repeating comments already used as the
     // primary feedback for self-check questions.
-    gradingProgress.textContent = "Saving your exam results…";
+    gradingProgress.textContent = "Saving your exam results\u2026";
     for (const row of rows) {
       const feedbackParts = [
         row.note,
@@ -8791,11 +8933,21 @@ async function runExam(root, st) {
     const questionSnapshots = rows.map((row) => {
       const key = keyOf(row.ex);
       const answered = Boolean(st.touched?.[key]);
-      const answer = !answered || row.ex.type === "terminal" ? null :
-        Array.isArray(row.a) ? row.a.slice() :
-        row.a && typeof row.a === "object" ? JSON.parse(JSON.stringify(row.a)) : row.a;
-      const checkComment = row.note || row.checkComment || row.ex.checkComment ||
-        row.ex.gradingComment || row.ex.feedback || "";
+      const answer =
+        !answered || row.ex.type === "terminal"
+          ? null
+          : Array.isArray(row.a)
+            ? row.a.slice()
+            : row.a && typeof row.a === "object"
+              ? JSON.parse(JSON.stringify(row.a))
+              : row.a;
+      const checkComment =
+        row.note ||
+        row.checkComment ||
+        row.ex.checkComment ||
+        row.ex.gradingComment ||
+        row.ex.feedback ||
+        "";
       return {
         id: key,
         packageId: row.ex.packageId,
@@ -9023,7 +9175,7 @@ async function runExam(root, st) {
       }
     });
     progress.value = answered;
-    summary.textContent = `${visited} visited · ${answered} answered · ${flagged} flagged for review`;
+    summary.textContent = `${visited} visited \u00B7 ${answered} answered \u00B7 ${flagged} flagged for review`;
   };
   const drawNav = () => {
     nav.replaceChildren(
@@ -9096,7 +9248,7 @@ async function runExam(root, st) {
       "div",
       { class: "exam-heading" },
       h("p", { class: "eyebrow" }, "EXAM IN PROGRESS"),
-      h("h1", {}, "Stay focused. You’ve got this."),
+      h("h1", {}, "Stay focused. You\u2019ve got this."),
       h("p", {}, "Your work saves automatically as you answer."),
     ),
     h(
@@ -9120,7 +9272,7 @@ async function runExam(root, st) {
               await confirmInApp({
                 title: "Submit exam?",
                 message:
-                  "Submit your answers now? You won’t be able to change them afterward.",
+                  "Submit your answers now? You won\u2019t be able to change them afterward.",
                 confirmLabel: "Submit exam",
                 danger: true,
               })
@@ -9623,7 +9775,7 @@ function computeProgress(examHistory) {
   ];
   baseAchievements.forEach((a) => {
     a.id ??= "base:" + a.title;
-    a.icon ??= "🏆";
+    a.icon ??= "\u{1F3C6}";
     a.tier ??= "silver";
   });
   const achievements = [...baseAchievements, ...customAchievements()];
@@ -9672,9 +9824,13 @@ async function pageProgress(root) {
     h(
       "div",
       { class: "level-info" },
-      h("p", { class: "eyebrow" }, "ACADEMIC RECORD · XP RANK"),
-      h("h1", {}, `${academicRank} · Level ${level}`),
-      h("p", {}, `${xp} XP earned · ${250 - levelXp} XP to level ${level + 1}`),
+      h("p", { class: "eyebrow" }, "ACADEMIC RECORD \u00B7 XP RANK"),
+      h("h1", {}, `${academicRank} \u00B7 Level ${level}`),
+      h(
+        "p",
+        {},
+        `${xp} XP earned \u00B7 ${250 - levelXp} XP to level ${level + 1}`,
+      ),
       h("progress", {
         class: "xp-progress",
         max: 250,
@@ -9698,7 +9854,11 @@ async function pageProgress(root) {
             "div",
             {},
             h("strong", {}, label),
-            h("small", {}, `${completed} / ${total} mastered · ${percentage}%`),
+            h(
+              "small",
+              {},
+              `${completed} / ${total} mastered \u00B7 ${percentage}%`,
+            ),
           ),
           h("progress", {
             max: Math.max(1, total),
@@ -9750,19 +9910,19 @@ async function pageProgress(root) {
         "div",
         { class: "progress-stats" },
         stat(
-          "🏆",
+          "\u{1F3C6}",
           "Solved",
           `${mastered} / ${filtered.length}`,
           "unique exercises cleared",
         ),
         stat(
-          "🎯",
+          "\u{1F3AF}",
           "Attempted",
           `${results.length} / ${filtered.length}`,
           "latest result saved per exercise",
         ),
         stat(
-          "📈",
+          "\u{1F4C8}",
           "Latest accuracy",
           `${accuracy}%`,
           results.length
@@ -9770,7 +9930,7 @@ async function pageProgress(root) {
             : "submit an answer to start",
         ),
         stat(
-          "⚡",
+          "\u26A1",
           "XP in this view",
           `${filtered.reduce((sum, e) => sum + (S.xpRewards[keyOf(e)]?.xp || 0), 0)}`,
           "earned once per exercise",
@@ -9794,7 +9954,7 @@ async function pageProgress(root) {
         h(
           "span",
           { class: "achievement-mark", "aria-hidden": "true" },
-          earned ? a.icon || "★" : hidden ? "?" : "◇",
+          earned ? a.icon || "\u2605" : hidden ? "?" : "\u25C7",
         ),
         h("div", {}, h("strong", {}, title), h("small", {}, detail)),
         h(
@@ -9854,7 +10014,7 @@ async function pageProgress(root) {
                       class: "quest-result " + (attempt.correct ? "ok" : "bad"),
                       "aria-label": attempt.correct ? "Correct" : "Incorrect",
                     },
-                    attempt.correct ? "✓" : "×",
+                    attempt.correct ? "\u2713" : "\u00D7",
                   ),
                   h(
                     "div",
@@ -9863,7 +10023,7 @@ async function pageProgress(root) {
                     h(
                       "small",
                       {},
-                      `${courseLabel(exercise.course)} · ${exercise.difficulty} · ${new Date(attempt.t).toLocaleDateString()}`,
+                      `${courseLabel(exercise.course)} \u00B7 ${exercise.difficulty} \u00B7 ${new Date(attempt.t).toLocaleDateString()}`,
                     ),
                   ),
                   h(
@@ -9871,7 +10031,7 @@ async function pageProgress(root) {
                     { class: "quest-xp" },
                     S.xpRewards[keyOf(exercise)]
                       ? `+${S.xpRewards[keyOf(exercise)].xp} XP`
-                      : "—",
+                      : "\u2014",
                   ),
                 ),
               ),
@@ -9968,7 +10128,7 @@ function resetLocalDataControl(root) {
         )
           return;
         button.disabled = true;
-        status.textContent = "Clearing saved app and terminal data…";
+        status.textContent = "Clearing saved app and terminal data\u2026";
         try {
           achFrozen = true; // stop saving stats while everything is wiped
           await kv.clear();
@@ -10051,7 +10211,7 @@ function updateThemeToggle() {
   const label = dark ? "Switch to light mode" : "Switch to dark mode";
   themeToggle.setAttribute("aria-label", label);
   themeToggle.title = label;
-  themeToggle.firstElementChild.textContent = dark ? "☀" : "☾";
+  themeToggle.firstElementChild.textContent = dark ? "\u2600" : "\u263E";
   updatePlantUmlImageTheme();
 }
 themeToggle?.addEventListener("click", () => {
@@ -10486,7 +10646,7 @@ function launchWassimEasterEgg() {
       onclick: closeEasterEgg,
     },
     "SKIP",
-    h("span", { "aria-hidden": "true" }, " ESC ↗"),
+    h("span", { "aria-hidden": "true" }, " ESC \u2197"),
   );
 
   const overlay = h(
@@ -10560,7 +10720,7 @@ function launchWassimEasterEgg() {
 
         h("span", {}, h("b", {}, "root@mainframe"), ":~$ whoami"),
 
-        h("span", {}, "wassim // system architect // level ∞"),
+        h("span", {}, "wassim // system architect // level \u221E"),
 
         h("span", {}, h("b", {}, "root@mainframe"), ":~$ ", logElement),
 
