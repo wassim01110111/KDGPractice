@@ -7454,6 +7454,7 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
       "button",
       {
         class: "item" + (key === selectedKey ? " on" : ""),
+        "data-exercise-key": key,
         "aria-pressed": key === selectedKey,
         onclick: () => {
           void selectExercise(e, true).catch((error) =>
@@ -7584,6 +7585,41 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
     list.replaceChildren(...nodes);
     pane.firstElementChild?.refreshNextExercise?.();
   };
+  // Keep the selected exercise visible in the left navigation when that
+  // navigation has its own scroll area. This does not move the main page.
+  function scrollSelectedNavigationItem(key) {
+    const navItem = [...list.querySelectorAll("[data-exercise-key]")].find(
+      (item) => item.dataset.exerciseKey === key,
+    );
+    if (!navItem) return;
+    let scroller = list;
+    while (scroller && scroller !== document.body) {
+      const overflowY = getComputedStyle(scroller).overflowY;
+      if (
+        scroller.scrollHeight > scroller.clientHeight + 1 &&
+        ["auto", "scroll", "overlay"].includes(overflowY)
+      )
+        break;
+      scroller = scroller.parentElement;
+    }
+    if (!scroller || scroller === document.body) return;
+    const scrollerRect = scroller.getBoundingClientRect();
+    const itemRect = navItem.getBoundingClientRect();
+    let nextTop = scroller.scrollTop;
+    if (itemRect.top < scrollerRect.top) {
+      nextTop += itemRect.top - scrollerRect.top - 8;
+    } else if (itemRect.bottom > scrollerRect.bottom) {
+      nextTop += itemRect.bottom - scrollerRect.bottom + 8;
+    } else {
+      return;
+    }
+    scroller.scrollTo({
+      top: Math.max(0, nextTop),
+      behavior: matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? "auto"
+        : "smooth",
+    });
+  }
   // Filter, search and status-slider changes start again from page one.
   function redraw() {
     practiceVisibleCount = PRACTICE_PAGE_SIZE;
@@ -7617,7 +7653,10 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
       "practice",
       () => answers[keyOf(exercise)],
       (v) => saveDraft(keyOf(exercise), v),
-      () => draw(),
+      () => {
+        draw();
+        syncCompletionFlag();
+      },
       () => {
         const next = nextExerciseAfter();
         if (next)
@@ -7684,6 +7723,25 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
     questionRoot?.prepend(
       h("div", { class: "practice-exercise-actions" }, saveButton, saveStatus),
     );
+    let completionFlag = null;
+    const syncCompletionFlag = () => {
+      if (!S.xpRewards[exerciseKey] || completionFlag) return;
+      completionFlag = h(
+        "span",
+        {
+          class: "exercise-completed-flag exercise-completed-flag--question",
+          role: "status",
+          "aria-label": "Completed before",
+          style:
+            "display:inline-flex;align-items:center;width:max-content;margin:0 0 .65rem;padding:.2rem .58rem;border:1px solid rgba(34,197,94,.42);border-radius:999px;background:rgba(34,197,94,.12);color:var(--success-color, #15803d);font-size:.8rem;font-weight:700;line-height:1.4;",
+        },
+        "\u2713 Completed before",
+      );
+      const heading = view.querySelector("h3");
+      if (heading) heading.before(completionFlag);
+      else questionRoot?.prepend(completionFlag);
+    };
+    syncCompletionFlag();
 
     // Guided Learning exercises retain their sequence in the practice view.
     // Reviewed sections are skipped; solved exercises remain available.
@@ -7814,6 +7872,9 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
         // Anchor to the actual exercise heading after the page has been
         // attached and laid out. This also works for direct URLs and reloads,
         // not only for clicks in the exercise list.
+        if (view.isConnected) {
+          scrollSelectedNavigationItem(keyOf(exercise));
+        }
         if (scrollToExercise && view.isConnected) {
           const title = view.querySelector("h3") || view,
             header = document.querySelector("header"),

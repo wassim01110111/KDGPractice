@@ -7400,9 +7400,10 @@ export async function mountTerminalExercise({
     "ot-input-highlight-content",
   );
   inputHighlight.append(inputHighlightContent);
-  const input = createElement("input", "ot-input");
-  input.type = "text";
+  const input = createElement("textarea", "ot-input");
 
+  input.rows = 1;
+  input.wrap = "soft";
   input.autocomplete = "off";
   input.setAttribute("autocorrect", "off");
   input.setAttribute("autocapitalize", "off");
@@ -7522,6 +7523,8 @@ export async function mountTerminalExercise({
   const output = (value, error = false) =>
     appendOutput(screen, value, error ? "err" : "");
   const syncInputHighlight = () => {
+    input.style.height = "auto";
+    input.style.height = `${input.scrollHeight}px`;
     if (input.type === "password")
       inputHighlightContent.textContent = "•".repeat(input.value.length);
     else if (input.value)
