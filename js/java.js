@@ -549,6 +549,7 @@ export async function mountJavaExercise({
   initialCode,
   onChange = () => {},
   onGrade = () => {},
+  onNext = null,
   mode = "practice",
 }) {
   const config = exercise?.java || {};
@@ -623,7 +624,10 @@ export async function mountJavaExercise({
     element("summary", "java-panel-summary", "Console output"),
   );
   const consoleContent = element("div", "java-console-content");
-  consolePanel.append(consoleContent);
+  const consoleEnd = element("div", "java-scroll-end");
+  consoleEnd.setAttribute("aria-hidden", "true");
+  consoleEnd.style.cssText = "height:0;overflow:hidden;";
+  consolePanel.append(consoleContent, consoleEnd);
   const resultsPanel = element("details", "java-panel java-results-panel");
   resultsPanel.open = true;
   resultsPanel.append(
@@ -634,7 +638,10 @@ export async function mountJavaExercise({
     "java-results-content",
     "Run Check to see the test results.",
   );
-  resultsPanel.append(resultsContent);
+  const resultsEnd = element("div", "java-scroll-end");
+  resultsEnd.setAttribute("aria-hidden", "true");
+  resultsEnd.style.cssText = "height:0;overflow:hidden;";
+  resultsPanel.append(resultsContent, resultsEnd);
 
   // In the split exercise view the code editor is mounted into the left pane,
   // while input, controls, status, console and grading results remain together
@@ -663,6 +670,46 @@ export async function mountJavaExercise({
     resetButton.disabled = busy;
     stopButton.disabled = !busy;
     root.setAttribute("aria-busy", String(busy));
+  };
+
+  // Scroll to the very bottom of a panel (console output after Run, automatic
+  // test results after Check). scrollIntoView on the zero-height sentinel moves
+  // every scrollable ancestor (split tools pane, page), and the panel body is
+  // also pinned to its own bottom in case it has a max-height with overflow.
+  const scrollToBottom = (content, end) => {
+    if (disposed) return;
+    requestAnimationFrame(() => {
+      if (disposed) return;
+      if (content && content.scrollHeight > content.clientHeight)
+        content.scrollTop = content.scrollHeight;
+      const reduce =
+        typeof window.matchMedia === "function" &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      end.scrollIntoView({
+        block: "end",
+        inline: "nearest",
+        behavior: reduce ? "auto" : "smooth",
+      });
+    });
+  };
+
+  // Shown after the test results once every automatic test has passed. The host
+  // page moves to the next exercise through the onNext callback; a bubbling
+  // "java-exercise-next" event is also dispatched for hosts that prefer events.
+  const renderNextButton = () => {
+    const nextButton = element("button", "java-next-button", "Next exercise →");
+    nextButton.type = "button";
+    nextButton.addEventListener("click", () => {
+      if (typeof onNext === "function") onNext({ exercise, result: latestResult });
+      root.dispatchEvent(
+        new CustomEvent("java-exercise-next", {
+          bubbles: true,
+          detail: { exercise, result: latestResult },
+        }),
+      );
+    });
+    resultsContent.append(element("div", "java-next-row", nextButton));
+    return nextButton;
   };
 
   const handleStatus = ({ status, detail }) => {
@@ -707,6 +754,8 @@ export async function mountJavaExercise({
         "Java is working in a separate browser worker. The editor remains responsive.",
       ),
     );
+    if (operation === "check") scrollToBottom(resultsContent, resultsEnd);
+    else scrollToBottom(consoleContent, consoleEnd);
     try {
       const result =
         operation === "check"
@@ -733,6 +782,7 @@ export async function mountJavaExercise({
         } catch (error) {
           console.warn("Could not record Java exercise grade:", error);
         }
+        if (result.success) renderNextButton();
       }
       statusLine.textContent =
         result.status === "compile-error"
@@ -745,6 +795,8 @@ export async function mountJavaExercise({
                 ? "All automatic checks passed."
                 : "Automatic checks completed; review the failed tests.";
       statusLine.dataset.status = result.success ? "ready" : "error";
+      if (operation === "check") scrollToBottom(resultsContent, resultsEnd);
+      else scrollToBottom(consoleContent, consoleEnd);
     } catch (error) {
       if (disposed || current !== currentOperation) return;
       const isTimeout = error?.code === "JAVA_TIMEOUT";
@@ -771,6 +823,8 @@ export async function mountJavaExercise({
         resultsContent.replaceChildren(element("p", "bad", message));
       statusLine.textContent = message;
       statusLine.dataset.status = isTimeout ? "timeout" : "error";
+      if (operation === "check") scrollToBottom(resultsContent, resultsEnd);
+      else scrollToBottom(consoleContent, consoleEnd);
       if (error?.code === "JAVA_TIMEOUT" || error?.code === "JAVA_STOPPED")
         setBusy(false);
     } finally {
