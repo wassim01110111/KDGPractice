@@ -7637,6 +7637,9 @@ export async function mountTerminalExercise({
       const setMode = (next, message = "") => {
         mode = next;
         modeLabel.textContent = next.toUpperCase();
+        // Keep the editor ready for typing in Insert mode and use a bar caret there.
+        textarea.style.caretShape = next === "insert" ? "bar" : "block";
+        if (next === "insert") textarea.focus();
         statusLine.textContent =
           message ||
           (next === "insert"
@@ -7817,9 +7820,12 @@ export async function mountTerminalExercise({
         }
         if (end === start && start > 0) end = textarea.value.length;
         const selected = textarea.value.slice(start, end);
+        yankBuffer = selected;
+        yankLinewise = true;
+        if (navigator.clipboard?.writeText) {
+          navigator.clipboard.writeText(selected).catch(() => {});
+        }
         if (operator === "y") {
-          yankBuffer = selected;
-          yankLinewise = true;
           statusLine.textContent = `Yanked ${count} line${count === 1 ? "" : "s"}`;
         } else {
           pushUndo();
@@ -7870,10 +7876,12 @@ export async function mountTerminalExercise({
             const a = Math.min(textarea.selectionStart, textarea.selectionEnd),
               b = Math.max(textarea.selectionStart, textarea.selectionEnd);
             const selected = textarea.value.slice(a, b);
-            if (key === "y") {
-              yankBuffer = selected;
-              yankLinewise = false;
-            } else {
+            yankBuffer = selected;
+            yankLinewise = false;
+            if (navigator.clipboard?.writeText) {
+              navigator.clipboard.writeText(selected).catch(() => {});
+            }
+            if (key === "d") {
               pushUndo();
               textarea.setRangeText("", a, b, "end");
               updateDirty();
