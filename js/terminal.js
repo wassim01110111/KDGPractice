@@ -6378,7 +6378,7 @@ function gradeFilesystem(
                     const regex = new RegExp(check.expected, check.flags || "");
                     contentPassed = regex.test(entry.content);
                     if (!contentPassed)
-                      feedback = `File content did not match the required pattern: ${check.expected}`;
+                      feedback = `File content did not match the required pattern: ${check.regex ? generateFromRegex(check.expected) : check.expected}`;
                   } catch (error) {
                     feedback = `Invalid check regex: ${error.message}`;
                   }
