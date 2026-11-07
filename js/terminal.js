@@ -7985,7 +7985,8 @@ export async function mountTerminalExercise({
         else if (key === "Enter") {
           setCursor(Math.min(textarea.value.length, end + 1));
         } else statusLine.textContent = `Unknown Normal-mode key: ${key}`;
-        textarea.focus();
+        // Keep the command/search field focused when openCommand() switches to it.
+        if (commandInput.hidden) textarea.focus();
       });
       commandInput.addEventListener("keydown", async (event) => {
         if (event.key === "Escape") {
