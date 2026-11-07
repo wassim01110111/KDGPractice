@@ -7401,6 +7401,9 @@ export async function mountTerminalExercise({
   );
   inputHighlight.append(inputHighlightContent);
   const input = createElement("textarea", "ot-input");
+  // Workspace restore is asynchronous. Do not accept commands until the shell
+  // exists; the Enter handler below also guards against synthetic/racing input.
+  input.disabled = true;
 
   input.rows = 1;
   input.wrap = "soft";
@@ -8350,6 +8353,12 @@ export async function mountTerminalExercise({
         completeSecret(value);
         return;
       }
+      // The textarea can receive synthetic events even while disabled. Guard
+      // this path too, so an early Enter never dereferences an unready shell.
+      if (!shell || disposed) {
+        event.preventDefault();
+        return;
+      }
       input.value = "";
       syncInputHighlight();
       const currentPrompt = continuationActive ? ">" : shell.prompt();
@@ -8537,6 +8546,7 @@ export async function mountTerminalExercise({
     }
     if (!savedRecord || !notice.hidden) await saveNow();
     status.textContent = "Ready";
+    input.disabled = false;
     focusInput();
   } catch (error) {
     showError(
