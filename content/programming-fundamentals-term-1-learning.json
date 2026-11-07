@@ -119,7 +119,7 @@
       "course": "programming_fundamentals",
       "category": "Variables and Types",
       "title": "Declare and initialize primitive variables",
-      "instructions": "Declare and initialize one variable of each primitive type covered in the summary: `byte`, `short`, `int`, `long`, `float`, `double`, `boolean`, and `char`. Use values that fit the selected types. Also declare a `String` variable for a name, remembering that `String` is a class and not a primitive type. Print the age and name using `Age: <age>` and `Name: <name>` on separate lines. The remaining variables must be valid and used or otherwise retained in the program.",
+      "instructions": "Declare and initialize one variable of each primitive type covered in the summary: `byte`, `short`, `int`, `long`, `float`, `double`, `boolean`, and `char`. Use values that fit the selected types. Also declare a `String` variable for a name (and initialize it with `Wassim`), remembering that `String` is a class and not a primitive type. Print the age and name using `Age: <age>` and `Name: <name>` on separate lines. The remaining variables must be valid and used or otherwise retained in the program.",
       "hints": [
         "A declaration has the form `type name;`.",
         "Initialize variables before reading their values.",
@@ -139,7 +139,7 @@
             "id": "primitive-age",
             "type": "stdout",
             "input": "",
-            "expected": "(?s)^\\s*Age:\\s*21\\s+Name:\\s*Avery\\s*$",
+            "expected": "(?s)^\\s*Age:\\s*21\\s+Name:\\s*Wassim\\s*$",
             "matcher": "regex",
             "points": 1,
             "description": "Prints the initialized integer and String values."
