@@ -5568,6 +5568,30 @@ async function enhanceLearningProgress(body, term, subject) {
                   "a",
                   {
                     href: `#/practice/${encodeURIComponent(exercise.packageId)}/${encodeURIComponent(exercise.id)}`,
+                    onclick: () => {
+                      const pathExercises = modules.flatMap((pathModule) =>
+                        pathModule.exercises.map((pathExercise) => ({
+                          packageId: pathExercise.packageId,
+                          exerciseId: pathExercise.id,
+                          sectionId: pathModule.sectionId,
+                        })),
+                      );
+                      try {
+                        localStorage.setItem(
+                          "learning-path-session",
+                          JSON.stringify({
+                            termFile: term.file,
+                            packageId: learningPackageId,
+                            exercises: pathExercises,
+                            completedSectionIds: [...completed],
+                            currentExerciseId: exercise.id,
+                            startedAt: Date.now(),
+                          }),
+                        );
+                      } catch (error) {
+                        console.warn("Could not save learning path position:", error);
+                      }
+                    },
                   },
                   readableTitle,
                 ),
@@ -7459,6 +7483,114 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
     questionRoot?.prepend(
       h("div", { class: "practice-exercise-actions" }, saveButton, saveStatus),
     );
+
+    // Guided Learning exercises retain their sequence in the practice view.
+    // Reviewed sections are skipped; solved exercises remain available.
+    let learningSession = null;
+    try {
+      learningSession = JSON.parse(
+        localStorage.getItem("learning-path-session") || "null",
+      );
+    } catch {
+      learningSession = null;
+    }
+    const learningPathExercises = Array.isArray(learningSession?.exercises)
+      ? learningSession.exercises
+      : [];
+    const learningPathIndex = learningPathExercises.findIndex(
+      (item) =>
+        item.packageId === exercise.packageId &&
+        item.exerciseId === exercise.id,
+    );
+    if (
+      learningSession?.packageId === exercise.packageId &&
+      learningPathIndex >= 0
+    ) {
+      const reviewedSections = new Set(
+        Array.isArray(learningSession.completedSectionIds)
+          ? learningSession.completedSectionIds
+          : [],
+      );
+      const pathPosition = h("span", {
+        class: "learning-path-position",
+        "aria-live": "polite",
+      });
+      const previousPathButton = h(
+        "button",
+        { type: "button", class: "sec", disabled: true },
+        "← Previous",
+      );
+      const nextPathButton = h(
+        "button",
+        { type: "button", class: "sec" },
+        "Next exercise →",
+      );
+      const findPathExercise = (direction) => {
+        for (
+          let index = learningPathIndex + direction;
+          index >= 0 && index < learningPathExercises.length;
+          index += direction
+        ) {
+          const candidate = learningPathExercises[index];
+          if (reviewedSections.has(candidate.sectionId)) continue;
+          const found = S.exercises.find(
+            (item) =>
+              item.packageId === candidate.packageId &&
+              item.id === candidate.exerciseId,
+          );
+          if (found) return { exercise: found, index };
+        }
+        return null;
+      };
+      const previousPathExercise = findPathExercise(-1);
+      const nextPathExercise = findPathExercise(1);
+      previousPathButton.disabled = !previousPathExercise;
+      nextPathButton.disabled = !nextPathExercise;
+      pathPosition.textContent =
+        `Learning path · Exercise ${learningPathIndex + 1} of ${learningPathExercises.length}` +
+        (reviewedSections.size
+          ? ` · ${reviewedSections.size} section${reviewedSections.size === 1 ? "" : "s"} marked done`
+          : "");
+      previousPathButton.addEventListener("click", () => {
+        if (previousPathExercise)
+          void selectExercise(previousPathExercise.exercise, true);
+      });
+      nextPathButton.addEventListener("click", () => {
+        if (nextPathExercise)
+          void selectExercise(nextPathExercise.exercise, true);
+      });
+      const pathNavigator = h(
+        "nav",
+        {
+          class: "learning-path-navigator",
+          "aria-label": "Learning path navigation",
+          style:
+            "display:flex;align-items:center;justify-content:space-between;gap:.75rem;flex-wrap:wrap;padding:.8rem 1rem;margin:0 0 1rem;border:1px solid var(--line, #8885);border-radius:12px;background:var(--card, transparent)",
+        },
+        h(
+          "div",
+          { style: "display:flex;flex-direction:column;gap:.2rem;min-width:0" },
+          h("strong", {}, "Continue learning"),
+          pathPosition,
+        ),
+        h(
+          "div",
+          { style: "display:flex;gap:.5rem;flex-wrap:wrap" },
+          previousPathButton,
+          nextPathButton,
+        ),
+      );
+      view.prepend(pathNavigator);
+      learningSession.currentExerciseId = exercise.id;
+      try {
+        localStorage.setItem(
+          "learning-path-session",
+          JSON.stringify(learningSession),
+        );
+      } catch {
+        /* Navigation still works for the current page. */
+      }
+    }
 
     pane.replaceChildren(view);
     requestAnimationFrame(() =>
