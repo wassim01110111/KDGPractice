@@ -102,7 +102,7 @@
     - [14.5 Constructor overloading and a copy constructor](#145-constructor-overloading-and-a-copy-constructor)
     - [14.6 Calling one constructor from another with `this(...)`](#146-calling-one-constructor-from-another-with-this)
   - [15. The `toString()` method](#15-the-tostring-method)
-  - [16. The `Math` class- Its constants include `E`, the base of the natural logarithms, and `PI`, the ratio of a circle's circumference to its diameter.](#16-the-math-class--its-constants-include-e-the-base-of-the-natural-logarithms-and-pi-the-ratio-of-a-circles-circumference-to-its-diameter)
+  - [16. The `Math` class- Its constants include `E`, the base of the natural logarithms, and `PI`, the ratio of a circle's circumference to its diameter](#16-the-math-class--its-constants-include-e-the-base-of-the-natural-logarithms-and-pi-the-ratio-of-a-circles-circumference-to-its-diameter)
   - [17. High-value comparisons to remember](#17-high-value-comparisons-to-remember)
   - [18. Coursework boundaries: items mentioned but not fully explained](#18-coursework-boundaries-items-mentioned-but-not-fully-explained)
   - [19. Quick revision checklist](#19-quick-revision-checklist)
@@ -221,6 +221,35 @@ The course says it will initially focus on desktop applications.
 | **JRE: Java Runtime Environment**           | JVM + Java API                         | Needed to run Java bytecode programs.                                                                    |
 | **JDK: Java Development Kit**               | JRE plus development tools and extras  | Includes tools such as compiling and debugging tools; API reference documentation is listed as optional. |
 | **IDE: Integrated Development Environment** | A workbench application for developers | Helps developers write, build and run programs; an IDE can support multiple programming languages.       |
+
+```text
+JDK (Java Development Kit)
+│
+├── JRE (Java Runtime Environment)
+│   │
+│   ├── JVM (Java Virtual Machine)
+│   │   └── Executes Java bytecode (.class)
+│   │       ├── Bytecode execution
+│   │       ├── JIT compilation
+│   │       ├── Memory management
+│   │       └── Garbage collection
+│   │
+│   └── Java API
+│       └── Prebuilt Java libraries
+│           ├── Scanner  → User input
+│           ├── Random  → Random numbers
+│           ├── LocalDate → Date handling
+│           ├── ArrayList → Dynamic collections
+│           └── Math → Mathematical operations
+│
+└── Development Tools
+    ├── javac → Compiles .java into .class
+    ├── java  → Launcher that starts the JVM
+    ├── jar   → Packages classes and resources
+    ├── jdb   → Debugger
+    └── javadoc → Generates documentation
+ └── javadoc → Generates documentation
+```
 
 The relationship is **JDK = JRE + development extras**. An IDE is the developer's workbench; it is not the same thing as the JDK or JRE.
 
