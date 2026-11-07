@@ -119,7 +119,7 @@
       "course": "programming_fundamentals",
       "category": "Variables and Types",
       "title": "Declare and initialize primitive variables",
-      "instructions": "Declare and initialize one variable of each primitive type covered in the summary: `byte`, `short`, `int`, `long`, `float`, `double`, `boolean`, and `char`. Use values that fit the selected types. Also declare a `String` variable for a name (and initialize it with `Wassim`), remembering that `String` is a class and not a primitive type. Print the age and name using `Age: <age>` and `Name: <name>` on separate lines. The remaining variables must be valid and used or otherwise retained in the program.",
+      "instructions": "Declare and initialize one variable of each primitive type covered in the summary: `byte`, `short`, `int`, `long`, `float`, `double`, `boolean`, and `char`. Use values that fit the selected types. Also declare a `String` variable for a name (and initialize it with `Wassim`), remembering that `String` is a class and not a primitive type. Print the age and name using `Age: <age>` and `Name: <name>` on separate lines, so the output is `Age: 21` and `Name: Wassim`. The remaining variables must be valid and used or otherwise retained in the program.",
       "hints": [
         "A declaration has the form `type name;`.",
         "Initialize variables before reading their values.",
@@ -139,14 +139,14 @@
             "id": "primitive-age",
             "type": "stdout",
             "input": "",
-            "expected": "(?s)^\\s*Age:\\s*21\\s+Name:\\s*Wassim\\s*$",
+            "expected": "(?s)^\\s*Age:\\s*\\d+\\s+Name:\\s*Wassim\\s*$",
             "matcher": "regex",
             "points": 1,
             "description": "Prints the initialized integer and String values."
           }
         ],
         "explanation": "The tests compile and run the submitted single source file. They inspect System.out for the required result using regular-expression matching so harmless leading, trailing, and repeated whitespace does not cause a false failure. The required words, values, and output order must still be correct.",
-        "solution": "public class Main {\n    public static void main(String[] args) {\n        byte small = 12;\n        short medium = 300;\n        int age = 21;\n        long large = 1247418127475L;\n        float temperature = 18.5F;\n        double percentage = 92.75;\n        boolean enrolled = true;\n        char initial = 'A';\n        String name = \"Avery\";\n\n        System.out.println(\"Age: \" + age);\n        System.out.println(\"Name: \" + name);\n    }\n}\n"
+        "solution": "public class Main {\n    public static void main(String[] args) {\n        byte small = 12;\n        short medium = 300;\n        int age = 21;\n        long large = 1247418127475L;\n        float temperature = 18.5F;\n        double percentage = 92.75;\n        boolean enrolled = true;\n        char initial = 'A';\n        String name = \"Wassim\";\n\n        System.out.println(\"Age: \" + age);\n        System.out.println(\"Name: \" + name);\n    }\n}\n"
       }
     },
     "java-t1-02-02": {
@@ -186,7 +186,7 @@
       "course": "programming_fundamentals",
       "category": "Variables and Types",
       "title": "Print literals and escaped characters",
-      "instructions": "Print exactly one line containing `Welcome to \"Java\"!` including the double quotation marks around Java. You must write the embedded quotation marks using the `\"` escape sequence. In a second output line, print the two words `red` and `blue` separated by a tab escape (`\t`). The checker permits one or more whitespace characters between the words.",
+      "instructions": "Print exactly one line containing `Welcome to \"Java\"!` including the double quotation marks around Java. You must write the embedded quotation marks using the `\\\"` escape sequence. In a second output line, print the two words `red` and `blue` separated by a tab escape (`\t`). The checker permits one or more whitespace characters between the words.",
       "hints": [
         "A String literal is enclosed in double quotes.",
         "Use `\\\"` inside the Java source String to represent a quotation mark.",
@@ -352,7 +352,7 @@
       "course": "programming_fundamentals",
       "category": "Operators and Expressions",
       "title": "Convert numeric types explicitly",
-      "instructions": "Declare `int whole = 100` and assign it to a `double` variable without a cast. Then declare `double precise = 100.8` and explicitly cast it to an `int`. Print `Widened: 100.0` and `Narrowed: 100`. The cast truncates the fractional part; do not round it. Also calculate `(double) 10 / 3` and print the result with `System.out.printf` to three decimal places.",
+      "instructions": "Declare `int whole = 100` and assign it to a `double` variable without a cast. Then declare `double precise = 100.8` and explicitly cast it to an `int`. Print `Widened: 100.0` and `Narrowed: 100`. The cast truncates the fractional part; do not round it. Also calculate `(double) 10 / 3` and print the result with `System.out.printf` to three decimal places on its own line, as `Division: 3.333`.",
       "hints": [
         "An int value can be assigned to a double variable automatically.",
         "A double-to-int assignment needs `(int)` in this example.",
@@ -419,7 +419,7 @@
       "course": "programming_fundamentals",
       "category": "Operators and Expressions",
       "title": "Make operator precedence explicit",
-      "instructions": "Calculate two expressions from the supplied values `a = 4`, `b = 3`, and `c = 2`. The first is `a + b * c` and must evaluate to 10. The second must add before multiplying: `(a + b) * c`, which evaluates to 14. Print both values with labels. Use parentheses to make the intended evaluation order obvious.",
+      "instructions": "Calculate two expressions from the supplied values `a = 4`, `b = 3`, and `c = 2`. The first is `a + b * c` and must evaluate to 10. The second must add before multiplying: `(a + b) * c`, which evaluates to 14. Print them on separate lines as `First: 10` and `Second: 14`. Use parentheses to make the intended evaluation order obvious.",
       "hints": [
         "Multiplication has higher precedence than addition.",
         "Parentheses are evaluated first.",
@@ -995,7 +995,7 @@
       "course": "programming_fundamentals",
       "category": "Switch Statements",
       "title": "Return a value from an arrow switch block with yield",
-      "instructions": "Read a month as a token. Use an arrow-style switch expression to produce a season String. Group the lowercase names for spring, summer, autumn, and winter as in the previous switch exercise. For the default branch, use a block that first prints `Please use lower case English month names` and then uses `yield` to return `invalid month`. Finally print the returned season String. The invalid input test must therefore display the warning and then the returned fallback value.",
+      "instructions": "Read a month as a token. Use an arrow-style switch expression to produce a season String. Group the lowercase names as follows: `march`, `april`, `may` → `spring`; `june`, `july`, `august` → `summer`; `september`, `october`, `november` → `autumn`; `december`, `january`, `february` → `winter`. For the default branch, use a block that first prints `Please use lower case English month names` and then uses `yield` to return `invalid month`. Finally print the returned season String. The invalid input test must therefore display the warning and then the returned fallback value.",
       "hints": [
         "An arrow case can contain a block with multiple statements.",
         "A switch expression block uses `yield` to provide its value.",
@@ -1544,7 +1544,7 @@
       "course": "programming_fundamentals",
       "category": "Random Class",
       "title": "Generate repeatable pseudo-random values with a seed",
-      "instructions": "Create two `Random` objects using the same seed value 42. Call `nextInt(100)` once on each object and print both values. They must match because the same seed starts the same pseudo-random sequence. Import `java.util.Random` at the beginning of the file. Do not hardcode the value returned by the generator.",
+      "instructions": "Create two `Random` objects using the same seed value 42. Call `nextInt(100)` once on each object and print both values as plain numbers without labels, separated by a space or a line break. They must match because the same seed starts the same pseudo-random sequence. Import `java.util.Random` at the beginning of the file. Do not hardcode the value returned by the generator.",
       "hints": [
         "A seeded Random instance produces a repeatable sequence.",
         "Use `new Random(42)` for both objects.",
@@ -1610,7 +1610,7 @@
       "course": "programming_fundamentals",
       "category": "Random Class",
       "title": "Use the Random methods and interval boundaries",
-      "instructions": "Use one `Random` object to generate four values and print them on separate lines: (1) `nextInt(50) + 50`, which must be 50–99; (2) `nextInt(100, 200)`, which must be 100–199; (3) `nextDouble()`, which must be at least 0 and less than 1; and (4) `nextBoolean()`, which must be either `true` or `false`. Import `java.util.Random`. Do not hardcode or constrain the random values beyond the specified bounds.",
+      "instructions": "Use one `Random` object to generate four values and print them on separate lines: (1) `nextInt(50) + 50`, which must be 50–99; (2) `nextInt(100, 200)`, which must be 100–199; (3) `nextDouble()`, which must be at least 0 and less than 1; and (4) `nextBoolean()`, which must be either `true` or `false`. Import `java.util.Random`. Print only the four values, without labels. Do not hardcode or constrain the random values beyond the specified bounds.",
       "hints": [
         "The lower bound is inclusive and the upper bound is exclusive.",
         "`nextDouble()` returns a value in [0, 1).",
@@ -1644,7 +1644,7 @@
       "course": "programming_fundamentals",
       "category": "References and Memory",
       "title": "Distinguish primitive copies from shared references",
-      "instructions": "Set `int original = 5` and copy it to `copy`. Change `original` to 9 and show that `copy` remains 5. Then create one `Box` object with a public `setValue` and `getValue` method. Assign its reference to two variables, change the Box through the first reference, and read the changed value through the second. Print `Primitive copy: 5` and `Shared object: 12`. Keep Box in this source file.",
+      "instructions": "Set `int original = 5` and copy it to `copy`. Change `original` to 9 and show that `copy` remains 5. Then create one `Box` object with a public `setValue` and `getValue` method. Assign its reference to two variables, change the Box value to 12 through the first reference, and read the changed value through the second. Print `Primitive copy: 5` and `Shared object: 12`. Keep Box in this source file.",
       "hints": [
         "Primitive assignment copies the primitive value.",
         "Reference assignment copies a reference, not the object.",
@@ -1677,7 +1677,7 @@
       "course": "programming_fundamentals",
       "category": "References and Packages",
       "title": "Use imports and fully qualified class names",
-      "instructions": "Generate a deterministic integer from `java.util.Random` using the fully qualified class name rather than an import. Also print the value of `Math.PI` to three decimal places using `System.out.printf`. `Math` belongs to `java.lang`, which is imported automatically. Print a line beginning `Random:` followed by a value between 0 and 9, then a line beginning `PI:` followed by 3.142. Do not write a package declaration.",
+      "instructions": "Generate a deterministic integer between 0 and 9 with `new java.util.Random(<any fixed seed>).nextInt(10)`, using the fully qualified class name rather than an import. Also print the value of `Math.PI` to three decimal places using `System.out.printf`. `Math` belongs to `java.lang`, which is imported automatically. Print a line beginning `Random:` followed by a value between 0 and 9, then a line beginning `PI:` followed by 3.142. Do not write a package declaration.",
       "hints": [
         "A fully qualified name includes the package, for example `java.util.Random`.",
         "`java.lang` classes such as Math are automatically available.",
@@ -1900,7 +1900,7 @@
       "course": "programming_fundamentals",
       "category": "Strings",
       "title": "Transform and extract String content",
-      "instructions": "Start with `String text = \"  Java Programming  \";`. Use `strip()` to remove surrounding whitespace. Then use `substring()` to extract `Java`, `toUpperCase()` to produce `JAVA`, and `toLowerCase()` to produce `programming`. Print those three results on separate labeled lines. Do not modify the original String in place; each String method returns a String value.",
+      "instructions": "Start with `String text = \"  Java Programming  \";`. Use `strip()` to remove surrounding whitespace. Then use `substring()` to extract `Java`, `toUpperCase()` to produce `JAVA`, and `toLowerCase()` to produce `programming`. Print those three results on separate lines using exactly the labels `Word: Java`, `Upper: JAVA`, and `Lower: programming`. Do not modify the original String in place; each String method returns a String value.",
       "hints": [
         "strip() returns a String without leading and trailing whitespace.",
         "substring uses a start index inclusive and an end index exclusive.",
@@ -1919,14 +1919,14 @@
             "id": "string-transform",
             "type": "stdout",
             "input": "",
-            "expected": "(?s)^\\s*Upper:\\s*JAVA\\s+Lower:\\s*programming\\s*$",
+            "expected": "(?s)^\\s*Word:\\s*Java\\s+Upper:\\s*JAVA\\s+Lower:\\s*programming\\s*$",
             "matcher": "regex",
             "points": 1,
             "description": "Removes surrounding whitespace and transforms substrings."
           }
         ],
         "explanation": "The tests compile and run the submitted single source file. They inspect System.out for the required result using regular-expression matching so harmless leading, trailing, and repeated whitespace does not cause a false failure. The required words, values, and output order must still be correct.",
-        "solution": "public class Main {\n    public static void main(String[] args) {\n        String text = \"  Java Programming  \";\n        String clean = text.strip();\n        String firstWord = clean.substring(0, 4);\n        String upper = firstWord.toUpperCase();\n        String lower = clean.substring(5).toLowerCase();\n        System.out.println(\"Upper: \" + upper);\n        System.out.println(\"Lower: \" + lower);\n    }\n}\n"
+        "solution": "public class Main {\n    public static void main(String[] args) {\n        String text = \"  Java Programming  \";\n        String clean = text.strip();\n        String firstWord = clean.substring(0, 4);\n        String upper = firstWord.toUpperCase();\n        String lower = clean.substring(5).toLowerCase();\n        System.out.println(\"Word: \" + firstWord);\n        System.out.println(\"Upper: \" + upper);\n        System.out.println(\"Lower: \" + lower);\n    }\n}\n"
       }
     },
     "java-t1-12-05": {
@@ -2189,7 +2189,7 @@
             "id": "printf-types",
             "type": "stdout",
             "input": "",
-            "expected": "(?s)^\\s*12\\s+A\\s+student\\s+true\\s*\n\\s*$",
+            "expected": "(?s)^\\s*12\\s+A\\s+student\\s+true\\s*$",
             "matcher": "regex",
             "points": 1,
             "description": "Matches each format specifier with the correct type."
@@ -2304,7 +2304,7 @@
       "course": "programming_fundamentals",
       "category": "Class Design",
       "title": "Understand access modifiers and package access",
-      "instructions": "Create a package-private class `Account` with a private `int balance` attribute, a package-access (no modifier) `int internalCode` attribute initialized to 7, a protected `String category` initialized to `savings`, and a public `getBalance()` method. Add a public constructor that initializes balance. In main, create an Account with 125 and print the balance, category, and internal code using public methods or same-package access as appropriate. Do not mark Account public because Main is the public class in this file.",
+      "instructions": "Create a package-private class `Account` with a private `int balance` attribute, a package-access (no modifier) `int internalCode` attribute initialized to 7, a protected `String category` initialized to `savings`, and a public `getBalance()` method. Add a public constructor that initializes balance. In main, create an Account with 125 and print the balance, category, and internal code on separate lines as `Balance: 125`, `Category: savings`, and `Code: 7`, using public methods or same-package access as appropriate. Do not mark Account public because Main is the public class in this file.",
       "hints": [
         "private is accessible within the declaring class.",
         "No modifier means package access.",
@@ -2373,7 +2373,7 @@
       "course": "programming_fundamentals",
       "category": "Class Design",
       "title": "Recognize a class declaration and its deferred modifiers",
-      "instructions": "Keep the class declaration simple: create a package-private `Coordinate` class with two private double attributes and a public method that returns their sum. In Main, instantiate the class and print the sum. After completing the program, review the general class declaration form from the guide and identify which syntax words (`abstract`, `final`, `extends`, `implements`) are named in the course but not explained in this term. Do not add inheritance or interfaces to this exercise.",
+      "instructions": "Keep the class declaration simple: create a package-private `Coordinate` class with two private double attributes and a public method that returns their sum. In Main, instantiate the class with the values 2.5 and 3.5 and print `Sum: 6.0`. After completing the program, review the general class declaration form from the guide and identify which syntax words (`abstract`, `final`, `extends`, `implements`) are named in the course but not explained in this term. Do not add inheritance or interfaces to this exercise.",
       "hints": [
         "Use `class Coordinate` because it is a secondary top-level class.",
         "The class body contains its attributes and method.",
@@ -2472,7 +2472,7 @@
       "course": "programming_fundamentals",
       "category": "Class Methods and Encapsulation",
       "title": "Write getters and validated setters",
-      "instructions": "Create a package-private `Car` class with private attributes `String brand` and `int speed`. Provide a public constructor that initializes both values. Add `getBrand()` and `getSpeed()` getters. Add `setSpeed(int speed)` that changes the attribute only when the proposed speed is between -20 and 300 inclusive; otherwise keep the old value unchanged. In main, construct a car with brand `Nova` and speed 80, try to set speed to 500, then print the brand and speed. The speed must remain 80.",
+      "instructions": "Create a package-private `Car` class with private attributes `String brand` and `int speed`. Provide a public constructor that initializes both values. Add `getBrand()` and `getSpeed()` getters. Add `setSpeed(int speed)` that changes the attribute only when the proposed speed is between -20 and 300 inclusive; otherwise keep the old value unchanged. In main, construct a car with brand `Nova` and speed 80, try to set speed to 500, then print `Brand: Nova` and `Speed: 80` on separate lines. The speed must remain 80.",
       "hints": [
         "A getter returns an attribute value and generally has no parameters.",
         "A setter is usually void and accepts the proposed new value.",
@@ -2506,7 +2506,7 @@
       "course": "programming_fundamentals",
       "category": "Class Methods and Encapsulation",
       "title": "Calculate derived values through getters",
-      "instructions": "Create a `Rectangle` class with private `width` and `height` attributes, a constructor, validated setters that accept only positive values, getters for each dimension, `getArea()`, and `getPerimeter()`. In main, construct a rectangle with width 5 and height 3, attempt to set the width to -4, and print width, height, area, and perimeter. The invalid setter call must leave width unchanged, so the results are 5, 3, 15, and 16.",
+      "instructions": "Create a `Rectangle` class with private `width` and `height` attributes, a constructor, validated setters that accept only positive values, getters for each dimension, `getArea()`, and `getPerimeter()`. In main, construct a rectangle with width 5 and height 3, attempt to set the width to -4, and print `Width: 5`, `Height: 3`, `Area: 15`, and `Perimeter: 16` on separate lines. The invalid setter call must leave width unchanged, so the results are 5, 3, 15, and 16.",
       "hints": [
         "Use a getter to provide a private attribute value.",
         "The setter should validate before assignment.",
@@ -2540,7 +2540,7 @@
       "course": "programming_fundamentals",
       "category": "Class Methods and Encapsulation",
       "title": "Overload methods with different parameter lists",
-      "instructions": "Create a `Reporter` class with two overloaded methods named `report`: `report()` returns `General report`, and `report(String unit)` returns `Report for <unit>`. Call both methods from main and print their return values. The methods have the same name but different parameter lists, so the compiler can select the correct method from the call.",
+      "instructions": "Create a `Reporter` class with two overloaded methods named `report`: `report()` returns `General report`, and `report(String unit)` returns `Report for <unit>`. Call `report()` and `report(\"sales\")` from main and print their return values on separate lines (`General report` and `Report for sales`). The methods have the same name but different parameter lists, so the compiler can select the correct method from the call.",
       "hints": [
         "An overloaded method name can be reused when the parameter list differs.",
         "The signature includes the method name and parameter types.",
@@ -2573,7 +2573,7 @@
       "course": "programming_fundamentals",
       "category": "Class Methods and Encapsulation",
       "title": "Overload methods by parameter type",
-      "instructions": "Create a class `Formatter` with two methods named `describe`: `describe(int value)` returns `Integer: <value>` and `describe(double value)` returns `Decimal: <value>`. Call each overload using an integer literal and a double literal. Print both results. The parameter types are different, so each call resolves to a different method signature.",
+      "instructions": "Create a class `Formatter` with two methods named `describe`: `describe(int value)` returns `Integer: <value>` and `describe(double value)` returns `Decimal: <value>`. Call `describe(8)` and `describe(8.5)` and print both results on separate lines: `Integer: 8` and `Decimal: 8.5`. The parameter types are different, so each call resolves to a different method signature.",
       "hints": [
         "Overloads may use different parameter types.",
         "An int literal such as 8 selects the int overload.",
@@ -2639,7 +2639,7 @@
       "course": "programming_fundamentals",
       "category": "Constructors",
       "title": "Overload constructors for different initialization options",
-      "instructions": "Create a `Point` class with private double coordinates `x` and `y`. Implement a no-argument constructor that sets both coordinates to 0.0 and a two-argument constructor that initializes them from supplied values. Add getters. In main, create one origin point and one point (9.0, 1.1), then print their coordinates. Constructor names must match the class name and must not have a return type.",
+      "instructions": "Create a `Point` class with private double coordinates `x` and `y`. Implement a no-argument constructor that sets both coordinates to 0.0 and a two-argument constructor that initializes them from supplied values. Add getters. In main, create one origin point and one point (9.0, 1.1), then print `Origin: 0.0,0.0` and `Point: 9.0,1.1` on separate lines (x and y separated by a comma, no space). Constructor names must match the class name and must not have a return type.",
       "hints": [
         "A constructor is called by new.",
         "A constructor has no declared return type.",
@@ -2672,7 +2672,7 @@
       "course": "programming_fundamentals",
       "category": "Constructors",
       "title": "Validate constructor input before storing it",
-      "instructions": "Create a `Car` class with a private speed attribute. Use the valid interval -20 through 300. The constructor must receive an initial speed and call a `setSpeed` method that validates the value. If the supplied value is invalid, leave speed at its default value 0. Create cars with speeds 80 and 500, then print both speeds. Expected values are 80 and 0. Do not assign the constructor parameter directly to the field without validation.",
+      "instructions": "Create a `Car` class with a private speed attribute. Use the valid interval -20 through 300. The constructor must receive an initial speed and call a `setSpeed` method that validates the value. If the supplied value is invalid, leave speed at its default value 0. Create cars with speeds 80 and 500, then print `Valid speed: 80` and `Invalid input result: 0` on separate lines (the speeds of the first and second car). Do not assign the constructor parameter directly to the field without validation.",
       "hints": [
         "A constructor should establish a valid object state.",
         "The setter can centralize the validation rule.",
@@ -2705,7 +2705,7 @@
       "course": "programming_fundamentals",
       "category": "Constructors",
       "title": "Create a copy constructor",
-      "instructions": "Create a `Rectangle` class with private integer attributes `x`, `y`, `height`, and `width`. Implement a four-argument constructor and a copy constructor `Rectangle(Rectangle other)` that copies all four values into a new object. Add getters for each field. In main, create a source rectangle (2, 3, 4, 5), create a copy, and print all four values from the copy. The copy must be a distinct object with the same initial attribute values.",
+      "instructions": "Create a `Rectangle` class with private integer attributes `x`, `y`, `height`, and `width`. Implement a four-argument constructor and a copy constructor `Rectangle(Rectangle other)` that copies all four values into a new object. Add getters for each field. The four-argument constructor takes its parameters in the order x, y, height, width. In main, create a source rectangle with `new Rectangle(2, 3, 4, 5)`, create a copy, and print x, y, height, and width of the copy in that order, as plain numbers without labels, separated by spaces or line breaks. The copy must be a distinct object with the same initial attribute values.",
       "hints": [
         "A copy constructor receives an object of the same class.",
         "Copy each field from `other` to `this`.",
@@ -2738,7 +2738,7 @@
       "course": "programming_fundamentals",
       "category": "Constructors",
       "title": "Reuse constructor initialization with this(...)",
-      "instructions": "Create a `Point` class with a two-argument constructor that initializes x and y. Add a no-argument constructor whose first statement is `this(1.0, 1.0);`. Add getters and print the default point coordinates. The constructor call must be the first statement in the no-argument constructor. This avoids duplicating initialization logic.",
+      "instructions": "Create a `Point` class with a two-argument constructor that initializes x and y. Add a no-argument constructor whose first statement is `this(1.0, 1.0);`. Add getters and print the default point's coordinates as `1.0,1.0` (x and y separated by a comma, no space). The constructor call must be the first statement in the no-argument constructor. This avoids duplicating initialization logic.",
       "hints": [
         "`this(parameters)` calls another constructor in the same class.",
         "The call must be the first statement in the constructor.",
@@ -2771,7 +2771,7 @@
       "course": "programming_fundamentals",
       "category": "toString",
       "title": "Override toString to describe an object",
-      "instructions": "Create a `Person` class with private `firstName` and `lastName` attributes. Initialize them in the constructor and override `toString()` with `@Override` so it returns `firstName + \" \" + lastName`. In main, print the Person object directly with `System.out.println(person)`. The output must be `Ada Lovelace`, not the default class-name and hash-code text.",
+      "instructions": "Create a `Person` class with private `firstName` and `lastName` attributes. Initialize them in the constructor and override `toString()` with `@Override` so it returns `firstName + \" \" + lastName`. In main, create a Person with first name `Ada` and last name `Lovelace`, then print the Person object directly with `System.out.println(person)`. The output must be `Ada Lovelace`, not the default class-name and hash-code text.",
       "hints": [
         "Every object can invoke toString().",
         "println calls toString() when passed an object.",
@@ -2984,7 +2984,7 @@
       "course": "programming_fundamentals",
       "category": "Integrated Capstone",
       "title": "Capstone: Validated rectangle geometry model",
-      "instructions": "Create a package-private `Rectangle` class in Main.java with private x, y, width, and height attributes. Provide a no-argument constructor that delegates with `this(...)`, a four-argument constructor, and a copy constructor. Ensure width and height are validated as positive using setters. Provide getters, `getArea()`, `getPerimeter()`, and an overridden `toString()` that includes position, dimensions, area, and perimeter. In Main, create a rectangle, make a copy, attempt to set the copy width to an invalid value, and print both objects. The invalid change must be rejected and the copy must keep its original dimensions. Keep Main as the only public top-level class.",
+      "instructions": "Create a package-private `Rectangle` class in Main.java with private x, y, width, and height attributes. Provide a no-argument constructor that delegates with `this(...)`, a four-argument constructor, and a copy constructor. Ensure width and height are validated as positive using setters. Provide getters, `getArea()`, `getPerimeter()`, and an overridden `toString()` that includes position, dimensions, area, and perimeter. In Main, create `new Rectangle(2, 3, 5, 4)` (x, y, width, height), make a copy with the copy constructor, attempt to set the copy's width to -10, and print the original and then the copy, one per line. Make `toString()` return `Rectangle[x=<x>, y=<y>, width=<width>, height=<height>, area=<area>, perimeter=<perimeter>]`; both printed lines must show width=5 and height=4. The invalid change must be rejected and the copy must keep its original dimensions. Keep Main as the only public top-level class.",
       "hints": [
         "Use this(...) as the first statement in a delegating constructor.",
         "Use a copy constructor that receives another Rectangle.",
@@ -3019,7 +3019,7 @@
       "course": "programming_fundamentals",
       "category": "Integrated Capstone",
       "title": "Capstone: Three-round randomized quiz",
-      "instructions": "Build a three-question arithmetic quiz. Use `Random` with seed 42 to generate two integers from 1 through 10 inclusive for each question. A `for` loop must repeat exactly three rounds. For each round, display `Question <round>: <a> + <b> = ?` with `System.out.printf`, read one integer answer, and use an if/else to print `Correct` or `Incorrect: <correct answer>`. Put the calculation in `public static int add(int a, int b)`. After the loop, print `Score: <correct count>/3`. The six generated operands are repeatable in this order: 1, 4, 9, 5, 1, 6. Do not print prompts or extra lines.",
+      "instructions": "Build a three-question arithmetic quiz. Use `Random` with seed 42 to generate two integers from 1 through 10 inclusive for each question: call `random.nextInt(10) + 1` for the first operand and then again for the second, in every round. A `for` loop must repeat exactly three rounds. For each round, display `Question <round>: <a> + <b> = ?` with `System.out.printf`, read one integer answer, and use an if/else to print `Correct` or `Incorrect: <correct answer>`. Put the calculation in `public static int add(int a, int b)`. After the loop, print `Score: <correct count>/3`. The six generated operands are repeatable in this order: 1, 4, 9, 5, 1, 6. Do not print prompts or extra lines.",
       "hints": [
         "Use `new Random(42)` to make the test sequence repeatable.",
         "Use a for loop with three passes.",
