@@ -1054,14 +1054,11 @@ function qView(
           actionsContainer: btns,
           feedbackContainer: fb,
           onChange: async () => {
-            // Keep the terminal module's persistent per-check result panel;
-            // clear only the app-owned summary feedback.
+            // The terminal module owns its detailed .ot-grade panel. Remove
+            // app-owned feedback (including any previous workspace summary)
+            // whenever the workspace changes or is reset.
             [...fb.children]
-              .filter(
-                (child) =>
-                  !child.classList.contains("ot-grade") &&
-                  !child.classList.contains("terminal-grade-summary"),
-              )
+              .filter((child) => !child.classList.contains("ot-grade"))
               .forEach((child) => child.remove());
             await updateAnswer("terminal-workspace");
           },
@@ -1075,6 +1072,10 @@ function qView(
               blank: false,
             });
             if (result.passed) markExerciseCorrect();
+            // A new check replaces the previous summary instead of stacking.
+            fb.querySelectorAll(".terminal-grade-summary").forEach((node) =>
+              node.remove(),
+            );
             fb.append(
               h(
                 "p",

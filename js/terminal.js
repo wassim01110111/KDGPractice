@@ -180,7 +180,7 @@ const MANUALS = {
     "gunzip — decompress files created by the ACS virtual gzip simulation. These are not standard gzip streams.",
   find: "find — search virtual paths. Supports -name/-iname, -type, -user/-group, -nouser/-nogroup, -size, -mtime/-mmin/-atime/-amin/-ctime/-cmin, -perm, -inum, -maxdepth, -print, -delete, -exec COMMAND {} \\;, and -o.",
   tar: "tar — virtual JSON-backed archive. Supports -c/-x/-t, -f, -v, -C, -P, -z/-j/-J as simulated format labels. It is not a GNU tar archive and compression flags do not create interoperable compressed files.",
-  vim: "vim — lightweight Vim-style editor with Normal/Insert modes and :w, :wq, :q, :q!, :x, h/j/k/l, i/a/I/A/o/O, x, dd, yy, p/P, u, /search, n, and :%s/old/new/g.",
+  vim: "vim — lightweight Vim-style editor with Normal/Insert/Visual modes; supports :w, :wq, :q, :q!, :x, gg, G, h/j/k/l, i/a/I/A/o/O, x, dd, yy, p/P, u, v/V, /search, n, and :%s/old/new/g.",
   command:
     "command — resolve or run a supported command. Usage: command -v NAME, command -V NAME, or command NAME [ARGS...].",
   logout: "logout — exit the current simulated shell (same as exit).",
@@ -2535,6 +2535,11 @@ class Shell {
           const path = expandShellPath(redir.path, this);
           const append =
             redir.op === ">>" || redir.op === "1>>" || redir.op === "2>>";
+          // POSIX shell opens redirection targets before executing the command.
+          // This must happen even when the command produces no output (e.g. an
+          // identical-file `diff` redirected with `>`), and it ensures the
+          // target exists while commands such as `ls` inspect the directory.
+          if (path !== "/dev/null") this.fs.writeFile(path, "", { append });
           const sink = {
             type: path === "/dev/null" ? "null" : "file",
             path,
@@ -3017,7 +3022,20 @@ class Shell {
           }
         };
         for (const path of paths) {
-          const node = fs.resolve(path, { followFinal: !has("d") }).node;
+          let node;
+          if (has("l") || has("d")) {
+            node = fs.resolve(path, { followFinal: false }).node;
+          } else {
+            try {
+              node = fs.resolve(path).node;
+            } catch (error) {
+              // GNU ls can display a dangling symbolic link rather than
+              // failing while trying to follow its missing target.
+              const link = fs.resolve(path, { followFinal: false }).node;
+              if (link.type !== "symlink") throw error;
+              node = link;
+            }
+          }
           if (paths.length > 1 && node.type === "directory" && !has("d"))
             output += `${path}:\n`;
           walk(path, node, true);
@@ -3097,7 +3115,10 @@ class Shell {
       }
       case "cp": {
         const { flags, rest } = splitFlags(args);
-        requireFlag(flags, "rfpRrecursivepreserveniforceinteractiveverbose");
+        requireFlag(
+          flags,
+          "rfpRrecursivepreserveniforceinteractiveverboseparents",
+        );
         if (rest.length < 2) noArgs("cp [-r] [-p] SOURCE... DEST");
         const dest = rest.at(-1),
           sources = rest.slice(0, -1);
@@ -3114,11 +3135,29 @@ class Shell {
           );
         let output = "";
         for (const source of sources) {
-          const basename = source.split("/").filter(Boolean).at(-1);
-          const target =
-            sources.length > 1 || destinationIsDirectory
-              ? dest.replace(/\/$/, "") + "/" + basename
+          const components = source
+            .split("/")
+            .filter(Boolean)
+            .filter((part) => part !== ".");
+          const basename = components.at(-1);
+          let target;
+          if (flags.has("parents")) {
+            if (!destinationIsDirectory)
+              throw new Error(
+                "cp: --parents requires an existing destination directory",
+              );
+            const parentParts = components.slice(0, -1);
+            const nestedParent = parentParts.length
+              ? dest.replace(/\/$/, "") + "/" + parentParts.join("/")
               : dest;
+            fs.mkdir(nestedParent, { parents: true });
+            target = nestedParent.replace(/\/$/, "") + "/" + basename;
+          } else {
+            target =
+              sources.length > 1 || destinationIsDirectory
+                ? dest.replace(/\/$/, "") + "/" + basename
+                : dest;
+          }
           const sourceNode = fs.resolve(source).node;
           let existing = null;
           try {
@@ -3814,7 +3853,18 @@ class Shell {
           action = "print",
           execCommand = null;
         if (list[0] && !list[0].startsWith("-")) start = list.shift();
+        const relativeOutput = !String(start).startsWith("/");
+        const displayPath = (node) => {
+          const absolute = fs.nodePath(node);
+          if (!relativeOutput) return absolute;
+          const cwd = fs.cwd.replace(/\/$/, "") || "/";
+          if (absolute === cwd) return ".";
+          return absolute.startsWith(cwd + "/")
+            ? absolute.slice(cwd.length + 1)
+            : absolute;
+        };
         const predicates = [];
+        const prunePatterns = [];
         const readValue = (i, flag) => {
           if (i + 1 >= list.length)
             throw new Error(`find: missing argument to ${flag}`);
@@ -3825,9 +3875,21 @@ class Shell {
           if (flag === "-maxdepth") {
             maxDepth = Number(readValue(i, flag));
             i++;
-          } else if (flag === "-name" || flag === "-iname") {
+          } else if (
+            flag === "-name" ||
+            flag === "-iname" ||
+            flag === "-path" ||
+            flag === "-wholename"
+          ) {
             predicates.push({ type: flag.slice(1), value: readValue(i, flag) });
             i++;
+          } else if (flag === "-prune") {
+            prunePatterns.push(
+              ...predicates
+                .filter((pred) => pred.type === "path")
+                .map((pred) => pred.value),
+            );
+            predicates.push({ type: "prune" });
           } else if (
             flag === "-type" ||
             flag === "-user" ||
@@ -3892,6 +3954,11 @@ class Shell {
               return globToRegExp(pred.value).test(node.name);
             case "iname":
               return globToRegExp(pred.value, true).test(node.name);
+            case "path":
+            case "wholename":
+              return globToRegExp(pred.value).test(displayPath(node));
+            case "prune":
+              return false;
             case "type":
               return (
                 { file: "f", directory: "d", symlink: "l" }[node.type] ===
@@ -3953,7 +4020,19 @@ class Shell {
               return true;
           }
         };
+        const isPruned = (row) => {
+          if (!prunePatterns.length) return false;
+          const path = displayPath(row.node);
+          return prunePatterns.some((pattern) => {
+            const matcher = globToRegExp(pattern);
+            return (
+              matcher.test(path) ||
+              path.startsWith(pattern.replace(/\/$/, "") + "/")
+            );
+          });
+        };
         const matches = rows.filter((row) => {
+          if (isPruned(row)) return false;
           let groupResult = true,
             anyGroup = false;
           for (const pred of predicates) {
@@ -3962,6 +4041,7 @@ class Shell {
               groupResult = true;
               continue;
             }
+            if (pred.type === "prune") continue;
             groupResult = groupResult && test(row, pred);
           }
           return anyGroup || groupResult;
@@ -3981,7 +4061,7 @@ class Shell {
             stderr = "",
             status = 0;
           for (const { node } of matches) {
-            const path = fs.nodePath(node);
+            const path = displayPath(node);
             const argv = execCommand.map((part) =>
               part === "{}" ? path : part,
             );
@@ -3993,7 +4073,7 @@ class Shell {
           return this.result(stdout, stderr, status);
         }
         return this.result(
-          matches.map(({ node }) => fs.nodePath(node)).join("\n") +
+          matches.map(({ node }) => displayPath(node)).join("\n") +
             (matches.length ? "\n" : ""),
         );
       }
@@ -5309,8 +5389,21 @@ wtmp begins ${new Date(Date.now() - 86400000).toDateString()} (simulated)\n`);
         if (this.fs.currentUid !== 0 && user.uid !== this.fs.currentUid)
           throw new Error("permission denied");
         if (args.includes("-l") || args.includes("--list")) {
+          const lastChange = user.aging.lastChange ?? "today";
+          const lastChangeText =
+            lastChange === 0 || lastChange === "0"
+              ? "password must be changed"
+              : lastChange;
+          const inactive = user.aging.inactive ?? "never";
           return this.result(
-            `Last password change\t\t: ${user.aging.lastChange ?? "today"}\nMinimum days between change\t: ${user.aging.min ?? 0}\nMaximum days between change\t: ${user.aging.max ?? 90}\nWarning days\t\t: ${user.aging.warn ?? 7}\nInactive days\t\t: ${user.aging.inactive ?? "never"}\nAccount expires\t\t: ${user.aging.expire ?? "never"}\n`,
+            `Last password change\t\t: ${lastChangeText}\n` +
+              `Password expires\t\t: never\n` +
+              `Password inactive\t\t: ${inactive}\n` +
+              `Account expires\t\t: ${user.aging.expire ?? "never"}\n` +
+              `Minimum number of days between password change\t: ${user.aging.min ?? 0}\n` +
+              `Maximum number of days between password change\t: ${user.aging.max ?? 90}\n` +
+              `Number of days of warning before password expires\t: ${user.aging.warn ?? 7}\n` +
+              `Number of days after password expires that account is disabled\t: ${inactive}\n`,
           );
         }
         let changed = false;
@@ -6377,8 +6470,20 @@ function gradeFilesystem(
                   try {
                     const regex = new RegExp(check.expected, check.flags || "");
                     contentPassed = regex.test(entry.content);
-                    if (!contentPassed)
-                      feedback = `File content did not match the required pattern: ${check.regex ? generateFromRegex(check.expected) : check.expected}`;
+                    if (!contentPassed) {
+                      let example = String(check.expected ?? "");
+                      if (check.regex) {
+                        try {
+                          example = generateFromRegex(check.expected);
+                        } catch {
+                          // The grader uses JavaScript RegExp, which supports
+                          // lookarounds; the optional example generator does not.
+                          // Show the actual pattern instead of misreporting it
+                          // as an invalid grading regex.
+                        }
+                      }
+                      feedback = `File content bryv did not match the required pattern: ${example}`;
+                    }
                   } catch (error) {
                     feedback = `Invalid check regex: ${error.message}`;
                   }
@@ -6432,9 +6537,21 @@ function gradeFilesystem(
 
                     passed = commandAndOutputMatched;
                     if (!passed) {
-                      if (!commandWasRun)
-                        feedback = `No command-history entry matched: ${check.regex ? generateFromRegex(check.commandExpected) : check.commandExpected}`;
-                      else if (outputRegex && !commandOutputCaptured)
+                      if (!commandWasRun) {
+                        if (check.regex) {
+                          try {
+                            feedback = `No command-history entry matched: ${generateFromRegex(check.commandExpected)}`;
+                          } catch {
+                            feedback = `No command-history entry matched: ${check.commandExpected}`;
+                            // The grader uses JavaScript RegExp, which supports
+                            // lookarounds; the optional example generator does not.
+                            // Show the actual pattern instead of misreporting it
+                            // as an invalid grading regex.
+                          }
+                        } else {
+                          feedback = `No command-history entry matched: ${check.commandExpected}`;
+                        }
+                      } else if (outputRegex && !commandOutputCaptured)
                         feedback =
                           "The command was found in history, but its output was not captured. Run it again to verify intendedOutput.";
                       else if (outputRegex)
@@ -6617,7 +6734,7 @@ function validateExercise(exercise) {
       ))
   )
     throw new Error(
-      "terminal.solution must be an array of non-empty command strings (maximum 8192 characters each)",
+      "terminal.solution must be an array of non-empty steps (maximum 8192 characters each)",
     );
   if (
     config.initialFilesystem !== undefined &&
@@ -7400,13 +7517,14 @@ export async function mountTerminalExercise({
     "ot-input-highlight-content",
   );
   inputHighlight.append(inputHighlightContent);
-  const input = createElement("textarea", "ot-input");
+  // Use an input rather than a textarea: secret prompts switch this same
+  // control to type=password, and HTMLTextAreaElement.type is read-only.
+  const input = createElement("input", "ot-input");
+  input.type = "text";
   // Workspace restore is asynchronous. Do not accept commands until the shell
   // exists; the Enter handler below also guards against synthetic/racing input.
   input.disabled = true;
 
-  input.rows = 1;
-  input.wrap = "soft";
   input.autocomplete = "off";
   input.setAttribute("autocorrect", "off");
   input.setAttribute("autocapitalize", "off");
@@ -7444,7 +7562,7 @@ export async function mountTerminalExercise({
   const solutionIntro = createElement(
     "p",
     "ot-solution-intro",
-    "These commands satisfy the configured grading checks. They may skip extra practice steps that are described but not graded.",
+    "Follow these steps in order. Depending on the exercise, a step may be a shell command, a response to an interactive prompt, an editor keystroke, or text to enter.",
   );
   const solutionList = createElement("ol", "ot-solution-list");
   for (const command of solutionCommands) {
@@ -7528,7 +7646,7 @@ export async function mountTerminalExercise({
   const syncInputHighlight = () => {
     input.style.height = "auto";
     input.style.height = `${input.scrollHeight}px`;
-    if (input.type === "password")
+    if (activePromptMode === "secret")
       inputHighlightContent.textContent = "•".repeat(input.value.length);
     else if (input.value)
       inputHighlightContent.innerHTML = highlightCommandMarkup(input.value);
@@ -7551,7 +7669,7 @@ export async function mountTerminalExercise({
   syncInputHighlight();
   const showError = (message) => {
     const box = createElement("div", "ot-error", message);
-    container.replaceChildren(style, box);
+    workspaceHost.replaceChildren(box);
   };
   const editorPromise = (path, initial, write) =>
     new Promise((resolve) => {
@@ -7568,6 +7686,10 @@ export async function mountTerminalExercise({
       let yankLinewise = false;
       let pendingOperator = "";
       let pendingCount = "";
+      let pendingG = false;
+      let visualAnchor = 0;
+      let visualHead = 0;
+      let visualLinewise = false;
       let lastSearch = "";
       let searchDirection = 1;
       let lineNumbers = false;
@@ -7608,7 +7730,8 @@ export async function mountTerminalExercise({
       for (const button of [saveButton, saveQuitButton, quitButton])
         button.type = "button";
 
-      const cursor = () => textarea.selectionStart ?? 0;
+      const cursor = () =>
+        mode === "visual" ? visualHead : (textarea.selectionStart ?? 0);
       const lineStart = (pos) => {
         const start = textarea.value.lastIndexOf("\n", Math.max(0, pos - 1));
         return start + 1;
@@ -7648,16 +7771,36 @@ export async function mountTerminalExercise({
               ? "-- VISUAL --  Move with h/j/k/l, y to copy, d to delete"
               : "NORMAL  h/j/k/l move · i insert · dd delete line · yy copy line · p paste · :wq save & quit");
       };
+      const updateVisualSelection = () => {
+        const low = Math.min(visualAnchor, visualHead);
+        const high = Math.max(visualAnchor, visualHead);
+        let start = low;
+        let end = Math.min(textarea.value.length, high + 1);
+        if (visualLinewise) {
+          start = lineStart(low);
+          const lastStart = lineStart(high);
+          const lastEnd = lineEnd(lastStart);
+          end = lastEnd < textarea.value.length ? lastEnd + 1 : lastEnd;
+        }
+        textarea.setSelectionRange(start, end);
+      };
       const setCursor = (position, extend = false) => {
         const bounded = Math.max(0, Math.min(textarea.value.length, position));
-        const anchor = extend
-          ? textarea.selectionStart <= textarea.selectionEnd
-            ? textarea.selectionStart
-            : textarea.selectionEnd
-          : bounded;
         textarea.focus();
-        if (extend) textarea.setSelectionRange(anchor, bounded);
-        else textarea.setSelectionRange(bounded, bounded);
+        if (extend && mode === "visual") {
+          visualHead = bounded;
+          updateVisualSelection();
+          return;
+        }
+        if (extend) {
+          const anchor = Math.min(
+            textarea.selectionStart,
+            textarea.selectionEnd,
+          );
+          textarea.setSelectionRange(anchor, bounded);
+        } else {
+          textarea.setSelectionRange(bounded, bounded);
+        }
       };
       const insertAt = (start, end, text) => {
         pushUndo();
@@ -7666,6 +7809,11 @@ export async function mountTerminalExercise({
         setMode(mode);
       };
       const saveTo = async (target = currentPath) => {
+        // Vim's default 'endofline' behavior writes a trailing newline for a
+        // non-empty text file. Preserve this normal text-file invariant so a
+        // saved Insert-mode buffer behaves like Vim rather than a raw textarea.
+        if (textarea.value.length && !textarea.value.endsWith("\n"))
+          textarea.value += "\n";
         await write(textarea.value, target);
         currentPath = target;
         savedValue = textarea.value;
@@ -7849,9 +7997,16 @@ export async function mountTerminalExercise({
       textarea.addEventListener("keydown", (event) => {
         if (event.key === "Escape") {
           event.preventDefault();
+          if (mode === "visual") {
+            const at = visualHead;
+            visualLinewise = false;
+            visualAnchor = visualHead = at;
+            textarea.setSelectionRange(at, at);
+          }
           setMode("normal");
           pendingOperator = "";
           pendingCount = "";
+          pendingG = false;
           textarea.focus();
           return;
         }
@@ -7865,7 +8020,10 @@ export async function mountTerminalExercise({
           return;
         }
         event.preventDefault();
-        const key = event.key;
+        const key =
+          event.shiftKey && /^[a-z]$/.test(event.key)
+            ? event.key.toUpperCase()
+            : event.key;
         if (mode === "visual") {
           if (["ArrowLeft", "h"].includes(key)) setCursor(cursor() - 1, true);
           else if (["ArrowRight", "l"].includes(key))
@@ -7877,7 +8035,8 @@ export async function mountTerminalExercise({
               b = Math.max(textarea.selectionStart, textarea.selectionEnd);
             const selected = textarea.value.slice(a, b);
             yankBuffer = selected;
-            yankLinewise = false;
+            yankLinewise = visualLinewise;
+            const collapseAt = visualHead;
             if (navigator.clipboard?.writeText) {
               navigator.clipboard.writeText(selected).catch(() => {});
             }
@@ -7886,11 +8045,36 @@ export async function mountTerminalExercise({
               textarea.setRangeText("", a, b, "end");
               updateDirty();
             }
+            visualLinewise = false;
+            visualAnchor = visualHead = Math.min(
+              collapseAt,
+              textarea.value.length,
+            );
+            textarea.setSelectionRange(visualHead, visualHead);
             setMode(
               "normal",
               key === "y" ? "Yanked selection" : "Deleted selection",
             );
           }
+          return;
+        }
+        if (pendingG) {
+          pendingG = false;
+          if (key === "g") {
+            setCursor(0);
+            return;
+          }
+        }
+        if (key === "g") {
+          pendingG = true;
+          return;
+        }
+        if (key === "G") {
+          const lastPosition = Math.max(
+            0,
+            textarea.value.length - (textarea.value.endsWith("\n") ? 1 : 0),
+          );
+          setCursor(lineStart(lastPosition));
           return;
         }
         if (pendingOperator) {
@@ -7975,12 +8159,11 @@ export async function mountTerminalExercise({
             statusLine.textContent = "Undo";
           }
         } else if (key === "v" || key === "V") {
-          const begin = key === "V" ? start : pos;
-          const finish =
-            key === "V" ? Math.min(textarea.value.length, end + 1) : pos;
-          setCursor(begin);
-          textarea.setSelectionRange(begin, finish);
+          visualAnchor = key === "V" ? start : pos;
+          visualHead = key === "V" ? start : pos;
+          visualLinewise = key === "V";
           setMode("visual");
+          updateVisualSelection();
         } else if (key === "/") {
           searchDirection = 1;
           openCommand("search");
@@ -8041,9 +8224,9 @@ export async function mountTerminalExercise({
       }
       activePrompt = resolve;
       activePromptMode = "secret";
+      input.type = "password";
       input.disabled = false;
       prompt.textContent = labelText;
-      input.type = "password";
       input.value = "";
       input.placeholder = "Enter simulated password";
       syncInputHighlight();
@@ -8057,9 +8240,9 @@ export async function mountTerminalExercise({
       }
       activePrompt = resolve;
       activePromptMode = "text";
+      input.type = "text";
       input.disabled = false;
       prompt.textContent = labelText;
-      input.type = "text";
       input.value = "";
       input.placeholder = "Type a response and press Enter";
       syncInputHighlight();

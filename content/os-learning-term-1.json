@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "packageId": "os-learning-term-1",
-  "version": "1.2.0",
+  "version": "1.3.1",
   "term": 1,
   "datasets": {},
   "exercises": {
@@ -693,7 +693,7 @@
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 2,
+      "contentVersion": 3,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -708,14 +708,14 @@
           {
             "id": "location",
             "type": "content",
-            "path": "/home/student/current-location.txt",
+            "path": "/home/student/nav/start/child/current-location.txt",
             "points": 1,
             "expected": "/home/student/nav/start/child\n"
           },
           {
             "id": "cd-to-child-directory",
             "type": "contains",
-            "path": "/home/student/current-location.txt",
+            "path": "/home/student/nav/start/child/current-location.txt",
             "expected": "[\\s\\S]*",
             "regex": true,
             "commandExpected": "^\\s*cd\\s+nav/start/child\\s*$",
@@ -801,7 +801,7 @@
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 2,
+      "contentVersion": 3,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -816,14 +816,14 @@
           {
             "id": "previous-dir",
             "type": "content",
-            "path": "/home/student/previous-directory.txt",
+            "path": "/home/student/nav/start/previous-directory.txt",
             "points": 1,
             "expected": "/home/student/nav/start\n"
           },
           {
             "id": "cd-to-start",
             "type": "contains",
-            "path": "/home/student/previous-directory.txt",
+            "path": "/home/student/nav/start/previous-directory.txt",
             "expected": "[\\s\\S]*",
             "regex": true,
             "commandExpected": "^\\s*cd\\s+nav/start\\s*$",
@@ -833,7 +833,7 @@
           {
             "id": "cd-to-archive",
             "type": "contains",
-            "path": "/home/student/previous-directory.txt",
+            "path": "/home/student/nav/start/previous-directory.txt",
             "expected": "[\\s\\S]*",
             "regex": true,
             "commandExpected": "^\\s*cd\\s+\\.\\./archive\\s*$",
@@ -843,7 +843,7 @@
           {
             "id": "cd-previous-directory",
             "type": "contains",
-            "path": "/home/student/previous-directory.txt",
+            "path": "/home/student/nav/start/previous-directory.txt",
             "expected": "[\\s\\S]*",
             "regex": true,
             "commandExpected": "^\\s*cd\\s+-\\s*$",
@@ -1443,7 +1443,7 @@
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 2,
+      "contentVersion": 3,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -1473,7 +1473,7 @@
             "type": "contains",
             "path": "/home/student/non-digit-names.txt",
             "regex": true,
-            "expected": "(?=[\\s\\S]*^Alpha\\.txt$)(?=[\\s\\S]*^list\\.txt$)(?![\\s\\S]*^log[0-9]+\\.txt$)[\\s\\S]*",
+            "expected": "(?=[\\s\\S]*^Alpha\\.txt$)(?=[\\s\\S]*^list\\.txt$)(?=[\\s\\S]*^log1\\.txt$)(?=[\\s\\S]*^log10\\.txt$)(?=[\\s\\S]*^log2\\.txt$)[\\s\\S]*",
             "flags": "m",
             "points": 1,
             "description": "Verify that the negated bracket expression lists non-digit-leading names only."
@@ -2267,15 +2267,15 @@
       "id": "os-learning-s04-010",
       "category": "Section 04 — Viewing and inspecting files",
       "title": "Use a pager safely",
-      "instructions": "Open `inspect/colors.txt` with `less`, move through it, and quit with `q`. Repeat with `more`, using Space to advance and `q` to quit. Then append the line count from `wc -l` and the detected type from `file` to `pager-notes.txt`.",
+      "instructions": "Open `inspect/colors.txt` with `less`, then with `more`. In this browser simulation both viewers print the file and return immediately; pager navigation keys such as Space and `q` are not interactive. Then append the line count from `wc -l` and the detected type from `file` to `pager-notes.txt`.",
       "hints": [
-        "`less` supports scrolling both directions; `more` pages forward.",
-        "Both pager programs use `q` to quit."
+        "`less inspect/colors.txt` and `more inspect/colors.txt` display the file in the terminal scrollback.",
+        "Use `wc -l` and `file` with `>>` to append both inspection results to `pager-notes.txt`."
       ],
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 2,
+      "contentVersion": 3,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -2328,10 +2328,7 @@
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
         "solution": [
           "less inspect/colors.txt",
-          "q",
           "more inspect/colors.txt",
-          " ",
-          "q",
           "wc -l inspect/colors.txt > pager-notes.txt",
           "file inspect/colors.txt >> pager-notes.txt"
         ]
@@ -3461,7 +3458,7 @@
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 2,
+      "contentVersion": 3,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -3472,8 +3469,8 @@
           "printf 'Mira,Sales,82\\nNoah,IT,91\\nAva,Sales,88\\n' > /home/student/textlab/people.csv",
           "printf '10\\n2\\n30\\n4\\n' > /home/student/textlab/numbers.txt",
           "printf 'alpha:beta:gamma\\n' > /home/student/textlab/colon.txt",
-          "chown -R student:student /home/student/textlab",
-          "printf 'red    green  blue\\n' > /home/student/textlab/spaces.txt"
+          "printf 'red    green  blue\\n' > /home/student/textlab/spaces.txt",
+          "chown -R student:student /home/student/textlab"
         ],
         "checks": [
           {
@@ -3964,7 +3961,7 @@
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 1,
+      "contentVersion": 2,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -3984,7 +3981,7 @@
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
         "solution": [
-          "( echo 'successful command'; ls /doesnotexist ) > iolab/all-output.log 2>&1",
+          "{ echo 'successful command'; ls /doesnotexist; } > iolab/all-output.log 2>&1",
           "echo 'expected failure' >> iolab/all-output.log"
         ]
       },
@@ -4046,7 +4043,7 @@
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 2,
+      "contentVersion": 3,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -4054,8 +4051,8 @@
         "preSetupCommands": [
           "mkdir -p /home/student/iolab",
           "printf 'pear\\napple\\nplum\\n' > /home/student/iolab/unsorted.txt",
-          "chown -R student:student /home/student/iolab",
-          "printf 'zeta\\nalpha\\nmu\\n' > /home/student/iolab/source.txt"
+          "printf 'zeta\\nalpha\\nmu\\n' > /home/student/iolab/source.txt",
+          "chown -R student:student /home/student/iolab"
         ],
         "checks": [
           {
@@ -4095,7 +4092,7 @@
       "difficulty": "Medium",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 2,
+      "contentVersion": 3,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -4122,15 +4119,12 @@
             "commandExpected": "^\\s*sort\\s+iolab/people\\.txt\\s*\\|\\s*uniq\\s*\\|\\s*nl\\s*\\|\\s*tee\\s+iolab/audit\\.txt\\s*$",
             "commandFlags": "",
             "points": 1,
-            "intendedOutput": "(?=[\\s\\S]*1\\s+Alex)(?=[\\s\\S]*2\\s+Mira)[\\s\\S]*",
+            "intendedOutput": "(?=[\\s\\S]*1\\s+ada)(?=[\\s\\S]*2\\s+liam)(?=[\\s\\S]*3\\s+zoe)[\\s\\S]*",
             "intendedOutputFlags": "i"
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
         "solution": [
-          "echo \"Mira\" > iolab/people.txt",
-          "echo \"Alex\" >> iolab/people.txt",
-          "echo \"Mira\" >> iolab/people.txt",
           "sort iolab/people.txt | uniq | nl | tee iolab/audit.txt"
         ]
       },
@@ -4238,7 +4232,7 @@
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 1,
+      "contentVersion": 2,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -4252,14 +4246,18 @@
         "checks": [
           {
             "id": "link-count",
-            "type": "file",
+            "type": "contains",
             "path": "/home/student/hard-link-count.txt",
-            "points": 1
+            "points": 1,
+            "expected": "^2\\n$",
+            "regex": true,
+            "commandExpected": "^\\s*stat\\s+-c\\s+['\\\"]?%h['\\\"]?\\s+linklab/original\\.txt\\s*>\\s*hard-link-count\\.txt\\s*$",
+            "commandFlags": "",
+            "description": "Save the hard-link count (two directory entries share the inode) using stat -c %h."
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
         "solution": [
-          "ln linklab/original.txt linklab/hard-copy.txt",
           "stat -c '%h' linklab/original.txt > hard-link-count.txt"
         ]
       },
@@ -4317,7 +4315,7 @@
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 2,
+      "contentVersion": 3,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -4340,9 +4338,14 @@
           },
           {
             "id": "link-listing",
-            "type": "file",
+            "type": "contains",
             "path": "/home/student/dangling-link-listing.txt",
-            "points": 1
+            "points": 1,
+            "expected": "dangling\\.txt -> temporary\\.txt",
+            "regex": true,
+            "commandExpected": "^\\s*ls\\s+-l\\s+linklab/dangling\\.txt\\s*>\\s*dangling-link-listing\\.txt\\s*$",
+            "commandFlags": "",
+            "description": "Save the long listing showing that the symbolic link remains after its target is removed."
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
@@ -4415,7 +4418,7 @@
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 1,
+      "contentVersion": 2,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -4423,8 +4426,8 @@
         "preSetupCommands": [
           "mkdir -p /home/student/linklab",
           "printf 'original data\\n' > /home/student/linklab/original.txt",
-          "chown -R student:student /home/student/linklab",
-          "mkdir -p /home/student/linklab/links"
+          "mkdir -p /home/student/linklab/links",
+          "chown -R student:student /home/student/linklab"
         ],
         "checks": [
           {
@@ -4496,7 +4499,7 @@
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 1,
+      "contentVersion": 2,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -4504,8 +4507,8 @@
         "preSetupCommands": [
           "mkdir -p /home/student/linklab",
           "printf 'original data\\n' > /home/student/linklab/original.txt",
-          "chown -R student:student /home/student/linklab",
-          "mkdir -p /home/student/linklab/shortcut-dir"
+          "mkdir -p /home/student/linklab/shortcut-dir",
+          "chown -R student:student /home/student/linklab"
         ],
         "checks": [
           {
@@ -4613,14 +4616,15 @@
       "difficulty": "Medium",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 2,
+      "contentVersion": 3,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
         "preSetupCommands": [
           "mkdir -p /home/student/linklab/share",
-          "printf 'original data\n' > /home/student/linklab/original.txt"
+          "printf 'original data\\n' > /home/student/linklab/original.txt",
+          "chown -R student:student /home/student/linklab"
         ],
         "checks": [
           {
@@ -5094,7 +5098,7 @@
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 3,
+      "contentVersion": 4,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -5105,9 +5109,9 @@
           "printf 'this is a larger sample file\\n' > /home/student/findlab/subdir/large-note.txt",
           "printf 'uppercase extension\\n' > /home/student/findlab/archive/REPORT.TXT",
           "touch /home/student/findlab/subdir/empty.dat",
-          "chown -R student:student /home/student/findlab",
           "mkdir -p /home/student/findlab/scratch",
-          "printf 'temporary\\n' > /home/student/findlab/scratch/remove.tmp"
+          "printf 'temporary\\n' > /home/student/findlab/scratch/remove.tmp",
+          "chown -R student:student /home/student/findlab"
         ],
         "checks": [
           {
@@ -5156,7 +5160,7 @@
       "difficulty": "Medium",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 2,
+      "contentVersion": 3,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -5167,8 +5171,8 @@
           "printf 'this is a larger sample file\\n' > /home/student/findlab/subdir/large-note.txt",
           "printf 'uppercase extension\\n' > /home/student/findlab/archive/REPORT.TXT",
           "touch /home/student/findlab/subdir/empty.dat",
-          "chown -R student:student /home/student/findlab",
-          "mkdir -p /home/student/findlab/collected"
+          "mkdir -p /home/student/findlab/collected",
+          "chown -R student:student /home/student/findlab"
         ],
         "checks": [
           {
@@ -5672,7 +5676,7 @@
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 4,
+      "contentVersion": 5,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -5700,6 +5704,7 @@
             "points": 1,
             "expected": [
               "oslearn_alex",
+              "root",
               "student"
             ]
           },
@@ -5912,7 +5917,7 @@
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 2,
+      "contentVersion": 3,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -5946,6 +5951,7 @@
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
         "solution": [
           "sudo passwd oslearn_pass",
+          "student",
           "ChangeMe123!",
           "ChangeMe123!",
           "echo \"A lab-only password was set with passwd.\" > password-lab/passwd-note.txt"
@@ -6662,7 +6668,7 @@
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 1,
+      "contentVersion": 2,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -6678,7 +6684,8 @@
           "chmod 755 /home/student/perm-lab /home/student/perm-lab/shared /home/student/perm-lab/private /home/student/perm-lab/collab",
           "chmod 644 /home/student/perm-lab/shared/readme.txt /home/student/perm-lab/private/key.txt /home/student/perm-lab/collab/report.txt",
           "printf '#!/bin/bash\\necho ready\\n' > /home/student/perm-lab/runme.sh",
-          "chmod 644 /home/student/perm-lab/runme.sh"
+          "chmod 644 /home/student/perm-lab/runme.sh",
+          "chown student:student /home/student/perm-lab/runme.sh"
         ],
         "checks": [
           {
@@ -6708,7 +6715,7 @@
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 2,
+      "contentVersion": 3,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -6719,6 +6726,7 @@
           "printf 'private key placeholder\\n' > /home/student/perm-lab/private/key.txt",
           "printf 'team report\\n' > /home/student/perm-lab/collab/report.txt",
           "groupadd -f oslearn_permteam",
+          "usermod -aG oslearn_permteam student",
           "useradd -m -s /bin/bash -g oslearn_permteam oslearn_owner 2>/dev/null || true",
           "chown -R student:student /home/student/perm-lab",
           "chmod 755 /home/student/perm-lab /home/student/perm-lab/shared /home/student/perm-lab/private /home/student/perm-lab/collab",
@@ -6942,7 +6950,7 @@
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 2,
+      "contentVersion": 3,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -6953,6 +6961,7 @@
           "printf 'private key placeholder\\n' > /home/student/perm-lab/private/key.txt",
           "printf 'team report\\n' > /home/student/perm-lab/collab/report.txt",
           "groupadd -f oslearn_permteam",
+          "usermod -aG oslearn_permteam student",
           "useradd -m -s /bin/bash -g oslearn_permteam oslearn_owner 2>/dev/null || true",
           "chown -R student:student /home/student/perm-lab",
           "chmod 755 /home/student/perm-lab /home/student/perm-lab/shared /home/student/perm-lab/private /home/student/perm-lab/collab",
@@ -7066,13 +7075,14 @@
       "difficulty": "Hard",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 2,
+      "contentVersion": 3,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
         "preSetupCommands": [
           "groupadd -f oslearn_permteam",
+          "usermod -aG oslearn_permteam student",
           "mkdir -p /home/student/team-workspace/private /home/student/team-workspace/shared /home/student/team-workspace/drop",
           "printf 'private\n' > /home/student/team-workspace/private/secret.txt",
           "chown -R student:student /home/student/team-workspace"
@@ -7459,7 +7469,7 @@
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 3,
+      "contentVersion": 4,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -7471,7 +7481,8 @@
           "printf '#!/bin/bash\\necho demo\\n' > /home/student/archlab/source/bin/demo.sh",
           "chmod 755 /home/student/archlab/source/bin/demo.sh",
           "chown -R student:student /home/student/archlab",
-          "mkdir -p /home/student/archlab/restore-meta"
+          "mkdir -p /home/student/archlab/restore-meta",
+          "chown -R student:student /home/student/archlab"
         ],
         "checks": [
           {
@@ -7675,7 +7686,7 @@
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 3,
+      "contentVersion": 4,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -7711,7 +7722,7 @@
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
         "solution": [
-          "tar -cf archlab/archive-safety.tar archlab/source/",
+          "tar -cf archlab/archive-safety.tar -C archlab source",
           "tar -tvf archlab/archive-safety.tar > archlab/archive-safety.txt",
           "mkdir -p archlab/safe-restore",
           "tar -xf archlab/archive-safety.tar -C archlab/safe-restore"
@@ -8874,7 +8885,7 @@
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 2,
+      "contentVersion": 3,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -8909,6 +8920,7 @@
           "vim vimlab/new-file.txt",
           "i",
           "Vim practice",
+          "Press Enter",
           "Saved successfully",
           "<Esc>",
           ":wq"
@@ -9410,7 +9422,7 @@
       "difficulty": "Medium",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 2,
+      "contentVersion": 3,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -9445,7 +9457,9 @@
           "vim vimlab/admin-notes.txt",
           "i",
           "Inspect before editing",
+          "Press Enter",
           "Save with :w",
+          "Press Enter",
           "Exit with :q",
           "<Esc>",
           ":wq",
@@ -9543,15 +9557,15 @@
       "id": "os-learning-s17-003",
       "category": "Section 17 — Getting help and reading documentation",
       "title": "Inspect the hidden-file option in the ls manual",
-      "instructions": "Use `man ls` to search for the `-a` option and quit with `q`. Then run `ls -la /home/student` and save the listing to `helplab/man-ls-note.txt`.",
+      "instructions": "Run `man ls` and inspect the displayed synopsis and `-a` option. In this browser simulation, manual pages print directly to the terminal scrollback and return immediately; pager navigation keys such as `/` and `q` are not interactive. Then run `ls -la /home/student` and save the listing to `helplab/man-ls-note.txt`.",
       "hints": [
-        "Inside `man`, use `/period` to search for a phrase and `n` for the next match.",
-        "`q` quits the manual viewer."
+        "`man ls` prints the bundled manual summary, including the `-a` option.",
+        "Save the actual directory listing with `ls -la /home/student > helplab/man-ls-note.txt`."
       ],
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 2,
+      "contentVersion": 3,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -9582,8 +9596,6 @@
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
         "solution": [
           "man ls",
-          "/-a",
-          "q",
           "ls -la /home/student > helplab/man-ls-note.txt"
         ]
       },
@@ -9771,15 +9783,15 @@
       "id": "os-learning-s17-008",
       "category": "Section 17 — Getting help and reading documentation",
       "title": "Explore GNU Info documentation",
-      "instructions": "Open the `File utilities` node in `info coreutils`, follow one subtopic with the Down/Enter keys, return to the parent with Left, and quit with `q`. Record the topic and two example commands in `helplab/info-note.txt`.",
+      "instructions": "Run `info coreutils` to inspect the bundled Coreutils summary. This browser simulation prints the topic immediately and returns to the shell; interactive Info-node navigation with Down, Enter, Left, and `q` is not implemented. Record the file-utility topic and example commands in `helplab/info-note.txt`.",
       "hints": [
-        "Info pages use linked nodes.",
-        "The summary names `info coreutils` as an example."
+        "`info coreutils` displays the bundled local summary.",
+        "The summary names common file utilities such as `cp`, `mv`, and `rm`."
       ],
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 2,
+      "contentVersion": 3,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -9802,7 +9814,7 @@
             "path": "/home/student/helplab/info-note.txt",
             "expected": "[\\s\\S]*",
             "regex": true,
-            "commandExpected": "^\\s*info\\s+coreutils\\s+['\\\"]?File\\s+utilities['\\\"]?\\s*$",
+            "commandExpected": "^\\s*info\\s+coreutils\\s*$",
             "commandFlags": "i",
             "points": 1
           },
@@ -9819,11 +9831,7 @@
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
         "solution": [
-          "info coreutils 'File utilities'",
-          "Down",
-          "Enter",
-          "Left",
-          "q",
+          "info coreutils",
           "echo \"File utilities cover copying, moving and removing files with cp, mv and rm.\" > helplab/info-note.txt"
         ]
       },
@@ -9833,15 +9841,15 @@
       "id": "os-learning-s17-009",
       "category": "Section 17 — Getting help and reading documentation",
       "title": "Explore documentation with pinfo",
-      "instructions": "Open `pinfo coreutils`, practise following a link with Enter/Right, return to the parent with Left, and quit with `q`. Record the navigation keys in `helplab/pinfo-keys.txt`.",
+      "instructions": "Run `pinfo coreutils` to inspect the bundled Coreutils summary. The browser simulation prints the topic immediately and returns to the shell; it does not provide an interactive Info navigator. Then save a short reference to standard Info navigation keys in `helplab/pinfo-keys.txt`, clearly noting that those keys are not active in this simulation.",
       "hints": [
-        "Arrow keys scroll; Enter/Right follow a link.",
-        "`u` or Left goes up; `n`/`p` moves next/previous; `q` quits."
+        "`pinfo coreutils` displays the bundled local summary and returns to the prompt.",
+        "Standard Info navigation uses Enter/Right to follow a link, Left or `u` to go up, `n`/`p` for adjacent nodes, and `q` to quit; these keys are not interactive in this simulator."
       ],
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 2,
+      "contentVersion": 3,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -9857,7 +9865,7 @@
             "type": "content",
             "path": "/home/student/helplab/pinfo-keys.txt",
             "points": 1,
-            "expected": "Enter/Right follows; Left/u goes up; n/p changes node; q quits.\n"
+            "expected": "This viewer is non-interactive. Standard Info navigation: Enter/Right follows; Left/u goes up; n/p changes node; q quits.\n"
           },
           {
             "id": "open-pinfo-coreutils",
@@ -9873,11 +9881,7 @@
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
         "solution": [
           "pinfo coreutils",
-          "Right",
-          "Enter",
-          "Left",
-          "q",
-          "echo \"Enter/Right follows; Left/u goes up; n/p changes node; q quits.\" > helplab/pinfo-keys.txt"
+          "echo \"This viewer is non-interactive. Standard Info navigation: Enter/Right follows; Left/u goes up; n/p changes node; q quits.\" > helplab/pinfo-keys.txt"
         ]
       },
       "course": "os"
@@ -9886,15 +9890,15 @@
       "id": "os-learning-s17-010",
       "category": "Section 17 — Getting help and reading documentation",
       "title": "Inspect a command synopsis",
-      "instructions": "Use `man ls` to inspect the `ls` manual synopsis and quit with `q`. Then run `ls --help` and save its output to `helplab/synopsis.txt`.",
+      "instructions": "Run `man ls` to inspect the `ls` manual synopsis. In this browser simulation, the manual prints directly to the terminal scrollback and returns immediately; no `q` pager command is needed. Then run `ls --help` and save its output to `helplab/synopsis.txt`.",
       "hints": [
-        "Use the synopsis examples from the summary.",
-        "A placeholder is replaced with a value you supply."
+        "The bundled `man ls` output includes the command synopsis.",
+        "Use `ls --help > helplab/synopsis.txt` to save the quick-help output."
       ],
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 2,
+      "contentVersion": 3,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -9925,7 +9929,6 @@
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
         "solution": [
           "man ls",
-          "q",
           "ls --help > helplab/synopsis.txt"
         ]
       },
@@ -9977,15 +9980,15 @@
       "id": "os-learning-s17-012",
       "category": "Section 17 — Getting help and reading documentation",
       "title": "Search permission and ownership documentation",
-      "instructions": "Use `apropos permission` and `man -k ownership`, saving their outputs in that order to `helplab/research-answers.txt`. Also inspect `man chmod` and `man cp`, searching the latter for `-p`; quit each manual page with `q`.",
+      "instructions": "Use `apropos permission` and `man -k ownership`, saving their outputs in that order to `helplab/research-answers.txt`. Also inspect `man chmod` and `man cp`; the bundled manual summaries print directly to the terminal scrollback and return immediately. Read the `-p` option in the displayed `cp` synopsis; no interactive pager search or quit keys are supported.",
       "hints": [
         "The summary identifies `chmod`, `chown`, and `cp -p`.",
-        "Use manual pages to verify options rather than guessing."
+        "`man cp` prints the synopsis, including `-p`, directly; there is no interactive pager in this simulation."
       ],
       "difficulty": "Medium",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 2,
+      "contentVersion": 3,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -10027,11 +10030,8 @@
         "solution": [
           "apropos permission > helplab/research-answers.txt",
           "man chmod",
-          "q",
           "man -k ownership >> helplab/research-answers.txt",
-          "man cp",
-          "/-p",
-          "q"
+          "man cp"
         ]
       },
       "course": "os"
@@ -10272,7 +10272,7 @@
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 2,
+      "contentVersion": 3,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -10285,7 +10285,8 @@
           "groupadd -f oslearn_capstone",
           "chown -R student:student /home/student/capstone",
           "chmod 755 /home/student/capstone /home/student/capstone/incoming /home/student/capstone/work /home/student/capstone/work/reports /home/student/capstone/archive",
-          "cp /home/student/capstone/incoming/brief.txt /home/student/capstone/work/brief.txt"
+          "cp /home/student/capstone/incoming/brief.txt /home/student/capstone/work/brief.txt",
+          "chown -R student:student /home/student/capstone"
         ],
         "checks": [
           {
@@ -10331,7 +10332,7 @@
       "difficulty": "Hard",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 2,
+      "contentVersion": 3,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -10345,7 +10346,8 @@
           "chown -R student:student /home/student/capstone",
           "chmod 755 /home/student/capstone /home/student/capstone/incoming /home/student/capstone/work /home/student/capstone/work/reports /home/student/capstone/archive",
           "cp /home/student/capstone/incoming/brief.txt /home/student/capstone/work/brief.txt",
-          "mkdir -p /home/student/capstone/archive/collected"
+          "mkdir -p /home/student/capstone/archive/collected",
+          "chown -R student:student /home/student/capstone"
         ],
         "checks": [
           {
@@ -10455,7 +10457,7 @@
       "difficulty": "Easy",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 2,
+      "contentVersion": 3,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -10466,6 +10468,7 @@
           "printf 'Project: Linux Learning\\nStatus: Active\\n' > /home/student/capstone/incoming/brief.txt",
           "printf 'remove this later\\n' > /home/student/capstone/incoming/scratch.tmp",
           "groupadd -f oslearn_capstone",
+          "usermod -aG oslearn_capstone student",
           "chown -R student:student /home/student/capstone",
           "chmod 755 /home/student/capstone /home/student/capstone/incoming /home/student/capstone/work /home/student/capstone/work/reports /home/student/capstone/archive"
         ],
@@ -10635,7 +10638,7 @@
       "difficulty": "Medium",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 2,
+      "contentVersion": 3,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -10673,8 +10676,11 @@
           "vim capstone/work/reports/operator-note.txt",
           "i",
           "Inspect first",
+          "Press Enter",
           "Back up with tar",
+          "Press Enter",
           "Check modes with stat",
+          "Press Enter",
           "Search with find",
           "<Esc>",
           ":wq"
@@ -10694,7 +10700,7 @@
       "difficulty": "Hard",
       "type": "terminal",
       "provenance": "os-learning-term-1.json",
-      "contentVersion": 2,
+      "contentVersion": 3,
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
@@ -10708,6 +10714,7 @@
           "chown -R student:student /home/student/capstone",
           "chmod 755 /home/student/capstone /home/student/capstone/incoming /home/student/capstone/work /home/student/capstone/work/reports /home/student/capstone/archive",
           "cp /home/student/capstone/incoming/hours.csv /home/student/capstone/work/team-hours.csv",
+          "cp /home/student/capstone/incoming/brief.txt /home/student/capstone/work/brief.txt",
           "tar -czf /home/student/capstone/archive/workspace.tgz -C /home/student/capstone work",
           "chgrp oslearn_capstone /home/student/capstone/work/reports",
           "chmod 2775 /home/student/capstone/work/reports"
@@ -10739,6 +10746,17 @@
             "points": 1,
             "intendedOutput": "(?=[\\s\\S]*brief\\.txt)(?=[\\s\\S]*team-hours\\.csv)[\\s\\S]*",
             "intendedOutputFlags": "i"
+          },
+          {
+            "id": "tar-listing-command",
+            "type": "contains",
+            "path": "/home/student/capstone/FINAL-RUNBOOK.txt",
+            "expected": "[\\s\\S]*",
+            "regex": true,
+            "commandExpected": "^\\s*tar\\s+-tf\\s+capstone/archive/workspace\\.tgz\\s*>>\\s*capstone/FINAL-RUNBOOK\\.txt\\s*$",
+            "commandFlags": "",
+            "points": 1,
+            "description": "Run tar -tf and append the archive member listing to the final runbook."
           }
         ],
         "explanation": "The grader inspects the final virtual filesystem state. Commands may be entered in a different order when the same required result is produced.",
