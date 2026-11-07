@@ -7,7 +7,15 @@ export const JAVA_TIMEOUTS = Object.freeze({
   gradingMs: 20_000,
 });
 
-const WORKER_URL = new URL("./java.worker.js", import.meta.url);
+const WORKER_URL = new URL(
+  "./java.worker.js",
+  globalThis.__ACS_JAVA_MODULE_BASE_URL__ || import.meta.url,
+);
+if (globalThis.__ACS_FORCE_CACHE_BUST__)
+  WORKER_URL.searchParams.set(
+    "__acs_nocache",
+    String(globalThis.__ACS_FORCE_CACHE_BUST__),
+  );
 const statusListeners = new Set();
 let worker = null;
 let readyPromise = null;
@@ -375,20 +383,26 @@ export function resetJavaRuntime() {
   stopJavaExecution("Java runtime reset.");
 }
 
-async function loadCodeMirror() {
-  const [core, language, javaLanguage, oneDark] = await Promise.all([
+let codeMirrorModulePromise = null;
+function loadCodeMirror() {
+  // Cache the import group across exercises. Dynamic import itself is cached by
+  // the browser, but retaining the aggregate promise also avoids repeat setup.
+  return (codeMirrorModulePromise ||= Promise.all([
     import("https://esm.sh/codemirror@6.0.2"),
     import("https://esm.sh/@codemirror/language"),
     import("https://esm.sh/@codemirror/lang-java@6.0.2"),
     import("https://esm.sh/@codemirror/theme-one-dark"),
-  ]);
-
-  return {
+    import("https://esm.sh/@codemirror/state@6"),
+  ]).then(([core, language, javaLanguage, oneDark, state]) => ({
     ...core,
     ...language,
     ...javaLanguage,
     ...oneDark,
-  };
+    ...state,
+  })).catch((error) => {
+    codeMirrorModulePromise = null;
+    throw error;
+  }));
 }
 
 function element(tag, className, children = []) {
@@ -399,6 +413,18 @@ function element(tag, className, children = []) {
     else if (child != null) node.append(document.createTextNode(String(child)));
   }
   return node;
+}
+
+function scrollSentinel() {
+  const node = element("div", "java-scroll-end");
+  node.setAttribute("aria-hidden", "true");
+  return node;
+}
+
+function createJavaThemeExtensions(oneDark, dark) {
+  // Keep all visual styling in style.css. One Dark contributes syntax colours
+  // only while the application itself is using its dark theme.
+  return dark ? [oneDark] : [];
 }
 
 function formatDiagnostics(diagnostics) {
@@ -569,6 +595,8 @@ export async function mountJavaExercise({
   let running = false;
   let currentOperation = 0;
   let unsubscribeStatus = null;
+  let themeObserver = null;
+  let themeCompartment = null;
   let latestResult = null;
   const root = element("div", "java-exercise");
   const editorPanel = element("section", "java-panel java-editor-panel");
@@ -626,15 +654,27 @@ export async function mountJavaExercise({
   );
   statusLine.setAttribute("role", "status");
   statusLine.setAttribute("aria-live", "polite");
+  const operationProgress = element("div", "java-operation-progress", [
+    element("div", "java-operation-progress-heading", [
+      element("span", "java-operation-progress-indicator", ""),
+      element("strong", "java-operation-progress-title", "Preparing Java runtime…"),
+    ]),
+    element("p", "java-operation-progress-detail", "The Java worker is getting ready."),
+    element("div", "java-operation-progress-track", [
+      element("span", "java-operation-progress-fill", ""),
+    ]),
+  ]);
+  operationProgress.hidden = true;
+  operationProgress.setAttribute("aria-hidden", "true");
+  const progressTitle = operationProgress.querySelector(".java-operation-progress-title");
+  const progressDetail = operationProgress.querySelector(".java-operation-progress-detail");
   const consolePanel = element("details", "java-panel java-output-panel");
   consolePanel.open = true;
   consolePanel.append(
     element("summary", "java-panel-summary", "Console output"),
   );
   const consoleContent = element("div", "java-console-content");
-  const consoleEnd = element("div", "java-scroll-end");
-  consoleEnd.setAttribute("aria-hidden", "true");
-  consoleEnd.style.cssText = "height:0;overflow:hidden;";
+  const consoleEnd = scrollSentinel();
   consolePanel.append(consoleContent, consoleEnd);
   const resultsPanel = element("details", "java-panel java-results-panel");
   resultsPanel.open = true;
@@ -646,9 +686,7 @@ export async function mountJavaExercise({
     "java-results-content",
     "Run Check to see the test results.",
   );
-  const resultsEnd = element("div", "java-scroll-end");
-  resultsEnd.setAttribute("aria-hidden", "true");
-  resultsEnd.style.cssText = "height:0;overflow:hidden;";
+  const resultsEnd = scrollSentinel();
   resultsPanel.append(resultsContent, resultsEnd);
 
   // The app supplies workspace and tools slots. The editor mounts in the
@@ -660,7 +698,7 @@ export async function mountJavaExercise({
   else root.append(editorPanel);
   root.append(inputPanel);
   if (!(actionsContainer instanceof Element)) root.append(actionButtons);
-  root.append(statusLine, consolePanel);
+  root.append(operationProgress, statusLine, consolePanel);
   if (!checkButton.hidden) root.append(resultsPanel);
   toolsHost.replaceChildren(root);
 
@@ -708,6 +746,22 @@ export async function mountJavaExercise({
 
   const handleStatus = ({ status, detail }) => {
     if (disposed) return;
+    const messages = {
+      INITIALIZING: ["Starting the Java 21 runtime", "Preparing the isolated Java worker. The first start may take longer."],
+      COMPILING: ["Compiling your Java code", "Checking the source and preparing the program to run."],
+      RUNNING: ["Running your program", "Your code is executing in a separate worker; the editor remains responsive."],
+      TESTING: ["Running automatic tests", "Executing the exercise checks and collecting their results."],
+    };
+    const activeMessage = messages[status];
+    if (activeMessage) {
+      progressTitle.textContent = activeMessage[0];
+      progressDetail.textContent = detail || activeMessage[1];
+      operationProgress.dataset.phase = status.toLowerCase();
+      operationProgress.hidden = false;
+    } else {
+      operationProgress.hidden = true;
+      operationProgress.removeAttribute("data-phase");
+    }
     statusLine.textContent =
       detail ||
       {
@@ -730,6 +784,11 @@ export async function mountJavaExercise({
     const current = ++currentOperation;
     const code = getSource();
     setBusy(true);
+    operationProgress.hidden = false;
+    operationProgress.dataset.phase = "queued";
+    progressTitle.textContent =
+      operation === "check" ? "Preparing automatic checks" : "Preparing Java execution";
+    progressDetail.textContent = "Starting the Java worker and preparing your source code.";
     statusLine.textContent =
       operation === "check"
         ? "Preparing automatic checks…"
@@ -788,6 +847,8 @@ export async function mountJavaExercise({
                 ? "All automatic checks passed."
                 : "Automatic checks completed; review the failed tests.";
       statusLine.dataset.status = result.success ? "ready" : "error";
+      operationProgress.hidden = true;
+      operationProgress.removeAttribute("data-phase");
       if (operation === "check") scrollToBottom(resultsContent, resultsEnd);
       else scrollToBottom(consoleContent, consoleEnd);
     } catch (error) {
@@ -816,6 +877,8 @@ export async function mountJavaExercise({
         resultsContent.replaceChildren(element("p", "bad", message));
       statusLine.textContent = message;
       statusLine.dataset.status = isTimeout ? "timeout" : "error";
+      operationProgress.hidden = true;
+      operationProgress.removeAttribute("data-phase");
       if (operation === "check") scrollToBottom(resultsContent, resultsEnd);
       else scrollToBottom(consoleContent, consoleEnd);
       if (error?.code === "JAVA_TIMEOUT" || error?.code === "JAVA_STOPPED")
@@ -857,6 +920,8 @@ export async function mountJavaExercise({
     input.value = String(config.stdin || "");
     consoleContent.replaceChildren();
     resultsContent.replaceChildren("Run Check to see the test results.");
+    operationProgress.hidden = true;
+    operationProgress.removeAttribute("data-phase");
     statusLine.textContent = "Starter code restored.";
   });
   stopButton.addEventListener("click", () => {
@@ -867,6 +932,8 @@ export async function mountJavaExercise({
     statusLine.textContent =
       "Execution stopped. The next run will initialize a fresh Java worker.";
     statusLine.dataset.status = "stopped";
+    operationProgress.hidden = true;
+    operationProgress.removeAttribute("data-phase");
   });
 
   // Begin runtime setup as soon as the Java exercise is opened. CodeMirror
@@ -879,40 +946,15 @@ export async function mountJavaExercise({
   });
 
   try {
-    const { basicSetup, EditorView, java, indentUnit, oneDark } =
+    const { basicSetup, EditorView, java, indentUnit, oneDark, Compartment } =
       await loadCodeMirror();
-    const theme = EditorView.theme(
-      {
-        "&": {
-          color: "var(--fg)",
-          backgroundColor: "var(--card)",
-          fontSize: "0.9rem",
-        },
-        ".cm-content": {
-          caretColor: "var(--ac)",
-          fontFamily: 'ui-monospace, "SFMono-Regular", Consolas, monospace',
-          minHeight: "18rem",
-          padding: "0.8rem 0",
-        },
-        ".cm-gutters": {
-          backgroundColor: "var(--soft)",
-          color: "var(--mut)",
-          borderRight: "1px solid var(--bd)",
-        },
-        ".cm-activeLineGutter, .cm-activeLine": {
-          backgroundColor: "color-mix(in srgb, var(--ac) 8%, transparent)",
-        },
-        "&.cm-focused": {
-          outline: "2px solid color-mix(in srgb, var(--ac) 45%, transparent)",
-          outlineOffset: "-2px",
-        },
-        ".cm-selectionBackground": {
-          backgroundColor:
-            "color-mix(in srgb, var(--ac) 25%, transparent) !important",
-        },
-      },
-      { dark: document.documentElement.dataset.theme === "dark" },
-    );
+    if (disposed) return { getSource, dispose: () => {} };
+    themeCompartment = new Compartment();
+    const activeTheme = () =>
+      createJavaThemeExtensions(
+        oneDark,
+        document.documentElement.dataset.theme === "dark",
+      );
     editorView = new EditorView({
       doc: source,
       parent: editorHost,
@@ -920,7 +962,7 @@ export async function mountJavaExercise({
         basicSetup,
         java(),
         indentUnit.of("    "),
-        oneDark,
+        themeCompartment.of(activeTheme()),
         EditorView.domEventHandlers({
           keydown(event, view) {
             if (
@@ -954,6 +996,17 @@ export async function mountJavaExercise({
       ],
     });
     editor = editorView;
+    themeObserver = new MutationObserver(() => {
+      if (!disposed && editorView && themeCompartment) {
+        editorView.dispatch({
+          effects: themeCompartment.reconfigure(activeTheme()),
+        });
+      }
+    });
+    themeObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
     fallbackNotice.remove();
   } catch (error) {
     if (!disposed) {
@@ -1015,6 +1068,8 @@ export async function mountJavaExercise({
       disposed = true;
       currentOperation++;
       unsubscribeStatus?.();
+      themeObserver?.disconnect();
+      themeObserver = null;
       if (running) stopJavaExecution("Java exercise closed.");
       editor?.destroy?.();
       root.remove();

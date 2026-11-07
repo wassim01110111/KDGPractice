@@ -1197,8 +1197,16 @@ backToTop?.addEventListener("click", () =>
     behavior: reducedMotion.matches ? "auto" : "smooth",
   }),
 );
-addEventListener("scroll", updateBackToTop, { passive: true });
-addEventListener("resize", updateBackToTop);
+let backToTopFrame = 0;
+const scheduleBackToTopUpdate = () => {
+  if (backToTopFrame) return;
+  backToTopFrame = requestAnimationFrame(() => {
+    backToTopFrame = 0;
+    updateBackToTop();
+  });
+};
+addEventListener("scroll", scheduleBackToTopUpdate, { passive: true });
+addEventListener("resize", scheduleBackToTopUpdate, { passive: true });
 updateBackToTop();
 if (terminalArtifact && !reducedMotion.matches) {
   const alphabet = "0123456789ABCDEF<>[]{}|_-=+/*;:.";
@@ -1283,10 +1291,23 @@ function triggerWassimSignal() {
     }, 4200);
   }, 5000);
 }
-setTimeout(function loop() {
-  triggerWassimSignal();
-  setTimeout(loop, (Math.floor(Math.random() * 13) + 3) * 60_000);
-}, 60000);
+let wassimSignalTimer = 0;
+function scheduleWassimSignal(delay = 60_000) {
+  clearTimeout(wassimSignalTimer);
+  if (document.hidden || focusButton.getAttribute("aria-pressed") === "true") return;
+  wassimSignalTimer = window.setTimeout(() => {
+    wassimSignalTimer = 0;
+    triggerWassimSignal();
+    scheduleWassimSignal((Math.floor(Math.random() * 13) + 3) * 60_000);
+  }, delay);
+}
+function syncWassimSignalSchedule() {
+  clearTimeout(wassimSignalTimer);
+  wassimSignalTimer = 0;
+  if (!document.hidden) scheduleWassimSignal(60_000);
+}
+document.addEventListener("visibilitychange", syncWassimSignalSchedule);
+scheduleWassimSignal(60_000);
 const clickme = document.getElementById("clickme");
 function hideClickme() {
   if (!clickme.classList.contains("is-visible")) return;
@@ -1303,18 +1324,33 @@ function hideClickme() {
     { once: true },
   );
 }
-setTimeout(() => {
-  if (focusButton.getAttribute("aria-pressed") === "true") return;
-  clickme.classList.remove("is-hiding");
-  clickme.classList.add("is-visible");
-  setTimeout(hideClickme, 10000);
-}, 15000);
-setInterval(() => {
-  if (focusButton.getAttribute("aria-pressed") === "true") return;
-  clickme.classList.remove("is-hiding");
-  clickme.classList.add("is-visible");
-  setTimeout(hideClickme, 10000);
-}, 61000);
+let clickmeShowTimer = 0;
+let clickmeHideTimer = 0;
+function syncClickmeSchedule(delay = 15_000) {
+  clearTimeout(clickmeShowTimer);
+  clickmeShowTimer = 0;
+  if (document.hidden || focusButton.getAttribute("aria-pressed") === "true") {
+    clearTimeout(clickmeHideTimer);
+    clickmeHideTimer = 0;
+    hideClickme();
+    return;
+  }
+  clickmeShowTimer = window.setTimeout(() => {
+    clickmeShowTimer = 0;
+    if (document.hidden || focusButton.getAttribute("aria-pressed") === "true") return;
+    clickme.classList.remove("is-hiding");
+    clickme.classList.add("is-visible");
+    clearTimeout(clickmeHideTimer);
+    clickmeHideTimer = window.setTimeout(() => {
+      clickmeHideTimer = 0;
+      hideClickme();
+    }, 10_000);
+    // Keep the next appearance timer separate from the 10-second hide timer.
+    syncClickmeSchedule(61_000);
+  }, delay);
+}
+document.addEventListener("visibilitychange", () => syncClickmeSchedule(15_000));
+syncClickmeSchedule(15_000);
 let routeTok = 0;
 let lastRouteHash = null;
 let routePending = false;

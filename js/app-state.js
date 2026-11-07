@@ -11,19 +11,72 @@ const {
 } = Core;
 const focusButton = document.getElementById("focus-toggle");
 const headerTools = document.getElementById("header-tools");
-const terminalModuleUrl = new URL(
-  "./terminal.js",
-  document.currentScript?.src || location.href,
-).href;
-const javaModuleUrl = new URL(
-  "./java.js",
-  document.currentScript?.src || location.href,
-).href;
+// A forced refresh adds a one-time URL token to app-owned resources. This
+// bypasses stale browser/service-worker entries without changing normal caching.
+function appResourceUrl(path, base = document.baseURI) {
+  const url = new URL(path, base);
+  const cacheBust = window.__ACS_FORCE_CACHE_BUST__;
+  if (cacheBust && url.origin === location.origin)
+    url.searchParams.set("__acs_nocache", String(cacheBust));
+  return url.href;
+}
+async function fetchAppResource(path, options = {}) {
+  const url = appResourceUrl(path);
+  const offlineCache = window.__ACS_OFFLINE_CACHE__;
+  if (offlineCache?.fetchResource)
+    return offlineCache.fetchResource(url, options);
+  const requestOptions = { ...options };
+  if (window.__ACS_FORCE_CACHE_BUST__) requestOptions.cache = "reload";
+  return fetch(url, requestOptions);
+}
+const appStateScript = document.currentScript;
+const appStateScriptUrl =
+  appStateScript?.dataset.appSectionSrc || appStateScript?.src || location.href;
+const terminalModuleUrl = appResourceUrl("./terminal.js", appStateScriptUrl);
+const javaModuleUrl = appResourceUrl("./java.js", appStateScriptUrl);
 let terminalModulePromise = null;
 let javaModulePromise = null;
+async function importAppModuleWithCacheFallback(url, kind) {
+  try {
+    const module = await import(url);
+    // Cache API warm-up is non-blocking; keep native module URLs for relative
+    // imports, and warm the Java worker URL so it can be served by the worker
+    // cache on a later offline visit.
+    void window.__ACS_OFFLINE_CACHE__?.prime?.(url);
+    if (kind === "java") {
+      const workerUrl = new URL("./java.worker.js", url).href;
+      void window.__ACS_OFFLINE_CACHE__?.prime?.(workerUrl);
+    }
+    return module;
+  } catch (networkError) {
+    if (!window.__ACS_OFFLINE_CACHE__?.readCachedResponse || window.__ACS_FORCE_CACHE_BUST__)
+      throw networkError;
+    const cached = await window.__ACS_OFFLINE_CACHE__.readCachedResponse(url);
+    if (!cached) {
+      // If the cache is unavailable/empty, retry the normal module URL once.
+      try { return await import(url); } catch (_) { throw networkError; }
+    }
+    const source = await cached.text();
+    const blobUrl = URL.createObjectURL(new Blob([source], { type: "text/javascript" }));
+    try {
+      // java.js derives its worker URL from import.meta.url; when loaded from a
+      // Blob, provide the original same-origin module URL explicitly.
+      if (kind === "java") window.__ACS_JAVA_MODULE_BASE_URL__ = url;
+      const module = await import(blobUrl);
+      if (kind === "java") {
+        const workerUrl = new URL("./java.worker.js", url).href;
+        void window.__ACS_OFFLINE_CACHE__?.prime?.(workerUrl);
+      }
+      return module;
+    } finally {
+      URL.revokeObjectURL(blobUrl);
+    }
+  }
+}
 const loadTerminalModule = () =>
-  (terminalModulePromise ||= import(terminalModuleUrl));
-const loadJavaModule = () => (javaModulePromise ||= import(javaModuleUrl));
+  (terminalModulePromise ||= importAppModuleWithCacheFallback(terminalModuleUrl, "terminal"));
+const loadJavaModule = () =>
+  (javaModulePromise ||= importAppModuleWithCacheFallback(javaModuleUrl, "java"));
 
 // One registry defines every desktop split exercise. Adding a new workspace
 // type requires one entry here and the shared workspace/action-container
@@ -643,9 +696,9 @@ const ACH_DEFS = [
     "sign",
     "\u{1F91D}",
     "secret",
-    "Secret Handshake",
-    "Find the hidden distractions switch",
-    "You clicked the sign five times. Nobody told you to.",
+    "Hidden Admin Panel",
+    "Hold the maker signature while distractions are enabled",
+    "You found a console that was definitely not in the documentation.",
     (s) => s.signToggles,
     1,
     true,

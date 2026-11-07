@@ -3,6 +3,197 @@
 const ROUTE_OUT_MS = 140,
   ROUTE_IN_MS = 360,
   ROUTE_EASE = "cubic-bezier(0.22, 1, 0.36, 1)";
+
+// Check content/version.json at most once per hour, on section/subject changes.
+// A dismissed notice is only dismissed for this page lifetime: pending update
+// metadata remains in localStorage so a reload can show the notice again.
+const SITE_VERSION_CHECK_INTERVAL = 60 * 60 * 1000;
+const SITE_VERSION_NOTICE_DURATION = 60 * 1000;
+const SITE_VERSION_KEYS = Object.freeze({
+  checkedAt: "acs-site-version:checked-at",
+  current: "acs-site-version:current",
+  pending: "acs-site-version:pending-notice",
+  forceApplied: "acs-site-version:force-applied",
+});
+let siteVersionCheckPromise = null;
+let siteVersionDismissedThisSession = null;
+let siteVersionNoticeTimer = 0;
+let siteVersionNoticeElement = null;
+
+function readSiteVersionValue(key) {
+  try {
+    return localStorage.getItem(key);
+  } catch (_) {
+    return null;
+  }
+}
+function writeSiteVersionValue(key, value) {
+  try {
+    if (value == null) localStorage.removeItem(key);
+    else localStorage.setItem(key, String(value));
+  } catch (_) {
+    // Storage can be disabled; the in-memory path still provides this session's UI.
+  }
+}
+function numericSiteVersion(value) {
+  if (value === null || value === undefined || value === "") return null;
+  const number = Number(value);
+  return Number.isFinite(number) && number >= 0 ? number : null;
+}
+function hideSiteVersionNotice(version, { dismissed = true } = {}) {
+  if (siteVersionNoticeTimer) clearTimeout(siteVersionNoticeTimer);
+  siteVersionNoticeTimer = 0;
+  if (dismissed) siteVersionDismissedThisSession = String(version);
+  siteVersionNoticeElement?.remove();
+  siteVersionNoticeElement = null;
+}
+function showPendingSiteVersionNotice() {
+  const version = readSiteVersionValue(SITE_VERSION_KEYS.pending);
+  if (version == null || version === "") return;
+  if (siteVersionDismissedThisSession === String(version)) return;
+  if (siteVersionNoticeElement?.dataset.version === String(version)) return;
+
+  // A newer pending version replaces the previous notice and its timer.
+  hideSiteVersionNotice(version, { dismissed: false });
+  const notice = h(
+    "section",
+    {
+      class: "site-update-notice",
+      role: "status",
+      "aria-live": "polite",
+      "aria-label": "Website update available",
+      "data-version": String(version),
+    },
+    h(
+      "div",
+      { class: "site-update-copy" },
+      h("strong", {}, "The website has been updated."),
+      h("p", {}, "Reload to get the latest version, or discard this notice for now."),
+    ),
+    h(
+      "div",
+      { class: "site-update-actions" },
+      h(
+        "button",
+        {
+          type: "button",
+          class: "site-update-reload",
+          onclick: () => {
+            writeSiteVersionValue(SITE_VERSION_KEYS.pending, null);
+            hideSiteVersionNotice(version, { dismissed: true });
+            void reloadSiteWithoutCache(version);
+          },
+        },
+        "Reload",
+      ),
+      h(
+        "button",
+        {
+          type: "button",
+          class: "site-update-discard",
+          onclick: () => hideSiteVersionNotice(version, { dismissed: true }),
+        },
+        "Discard",
+      ),
+    ),
+  );
+  siteVersionNoticeElement = notice;
+  document.body.append(notice);
+  siteVersionNoticeTimer = setTimeout(
+    () => hideSiteVersionNotice(version, { dismissed: true }),
+    SITE_VERSION_NOTICE_DURATION,
+  );
+}
+async function reloadSiteWithoutCache(version) {
+  // CacheStorage may contain app-shell or content responses controlled by a
+  // service worker. Clear those first; cache-bust the document and app assets
+  // on the next load as an additional safeguard.
+  try {
+    if ("caches" in window) {
+      const names = await caches.keys();
+      await Promise.all(names.map((name) => caches.delete(name)));
+    }
+  } catch (error) {
+    console.warn("Could not clear the site cache before reloading:", error);
+  }
+  const target = new URL(location.href);
+  target.searchParams.set(
+    "__acs_nocache",
+    `${String(version).replace(/[^a-zA-Z0-9_-]/g, "_")}-${Date.now()}`,
+  );
+  location.replace(target.href);
+}
+async function checkSiteVersion() {
+  // A stored pending notice is replayed on reload even when the one-hour
+  // network-check window has not elapsed. The session dismissal resets on reload.
+  showPendingSiteVersionNotice();
+
+  const lastCheckedAt = numericSiteVersion(
+    readSiteVersionValue(SITE_VERSION_KEYS.checkedAt),
+  ) || 0;
+  if (Date.now() - lastCheckedAt < SITE_VERSION_CHECK_INTERVAL)
+    return siteVersionCheckPromise;
+  if (siteVersionCheckPromise) return siteVersionCheckPromise;
+
+  siteVersionCheckPromise = (async () => {
+    try {
+      const versionUrl = new URL(
+        appResourceUrl("content/version.json", document.baseURI),
+      );
+      // Both Fetch's cache mode and a unique query string avoid a cached version
+      // response; this endpoint is intentionally checked independently of assets.
+      versionUrl.searchParams.set("_version_check", String(Date.now()));
+      const response = await fetch(versionUrl.href, {
+        cache: "no-store",
+        headers: {
+          "Cache-Control": "no-cache, no-store, max-age=0",
+          Pragma: "no-cache",
+        },
+      });
+      if (!response.ok)
+        throw new Error(`Version check failed with HTTP ${response.status}`);
+      const payload = await response.json();
+      const incomingVersion = numericSiteVersion(payload?.version);
+      const forceUpdate = numericSiteVersion(payload?.forceUpdate);
+      if (incomingVersion === null)
+        throw new Error("content/version.json must contain a numeric version.");
+
+      const previousVersion = numericSiteVersion(
+        readSiteVersionValue(SITE_VERSION_KEYS.current),
+      );
+      const currentVersion = previousVersion ?? incomingVersion;
+      const appliedForceKey = `${incomingVersion}:${forceUpdate ?? 0}`;
+      writeSiteVersionValue(SITE_VERSION_KEYS.checkedAt, Date.now());
+
+      // forceUpdate is a minimum client version. Compare it with the previously
+      // fetched version, using the incoming version as the first-visit baseline.
+      if (
+        forceUpdate !== null &&
+        forceUpdate > currentVersion &&
+        readSiteVersionValue(SITE_VERSION_KEYS.forceApplied) !== appliedForceKey
+      ) {
+        writeSiteVersionValue(SITE_VERSION_KEYS.current, incomingVersion);
+        writeSiteVersionValue(SITE_VERSION_KEYS.pending, null);
+        writeSiteVersionValue(SITE_VERSION_KEYS.forceApplied, appliedForceKey);
+        hideSiteVersionNotice(incomingVersion, { dismissed: false });
+        await reloadSiteWithoutCache(`forced-${incomingVersion}-${forceUpdate}`);
+        return;
+      }
+
+      if (previousVersion !== null && incomingVersion !== previousVersion) {
+        writeSiteVersionValue(SITE_VERSION_KEYS.pending, incomingVersion);
+      }
+      writeSiteVersionValue(SITE_VERSION_KEYS.current, incomingVersion);
+      showPendingSiteVersionNotice();
+    } catch (error) {
+      // Version checks are opportunistic: a network failure must never block navigation.
+      console.warn("Website version check skipped:", error);
+    } finally {
+      siteVersionCheckPromise = null;
+    }
+  })();
+  return siteVersionCheckPromise;
+}
 let routeShown = null; // { page, subject } currently on screen
 let routeEnterAnim = null; // enter animation still running, if any
 let routeLeaving = null; // { target, anim }: the exit that is in flight
@@ -68,6 +259,9 @@ function playRoute(el, phase, motion) {
 async function route() {
   const routeHash = location.hash;
   if (routeHash === lastRouteHash && routePending) return;
+  // Never await this: navigation and page rendering remain responsive while
+  // the optional hourly version request runs in the background.
+  void checkSiteVersion();
   lastRouteHash = routeHash;
   if (activeConfirmDialog?.open) activeConfirmDialog.close("cancel");
   readerSearchCleanup?.();
@@ -525,6 +719,8 @@ function setFocusMode(isPressed, recordAchievement = false) {
     label;
 
   focusButton.setAttribute("aria-pressed", String(isPressed));
+  syncClickmeSchedule?.();
+  syncWassimSignalSchedule?.();
 
   try {
     localStorage.setItem(FOCUS_MODE_KEY, String(isPressed));
@@ -532,6 +728,10 @@ function setFocusMode(isPressed, recordAchievement = false) {
     console.warn("Could not save distraction setting:", error);
   }
 }
+
+// The distraction setting is now a normal, always-available control; the
+// maker signature no longer hides/reveals it as part of a tap-count secret.
+focusButton.hidden = false;
 
 // Restore the previous setting when the page loads.
 let savedFocusMode = false;
@@ -547,29 +747,130 @@ setFocusMode(savedFocusMode);
 // Toggle distraction mode.
 focusButton.addEventListener("click", () => {
   const isPressed = focusButton.getAttribute("aria-pressed") === "true";
-
+  // Switching distractions off must cancel a secret hold already in progress.
+  if (!isPressed) cancelMakerSecretHold();
   setFocusMode(!isPressed, !isPressed);
 });
 
-let clickCount = 0;
-let clickTimer;
-
+// Hidden developer console: a deliberate press-and-hold, not a multi-tap.
+// It is only available when distractions are enabled (focus mode is off).
 const wassimSign = document.getElementById("wassim-sign");
+const MAKER_SECRET_HOLD_MS = 1250;
+let makerSecretHoldTimer = 0;
+let makerSecretSuppressTimer = 0;
+let makerSecretHolding = false;
+let makerSecretOpen = false;
+let makerSecretTriggered = false;
 
-wassimSign.addEventListener("click", () => {
-  clickCount++;
+function distractionsAreEnabled() {
+  return focusButton.getAttribute("aria-pressed") !== "true";
+}
 
-  clearTimeout(clickTimer);
+function openMakerSecretConsole() {
+  if (!distractionsAreEnabled() || makerSecretOpen || wassimEggActive) return;
+  makerSecretOpen = true;
+  achTrack((stats) => void stats.signToggles++, { full: false });
 
-  if (clickCount >= 5) {
-    achTrack((s) => void s.signToggles++, { full: false });
-    focusButton.hidden = !focusButton.hidden;
+  const dialog = h(
+    "dialog",
+    {
+      class: "maker-secret-dialog",
+      "aria-labelledby": "maker-secret-title",
+      "aria-describedby": "maker-secret-description",
+    },
+    h("div", { class: "maker-secret-content" },
+      h("p", { class: "maker-secret-kicker" }, "UNLISTED // DEVELOPER CHANNEL"),
+      h("h2", { id: "maker-secret-title" }, "Well, this is awkward."),
+      h("p", { id: "maker-secret-description", class: "maker-secret-description" },
+        "You found the maintenance console. It mostly contains things the developer meant to fix later."),
+      h("div", { class: "maker-secret-log", "aria-label": "Developer console diagnostics" },
+        h("p", {}, h("strong", {}, "[ OK ] "), "CSS cascade: contained (mostly)"),
+        h("p", {}, h("strong", {}, "[ OK ] "), "Study progress: safely stored"),
+        h("p", {}, h("strong", {}, "[ WARN ] "), "One more tiny refactor is pending"),
+        h("p", {}, h("strong", {}, "[ INFO ] "), "Coffee dependency: unresolved"),
+        h("p", { class: "maker-secret-success" }, "ACCESS GRANTED // YOU WERE NEVER SUPPOSED TO FIND THIS"),
+      ),
+      h("div", { class: "maker-secret-footer" },
+        h("span", {}, "SESSION: LOCAL ONLY"),
+        h("button", { type: "button", class: "sec", onclick: () => dialog.close() }, "Back to work"),
+      ),
+    ),
+  );
 
-    clickCount = 0;
-    return;
+  dialog.addEventListener("close", () => {
+    dialog.remove();
+    makerSecretOpen = false;
+    if (wassimSign instanceof HTMLElement && wassimSign.isConnected) {
+      try { wassimSign.focus({ preventScroll: true }); }
+      catch { wassimSign.focus(); }
+    }
+  }, { once: true });
+  document.body.append(dialog);
+  if (typeof dialog.showModal === "function") dialog.showModal();
+  else dialog.setAttribute("open", "");
+}
+
+function startMakerSecretHold(event) {
+  if (!wassimSign || !distractionsAreEnabled() || makerSecretOpen) return;
+  if (event.type === "pointerdown" && event.button !== 0) return;
+  if (event.type === "keydown" && event.repeat) return;
+  makerSecretHolding = true;
+  wassimSign.classList.add("is-secret-holding");
+  clearTimeout(makerSecretHoldTimer);
+  makerSecretHoldTimer = window.setTimeout(() => {
+    makerSecretHoldTimer = 0;
+    if (!makerSecretHolding || !distractionsAreEnabled()) return;
+    makerSecretHolding = false;
+    makerSecretTriggered = true;
+    clearTimeout(makerSecretSuppressTimer);
+    makerSecretSuppressTimer = window.setTimeout(() => {
+      makerSecretTriggered = false;
+      makerSecretSuppressTimer = 0;
+    }, 700);
+    wassimSign.classList.remove("is-secret-holding");
+    openMakerSecretConsole();
+  }, MAKER_SECRET_HOLD_MS);
+}
+
+function cancelMakerSecretHold() {
+  makerSecretHolding = false;
+  clearTimeout(makerSecretHoldTimer);
+  makerSecretHoldTimer = 0;
+  wassimSign?.classList.remove("is-secret-holding");
+}
+
+if (wassimSign) {
+  // Make the hold discoverable to keyboard and assistive-technology users too.
+  if (wassimSign.tabIndex < 0) wassimSign.tabIndex = 0;
+  if (!wassimSign.hasAttribute("aria-label")) {
+    wassimSign.setAttribute(
+      "aria-label",
+      "Maker signature. Press and hold while distractions are enabled to open a hidden console.",
+    );
   }
-
-  clickTimer = setTimeout(() => {
-    clickCount = 0;
-  }, 3000);
-});
+  wassimSign.addEventListener("click", (event) => {
+    if (!makerSecretTriggered) return;
+    makerSecretTriggered = false;
+    clearTimeout(makerSecretSuppressTimer);
+    makerSecretSuppressTimer = 0;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+  }, true);
+  wassimSign.addEventListener("contextmenu", (event) => {
+    if (makerSecretHolding) event.preventDefault();
+  });
+  wassimSign.addEventListener("pointerdown", startMakerSecretHold);
+  wassimSign.addEventListener("pointerup", cancelMakerSecretHold);
+  wassimSign.addEventListener("pointercancel", cancelMakerSecretHold);
+  wassimSign.addEventListener("pointerleave", cancelMakerSecretHold);
+  wassimSign.addEventListener("blur", cancelMakerSecretHold);
+  wassimSign.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      startMakerSecretHold(event);
+    }
+  });
+  wassimSign.addEventListener("keyup", (event) => {
+    if (event.key === "Enter" || event.key === " ") cancelMakerSecretHold();
+  });
+}

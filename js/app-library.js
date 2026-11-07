@@ -784,6 +784,7 @@ async function pageLibrary(root, arg, termArg, view) {
     lastSearchKey = "",
     loadToken = 0,
     frame = null, // the iframe, while an .html file is shown
+    frameObjectUrl = null,
     frameObserver = null,
     currentDoc = document; // document that holds the rendered content
   // Where text is searched: the article for markdown, the iframe body for html.
@@ -794,6 +795,7 @@ async function pageLibrary(root, arg, termArg, view) {
   // fast programmatic scroll while it is open) can leave that behind the
   // visual viewport. Measure the gap and lift the panel by it.
   const viewport = window.visualViewport;
+  let searchViewportFrame = 0;
   const syncSearchPanelToViewport = () => {
     const open = searchPanel.classList.contains("mobile-open"),
       gap =
@@ -810,9 +812,16 @@ async function pageLibrary(root, arg, termArg, view) {
     else searchPanel.style.removeProperty("--search-kb-offset");
     searchPanel.classList.toggle("keyboard-open", lifted);
   };
-  viewport?.addEventListener("resize", syncSearchPanelToViewport);
-  viewport?.addEventListener("scroll", syncSearchPanelToViewport);
-  addEventListener("scroll", syncSearchPanelToViewport, { passive: true });
+  const scheduleSearchPanelViewportSync = () => {
+    if (searchViewportFrame) return;
+    searchViewportFrame = requestAnimationFrame(() => {
+      searchViewportFrame = 0;
+      syncSearchPanelToViewport();
+    });
+  };
+  viewport?.addEventListener("resize", scheduleSearchPanelViewportSync, { passive: true });
+  viewport?.addEventListener("scroll", scheduleSearchPanelViewportSync, { passive: true });
+  addEventListener("scroll", scheduleSearchPanelViewportSync, { passive: true });
   // Pass the app theme to html canvases (as data-theme) so they can follow it.
   const syncFrameTheme = () => {
     const el = frame?.contentDocument?.documentElement;
@@ -827,12 +836,18 @@ async function pageLibrary(root, arg, termArg, view) {
     frameObserver?.disconnect();
     frameObserver = null;
     frame = null;
+    if (frameObjectUrl) {
+      URL.revokeObjectURL(frameObjectUrl);
+      frameObjectUrl = null;
+    }
     currentDoc = document;
   };
   readerSearchCleanup = () => {
-    viewport?.removeEventListener("resize", syncSearchPanelToViewport);
-    viewport?.removeEventListener("scroll", syncSearchPanelToViewport);
-    removeEventListener("scroll", syncSearchPanelToViewport);
+    viewport?.removeEventListener("resize", scheduleSearchPanelViewportSync);
+    viewport?.removeEventListener("scroll", scheduleSearchPanelViewportSync);
+    removeEventListener("scroll", scheduleSearchPanelViewportSync);
+    if (searchViewportFrame) cancelAnimationFrame(searchViewportFrame);
+    searchViewportFrame = 0;
     clearTimeout(searchTimer);
     loadToken++;
     themeObserver.disconnect();
@@ -1137,7 +1152,7 @@ async function pageLibrary(root, arg, termArg, view) {
     );
   };
   const loadMarkdown = async (term, token) => {
-    const r = await fetch("content/" + term.file);
+    const r = await fetchAppResource("content/" + term.file);
     if (!r.ok) throw new Error("HTTP " + r.status);
     const source = await r.text();
     if (token !== loadToken) return null;
@@ -1173,17 +1188,47 @@ async function pageLibrary(root, arg, termArg, view) {
   // An .html canvas runs in an iframe, so its own CSS and JS execute normally
   // without touching (or being touched by) the rest of the app.
   const loadHtml = async (term, token) => {
-    const r = await fetch("content/" + term.file);
+    const resourceUrl = appResourceUrl("content/" + term.file);
+    const r = await fetchAppResource("content/" + term.file);
     if (!r.ok) throw new Error("HTTP " + r.status);
-    r.body?.cancel?.();
     if (token !== loadToken) return null;
+
     const f = h("iframe", {
       class: "canvas-frame",
       title: `${cur.title} \u2013 ${term.label}`,
       sandbox:
         "allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads",
-      src: "content/" + term.file,
     });
+    if (r.headers.has("X-ACS-Cache-Time")) {
+      // A cached response cannot be assigned to an iframe URL directly. Load
+      // its body into a Blob and restore the source URL as <base> so relative
+      // images/scripts/styles continue resolving to their original locations.
+      const source = await r.text();
+      if (token !== loadToken) return null;
+      const parsed = new DOMParser().parseFromString(source, "text/html");
+      if (!parsed.querySelector("base[href]")) {
+        const baseElement = parsed.createElement("base");
+        baseElement.href = resourceUrl;
+        parsed.head.prepend(baseElement);
+      }
+      // Retain the document's HTTP content-security policy when available.
+      const policy = r.headers.get("Content-Security-Policy");
+      if (policy) {
+        const policyMeta = parsed.createElement("meta");
+        policyMeta.httpEquiv = "Content-Security-Policy";
+        policyMeta.content = policy;
+        parsed.head.prepend(policyMeta);
+      }
+      const htmlSource = "<!doctype html>\n" + parsed.documentElement.outerHTML;
+      frameObjectUrl = URL.createObjectURL(
+        new Blob([htmlSource], { type: "text/html" }),
+      );
+      f.src = frameObjectUrl;
+    } else {
+      // Preserve the original URL/location behavior for normal online loads.
+      r.body?.cancel?.();
+      f.src = resourceUrl;
+    }
     // Attach the listener before inserting so the load can't be missed.
     const loaded = new Promise((resolve) =>
       f.addEventListener("load", resolve, { once: true }),

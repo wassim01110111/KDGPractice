@@ -72,7 +72,7 @@ async function loadContent() {
   const files = [];
 
   try {
-    const manifest = await (await fetch("content/manifest.json")).json();
+    const manifest = await (await fetchAppResource("content/manifest.json")).json();
 
     if (!compatibleManifest(manifest))
       throw new Error(
@@ -105,7 +105,7 @@ async function loadContent() {
     for (const [manifestId, entry] of packageEntries) {
       for (const f of entry.files || []) {
         try {
-          const r = await fetch("content/" + f);
+          const r = await fetchAppResource("content/" + f);
 
           if (!r.ok) throw new Error("HTTP " + r.status);
 
