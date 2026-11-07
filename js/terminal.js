@@ -7538,31 +7538,16 @@ export async function mountTerminalExercise({
   const notice = createElement("p", "ot-notice");
   notice.hidden = true;
 
-  // On desktop, keep the terminal workspace as the main column and place
-  // exercise actions in a compact side panel. display:contents on mobile
-  // preserves the original stacked order and spacing.
+  // The host application owns exercise navigation. Keep terminal-specific
+  // Run/Check/Reset/Solution controls inside the shared action group, and
+  // never search for, move, or restyle the app-owned Previous/Next buttons.
   const workbench = createElement("div", "ot-workbench");
   const workspaceMain = createElement("div", "ot-workspace-main");
   const controlSidebar = createElement("aside", "ot-control-sidebar");
-  // The instruction pane can host this panel while retaining the terminal's
-  // scoped styling and color variables.
   if (controlsContainer) controlSidebar.classList.add("os-terminal");
-  controlSidebar.setAttribute("aria-label", "Exercise controls");
-  const controlHeading = createElement(
-    "h4",
-    "ot-control-heading",
-    "Exercise controls",
-  );
-  const nextExerciseSlot = createElement("div", "ot-next-slot");
-  nextExerciseSlot.hidden = true;
+  controlSidebar.setAttribute("aria-label", "Exercise actions");
   workspaceMain.append(toolbar, screen, inputRow, keyBar, notice, editorArea);
-  controlSidebar.append(
-    controlHeading,
-    nextExerciseSlot,
-    actions,
-    solutionArea,
-    gradeArea,
-  );
+  controlSidebar.append(actions, solutionArea, gradeArea);
   workbench.append(workspaceMain);
   if (controlsContainer instanceof Element) {
     controlsContainer.append(controlSidebar);
@@ -7571,106 +7556,6 @@ export async function mountTerminalExercise({
   }
   instance.append(style, workbench);
   container.replaceChildren(instance);
-
-  // The host app owns the Next exercise control. When it is present alongside
-  // this exercise, temporarily move that same live control into the desktop
-  // side panel. A placeholder lets us restore it to its original position on
-  // mobile or when this terminal unmounts; its existing click handler remains.
-  let nextExerciseControl = null;
-  let nextExercisePlaceholder = null;
-  let nextExerciseOriginalParent = null;
-  let nextExerciseOriginalSibling = null;
-  let nextExerciseObserver = null;
-  const desktopLayoutQuery =
-    typeof window !== "undefined" && window.matchMedia
-      ? window.matchMedia("(min-width: 901px)")
-      : null;
-  const restoreNextExerciseControl = () => {
-    if (!nextExerciseControl) return;
-    if (nextExercisePlaceholder?.parentNode) {
-      nextExercisePlaceholder.parentNode.insertBefore(
-        nextExerciseControl,
-        nextExercisePlaceholder,
-      );
-      nextExercisePlaceholder.remove();
-    } else if (nextExerciseOriginalParent?.isConnected) {
-      const reference =
-        nextExerciseOriginalSibling?.parentNode === nextExerciseOriginalParent
-          ? nextExerciseOriginalSibling
-          : null;
-      nextExerciseOriginalParent.insertBefore(nextExerciseControl, reference);
-    }
-    nextExerciseSlot.hidden = true;
-    nextExerciseControl.classList.remove("ot-next-exercise-control");
-  };
-  const syncNextExerciseControlPlacement = () => {
-    if (!nextExerciseControl) return;
-    if (desktopLayoutQuery?.matches) {
-      nextExerciseSlot.hidden = false;
-      nextExerciseSlot.append(nextExerciseControl);
-    } else {
-      restoreNextExerciseControl();
-    }
-  };
-  const locateNextExerciseControl = () => {
-    if (nextExerciseControl || !instance.isConnected) return;
-    let root = container.parentElement;
-    for (let depth = 0; root && depth < 6; depth++, root = root.parentElement) {
-      const candidates = root.querySelectorAll(
-        'button, a[href], [role="button"]',
-      );
-      for (const candidate of candidates) {
-        if (instance.contains(candidate) || candidate.hidden) continue;
-        const visibleText = safeText(candidate.textContent)
-          .trim()
-          .replace(/\s+/g, " ");
-        const accessibleText = [
-          candidate.getAttribute("aria-label"),
-          candidate.getAttribute("title"),
-          candidate.getAttribute("data-action"),
-        ]
-          .filter(Boolean)
-          .join(" ");
-        const matchesNext = (value) =>
-          /^next(?:\s+(?:exercise|question))?(?:\s*[›»→>].*)?$/i.test(
-            safeText(value).trim().replace(/\s+/g, " "),
-          ) || /next[-_\s]*(?:exercise|question)/i.test(safeText(value));
-        if (!matchesNext(visibleText) && !matchesNext(accessibleText)) continue;
-        nextExerciseControl = candidate;
-        nextExerciseOriginalParent = candidate.parentNode;
-        nextExerciseOriginalSibling = candidate.nextSibling;
-        nextExercisePlaceholder = document.createComment(
-          "next exercise control position",
-        );
-        nextExerciseOriginalParent.insertBefore(
-          nextExercisePlaceholder,
-          candidate,
-        );
-        candidate.classList.add("ot-next-exercise-control");
-        syncNextExerciseControlPlacement();
-        return;
-      }
-    }
-  };
-  if (desktopLayoutQuery) {
-    desktopLayoutQuery.addEventListener?.(
-      "change",
-      syncNextExerciseControlPlacement,
-    );
-    // Older browsers expose addListener instead of addEventListener.
-    if (!desktopLayoutQuery.addEventListener)
-      desktopLayoutQuery.addListener?.(syncNextExerciseControlPlacement);
-  }
-  locateNextExerciseControl();
-  const nextSearchRoot =
-    container.closest(".terminal-exercise-layout") || container.parentElement;
-  if (typeof MutationObserver !== "undefined" && nextSearchRoot) {
-    nextExerciseObserver = new MutationObserver(locateNextExerciseControl);
-    nextExerciseObserver.observe(nextSearchRoot, {
-      childList: true,
-      subtree: true,
-    });
-  }
 
   let commandHistory = [],
     historyIndex = 0,
@@ -8745,16 +8630,6 @@ export async function mountTerminalExercise({
     }
     const connection = db;
     db = null;
-    nextExerciseObserver?.disconnect();
-    if (desktopLayoutQuery) {
-      desktopLayoutQuery.removeEventListener?.(
-        "change",
-        syncNextExerciseControlPlacement,
-      );
-      if (!desktopLayoutQuery.removeEventListener)
-        desktopLayoutQuery.removeListener?.(syncNextExerciseControlPlacement);
-    }
-    restoreNextExerciseControl();
     instance.replaceChildren();
     return (async () => {
       try {

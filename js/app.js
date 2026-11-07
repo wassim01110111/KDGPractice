@@ -3700,13 +3700,8 @@ async function plantumlEncode(source) {
 function normalizeExerciseActionControls(actionGroup) {
   if (!actionGroup) return;
 
-  // Navigation belongs to the app-wide learning-path navigator, never inside
-  // a module-owned control sidebar. Remove legacy terminal placeholders that
-  // older terminal.js builds may still inject.
-  actionGroup.querySelectorAll(".ot-next-slot").forEach((slot) => slot.remove());
-  actionGroup
-    .querySelectorAll(".ot-next-exercise-control")
-    .forEach((control) => control.remove());
+  // The app owns Previous/Next navigation. Exercise modules provide actions
+  // only; they must not inject navigation placeholders into this group.
 
   actionGroup
     .querySelectorAll(".ot-control-sidebar, .java-controls")
