@@ -6,6 +6,7 @@
   --bd: #d7dfeb;
   --ac: #315bd6;
   --ac-hover: #2549b5;
+  --on-ac: #fff;
   --ok: #16804a;
   --bad: #c03d4b;
   --hint-bg: #fff7e6;
@@ -25,6 +26,7 @@
   --bd: #303b4e;
   --ac: #8ba9ff;
   --ac-hover: #a9bdff;
+  --on-ac: #111722;
   --ok: #6bd49a;
   --bad: #ff8994;
   --hint-bg: #382b16;
@@ -44,6 +46,7 @@
     --bd: #303b4e;
     --ac: #8ba9ff;
     --ac-hover: #a9bdff;
+    --on-ac: #111722;
     --ok: #6bd49a;
     --bad: #ff8994;
     --hint-bg: #382b16;
@@ -62,6 +65,7 @@
   --bd: #b7bbc0;
   --ac: #334e65;
   --ac-hover: #263d52;
+  --on-ac: #fff;
   --card: #f0f1f2;
   --soft: #e5e6e8;
   --shadow: 0 8px 24px rgb(20 24 28 / 10%);
@@ -74,6 +78,7 @@
   --bd: #4a4e53;
   --ac: #c1cbd2;
   --ac-hover: #e0e5e9;
+  --on-ac: #202327;
   --card: #303337;
   --soft: #3a3e43;
   --shadow: 0 8px 24px rgb(0 0 0 / 24%);
@@ -87,6 +92,7 @@
     --bd: #4a4e53;
     --ac: #c1cbd2;
     --ac-hover: #e0e5e9;
+    --on-ac: #202327;
     --card: #303337;
     --soft: #3a3e43;
     --shadow: 0 8px 24px rgb(0 0 0 / 24%);
@@ -548,7 +554,7 @@ textarea {
 }
 button {
   cursor: pointer;
-  color: #fff;
+  color: var(--on-ac, #fff);
   background: var(--ac);
   border-color: var(--ac);
   margin: 0.2rem 0.3rem 0.2rem 0;
@@ -1839,84 +1845,12 @@ button,
 nav a {
   min-height: 2.75rem;
 }
-.sql-exercise-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(250px, 0.7fr);
-  gap: 1rem;
-  align-items: start;
-}
-.sql-exercise-layout > .q {
-  grid-column: 1;
-  grid-row: 1;
-  min-width: 0;
-}
-.sql-exercise-layout > .schema-workspace {
-  grid-column: 2;
-  grid-row: 1;
-}
 .schema-workspace {
   position: sticky;
   top: 5.5rem;
   min-width: 0;
   max-height: calc(100vh - 7rem);
   overflow: auto;
-}
-/* Resizable divider between the question and the schema (SQL exercises). */
-.sql-split-handle {
-  display: none;
-}
-@media (min-width: 901px) {
-  .sql-exercise-layout {
-    grid-template-columns: minmax(0, 1fr) 1rem minmax(
-        250px,
-        var(--sql-schema-col, 0.7fr)
-      );
-    column-gap: 0;
-  }
-  .sql-exercise-layout > .schema-workspace {
-    grid-column: 3;
-  }
-  .sql-split-handle {
-    position: relative;
-    display: block;
-    grid-column: 2;
-    grid-row: 1;
-    align-self: stretch;
-    cursor: col-resize;
-    touch-action: none;
-    outline: none;
-  }
-  .sql-split-handle::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 50%;
-    width: 3px;
-    border-radius: 999px;
-    background: var(--bd);
-    transform: translateX(-50%);
-  }
-  .sql-split-handle:hover::before,
-  .sql-split-handle:focus-visible::before,
-  .sql-split-handle.is-dragging::before {
-    background: var(--ac);
-  }
-  .sql-split-handle:focus-visible::before {
-    box-shadow: var(
-      --ui-glow,
-      0 0 0 3px color-mix(in srgb, var(--ac) 13%, transparent)
-    );
-  }
-}
-@media (min-width: 901px) and (prefers-reduced-motion: no-preference) {
-  .sql-split-handle::before {
-    transition: background-color var(--ui-fast, 150ms) var(--ui-ease, ease);
-  }
-}
-body.sql-split-dragging {
-  cursor: col-resize;
-  user-select: none;
 }
 .schema {
   margin: 0;
@@ -2196,19 +2130,6 @@ button.sql-result-toggle:hover:not(:disabled) {
   min-height: 2.75rem;
 }
 @media (max-width: 900px) {
-  .sql-exercise-layout {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .sql-exercise-layout > .q,
-  .sql-exercise-layout > .schema-workspace {
-    grid-column: 1;
-  }
-  .sql-exercise-layout > .schema-workspace {
-    grid-row: 1;
-  }
-  .sql-exercise-layout > .q {
-    grid-row: 2;
-  }
   .schema-workspace {
     position: static;
     max-height: none;
@@ -2224,9 +2145,6 @@ button.sql-result-toggle:hover:not(:disabled) {
 @media (max-width: 760px) {
   main {
     padding: 0.65rem;
-  }
-  .sql-exercise-layout {
-    gap: 0.5rem;
   }
   .practice-filters {
     gap: 0.75rem;
@@ -7878,168 +7796,6 @@ pre,
   }
 }
 
-/* Resizable terminal exercise: terminal on the left, instructions on the right.
-   The divider is enabled only on desktop; mobile keeps a simple stacked flow. */
-.terminal-exercise-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 0.75rem;
-  align-items: start;
-  min-width: 0;
-}
-
-.terminal-exercise-layout > .terminal-workspace-pane,
-.terminal-exercise-layout > .terminal-instructions-pane {
-  min-width: 0;
-  margin: 0;
-}
-
-.terminal-exercise-layout > .terminal-workspace-pane {
-  grid-row: 1;
-}
-
-.terminal-exercise-layout > .terminal-instructions-pane {
-  grid-row: 2;
-}
-
-.terminal-split-handle {
-  display: none;
-}
-
-@media (min-width: 901px) {
-  .terminal-exercise-layout {
-    grid-template-columns:
-      minmax(0, 1fr)
-      1rem
-      minmax(220px, var(--terminal-instructions-col, 34%));
-    column-gap: 0;
-    align-items: start;
-  }
-
-  .terminal-exercise-layout > .terminal-workspace-pane {
-    grid-column: 1;
-    grid-row: 1;
-  }
-
-  .terminal-exercise-layout > .terminal-instructions-pane {
-    grid-column: 3;
-    grid-row: 1;
-    position: sticky;
-    top: 5.5rem;
-    max-height: calc(100vh - 7rem);
-    overflow: auto;
-  }
-
-  .terminal-split-handle {
-    position: relative;
-    display: block;
-    grid-column: 2;
-    grid-row: 1;
-    align-self: stretch;
-    min-height: 100%;
-    cursor: col-resize;
-    touch-action: none;
-    outline: none;
-  }
-
-  .terminal-split-handle::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 50%;
-    width: 3px;
-    min-height: 4rem;
-    border-radius: 999px;
-    background: var(--bd);
-    transform: translateX(-50%);
-  }
-
-  .terminal-split-handle:hover::before,
-  .terminal-split-handle:focus-visible::before,
-  .terminal-split-handle.is-dragging::before {
-    background: var(--ac);
-  }
-
-  .terminal-split-handle:focus-visible::before {
-    box-shadow: var(
-      --ui-glow,
-      0 0 0 3px color-mix(in srgb, var(--ac) 13%, transparent)
-    );
-  }
-
-  .terminal-exercise-layout .os-terminal {
-    margin: 0;
-  }
-}
-
-@media (min-width: 901px) and (prefers-reduced-motion: no-preference) {
-  .terminal-split-handle::before {
-    transition: background-color var(--ui-fast, 150ms) var(--ui-ease, ease);
-  }
-}
-
-body.terminal-split-dragging {
-  cursor: col-resize;
-  user-select: none;
-}
-
-@media (max-width: 900px) {
-  .terminal-exercise-layout {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .terminal-exercise-layout > .terminal-instructions-pane {
-    order: 0;
-    position: static;
-    max-height: none;
-    overflow: visible;
-  }
-
-  .terminal-exercise-layout > .terminal-workspace-pane {
-    order: 1;
-  }
-}
-
-/* ============================================================
-   EXAM TERMINAL: match the practice terminal exercise layout.
-
-   qView() already renders the same .terminal-exercise-layout in both
-   practice and exam modes. In exams that layout sits inside an extra
-   .exam-question-panel card. Remove only that outer card when the active
-   question contains a terminal, so the two inner panes get the same width,
-   spacing, borders and surface treatment as they do in practice. Normal
-   (non-terminal) exam questions keep their existing panel styling.
-   ============================================================ */
-.exam-question-panel:has(.terminal-exercise-layout) {
-  margin: 0;
-  padding: 0;
-  background: transparent;
-  border: 0;
-  border-radius: 0;
-  box-shadow: none;
-  transform: none;
-}
-
-.exam-question-panel:has(.terminal-exercise-layout):focus-within,
-.exam-question-panel:has(.terminal-exercise-layout):hover {
-  border-color: transparent;
-  box-shadow: none;
-  transform: none;
-}
-
-.exam-question-panel:has(.terminal-exercise-layout)::after {
-  display: none;
-  content: none;
-}
-
-.exam-question-panel:has(.terminal-exercise-layout) .terminal-exercise-layout {
-  width: 100%;
-  min-width: 0;
-}
-
 /* Browser-based Java exercise workspace (CheerpJ 5 worker + CodeMirror). */
 .java-exercise-host,
 .java-exercise {
@@ -8374,173 +8130,10 @@ body.terminal-split-dragging {
 }
 
 /* ============================================================
-   Java exercise split workspace.
-   Desktop: editor on the left; instructions and all Java tools on the right.
-   Mobile: stack the instructions/tools and editor without horizontal overflow.
-   ============================================================ */
-.java-exercise-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 0.75rem;
-  align-items: start;
-  min-width: 0;
-}
-.java-exercise-layout > .java-workspace-pane,
-.java-exercise-layout > .java-instructions-pane {
-  min-width: 0;
-  margin: 0;
-}
-.java-exercise-layout > .java-workspace-pane {
-  order: 1;
-  padding: 0;
-  background: transparent;
-  border: 0;
-  box-shadow: none;
-}
-.java-exercise-layout > .java-instructions-pane {
-  order: 0;
-}
-.java-split-handle {
-  display: none;
-}
-.java-instructions-pane > .java-exercise-host {
-  margin-top: 0.85rem;
-}
-.java-workspace-pane .java-editor-panel {
-  margin: 0;
-}
-
-@media (min-width: 901px) {
-  .java-exercise-layout {
-    grid-template-columns:
-      minmax(320px, 1fr)
-      1rem
-      minmax(320px, var(--java-side-col, 46%));
-    column-gap: 0;
-    align-items: start;
-  }
-  .java-exercise-layout > .java-workspace-pane {
-    grid-column: 1;
-    grid-row: 1;
-    position: sticky;
-    top: 5.5rem;
-    max-height: calc(100vh - 7rem);
-    overflow: auto;
-  }
-  .java-exercise-layout > .java-instructions-pane {
-    grid-column: 3;
-    grid-row: 1;
-    position: sticky;
-    top: 5.5rem;
-    max-height: calc(100vh - 7rem);
-    overflow: auto;
-  }
-  .java-split-handle {
-    position: relative;
-    display: block;
-    grid-column: 2;
-    grid-row: 1;
-    align-self: stretch;
-    min-height: 100%;
-    cursor: col-resize;
-    touch-action: none;
-    outline: none;
-  }
-  .java-split-handle::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 50%;
-    width: 3px;
-    min-height: 4rem;
-    border-radius: 999px;
-    background: var(--bd);
-    transform: translateX(-50%);
-  }
-  .java-split-handle:hover::before,
-  .java-split-handle:focus-visible::before,
-  .java-split-handle.is-dragging::before {
-    background: var(--ac);
-  }
-  .java-split-handle:focus-visible::before {
-    box-shadow: var(
-      --ui-glow,
-      0 0 0 3px color-mix(in srgb, var(--ac) 13%, transparent)
-    );
-  }
-  .java-codemirror-host .cm-editor {
-    min-height: 25rem;
-    max-height: calc(100vh - 12rem);
-  }
-  .java-codemirror-host .cm-content {
-    min-height: 25rem;
-  }
-}
-
-@media (min-width: 901px) and (prefers-reduced-motion: no-preference) {
-  .java-split-handle::before {
-    transition: background-color var(--ui-fast, 150ms) var(--ui-ease, ease);
-  }
-}
-
-body.java-split-dragging {
-  cursor: col-resize;
-  user-select: none;
-}
-
-@media (max-width: 900px) {
-  .java-workspace-pane {
-    max-width: 100%;
-  }
-  .java-exercise-layout {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-  .java-exercise-layout > .java-instructions-pane {
-    order: 0;
-    position: static;
-    max-height: none;
-    overflow: visible;
-  }
-  .java-exercise-layout > .java-workspace-pane {
-    order: 1;
-    position: static;
-    max-height: none;
-    overflow: visible;
-  }
-}
-
-/* Exam questions use the same two-pane Java layout as practice. */
-.exam-question-panel:has(.java-exercise-layout) {
-  margin: 0;
-  padding: 0;
-  background: transparent;
-  border: 0;
-  border-radius: 0;
-  box-shadow: none;
-  transform: none;
-}
-.exam-question-panel:has(.java-exercise-layout):focus-within,
-.exam-question-panel:has(.java-exercise-layout):hover {
-  border-color: transparent;
-  box-shadow: none;
-  transform: none;
-}
-.exam-question-panel:has(.java-exercise-layout)::after {
-  display: none;
-  content: none;
-}
-.exam-question-panel:has(.java-exercise-layout) .java-exercise-layout {
-  width: 100%;
-  min-width: 0;
-}
-
-/* ============================================================
    Terminal desktop action rail.
-   Desktop: terminal stays on the left; solution, reset and the host app's
-   Next exercise control sit in a dedicated rail on the right.
+   Desktop: terminal stays on the left; solution and reset controls sit in a
+   dedicated rail on the right. Guided Learning navigation stays in its top
+   navigator, outside this terminal control rail.
    Mobile: display:contents keeps the previous stacked terminal layout.
    ============================================================ */
 .os-terminal .ot-workbench,
@@ -8738,4 +8331,326 @@ body.java-split-dragging {
     overflow-wrap: anywhere;
     word-break: break-word;
   }
+}
+
+
+/* Learning section resume controls */
+.learning-module-actions {
+  display: flex;
+  flex: 0 0 auto;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+.learning-module-actions > * {
+  margin: 0;
+}
+.learning-continue-button {
+  display: inline-flex;
+  min-height: 2.2rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0.45rem 0.8rem;
+  color: var(--on-ac, #fff);
+  background: var(--ac);
+  border: 1px solid var(--ac);
+  border-radius: 9px;
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 750;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    box-shadow 160ms ease;
+}
+.learning-continue-button:link,
+.learning-continue-button:visited {
+  color: var(--on-ac, #fff);
+}
+.learning-continue-button:hover:not(:disabled):not(.is-disabled) {
+  color: var(--on-ac, #fff);
+  background: var(--ac-hover);
+  border-color: var(--ac-hover);
+  text-decoration: none;
+}
+.learning-continue-button:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--ac) 55%, transparent);
+  outline-offset: 3px;
+}
+.learning-continue-button.is-disabled,
+.learning-continue-button:disabled {
+  color: var(--mut);
+  background: var(--soft);
+  border-color: var(--bd);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+button.learning-continue-button {
+  margin: 0;
+}
+
+/* Terminal exercise navigation belongs beside the terminal instructions. */
+.terminal-instructions-pane > .exercise-action-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--bd);
+}
+.terminal-instructions-pane > .exercise-action-buttons button {
+  min-height: 2.35rem;
+  margin: 0;
+}
+
+@media (max-width: 650px) {
+  .learning-module-actions {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 9rem), 1fr));
+    justify-content: stretch;
+  }
+  .learning-module-actions > * {
+    width: 100%;
+  }
+  .learning-module-actions .learning-complete-toggle {
+    width: 100%;
+  }
+  .terminal-instructions-pane > .exercise-action-buttons button {
+    flex: 1 1 10rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .learning-continue-button {
+    transition: none;
+  }
+}
+
+/* ========================================================================
+   STANDARD EXERCISE SPLIT LAYOUT
+   Reuse these three classes for any desktop exercise with a main workspace
+   on the left and supporting instructions / diagram / PlantUML on the right:
+     .exercise-split-layout  -> grid wrapper
+     .exercise-split-main    -> left-hand primary content
+     .exercise-split-side    -> right-hand supporting content
+   Add .exercise-split-handle to an optional resize divider. Keep the semantic
+   exercise classes only for feature-specific styling, not layout structure.
+   Mobile intentionally disables the split and divider; the panes stack.
+   ======================================================================== */
+.exercise-split-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: start;
+  min-width: 0;
+}
+.exercise-split-layout > .exercise-split-main,
+.exercise-split-layout > .exercise-split-side {
+  min-width: 0;
+  margin: 0;
+}
+.exercise-split-layout > .exercise-split-main {
+  grid-column: 1;
+  grid-row: 1;
+  order: 1;
+}
+.exercise-split-layout > .exercise-split-side {
+  grid-column: 1;
+  grid-row: 2;
+  order: 0;
+  position: static;
+  max-height: none;
+  overflow: visible;
+}
+.exercise-split-handle {
+  display: none;
+}
+@media (min-width: 901px) {
+  .exercise-split-layout {
+    grid-template-columns:
+      minmax(0, 1fr)
+      1rem
+      minmax(220px, var(--exercise-split-side-width, 34%));
+    column-gap: 0;
+    row-gap: 0;
+    align-items: start;
+  }
+  .exercise-split-layout > .exercise-split-main {
+    grid-column: 1;
+    grid-row: 1;
+    order: initial;
+    min-width: 0;
+  }
+  .exercise-split-layout > .exercise-split-side {
+    grid-column: 3;
+    grid-row: 1;
+    order: initial;
+    position: sticky;
+    top: 5.5rem;
+    max-height: calc(100vh - 7rem);
+    overflow: auto;
+  }
+  .exercise-split-layout--java {
+    grid-template-columns:
+      minmax(320px, 1fr)
+      1rem
+      minmax(320px, var(--exercise-split-side-width, 46%));
+  }
+  .exercise-split-layout--sql {
+    grid-template-columns:
+      minmax(0, 1fr)
+      1rem
+      minmax(250px, var(--exercise-split-side-width, 0.7fr));
+  }
+  .exercise-split-handle {
+    position: relative;
+    display: block;
+    grid-column: 2;
+    grid-row: 1;
+    align-self: stretch;
+    min-height: 4rem;
+    cursor: col-resize;
+    touch-action: none;
+    outline: none;
+  }
+  .exercise-split-handle::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 3px;
+    min-height: 4rem;
+    border-radius: 999px;
+    background: var(--bd);
+    transform: translateX(-50%);
+  }
+  .exercise-split-handle:hover::before,
+  .exercise-split-handle:focus-visible::before,
+  .exercise-split-handle.is-dragging::before {
+    background: var(--ac);
+  }
+  .exercise-split-handle:focus-visible::before {
+    box-shadow: var(--ui-glow, 0 0 0 3px color-mix(in srgb, var(--ac) 13%, transparent));
+  }
+  .exercise-split-layout--terminal .os-terminal { margin: 0; }
+  .exercise-split-layout--java .java-workspace-pane {
+    padding: 0;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+  }
+}
+@media (max-width: 900px) {
+  .exercise-split-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .exercise-split-layout > .exercise-split-side {
+    order: 0;
+    position: static;
+    max-height: none;
+    overflow: visible;
+  }
+  .exercise-split-layout > .exercise-split-main { order: 1; }
+  .exercise-split-handle { display: none !important; }
+}
+@media (min-width: 901px) and (prefers-reduced-motion: no-preference) {
+  .exercise-split-handle::before {
+    transition: background-color var(--ui-fast, 150ms) var(--ui-ease, ease);
+  }
+}
+body.terminal-split-dragging,
+body.java-split-dragging,
+body.sql-split-dragging {
+  cursor: col-resize;
+  user-select: none;
+}
+
+/* Course-wide resume control lives alongside the top-level progress summary. */
+.learning-overview-heading {
+  align-items: center;
+}
+.learning-course-continue {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+@media (max-width: 650px) {
+  .learning-overview-heading { flex-wrap: wrap; }
+  .learning-course-continue { width: 100%; }
+}
+
+/* Guided Learning navigator: all layout and spacing are defined in CSS. */
+/* When a path navigator is inside a split exercise, let it span both panes. */
+.exercise-split-layout > .learning-path-navigator {
+  grid-column: 1 / -1;
+  grid-row: 1;
+}
+.exercise-split-layout:has(> .learning-path-navigator) > .exercise-split-main,
+.exercise-split-layout:has(> .learning-path-navigator) > .exercise-split-side,
+.exercise-split-layout:has(> .learning-path-navigator) > .exercise-split-handle {
+  grid-row: 2;
+}
+
+.learning-path-navigator {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 0 0 1rem;
+  padding: 0.8rem 1rem;
+  background: var(--card, transparent);
+  border: 1px solid var(--line, var(--bd, #8885));
+  border-radius: 12px;
+}
+.learning-path-navigator__details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+.learning-path-navigator__actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.learning-path-navigator__actions > button {
+  margin: 0;
+}
+@media (max-width: 650px) {
+  .learning-path-navigator {
+    align-items: stretch;
+  }
+  .learning-path-navigator__actions {
+    width: 100%;
+  }
+  .learning-path-navigator__actions > button {
+    flex: 1 1 auto;
+  }
+}
+
+/* Exam cards use the same neutral outer wrapper for every shared split layout. */
+.exam-question-panel:has(.exercise-split-layout) {
+  margin: 0; padding: 0; background: transparent; border: 0;
+  border-radius: 0; box-shadow: none; transform: none;
+}
+.exam-question-panel:has(.exercise-split-layout):focus-within,
+.exam-question-panel:has(.exercise-split-layout):hover {
+  border-color: transparent; box-shadow: none; transform: none;
+}
+.exam-question-panel:has(.exercise-split-layout)::after { display: none; content: none; }
+.exam-question-panel:has(.exercise-split-layout) > .exercise-split-layout {
+  width: 100%; min-width: 0;
 }

@@ -3639,14 +3639,23 @@ function qView(
   } else {
     q.append(exerciseHeading, exerciseMeta, instructions);
   }
-  const btns = h("div");
+  const btns = h("div", { class: "exercise-action-buttons" });
   let readAns, resetFn, submitButton, nextExerciseButton, focusTarget;
+  let nextExerciseHandler = onNextExercise;
+  let nextExerciseAvailability = hasNextExercise;
+  let nextExerciseInNavigator = false;
 
-  let exerciseCorrect = false;
+  // Reopening an already completed exercise should retain its Next action.
+  let exerciseCorrect = Boolean(
+    S.xpRewards?.[keyOf(ex)] || S.xpRewards?.[ex.id],
+  );
 
   const updateNextExercise = () => {
     if (nextExerciseButton) {
-      nextExerciseButton.hidden = !(exerciseCorrect && hasNextExercise());
+      const shouldShow = exerciseCorrect && nextExerciseAvailability();
+      nextExerciseButton.hidden = !shouldShow;
+      if (ex.type === "terminal" && !nextExerciseInNavigator)
+        btns.hidden = !shouldShow;
     }
   };
   const markExerciseCorrect = () => {
@@ -3923,6 +3932,23 @@ function qView(
           return;
         }
         terminalController = controller;
+        // Guided Learning owns navigation in its top navigator, not in the
+        // terminal module's control sidebar. Outside a learning path, keep the
+        // completion-gated action with the exercise instructions.
+        const learningPathActions = terminalInstructionsPane
+          .closest(".exercise-split-layout")
+          ?.querySelector(".learning-path-navigator__actions");
+        if (nextExerciseButton) {
+          if (learningPathActions) {
+            learningPathActions.append(nextExerciseButton);
+            nextExerciseInNavigator = true;
+            btns.hidden = false;
+          } else {
+            btns.append(nextExerciseButton);
+            terminalInstructionsPane.append(btns);
+          }
+          updateNextExercise();
+        }
         await updateAnswer("terminal-workspace");
       })
       .catch((error) => {
@@ -4141,16 +4167,23 @@ function qView(
       nextExerciseButton = h(
         "button",
         {
+          class: "learning-path-next-exercise",
           onclick: () => {
-            if (!exerciseCorrect || !hasNextExercise()) return;
-            onNextExercise();
+            if (!exerciseCorrect || !nextExerciseAvailability()) return;
+            nextExerciseHandler?.();
           },
           "aria-keyshortcuts": "Enter",
           hidden: true,
         },
         "Next exercise",
       );
-      btns.append(nextExerciseButton);
+      if (ex.type === "terminal") {
+        // The terminal module mounts its own right-hand control rail later.
+        // Move this button into that rail after mount, not into the question
+        // wrapper or the generic (hidden) exercise button group.
+      } else {
+        btns.append(nextExerciseButton);
+      }
     }
     if (ex.type !== "terminal" && ex.type !== "java-ex") {
       btns.append(
@@ -4415,6 +4448,8 @@ function qView(
   }
   if (ex.type === "java-ex") {
     javaInstructionsPane.append(btns, out, fb);
+  } else if (ex.type === "terminal") {
+    q.append(out, fb);
   } else {
     q.append(btns, out, fb);
   }
@@ -4426,7 +4461,14 @@ function qView(
         ? javaSplitLayout(q, javaInstructionsPane)
         : q;
   view.refreshNextExercise = updateNextExercise;
+  view.configureNextExercise = (handler, availability) => {
+    if (typeof handler === "function") nextExerciseHandler = handler;
+    if (typeof availability === "function")
+      nextExerciseAvailability = availability;
+    updateNextExercise();
+  };
   view.focusInput = () => focusTarget?.focus({ preventScroll: true });
+  updateNextExercise();
   // Where outside callers may attach extra controls. Java owns its editor pane
   // (java.js replaces its children on mount), so use the instructions pane.
   view.actionsRoot =
@@ -4438,6 +4480,10 @@ function qView(
   return view;
 }
 
+// Shared desktop split contract: every two-pane exercise uses
+// .exercise-split-layout + .exercise-split-main + .exercise-split-side,
+// with an optional .exercise-split-handle. Add a modifier only for sizing or
+// feature-specific behaviour; do not create another layout class per exercise.
 // ---------- resizable split between terminal instructions and workspace ----------
 const TERMINAL_SPLIT_KEY = "terminalInstructionsFraction";
 const TERMINAL_SPLIT_MIN = 0.22;
@@ -4457,25 +4503,26 @@ let terminalInstructionsFraction = (() => {
 })();
 function terminalSplitLayout(instructionsPanel, workspacePanel) {
   const handle = h("div", {
-    class: "terminal-split-handle",
+    class: "exercise-split-handle",
     role: "separator",
     "aria-orientation": "vertical",
     "aria-label": "Resize terminal instructions and workspace",
     tabindex: "0",
     title: "Drag to resize (double-click to reset)",
   });
+  workspacePanel.classList.add("exercise-split-main");
+  instructionsPanel.classList.add("exercise-split-side");
   const layout = h(
     "div",
-    { class: "terminal-exercise-layout" },
+    { class: "exercise-split-layout exercise-split-layout--terminal" },
     workspacePanel,
     handle,
     instructionsPanel,
   );
   const apply = () => {
-    layout.style.setProperty(
-      "--terminal-instructions-col",
-      `${(terminalInstructionsFraction * 100).toFixed(2)}%`,
-    );
+    const sideWidth = `${(terminalInstructionsFraction * 100).toFixed(2)}%`;
+    layout.style.setProperty("--terminal-instructions-col", sideWidth);
+    layout.style.setProperty("--exercise-split-side-width", sideWidth);
     handle.setAttribute(
       "aria-valuenow",
       String(Math.round(terminalInstructionsFraction * 100)),
@@ -4571,25 +4618,26 @@ let javaSideFraction = (() => {
 })();
 function javaSplitLayout(editorPanel, instructionsPanel) {
   const handle = h("div", {
-    class: "java-split-handle",
+    class: "exercise-split-handle",
     role: "separator",
     "aria-orientation": "vertical",
     "aria-label": "Resize Java editor and exercise tools",
     tabindex: "0",
     title: "Drag to resize (double-click to reset)",
   });
+  editorPanel.classList.add("exercise-split-main");
+  instructionsPanel.classList.add("exercise-split-side");
   const layout = h(
     "div",
-    { class: "java-exercise-layout" },
+    { class: "exercise-split-layout exercise-split-layout--java" },
     editorPanel,
     handle,
     instructionsPanel,
   );
   const apply = () => {
-    layout.style.setProperty(
-      "--java-side-col",
-      `${(javaSideFraction * 100).toFixed(2)}%`,
-    );
+    const sideWidth = `${(javaSideFraction * 100).toFixed(2)}%`;
+    layout.style.setProperty("--java-side-col", sideWidth);
+    layout.style.setProperty("--exercise-split-side-width", sideWidth);
     handle.setAttribute(
       "aria-valuenow",
       String(Math.round(javaSideFraction * 100)),
@@ -4657,7 +4705,7 @@ function javaSplitLayout(editorPanel, instructionsPanel) {
 
 // ---------- resizable split between the question and the schema/diagram ----------
 // Only used for SQL exercises (the only ones that have a schema panel).
-// Layout/visuals live in style.css (.sql-exercise-layout, .sql-split-handle);
+// Shared split layout lives in style.css (.exercise-split-layout / .exercise-split-handle).
 // here we only set --sql-schema-col (the schema column width) while dragging.
 const SQL_SPLIT_KEY = "sqlSchemaFraction";
 const SQL_SPLIT_MIN = 0.25,
@@ -4671,19 +4719,22 @@ let sqlSchemaFraction = (() => {
 })();
 function sqlSplitLayout(schemaPanel, q) {
   const handle = h("div", {
-    class: "sql-split-handle",
+    class: "exercise-split-handle",
     role: "separator",
     "aria-orientation": "vertical",
     "aria-label": "Resize question and diagram panels",
     tabindex: "0",
     title: "Drag to resize (double-click to reset)",
   });
+  q.classList.add("exercise-split-main");
+  schemaPanel.classList.add("exercise-split-side");
+  // Shared split order is always main content on the left, supporting panel on the right.
   const layout = h(
     "div",
-    { class: "sql-exercise-layout" },
-    schemaPanel,
-    handle,
+    { class: "exercise-split-layout exercise-split-layout--sql" },
     q,
+    handle,
+    schemaPanel,
   );
   const currentFraction = () =>
     sqlSchemaFraction ??
@@ -4692,13 +4743,13 @@ function sqlSplitLayout(schemaPanel, q) {
   const apply = () => {
     if (sqlSchemaFraction == null) {
       layout.style.removeProperty("--sql-schema-col");
+      layout.style.removeProperty("--exercise-split-side-width");
       handle.removeAttribute("aria-valuenow");
       return;
     }
-    layout.style.setProperty(
-      "--sql-schema-col",
-      `${(sqlSchemaFraction * 100).toFixed(2)}%`,
-    );
+    const sideWidth = `${(sqlSchemaFraction * 100).toFixed(2)}%`;
+    layout.style.setProperty("--sql-schema-col", sideWidth);
+    layout.style.setProperty("--exercise-split-side-width", sideWidth);
     handle.setAttribute(
       "aria-valuenow",
       String(Math.round(sqlSchemaFraction * 100)),
@@ -5413,6 +5464,30 @@ async function enhanceLearningProgress(body, term, subject) {
     });
     return { heading, sectionId, exercises, index };
   });
+  const pathExercises = modules.flatMap((pathModule) =>
+    pathModule.exercises.map((pathExercise) => ({
+      packageId: pathExercise.packageId,
+      exerciseId: pathExercise.id,
+      sectionId: pathModule.sectionId,
+    })),
+  );
+  const saveLearningPathSession = (exercise) => {
+    try {
+      localStorage.setItem(
+        "learning-path-session",
+        JSON.stringify({
+          termFile: term.file,
+          packageId: learningPackageId,
+          exercises: pathExercises,
+          completedSectionIds: [...completed],
+          currentExerciseId: exercise.id,
+          startedAt: Date.now(),
+        }),
+      );
+    } catch (error) {
+      console.warn("Could not save learning path position:", error);
+    }
+  };
   const totalExercises = modules.reduce(
     (sum, module) => sum + module.exercises.length,
     0,
@@ -5486,7 +5561,51 @@ async function enhanceLearningProgress(body, term, subject) {
     ),
   );
 
-  if (modules[0]?.heading) modules[0].heading.before(overall);
+  // Keep the progress summary and one course-wide resume action at the very top.
+  // Resume scans sections in document order, skipping reviewed sections and
+  // selecting the first unsolved exercise in the first eligible section.
+  const firstResumeTarget = () => {
+    for (const module of modules) {
+      if (completed.has(module.sectionId)) continue;
+      const exercise = module.exercises.find((item) => !solved.has(keyOf(item)));
+      if (exercise) return { module, exercise };
+    }
+    return null;
+  };
+  const hasAnyLearningProgress = () =>
+    modules.some((module) =>
+      module.exercises.some((exercise) => {
+        const key = keyOf(exercise);
+        return solved.has(key) ||
+          S.attempts.some((attempt) => attempt.key === key) ||
+          Object.prototype.hasOwnProperty.call(S.drafts, key);
+      }) || completed.has(module.sectionId),
+    );
+  const courseResume = h("a", {
+    class: "learning-continue-button learning-course-continue",
+    "aria-label": "Continue the learning path from the first unfinished section and exercise",
+  });
+  const syncCourseResume = () => {
+    const target = firstResumeTarget();
+    if (target) {
+      courseResume.href = `#/practice/${encodeURIComponent(target.exercise.packageId)}/${encodeURIComponent(target.exercise.id)}`;
+      courseResume.classList.remove("is-disabled");
+      courseResume.removeAttribute("aria-disabled");
+      courseResume.textContent = hasAnyLearningProgress() ? "Continue learning →" : "Start learning →";
+      courseResume.onclick = () => saveLearningPathSession(target.exercise);
+      courseResume.title = `Section ${String(target.module.index + 1).padStart(2, "0")} · ${target.exercise.title}`;
+    } else {
+      courseResume.removeAttribute("href");
+      courseResume.classList.add("is-disabled");
+      courseResume.setAttribute("aria-disabled", "true");
+      courseResume.textContent = "Learning path completed";
+      courseResume.onclick = (event) => event.preventDefault();
+      courseResume.title = "Every section is reviewed or every exercise is complete.";
+    }
+  };
+  overall.querySelector(".learning-overview-heading").append(courseResume);
+  body.prepend(overall);
+  syncCourseResume();
   const refreshOverview = () => {
     const solvedNow = modules.reduce(
       (sum, module) =>
@@ -5521,28 +5640,112 @@ async function enhanceLearningProgress(body, term, subject) {
       { class: "learning-module-status" },
       `${solvedCount}/${exercises.length} exercises solved`,
     );
+    const firstUncompletedExercise = exercises.find(
+      (exercise) => !solved.has(keyOf(exercise)),
+    );
+    let sectionReviewed = completed.has(sectionId);
+    let canContinue = !sectionReviewed && Boolean(firstUncompletedExercise);
+    const hasProgress = exercises.some((exercise) => {
+      const exerciseKey = keyOf(exercise);
+      return (
+        solved.has(exerciseKey) ||
+        S.attempts.some((attempt) => attempt.key === exerciseKey) ||
+        Object.prototype.hasOwnProperty.call(S.drafts, exerciseKey)
+      );
+    });
+    const continueLabel = hasProgress ? "Continue →" : "Start section →";
+    const continueControl = h(
+      "a",
+      {
+        class: "learning-continue-button" + (canContinue ? "" : " is-disabled"),
+        ...(canContinue
+          ? {
+              href: `#/practice/${encodeURIComponent(firstUncompletedExercise.packageId)}/${encodeURIComponent(firstUncompletedExercise.id)}`,
+            }
+          : {}),
+        "aria-disabled": String(!canContinue),
+        "aria-label": `${hasProgress ? "Continue" : "Start"} Section ${String(index + 1).padStart(2, "0")} at its first unsolved exercise`,
+        tabindex: canContinue ? "0" : "-1",
+        title: canContinue
+          ? ""
+          : sectionReviewed
+            ? "This section is marked as reviewed."
+            : exercises.length
+              ? "All exercises in this section are solved."
+              : "No exercises are available in this section.",
+        onclick: (event) => {
+          if (!canContinue) {
+            event.preventDefault();
+            return;
+          }
+          saveLearningPathSession(firstUncompletedExercise);
+        },
+      },
+      canContinue
+        ? continueLabel
+        : sectionReviewed
+          ? "Section reviewed"
+          : exercises.length
+            ? "All solved"
+            : "Unavailable",
+    );
+    const syncContinueControl = () => {
+      canContinue = !sectionReviewed && Boolean(firstUncompletedExercise);
+      continueControl.classList.toggle("is-disabled", !canContinue);
+      continueControl.setAttribute("aria-disabled", String(!canContinue));
+      if (canContinue) {
+        continueControl.setAttribute(
+          "href",
+          `#/practice/${encodeURIComponent(firstUncompletedExercise.packageId)}/${encodeURIComponent(firstUncompletedExercise.id)}`,
+        );
+        continueControl.setAttribute("tabindex", "0");
+        continueControl.textContent = continueLabel;
+        continueControl.removeAttribute("title");
+      } else {
+        continueControl.removeAttribute("href");
+        continueControl.setAttribute("tabindex", "-1");
+        continueControl.textContent = sectionReviewed
+          ? "Section reviewed"
+          : exercises.length
+            ? "All solved"
+            : "Unavailable";
+        continueControl.title = sectionReviewed
+          ? "This section is marked as reviewed."
+          : exercises.length
+            ? "All exercises in this section are solved."
+            : "No exercises are available in this section.";
+      }
+    };
     const toggle = h(
       "button",
       {
         type: "button",
         class:
           "learning-complete-toggle" +
-          (completed.has(sectionId) ? " is-complete" : ""),
-        "aria-pressed": String(completed.has(sectionId)),
+          (sectionReviewed ? " is-complete" : ""),
+        "aria-pressed": String(sectionReviewed),
         onclick: async () => {
           if (completed.has(sectionId)) completed.delete(sectionId);
           else completed.add(sectionId);
-          const isComplete = completed.has(sectionId);
-          toggle.classList.toggle("is-complete", isComplete);
-          toggle.setAttribute("aria-pressed", String(isComplete));
-          toggle.textContent = isComplete
+          sectionReviewed = completed.has(sectionId);
+          toggle.classList.toggle("is-complete", sectionReviewed);
+          toggle.setAttribute("aria-pressed", String(sectionReviewed));
+          toggle.textContent = sectionReviewed
             ? "✓ Section reviewed"
             : "Mark section reviewed";
+          syncContinueControl();
           await kv.set(storageKey, [...completed]);
+          syncCourseResume();
           refreshOverview();
         },
       },
-      completed.has(sectionId) ? "✓ Section reviewed" : "Mark section reviewed",
+      sectionReviewed ? "✓ Section reviewed" : "Mark section reviewed",
+    );
+    const moduleActions = h(
+      "div",
+      { class: "learning-module-actions" },
+      continueControl,
+      toggle,
     );
     const exerciseLinks = exercises.length
       ? h(
@@ -5568,30 +5771,7 @@ async function enhanceLearningProgress(body, term, subject) {
                   "a",
                   {
                     href: `#/practice/${encodeURIComponent(exercise.packageId)}/${encodeURIComponent(exercise.id)}`,
-                    onclick: () => {
-                      const pathExercises = modules.flatMap((pathModule) =>
-                        pathModule.exercises.map((pathExercise) => ({
-                          packageId: pathExercise.packageId,
-                          exerciseId: pathExercise.id,
-                          sectionId: pathModule.sectionId,
-                        })),
-                      );
-                      try {
-                        localStorage.setItem(
-                          "learning-path-session",
-                          JSON.stringify({
-                            termFile: term.file,
-                            packageId: learningPackageId,
-                            exercises: pathExercises,
-                            completedSectionIds: [...completed],
-                            currentExerciseId: exercise.id,
-                            startedAt: Date.now(),
-                          }),
-                        );
-                      } catch (error) {
-                        console.warn("Could not save learning path position:", error);
-                      }
-                    },
+                    onclick: () => saveLearningPathSession(exercise),
                   },
                   readableTitle,
                 ),
@@ -5628,7 +5808,7 @@ async function enhanceLearningProgress(body, term, subject) {
           h("strong", {}, `Section ${String(index + 1).padStart(2, "0")}`),
           status,
         ),
-        toggle,
+        moduleActions,
       ),
       progress,
       exerciseLinks,
@@ -7533,12 +7713,16 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
         ) {
           const candidate = learningPathExercises[index];
           if (reviewedSections.has(candidate.sectionId)) continue;
+          const candidateKey = `${candidate.packageId}:${candidate.exerciseId}`;
+          if (direction > 0 && (S.xpRewards?.[candidateKey] || S.xpRewards?.[candidate.exerciseId])) continue;
           const found = S.exercises.find(
             (item) =>
               item.packageId === candidate.packageId &&
               item.id === candidate.exerciseId,
           );
-          if (found) return { exercise: found, index };
+          if (!found) continue;
+          if (direction > 0 && S.xpRewards[keyOf(found)]) continue;
+          return { exercise: found, index };
         }
         return null;
       };
@@ -7546,6 +7730,19 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
       const nextPathExercise = findPathExercise(1);
       previousPathButton.disabled = !previousPathExercise;
       nextPathButton.disabled = !nextPathExercise;
+      if (exercise.type === "terminal") {
+        // The terminal's completion-gated Next exercise action is placed in
+        // the learning-path navigator once the terminal module has mounted.
+        // Route it through the path sequence so reviewed/solved items are
+        // skipped instead of using the generic exercise-list order.
+        view.configureNextExercise?.(
+          () => {
+            if (nextPathExercise)
+              void selectExercise(nextPathExercise.exercise, true);
+          },
+          () => Boolean(nextPathExercise),
+        );
+      }
       pathPosition.textContent =
         `Learning path · Exercise ${learningPathIndex + 1} of ${learningPathExercises.length}` +
         (reviewedSections.size
@@ -7564,20 +7761,18 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
         {
           class: "learning-path-navigator",
           "aria-label": "Learning path navigation",
-          style:
-            "display:flex;align-items:center;justify-content:space-between;gap:.75rem;flex-wrap:wrap;padding:.8rem 1rem;margin:0 0 1rem;border:1px solid var(--line, #8885);border-radius:12px;background:var(--card, transparent)",
         },
         h(
           "div",
-          { style: "display:flex;flex-direction:column;gap:.2rem;min-width:0" },
+          { class: "learning-path-navigator__details" },
           h("strong", {}, "Continue learning"),
           pathPosition,
         ),
         h(
           "div",
-          { style: "display:flex;gap:.5rem;flex-wrap:wrap" },
+          { class: "learning-path-navigator__actions" },
           previousPathButton,
-          nextPathButton,
+          ...(exercise.type === "terminal" ? [] : [nextPathButton]),
         ),
       );
       view.prepend(pathNavigator);
