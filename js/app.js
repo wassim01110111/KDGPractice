@@ -19,6 +19,19 @@ const javaModuleUrl = new URL(
   "./java.js",
   document.currentScript?.src || location.href,
 ).href;
+let terminalModulePromise = null;
+let javaModulePromise = null;
+const loadTerminalModule = () =>
+  (terminalModulePromise ||= import(terminalModuleUrl));
+const loadJavaModule = () => (javaModulePromise ||= import(javaModuleUrl));
+
+// Keep every desktop two-pane exercise type in this one registry. The same
+// layout factory is used in Practice, Guided Learning, and Exam mode.
+const DESKTOP_SPLIT_EXERCISE_TYPES = Object.freeze([
+  "terminal",
+  "java-ex",
+  "sql-query",
+]);
 
 // Terminal views own their listeners and resources. Dispose only exercise
 // views that explicitly expose this small lifecycle hook.
@@ -2520,52 +2533,182 @@ async function runStudent(ex, sql) {
   );
   return { res, ms: Math.round(performance.now() - t0) };
 }
-async function gradeSql(ex, sql) {
-  const ds = S.datasets[ex.datasetId],
-    t0 = performance.now();
+async function runSqlInRollbackTransaction(db, ds, sql) {
+  let began = false;
+  let result;
+  try {
+    await db.exec("BEGIN");
+    began = true;
+    result = { status: "fulfilled", value: await runSql(db, sql) };
+  } catch (reason) {
+    result = { status: "rejected", reason };
+  }
+
+  // A normal query (including DML/DDL) is rolled back to the dataset baseline.
+  // Explicit transaction control can make PostgreSQL treat a later ROLLBACK
+  // with no active transaction as a warning rather than an error, so those
+  // scripts always receive a full dataset reset before the next query.
+  const controlsTransaction = /\b(?:BEGIN|COMMIT|END|ROLLBACK)\b/i.test(sql);
+  if (began && !controlsTransaction) {
+    try {
+      await db.exec("ROLLBACK");
+    } catch {
+      await resetDatabase(db, ds);
+    }
+  } else {
+    await resetDatabase(db, ds);
+  }
+  return result;
+}
+
+async function gradeSqlOnDatabase(
+  ex,
+  sql,
+  db,
+  ds,
+  startedAt = performance.now(),
+  setupMs = 0,
+) {
+  const t0 = startedAt;
+  if (!String(sql || "").trim())
+    return { correct: false, error: "No SQL answer was submitted." };
   try {
     checkKind(ex, sql);
-  } catch (e) {
-    return { correct: false, error: e.message };
+  } catch (error) {
+    return { correct: false, error: error.message };
   }
-  return withFreshDb(ds, async (db) => {
-    const t1 = performance.now();
-    let s, r;
-    try {
-      s = { status: "fulfilled", value: await runSql(db, sql) };
-    } catch (reason) {
-      s = { status: "rejected", reason };
-    }
-    // Run the reference query on a freshly restored dataset in the same
-    // worker, rather than trying to open a second main-thread database.
-    await resetDatabase(db, ds);
-    try {
-      r = {
-        status: "fulfilled",
-        value: await runSql(db, ex.referenceSolution),
-      };
-    } catch (reason) {
-      r = { status: "rejected", reason };
-    }
-    if (r.status === "rejected")
-      return {
-        correct: false,
-        error:
-          s.status === "rejected"
-            ? describeSqlError(s.reason, sql)
-            : describeSqlError(r.reason, ex.referenceSolution),
-      };
-    if (s.status === "rejected")
-      return { correct: false, error: s.reason.message };
-    const cmp = compare(s.value, r.value, ex);
+
+  const student = await runSqlInRollbackTransaction(db, ds, sql);
+  if (student.status === "rejected") {
     return {
-      correct: cmp.ok,
-      cmp,
-      res: s.value,
-      setupMs: Math.round(t1 - t0),
+      correct: false,
+      error: describeSqlError(student.reason, sql),
+      setupMs,
       totalMs: Math.round(performance.now() - t0),
     };
-  });
+  }
+
+  const reference = await runSqlInRollbackTransaction(
+    db,
+    ds,
+    ex.referenceSolution,
+  );
+  if (reference.status === "rejected") {
+    return {
+      correct: false,
+      error: describeSqlError(reference.reason, ex.referenceSolution),
+      res: student.value,
+      setupMs,
+      totalMs: Math.round(performance.now() - t0),
+    };
+  }
+
+  const cmp = compare(student.value, reference.value, ex);
+  return {
+    correct: cmp.ok,
+    cmp,
+    res: student.value,
+    setupMs,
+    totalMs: Math.round(performance.now() - t0),
+  };
+}
+
+async function gradeSql(ex, sql) {
+  const ds = S.datasets[ex.datasetId];
+  if (!ds) return { correct: false, error: "The SQL dataset is unavailable." };
+  try {
+    checkKind(ex, sql);
+  } catch (error) {
+    return { correct: false, error: error.message };
+  }
+  const startedAt = performance.now();
+  return withFreshDb(ds, (db) =>
+    gradeSqlOnDatabase(
+      ex,
+      sql,
+      db,
+      ds,
+      startedAt,
+      Math.round(performance.now() - startedAt),
+    ),
+  );
+}
+
+// Exam SQL grading groups questions by dataset. PGlite is a single worker and
+// each question previously re-imported the complete dataset twice (student
+// query + reference query). A single seed per dataset plus isolated rollback
+// transactions preserves clean-state grading while avoiding repeated imports.
+async function gradeSqlBatch(items, onProgress = () => {}) {
+  const grades = new Map();
+  const groups = new Map();
+
+  for (const item of items) {
+    const { ex } = item;
+    const key = keyOf(ex);
+    const sql = typeof item.answer === "string" ? item.answer : "";
+    if (!sql.trim()) {
+      grades.set(key, { correct: false, error: "No SQL answer was submitted." });
+      continue;
+    }
+    try {
+      checkKind(ex, sql);
+    } catch (error) {
+      grades.set(key, { correct: false, error: error.message });
+      continue;
+    }
+    const ds = S.datasets[ex.datasetId];
+    if (!ds) {
+      grades.set(key, { correct: false, error: "The SQL dataset is unavailable." });
+      continue;
+    }
+    const groupKey = databaseToken(ds);
+    if (!groups.has(groupKey)) groups.set(groupKey, { ds, items: [] });
+    groups.get(groupKey).items.push({ ex, sql, key });
+  }
+
+  let completed = 0;
+  const total = [...groups.values()].reduce((sum, group) => sum + group.items.length, 0);
+  for (const { ds, items: groupItems } of groups.values()) {
+    try {
+      const startedAt = performance.now();
+      onProgress({ phase: "prepare", dataset: ds, completed, total });
+      await withFreshDb(ds, async (db) => {
+        const setupMs = Math.round(performance.now() - startedAt);
+        for (const item of groupItems) {
+          onProgress({ phase: "check", exercise: item.ex, completed, total });
+          try {
+            grades.set(
+              item.key,
+              await gradeSqlOnDatabase(
+                item.ex,
+                item.sql,
+                db,
+                ds,
+                startedAt,
+                setupMs,
+              ),
+            );
+          } catch (error) {
+            grades.set(item.key, {
+              correct: false,
+              error: `SQL grading failed: ${error?.message || String(error)}`,
+            });
+          }
+          completed++;
+        }
+      });
+    } catch (error) {
+      for (const item of groupItems) {
+        if (grades.has(item.key)) continue;
+        grades.set(item.key, {
+          correct: false,
+          error: `SQL dataset setup failed: ${error?.message || String(error)}`,
+        });
+        completed++;
+      }
+    }
+  }
+  return grades;
 }
 // ---------- rendering helpers ----------
 function table(r, max = 200) {
@@ -3154,6 +3297,8 @@ const answerText = (ex, answer) => {
       .map((i) => ex.options[i]);
     return choices.length ? choices.join("\n") : "(no answer)";
   }
+  if (ex.type === "fill-blank" && Array.isArray(answer))
+    return answer.map((value, index) => `${index + 1}. ${value || "(empty)"}`).join("\n");
   return typeof answer === "string"
     ? answer || "(empty)"
     : JSON.stringify(answer ?? "(no answer)");
@@ -3549,7 +3694,51 @@ async function plantumlEncode(source) {
   return encoded;
 }
 
-// Question view. mode 'practice' shows Run/Submit/feedback; 'exam' shows Run only, no feedback.
+// Normalize controls supplied by exercise modules so their buttons share the
+// same visual and semantic action group as hints, solutions, flags, and Next.
+// Moving the original nodes preserves their event listeners and module state.
+function normalizeExerciseActionControls(actionGroup) {
+  if (!actionGroup) return;
+
+  // Navigation belongs to the app-wide learning-path navigator, never inside
+  // a module-owned control sidebar. Remove legacy terminal placeholders that
+  // older terminal.js builds may still inject.
+  actionGroup.querySelectorAll(".ot-next-slot").forEach((slot) => slot.remove());
+  actionGroup
+    .querySelectorAll(".ot-next-exercise-control")
+    .forEach((control) => control.remove());
+
+  actionGroup
+    .querySelectorAll(".ot-control-sidebar, .java-controls")
+    .forEach((controls) => {
+      controls
+        .querySelectorAll(".ot-control-heading, h1, h2, h3, [role=heading]")
+        .forEach((heading) => {
+          const label = (heading.textContent || "").trim();
+          if (
+            heading.classList.contains("ot-control-heading") ||
+            /^exercise controls$/i.test(label)
+          ) {
+            heading.remove();
+          }
+        });
+      controls.setAttribute("role", "group");
+      controls.setAttribute("aria-label", "Exercise actions");
+      controls.classList.add("exercise-action-buttons__module-controls");
+    });
+}
+
+function moveMountedExerciseActions(source, actionGroup, selector) {
+  if (!source || !actionGroup) return;
+  source.querySelectorAll(selector).forEach((controls) => {
+    if (controls !== actionGroup && !actionGroup.contains(controls))
+      actionGroup.append(controls);
+  });
+  normalizeExerciseActionControls(actionGroup);
+}
+
+// Question view. Practice and exam share the same panels, split layout, and
+// exercise-action-buttons container; only mode-specific actions differ.
 function qView(
   ex,
   mode,
@@ -3559,6 +3748,7 @@ function qView(
   onNextExercise = null,
   hasNextExercise = () => true,
   attemptId = mode === "exam" ? "exam" : "practice",
+  extraActionControls = [],
 ) {
   let q = h("div", { class: "q" });
   const out = h("div"),
@@ -3588,8 +3778,8 @@ function qView(
   let schemaPanel,
     runId = 0,
     gradingId = 0;
-  const updateAnswer = (value) => {
-    const saved = set(value);
+  const updateAnswer = (value, meta = { source: "user" }) => {
+    const saved = set(value, meta);
     return Promise.resolve(saved).catch((e) => {
       console.error("Could not save answer draft:", e);
     });
@@ -3639,24 +3829,32 @@ function qView(
   } else {
     q.append(exerciseHeading, exerciseMeta, instructions);
   }
-  const btns = h("div", { class: "exercise-action-buttons" });
+  const btns = h("div", {
+    class: "exercise-action-buttons",
+    role: "group",
+    "aria-label": "Exercise actions",
+  });
+  const supplementalPanels = [];
+  const suppliedActions = Array.isArray(extraActionControls)
+    ? extraActionControls
+    : extraActionControls
+      ? [extraActionControls]
+      : [];
+  btns.append(...suppliedActions.filter(Boolean));
   let readAns, resetFn, submitButton, nextExerciseButton, focusTarget;
   let nextExerciseHandler = onNextExercise;
   let nextExerciseAvailability = hasNextExercise;
-  let nextExerciseInNavigator = false;
 
-  // Reopening an already completed exercise should retain its Next action.
+  // Every exercise type uses the same completion-gated Next action.
   let exerciseCorrect = Boolean(
     S.xpRewards?.[keyOf(ex)] || S.xpRewards?.[ex.id],
   );
 
   const updateNextExercise = () => {
-    if (nextExerciseButton) {
-      const shouldShow = exerciseCorrect && nextExerciseAvailability();
-      nextExerciseButton.hidden = !shouldShow;
-      if (ex.type === "terminal" && !nextExerciseInNavigator)
-        btns.hidden = !shouldShow;
-    }
+    if (!nextExerciseButton) return;
+    const canContinue = exerciseCorrect && nextExerciseAvailability();
+    nextExerciseButton.hidden = !canContinue;
+    nextExerciseButton.disabled = !canContinue;
   };
   const markExerciseCorrect = () => {
     exerciseCorrect = true;
@@ -3797,7 +3995,7 @@ function qView(
         : String(savedCode);
     // Persist the visible starter text too, so a saved exam always contains
     // the exact source that will be graded even when the student never edits it.
-    updateAnswer(initialCode);
+    updateAnswer(initialCode, { source: "initial" });
     readAns = () => javaController?.getSource?.() ?? initialCode;
     resetFn = () => javaController?.reset?.();
     q.disposeExercise = () => {
@@ -3809,7 +4007,7 @@ function qView(
       return javaMountPromise?.then((mounted) => mounted?.dispose?.());
     };
     const generation = javaMountGeneration;
-    javaMountPromise = import(javaModuleUrl)
+    javaMountPromise = loadJavaModule()
       .then(async (javaModule) => {
         if (
           javaDisposed ||
@@ -3849,6 +4047,7 @@ function qView(
           return null;
         }
         javaController = controller;
+        moveMountedExerciseActions(javaHost, btns, ".java-controls");
         return controller;
       })
       .catch((error) => {
@@ -3882,7 +4081,7 @@ function qView(
       return terminalMountPromise;
     };
     const generation = mountGeneration;
-    terminalMountPromise = import(terminalModuleUrl)
+    terminalMountPromise = loadTerminalModule()
       .then(async (terminalModule) => {
         if (
           terminalDisposed ||
@@ -3897,7 +4096,7 @@ function qView(
           exerciseId: ex.id,
           attemptId,
           mode,
-          controlsContainer: terminalInstructionsPane,
+          controlsContainer: btns,
           onChange: async () => {
             fb.replaceChildren();
             await updateAnswer("terminal-workspace");
@@ -3932,24 +4131,9 @@ function qView(
           return;
         }
         terminalController = controller;
-        // Guided Learning owns navigation in its top navigator, not in the
-        // terminal module's control sidebar. Outside a learning path, keep the
-        // completion-gated action with the exercise instructions.
-        const learningPathActions = terminalInstructionsPane
-          .closest(".exercise-split-layout")
-          ?.querySelector(".learning-path-navigator__actions");
-        if (nextExerciseButton) {
-          if (learningPathActions) {
-            learningPathActions.append(nextExerciseButton);
-            nextExerciseInNavigator = true;
-            btns.hidden = false;
-          } else {
-            btns.append(nextExerciseButton);
-            terminalInstructionsPane.append(btns);
-          }
-          updateNextExercise();
-        }
-        await updateAnswer("terminal-workspace");
+        normalizeExerciseActionControls(btns);
+        updateNextExercise();
+        await updateAnswer("terminal-workspace", { source: "workspace-open" });
       })
       .catch((error) => {
         if (
@@ -4177,13 +4361,7 @@ function qView(
         },
         "Next exercise",
       );
-      if (ex.type === "terminal") {
-        // The terminal module mounts its own right-hand control rail later.
-        // Move this button into that rail after mount, not into the question
-        // wrapper or the generic (hidden) exercise button group.
-      } else {
-        btns.append(nextExerciseButton);
-      }
+      btns.append(nextExerciseButton);
     }
     if (ex.type !== "terminal" && ex.type !== "java-ex") {
       btns.append(
@@ -4245,14 +4423,8 @@ function qView(
         },
         "Show hints",
       );
-      if (ex.type === "terminal") {
-        terminalInstructionsPane.append(hb, hintPanel);
-      } else if (ex.type === "java-ex") {
-        javaInstructionsPane.append(hb, hintPanel);
-      } else {
-        btns.append(hb);
-        q.append(hintPanel);
-      }
+      btns.append(hb);
+      supplementalPanels.push(hintPanel);
     }
   }
   // Result snippet: shown in practice and exam, open by default.
@@ -4403,7 +4575,7 @@ function qView(
         "Show solution",
       );
       btns.append(toggle);
-      q.append(solution);
+      supplementalPanels.push(solution);
     }
   }
   // Java source solutions live in the Java-specific configuration, keeping
@@ -4444,23 +4616,44 @@ function qView(
       },
       "Show solution",
     );
-    javaInstructionsPane.append(toggle, solution);
+    btns.append(toggle);
+    supplementalPanels.push(solution);
   }
-  if (ex.type === "java-ex") {
-    javaInstructionsPane.append(btns, out, fb);
-  } else if (ex.type === "terminal") {
-    q.append(out, fb);
-  } else {
-    q.append(btns, out, fb);
+  if (DESKTOP_SPLIT_EXERCISE_TYPES.includes(ex.type)) {
+    const sidePanel =
+      ex.type === "terminal"
+        ? terminalInstructionsPane
+        : ex.type === "java-ex"
+          ? javaInstructionsPane
+          : schemaPanel;
+    if (sidePanel && ex.type !== "sql-query")
+      sidePanel.append(btns, ...supplementalPanels, out, fb);
+    else
+      q.append(btns, ...supplementalPanels, out, fb);
+    const view = createExerciseSplitLayout(ex.type, q, sidePanel);
+    view.refreshNextExercise = updateNextExercise;
+    view.hideInlineNextExercise = () => {
+      nextExerciseButton?.remove();
+      nextExerciseButton = null;
+    };
+    view.configureNextExercise = (handler, availability) => {
+      if (typeof handler === "function") nextExerciseHandler = handler;
+      if (typeof availability === "function")
+        nextExerciseAvailability = availability;
+      updateNextExercise();
+    };
+    view.focusInput = () => focusTarget?.focus({ preventScroll: true });
+    updateNextExercise();
+    view.actionsRoot = sidePanel && ex.type !== "sql-query" ? sidePanel : q;
+    return view;
   }
-  const view = schemaPanel
-    ? sqlSplitLayout(schemaPanel, q)
-    : ex.type === "terminal"
-      ? terminalSplitLayout(terminalInstructionsPane, q)
-      : ex.type === "java-ex"
-        ? javaSplitLayout(q, javaInstructionsPane)
-        : q;
+  q.append(btns, ...supplementalPanels, out, fb);
+  const view = q;
   view.refreshNextExercise = updateNextExercise;
+  view.hideInlineNextExercise = () => {
+    nextExerciseButton?.remove();
+    nextExerciseButton = null;
+  };
   view.configureNextExercise = (handler, availability) => {
     if (typeof handler === "function") nextExerciseHandler = handler;
     if (typeof availability === "function")
@@ -4469,341 +4662,116 @@ function qView(
   };
   view.focusInput = () => focusTarget?.focus({ preventScroll: true });
   updateNextExercise();
-  // Where outside callers may attach extra controls. Java owns its editor pane
-  // (java.js replaces its children on mount), so use the instructions pane.
-  view.actionsRoot =
-    ex.type === "java-ex"
-      ? javaInstructionsPane
-      : ex.type === "terminal"
-        ? terminalInstructionsPane
-        : q;
+  // All non-split exercise actions live in the question's shared action group.
+  view.actionsRoot = q;
   return view;
 }
 
-// Shared desktop split contract: every two-pane exercise uses
-// .exercise-split-layout + .exercise-split-main + .exercise-split-side,
-// with an optional .exercise-split-handle. Add a modifier only for sizing or
-// feature-specific behaviour; do not create another layout class per exercise.
-// ---------- resizable split between terminal instructions and workspace ----------
-const TERMINAL_SPLIT_KEY = "terminalInstructionsFraction";
-const TERMINAL_SPLIT_MIN = 0.22;
-const TERMINAL_SPLIT_MAX = 0.56;
-const TERMINAL_SPLIT_DEFAULT = 0.34;
-let terminalInstructionsFraction = (() => {
-  try {
-    const value = Number(localStorage.getItem(TERMINAL_SPLIT_KEY));
-    if (
-      Number.isFinite(value) &&
-      value >= TERMINAL_SPLIT_MIN &&
-      value <= TERMINAL_SPLIT_MAX
-    )
-      return value;
-  } catch {}
-  return TERMINAL_SPLIT_DEFAULT;
-})();
-function terminalSplitLayout(instructionsPanel, workspacePanel) {
-  const handle = h("div", {
-    class: "exercise-split-handle",
-    role: "separator",
-    "aria-orientation": "vertical",
-    "aria-label": "Resize terminal instructions and workspace",
-    tabindex: "0",
-    title: "Drag to resize (double-click to reset)",
-  });
-  workspacePanel.classList.add("exercise-split-main");
-  instructionsPanel.classList.add("exercise-split-side");
-  const layout = h(
-    "div",
-    { class: "exercise-split-layout exercise-split-layout--terminal" },
-    workspacePanel,
-    handle,
-    instructionsPanel,
-  );
-  const apply = () => {
-    const sideWidth = `${(terminalInstructionsFraction * 100).toFixed(2)}%`;
-    layout.style.setProperty("--terminal-instructions-col", sideWidth);
-    layout.style.setProperty("--exercise-split-side-width", sideWidth);
-    handle.setAttribute(
-      "aria-valuenow",
-      String(Math.round(terminalInstructionsFraction * 100)),
-    );
-  };
-  const set = (fraction, save = false) => {
-    terminalInstructionsFraction = Math.min(
-      TERMINAL_SPLIT_MAX,
-      Math.max(TERMINAL_SPLIT_MIN, fraction),
-    );
-    apply();
-    if (save) {
-      try {
-        localStorage.setItem(
-          TERMINAL_SPLIT_KEY,
-          String(terminalInstructionsFraction),
-        );
-      } catch {}
-    }
-  };
-  handle.setAttribute("aria-valuemin", String(TERMINAL_SPLIT_MIN * 100));
-  handle.setAttribute("aria-valuemax", String(TERMINAL_SPLIT_MAX * 100));
-  apply();
-  let dragging = false;
-  handle.addEventListener("pointerdown", (event) => {
-    if (event.button !== 0 || matchMedia("(max-width: 900px)").matches) return;
-    dragging = true;
-    handle.setPointerCapture(event.pointerId);
-    handle.classList.add("is-dragging");
-    document.body.classList.add("terminal-split-dragging");
-    event.preventDefault();
-  });
-  handle.addEventListener("pointermove", (event) => {
-    if (!dragging) return;
-    const rect = layout.getBoundingClientRect();
-    // Instructions occupy the right-hand column, so measure from the right.
-    if (rect.width) set((rect.right - event.clientX) / rect.width, false);
-  });
-  const end = () => {
-    if (!dragging) return;
-    dragging = false;
-    handle.classList.remove("is-dragging");
-    document.body.classList.remove("terminal-split-dragging");
-    try {
-      localStorage.setItem(
-        TERMINAL_SPLIT_KEY,
-        String(terminalInstructionsFraction),
-      );
-    } catch {}
-  };
-  handle.addEventListener("pointerup", end);
-  handle.addEventListener("pointercancel", end);
-  handle.addEventListener("lostpointercapture", end);
-  handle.addEventListener("dblclick", () => {
-    terminalInstructionsFraction = TERMINAL_SPLIT_DEFAULT;
-    apply();
-    try {
-      localStorage.removeItem(TERMINAL_SPLIT_KEY);
-    } catch {}
-  });
-  handle.addEventListener("keydown", (event) => {
-    const step = event.shiftKey ? 0.1 : 0.02;
-    if (event.key === "ArrowLeft")
-      set(terminalInstructionsFraction - step, true);
-    else if (event.key === "ArrowRight")
-      set(terminalInstructionsFraction + step, true);
-    else if (event.key === "Home") set(TERMINAL_SPLIT_MIN, true);
-    else if (event.key === "End") set(TERMINAL_SPLIT_MAX, true);
-    else return;
-    event.preventDefault();
-  });
-  return layout;
-}
+// Shared desktop split layout. Every registered exercise keeps the workspace
+// on the left, supporting instructions/schema on the right, and uses the same
+// resize handle, persisted sizing, keyboard controls, and mobile stacking.
+const EXERCISE_SPLIT_CONFIG = Object.freeze({
+  terminal: {
+    storageKey: "terminalInstructionsFraction", min: 0.22, max: 0.56,
+    defaultFraction: 0.34, label: "Resize terminal workspace and instructions",
+  },
+  "java-ex": {
+    storageKey: "javaSideFraction", min: 0.3, max: 0.64,
+    defaultFraction: 0.46, label: "Resize Java editor and instructions",
+  },
+  "sql-query": {
+    storageKey: "sqlSchemaFraction", min: 0.25, max: 0.65,
+    defaultFraction: null, label: "Resize SQL workspace and schema",
+  },
+});
 
-// ---------- resizable Java editor / instructions-and-tools split ----------
-// The editor stays on the left; exercise instructions and all Java controls,
-// input, console output, hints and grading results share the right pane.
-const JAVA_SPLIT_KEY = "javaSideFraction";
-const JAVA_SPLIT_MIN = 0.3;
-const JAVA_SPLIT_MAX = 0.64;
-const JAVA_SPLIT_DEFAULT = 0.46;
-let javaSideFraction = (() => {
-  try {
-    const value = Number(localStorage.getItem(JAVA_SPLIT_KEY));
-    if (
-      Number.isFinite(value) &&
-      value >= JAVA_SPLIT_MIN &&
-      value <= JAVA_SPLIT_MAX
-    )
-      return value;
-  } catch {}
-  return JAVA_SPLIT_DEFAULT;
-})();
-function javaSplitLayout(editorPanel, instructionsPanel) {
-  const handle = h("div", {
-    class: "exercise-split-handle",
-    role: "separator",
-    "aria-orientation": "vertical",
-    "aria-label": "Resize Java editor and exercise tools",
-    tabindex: "0",
-    title: "Drag to resize (double-click to reset)",
-  });
-  editorPanel.classList.add("exercise-split-main");
-  instructionsPanel.classList.add("exercise-split-side");
-  const layout = h(
-    "div",
-    { class: "exercise-split-layout exercise-split-layout--java" },
-    editorPanel,
-    handle,
-    instructionsPanel,
-  );
-  const apply = () => {
-    const sideWidth = `${(javaSideFraction * 100).toFixed(2)}%`;
-    layout.style.setProperty("--java-side-col", sideWidth);
-    layout.style.setProperty("--exercise-split-side-width", sideWidth);
-    handle.setAttribute(
-      "aria-valuenow",
-      String(Math.round(javaSideFraction * 100)),
-    );
-  };
-  const set = (fraction, save = false) => {
-    javaSideFraction = Math.min(
-      JAVA_SPLIT_MAX,
-      Math.max(JAVA_SPLIT_MIN, fraction),
-    );
-    apply();
-    if (save) {
-      try {
-        localStorage.setItem(JAVA_SPLIT_KEY, String(javaSideFraction));
-      } catch {}
-    }
-  };
-  handle.setAttribute("aria-valuemin", String(JAVA_SPLIT_MIN * 100));
-  handle.setAttribute("aria-valuemax", String(JAVA_SPLIT_MAX * 100));
-  apply();
-  let dragging = false;
-  handle.addEventListener("pointerdown", (event) => {
-    if (event.button !== 0 || matchMedia("(max-width: 900px)").matches) return;
-    dragging = true;
-    handle.setPointerCapture(event.pointerId);
-    handle.classList.add("is-dragging");
-    document.body.classList.add("java-split-dragging");
-    event.preventDefault();
-  });
-  handle.addEventListener("pointermove", (event) => {
-    if (!dragging) return;
-    const rect = layout.getBoundingClientRect();
-    if (rect.width) set((rect.right - event.clientX) / rect.width, false);
-  });
-  const end = () => {
-    if (!dragging) return;
-    dragging = false;
-    handle.classList.remove("is-dragging");
-    document.body.classList.remove("java-split-dragging");
-    try {
-      localStorage.setItem(JAVA_SPLIT_KEY, String(javaSideFraction));
-    } catch {}
-  };
-  handle.addEventListener("pointerup", end);
-  handle.addEventListener("pointercancel", end);
-  handle.addEventListener("lostpointercapture", end);
-  handle.addEventListener("dblclick", () => {
-    javaSideFraction = JAVA_SPLIT_DEFAULT;
-    apply();
-    try {
-      localStorage.removeItem(JAVA_SPLIT_KEY);
-    } catch {}
-  });
-  handle.addEventListener("keydown", (event) => {
-    const step = event.shiftKey ? 0.1 : 0.02;
-    if (event.key === "ArrowLeft") set(javaSideFraction - step, true);
-    else if (event.key === "ArrowRight") set(javaSideFraction + step, true);
-    else if (event.key === "Home") set(JAVA_SPLIT_MIN, true);
-    else if (event.key === "End") set(JAVA_SPLIT_MAX, true);
-    else return;
-    event.preventDefault();
-  });
-  return layout;
-}
+function createExerciseSplitLayout(type, mainPanel, sidePanel) {
+  const config = EXERCISE_SPLIT_CONFIG[type];
+  if (!config || !DESKTOP_SPLIT_EXERCISE_TYPES.includes(type) || !sidePanel)
+    return mainPanel;
 
-// ---------- resizable split between the question and the schema/diagram ----------
-// Only used for SQL exercises (the only ones that have a schema panel).
-// Shared split layout lives in style.css (.exercise-split-layout / .exercise-split-handle).
-// here we only set --sql-schema-col (the schema column width) while dragging.
-const SQL_SPLIT_KEY = "sqlSchemaFraction";
-const SQL_SPLIT_MIN = 0.25,
-  SQL_SPLIT_MAX = 0.65;
-let sqlSchemaFraction = (() => {
+  let fraction = config.defaultFraction;
   try {
-    const v = parseFloat(localStorage.getItem(SQL_SPLIT_KEY));
-    if (v >= SQL_SPLIT_MIN && v <= SQL_SPLIT_MAX) return v;
+    const stored = Number(localStorage.getItem(config.storageKey));
+    if (localStorage.getItem(config.storageKey) !== null &&
+        Number.isFinite(stored) && stored >= config.min && stored <= config.max)
+      fraction = stored;
   } catch {}
-  return null; // null = use the stylesheet's default proportions
-})();
-function sqlSplitLayout(schemaPanel, q) {
+
   const handle = h("div", {
-    class: "exercise-split-handle",
-    role: "separator",
-    "aria-orientation": "vertical",
-    "aria-label": "Resize question and diagram panels",
-    tabindex: "0",
-    title: "Drag to resize (double-click to reset)",
+    class: "exercise-split-handle", role: "separator",
+    "aria-orientation": "vertical", "aria-label": config.label,
+    tabindex: "0", title: "Drag to resize (double-click to reset)",
   });
-  q.classList.add("exercise-split-main");
-  schemaPanel.classList.add("exercise-split-side");
-  // Shared split order is always main content on the left, supporting panel on the right.
+  mainPanel.classList.add("exercise-split-main");
+  sidePanel.classList.add("exercise-split-side");
   const layout = h(
     "div",
-    { class: "exercise-split-layout exercise-split-layout--sql" },
-    q,
-    handle,
-    schemaPanel,
+    { class: `exercise-split-layout exercise-split-layout--${type}` },
+    mainPanel, handle, sidePanel,
   );
-  const currentFraction = () =>
-    sqlSchemaFraction ??
-    schemaPanel.getBoundingClientRect().width /
-      (layout.getBoundingClientRect().width || 1);
   const apply = () => {
-    if (sqlSchemaFraction == null) {
-      layout.style.removeProperty("--sql-schema-col");
+    if (fraction == null) {
       layout.style.removeProperty("--exercise-split-side-width");
       handle.removeAttribute("aria-valuenow");
       return;
     }
-    const sideWidth = `${(sqlSchemaFraction * 100).toFixed(2)}%`;
-    layout.style.setProperty("--sql-schema-col", sideWidth);
-    layout.style.setProperty("--exercise-split-side-width", sideWidth);
-    handle.setAttribute(
-      "aria-valuenow",
-      String(Math.round(sqlSchemaFraction * 100)),
-    );
+    layout.style.setProperty("--exercise-split-side-width", `${(fraction * 100).toFixed(2)}%`);
+    handle.setAttribute("aria-valuenow", String(Math.round(fraction * 100)));
   };
-  const set = (fraction, save) => {
-    sqlSchemaFraction =
-      fraction == null
-        ? null
-        : Math.min(SQL_SPLIT_MAX, Math.max(SQL_SPLIT_MIN, fraction));
+  const set = (next, save = false) => {
+    fraction = next == null
+      ? null
+      : Math.min(config.max, Math.max(config.min, next));
     apply();
     if (!save) return;
     try {
-      if (sqlSchemaFraction == null) localStorage.removeItem(SQL_SPLIT_KEY);
-      else localStorage.setItem(SQL_SPLIT_KEY, String(sqlSchemaFraction));
+      if (fraction == null) localStorage.removeItem(config.storageKey);
+      else localStorage.setItem(config.storageKey, String(fraction));
     } catch {}
   };
-  handle.setAttribute("aria-valuemin", String(SQL_SPLIT_MIN * 100));
-  handle.setAttribute("aria-valuemax", String(SQL_SPLIT_MAX * 100));
+  const currentFraction = () =>
+    fraction ?? (sidePanel.getBoundingClientRect().width /
+      (layout.getBoundingClientRect().width || 1));
+
+  handle.setAttribute("aria-valuemin", String(config.min * 100));
+  handle.setAttribute("aria-valuemax", String(config.max * 100));
   apply();
+
   let dragging = false;
-  handle.addEventListener("pointerdown", (e) => {
-    if (e.button !== 0) return;
+  handle.addEventListener("pointerdown", (event) => {
+    if (event.button !== 0 || matchMedia("(max-width: 900px)").matches) return;
     dragging = true;
-    handle.setPointerCapture(e.pointerId);
+    handle.setPointerCapture(event.pointerId);
     handle.classList.add("is-dragging");
-    document.body.classList.add("sql-split-dragging");
-    e.preventDefault();
+    document.body.classList.add("exercise-split-dragging");
+    event.preventDefault();
   });
-  handle.addEventListener("pointermove", (e) => {
+  handle.addEventListener("pointermove", (event) => {
     if (!dragging) return;
     const rect = layout.getBoundingClientRect();
-    // Schema is the right-hand column: its width is what is left of the pointer.
-    set((rect.right - e.clientX) / rect.width, false);
+    if (rect.width) set((rect.right - event.clientX) / rect.width);
   });
-  const end = () => {
+  const endDrag = () => {
     if (!dragging) return;
     dragging = false;
     handle.classList.remove("is-dragging");
-    document.body.classList.remove("sql-split-dragging");
-    set(sqlSchemaFraction, true);
+    document.body.classList.remove("exercise-split-dragging");
+    set(fraction, true);
   };
-  handle.addEventListener("pointerup", end);
-  handle.addEventListener("pointercancel", end);
-  handle.addEventListener("dblclick", () => set(null, true));
-  handle.addEventListener("keydown", (e) => {
-    const step = e.shiftKey ? 0.1 : 0.02;
-    // Left arrow moves the divider left, i.e. makes the diagram wider.
-    if (e.key === "ArrowLeft") set(currentFraction() + step, true);
-    else if (e.key === "ArrowRight") set(currentFraction() - step, true);
-    else if (e.key === "Home") set(SQL_SPLIT_MAX, true);
-    else if (e.key === "End") set(SQL_SPLIT_MIN, true);
+  handle.addEventListener("pointerup", endDrag);
+  handle.addEventListener("pointercancel", endDrag);
+  handle.addEventListener("lostpointercapture", endDrag);
+  handle.addEventListener("dblclick", () => set(config.defaultFraction, true));
+  handle.addEventListener("keydown", (event) => {
+    const step = event.shiftKey ? 0.1 : 0.02;
+    const current = currentFraction();
+    if (event.key === "ArrowLeft") set(current - step, true);
+    else if (event.key === "ArrowRight") set(current + step, true);
+    else if (event.key === "Home") set(config.min, true);
+    else if (event.key === "End") set(config.max, true);
     else return;
-    e.preventDefault();
+    event.preventDefault();
   });
   return layout;
 }
@@ -6856,7 +6824,7 @@ async function pageSandbox(root) {
       loadingNote("Opening your personal terminal sandbox…"),
     );
     try {
-      const terminalModule = await import(terminalModuleUrl);
+      const terminalModule = await loadTerminalModule();
       if (generation !== modeGeneration || !content.isConnected) return;
       const host = h("div", { class: "terminal-sandbox-host" });
       content.replaceChildren(host);
@@ -6889,7 +6857,7 @@ async function pageSandbox(root) {
     if (generation !== modeGeneration) return;
     content.replaceChildren(loadingNote("Loading the Java playground…"));
     try {
-      const javaModule = await import(javaModuleUrl);
+      const javaModule = await loadJavaModule();
       if (generation !== modeGeneration || !content.isConnected) return;
       // Same two-pane layout as a Java practice exercise: editor on the left,
       // input / controls / console on the right (no instructions pane content).
@@ -6903,7 +6871,7 @@ async function pageSandbox(root) {
       });
       const host = h("div", { class: "java-exercise-host" });
       toolsPane.append(host);
-      content.replaceChildren(javaSplitLayout(editorPane, toolsPane));
+      content.replaceChildren(createExerciseSplitLayout("java-ex", editorPane, toolsPane));
       const controller = await javaModule.mountJavaExercise({
         container: host,
         editorContainer: editorPane,
@@ -7032,12 +7000,12 @@ async function pageSandbox(root) {
     const output = h("div", { class: "sandbox-sql-output" });
     actions.append(runButton, clearButton, status);
     question.append(textarea, actions, output);
-    const layout = sqlSplitLayout(schemaPanel, question);
+    const layout = createExerciseSplitLayout("sql-query", question, schemaPanel);
     const refreshSchema = () => {
       const freshSchema = schemaView(pseudoExercise, {
         preserveDatabase: true,
       });
-      layout.replaceChild(freshSchema, layout.firstElementChild);
+      layout.replaceChild(freshSchema, layout.lastElementChild);
       currentSchema = freshSchema;
     };
     content.replaceChildren(topbar, layout);
@@ -7728,21 +7696,17 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
       };
       const previousPathExercise = findPathExercise(-1);
       const nextPathExercise = findPathExercise(1);
+      view.hideInlineNextExercise?.();
       previousPathButton.disabled = !previousPathExercise;
       nextPathButton.disabled = !nextPathExercise;
-      if (exercise.type === "terminal") {
-        // The terminal's completion-gated Next exercise action is placed in
-        // the learning-path navigator once the terminal module has mounted.
-        // Route it through the path sequence so reviewed/solved items are
-        // skipped instead of using the generic exercise-list order.
-        view.configureNextExercise?.(
-          () => {
-            if (nextPathExercise)
-              void selectExercise(nextPathExercise.exercise, true);
-          },
-          () => Boolean(nextPathExercise),
-        );
-      }
+      // Every exercise type uses this same path-order handler and skip rules.
+      view.configureNextExercise?.(
+        () => {
+          if (nextPathExercise)
+            void selectExercise(nextPathExercise.exercise, true);
+        },
+        () => Boolean(nextPathExercise),
+      );
       pathPosition.textContent =
         `Learning path · Exercise ${learningPathIndex + 1} of ${learningPathExercises.length}` +
         (reviewedSections.size
@@ -7772,7 +7736,7 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
           "div",
           { class: "learning-path-navigator__actions" },
           previousPathButton,
-          ...(exercise.type === "terminal" ? [] : [nextPathButton]),
+          nextPathButton,
         ),
       );
       view.prepend(pathNavigator);
@@ -8221,6 +8185,8 @@ async function pageExam(root, isCurrent = () => true) {
                 ids: r.exercises.map(keyOf),
                 answers: {},
                 flags: {},
+                visited: {},
+                touched: {},
                 cur: 0,
                 cfg: examConfig,
                 deadline: Date.now() + cfg.mins * 60000,
@@ -8243,26 +8209,274 @@ async function pageExam(root, isCurrent = () => true) {
   );
 }
 async function historyView() {
-  const hist = await kv.get("examHistory", []);
-  return h(
-    "div",
-    { class: "card" },
-    h("h3", {}, "Exam history"),
-    hist.length
-      ? hist
-          .slice()
-          .reverse()
-          .map((x) =>
-            h(
-              "div",
-              {},
-              `${new Date(x.date).toLocaleString()}: ${x.score}/${x.total} (${x.ids.length} questions, ${Math.round(x.cfg.mins)} min)`,
-            ),
+  const savedHistory = await kv.get("examHistory", []);
+  const hist = Array.isArray(savedHistory) ? savedHistory : [];
+  const resolveExercise = (id) => {
+    const normalizedId = typeof id === "string" ? id : id?.id || id?.key || "";
+    return S.exercises.find((exercise) => keyOf(exercise) === normalizedId) ||
+      (S.exercises.filter((exercise) => exercise.id === normalizedId).length === 1
+        ? S.exercises.find((exercise) => exercise.id === normalizedId)
+        : null);
+  };
+  const practiceLink = (question, exercise) => {
+    const id = question.id || question.key || "";
+    const packageId = exercise?.packageId || question.packageId || id.split(":")[0];
+    const exerciseId = exercise?.id || question.exerciseId || id.split(":").slice(1).join(":");
+    if (!packageId || !exerciseId || !exercise) return "";
+    return h(
+      "button",
+      {
+        type: "button",
+        class: "exam-history-practice-link",
+        onclick: () => {
+          location.hash = `#/practice/${encodeURIComponent(packageId)}/${encodeURIComponent(exerciseId)}`;
+        },
+      },
+      "Practice this question",
+    );
+  };
+  const questionCard = (question, index) => {
+    const id = question.id || question.key || "";
+    const exercise = resolveExercise(id);
+    const title = question.title || exercise?.title || `Question ${index + 1}`;
+    const answerAvailable = Object.prototype.hasOwnProperty.call(question, "answer");
+    const legacyRecord = question.legacy === true;
+    let learnerAnswer = "No answer was entered for this question.";
+    if (legacyRecord && !answerAvailable) {
+      learnerAnswer = "This exam was saved before per-question answers were recorded. The overall exam result is preserved, but this question's answer and visit state are unavailable.";
+    } else if (question.type === "terminal" || exercise?.type === "terminal") {
+      learnerAnswer = question.answered
+        ? "Terminal workspace changes were saved and graded from the final state."
+        : question.visited
+          ? "The terminal workspace was opened, but no changes were saved."
+          : "The terminal workspace was not opened for this question.";
+    } else if (question.answered === false) {
+      learnerAnswer = question.visited
+        ? "You opened this question but did not submit an answer."
+        : "This question was not opened during the exam.";
+    } else if (answerAvailable && exercise) {
+      learnerAnswer = answerText(exercise, question.answer);
+    } else if (answerAvailable) {
+      learnerAnswer = Array.isArray(question.answer)
+        ? question.answer.join(", ")
+        : String(question.answer ?? "(no answer)");
+    } else if (!question.visited && !question.answered) {
+      learnerAnswer = "This question was not opened during the exam.";
+    }
+    const resultLabel = legacyRecord
+      ? "Details unavailable"
+      : question.correct === true
+        ? "Correct"
+        : question.correct === false
+          ? "Incorrect"
+          : "Self-check";
+    const resultClass = legacyRecord
+      ? "is-legacy"
+      : question.correct === true
+        ? "is-correct"
+        : question.correct === false
+          ? "is-incorrect"
+          : "is-self-check";
+    const comment = question.feedback || question.checkComment || "";
+    const explanation = question.explanation || exercise?.explanation || "";
+    return h(
+      "article",
+      { class: "exam-history-question" },
+      h(
+        "div",
+        { class: "exam-history-question-heading" },
+        h("div", {},
+          h("span", { class: "exam-history-question-number" }, `QUESTION ${String(index + 1).padStart(2, "0")}`),
+          h("h4", {}, title),
+        ),
+        h("span", { class: `exam-history-result ${resultClass}` }, resultLabel),
+      ),
+      h(
+        "div",
+        { class: "exam-history-answer" },
+        h("strong", {}, "Your answer"),
+        h("pre", {}, learnerAnswer),
+      ),
+      comment
+        ? h(
+            "div",
+            { class: "exam-history-feedback" },
+            h("strong", {}, "Check feedback"),
+            h("pre", {}, comment),
           )
-      : h("small", {}, "No exams taken yet."),
+        : "",
+      explanation
+        ? h(
+            "div",
+            { class: "exam-history-feedback" },
+            h("strong", {}, "Exercise explanation"),
+            h("p", {}, explanation),
+          )
+        : "",
+      h(
+        "div",
+        { class: "exam-history-question-meta" },
+        legacyRecord
+          ? h("span", {}, "Saved with an older exam format")
+          : h("span", {}, question.visited ? "Visited" : "Not visited"),
+        legacyRecord
+          ? ""
+          : h("span", {}, question.answered ? "Answered" : "Unanswered"),
+        question.flagged ? h("span", { class: "is-flagged" }, "Flagged for review") : "",
+      ),
+      practiceLink(question, exercise),
+    );
+  };
+
+  return h(
+    "section",
+    { class: "exam-history-section card" },
+    h(
+      "div",
+      { class: "exam-history-section-heading" },
+      h("div", {},
+        h("p", { class: "eyebrow" }, "YOUR PAST SESSIONS"),
+        h("h2", {}, "Exam history"),
+      ),
+      h("span", { class: "exam-history-count" }, `${hist.length} exam${hist.length === 1 ? "" : "s"}`),
+    ),
+    hist.length
+      ? h(
+          "div",
+          { class: "exam-history-list" },
+          ...hist.slice().reverse().map((exam, examIndex) => {
+            const legacyIds = Array.isArray(exam.ids)
+              ? exam.ids
+              : Array.isArray(exam.exerciseIds)
+                ? exam.exerciseIds
+                : [];
+            const rawQuestions = Array.isArray(exam.questions)
+              ? exam.questions
+              : legacyIds.map((rawId, index) => {
+                  const id = typeof rawId === "string"
+                    ? rawId
+                    : rawId?.id || rawId?.key ||
+                      (rawId?.packageId && rawId?.exerciseId
+                        ? `${rawId.packageId}:${rawId.exerciseId}`
+                        : "");
+                  const exercise = resolveExercise(id);
+                  const legacyAnswer = exam.answers?.[id] ??
+                    (exercise ? exam.answers?.[exercise.id] : undefined) ??
+                    exam.answers?.[index];
+                  const legacyQuestion = { id, legacy: true };
+                  if (legacyAnswer !== undefined) {
+                    legacyQuestion.answer = legacyAnswer;
+                    legacyQuestion.answered = true;
+                  }
+                  return legacyQuestion;
+                });
+            const savedQuestions = rawQuestions.map((rawQuestion, index) => {
+              if (typeof rawQuestion === "string")
+                rawQuestion = { id: rawQuestion, legacy: true };
+              const question = rawQuestion && typeof rawQuestion === "object"
+                ? { ...rawQuestion }
+                : { legacy: true };
+              question.id ||= question.key ||
+                (question.packageId && question.exerciseId
+                  ? `${question.packageId}:${question.exerciseId}`
+                  : "");
+              if (!Object.prototype.hasOwnProperty.call(question, "answer")) {
+                const exercise = resolveExercise(question.id);
+                const legacyAnswer = exam.answers?.[question.id] ??
+                  (exercise ? exam.answers?.[exercise.id] : undefined) ??
+                  exam.answers?.[index];
+                if (legacyAnswer !== undefined) {
+                  question.answer = legacyAnswer;
+                  if (question.answered == null) question.answered = true;
+                }
+              }
+              return question;
+            });
+            const hasSnapshots = savedQuestions.some((question) =>
+              ["visited", "answered", "flagged", "correct", "feedback", "checkComment"]
+                .some((field) => Object.prototype.hasOwnProperty.call(question, field)),
+            );
+            if (!hasSnapshots)
+              savedQuestions.forEach((question) => { question.legacy = true; });
+            const dateLabel = exam.date
+              ? new Date(exam.date).toLocaleString()
+              : `Exam ${hist.length - examIndex}`;
+            const visitedCount = savedQuestions.filter((question) => question.visited).length;
+            const answeredCount = savedQuestions.filter((question) => question.answered).length;
+            const sessionMeta = hasSnapshots
+              ? `${savedQuestions.length} questions · ${visitedCount} visited · ${answeredCount} answered · ${Math.round(exam.cfg?.mins || 0)} min`
+              : `${savedQuestions.length} questions · ${Math.round(exam.cfg?.mins || 0)} min`;
+            return h(
+              "article",
+              { class: "exam-history-card" },
+              h(
+                "div",
+                { class: "exam-history-card-heading" },
+                h("div", {},
+                  h("strong", {}, dateLabel),
+                  h("small", {}, sessionMeta),
+                ),
+                h(
+                  "span",
+                  { class: "exam-history-score" },
+                  `${exam.score ?? 0} / ${exam.total ?? 0}`,
+                ),
+              ),
+              h(
+                "details",
+                { class: "exam-history-details" },
+                h("summary", {}, "Review questions and your answers"),
+                h(
+                  "div",
+                  {},
+                  hasSnapshots
+                    ? ""
+                    : h(
+                        "p",
+                        { class: "exam-history-older-note" },
+                        "This exam was taken before question-level answers and visit status were saved. The overall score is preserved; available questions can still be opened in Practice.",
+                      ),
+                  h(
+                    "div",
+                    { class: "exam-history-questions" },
+                    ...savedQuestions.map(questionCard),
+                  ),
+                ),
+              ),
+            );
+          }),
+        )
+      : h("p", { class: "exam-history-empty" }, "No completed exams yet. Your question-by-question reviews will appear here after you submit an exam."),
   );
 }
 async function runExam(root, st) {
+  const storedIds = Array.isArray(st.ids)
+    ? st.ids
+    : Array.isArray(st.exerciseIds)
+      ? st.exerciseIds
+      : Array.isArray(st.questions)
+        ? st.questions.map((question) =>
+            question?.id || question?.key ||
+            (question?.packageId && question?.exerciseId
+              ? `${question.packageId}:${question.exerciseId}`
+              : null),
+          )
+        : [];
+  st.ids = storedIds
+    .map((value) =>
+      typeof value === "string"
+        ? value
+        : value?.id || value?.key ||
+          (value?.packageId && value?.exerciseId
+            ? `${value.packageId}:${value.exerciseId}`
+            : null),
+    )
+    .filter(Boolean);
+  st.cfg = { mins: 60, ...(st.cfg || {}) };
+  st.startedAt = Number(st.startedAt) || Date.now();
+  st.deadline = Number(st.deadline) || st.startedAt + st.cfg.mins * 60000;
+  st.cur = Math.max(0, Math.min(st.ids.length - 1, Number(st.cur) || 0));
+  st.id ||= `legacy-exam-${st.startedAt}`;
   const exs = st.ids.map(
     (id) =>
       S.exercises.find((e) => keyOf(e) === id) ||
@@ -8287,16 +8501,47 @@ async function runExam(root, st) {
       ),
     );
   const oldAnswers = st.answers || {},
-    oldFlags = st.flags || {};
+    oldFlags = st.flags || {},
+    oldVisited = st.visited || {},
+    oldTouched = st.touched || {};
+  const oldValue = (record, ex, index) =>
+    Array.isArray(record)
+      ? record[index]
+      : record?.[keyOf(ex)] ?? record?.[ex.id] ?? record?.[index];
   st.answers = Object.fromEntries(
     exs
-      .map((ex) => [keyOf(ex), oldAnswers[keyOf(ex)] ?? oldAnswers[ex.id]])
+      .map((ex, index) => [keyOf(ex), oldValue(oldAnswers, ex, index)])
       .filter(([, value]) => value !== undefined),
   );
   st.flags = Object.fromEntries(
     exs
-      .map((ex) => [keyOf(ex), oldFlags[keyOf(ex)] ?? oldFlags[ex.id]])
+      .map((ex, index) => [keyOf(ex), oldValue(oldFlags, ex, index)])
       .filter(([, value]) => value !== undefined),
+  );
+  st.visited = Object.fromEntries(
+    exs.map((ex, index) => [
+      keyOf(ex),
+      Boolean(oldValue(oldVisited, ex, index) ?? index === st.cur),
+    ]),
+  );
+  const inferTouched = (ex, answer) => {
+    // Older exam checkpoints only stored the terminal-open sentinel. Preserve
+    // their ability to be graded against the saved virtual workspace.
+    if (ex.type === "terminal") return answer === "terminal-workspace";
+    if (ex.type === "java-ex")
+      return typeof answer === "string" && answer !== String(ex.java?.preCode ?? "");
+    if (Array.isArray(answer))
+      return answer.some((value) => String(value ?? "").trim() !== "");
+    if (answer && typeof answer === "object")
+      return Object.values(answer).some((value) => String(value ?? "").trim() !== "");
+    return answer != null && String(answer).trim() !== "";
+  };
+  st.touched = Object.fromEntries(
+    exs.map((ex, index) => {
+      const key = keyOf(ex);
+      const saved = oldValue(oldTouched, ex, index);
+      return [key, saved === undefined ? inferTouched(ex, st.answers[key]) : Boolean(saved)];
+    }),
   );
   st.ids = exs.map(keyOf);
   const saveStatus = h("small", {
@@ -8316,8 +8561,8 @@ async function runExam(root, st) {
         saveStatus.classList.add("err");
       });
   const top = h("div", { class: "exam-topbar card" }),
-    nav = h("div", { class: "exam-question-grid" }),
-    body = h("div", { class: "exam-question-body" }),
+    nav = h("div", { class: "exercise-index-grid" }),
+    body = h("div", { class: "exercise-question-body" }),
     timer = h("span", { class: "exam-timer-clock", role: "timer" }),
     summary = h("p", { class: "exam-summary", "aria-live": "polite" }),
     progress = h("progress", {
@@ -8328,20 +8573,20 @@ async function runExam(root, st) {
     }),
     workspace = h(
       "div",
-      { class: "cols exam-workspace" },
+      { class: "cols exercise-session-layout" },
       h(
         "aside",
-        { class: "side exam-nav-panel" },
+        { class: "side exercise-index-panel" },
         h("h2", {}, "Questions"),
         h("p", {}, "Choose a number to jump to a question."),
         nav,
         h(
           "small",
-          { class: "exam-nav-legend" },
-          "Filled = answered · outlined = flagged",
+          { class: "exercise-index-legend" },
+          "Tinted = visited · filled = answered · orange = flagged",
         ),
       ),
-      h("section", { class: "q exam-question-panel" }, body),
+      h("section", { class: "q exercise-question-panel" }, body),
     ),
     session = h("section", { class: "exam-session" }, top, workspace);
   let done = false;
@@ -8355,56 +8600,121 @@ async function runExam(root, st) {
     clearInterval(autosaveTimer);
     showGeneration++;
     await disposeExerciseViews(body);
+    const gradingProgress = h(
+      "p",
+      {},
+      "Preparing submitted answers and reusing each SQL dataset where possible…",
+    );
     root.replaceChildren(
       h(
         "div",
         { class: "exam-grading card", role: "status" },
         h("span", { class: "exam-grading-spinner", "aria-hidden": "true" }),
         h("h2", {}, "Grading your exam…"),
-        h("p", {}, "Your answers are being checked. This may take a moment."),
+        gradingProgress,
       ),
     );
     let score = 0,
       gradable = 0;
     const rows = [];
-    for (const ex of exs) {
+    const sqlItems = exs
+      .filter((exercise) => exercise.type === "sql-query")
+      .map((exercise) => ({ exercise, answer: st.answers[keyOf(exercise)] }));
+    const sqlGrades = await gradeSqlBatch(
+      sqlItems.map(({ exercise, answer }) => ({ ex: exercise, answer })),
+      ({ phase, exercise, completed, total }) => {
+        gradingProgress.textContent = phase === "prepare"
+          ? `Preparing one SQL dataset for ${total} submitted question${total === 1 ? "" : "s"}…`
+          : `Checking SQL question: ${exercise?.title || "SQL exercise"} (${completed + 1} of ${total})…`;
+      },
+    );
+    let javaModule = null;
+    let terminalModule = null;
+    const javaWork = exs.some(
+      (exercise) => exercise.type === "java-ex" && st.touched?.[keyOf(exercise)],
+    );
+    const terminalWork = exs.some(
+      (exercise) =>
+        exercise.type === "terminal" &&
+        st.answers[keyOf(exercise)] === "terminal-workspace",
+    );
+    const moduleLoads = [];
+    if (javaWork) {
+      gradingProgress.textContent = "Loading the Java checker…";
+      moduleLoads.push(loadJavaModule().then((module) => { javaModule = module; }));
+    }
+    if (terminalWork) {
+      gradingProgress.textContent = "Loading the terminal checker…";
+      moduleLoads.push(loadTerminalModule().then((module) => { terminalModule = module; }));
+    }
+    const moduleResults = await Promise.allSettled(moduleLoads);
+    const moduleLoadError = moduleResults.find((result) => result.status === "rejected");
+    if (moduleLoadError) {
+      // Individual rows below retain a readable per-question module error.
+      gradingProgress.textContent = `Loading an exercise grader failed: ${moduleLoadError.reason?.message || String(moduleLoadError.reason)}`;
+    }
+    for (let questionIndex = 0; questionIndex < exs.length; questionIndex++) {
+      const ex = exs[questionIndex];
+      gradingProgress.textContent = `Grading question ${questionIndex + 1} of ${exs.length}: ${ex.title || ex.id}`;
       const key = keyOf(ex),
         a = st.answers[key];
       let ok = null;
       if (ex.type === "sql-query") {
-        const g = await gradeSql(ex, a || "");
+        const g = sqlGrades.get(key) || {
+          correct: false,
+          error: "No SQL grading result was produced.",
+        };
         ok = g.correct;
-        rows.push({ ex, ok, a, note: g.error });
+        rows.push({
+          ex, ok, a,
+          note: g.error || (g.correct === true
+            ? "SQL automatic checks passed."
+            : g.correct === false
+              ? "The SQL result did not match the expected output."
+              : "This SQL question is not automatically graded."),
+        });
       } else if (ex.type === "java-ex") {
         const submittedSource =
           typeof a === "string" ? a : String(ex.java?.preCode ?? "");
-        try {
-          const javaModule = await import(javaModuleUrl);
-          const result = await javaModule.checkJavaExercise({
-            exercise: ex,
-            source: submittedSource,
-          });
-          ok = result.success === true;
-          const failed = (result.checks || []).filter((check) => !check.passed);
-          const score = result.score || { earned: 0, total: 0 };
-          rows.push({
-            ex,
-            ok,
-            a: submittedSource,
-            note:
-              `Java automatic checks: ${score.earned ?? 0} / ${score.total ?? 0} points` +
-              (failed.length
-                ? `\n${failed.map((check) => `${check.description}: ${check.feedback}`).join("\n")}`
-                : ""),
-          });
-        } catch (error) {
+        if (!st.touched?.[key]) {
           ok = false;
           rows.push({
             ex,
             ok,
             a: submittedSource,
-            note: `Java grading failed: ${error?.message || String(error)}`,
+            note: "No Java answer was submitted; compilation was skipped.",
           });
+        } else {
+          try {
+            if (!javaModule) javaModule = await loadJavaModule();
+            const result = await javaModule.checkJavaExercise({
+              exercise: ex,
+              source: submittedSource,
+            });
+            ok = result.success === true;
+            const checks = (result.checks || []).filter(
+              (check) => check.feedback || !check.passed,
+            );
+            const javaScore = result.score || { earned: 0, total: 0 };
+            rows.push({
+              ex,
+              ok,
+              a: submittedSource,
+              note:
+                `Java automatic checks: ${javaScore.earned ?? 0} / ${javaScore.total ?? 0} points` +
+                (checks.length
+                  ? `\n${checks.map((check) => `${check.passed ? "✓" : "✗"} ${check.description}: ${check.feedback || (check.passed ? "Passed" : "Failed")}`).join("\n")}`
+                  : ""),
+            });
+          } catch (error) {
+            ok = false;
+            rows.push({
+              ex,
+              ok,
+              a: submittedSource,
+              note: `Java grading failed: ${error?.message || String(error)}`,
+            });
+          }
         }
       } else if (ex.type === "terminal") {
         if (a !== "terminal-workspace") {
@@ -8417,7 +8727,7 @@ async function runExam(root, st) {
           });
         } else {
           try {
-            const terminalModule = await import(terminalModuleUrl);
+            if (!terminalModule) terminalModule = await loadTerminalModule();
             const result = await terminalModule.gradeTerminalAttempt({
               exercise: ex,
               packageId: ex.packageId,
@@ -8425,15 +8735,17 @@ async function runExam(root, st) {
               attemptId: st.id,
             });
             ok = result.passed;
-            const failed = result.checks.filter((check) => !check.passed);
+            const checks = (result.checks || []).filter(
+              (check) => check.feedback || !check.passed,
+            );
             rows.push({
               ex,
               ok,
               a,
               note:
                 `Terminal workspace: ${result.score} / ${result.maxScore} points` +
-                (failed.length
-                  ? `\n${failed.map((check) => `${check.description}: ${check.feedback}`).join("\n")}`
+                (checks.length
+                  ? `\n${checks.map((check) => `${check.passed ? "✓" : "✗"} ${check.description}: ${check.feedback || (check.passed ? "Passed" : "Failed")}`).join("\n")}`
                   : ""),
             });
           } catch (error) {
@@ -8448,7 +8760,12 @@ async function runExam(root, st) {
         }
       } else {
         ok = gradeOS(ex, a);
-        rows.push({ ex, ok, a });
+        rows.push({
+          ex,
+          ok,
+          a,
+          note: ex.checkComment || ex.gradingComment || ex.feedback || "",
+        });
       }
       if (ok !== null) {
         gradable++;
@@ -8456,13 +8773,56 @@ async function runExam(root, st) {
         await rec(ex, ok, "exam");
       }
     }
-    const hist = await kv.get("examHistory", []);
+
+    // Preserve generated grading details and any authored exercise-level
+    // check comment. A Set prevents repeating comments already used as the
+    // primary feedback for self-check questions.
+    gradingProgress.textContent = "Saving your exam results…";
+    for (const row of rows) {
+      const feedbackParts = [
+        row.note,
+        row.ex.checkComment,
+        row.ex.gradingComment,
+        row.ex.feedback,
+      ]
+        .filter((part) => typeof part === "string")
+        .map((part) => part.trim())
+        .filter(Boolean);
+      row.note = [...new Set(feedbackParts)].join("\n\n");
+    }
+
+    const savedHistory = await kv.get("examHistory", []);
+    const hist = Array.isArray(savedHistory) ? savedHistory : [];
+    const questionSnapshots = rows.map((row) => {
+      const key = keyOf(row.ex);
+      const answered = Boolean(st.touched?.[key]);
+      const answer = !answered || row.ex.type === "terminal" ? null :
+        Array.isArray(row.a) ? row.a.slice() :
+        row.a && typeof row.a === "object" ? JSON.parse(JSON.stringify(row.a)) : row.a;
+      const checkComment = row.note || row.checkComment || row.ex.checkComment ||
+        row.ex.gradingComment || row.ex.feedback || "";
+      return {
+        id: key,
+        packageId: row.ex.packageId,
+        exerciseId: row.ex.id,
+        title: row.ex.title,
+        type: row.ex.type,
+        answer,
+        answered,
+        visited: Boolean(st.visited?.[key]),
+        flagged: Boolean(st.flags?.[key]),
+        correct: row.ok,
+        feedback: checkComment,
+        explanation: row.ex.explanation || "",
+      };
+    });
     hist.push({
       date: Date.now(),
       ids: st.ids,
       score,
       total: gradable,
       cfg: st.cfg,
+      questions: questionSnapshots,
     });
     await kv.set("examHistory", hist);
     achOnExam({
@@ -8470,12 +8830,7 @@ async function runExam(root, st) {
       gradable,
       usedMs: st.startedAt ? Date.now() - st.startedAt : Infinity,
       limitMs: (st.cfg?.mins || 0) * 60000,
-      answered: exs.filter((ex) => {
-        const a = st.answers[keyOf(ex)];
-        return Array.isArray(a)
-          ? a.length > 0
-          : a != null && String(a).trim() !== "";
-      }).length,
+      answered: exs.filter((ex) => Boolean(st.touched[keyOf(ex)])).length,
       timedOut: autoSubmitted,
     });
     st.submitted = true;
@@ -8536,9 +8891,14 @@ async function runExam(root, st) {
               : "",
             r.ex.type === "terminal"
               ? h(
-                  "p",
-                  {},
-                  "The browser terminal workspace was graded from its final virtual filesystem state.",
+                  "div",
+                  { class: "exam-answer-review" },
+                  h("h3", {}, "Your answer"),
+                  h(
+                    "p",
+                    {},
+                    "The terminal workspace was graded from its final virtual filesystem state. The per-check result is shown above.",
+                  ),
                 )
               : h(
                   "details",
@@ -8551,7 +8911,13 @@ async function runExam(root, st) {
                       "div",
                       {},
                       h("h3", {}, "Your answer"),
-                      h("pre", {}, answerText(r.ex, r.a)),
+                      h(
+                        "pre",
+                        {},
+                        st.touched?.[keyOf(r.ex)]
+                          ? answerText(r.ex, r.a)
+                          : "No answer was submitted for this question.",
+                      ),
                     ),
                     h(
                       "div",
@@ -8565,6 +8931,7 @@ async function runExam(root, st) {
           ),
         ),
       ),
+      await historyView(),
     );
   };
   const show = async (i) => {
@@ -8573,11 +8940,26 @@ async function runExam(root, st) {
     if (done || generation !== showGeneration) return;
     const key = keyOf(exs[i]);
     st.cur = i;
+    st.visited[key] = true;
     save();
+    const flagControl = h(
+      "label",
+      { class: "exercise-review-flag" },
+      h("input", {
+        type: "checkbox",
+        checked: !!st.flags[key],
+        onchange: (e) => {
+          st.flags[key] = e.target.checked;
+          save();
+          updateQuestionStatus();
+        },
+      }),
+      h("span", {}, "Flag for review"),
+    );
     body.replaceChildren(
       h(
         "div",
-        { class: "exam-question-kicker" },
+        { class: "exercise-question-kicker" },
         h("span", {}, `QUESTION ${String(i + 1).padStart(2, "0")}`),
         h("span", {}, `of ${exs.length}`),
       ),
@@ -8585,8 +8967,9 @@ async function runExam(root, st) {
         exs[i],
         "exam",
         () => st.answers[key],
-        (v) => {
+        (v, meta = {}) => {
           st.answers[key] = v;
+          if (meta.source === "user") st.touched[key] = true;
           save();
           updateQuestionStatus();
         },
@@ -8594,24 +8977,11 @@ async function runExam(root, st) {
         null,
         () => true,
         st.id,
-      ),
-      h(
-        "label",
-        { class: "exam-flag-control" },
-        h("input", {
-          type: "checkbox",
-          checked: !!st.flags[key],
-          onchange: (e) => {
-            st.flags[key] = e.target.checked;
-            save();
-            updateQuestionStatus();
-          },
-        }),
-        h("span", {}, "Flag for review"),
+        [flagControl],
       ),
       h(
         "div",
-        { class: "exam-question-actions" },
+        { class: "exercise-question-navigation" },
         h(
           "button",
           {
@@ -8636,31 +9006,29 @@ async function runExam(root, st) {
   };
   const updateQuestionStatus = () => {
     let answered = 0,
-      flagged = 0;
+      flagged = 0,
+      visited = 0;
     exs.forEach((exercise, i) => {
       const key = keyOf(exercise),
-        answer = st.answers[key],
-        hasAnswer = Array.isArray(answer)
-          ? answer.some((value) => String(value ?? "").trim() !== "")
-          : typeof answer === "string"
-            ? answer.trim().length > 0
-            : answer != null;
+        hasAnswer = Boolean(st.touched[key]);
       if (hasAnswer) answered++;
+      if (st.visited[key]) visited++;
       if (st.flags[key]) flagged++;
       const button = nav.children[i];
       if (button) {
         button.classList.toggle("answered", hasAnswer);
+        button.classList.toggle("visited", !!st.visited[key]);
         button.classList.toggle("flagged", !!st.flags[key]);
         button.classList.toggle("current", i === st.cur);
         button.setAttribute("aria-current", i === st.cur ? "step" : "false");
         button.setAttribute(
           "aria-label",
-          `Question ${i + 1}${hasAnswer ? ", answered" : ", unanswered"}${st.flags[key] ? ", flagged for review" : ""}`,
+          `Question ${i + 1}${st.visited[key] ? ", visited" : ", not visited"}${hasAnswer ? ", answered" : ", unanswered"}${st.flags[key] ? ", flagged for review" : ""}`,
         );
       }
     });
     progress.value = answered;
-    summary.textContent = `${answered} of ${exs.length} answered · ${flagged} flagged for review`;
+    summary.textContent = `${visited} visited · ${answered} answered · ${flagged} flagged for review`;
   };
   const drawNav = () => {
     nav.replaceChildren(
@@ -8668,7 +9036,7 @@ async function runExam(root, st) {
         h(
           "button",
           {
-            class: "exam-question-button",
+            class: "exercise-index-button",
             "aria-current": i === st.cur ? "step" : "false",
             "data-question": i + 1,
             onclick: () => show(i),

@@ -1011,24 +1011,51 @@ th {
   min-height: 2.8rem;
   white-space: nowrap;
 }
-.exam-workspace {
+.exercise-session-layout {
+  display: grid;
+  grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
   margin-top: 1rem;
+  align-items: start;
+  gap: 1rem;
 }
-.exam-nav-panel h2 {
+@media (min-width: 901px) {
+  .exercise-session-layout > .exercise-index-panel {
+    position: sticky;
+    top: 5.5rem;
+    max-height: calc(100vh - 7rem);
+    overflow: auto;
+  }
+}
+@media (max-width: 900px) {
+  .exercise-session-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .exercise-session-layout > .exercise-index-panel {
+    position: static;
+    max-height: 38vh;
+    overflow: auto;
+  }
+}
+.exercise-session-layout > .exercise-index-panel,
+.exercise-session-layout > .exercise-question-panel {
+  min-width: 0;
+  margin: 0;
+}
+.exercise-index-panel h2 {
   margin: 0;
   font-size: 1.1rem;
 }
-.exam-nav-panel > p {
+.exercise-index-panel > p {
   margin: 0.2rem 0 0.85rem;
   color: var(--mut);
   font-size: 0.82rem;
 }
-.exam-question-grid {
+.exercise-index-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 0.45rem;
 }
-.exam-question-button {
+.exercise-index-button {
   position: relative;
   min-width: 0;
   min-height: 2.6rem;
@@ -1040,33 +1067,37 @@ th {
   font-size: 0.8rem;
   font-variant-numeric: tabular-nums;
 }
-.exam-question-button.answered {
+.exercise-index-button.answered {
   color: var(--ok);
   background: color-mix(in srgb, var(--ok) 10%, var(--card));
   border-color: color-mix(in srgb, var(--ok) 45%, var(--bd));
 }
-.exam-question-button.flagged {
+.exercise-index-button.visited:not(.answered) {
+  border-color: color-mix(in srgb, var(--ac) 45%, var(--bd));
+  background: color-mix(in srgb, var(--ac) 7%, var(--soft));
+}
+.exercise-index-button.flagged {
   box-shadow: inset 0 -3px 0 #e69b25;
 }
-.exam-question-button.current {
+.exercise-index-button.current {
   color: #fff;
   background: var(--ac);
   border-color: var(--ac);
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--ac) 25%, transparent);
 }
-.exam-question-button.current.answered {
+.exercise-index-button.current.answered {
   color: #fff;
 }
-.exam-nav-legend {
+.exercise-index-legend {
   display: block;
   margin-top: 0.8rem;
   color: var(--mut);
   line-height: 1.35;
 }
-.exam-question-panel {
+.exercise-question-panel {
   min-width: 0;
 }
-.exam-question-kicker {
+.exercise-question-kicker {
   display: flex;
   gap: 0.35rem;
   align-items: baseline;
@@ -1076,17 +1107,17 @@ th {
   font-weight: 750;
   letter-spacing: 0.07em;
 }
-.exam-question-kicker span:first-child {
+.exercise-question-kicker span:first-child {
   color: var(--ac);
 }
-.exam-question-body > .q {
+.exercise-question-body > .q {
   margin: 0;
   padding: 0;
   background: transparent;
   border: 0;
   box-shadow: none;
 }
-.exam-question-body .q > h3 {
+.exercise-question-body .q > h3 {
   margin-bottom: 0.55rem;
   font-size: clamp(1.2rem, 2.5vw, 1.55rem);
   line-height: 1.3;
@@ -1127,12 +1158,12 @@ th {
 .exam-session .answer-options input {
   flex: 0 0 auto;
 }
-.exam-flag-control {
+.exercise-review-flag {
   display: inline-flex;
   gap: 0.55rem;
   align-items: center;
   min-height: 2.7rem;
-  margin-top: 0.8rem;
+  margin: 0;
   padding: 0.3rem 0.65rem;
   color: var(--mut);
   background: var(--soft);
@@ -1140,13 +1171,13 @@ th {
   border-radius: 9px;
   cursor: pointer;
 }
-.exam-flag-control input {
+.exercise-review-flag input {
   width: 1.1rem;
   height: 1.1rem;
   margin: 0;
   accent-color: #e69b25;
 }
-.exam-question-actions {
+.exercise-question-navigation {
   display: flex;
   justify-content: space-between;
   gap: 0.75rem;
@@ -1154,11 +1185,11 @@ th {
   padding-top: 0.9rem;
   border-top: 1px solid var(--bd);
 }
-.exam-question-actions button {
+.exercise-question-navigation button {
   min-height: 2.8rem;
   margin: 0;
 }
-.exam-question-actions button:only-child {
+.exercise-question-navigation button:only-child {
   margin-left: auto;
 }
 .exam-grading {
@@ -1188,6 +1219,187 @@ th {
     transform: rotate(360deg);
   }
 }
+/* Completed exam history: expandable session cards with per-question review. */
+.exam-history-section {
+  margin-top: 1.25rem;
+  padding: clamp(1rem, 2.5vw, 1.5rem);
+}
+.exam-history-section-heading,
+.exam-history-card-heading,
+.exam-history-question-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.9rem;
+}
+.exam-history-section-heading {
+  margin-bottom: 1rem;
+}
+.exam-history-section-heading .eyebrow {
+  margin: 0 0 0.15rem;
+}
+.exam-history-section-heading h2 {
+  margin: 0;
+}
+.exam-history-count,
+.exam-history-score {
+  flex: 0 0 auto;
+  padding: 0.3rem 0.7rem;
+  color: var(--ac);
+  background: color-mix(in srgb, var(--ac) 9%, var(--card));
+  border: 1px solid color-mix(in srgb, var(--ac) 30%, var(--bd));
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 750;
+  font-variant-numeric: tabular-nums;
+}
+.exam-history-list {
+  display: grid;
+  gap: 0.8rem;
+}
+.exam-history-card {
+  min-width: 0;
+  padding: 0.9rem 1rem;
+  background: var(--bg);
+  border: 1px solid var(--bd);
+  border-radius: 12px;
+}
+.exam-history-card-heading > div {
+  display: grid;
+  gap: 0.15rem;
+  min-width: 0;
+}
+.exam-history-card-heading small {
+  color: var(--mut);
+  font-size: 0.78rem;
+}
+.exam-history-details {
+  margin-top: 0.65rem;
+  border-top: 1px solid var(--bd);
+}
+.exam-history-details > summary {
+  padding: 0.65rem 0 0.15rem;
+  color: var(--ac);
+  cursor: pointer;
+  font-weight: 700;
+}
+.exam-history-questions {
+  display: grid;
+  gap: 0.7rem;
+  margin-top: 0.8rem;
+}
+.exam-history-question {
+  min-width: 0;
+  padding: 0.85rem;
+  background: var(--card);
+  border: 1px solid var(--bd);
+  border-radius: 10px;
+}
+.exam-history-question-heading {
+  align-items: flex-start;
+  margin-bottom: 0.7rem;
+}
+.exam-history-question-heading > div {
+  min-width: 0;
+}
+.exam-history-question-number {
+  display: block;
+  margin-bottom: 0.15rem;
+  color: var(--mut);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+.exam-history-question-heading h4 {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.35;
+}
+.exam-history-result {
+  flex: 0 0 auto;
+  padding: 0.22rem 0.6rem;
+  background: var(--soft);
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 750;
+}
+.exam-history-result.is-correct { color: var(--ok); }
+.exam-history-result.is-incorrect { color: var(--bad); }
+.exam-history-result.is-self-check,
+.exam-history-result.is-legacy { color: var(--mut); }
+.exam-history-answer,
+.exam-history-feedback {
+  min-width: 0;
+  margin-top: 0.65rem;
+  padding: 0.7rem 0.8rem;
+  background: var(--soft);
+  border-radius: 8px;
+}
+.exam-history-answer > strong,
+.exam-history-feedback > strong {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-size: 0.78rem;
+}
+.exam-history-answer pre,
+.exam-history-feedback pre {
+  max-width: 100%;
+  margin: 0;
+  overflow: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font: 0.82rem/1.55 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+.exam-history-feedback p { margin: 0; }
+.exam-history-question-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.65rem;
+  color: var(--mut);
+  font-size: 0.72rem;
+}
+.exam-history-question-meta > span {
+  padding: 0.16rem 0.45rem;
+  background: var(--soft);
+  border-radius: 999px;
+}
+.exam-history-question-meta .is-flagged { color: #b87914; }
+.exam-history-practice-link {
+  display: inline-flex;
+  font: inherit;
+  cursor: pointer;
+  min-height: 2.25rem;
+  align-items: center;
+  margin-top: 0.7rem;
+  padding: 0.35rem 0.7rem;
+  color: var(--on-ac, #fff);
+  background: var(--ac);
+  border: 1px solid var(--ac);
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+.exam-history-practice-link:hover {
+  color: var(--on-ac, #fff);
+  background: var(--ac-hover);
+  border-color: var(--ac-hover);
+  text-decoration: none;
+}
+.exam-history-older-note,
+.exam-history-empty {
+  margin: 0.8rem 0 0;
+  color: var(--mut);
+}
+@media (max-width: 600px) {
+  .exam-history-card-heading,
+  .exam-history-question-heading {
+    align-items: flex-start;
+  }
+  .exam-history-question { padding: 0.7rem; }
+}
+
 .exam-results {
   width: min(100%, 900px);
   margin: 0 auto;
@@ -1260,7 +1472,7 @@ th {
 .nav .cur {
   outline: 2px solid var(--fg);
 }
-@media (max-width: 760px) {
+@media (max-width: 900px) {
   .exam-difficulty-controls {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -1281,7 +1493,7 @@ th {
     grid-column: 1 / -1;
     width: 100%;
   }
-  .exam-question-grid {
+  .exercise-index-grid {
     grid-template-columns: repeat(6, minmax(0, 1fr));
   }
   .side {
@@ -1306,7 +1518,7 @@ th {
   .exam-timer-card {
     min-width: 5.8rem;
   }
-  .exam-question-grid {
+  .exercise-index-grid {
     grid-template-columns: repeat(5, minmax(0, 1fr));
   }
   .exam-answer-comparison {
@@ -3273,8 +3485,8 @@ main {
 .practice-filters,
 .exam-setup-card,
 .exam-topbar,
-.exam-nav-panel,
-.exam-question-panel,
+.exercise-index-panel,
+.exercise-question-panel,
 .exam-score-card,
 .progress-stat,
 .achievement,
@@ -3294,7 +3506,7 @@ main {
    modules rather than flat blocks. */
 .card,
 .q,
-.exam-question-panel,
+.exercise-question-panel,
 .exam-topbar,
 .exam-score-card {
   border-color: color-mix(in srgb, var(--bd) 84%, var(--ac));
@@ -3303,7 +3515,7 @@ main {
 .card:focus-within,
 .q:focus-within,
 .md:focus-within,
-.exam-question-panel:focus-within,
+.exercise-question-panel:focus-within,
 .reference-search-panel:focus-within {
   border-color: color-mix(in srgb, var(--ac) 58%, var(--bd));
   box-shadow:
@@ -3362,7 +3574,7 @@ header nav a.on {
 /* More tactile selection controls and reference navigation. */
 .exam-course-checkbox,
 .exam-session .answer-options label,
-.exam-flag-control,
+.exercise-review-flag,
 .achievement-group > summary,
 .schema > summary {
   transition:
@@ -3375,7 +3587,7 @@ header nav a.on {
 
 .exam-course-checkbox:focus-within,
 .exam-session .answer-options label:focus-within,
-.exam-flag-control:focus-within {
+.exercise-review-flag:focus-within {
   border-color: var(--ac);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--ac) 11%, transparent);
 }
@@ -3384,7 +3596,7 @@ header nav a.on {
   box-shadow: inset 3px 0 0 var(--ac);
 }
 
-.exam-question-button {
+.exercise-index-button {
   transition:
     color 0.16s ease,
     background-color 0.16s ease,
@@ -3393,7 +3605,7 @@ header nav a.on {
     transform 0.16s ease;
 }
 
-.exam-question-button:focus-visible {
+.exercise-index-button:focus-visible {
   z-index: 1;
 }
 
@@ -3481,14 +3693,14 @@ code {
 
   .exam-course-checkbox:hover,
   .exam-session .answer-options label:hover,
-  .exam-flag-control:hover,
+  .exercise-review-flag:hover,
   .achievement-group > summary:hover,
   .schema > summary:hover {
     border-color: color-mix(in srgb, var(--ac) 60%, var(--bd));
     background-color: color-mix(in srgb, var(--soft) 76%, var(--card));
   }
 
-  .exam-question-button:hover:not(:disabled) {
+  .exercise-index-button:hover:not(:disabled) {
     transform: translateY(-1px);
     border-color: var(--ac);
   }
@@ -3527,7 +3739,7 @@ code {
 
 :root.hacking-mode .card,
 :root.hacking-mode .q,
-:root.hacking-mode .exam-question-panel,
+:root.hacking-mode .exercise-question-panel,
 :root.hacking-mode .exam-topbar,
 :root.hacking-mode .progress-stat,
 :root.hacking-mode .quest-row {
@@ -3561,8 +3773,8 @@ code {
   .practice-filters,
   .exam-setup-card,
   .exam-topbar,
-  .exam-nav-panel,
-  .exam-question-panel,
+  .exercise-index-panel,
+  .exercise-question-panel,
   .exam-score-card,
   .progress-stat,
   .achievement,
@@ -3570,10 +3782,10 @@ code {
   .schema,
   .schema-table,
   .schema-relations,
-  .exam-question-button,
+  .exercise-index-button,
   .exam-course-checkbox,
   .exam-session .answer-options label,
-  .exam-flag-control,
+  .exercise-review-flag,
   .achievement-group > summary,
   .schema > summary {
     transform: none !important;
@@ -3713,7 +3925,7 @@ button.danger:not(:disabled):hover {
 .quest-row,
 .schema-table,
 .schema-relations,
-.exam-question-panel,
+.exercise-question-panel,
 .exam-result-card {
   position: relative;
   transition:
@@ -3730,7 +3942,7 @@ button.danger:not(:disabled):hover {
 .quest-row:focus-within,
 .schema-table:focus-within,
 .schema-relations:focus-within,
-.exam-question-panel:focus-within,
+.exercise-question-panel:focus-within,
 .exam-result-card:focus-within {
   border-color: color-mix(in srgb, var(--ac) 65%, var(--bd));
   box-shadow: var(--shadow), var(--ui-glow);
@@ -3742,7 +3954,7 @@ button.danger:not(:disabled):hover {
 .progress-stat::after,
 .achievement::after,
 .quest-row::after,
-.exam-question-panel::after,
+.exercise-question-panel::after,
 .exam-result-card::after {
   position: absolute;
   inset: 0;
@@ -3784,7 +3996,7 @@ input[type="radio"]:active {
 .answer-blanks label,
 .exam-session .answer-options label,
 .exam-course-checkbox,
-.exam-flag-control {
+.exercise-review-flag {
   transition:
     background-color var(--ui-fast) ease,
     border-color var(--ui-fast) ease,
@@ -3886,7 +4098,7 @@ nav.reference-toc-links a[aria-current="page"] {
 }
 
 /* Exam mode: the question navigator feels like a live control deck. */
-.exam-question-button {
+.exercise-index-button {
   transition:
     color var(--ui-fast) ease,
     background-color var(--ui-fast) ease,
@@ -3895,17 +4107,17 @@ nav.reference-toc-links a[aria-current="page"] {
     transform var(--ui-fast) var(--ui-ease);
 }
 
-.exam-question-button.current {
+.exercise-index-button.current {
   box-shadow:
     0 0 0 2px color-mix(in srgb, var(--ac) 22%, transparent),
     0 0 16px color-mix(in srgb, var(--ac) 18%, transparent);
 }
 
-.exam-question-button.answered:not(.current) {
+.exercise-index-button.answered:not(.current) {
   box-shadow: inset 0 -2px 0 color-mix(in srgb, var(--ok) 60%, transparent);
 }
 
-.exam-question-button.flagged:not(.current)::after {
+.exercise-index-button.flagged:not(.current)::after {
   position: absolute;
   top: 0.22rem;
   right: 0.22rem;
@@ -4072,7 +4284,7 @@ pre:focus-within,
 
 :root.hacking-mode .card,
 :root.hacking-mode .q,
-:root.hacking-mode .exam-question-panel,
+:root.hacking-mode .exercise-question-panel,
 :root.hacking-mode .progress-stat,
 :root.hacking-mode .achievement,
 :root.hacking-mode .quest-row,
@@ -4173,7 +4385,7 @@ pre:focus-within,
   .progress-stat:hover::after,
   .achievement.earned:hover::after,
   .quest-row:hover::after,
-  .exam-question-panel:hover::after,
+  .exercise-question-panel:hover::after,
   .exam-result-card:hover::after {
     opacity: 1;
   }
@@ -4181,7 +4393,7 @@ pre:focus-within,
   .exam-course-checkbox:hover,
   .answer-options label:hover,
   .exam-session .answer-options label:hover,
-  .exam-flag-control:hover {
+  .exercise-review-flag:hover {
     transform: translateY(-2px);
     border-color: color-mix(in srgb, var(--ac) 65%, var(--bd));
     box-shadow: 0 5px 14px color-mix(in srgb, var(--ac) 10%, transparent);
@@ -4253,7 +4465,7 @@ pre:focus-within,
   .progress-stat:hover,
   .achievement.earned:hover,
   .quest-row:hover,
-  .exam-question-panel:hover,
+  .exercise-question-panel:hover,
   .exam-result-card:hover,
   .level-card:hover,
   nav a:not(.reference-tab):hover {
@@ -8129,210 +8341,136 @@ pre,
   }
 }
 
-/* ============================================================
-   Terminal desktop action rail.
-   Desktop: terminal stays on the left; solution and reset controls sit in a
-   dedicated rail on the right. Guided Learning navigation stays in its top
-   navigator, outside this terminal control rail.
-   Mobile: display:contents keeps the previous stacked terminal layout.
-   ============================================================ */
+/* Terminal workspace sizing remains independent from the action controls. */
 .os-terminal .ot-workbench,
 .os-terminal .ot-workspace-main {
   min-width: 0;
 }
-.os-terminal .ot-control-sidebar {
+.os-terminal .ot-workbench {
+  gap: 0.85rem;
+  align-items: start;
+}
+.os-terminal .ot-workspace-main {
+  min-width: 0;
+}
+
+/* One consistent action area for practice and exam controls across all types. */
+.exercise-action-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem;
+  min-width: 0;
+  margin-top: 1rem;
+  padding: 0.85rem 0 0;
+  border-top: 1px solid var(--bd);
+}
+.exercise-action-buttons > button,
+.exercise-action-buttons .ot-actions button,
+.exercise-action-buttons .java-controls button,
+.exercise-action-buttons .ot-control-sidebar button,
+.exercise-action-buttons .exercise-action-buttons__module-controls button {
+  min-height: 2.35rem;
+  margin: 0;
+}
+.exercise-action-buttons > .ot-control-sidebar,
+.exercise-action-buttons .exercise-action-buttons__module-controls {
+  display: contents !important;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+.exercise-action-buttons .ot-control-heading {
+  display: none !important;
+}
+/* Flatten module wrappers so every Run/Check/Reset/Stop/Hint/Solution/Flag
+   control participates in this same flex row. */
+.exercise-action-buttons .ot-actions,
+.exercise-action-buttons .java-controls {
   display: contents;
 }
-.os-terminal .ot-control-heading,
-.os-terminal .ot-next-slot {
-  display: none;
+.exercise-action-buttons .ot-solution {
+  flex: 1 0 100%;
+  min-width: 0;
+  max-width: 100%;
+  max-height: min(45vh, 22rem);
+  overflow: auto;
+  margin: 0;
+}
+.exercise-action-buttons .ot-solution-list {
+  padding-left: 1.35rem;
+  overflow-wrap: anywhere;
+}
+.exercise-action-buttons .ot-solution-list code {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+.exercise-action-buttons .ot-actions button,
+.exercise-action-buttons .java-controls button,
+.exercise-action-buttons .ot-control-sidebar button,
+.exercise-action-buttons .exercise-action-buttons__module-controls button,
+.exercise-action-buttons .exercise-review-flag {
+  margin: 0;
 }
 
-@media (min-width: 901px) {
-  .os-terminal .ot-workbench {
-    gap: 0.85rem;
-    align-items: start;
-    padding: 0.75rem;
-  }
-
-  .os-terminal .ot-workspace-main {
-    min-width: 0;
-  }
-
-  /* Control sidebar */
-  .os-terminal.ot-control-sidebar,
-  .os-terminal .ot-control-sidebar {
-    margin-top: 1rem;
-    position: sticky;
-    top: 5.5rem;
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    min-width: 0;
-    width: 100%;
-    gap: 0.65rem;
-    align-content: start;
-    align-self: start;
-    box-sizing: border-box;
-    padding: 0.75rem;
-    background: var(--card);
-    border: 1px solid var(--bd);
-    border-radius: 10px;
-  }
-
-  /* Sidebar heading */
-  .os-terminal.ot-control-sidebar .ot-control-heading,
-  .os-terminal .ot-control-sidebar .ot-control-heading {
-    display: block;
-    margin: 0;
-    font-size: 0.9rem;
-    line-height: 1.4;
-  }
-
-  /* Next action slot */
-  .os-terminal.ot-control-sidebar .ot-next-slot:not(:empty),
-  .os-terminal .ot-control-sidebar .ot-next-slot:not(:empty) {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 0.4rem;
-    min-width: 0;
-  }
-
-  /* Action buttons */
-  .os-terminal.ot-control-sidebar .ot-actions,
-  .os-terminal .ot-control-sidebar .ot-actions {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
+/* Instructions stay readable: consistent vertical rhythm in the supporting pane. */
+.terminal-instructions-pane,
+.java-instructions-pane {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.85rem;
+  min-width: 0;
+  padding: 1rem;
+}
+.terminal-instructions-pane > *,
+.java-instructions-pane > * {
+  min-width: 0;
+}
+.terminal-instructions-pane .stmt,
+.java-instructions-pane .stmt {
+  line-height: 1.6;
+}
+.terminal-instructions-pane > h3,
+.java-instructions-pane > h3 {
+  margin: 0;
+  line-height: 1.3;
+}
+.terminal-instructions-pane > .meta,
+.java-instructions-pane > .meta {
+  margin: -0.35rem 0 0;
+}
+.terminal-instructions-pane > .stmt,
+.java-instructions-pane > .stmt {
+  margin: 0;
+  min-width: 0;
+}
+.terminal-instructions-pane > .hint-panel,
+.java-instructions-pane > .hint-panel,
+.java-instructions-pane > .solution-panel {
+  margin: 0;
+}
+.terminal-instructions-pane > .exercise-action-buttons,
+.java-instructions-pane > .exercise-action-buttons {
+  margin-top: 0;
+}
+@media (max-width: 650px) {
+  .exercise-action-buttons {
     gap: 0.5rem;
-    min-width: 0;
-    margin: 0;
   }
-
-  .os-terminal.ot-control-sidebar .ot-actions button,
-  .os-terminal .ot-control-sidebar .ot-actions button,
-  .os-terminal.ot-control-sidebar .ot-next-slot > button,
-  .os-terminal .ot-control-sidebar .ot-next-slot > button,
-  .os-terminal.ot-control-sidebar .ot-next-slot > a,
-  .os-terminal .ot-control-sidebar .ot-next-slot > a,
-  .os-terminal.ot-control-sidebar .ot-next-slot > [role="button"],
-  .os-terminal .ot-control-sidebar .ot-next-slot > [role="button"] {
-    display: block;
-    width: 100%;
-    min-width: 0;
-    max-width: 100%;
-    margin: 0;
-    box-sizing: border-box;
-    text-align: center;
-    overflow-wrap: anywhere;
-  }
-
-  /* Solution panel */
-  .os-terminal.ot-control-sidebar .ot-solution,
-  .os-terminal .ot-control-sidebar .ot-solution {
-    min-width: 0;
-    max-width: 100%;
-    max-height: min(48vh, 24rem);
-    overflow: auto;
-    overscroll-behavior: contain;
-    margin: 0;
-    box-sizing: border-box;
-  }
-
-  .os-terminal.ot-control-sidebar .ot-solution-list,
-  .os-terminal .ot-control-sidebar .ot-solution-list {
-    padding-left: 1.35rem;
-    overflow-wrap: anywhere;
-  }
-
-  .os-terminal.ot-control-sidebar .ot-solution-list code,
-  .os-terminal .ot-control-sidebar .ot-solution-list code {
-    white-space: normal;
-    overflow-wrap: anywhere;
-    word-break: break-word;
+  .exercise-action-buttons > button,
+  .exercise-action-buttons .ot-actions button,
+  .exercise-action-buttons .java-controls button,
+  .exercise-action-buttons .ot-control-sidebar button,
+  .terminal-instructions-pane,
+  .java-instructions-pane {
+    padding: 0.85rem;
   }
 }
-
-@media (max-width: 900px) {
-  .os-terminal .ot-workbench {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    padding: 0.75rem;
-  }
-
-  .os-terminal .ot-workspace-main {
-    display: block;
-    min-width: 0;
-    width: 100%;
-  }
-
-  /* Mobile control sidebar */
-  .os-terminal.ot-control-sidebar,
-  .os-terminal .ot-control-sidebar {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    width: 100%;
-    min-width: 0;
-    box-sizing: border-box;
-    gap: 0.65rem;
-    margin-top: 1rem;
-    padding: 0.75rem;
-    position: static;
-    background: var(--card);
-    border: 1px solid var(--bd);
-    border-radius: 10px;
-  }
-
-  .os-terminal .ot-control-heading {
-    display: block;
-    margin: 0;
-    font-size: 0.9rem;
-  }
-
-  .os-terminal .ot-next-slot:not(:empty) {
-    display: grid;
-    gap: 0.4rem;
-  }
-
-  .os-terminal .ot-actions {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 0.5rem;
-    margin: 0;
-    min-width: 0;
-  }
-
-  .os-terminal .ot-control-sidebar .ot-actions button,
-  .os-terminal .ot-control-sidebar .ot-next-slot > button,
-  .os-terminal .ot-control-sidebar .ot-next-slot > a,
-  .os-terminal .ot-control-sidebar .ot-next-slot > [role="button"] {
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
-    margin: 0;
-    box-sizing: border-box;
-    text-align: center;
-    overflow-wrap: anywhere;
-  }
-
-  .os-terminal .ot-solution {
-    max-height: 40vh;
-    overflow: auto;
-    overscroll-behavior: contain;
-    margin: 0;
-    min-width: 0;
-  }
-
-  .os-terminal .ot-solution-list {
-    padding-left: 1.35rem;
-  }
-
-  .os-terminal .ot-solution-list code {
-    white-space: normal;
-    overflow-wrap: anywhere;
-    word-break: break-word;
-  }
-}
-
 
 /* Learning section resume controls */
 .learning-module-actions {
@@ -8396,21 +8534,6 @@ button.learning-continue-button {
   margin: 0;
 }
 
-/* Terminal exercise navigation belongs beside the terminal instructions. */
-.terminal-instructions-pane > .exercise-action-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.5rem;
-  margin-top: 1rem;
-  padding-top: 0.8rem;
-  border-top: 1px solid var(--bd);
-}
-.terminal-instructions-pane > .exercise-action-buttons button {
-  min-height: 2.35rem;
-  margin: 0;
-}
-
 @media (max-width: 650px) {
   .learning-module-actions {
     display: grid;
@@ -8424,10 +8547,7 @@ button.learning-continue-button {
   .learning-module-actions .learning-complete-toggle {
     width: 100%;
   }
-  .terminal-instructions-pane > .exercise-action-buttons button {
-    flex: 1 1 10rem;
   }
-}
 
 @media (prefers-reduced-motion: reduce) {
   .learning-continue-button {
@@ -8562,7 +8682,12 @@ button.learning-continue-button {
     max-height: none;
     overflow: visible;
   }
-  .exercise-split-layout > .exercise-split-main { order: 1; }
+  .exercise-split-layout > .exercise-split-main {
+    order: 1;
+  }
+  .exercise-split-main {
+    max-width: 100%;
+  }
   .exercise-split-handle { display: none !important; }
 }
 @media (min-width: 901px) and (prefers-reduced-motion: no-preference) {
@@ -8570,9 +8695,7 @@ button.learning-continue-button {
     transition: background-color var(--ui-fast, 150ms) var(--ui-ease, ease);
   }
 }
-body.terminal-split-dragging,
-body.java-split-dragging,
-body.sql-split-dragging {
+body.exercise-split-dragging {
   cursor: col-resize;
   user-select: none;
 }
@@ -8629,7 +8752,7 @@ body.sql-split-dragging {
 .learning-path-navigator__actions > button {
   margin: 0;
 }
-@media (max-width: 650px) {
+@media (max-width: 900px) {
   .learning-path-navigator {
     align-items: stretch;
   }
@@ -8642,15 +8765,15 @@ body.sql-split-dragging {
 }
 
 /* Exam cards use the same neutral outer wrapper for every shared split layout. */
-.exam-question-panel:has(.exercise-split-layout) {
+.exercise-question-panel:has(.exercise-split-layout) {
   margin: 0; padding: 0; background: transparent; border: 0;
   border-radius: 0; box-shadow: none; transform: none;
 }
-.exam-question-panel:has(.exercise-split-layout):focus-within,
-.exam-question-panel:has(.exercise-split-layout):hover {
+.exercise-question-panel:has(.exercise-split-layout):focus-within,
+.exercise-question-panel:has(.exercise-split-layout):hover {
   border-color: transparent; box-shadow: none; transform: none;
 }
-.exam-question-panel:has(.exercise-split-layout)::after { display: none; content: none; }
-.exam-question-panel:has(.exercise-split-layout) > .exercise-split-layout {
+.exercise-question-panel:has(.exercise-split-layout)::after { display: none; content: none; }
+.exercise-question-panel:has(.exercise-split-layout) > .exercise-split-layout {
   width: 100%; min-width: 0;
 }
