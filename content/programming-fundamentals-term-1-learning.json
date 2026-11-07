@@ -89,7 +89,7 @@
       "java": {
         "sourceFile": "Main.java",
         "mainClass": "Main",
-        "preCode": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n        // TODO: Read two integers, add them, and print \"Sum: <value>\".\n    }\n}\n",
+        "preCode": "public class Main {\n    public static void main(String[] args) {\n        // TODO: Read two integers, add them, and print \"Sum: <value>\".\n    }\n}\n",
         "stdin": "3\n4\n",
         "checks": [
           {
