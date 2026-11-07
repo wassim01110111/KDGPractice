@@ -5993,6 +5993,290 @@ function restoreArchiveNode(fs, raw, targetPath) {
   parent.children.set(name, build(raw, parent, name));
 }
 
+function generateFromRegex(input, options = {}) {
+  const maxRepeat = options.maxRepeat ?? 3;
+  const maxAttempts = options.maxAttempts ?? 100;
+
+  let source;
+  let flags = "";
+
+  if (input instanceof RegExp) {
+    source = input.source;
+    flags = input.flags;
+  } else {
+    source = String(input);
+
+    // Support common inline dotAll syntax.
+    if (source.startsWith("(?s)")) {
+      source = source.slice(4);
+      flags += "s";
+    }
+  }
+
+  const original = new RegExp(source, flags);
+
+  let pos = 0;
+
+  function peek() {
+    return source[pos];
+  }
+
+  function consume() {
+    return source[pos++];
+  }
+
+  function parseExpression() {
+    const alternatives = [parseSequence()];
+
+    while (peek() === "|") {
+      consume();
+      alternatives.push(parseSequence());
+    }
+
+    return { type: "alt", alternatives };
+  }
+
+  function parseSequence() {
+    const nodes = [];
+
+    while (pos < source.length && peek() !== ")" && peek() !== "|") {
+      nodes.push(parseQuantified());
+    }
+
+    return { type: "seq", nodes };
+  }
+
+  function parseQuantified() {
+    let node = parseAtom();
+    let min = 1;
+    let max = 1;
+
+    if (peek() === "*") {
+      consume();
+      min = 0;
+      max = maxRepeat;
+    } else if (peek() === "+") {
+      consume();
+      min = 1;
+      max = maxRepeat;
+    } else if (peek() === "?") {
+      consume();
+      min = 0;
+      max = 1;
+    } else if (peek() === "{") {
+      const remaining = source.slice(pos);
+      const match = remaining.match(/^\{(\d+)(?:,(\d*))?\}/);
+
+      if (match) {
+        pos += match[0].length;
+        min = Number(match[1]);
+
+        max =
+          match[2] === undefined
+            ? min
+            : match[2] === ""
+              ? maxRepeat
+              : Math.min(Number(match[2]), maxRepeat);
+      }
+    }
+
+    if (min !== 1 || max !== 1) {
+      node = { type: "repeat", node, min, max };
+    }
+
+    // Ignore lazy quantifier modifier.
+    if (peek() === "?") consume();
+
+    return node;
+  }
+
+  function parseAtom() {
+    const char = consume();
+
+    if (char === undefined) {
+      throw new Error("Unexpected end of regex");
+    }
+
+    if (char === "^" || char === "$") {
+      return { type: "empty" };
+    }
+
+    if (char === ".") {
+      return { type: "dot" };
+    }
+
+    if (char === "[") {
+      let content = "";
+      let escaped = false;
+
+      while (pos < source.length) {
+        const c = consume();
+
+        if (c === "]" && !escaped) break;
+
+        content += c;
+
+        if (c === "\\" && !escaped) {
+          escaped = true;
+        } else {
+          escaped = false;
+        }
+      }
+
+      return { type: "class", content };
+    }
+
+    if (char === "\\") {
+      const escaped = consume();
+
+      if (escaped === undefined) {
+        throw new Error("Incomplete escape");
+      }
+
+      if (escaped === "d") return { type: "literal", value: "0" };
+      if (escaped === "w") return { type: "literal", value: "a" };
+      if (escaped === "s") return { type: "literal", value: " " };
+
+      if (escaped === "D") return { type: "class", content: "^0-9" };
+      if (escaped === "W") return { type: "class", content: "^a-zA-Z0-9_" };
+      if (escaped === "S")
+        return { type: "class", content: "^ \\t\\n\\r\\f\\v" };
+
+      if (escaped === "n") return { type: "literal", value: "\n" };
+      if (escaped === "r") return { type: "literal", value: "\r" };
+      if (escaped === "t") return { type: "literal", value: "\t" };
+      if (escaped === "f") return { type: "literal", value: "\f" };
+      if (escaped === "v") return { type: "literal", value: "\v" };
+
+      // Zero-width assertions.
+      if ("bBAZz".includes(escaped)) {
+        return { type: "empty" };
+      }
+
+      // Hexadecimal escape.
+      if (escaped === "x") {
+        const hex = source.slice(pos, pos + 2);
+        if (!/^[0-9a-f]{2}$/i.test(hex)) {
+          throw new Error("Invalid hex escape");
+        }
+        pos += 2;
+        return {
+          type: "literal",
+          value: String.fromCharCode(parseInt(hex, 16)),
+        };
+      }
+
+      // Unicode escape.
+      if (escaped === "u") {
+        const hex = source.slice(pos, pos + 4);
+        if (!/^[0-9a-f]{4}$/i.test(hex)) {
+          throw new Error("Invalid Unicode escape");
+        }
+        pos += 4;
+        return {
+          type: "literal",
+          value: String.fromCharCode(parseInt(hex, 16)),
+        };
+      }
+
+      return { type: "literal", value: escaped };
+    }
+
+    if (char === "(") {
+      if (peek() === "?") {
+        consume();
+
+        if (peek() === ":") {
+          consume();
+        } else {
+          throw new Error(
+            "Lookarounds and inline group modifiers are not supported",
+          );
+        }
+      }
+
+      const node = parseExpression();
+
+      if (consume() !== ")") {
+        throw new Error("Unclosed group");
+      }
+
+      return node;
+    }
+
+    return { type: "literal", value: char };
+  }
+
+  function generate(node) {
+    switch (node.type) {
+      case "empty":
+        return "";
+
+      case "literal":
+        return node.value;
+
+      case "dot":
+        return "\na".slice(1);
+
+      case "class": {
+        const regex = new RegExp("^(?:[" + node.content + "])$", flags);
+
+        const candidates =
+          "aAzZ019_ -!@#$%^&*()[]{} \t\n\r" +
+          "abcdefghijklmnopqrstuvwxyz" +
+          "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+          "0123456789";
+
+        for (const c of candidates) {
+          if (regex.test(c)) return c;
+        }
+
+        throw new Error(
+          "Could not find a character for class: [" + node.content + "]",
+        );
+      }
+
+      case "seq":
+        return node.nodes.map(generate).join("");
+
+      case "alt":
+        return generate(node.alternatives[0]);
+
+      case "repeat": {
+        const count = node.min;
+        return Array.from({ length: count }, () => generate(node.node)).join(
+          "",
+        );
+      }
+
+      default:
+        throw new Error("Unknown AST node: " + node.type);
+    }
+  }
+
+  // Try different alternatives if the first generated candidate
+  // doesn't pass validation.
+  for (let attempt = 0; attempt < maxAttempts; attempt++) {
+    try {
+      const result = generate(parseExpression());
+
+      if (original.test(result)) {
+        return result;
+      }
+    } catch (error) {
+      if (attempt === maxAttempts - 1) throw error;
+    }
+
+    // Reset parser for another attempt.
+    pos = 0;
+  }
+
+  throw new Error(
+    "Could not generate a matching string. " +
+      "The pattern may use unsupported regex features.",
+  );
+}
+
 function gradeFilesystem(
   fs,
   checks,
@@ -6149,7 +6433,7 @@ function gradeFilesystem(
                     passed = commandAndOutputMatched;
                     if (!passed) {
                       if (!commandWasRun)
-                        feedback = `No command-history entry matched: ${check.commandExpected}`;
+                        feedback = `No command-history entry matched: ${check.regex ? generateFromRegex(check.commandExpected) : check.commandExpected}`;
                       else if (outputRegex && !commandOutputCaptured)
                         feedback =
                           "The command was found in history, but its output was not captured. Run it again to verify intendedOutput.";
