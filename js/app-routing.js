@@ -4,7 +4,7 @@ const ROUTE_OUT_MS = 140,
   ROUTE_IN_MS = 360,
   ROUTE_EASE = "cubic-bezier(0.22, 1, 0.36, 1)";
 
-// Check content/version.json at most once per hour, on section/subject changes.
+// Check content/version.json at most once per hour, independently of navigation.
 // A dismissed notice is only dismissed for this page lifetime: pending update
 // metadata remains in localStorage so a reload can show the notice again.
 const SITE_VERSION_CHECK_INTERVAL = 60 * 60 * 1000;
@@ -194,6 +194,17 @@ async function checkSiteVersion() {
   })();
   return siteVersionCheckPromise;
 }
+
+// Run independently of route()/section changes. The visibility check catches up
+// promptly when a background tab has had its interval timer throttled.
+window.setInterval(() => {
+  void checkSiteVersion();
+}, SITE_VERSION_CHECK_INTERVAL);
+
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "visible") void checkSiteVersion();
+});
+
 let routeShown = null; // { page, subject } currently on screen
 let routeEnterAnim = null; // enter animation still running, if any
 let routeLeaving = null; // { target, anim }: the exit that is in flight
