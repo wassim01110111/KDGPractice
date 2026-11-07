@@ -15,9 +15,12 @@ import java.net.URI;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -26,9 +29,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Random;
 import java.util.Set;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
@@ -41,71 +42,80 @@ import javax.tools.StandardJavaFileManager;
 import javax.tools.ToolProvider;
 
 /**
- * ;
- * ;
- * ;
- * Static, client-side Java exercise compiler and grader.;
- * ;
- * Commands:;
- * compile <sources.json> <config.json> <result.json> <classes-dir>;
- * run <config.json> <result.json> <classes-dir>;
- * check <config.json> <result.json> <classes-dir>;
- * ;
- * All paths are CheerpJ virtual-filesystem paths when run in the browser.;
+ * Dependency-free Java exercise compiler and grader.
+ *
+ * Commands (five arguments are always required):
+ *   compile <sources.json> <config.json> <result.json> <classes-dir>
+ *   run     -             <config.json> <result.json> <classes-dir>
+ *   check   -             <config.json> <result.json> <classes-dir>
+ *   cleanup -             -            -            <classes-dir>
+ *
+ * JSON paths may be paths in the host filesystem or a browser virtual filesystem.
  */
 public final class ExerciseRunner {
-    private ExerciseRunner() {
-    };
+    private ExerciseRunner() { }
 
     public static void main(String[] args) {
         if (args.length != 5) {
-            System.err.println(
-                    "Usage: ExerciseRunner <compile|run|check|cleanup> <sources-or-dash> <config> <result> <classes-dir>");
+            System.err.println("Usage: ExerciseRunner <compile|run|check|cleanup> <sources-or-dash> <config> <result> <classes-dir>");
             return;
         }
+
         String operation = args[0];
         Path sourcesPath = "-".equals(args[1]) ? null : Paths.get(args[1]);
-        Path configPath = Paths.get(args[2]);
-        Path resultPath = Paths.get(args[3]);
+        Path configPath = "-".equals(args[2]) ? null : Paths.get(args[2]);
+        Path resultPath = "-".equals(args[3]) ? null : Paths.get(args[3]);
         Path classesDir = Paths.get(args[4]);
+
+        if ("cleanup".equals(operation)) {
+            try {
+                Path requestDirectory = classesDir.getParent();
+                if (requestDirectory != null) deleteTree(requestDirectory);
+            } catch (Throwable error) {
+                System.err.println("Could not clean runner files: " + safeMessage(error));
+            }
+            return;
+        }
+
         Map<String, Object> result;
         try {
-            if ("cleanup".equals(operation)) {
-                // The output directory is unique to one browser request. Remove
-                // its complete parent so class files and JSON result files do
-                // not accumulate in CheerpJ's persistent /files/ mount.
-                Path requestDirectory = classesDir.getParent();
-                if (requestDirectory != null)
-                    deleteTree(requestDirectory);
-                return;
-            }
+            if (configPath == null) throw new IllegalArgumentException("A config path is required.");
             Map<String, Object> config = asMap(Json.parse(Files.readString(configPath, StandardCharsets.UTF_8)));
-            if ("compile".equals(operation)) {
-                Map<String, Object> sourcesDoc = asMap(
-                        Json.parse(Files.readString(sourcesPath, StandardCharsets.UTF_8)));
-                result = compile(sourcesDoc, config, classesDir);
-            } else if ("run".equals(operation)) {
-                result = runProgram(config, classesDir);
-            } else if ("check".equals(operation)) {
-                result = grade(config, classesDir);
-            } else {
-                result = failure("Unknown runner operation: " + operation);
+            switch (operation) {
+                case "compile": {
+                    if (sourcesPath == null) throw new IllegalArgumentException("A sources path is required for compile.");
+                    Map<String, Object> sourcesDoc = asMap(Json.parse(Files.readString(sourcesPath, StandardCharsets.UTF_8)));
+                    result = compile(sourcesDoc, classesDir);
+                    break;
+                }
+                case "run":
+                    result = runProgram(config, classesDir);
+                    break;
+                case "check":
+                    result = grade(config, classesDir);
+                    break;
+                default:
+                    result = failure("Unknown runner operation: " + operation);
             }
         } catch (Throwable error) {
             result = failure(safeMessage(error));
             result.put("errorType", error.getClass().getName());
         }
+
+        if (resultPath == null) {
+            System.err.println("A result path is required.");
+            return;
+        }
         try {
             Path parent = resultPath.getParent();
-            if (parent != null)
-                Files.createDirectories(parent);
+            if (parent != null) Files.createDirectories(parent);
             Files.writeString(resultPath, Json.stringify(result), StandardCharsets.UTF_8);
-        } catch (Throwable writeError) {
-            System.err.println("Could not write runner result: " + safeMessage(writeError));
+        } catch (Throwable error) {
+            System.err.println("Could not write runner result: " + safeMessage(error));
         }
     }
 
-    private static Map<String, Object> compile(Map<String, Object> sourcesDoc, Map<String, Object> config, Path classesDir) {
+    private static Map<String, Object> compile(Map<String, Object> sourcesDoc, Path classesDir) {
         Map<String, Object> result = baseResult();
         List<Map<String, Object>> sourceRows = maps(sourcesDoc.get("sources"));
         if (sourceRows.isEmpty()) {
@@ -134,28 +144,22 @@ public final class ExerciseRunner {
                     result.put("status", "compile-error");
                     result.put("diagnostics", List.of(diagnostic("ERROR", name, 0, 0,
                             "Source file names must be simple .java file names without directory separators.")));
+                    result.put("compiled", false);
+                    result.put("success", false);
+                    result.put("exitCode", 1);
                     return result;
                 }
                 units.add(new MemorySource(name, code));
             }
 
             try (StandardJavaFileManager manager = compiler.getStandardFileManager(collector, Locale.ROOT, StandardCharsets.UTF_8)) {
-                List<String> options = Arrays.asList(
-                        "-proc:none",
-                        "--release", "21",
-                        "-encoding", "UTF-8",
-                        "-d", classesDir.toString()
-                );
+                List<String> options = Arrays.asList("-proc:none", "--release", "21", "-encoding", "UTF-8", "-d", classesDir.toString());
                 boolean ok = Boolean.TRUE.equals(compiler.getTask(null, manager, collector, options, null, units).call());
                 List<Object> diagnostics = new ArrayList<>();
                 for (Diagnostic<? extends JavaFileObject> item : collector.getDiagnostics()) {
-                    String sourceUriPath = item.getSource() == null ? "" : item.getSource().toUri().getPath();
-                    String sourceName = sourceUriPath.isEmpty() ? "" : sourceUriPath.substring(sourceUriPath.lastIndexOf('/') + 1);
-                    diagnostics.add(diagnostic(
-                            item.getKind().name(), sourceName,
-                            item.getLineNumber(), item.getColumnNumber(),
-                            item.getMessage(Locale.ROOT)
-                    ));
+                    String sourcePath = item.getSource() == null ? "" : item.getSource().toUri().getPath();
+                    String sourceName = sourcePath.isEmpty() ? "" : sourcePath.substring(sourcePath.lastIndexOf('/') + 1);
+                    diagnostics.add(diagnostic(item.getKind().name(), sourceName, item.getLineNumber(), item.getColumnNumber(), item.getMessage(Locale.ROOT)));
                 }
                 result.put("compiled", ok);
                 result.put("success", ok);
@@ -188,8 +192,7 @@ public final class ExerciseRunner {
             result.put("exitCode", capture.exception == null ? 0 : 1);
             result.put("success", capture.exception == null);
             result.put("status", capture.exception == null ? "completed" : "runtime-error");
-            if (capture.exception != null)
-                result.put("runtimeException", capture.exception);
+            if (capture.exception != null) result.put("runtimeException", capture.exception);
         } catch (Throwable error) {
             result.put("success", false);
             result.put("status", "runtime-error");
@@ -206,37 +209,31 @@ public final class ExerciseRunner {
         long start = System.nanoTime();
         List<Map<String, Object>> checks = maps(config.get("checks"));
         List<Object> checkResults = new ArrayList<>();
-        double total = 0;
-        double earned = 0;
-        String lastStdout = "";
-        String lastStderr = "";
+        double total = 0d, earned = 0d;
+        String lastStdout = "", lastStderr = "";
         boolean allPassed = true;
 
-        for (Map<String, Object> check : checks) {
+        for (int index = 0; index < checks.size(); index++) {
+            Map<String, Object> check = checks.get(index);
             double points = number(check.get("points"), 1d);
             total += points;
+            String id = string(check.get("id"), "check-" + (index + 1));
             Map<String, Object> checkResult = new LinkedHashMap<>();
-            String id = string(check.get("id"), "check-" + (checkResults.size() + 1));
-            String description = string(check.get("description"), id);
             checkResult.put("id", id);
-            checkResult.put("description", description);
+            checkResult.put("description", string(check.get("description"), id));
             checkResult.put("points", points);
             checkResult.put("pointsEarned", 0d);
+
             try (URLClassLoader loader = newClassLoader(classesDir)) {
                 CheckOutcome outcome = evaluate(check, loader);
-                if (outcome.stdout != null)
-                    lastStdout = outcome.stdout;
-                if (outcome.stderr != null)
-                    lastStderr = outcome.stderr;
+                if (outcome.stdout != null) lastStdout = outcome.stdout;
+                if (outcome.stderr != null) lastStderr = outcome.stderr;
                 checkResult.put("passed", outcome.passed);
-                checkResult.put("feedback",
-                        outcome.feedback == null
-                                ? (outcome.passed ? "Passed." : "The check did not match the expected result.")
-                                : outcome.feedback);
-                if (outcome.actual != null)
-                    checkResult.put("actual", outcome.actual);
-                if (check.containsKey("expected"))
-                    checkResult.put("expected", check.get("expected"));
+                checkResult.put("feedback", outcome.feedback == null
+                        ? (outcome.passed ? "Passed." : "The check did not match the expected result.")
+                        : outcome.feedback);
+                if (outcome.actual != null) checkResult.put("actual", outcome.actual);
+                if (check.containsKey("expected")) checkResult.put("expected", check.get("expected"));
                 if (outcome.passed) {
                     earned += points;
                     checkResult.put("pointsEarned", points);
@@ -253,108 +250,122 @@ public final class ExerciseRunner {
         }
 
         result.put("checks", checkResults);
-        result.put("score", Map.of("earned", earned, "total", total));
+        Map<String, Object> score = new LinkedHashMap<>();
+        score.put("earned", earned);
+        score.put("total", total);
+        result.put("score", score);
         result.put("stdout", lastStdout);
         result.put("stderr", lastStderr);
         result.put("success", allPassed && !checks.isEmpty());
         result.put("status", "graded");
-        result.put("exitCode", allPassed ? 0 : 1);
+        result.put("exitCode", allPassed && !checks.isEmpty() ? 0 : 1);
         result.put("executionTimeMs", elapsedMs(start));
         return result;
     }
 
     private static CheckOutcome evaluate(Map<String, Object> check, ClassLoader loader) throws Exception {
-        String type = string(check.get("type"), "");
+        String checkType = string(check.get("type"), "");
         String className = string(check.get("className"), string(check.get("mainClass"), "Main"));
-        switch (type) {
+        switch (checkType) {
             case "stdout":
             case "stderr": {
                 ProgramCapture capture = invokeMain(className, loader, string(check.get("input"), ""));
-                String actual = "stderr".equals(type) ? capture.stderr : capture.stdout;
-                if (capture.exception != null)
-                    return CheckOutcome.fail("Program threw " + string(capture.exception.get("type"), "an exception") + ": " + string(capture.exception.get("message"), ""), actual, capture.stdout, capture.stderr);
+                String actual = "stderr".equals(checkType) ? capture.stderr : capture.stdout;
+                if (capture.exception != null) {
+                    return CheckOutcome.fail("Program threw " + string(capture.exception.get("type"), "an exception") + ": "
+                            + string(capture.exception.get("message"), ""), actual, capture.stdout, capture.stderr);
+                }
                 Match match = match(actual, check.get("expected"), check);
                 return new CheckOutcome(match.passed, match.feedback, actual, capture.stdout, capture.stderr);
             }
             case "classExists": {
-                Class<?> typeClass = Class.forName(className, false, loader);
-                return CheckOutcome.pass(typeClass.getName());
+                Class<?> type = Class.forName(className, false, loader);
+                return CheckOutcome.pass(type.getName());
             }
             case "fieldExists": {
-                Class<?> typeClass = Class.forName(className, false, loader);
-                Field field = typeClass.getDeclaredField(string(check.get("fieldName"), ""));
+                Class<?> type = Class.forName(className, false, loader);
+                Field field = type.getDeclaredField(string(check.get("fieldName"), ""));
                 String expectedType = string(check.get("expectedType"), "");
-                if (!expectedType.isEmpty() && !field.getType().getName().equals(expectedType))
+                if (!expectedType.isEmpty() && !field.getType().getName().equals(expectedType)) {
                     return CheckOutcome.fail("Field exists, but its type is " + field.getType().getName() + " instead of " + expectedType + ".", field.getType().getName());
+                }
                 return CheckOutcome.pass(field.getName());
             }
             case "fieldModifier": {
-                Class<?> typeClass = Class.forName(className, false, loader);
-                Field field = typeClass.getDeclaredField(string(check.get("fieldName"), ""));
+                Class<?> type = Class.forName(className, false, loader);
+                Field field = type.getDeclaredField(string(check.get("fieldName"), ""));
                 return modifierOutcome(field.getModifiers(), check.get("expected"), "Field " + field.getName());
             }
             case "fieldValue": {
-                Class<?> typeClass = Class.forName(className, false, loader);
-                Field field = typeClass.getDeclaredField(string(check.get("fieldName"), ""));
+                Class<?> type = Class.forName(className, false, loader);
+                Field field = type.getDeclaredField(string(check.get("fieldName"), ""));
                 field.setAccessible(true);
-                Object instance = Modifier.isStatic(field.getModifiers()) ? null : instantiate(typeClass, asMap(check.get("constructor")), loader);
-                Object actual = field.get(instance);
-                return compareValue(actual, check.get("expected"), check);
+                Object instance = Modifier.isStatic(field.getModifiers()) ? null : instantiate(type, asMap(check.get("constructor")), loader);
+                return compareValue(field.get(instance), check.get("expected"), check);
             }
             case "methodExists": {
-                Class<?> typeClass = Class.forName(className, false, loader);
-                Method method = typeClass.getDeclaredMethod(string(check.get("method"), ""), parameterTypes(check.get("parameterTypes"), loader));
+                Class<?> type = Class.forName(className, false, loader);
+                Method method = type.getDeclaredMethod(string(check.get("method"), ""), parameterTypes(check.get("parameterTypes"), loader));
                 return CheckOutcome.pass(method.getName());
             }
             case "methodModifier": {
-                Class<?> typeClass = Class.forName(className, false, loader);
-                Method method = typeClass.getDeclaredMethod(string(check.get("method"), ""), parameterTypes(check.get("parameterTypes"), loader));
+                Class<?> type = Class.forName(className, false, loader);
+                Method method = type.getDeclaredMethod(string(check.get("method"), ""), parameterTypes(check.get("parameterTypes"), loader));
                 return modifierOutcome(method.getModifiers(), check.get("expected"), "Method " + method.getName());
             }
             case "constructorExists": {
-                Class<?> typeClass = Class.forName(className, false, loader);
-                Constructor<?> constructor = typeClass.getDeclaredConstructor(parameterTypes(check.get("parameterTypes"), loader));
-                if (check.containsKey("expected")) return modifierOutcome(constructor.getModifiers(), check.get("expected"), "Constructor");
-                return CheckOutcome.pass(constructor.toString());
+                Class<?> type = Class.forName(className, false, loader);
+                Constructor<?> constructor = type.getDeclaredConstructor(parameterTypes(check.get("parameterTypes"), loader));
+                return check.containsKey("expected")
+                        ? modifierOutcome(constructor.getModifiers(), check.get("expected"), "Constructor")
+                        : CheckOutcome.pass(constructor.toString());
             }
             case "classModifier": {
-                Class<?> typeClass = Class.forName(className, false, loader);
-                return modifierOutcome(typeClass.getModifiers(), check.get("expected"), "Class " + className);
+                Class<?> type = Class.forName(className, false, loader);
+                return modifierOutcome(type.getModifiers(), check.get("expected"), "Class " + className);
             }
             case "inheritance": {
-                Class<?> typeClass = Class.forName(className, false, loader);
+                Class<?> type = Class.forName(className, false, loader);
                 String expectedSuper = string(check.get("superclass"), string(check.get("expected"), ""));
                 if (!expectedSuper.isEmpty()) {
-                    Class<?> actualSuper = typeClass.getSuperclass();
-                    String actual = actualSuper == null ? "" : actualSuper.getName();
-                    if (!actual.equals(expectedSuper)) return CheckOutcome.fail("Expected superclass " + expectedSuper + ", found " + (actual.isEmpty() ? "none" : actual) + ".", actual);
+                    Class<?> parent = type.getSuperclass();
+                    String actual = parent == null ? "" : parent.getName();
+                    if (!actual.equals(expectedSuper)) {
+                        return CheckOutcome.fail("Expected superclass " + expectedSuper + ", found " + (actual.isEmpty() ? "none" : actual) + ".", actual);
+                    }
                 }
                 List<String> expectedInterfaces = strings(check.get("interfaces"));
-                if (!expectedInterfaces.isEmpty()) {
-                    Set<String> actualInterfaces = new LinkedHashSet<>();
-                    for (Class<?> item : typeClass.getInterfaces()) actualInterfaces.add(item.getName());
-                    for (String expected : expectedInterfaces)
-                        if (!actualInterfaces.contains(expected)) return CheckOutcome.fail("Expected implemented interface " + expected + " was not found.", actualInterfaces.toString());
+                Set<String> actualInterfaces = new LinkedHashSet<>();
+                for (Class<?> item : type.getInterfaces()) actualInterfaces.add(item.getName());
+                for (String expected : expectedInterfaces) {
+                    if (!actualInterfaces.contains(expected)) return CheckOutcome.fail("Expected implemented interface " + expected + " was not found.", actualInterfaces.toString());
                 }
-                return CheckOutcome.pass(typeClass.getSuperclass() == null ? "" : typeClass.getSuperclass().getName());
+                Class<?> parent = type.getSuperclass();
+                return CheckOutcome.pass(parent == null ? "" : parent.getName());
             }
             case "instanceOf": {
-                Class<?> typeClass = Class.forName(className, false, loader);
-                Object instance = instantiate(typeClass, asMap(check.get("constructor")), loader);
+                Class<?> type = Class.forName(className, false, loader);
+                Object instance = instantiate(type, asMap(check.get("constructor")), loader);
                 String targetName = string(check.get("expectedType"), string(check.get("expected"), ""));
                 Class<?> target = resolveType(targetName, loader);
                 boolean passed = target.isInstance(instance);
                 return new CheckOutcome(passed, passed ? "Instance has the expected type." : "Expected an instance of " + targetName + ".", instance.getClass().getName(), null, null);
             }
             case "methodReturn": {
-                Class<?> typeClass = Class.forName(className, false, loader);
-                Object instance = Modifier.isAbstract(typeClass.getModifiers()) || Modifier.isInterface(typeClass.getModifiers()) ?
-                         null : instantiate(typeClass, asMap(check.get("constructor")), loader);
-                Method method = typeClass.getDeclaredMethod(string(check.get("method"), ""), parameterTypes(check.get("parameterTypes"), loader));
+                Class<?> type = Class.forName(className, false, loader);
+                Method method = type.getDeclaredMethod(string(check.get("method"), ""), parameterTypes(check.get("parameterTypes"), loader));
                 method.setAccessible(true);
+                Object instance = null;
+                if (!Modifier.isStatic(method.getModifiers())) {
+                    if (Modifier.isAbstract(type.getModifiers()) || type.isInterface()) {
+                        return CheckOutcome.fail("Cannot invoke an instance method on an abstract class or interface without a concrete instance.", null);
+                    }
+                    instance = instantiate(type, asMap(check.get("constructor")), loader);
+                }
                 Object actual;
                 try {
-                    actual = method.invoke(Modifier.isStatic(method.getModifiers()) ? null : instance, convertArgs(check.get("args"), method.getParameterTypes(), loader));
+                    actual = method.invoke(Modifier.isStatic(method.getModifiers()) ? null : instance,
+                            convertArgs(check.get("args"), method.getParameterTypes(), loader));
                 } catch (InvocationTargetException error) {
                     Throwable cause = error.getCause() == null ? error : error.getCause();
                     return CheckOutcome.fail("Method threw " + cause.getClass().getSimpleName() + ": " + safeMessage(cause), exceptionInfo(cause));
@@ -362,55 +373,30 @@ public final class ExerciseRunner {
                 return compareValue(actual, check.get("expected"), check);
             }
             default:
-                return CheckOutcome.fail("Unsupported check type: " + type, null);
+                return CheckOutcome.fail("Unsupported check type: " + checkType, null);
         }
     }
 
     private static CheckOutcome modifierOutcome(int modifiers, Object expected, String label) {
-        List<String> wanted = expected instanceof List ? strings(expected) : List.of(string(expected, ""));
+        List<String> wanted = expected instanceof List<?> ? strings(expected) : List.of(string(expected, ""));
         for (String modifier : wanted) {
             boolean present;
             switch (modifier.toLowerCase(Locale.ROOT)) {
-                case "public":
-                    present = Modifier.isPublic(modifiers);
-                    break;
-                case "private":
-                    present = Modifier.isPrivate(modifiers);
-                    break;
-                case "protected":
-                    present = Modifier.isProtected(modifiers);
-                    break;
-                case "static":
-                    present = Modifier.isStatic(modifiers);
-                    break;
-                case "final":
-                    present = Modifier.isFinal(modifiers);
-                    break;
-                case "abstract":
-                    present = Modifier.isAbstract(modifiers);
-                    break;
-                case "synchronized":
-                    present = Modifier.isSynchronized(modifiers);
-                    break;
-                case "native":
-                    present = Modifier.isNative(modifiers);
-                    break;
-                case "strict":
-                    present = Modifier.isStrict(modifiers);
-                    break;
-                case "transient":
-                    present = Modifier.isTransient(modifiers);
-                    break;
-                case "volatile":
-                    present = Modifier.isVolatile(modifiers);
-                    break;
-                default:
-                    return CheckOutcome.fail("Unknown modifier: " + modifier, Modifier.toString(modifiers));
+                case "public": present = Modifier.isPublic(modifiers); break;
+                case "private": present = Modifier.isPrivate(modifiers); break;
+                case "protected": present = Modifier.isProtected(modifiers); break;
+                case "static": present = Modifier.isStatic(modifiers); break;
+                case "final": present = Modifier.isFinal(modifiers); break;
+                case "abstract": present = Modifier.isAbstract(modifiers); break;
+                case "synchronized": present = Modifier.isSynchronized(modifiers); break;
+                case "native": present = Modifier.isNative(modifiers); break;
+                case "strict": present = Modifier.isStrict(modifiers); break;
+                case "transient": present = Modifier.isTransient(modifiers); break;
+                case "volatile": present = Modifier.isVolatile(modifiers); break;
+                case "default": present = false; break; // Interface default methods are not represented by a modifier bit.
+                default: return CheckOutcome.fail("Unknown modifier: " + modifier, Modifier.toString(modifiers));
             }
-            if (!present)
-                return CheckOutcome.fail(
-                        label + " must be " + modifier + ". Actual modifiers: " + Modifier.toString(modifiers) + ".",
-                        Modifier.toString(modifiers));
+            if (!present) return CheckOutcome.fail(label + " must be " + modifier + ". Actual modifiers: " + Modifier.toString(modifiers) + ".", Modifier.toString(modifiers));
         }
         return CheckOutcome.pass(Modifier.toString(modifiers));
     }
@@ -421,10 +407,7 @@ public final class ExerciseRunner {
             return new CheckOutcome(match.passed, match.feedback, actual, null, null);
         }
         boolean same = valuesEqual(actual, expected);
-        return new CheckOutcome(same,
-                same ? "Returned value matches."
-                        : "Expected " + Json.stringify(expected) + " but received " + Json.stringify(actual) + ".",
-                actual, null, null);
+        return new CheckOutcome(same, same ? "Returned value matches." : "Expected " + Json.stringify(expected) + " but received " + Json.stringify(actual) + ".", actual, null, null);
     }
 
     private static Match match(String actual, Object expectedValue, Map<String, Object> check) {
@@ -432,54 +415,36 @@ public final class ExerciseRunner {
         String matcher = string(check.get("matcher"), "exact").toLowerCase(Locale.ROOT);
         switch (matcher) {
             case "exact":
-                return new Match(actual.equals(expected), actual.equals(expected) ? "Text matches exactly."
-                        : "Expected exact text " + quote(expected) + " but received " + quote(actual) + ".");
+                return new Match(actual.equals(expected), actual.equals(expected)
+                        ? "Text matches exactly." : "Expected exact text " + quote(expected) + " but received " + quote(actual) + ".");
             case "contains":
-                return new Match(actual.contains(expected), actual.contains(expected) ? "Expected text was found."
-                        : "Output does not contain " + quote(expected) + ".");
+                return new Match(actual.contains(expected), actual.contains(expected)
+                        ? "Expected text was found." : "Output does not contain " + quote(expected) + ".");
             case "regex":
                 try {
                     int flags = 0;
-                    Object flagsValue = check.get("flags");
-                    List<String> flagNames = flagsValue instanceof List ? strings(flagsValue)
-                            : List.of(string(flagsValue, ""));
+                    Object rawFlags = check.get("flags");
+                    List<String> flagNames = rawFlags instanceof List<?> ? strings(rawFlags) : List.of(string(rawFlags, ""));
                     for (String flag : flagNames) {
                         switch (flag.toLowerCase(Locale.ROOT)) {
+                            case "": break;
                             case "i":
                             case "case_insensitive":
-                            case "case-insensitive":
-                                flags |= Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE;
-                                break;
+                            case "case-insensitive": flags |= Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE; break;
                             case "m":
-                            case "multiline":
-                                flags |= Pattern.MULTILINE;
-                                break;
+                            case "multiline": flags |= Pattern.MULTILINE; break;
                             case "s":
-                            case "dotall":
-                                flags |= Pattern.DOTALL;
-                                break;
+                            case "dotall": flags |= Pattern.DOTALL; break;
                             case "u":
-                            case "unicode_case":
-                                flags |= Pattern.UNICODE_CASE;
-                                break;
-                            case "":
-                                break;
-                            default:
-                                return new Match(false, "Unknown regex flag: " + flag);
+                            case "unicode_case": flags |= Pattern.UNICODE_CASE; break;
+                            default: return new Match(false, "Unknown regex flag: " + flag);
                         }
                     }
-                    java.util.regex.Matcher compiled = Pattern.compile(expected, flags).matcher(actual);
                     boolean full = Boolean.TRUE.equals(check.get("fullMatch"));
-                    boolean passed = full ? compiled.matches() : compiled.find();
-                    if (passed) {
-                        return new Match(passed, "Regular expression matched.");
-                    } else {
-                        RegexGenerator generator = new RegexGenerator(expected);
-
-                        String result = generator.generate();
-                        return new Match(passed,
-                                "The output did not match the regular expression " + quote(result) + ".");
-                    }
+                    boolean passed = full ? Pattern.compile(expected, flags).matcher(actual).matches()
+                            : Pattern.compile(expected, flags).matcher(actual).find();
+                    return new Match(passed, passed ? "Regular expression matched."
+                            : "The output did not match the regular expression " + quote(expected) + ".");
                 } catch (PatternSyntaxException error) {
                     return new Match(false, "Invalid regular expression: " + error.getDescription());
                 }
@@ -489,8 +454,11 @@ public final class ExerciseRunner {
     }
 
     private static Object instantiate(Class<?> type, Map<String, Object> spec, ClassLoader loader) throws Exception {
-        if (spec == null || spec.isEmpty())
-            return type.getDeclaredConstructor().newInstance();
+        if (spec == null || spec.isEmpty()) {
+            Constructor<?> constructor = type.getDeclaredConstructor();
+            constructor.setAccessible(true);
+            return constructor.newInstance();
+        }
         Class<?>[] parameterTypes = parameterTypes(spec.get("parameterTypes"), loader);
         Constructor<?> constructor = type.getDeclaredConstructor(parameterTypes);
         constructor.setAccessible(true);
@@ -499,82 +467,66 @@ public final class ExerciseRunner {
 
     private static Class<?>[] parameterTypes(Object value, ClassLoader loader) throws ClassNotFoundException {
         List<String> names = strings(value);
-        Class<?>[] result = new Class<?>[names.size()];
-        for (int i = 0; i < names.size(); i++)
-            result[i] = resolveType(names.get(i), loader);
-        return result;
+        Class<?>[] types = new Class<?>[names.size()];
+        for (int i = 0; i < names.size(); i++) types[i] = resolveType(names.get(i), loader);
+        return types;
     }
 
     private static Class<?> resolveType(String name, ClassLoader loader) throws ClassNotFoundException {
         switch (name) {
-            case "boolean":
-                return boolean.class;
-            case "byte":
-                return byte.class;
-            case "short":
-                return short.class;
-            case "int":
-                return int.class;
-            case "long":
-                return long.class;
-            case "float":
-                return float.class;
-            case "double":
-                return double.class;
-            case "char":
-                return char.class;
-            case "void":
-                return void.class;
+            case "boolean": return boolean.class;
+            case "byte": return byte.class;
+            case "short": return short.class;
+            case "int": return int.class;
+            case "long": return long.class;
+            case "float": return float.class;
+            case "double": return double.class;
+            case "char": return char.class;
+            case "void": return void.class;
             default:
+                if (name.endsWith("[]")) return java.lang.reflect.Array.newInstance(resolveType(name.substring(0, name.length() - 2), loader), 0).getClass();
                 return Class.forName(name, true, loader);
         }
     }
 
     private static Object[] convertArgs(Object raw, Class<?>[] types, ClassLoader loader) throws Exception {
-        List<Object> values = raw instanceof List ? (List<Object>) raw : Collections.emptyList();
-        if (values.size() != types.length)
-            throw new IllegalArgumentException(
-                    "Expected " + types.length + " arguments but received " + values.size() + ".");
-        Object[] result = new Object[types.length];
-        for (int i = 0; i < types.length; i++)
-            result[i] = convert(values.get(i), types[i], loader);
-        return result;
+        List<?> values = raw instanceof List<?> ? (List<?>) raw : Collections.emptyList();
+        if (values.size() != types.length) throw new IllegalArgumentException("Expected " + types.length + " arguments but received " + values.size() + ".");
+        Object[] converted = new Object[types.length];
+        for (int i = 0; i < types.length; i++) converted[i] = convert(values.get(i), types[i], loader);
+        return converted;
     }
 
     private static Object convert(Object value, Class<?> target, ClassLoader loader) throws Exception {
-        if (value == null)
-            return null;
-        if (target == String.class)
-            return String.valueOf(value);
+        if (value == null) return null;
+        if (target == String.class) return String.valueOf(value);
         if (target == char.class || target == Character.class) {
             String text = String.valueOf(value);
-            if (text.length() != 1)
-                throw new IllegalArgumentException("A char argument must contain exactly one character.");
+            if (text.length() != 1) throw new IllegalArgumentException("A char argument must contain exactly one character.");
             return text.charAt(0);
         }
         if (target == boolean.class || target == Boolean.class) {
-            if (value instanceof Boolean)
-                return value;
-            return Boolean.parseBoolean(String.valueOf(value));
+            if (value instanceof Boolean) return value;
+            String text = String.valueOf(value);
+            if (!"true".equalsIgnoreCase(text) && !"false".equalsIgnoreCase(text)) throw new IllegalArgumentException("A boolean argument must be true or false.");
+            return Boolean.parseBoolean(text);
         }
-        if (target == byte.class || target == Byte.class)
-            return new BigDecimal(String.valueOf(value)).byteValueExact();
-        if (target == short.class || target == Short.class)
-            return new BigDecimal(String.valueOf(value)).shortValueExact();
-        if (target == int.class || target == Integer.class)
-            return new BigDecimal(String.valueOf(value)).intValueExact();
-        if (target == long.class || target == Long.class)
-            return new BigDecimal(String.valueOf(value)).longValueExact();
-        if (target == float.class || target == Float.class)
-            return Float.parseFloat(String.valueOf(value));
-        if (target == double.class || target == Double.class)
-            return Double.parseDouble(String.valueOf(value));
-        if (target.isInstance(value))
-            return value;
+        if (target == byte.class || target == Byte.class) return new BigDecimal(String.valueOf(value)).byteValueExact();
+        if (target == short.class || target == Short.class) return new BigDecimal(String.valueOf(value)).shortValueExact();
+        if (target == int.class || target == Integer.class) return new BigDecimal(String.valueOf(value)).intValueExact();
+        if (target == long.class || target == Long.class) return new BigDecimal(String.valueOf(value)).longValueExact();
+        if (target == float.class || target == Float.class) return Float.parseFloat(String.valueOf(value));
+        if (target == double.class || target == Double.class) return Double.parseDouble(String.valueOf(value));
+        if (target.isInstance(value)) return value;
         if (target.isEnum()) {
-            @SuppressWarnings({ "unchecked", "rawtypes" })
-            Object enumValue = Enum.valueOf((Class<? extends Enum>) target, String.valueOf(value));
+            @SuppressWarnings({"unchecked", "rawtypes"}) Object enumValue = Enum.valueOf((Class<? extends Enum>) target, String.valueOf(value));
             return enumValue;
+        }
+        if (target.isArray() && value instanceof List<?>) {
+            List<?> items = (List<?>) value;
+            Object array = java.lang.reflect.Array.newInstance(target.getComponentType(), items.size());
+            for (int i = 0; i < items.size(); i++) java.lang.reflect.Array.set(array, i, convert(items.get(i), target.getComponentType(), loader));
+            return array;
         }
         return value;
     }
@@ -585,41 +537,42 @@ public final class ExerciseRunner {
         PrintStream originalErr = System.err;
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         ByteArrayOutputStream err = new ByteArrayOutputStream();
-        Map<String, Object> failure = null;
-        try (PrintStream outStream = new PrintStream(out, true, "UTF-8");
-             PrintStream errStream = new PrintStream(err, true, "UTF-8")) {
+        Map<String, Object> exception = null;
+        try (PrintStream outStream = new PrintStream(out, true, StandardCharsets.UTF_8);
+             PrintStream errStream = new PrintStream(err, true, StandardCharsets.UTF_8)) {
             System.setIn(new ByteArrayInputStream(input.getBytes(StandardCharsets.UTF_8)));
             System.setOut(outStream);
             System.setErr(errStream);
             Class<?> mainType = Class.forName(mainClass, true, loader);
             Method main = mainType.getMethod("main", String[].class);
             if (!Modifier.isStatic(main.getModifiers())) throw new NoSuchMethodException("main(String[]) must be static.");
+            // Supports a public main method on a package-private launcher class.
+            main.setAccessible(true);
             main.invoke(null, (Object) new String[0]);
         } catch (Throwable error) {
             Throwable cause = error instanceof InvocationTargetException && ((InvocationTargetException) error).getCause() != null
                     ? ((InvocationTargetException) error).getCause() : error;
-            failure = exceptionInfo(cause);
+            exception = exceptionInfo(cause);
         } finally {
             System.setIn(originalIn);
             System.setOut(originalOut);
             System.setErr(originalErr);
         }
-        return new ProgramCapture(out.toString(StandardCharsets.UTF_8), err.toString(StandardCharsets.UTF_8), failure);
+        return new ProgramCapture(out.toString(StandardCharsets.UTF_8), err.toString(StandardCharsets.UTF_8), exception);
     }
 
-    private static URLClassLoader newClassLoader(Path classesDir) throws Exception {
+    private static URLClassLoader newClassLoader(Path classesDir) throws IOException {
         URL url = classesDir.toUri().toURL();
-        return new URLClassLoader(new URL[] { url }, ExerciseRunner.class.getClassLoader());
+        return new URLClassLoader(new URL[] {url}, ExerciseRunner.class.getClassLoader());
     }
 
     private static Map<String, Object> exceptionInfo(Throwable error) {
         Map<String, Object> info = new LinkedHashMap<>();
         info.put("type", error.getClass().getName());
         info.put("message", safeMessage(error));
-        StackTraceElement[] stack = error.getStackTrace();
         List<String> frames = new ArrayList<>();
-        for (int i = 0; i < Math.min(stack.length, 8); i++)
-            frames.add(stack[i].toString());
+        StackTraceElement[] stack = error.getStackTrace();
+        for (int i = 0; i < Math.min(stack.length, 8); i++) frames.add(stack[i].toString());
         info.put("stack", frames);
         return info;
     }
@@ -659,41 +612,29 @@ public final class ExerciseRunner {
         return message == null || message.isBlank() ? error.getClass().getSimpleName() : message;
     }
 
-    private static String string(Object value, String fallback) {
-        return value == null ? fallback : String.valueOf(value);
-    };
-
-    private static double number(Object value, double fallback) {
-        return value instanceof Number ? ((Number) value).doubleValue() : fallback;
-    };
-
-    private static long elapsedMs(long start) {
-        return (System.nanoTime() - start) / 1_000_000L;
-    };
-
-    private static String quote(String value) {
-        return "\"" + value.replace("\\", "\\\\").replace("\n", "\\n").replace("\r", "\\r").replace("\"", "\\\"")
-                + "\"";
-    };
+    private static String string(Object value, String fallback) { return value == null ? fallback : String.valueOf(value); }
+    private static double number(Object value, double fallback) { return value instanceof Number ? ((Number) value).doubleValue() : fallback; }
+    private static long elapsedMs(long start) { return (System.nanoTime() - start) / 1_000_000L; }
+    private static String quote(String value) { return "\"" + value.replace("\\", "\\\\").replace("\n", "\\n").replace("\r", "\\r").replace("\"", "\\\"") + "\""; }
 
     @SuppressWarnings("unchecked")
-    private static Map<String, Object> asMap(Object value) { return value instanceof Map ? (Map<String, Object>) value : new LinkedHashMap<>(); };
+    private static Map<String, Object> asMap(Object value) {
+        return value instanceof Map<?, ?> ? (Map<String, Object>) value : new LinkedHashMap<>();
+    }
 
     @SuppressWarnings("unchecked")
     private static List<Map<String, Object>> maps(Object value) {
-        if (!(value instanceof List)) return Collections.emptyList();
+        if (!(value instanceof List<?>)) return Collections.emptyList();
         List<Map<String, Object>> result = new ArrayList<>();
-        for (Object item : (List<?>) value) if (item instanceof Map) result.add((Map<String, Object>) item);
+        for (Object item : (List<?>) value) if (item instanceof Map<?, ?>) result.add((Map<String, Object>) item);
         return result;
     }
 
     private static List<String> strings(Object value) {
-        if (value == null)
-            return Collections.emptyList();
-        if (value instanceof List) {
+        if (value == null) return Collections.emptyList();
+        if (value instanceof List<?>) {
             List<String> result = new ArrayList<>();
-            for (Object item : (List<?>) value)
-                result.add(String.valueOf(item));
+            for (Object item : (List<?>) value) result.add(String.valueOf(item));
             return result;
         }
         String one = String.valueOf(value);
@@ -711,595 +652,224 @@ public final class ExerciseRunner {
     }
 
     private static void deleteTree(Path path) throws IOException {
-        if (!Files.exists(path))
-            return;
-        try (java.util.stream.Stream<Path> stream = Files.walk(path)) {
-            stream.sorted((a, b) -> b.compareTo(a)).forEach(item -> {
-                try {
-                    Files.deleteIfExists(item);
-                } catch (IOException error) {
-                    throw new RuntimeException(error);
-                }
-                
-            });
-        }
+        if (path == null || !Files.exists(path)) return;
+        Files.walkFileTree(path, new SimpleFileVisitor<>() {
+            @Override public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                Files.deleteIfExists(file);
+                return FileVisitResult.CONTINUE;
+            }
+            @Override public FileVisitResult postVisitDirectory(Path dir, IOException error) throws IOException {
+                if (error != null) throw error;
+                Files.deleteIfExists(dir);
+                return FileVisitResult.CONTINUE;
+            }
+        });
     }
 
     private static final class MemorySource extends SimpleJavaFileObject {
         private final String source;
-
         MemorySource(String name, String source) {
             super(URI.create("string:///" + name.replace('\\', '/')), Kind.SOURCE);
             this.source = source;
         }
-
-        @Override
-        public CharSequence getCharContent(boolean ignoreEncodingErrors) {
-            return source;
-        };
+        @Override public CharSequence getCharContent(boolean ignoreEncodingErrors) { return source; }
     }
 
     private static final class ProgramCapture {
-        final String stdout, stderr;
+        final String stdout;
+        final String stderr;
         final Map<String, Object> exception;
-
         ProgramCapture(String stdout, String stderr, Map<String, Object> exception) {
-            this.stdout = stdout;
-            this.stderr = stderr;
-            this.exception = exception;
+            this.stdout = stdout; this.stderr = stderr; this.exception = exception;
         }
-    }
-
-    private static class RegexGenerator {
-
-        private final String regex;
-        private final Random random = new Random();
-        private int pos = 0;
-        private final int maxRepeat;
-
-        public RegexGenerator(String regex) {
-            this(regex, 3);
-        }
-
-        public RegexGenerator(String regex, int maxRepeat) {
-            this.regex = regex;
-            this.maxRepeat = maxRepeat;
-        }
-
-        public String generate() {
-            String pattern = regex;
-
-            // Support inline dot-all flag.
-            if (pattern.startsWith("(?s)")) {
-                pattern = pattern.substring(4);
-            }
-
-            for (int attempt = 0; attempt < 1000; attempt++) {
-                pos = 0;
-
-                try {
-                    String candidate = parseExpression(pattern);
-
-                    if (Pattern.compile(regex).matcher(candidate).matches()) {
-                        return candidate;
-                    }
-                } catch (Exception ignored) {
-                }
-            }
-
-            throw new IllegalStateException(
-                    "Could not generate a valid string for: " + regex);
-        }
-
-        private String parseExpression(String input) {
-            List<String> alternatives = new ArrayList<>();
-            StringBuilder current = new StringBuilder();
-
-            while (pos < input.length()) {
-                char c = input.charAt(pos);
-
-                if (c == ')')
-                    break;
-
-                if (c == '|') {
-                    alternatives.add(current.toString());
-                    current.setLength(0);
-                    pos++;
-                    continue;
-                }
-
-                current.append(parseQuantified(input));
-            }
-
-            alternatives.add(current.toString());
-
-            return alternatives.get(random.nextInt(alternatives.size()));
-        }
-
-        private String parseQuantified(String input) {
-            String atom = parseAtom(input);
-
-            if (pos >= input.length())
-                return atom;
-
-            char c = input.charAt(pos);
-
-            int min = 1;
-            int max = 1;
-
-            if (c == '*') {
-                min = 0;
-                max = maxRepeat;
-                pos++;
-            } else if (c == '+') {
-                min = 1;
-                max = maxRepeat;
-                pos++;
-            } else if (c == '?') {
-                min = 0;
-                max = 1;
-                pos++;
-            } else if (c == '{') {
-                Matcher m = Pattern.compile(
-                        "^\\{(\\d+)(?:,(\\d*))?\\}").matcher(input.substring(pos));
-
-                if (m.find()) {
-                    min = Integer.parseInt(m.group(1));
-
-                    max = m.group(2) == null
-                            ? min
-                            : m.group(2).isEmpty()
-                                    ? maxRepeat
-                                    : Math.min(
-                                            Integer.parseInt(m.group(2)),
-                                            maxRepeat);
-
-                    pos += m.group().length();
-                }
-            }
-
-            if (pos < input.length() && input.charAt(pos) == '?') {
-                pos++;
-            }
-
-            int count = min == max
-                    ? min
-                    : random.nextInt(max - min + 1) + min;
-
-            return atom.repeat(count);
-        }
-
-        private String parseAtom(String input) {
-            char c = input.charAt(pos++);
-
-            switch (c) {
-                case '^':
-                case '$':
-                    return "";
-
-                case '.':
-                    return "a";
-
-                case '(':
-                    if (pos < input.length() && input.charAt(pos) == '?') {
-                        pos++;
-
-                        if (pos < input.length() &&
-                                input.charAt(pos) == ':') {
-                            pos++;
-                        } else {
-                            throw new UnsupportedOperationException(
-                                    "Lookarounds and inline modifiers unsupported");
-                        }
-                    }
-
-                    String group = parseExpression(input);
-
-                    if (pos >= input.length() || input.charAt(pos) != ')') {
-                        throw new IllegalArgumentException("Unclosed group");
-                    }
-
-                    pos++;
-                    return group;
-
-                case '[':
-                    return parseCharacterClass(input);
-
-                case '\\':
-                    return parseEscape(input);
-
-                default:
-                    return String.valueOf(c);
-            }
-        }
-
-        private String parseEscape(String input) {
-            if (pos >= input.length()) {
-                throw new IllegalArgumentException("Incomplete escape");
-            }
-
-            char c = input.charAt(pos++);
-
-            switch (c) {
-                case 'd':
-                    return "0";
-                case 'D':
-                    return "a";
-                case 'w':
-                    return "a";
-                case 'W':
-                    return "!";
-                case 's':
-                    return " ";
-                case 'S':
-                    return "a";
-                case 'n':
-                    return "\n";
-                case 'r':
-                    return "\r";
-                case 't':
-                    return "\t";
-                case 'f':
-                    return "\f";
-
-                case 'b':
-                case 'B':
-                case 'A':
-                case 'Z':
-                case 'z':
-                    return "";
-
-                default:
-                    return String.valueOf(c);
-            }
-        }
-
-        private String parseCharacterClass(String input) {
-            int start = pos - 1;
-            boolean escaped = false;
-
-            while (pos < input.length()) {
-                char c = input.charAt(pos++);
-
-                if (c == ']' && !escaped) {
-                    String characterClass = input.substring(start, pos);
-
-                    String candidates = "abcdefghijklmnopqrstuvwxyz" +
-                            "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
-                            "0123456789_ -!@#$%^&*()";
-
-                    for (char candidate : candidates.toCharArray()) {
-                        if (Pattern.matches(
-                                characterClass,
-                                String.valueOf(candidate))) {
-                            return String.valueOf(candidate);
-                        }
-                    }
-
-                    throw new IllegalArgumentException(
-                            "No suitable character for " + characterClass);
-                }
-
-                if (c == '\\' && !escaped) {
-                    escaped = true;
-                } else {
-                    escaped = false;
-                }
-            }
-
-            throw new IllegalArgumentException("Unclosed character class");
-        }
-
     }
 
     private static final class CheckOutcome {
         final boolean passed;
         final String feedback;
         final Object actual;
-        final String stdout, stderr;
-
+        final String stdout;
+        final String stderr;
         CheckOutcome(boolean passed, String feedback, Object actual, String stdout, String stderr) {
-            this.passed = passed;
-            this.feedback = feedback;
-            this.actual = actual;
-            this.stdout = stdout;
-            this.stderr = stderr;
+            this.passed = passed; this.feedback = feedback; this.actual = actual; this.stdout = stdout; this.stderr = stderr;
         }
-
-        static CheckOutcome pass(Object actual) {
-            return new CheckOutcome(true, "Passed.", actual, null, null);
-        };
-
-        static CheckOutcome fail(String feedback, Object actual) {
-            return new CheckOutcome(false, feedback, actual, null, null);
-        };
-
-        static CheckOutcome fail(String feedback, Object actual, String stdout, String stderr) {
-            return new CheckOutcome(false, feedback, actual, stdout, stderr);
-        };
+        static CheckOutcome pass(Object actual) { return new CheckOutcome(true, "Passed.", actual, null, null); }
+        static CheckOutcome fail(String feedback, Object actual) { return new CheckOutcome(false, feedback, actual, null, null); }
+        static CheckOutcome fail(String feedback, Object actual, String stdout, String stderr) { return new CheckOutcome(false, feedback, actual, stdout, stderr); }
     }
 
     private static final class Match {
         final boolean passed;
         final String feedback;
-
-        Match(boolean passed, String feedback) {
-            this.passed = passed;
-            this.feedback = feedback;
-        };
+        Match(boolean passed, String feedback) { this.passed = passed; this.feedback = feedback; }
     }
 
-    /** Minimal JSON parser/serializer; keeps the runner dependency-free. */
+    /** Small JSON parser/serializer to keep the runner dependency-free. */
     private static final class Json {
-        static Object parse(String text) {
-            return new Parser(text).parse();
-        };
-
+        static Object parse(String text) { return new Parser(text).parse(); }
         static String stringify(Object value) {
             StringBuilder out = new StringBuilder();
             write(value, out);
             return out.toString();
         }
-
         private static void write(Object value, StringBuilder out) {
-            if (value == null) {
-                out.append("null");
+            if (value == null) { out.append("null"); return; }
+            if (value instanceof String || value instanceof Character) { quoteJson(String.valueOf(value), out); return; }
+            if (value instanceof Number) {
+                String numeric = value.toString();
+                if (value instanceof Double && !Double.isFinite((Double) value) || value instanceof Float && !Float.isFinite((Float) value)) quoteJson(numeric, out);
+                else out.append(numeric);
                 return;
             }
-            if (value instanceof String || value instanceof Character) {
-                quoteJson(String.valueOf(value), out);
-                return;
-            }
-            if (value instanceof Number || value instanceof Boolean) {
-                out.append(value);
-                return;
-            }
-            if (value instanceof Map) {
-                out.append('{');
-                boolean first = true;
-                for (Object entryObject : ((Map<?, ?>) value).entrySet()) {
-                    Map.Entry<?, ?> entry = (Map.Entry<?, ?>) entryObject;
-                    if (!first)
-                        out.append(',');
-                    first = false;
-                    quoteJson(String.valueOf(entry.getKey()), out);
-                    out.append(':');
-                    write(entry.getValue(), out);
+            if (value instanceof Boolean) { out.append(value); return; }
+            if (value instanceof Map<?, ?>) {
+                out.append('{'); boolean first = true;
+                for (Map.Entry<?, ?> entry : ((Map<?, ?>) value).entrySet()) {
+                    if (!first) out.append(','); first = false;
+                    quoteJson(String.valueOf(entry.getKey()), out); out.append(':'); write(entry.getValue(), out);
                 }
-                out.append('}');
-                return;
+                out.append('}'); return;
             }
-            if (value instanceof Iterable) {
+            if (value instanceof Iterable<?>) {
+                out.append('['); boolean first = true;
+                for (Object item : (Iterable<?>) value) { if (!first) out.append(','); first = false; write(item, out); }
+                out.append(']'); return;
+            }
+            if (value.getClass().isArray()) {
                 out.append('[');
-                boolean first = true;
-                for (Object item : (Iterable<?>) value) {
-                    if (!first)
-                        out.append(',');
-                    first = false;
-                    write(item, out);
-                }
-                out.append(']');
-                return;
+                for (int i = 0; i < java.lang.reflect.Array.getLength(value); i++) { if (i > 0) out.append(','); write(java.lang.reflect.Array.get(value, i), out); }
+                out.append(']'); return;
             }
             quoteJson(String.valueOf(value), out);
         }
-
         private static void quoteJson(String text, StringBuilder out) {
             out.append('"');
             for (int i = 0; i < text.length(); i++) {
                 char ch = text.charAt(i);
                 switch (ch) {
-                    case '"':
-                        out.append("\\\"");
-                        break;
-                    case '\\':
-                        out.append("\\\\");
-                        break;
-                    case '\b':
-                        out.append("\\b");
-                        break;
-                    case '\f':
-                        out.append("\\f");
-                        break;
-                    case '\n':
-                        out.append("\\n");
-                        break;
-                    case '\r':
-                        out.append("\\r");
-                        break;
-                    case '\t':
-                        out.append("\\t");
-                        break;
+                    case '"': out.append("\\\""); break;
+                    case '\\': out.append("\\\\"); break;
+                    case '\b': out.append("\\b"); break;
+                    case '\f': out.append("\\f"); break;
+                    case '\n': out.append("\\n"); break;
+                    case '\r': out.append("\\r"); break;
+                    case '\t': out.append("\\t"); break;
                     default:
-                        if (ch < 0x20)
-                            out.append(String.format("\\u%04x", (int) ch));
-                        else
-                            ;
-                        ;
-                        out.append(ch);
+                        if (ch < 0x20) out.append(String.format(Locale.ROOT, "\\u%04x", (int) ch));
+                        else out.append(ch);
                 }
             }
             out.append('"');
         }
 
         private static final class Parser {
-            final String text;
-            int at;
-
-            Parser(String text) {
-                this.text = text == null ? "" : text;
-            };
-
+            private final String text;
+            private int at;
+            Parser(String text) { this.text = text == null ? "" : text; }
             Object parse() {
-                Object value = value();
+                Object result = value(); whitespace();
+                if (at != text.length()) throw error("Unexpected trailing content");
+                return result;
+            }
+            private Object value() {
                 whitespace();
-                if (at != text.length())
-                    throw error("Unexpected trailing content");
-                return value;
-            };
-
-            Object value() {
-                whitespace();
-                if (at >= text.length())
-                    throw error("Unexpected end of JSON");
+                if (at >= text.length()) throw error("Unexpected end of JSON");
                 char ch = text.charAt(at);
-                if (ch == '{')
-                    return object();
-                if (ch == '[')
-                    return array();
-                if (ch == '"')
-                    return string();
-                if (ch == 't') {
-                    literal("true");
-                    return Boolean.TRUE;
-                }
-                if (ch == 'f') {
-                    literal("false");
-                    return Boolean.FALSE;
-                }
-                if (ch == 'n') {
-                    literal("null");
-                    return null;
-                }
+                if (ch == '{') return object();
+                if (ch == '[') return array();
+                if (ch == '"') return string();
+                if (ch == 't') { literal("true"); return Boolean.TRUE; }
+                if (ch == 'f') { literal("false"); return Boolean.FALSE; }
+                if (ch == 'n') { literal("null"); return null; }
                 return number();
             }
-
-            Map<String, Object> object() {
-                Map<String, Object> map = new LinkedHashMap<>();
-                at++;
-                whitespace();
-                if (take('}'))
-                    return map;
+            private Map<String, Object> object() {
+                Map<String, Object> map = new LinkedHashMap<>(); at++; whitespace();
+                if (take('}')) return map;
                 while (true) {
-                    whitespace();
-                    if (at >= text.length() || text.charAt(at) != '"')
-                        throw error("Expected object key");
-                    String key = string();
-                    whitespace();
-                    require(':');
-                    map.put(key, value());
-                    whitespace();
-                    if (take('}'))
-                        return map;
+                    whitespace(); if (at >= text.length() || text.charAt(at) != '"') throw error("Expected object key");
+                    String key = string(); whitespace(); require(':'); map.put(key, value()); whitespace();
+                    if (take('}')) return map;
                     require(',');
                 }
             }
-
-            List<Object> array() {
-                List<Object> list = new ArrayList<>();
-                at++;
-                whitespace();
-                if (take(']'))
-                    return list;
-                while (true) {
-                    list.add(value());
-                    whitespace();
-                    if (take(']'))
-                        return list;
-                    require(',');
-                }
+            private List<Object> array() {
+                List<Object> list = new ArrayList<>(); at++; whitespace();
+                if (take(']')) return list;
+                while (true) { list.add(value()); whitespace(); if (take(']')) return list; require(','); }
             }
-
-            String string() {
-                require('"');
-                StringBuilder out = new StringBuilder();
+            private String string() {
+                require('"'); StringBuilder out = new StringBuilder();
                 while (at < text.length()) {
                     char ch = text.charAt(at++);
-                    if (ch == '"')
-                        return out.toString();
+                    if (ch == '"') return out.toString();
                     if (ch == '\\') {
-                        if (at >= text.length())
-                            throw error("Unfinished escape");
+                        if (at >= text.length()) throw error("Unfinished escape");
                         char esc = text.charAt(at++);
                         switch (esc) {
-                            case '"':
-                                out.append('"');
-                                break;
-                            case '\\':
-                                out.append('\\');
-                                break;
-                            case '/':
-                                out.append('/');
-                                break;
-                            case 'b':
-                                out.append('\b');
-                                break;
-                            case 'f':
-                                out.append('\f');
-                                break;
-                            case 'n':
-                                out.append('\n');
-                                break;
-                            case 'r':
-                                out.append('\r');
-                                break;
-                            case 't':
-                                out.append('\t');
-                                break;
+                            case '"': out.append('"'); break;
+                            case '\\': out.append('\\'); break;
+                            case '/': out.append('/'); break;
+                            case 'b': out.append('\b'); break;
+                            case 'f': out.append('\f'); break;
+                            case 'n': out.append('\n'); break;
+                            case 'r': out.append('\r'); break;
+                            case 't': out.append('\t'); break;
                             case 'u':
-                                if (at + 4 > text.length())
-                                    throw error("Invalid unicode escape");
-                                out.append((char) Integer.parseInt(text.substring(at, at + 4), 16));
-                                at += 4;
-                                break;
-                            default:
-                                throw error("Invalid escape: " + esc);
+                                if (at + 4 > text.length()) throw error("Invalid unicode escape");
+                                try { out.append((char) Integer.parseInt(text.substring(at, at + 4), 16)); }
+                                catch (NumberFormatException ex) { throw error("Invalid unicode escape"); }
+                                at += 4; break;
+                            default: throw error("Invalid escape: " + esc);
                         }
-                    } else
+                    } else {
+                        if (ch < 0x20) throw error("Unescaped control character in string");
                         out.append(ch);
+                    }
                 }
                 throw error("Unterminated string");
             }
-
-            Number number() {
+            private Number number() {
                 int start = at;
-                if (take('-')) {
+                if (take('-') && at >= text.length()) throw error("Invalid number");
+                if (take('0')) {
+                    if (at < text.length() && Character.isDigit(text.charAt(at))) throw error("Leading zero in number");
+                } else {
+                    if (at >= text.length() || text.charAt(at) < '1' || text.charAt(at) > '9') throw error("Expected value");
+                    while (at < text.length() && Character.isDigit(text.charAt(at))) at++;
                 }
-                while (at < text.length() && Character.isDigit(text.charAt(at)))
-                    at++;
-                if (take('.'))
-                    while (at < text.length() && Character.isDigit(text.charAt(at)))
-                        at++;
+                if (take('.')) {
+                    int fractionStart = at;
+                    while (at < text.length() && Character.isDigit(text.charAt(at))) at++;
+                    if (fractionStart == at) throw error("Invalid fraction");
+                }
                 if (at < text.length() && (text.charAt(at) == 'e' || text.charAt(at) == 'E')) {
                     at++;
-                    if (at < text.length() && (text.charAt(at) == '+' || text.charAt(at) == '-'))
-                        at++;
-                    while (at < text.length() && Character.isDigit(text.charAt(at)))
-                        at++;
+                    if (at < text.length() && (text.charAt(at) == '+' || text.charAt(at) == '-')) at++;
+                    int exponentStart = at;
+                    while (at < text.length() && Character.isDigit(text.charAt(at))) at++;
+                    if (exponentStart == at) throw error("Invalid exponent");
                 }
-                if (start == at)
-                    throw error("Expected value");
-                BigDecimal parsed = new BigDecimal(text.substring(start, at));
-                return parsed;
+                try { return new BigDecimal(text.substring(start, at)); }
+                catch (NumberFormatException ex) { throw error("Invalid number"); }
             }
-
-            void literal(String expected) {
-                if (!text.startsWith(expected, at))
-                    throw error("Expected " + expected);
+            private void literal(String expected) {
+                if (!text.startsWith(expected, at)) throw error("Expected " + expected);
                 at += expected.length();
-            };
-
-            void whitespace() {
-                while (at < text.length() && Character.isWhitespace(text.charAt(at)))
-                    at++;
-            };
-
-            boolean take(char ch) {
-                if (at < text.length() && text.charAt(at) == ch) {
-                    at++;
-                    return true;
+            }
+            private void whitespace() {
+                while (at < text.length()) {
+                    char ch = text.charAt(at);
+                    if (ch == ' ' || ch == '\t' || ch == '\r' || ch == '\n') at++;
+                    else break;
                 }
+            }
+            private boolean take(char ch) {
+                if (at < text.length() && text.charAt(at) == ch) { at++; return true; }
                 return false;
-            };
-
-            void require(char ch) {
-                if (!take(ch))
-                    throw error("Expected '" + ch + "'");
-            };
-
-            IllegalArgumentException error(String message) {
-                return new IllegalArgumentException(message + " at JSON offset " + at);
-            };
+            }
+            private void require(char ch) { if (!take(ch)) throw error("Expected '" + ch + "'"); }
+            private IllegalArgumentException error(String message) { return new IllegalArgumentException(message + " at JSON offset " + at); }
         }
     }
 }
