@@ -2189,7 +2189,7 @@
             "id": "printf-types",
             "type": "stdout",
             "input": "",
-            "expected": "(?s)^\\s*12\\s+A\\s+student\\s+true\\s*$",
+            "expected": "(?s)^\\s*12\\s+A\\s+student\\s+true\\s*\n\\s*$",
             "matcher": "regex",
             "points": 1,
             "description": "Matches each format specifier with the correct type."
