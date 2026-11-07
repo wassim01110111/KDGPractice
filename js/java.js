@@ -2,9 +2,9 @@
 
 export const JAVA_TIMEOUTS = Object.freeze({
   initializationMs: 90_000,
-  compilationMs: 20_000,
+  compilationMs: 60_000,
   executionMs: 8_000,
-  gradingMs: 20_000,
+  gradingMs: 60_000,
 });
 
 const WORKER_URL = new URL(
@@ -393,16 +393,18 @@ function loadCodeMirror() {
     import("https://esm.sh/@codemirror/lang-java@6.0.2"),
     import("https://esm.sh/@codemirror/theme-one-dark"),
     import("https://esm.sh/@codemirror/state@6"),
-  ]).then(([core, language, javaLanguage, oneDark, state]) => ({
-    ...core,
-    ...language,
-    ...javaLanguage,
-    ...oneDark,
-    ...state,
-  })).catch((error) => {
-    codeMirrorModulePromise = null;
-    throw error;
-  }));
+  ])
+    .then(([core, language, javaLanguage, oneDark, state]) => ({
+      ...core,
+      ...language,
+      ...javaLanguage,
+      ...oneDark,
+      ...state,
+    }))
+    .catch((error) => {
+      codeMirrorModulePromise = null;
+      throw error;
+    }));
 }
 
 function element(tag, className, children = []) {
@@ -580,7 +582,8 @@ export async function mountJavaExercise({
   onGrade = () => {},
   mode = "practice",
 }) {
-  const toolsHost = toolsContainer instanceof Element ? toolsContainer : container;
+  const toolsHost =
+    toolsContainer instanceof Element ? toolsContainer : container;
   if (!(toolsHost instanceof Element))
     throw new Error("A valid Java tools container is required");
   const config = exercise?.java || {};
@@ -657,17 +660,29 @@ export async function mountJavaExercise({
   const operationProgress = element("div", "java-operation-progress", [
     element("div", "java-operation-progress-heading", [
       element("span", "java-operation-progress-indicator", ""),
-      element("strong", "java-operation-progress-title", "Preparing Java runtime…"),
+      element(
+        "strong",
+        "java-operation-progress-title",
+        "Preparing Java runtime…",
+      ),
     ]),
-    element("p", "java-operation-progress-detail", "The Java worker is getting ready."),
+    element(
+      "p",
+      "java-operation-progress-detail",
+      "The Java worker is getting ready.",
+    ),
     element("div", "java-operation-progress-track", [
       element("span", "java-operation-progress-fill", ""),
     ]),
   ]);
   operationProgress.hidden = true;
   operationProgress.setAttribute("aria-hidden", "true");
-  const progressTitle = operationProgress.querySelector(".java-operation-progress-title");
-  const progressDetail = operationProgress.querySelector(".java-operation-progress-detail");
+  const progressTitle = operationProgress.querySelector(
+    ".java-operation-progress-title",
+  );
+  const progressDetail = operationProgress.querySelector(
+    ".java-operation-progress-detail",
+  );
   const consolePanel = element("details", "java-panel java-output-panel");
   consolePanel.open = true;
   consolePanel.append(
@@ -747,10 +762,22 @@ export async function mountJavaExercise({
   const handleStatus = ({ status, detail }) => {
     if (disposed) return;
     const messages = {
-      INITIALIZING: ["Starting the Java 21 runtime", "Preparing the isolated Java worker. The first start may take longer."],
-      COMPILING: ["Compiling your Java code", "Checking the source and preparing the program to run."],
-      RUNNING: ["Running your program", "Your code is executing in a separate worker; the editor remains responsive."],
-      TESTING: ["Running automatic tests", "Executing the exercise checks and collecting their results."],
+      INITIALIZING: [
+        "Starting the Java 21 runtime",
+        "Preparing the isolated Java worker. The first start may take longer.",
+      ],
+      COMPILING: [
+        "Compiling your Java code",
+        "Checking the source and preparing the program to run.",
+      ],
+      RUNNING: [
+        "Running your program",
+        "Your code is executing in a separate worker; the editor remains responsive.",
+      ],
+      TESTING: [
+        "Running automatic tests",
+        "Executing the exercise checks and collecting their results.",
+      ],
     };
     const activeMessage = messages[status];
     if (activeMessage) {
@@ -787,8 +814,11 @@ export async function mountJavaExercise({
     operationProgress.hidden = false;
     operationProgress.dataset.phase = "queued";
     progressTitle.textContent =
-      operation === "check" ? "Preparing automatic checks" : "Preparing Java execution";
-    progressDetail.textContent = "Starting the Java worker and preparing your source code.";
+      operation === "check"
+        ? "Preparing automatic checks"
+        : "Preparing Java execution";
+    progressDetail.textContent =
+      "Starting the Java worker and preparing your source code.";
     statusLine.textContent =
       operation === "check"
         ? "Preparing automatic checks…"
