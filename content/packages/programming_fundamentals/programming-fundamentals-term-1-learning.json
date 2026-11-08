@@ -2179,7 +2179,7 @@
         {
           "type": "stdout",
           "input": "Java\n Rocks\n",
-          "expected": "(?s)^\\s*Length:\\s*11\\s+First:\\s*J\\s+Text:\\s*Java\\s+Rocks!\\s*$",
+          "expected": "(?s)^\\s*11\\s+J\\s+Java\\s+Rocks!\\s*$",
           "points": 0.5,
           "description": "Builds Java Rocks! with chained append calls.",
           "regex": true
@@ -2187,7 +2187,7 @@
         {
           "type": "stdout",
           "input": "Code\n Works\n",
-          "expected": "(?s)^\\s*Length:\\s*11\\s+First:\\s*C\\s+Text:\\s*Code\\s+Works!\\s*$",
+          "expected": "(?s)^\\s*11\\s+C\\s+Code\\s+Works!\\s*$",
           "points": 0.5,
           "description": "Uses different input text and checks the resulting builder content.",
           "regex": true
