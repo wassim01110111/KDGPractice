@@ -1,94 +1,88 @@
 {
   "schemaVersion": 1,
   "packages": {
-    "os": {
+    "operating_system_fundamentals": {
       "version": "0.0.1",
       "files": [
-        "packages/os/os-course.json",
-        "packages/os/os-term-1-canvas.json",
-        "packages/os/os-learning-term-1.json"
+        "os-course.json",
+        "os-term-1-canvas.json",
+        "os-learning-term-1.json"
       ]
     },
-    "sql": {
+    "relational_database_fundamentals": {
       "version": "0.0.1",
       "files": [
-        "packages/sql/sql-course.json",
-        "packages/sql/sql-theory-course.json",
-        "packages/sql/sql-canvas-1.json",
-        "packages/sql/sql-extreme-t1.json",
-        "packages/sql/sql-relational-learning-term-1.json"
+        "sql-course.json",
+        "sql-theory-course.json",
+        "sql-canvas-1.json",
+        "sql-extreme-t1.json",
+        "sql-relational-learning-term-1.json"
       ]
     },
-    "programming-fundamentals": {
+    "programming_fundamentals": {
       "version": "0.0.1",
       "files": [
-        "packages/programming-fundamentals/programming-fundamentals-theory-t1.json",
-        "packages/programming-fundamentals/programming-fundamentals-term-1-learning.json",
-        "packages/programming-fundamentals/programming-fundamentals-term-1-canvas.json"
+        "programming-fundamentals-theory-t1.json",
+        "programming-fundamentals-term-1-learning.json",
+        "programming-fundamentals-term-1-canvas.json"
       ]
     }
   },
   "referenceFiles": {
-    "sql": {
-      "title": "SQL cheat sheet",
+    "relational_database_fundamentals": {
       "terms": [
         {
-          "file": "reference/sql-cheat-sheet.md",
+          "file": "sql-cheat-sheet.md",
           "name": "Term 1"
         }
       ]
     },
-    "os": {
-      "title": "Linux / OS summary",
+    "operating_system_fundamentals": {
       "terms": [
         {
-          "file": "reference/linux-summary.md",
+          "file": "linux-summary.md",
           "name": "Term 1"
         }
       ]
     },
     "programming_fundamentals": {
-      "title": "Programming Fundamentals theory",
       "terms": [
         {
-          "file": "reference/prog-summary.md",
+          "file": "prog-summary.md",
           "name": "Term 1"
         }
       ]
     }
   },
   "canvasFiles": {
-    "sql": {
-      "title": "Relational database",
+    "relational_database_fundamentals": {
       "terms": [
         {
-          "file": "reference/relational-database-term-1-ex.md",
+          "file": "relational-database-term-1-ex.md",
           "name": "Term 1"
         }
       ]
     },
     "programming_fundamentals": {
-      "title": "Programming Fundamentals",
       "terms": [
         {
-          "file": "reference/programming-fundamentals-term-1-ex.md",
+          "file": "programming-fundamentals-term-1-ex.md",
           "name": "Term 1"
         },
         {
-          "file": "reference/programming-fundamentals-term-1-tutoring.md",
+          "file": "programming-fundamentals-term-1-tutoring.md",
           "name": "Tutoring 1"
         },
         {
-          "file": "reference/programming-fundamentals-term-1-brownfielders.md",
+          "file": "programming-fundamentals-term-1-brownfielders.md",
           "name": "Brownfielders 1"
         }
       ]
     },
-    "os": {
-      "title": "Operating Systems Fundamentals",
+    "operating_system_fundamentals": {
       "terms": [
         {
-          "file": "reference/os-term-1-canvas.md",
+          "file": "os-term-1-canvas.md",
           "name": "Term 1"
         }
       ]
@@ -96,30 +90,27 @@
   },
   "learningFiles": {
     "programming_fundamentals": {
-      "title": "Programming Fundamentals",
       "terms": [
         {
-          "file": "reference/programming-fundamentals-term-1-learning.md",
+          "file": "programming-fundamentals-term-1-learning.md",
           "name": "Term 1",
           "packageId": "programming-fundamentals-term-1-learning"
         }
       ]
     },
-    "sql": {
-      "title": "Relational database",
+    "relational_database_fundamentals": {
       "terms": [
         {
-          "file": "reference/relational-database-term-1-learning.md",
+          "file": "relational-database-term-1-learning.md",
           "name": "Term 1",
           "packageId": "sql-relational-learning-term-1"
         }
       ]
     },
-    "os": {
-      "title": "Operating Systems Fundamentals",
+    "operating_system_fundamentals": {
       "terms": [
         {
-          "file": "reference/os-term-1-learning.md",
+          "file": "os-term-1-learning.md",
           "name": "Term 1",
           "packageId": "os-learning-term-1"
         }

@@ -1,8 +1,12 @@
 /* Classic worker: CheerpJ must be loaded here, never on the page thread. */
 "use strict";
 
-const JAVA_CACHE_VERSION = new URL(self.location.href).searchParams.get("__acs_java_version");
-const LOADER_URL_OBJECT = new URL("https://cjrtnc.leaningtech.com/5.0/loader.js");
+const JAVA_CACHE_VERSION = new URL(self.location.href).searchParams.get(
+  "__acs_java_version",
+);
+const LOADER_URL_OBJECT = new URL(
+  "https://cjrtnc.leaningtech.com/5.0/loader.js",
+);
 if (JAVA_CACHE_VERSION)
   LOADER_URL_OBJECT.searchParams.set("__acs_java_version", JAVA_CACHE_VERSION);
 const LOADER_URL = LOADER_URL_OBJECT.href;
@@ -15,7 +19,10 @@ const RUNNER_JAR_URL_OBJECT = new URL(
   self.location.href,
 );
 if (JAVA_CACHE_VERSION)
-  RUNNER_JAR_URL_OBJECT.searchParams.set("__acs_java_version", JAVA_CACHE_VERSION);
+  RUNNER_JAR_URL_OBJECT.searchParams.set(
+    "__acs_java_version",
+    JAVA_CACHE_VERSION,
+  );
 const RUNNER_JAR_URL = RUNNER_JAR_URL_OBJECT.href;
 
 // Stage the downloaded JAR in CheerpJ's Java-readable /str filesystem.
@@ -207,8 +214,8 @@ async function loadRunnerJarBytes() {
   if (!response.ok) {
     throw new Error(
       `Could not download ExerciseRunner.jar from ${RUNNER_JAR_URL} ` +
-      `(HTTP ${response.status}). Ensure it exists at content/java/ExerciseRunner.jar ` +
-      `relative to java.worker.js.`,
+        `(HTTP ${response.status}). Ensure it exists at content/java/ExerciseRunner.jar ` +
+        `relative to java.worker.js.`,
     );
   }
   const buffer = await response.arrayBuffer();
@@ -228,13 +235,17 @@ async function ensureRunnerJar() {
     runnerJarReady = (async () => {
       const bytes = await loadRunnerJarBytes();
       if (!isJar(bytes)) {
-        throw new Error(`The response from ${RUNNER_JAR_URL} is not a valid JAR/ZIP file.`);
+        throw new Error(
+          `The response from ${RUNNER_JAR_URL} is not a valid JAR/ZIP file.`,
+        );
       }
 
       cheerpOSAddStringFile(RUNNER_JAR, bytes);
       const staged = await cjFileBlob(RUNNER_JAR);
       if (!staged || staged.size === 0) {
-        throw new Error(`ExerciseRunner.jar could not be staged at ${RUNNER_JAR}.`);
+        throw new Error(
+          `ExerciseRunner.jar could not be staged at ${RUNNER_JAR}.`,
+        );
       }
     })().catch((error) => {
       runnerJarReady = null;
@@ -359,12 +370,28 @@ async function warmUp() {
       configPath,
       JSON.stringify({ mainClass: "Warmup", stdin: "", checks: [] }),
     );
-    await runExerciseRunner("compile", sourcesPath, configPath, `${basePath}/compile-result.json`, classesPath);
-    await runExerciseRunner("run", "-", configPath, `${basePath}/result.json`, classesPath);
+    await runExerciseRunner(
+      "compile",
+      sourcesPath,
+      configPath,
+      `${basePath}/compile-result.json`,
+      classesPath,
+    );
+    await runExerciseRunner(
+      "run",
+      "-",
+      configPath,
+      `${basePath}/result.json`,
+      classesPath,
+    );
   } catch (error) {
     console.warn("Java warm-up skipped:", error);
   } finally {
-    await cleanupRequestFiles(configPath, `${basePath}/cleanup-result.json`, classesPath);
+    await cleanupRequestFiles(
+      configPath,
+      `${basePath}/cleanup-result.json`,
+      classesPath,
+    );
     safeRemoveStringFile(sourcesPath);
     safeRemoveStringFile(configPath);
   }
@@ -474,13 +501,15 @@ async function execute(message) {
 self.onmessage = (event) => {
   const message = event.data || {};
   if (message.type === "INIT") {
-    initialize(message.requestId, { newVer: message.newVer === true }).catch((error) => {
-      self.postMessage({
-        type: "INIT_ERROR",
-        requestId: message.requestId,
-        ...errorPayload(error, "initialization"),
-      });
-    });
+    initialize(message.requestId, { newVer: message.newVer === true }).catch(
+      (error) => {
+        self.postMessage({
+          type: "INIT_ERROR",
+          requestId: message.requestId,
+          ...errorPayload(error, "initialization"),
+        });
+      },
+    );
     return;
   }
   if (message.type === "EXECUTE") {

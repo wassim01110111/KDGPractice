@@ -3,77 +3,10 @@
   "packageId": "sql-theory-course",
   "version": "1.1.0",
   "term": 1,
-  "topics": {
-    "database-fundamentals": {
-      "title": "Database Fundamentals",
-      "examEligible": true
-    },
-    "relational-tables": {
-      "title": "Relational Tables",
-      "examEligible": true
-    },
-    "keys-and-relationships": {
-      "title": "Keys and Relationships",
-      "examEligible": true
-    },
-    "multiplicities": {
-      "title": "Relationship Multiplicities",
-      "examEligible": true
-    },
-    "data-modeling": {
-      "title": "Data Modeling",
-      "examEligible": true
-    },
-    "database-roles": {
-      "title": "Database Roles",
-      "examEligible": true
-    },
-    "relational-integrity": {
-      "title": "Relational Integrity",
-      "examEligible": true
-    },
-    "sql-language": {
-      "title": "SQL Language",
-      "examEligible": true
-    },
-    "sql-execution-order": {
-      "title": "SQL Execution Order",
-      "examEligible": true
-    },
-    "text-comparisons": {
-      "title": "Text Comparisons",
-      "examEligible": true
-    },
-    "type-conversion": {
-      "title": "Type Conversion",
-      "examEligible": true
-    },
-    "date-formatting": {
-      "title": "Date Formatting",
-      "examEligible": true
-    },
-    "numeric-formatting": {
-      "title": "Numeric Formatting",
-      "examEligible": true
-    },
-    "numeric-functions": {
-      "title": "Numeric Functions",
-      "examEligible": true
-    },
-    "joins": {
-      "title": "Joins",
-      "examEligible": true
-    },
-    "aggregate-functions": {
-      "title": "Aggregate Functions",
-      "examEligible": true
-    }
-  },
+  "course": "relational_database_fundamentals",
   "exercises": {
     "database-fundamentals-001": {
-      "course": "sql",
       "category": "database-fundamentals",
-      "topic": "database-fundamentals",
       "title": "Purpose of a DBMS",
       "instructions": "Select the one correct answer. What is the primary purpose of a Database Management System (DBMS)?",
       "difficulty": "Easy",
@@ -87,15 +20,11 @@
         "To define the organization's business strategy."
       ],
       "explanation": "A DBMS is the software layer used to manage, maintain, query and secure a database.",
-      "checks": [
-        1
-      ],
+      "checks": [1],
       "hints": []
     },
     "database-fundamentals-002": {
-      "course": "sql",
       "category": "database-fundamentals",
-      "topic": "database-fundamentals",
       "title": "Benefits of the Database Approach",
       "instructions": "Select all correct answers. Which are benefits of the database approach described in the course?",
       "difficulty": "Easy",
@@ -109,17 +38,12 @@
         "The physical order of rows determines the meaning of a relational table."
       ],
       "explanation": "The database approach supports shared data, reduces unnecessary redundancy and provides centralized security monitoring. Relational table rows have no inherent order.",
-      "checks": [
-        0,
-        1,
-        2
-      ],
+      "checks": [0, 1, 2],
       "hints": []
     },
     "relational-tables-001": {
-      "course": "sql",
       "category": "relational-tables",
-      "topic": "relational-tables",
+
       "title": "Properties of Relational Tables",
       "instructions": "Select all correct answers. Which statements describe properties of relational tables?",
       "difficulty": "Easy",
@@ -133,17 +57,11 @@
         "The order of columns carries inherent meaning."
       ],
       "explanation": "Relational tables have atomic attribute values, unique rows and unordered rows. Column names are unique, but column order carries no inherent meaning.",
-      "checks": [
-        0,
-        1,
-        2
-      ],
+      "checks": [0, 1, 2],
       "hints": []
     },
     "database-fundamentals-003": {
-      "course": "sql",
       "category": "database-fundamentals",
-      "topic": "database-fundamentals",
       "title": "Database, DBMS and RDBMS",
       "instructions": "Select all correct answers. Which statements correctly describe these terms?",
       "difficulty": "Easy",
@@ -157,17 +75,12 @@
         "A database contains metadata only and does not contain data."
       ],
       "explanation": "The course defines a database as an integrated collection containing data and metadata, a DBMS as the management software, and an RDBMS as a DBMS based on the relational model.",
-      "checks": [
-        0,
-        1,
-        2
-      ],
+      "checks": [0, 1, 2],
       "hints": []
     },
     "keys-and-relationships-001": {
-      "course": "sql",
       "category": "keys-and-relationships",
-      "topic": "keys-and-relationships",
+
       "title": "Purpose of a Primary Key",
       "instructions": "Select the one correct answer. What is the main purpose of a primary key?",
       "difficulty": "Easy",
@@ -181,15 +94,12 @@
         "To store the description of every column."
       ],
       "explanation": "A primary key uniquely identifies rows in a table. It must contain a valid, non-NULL value.",
-      "checks": [
-        0
-      ],
+      "checks": [0],
       "hints": []
     },
     "keys-and-relationships-002": {
-      "course": "sql",
       "category": "keys-and-relationships",
-      "topic": "keys-and-relationships",
+
       "title": "Choosing a Primary Key",
       "instructions": "Select all correct answers. Which statements about choosing a primary key are supported by the course material?",
       "difficulty": "Medium",
@@ -203,17 +113,12 @@
         "A primary key is allowed to contain NULL values."
       ],
       "explanation": "The course recommends a meaningless surrogate key because meaningful values may change over time and complicate references. A primary key must always contain a valid, non-NULL value.",
-      "checks": [
-        0,
-        1,
-        2
-      ],
+      "checks": [0, 1, 2],
       "hints": []
     },
     "keys-and-relationships-003": {
-      "course": "sql",
       "category": "keys-and-relationships",
-      "topic": "keys-and-relationships",
+
       "title": "Foreign Key Rules",
       "instructions": "Select all correct answers. Which statements about foreign keys are correct according to the course?",
       "difficulty": "Easy",
@@ -227,17 +132,12 @@
         "A foreign key must always contain unique values."
       ],
       "explanation": "A foreign key establishes a relationship by referencing another table's primary key. The data types must match, and referential integrity requires its population to be a subset of the referenced primary-key population.",
-      "checks": [
-        0,
-        1,
-        2
-      ],
+      "checks": [0, 1, 2],
       "hints": []
     },
     "multiplicities-001": {
-      "course": "sql",
       "category": "multiplicities",
-      "topic": "multiplicities",
+
       "title": "Relationship Multiplicities",
       "instructions": "Select all correct answers. Which multiplicity definitions are correct?",
       "difficulty": "Medium",
@@ -251,17 +151,12 @@
         "1..* means zero or many."
       ],
       "explanation": "The course defines 1 as exactly one, 0..1 as zero or one, 0..* as zero or many, and 1..* as one or many.",
-      "checks": [
-        0,
-        1,
-        2
-      ],
+      "checks": [0, 1, 2],
       "hints": []
     },
     "data-modeling-001": {
-      "course": "sql",
       "category": "data-modeling",
-      "topic": "data-modeling",
+
       "title": "Modeling Lifecycle Order",
       "instructions": "Select the one correct answer. Which sequence follows the modeling chain presented in the course?",
       "difficulty": "Medium",
@@ -275,15 +170,12 @@
         "Behavior Modeling → Physical Data Model → Domain Model → Wireframes and interviews"
       ],
       "explanation": "The course presents the lifecycle as wireframes/interviews, Domain Model, behavior modeling, Design Model, Logical Data Model and finally Physical Data Model.",
-      "checks": [
-        1
-      ],
+      "checks": [1],
       "hints": []
     },
     "data-modeling-002": {
-      "course": "sql",
       "category": "data-modeling",
-      "topic": "data-modeling",
+
       "title": "Logical and Physical Models",
       "instructions": "Select all correct answers. Which statements distinguish the Logical Data Model from the Physical Data Model?",
       "difficulty": "Medium",
@@ -297,17 +189,12 @@
         "The Domain Model contains foreign keys and database-specific indexes."
       ],
       "explanation": "The Logical Data Model defines keys, constraints and naming standards. The Physical Data Model adds DBMS-specific data types, objects, indexes and technical constraints. The Domain Model contains business concepts without foreign keys.",
-      "checks": [
-        0,
-        1,
-        2
-      ],
+      "checks": [0, 1, 2],
       "hints": []
     },
     "database-roles-001": {
-      "course": "sql",
       "category": "database-roles",
-      "topic": "database-roles",
+
       "title": "Responsibilities in a Database Environment",
       "instructions": "Select all correct answers. Which responsibilities are correctly matched to the database roles?",
       "difficulty": "Easy",
@@ -321,17 +208,12 @@
         "The End User is technically responsible for maintaining database performance."
       ],
       "explanation": "The Data Administrator handles data governance, the DBA handles technical implementation, performance and maintenance, and the Application Developer builds applications that use the database. End Users use the database indirectly through application interfaces.",
-      "checks": [
-        0,
-        1,
-        2
-      ],
+      "checks": [0, 1, 2],
       "hints": []
     },
     "relational-integrity-001": {
-      "course": "sql",
       "category": "relational-integrity",
-      "topic": "relational-integrity",
+
       "title": "Domain, Population and NULL",
       "instructions": "Select all correct answers. Which statements correctly describe relational database terminology?",
       "difficulty": "Medium",
@@ -345,17 +227,12 @@
         "A domain is always identical to the values currently stored in the table."
       ],
       "explanation": "A domain describes all values permitted for an attribute, while a population describes the concrete values currently present. NULL denotes a missing or unknown value.",
-      "checks": [
-        0,
-        1,
-        2
-      ],
+      "checks": [0, 1, 2],
       "hints": []
     },
     "sql-language-001": {
-      "course": "sql",
       "category": "sql-language",
-      "topic": "sql-language",
+
       "title": "Declarative SQL",
       "instructions": "Select the one correct answer. What does it mean that SQL is a declarative language?",
       "difficulty": "Easy",
@@ -369,15 +246,12 @@
         "SQL automatically defines the organization's data standards."
       ],
       "explanation": "SQL is declarative because users state what they want to achieve, rather than specifying the exact procedural steps for achieving it.",
-      "checks": [
-        0
-      ],
+      "checks": [0],
       "hints": []
     },
     "sql-language-002": {
-      "course": "sql",
       "category": "sql-language",
-      "topic": "sql-language",
+
       "title": "SQL Subcategories",
       "instructions": "Select all correct answers. Which SQL commands are correctly assigned to their subcategories in the course?",
       "difficulty": "Easy",
@@ -391,17 +265,12 @@
         "GRANT and REVOKE belong to transaction control."
       ],
       "explanation": "The course classifies SELECT as DQL, INSERT/UPDATE/DELETE as DML, CREATE/ALTER/DROP as DDL, and GRANT/REVOKE as DCL. COMMIT, ROLLBACK and SAVEPOINT are transaction-control commands.",
-      "checks": [
-        0,
-        1,
-        2
-      ],
+      "checks": [0, 1, 2],
       "hints": []
     },
     "sql-language-003": {
-      "course": "sql",
       "category": "sql-language",
-      "topic": "sql-language",
+
       "title": "SQL Execution Modes",
       "instructions": "Select all correct answers. According to the course, how can SQL be used?",
       "difficulty": "Easy",
@@ -415,17 +284,12 @@
         "Only through a spreadsheet application."
       ],
       "explanation": "The course describes interactive use through direct queries and embedded use within host programming languages, including Java, C and C#.",
-      "checks": [
-        0,
-        1,
-        2
-      ],
+      "checks": [0, 1, 2],
       "hints": []
     },
     "sql-language-004": {
-      "course": "sql",
       "category": "sql-language",
-      "topic": "sql-language",
+
       "title": "SELECT Without FROM",
       "instructions": "Select the one correct answer. What can PostgreSQL do with SELECT when no FROM clause is present?",
       "difficulty": "Easy",
@@ -439,15 +303,12 @@
         "It can only return metadata about columns."
       ],
       "explanation": "The course notes that SELECT can evaluate scalar expressions, calculations and system variables without querying a table.",
-      "checks": [
-        0
-      ],
+      "checks": [0],
       "hints": []
     },
     "sql-execution-order-001": {
-      "course": "sql",
       "category": "sql-execution-order",
-      "topic": "sql-execution-order",
+
       "title": "Logical SQL Execution Order",
       "instructions": "Select all correct answers. Which statements about the logical execution order are correct?",
       "difficulty": "Medium",
@@ -461,17 +322,12 @@
         "ORDER BY is evaluated before DISTINCT."
       ],
       "explanation": "The relevant order is FROM, WHERE, GROUP BY, HAVING, SELECT, DISTINCT and ORDER BY. Therefore the first three statements are correct, while DISTINCT precedes ORDER BY.",
-      "checks": [
-        0,
-        1,
-        2
-      ],
+      "checks": [0, 1, 2],
       "hints": []
     },
     "text-comparisons-001": {
-      "course": "sql",
       "category": "text-comparisons",
-      "topic": "text-comparisons",
+
       "title": "Case Sensitivity in Text Comparisons",
       "instructions": "Select the one correct answer. According to the course material, how are literal text comparisons evaluated?",
       "difficulty": "Medium",
@@ -485,15 +341,12 @@
         "They ignore capitalization only when values contain spaces."
       ],
       "explanation": "The course states that literal text comparisons are strictly case-sensitive. UPPER() and LOWER() can be used to standardize text for uniform comparison.",
-      "checks": [
-        1
-      ],
+      "checks": [1],
       "hints": []
     },
     "type-conversion-001": {
-      "course": "sql",
       "category": "type-conversion",
-      "topic": "type-conversion",
+
       "title": "Implicit and Explicit Conversion",
       "instructions": "Select all correct answers. Which statements about type conversion are correct?",
       "difficulty": "Medium",
@@ -507,17 +360,12 @@
         "Explicit conversions rely on the active system defaults instead of specifying the conversion."
       ],
       "explanation": "Implicit conversions happen automatically and can depend on configuration. Explicit conversions use functions such as TO_CHAR, TO_DATE, TO_NUMBER or CAST to make type compatibility more predictable.",
-      "checks": [
-        0,
-        1,
-        2
-      ],
+      "checks": [0, 1, 2],
       "hints": []
     },
     "date-formatting-001": {
-      "course": "sql",
       "category": "date-formatting",
-      "topic": "date-formatting",
+
       "title": "PostgreSQL DateStyle",
       "instructions": "Select the one correct answer. What does the DateStyle setting influence in PostgreSQL?",
       "difficulty": "Easy",
@@ -531,15 +379,12 @@
         "How foreign-key data types are matched."
       ],
       "explanation": "PostgreSQL interprets date inputs and formats date outputs according to the active DateStyle parameter. The course recommends using explicit formatting masks rather than relying on system defaults.",
-      "checks": [
-        0
-      ],
+      "checks": [0],
       "hints": []
     },
     "numeric-formatting-001": {
-      "course": "sql",
       "category": "numeric-formatting",
-      "topic": "numeric-formatting",
+
       "title": "Numeric Formatting Modifiers",
       "instructions": "Select all correct answers. Which statements about numeric TO_CHAR format modifiers are correct?",
       "difficulty": "Medium",
@@ -553,17 +398,12 @@
         "L represents the localized decimal separator."
       ],
       "explanation": "The course defines 9 as an optional digit position, 0 as a retained digit position, and FM as Fill Mode, which suppresses leading zeros and blank padding. L represents the localized currency symbol; D and G represent localized decimal and group separators.",
-      "checks": [
-        0,
-        1,
-        2
-      ],
+      "checks": [0, 1, 2],
       "hints": []
     },
     "numeric-functions-001": {
-      "course": "sql",
       "category": "numeric-functions",
-      "topic": "numeric-functions",
+
       "title": "ROUND and TRUNC",
       "instructions": "Select the one correct answer. What is the main difference between ROUND() and TRUNC()?",
       "difficulty": "Easy",
@@ -577,15 +417,12 @@
         "TRUNC only works with negative numbers."
       ],
       "explanation": "ROUND() rounds a number to the specified precision. TRUNC() truncates toward zero without rounding.",
-      "checks": [
-        1
-      ],
+      "checks": [1],
       "hints": []
     },
     "numeric-functions-002": {
-      "course": "sql",
       "category": "numeric-functions",
-      "topic": "numeric-functions",
+
       "title": "Numeric Function Rules",
       "instructions": "Select all correct answers. Which statements about ROUND() and TRUNC() are correct?",
       "difficulty": "Medium",
@@ -599,17 +436,12 @@
         "TRUNC(15256, -1) returns 15260."
       ],
       "explanation": "ROUND() rounds ties away from zero, and negative precision rounds tens, hundreds and other positions to the left of the decimal point. TRUNC() removes digits toward zero without rounding; the course example gives TRUNC(15256, -1) = 15250.",
-      "checks": [
-        0,
-        1,
-        2
-      ],
+      "checks": [0, 1, 2],
       "hints": []
     },
     "numeric-functions-003": {
-      "course": "sql",
       "category": "numeric-functions",
-      "topic": "numeric-functions",
+
       "title": "Purpose of MOD",
       "instructions": "Select the one correct answer. What does MOD(y, x) return?",
       "difficulty": "Easy",
@@ -623,15 +455,12 @@
         "The difference between y and x."
       ],
       "explanation": "MOD(y, x) returns the remainder of y/x. If y is a multiple of x, the result is zero; if x is greater than y, the result is y.",
-      "checks": [
-        0
-      ],
+      "checks": [0],
       "hints": []
     },
     "joins-001": {
-      "course": "sql",
       "category": "joins",
-      "topic": "joins",
+
       "title": "Cartesian Product",
       "instructions": "Select the one correct answer. Table A contains 4 rows and Table B contains 3 rows. If both tables are included in the FROM clause without a join condition, how many row combinations are produced?",
       "difficulty": "Medium",
@@ -645,15 +474,12 @@
         "3 combinations."
       ],
       "explanation": "A Cartesian product pairs every row in the first table with every row in the second table. The total is 4 × 3 = 12 combinations.",
-      "checks": [
-        2
-      ],
+      "checks": [2],
       "hints": []
     },
     "joins-002": {
-      "course": "sql",
       "category": "joins",
-      "topic": "joins",
+
       "title": "Ambiguous Column References",
       "instructions": "Select all correct answers. Two joined tables both contain a column named department_id. Which statements are correct?",
       "difficulty": "Medium",
@@ -667,17 +493,12 @@
         "The database always chooses the first table's column automatically."
       ],
       "explanation": "When joined tables share a column name, an unqualified reference can be ambiguous. Qualifying the column with its table name or alias resolves the ambiguity.",
-      "checks": [
-        0,
-        1,
-        2
-      ],
+      "checks": [0, 1, 2],
       "hints": []
     },
     "joins-003": {
-      "course": "sql",
       "category": "joins",
-      "topic": "joins",
+
       "title": "NATURAL JOIN and USING",
       "instructions": "Select all correct answers. Which statements about NATURAL JOIN and USING match the course material?",
       "difficulty": "Medium",
@@ -691,17 +512,12 @@
         "Table aliases can be used on the joined column specified in USING."
       ],
       "explanation": "NATURAL JOIN uses all identically named columns, which can introduce unintended join conditions. USING explicitly names the common join column, but table aliases are not permitted on that joined column. The course also notes that aliases cannot be used with NATURAL JOIN.",
-      "checks": [
-        0,
-        1,
-        2
-      ],
+      "checks": [0, 1, 2],
       "hints": []
     },
     "aggregate-functions-001": {
-      "course": "sql",
       "category": "aggregate",
-      "topic": "aggregate-functions",
+
       "title": "Nested Aggregate Functions",
       "instructions": "Select the one correct answer. Why does PostgreSQL reject directly nesting aggregate functions such as AVG(MAX(salary))?",
       "difficulty": "Medium",
@@ -715,9 +531,7 @@
         "MAX() always requires a join condition."
       ],
       "explanation": "Aggregate functions operate on groups of rows to return a single result per group. Directly nesting aggregate function calls is logically invalid and PostgreSQL raises an error.",
-      "checks": [
-        1
-      ],
+      "checks": [1],
       "hints": []
     }
   }

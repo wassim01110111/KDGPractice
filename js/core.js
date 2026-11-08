@@ -817,7 +817,6 @@
       else dsIds.add(id);
     }
     const req = [
-      "course",
       "category",
       "title",
       "instructions",
@@ -843,11 +842,9 @@
       ctx.seenIds.add(key);
       if (ex.difficulty && !DIFF.includes(ex.difficulty))
         E(id, "difficulty", `Must be one of ${DIFF.join(", ")}`);
-      if (typeof ex.course !== "string" || !ex.course.trim())
+      if (typeof pkg.course !== "string" || !pkg.course.trim())
         E(id, "course", "Must be a non-empty course name");
       if (ex.type === "sql-query") {
-        if (ex.course !== "sql")
-          E(id, "type", "sql-query exercises must use course sql");
         if (!ex.datasetId) E(id, "datasetId", "Missing datasetId");
         else if (!dsIds.has(ex.datasetId))
           E(id, "datasetId", `Unknown dataset "${ex.datasetId}"`);
@@ -887,8 +884,6 @@
         )
           E(id, "hints", "Must be a string or an array of strings");
         if (ex.type === "terminal") {
-          if (ex.course !== "os")
-            E(id, "course", "terminal exercises must use course os");
           const config = ex.terminal;
           if (!config || typeof config !== "object" || Array.isArray(config)) {
             E(
@@ -1007,12 +1002,6 @@
               );
           }
         } else if (ex.type === "java-ex") {
-          if (!["java", "programming_fundamentals"].includes(ex.course))
-            E(
-              id,
-              "course",
-              "java-ex exercises must use course java or programming_fundamentals",
-            );
           const config = ex.java;
           if (!isMap(config)) {
             E(id, "java", "Java exercises need a java configuration object");
@@ -1394,6 +1383,12 @@
         return null;
     }
   }
+  function initcap(str) {
+    return str
+      .replaceAll("_", " ")
+      .replace(/(^|\s)\S/g, (char) => char.toUpperCase());
+  }
+
   const api = {
     compare,
     generateFromRegex,
@@ -1405,6 +1400,7 @@
     highlightJava,
     exerciseKey,
     cellKey,
+    initcap,
     normNum,
     shuffle,
     DIFF,

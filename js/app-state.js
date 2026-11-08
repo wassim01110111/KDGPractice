@@ -49,15 +49,24 @@ async function importAppModuleWithCacheFallback(url, kind) {
     }
     return module;
   } catch (networkError) {
-    if (!window.__ACS_OFFLINE_CACHE__?.readCachedResponse || window.__ACS_FORCE_CACHE_BUST__)
+    if (
+      !window.__ACS_OFFLINE_CACHE__?.readCachedResponse ||
+      window.__ACS_FORCE_CACHE_BUST__
+    )
       throw networkError;
     const cached = await window.__ACS_OFFLINE_CACHE__.readCachedResponse(url);
     if (!cached) {
       // If the cache is unavailable/empty, retry the normal module URL once.
-      try { return await import(url); } catch (_) { throw networkError; }
+      try {
+        return await import(url);
+      } catch (_) {
+        throw networkError;
+      }
     }
     const source = await cached.text();
-    const blobUrl = URL.createObjectURL(new Blob([source], { type: "text/javascript" }));
+    const blobUrl = URL.createObjectURL(
+      new Blob([source], { type: "text/javascript" }),
+    );
     try {
       // java.js derives its worker URL from import.meta.url; when loaded from a
       // Blob, provide the original same-origin module URL explicitly.
@@ -74,7 +83,10 @@ async function importAppModuleWithCacheFallback(url, kind) {
   }
 }
 const loadTerminalModule = () =>
-  (terminalModulePromise ||= importAppModuleWithCacheFallback(terminalModuleUrl, "terminal"));
+  (terminalModulePromise ||= importAppModuleWithCacheFallback(
+    terminalModuleUrl,
+    "terminal",
+  ));
 const loadJavaModule = () => {
   if (window.newVer === true) {
     const versionedUrl = new URL(javaModuleUrl);
@@ -84,7 +96,10 @@ const loadJavaModule = () => {
     );
     javaModuleUrl = versionedUrl.href;
   }
-  return (javaModulePromise ||= importAppModuleWithCacheFallback(javaModuleUrl, "java"));
+  return (javaModulePromise ||= importAppModuleWithCacheFallback(
+    javaModuleUrl,
+    "java",
+  ));
 };
 window.__ACS_LOAD_JAVA_MODULE__ = loadJavaModule;
 
@@ -279,7 +294,12 @@ function createLoadingProgress({
       element.classList.add("is-complete");
     },
     fail(detailText) {
-      update({ title: "Could not finish", detail: detailText, value: null, error: true });
+      update({
+        title: "Could not finish",
+        detail: detailText,
+        value: null,
+        error: true,
+      });
       element.setAttribute("aria-busy", "false");
     },
   });
@@ -294,14 +314,8 @@ const loadingSkeleton = (text, sub = "") =>
   );
 const uniq = (arr, f) =>
   [...new Set(arr.map(f).filter((x) => x !== undefined && x !== ""))].sort();
-const courseLabel = (course) =>
-  course === "sql"
-    ? "SQL"
-    : course === "os"
-      ? "OS"
-      : ["java", "programming_fundamentals"].includes(course)
-        ? "Programming Fundamentals"
-        : course;
+const courseLabel = (course) => globalThis.Core.initcap(course);
+
 let activeConfirmDialog = null;
 let confirmDialogId = 0;
 function confirmInApp({

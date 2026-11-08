@@ -3,10 +3,9 @@
   "packageId": "programming-fundamentals-term-1-learning",
   "version": "1.0.2",
   "term": 1,
-  "datasets": {},
+  "course": "programming_fundamentals",
   "exercises": {
     "java-t1-01-01": {
-      "course": "programming_fundamentals",
       "category": "Java Foundations",
       "title": "Print the first Java message",
       "instructions": "Implement the `main` method so that the program writes exactly one message: `Hello World!`. Use `System.out.println`. Do not print a prompt, label, quotation marks, or any extra explanation. The output checker ignores whitespace before and after the message, but the message text itself must be correct.",
@@ -26,7 +25,6 @@
       },
       "checks": [
         {
-          "id": "hello-default",
           "type": "stdout",
           "input": "",
           "expected": "(?s)^\\s*Hello\\s+World!\\s*$",
@@ -39,7 +37,6 @@
       "explanation": "This first run checks the entry-point structure and the difference between Java source code and the text the program produces. The checker allows harmless whitespace around the greeting."
     },
     "java-t1-01-02": {
-      "course": "programming_fundamentals",
       "category": "Java Foundations",
       "title": "Use comments and distinguish print from println",
       "instructions": "Write two output operations. First use `System.out.print` to write `Java ` (including one trailing space). Then use `System.out.println` to write `starts here`. The final visible line must read `Java starts here`. Add one `//` comment and one `/* ... */` block comment somewhere in the source; comments must not create output.",
@@ -59,7 +56,6 @@
       },
       "checks": [
         {
-          "id": "print-println",
           "type": "stdout",
           "input": "",
           "expected": "(?s)^\\s*Java\\s+starts\\s+here\\s*$",
@@ -72,7 +68,6 @@
       "explanation": "The tests compile and run the submitted single source file. They inspect System.out for the required result using regular-expression matching so harmless leading, trailing, and repeated whitespace does not cause a false failure. The required words, values, and output order must still be correct."
     },
     "java-t1-01-03": {
-      "course": "programming_fundamentals",
       "category": "Input and Algorithms",
       "title": "Turn a sum algorithm into Java",
       "instructions": "Read exactly two integers from standard input with `Scanner` and display their sum in the format `Sum: <value>`. The tests provide different pairs of integers, so calculate from the input; do not hardcode the sample result. Do not print an input prompt. Import `java.util.Scanner` at the top of the file, create one scanner connected to `System.in`, and use `nextInt()` twice.",
@@ -94,7 +89,6 @@
       },
       "checks": [
         {
-          "id": "sum-positive",
           "type": "stdout",
           "input": "3\n4\n",
           "expected": "(?s)^\\s*Sum:\\s*7\\s*$",
@@ -103,7 +97,6 @@
           "regex": true
         },
         {
-          "id": "sum-negative",
           "type": "stdout",
           "input": "-8\n5\n",
           "expected": "(?s)^\\s*Sum:\\s*-3\\s*$",
@@ -116,7 +109,6 @@
       "explanation": "Both test cases supply their own input through System.in. The output matcher permits flexible whitespace but checks the label and computed result, so printing a fixed sample answer will fail."
     },
     "java-t1-02-01": {
-      "course": "programming_fundamentals",
       "category": "Variables and Types",
       "title": "Declare and initialize primitive variables",
       "instructions": "Declare and initialize one variable of each primitive type covered in the summary: `byte`, `short`, `int`, `long`, `float`, `double`, `boolean`, and `char`. Use values that fit the selected types. Use `Scanner` to read the age as an integer and the name as a complete line; initialize the other primitive variables with valid values. Remember that `String` is a class, not a primitive type. Print `Age: <age>` and `Name: <name>` on separate lines. Do not print a prompt.",
@@ -139,7 +131,6 @@
       },
       "checks": [
         {
-          "id": "primitive-age-scanner",
           "type": "stdout",
           "input": "21\nWassim\n",
           "expected": "(?s)^\\s*Age:\\s*21\\s+Name:\\s*Wassim\\s*$",
@@ -148,7 +139,6 @@
           "regex": true
         },
         {
-          "id": "primitive-age-scanner-2",
           "type": "stdout",
           "input": "34\nAda Lovelace\n",
           "expected": "(?s)^\\s*Age:\\s*34\\s+Name:\\s*Ada\\s+Lovelace\\s*$",
@@ -161,7 +151,6 @@
       "explanation": "Each test supplies different values through standard input. Read the supplied data with Scanner and calculate or transform those values instead of relying on fixed sample values. The output checks allow harmless whitespace differences while still checking the required labels, values, and order."
     },
     "java-t1-02-02": {
-      "course": "programming_fundamentals",
       "category": "Variables and Types",
       "title": "Use valid identifiers and camelCase",
       "instructions": "Create variables named `firstNumber`, `secondNumber`, and `total`. Read the first two integers from standard input with `Scanner`, assign them to the first two variables, calculate their sum, and print `Total: <value>`. Use clear camelCase identifiers. Do not use a reserved word, begin a name with a digit, or rely on capitalization differences to distinguish variables. Do not print a prompt.",
@@ -183,7 +172,6 @@
       },
       "checks": [
         {
-          "id": "identifier-total-scanner",
           "type": "stdout",
           "input": "12\n30\n",
           "expected": "(?s)^\\s*Total:\\s*42\\s*$",
@@ -192,7 +180,6 @@
           "regex": true
         },
         {
-          "id": "identifier-total-scanner-2",
           "type": "stdout",
           "input": "8\n-3\n",
           "expected": "(?s)^\\s*Total:\\s*5\\s*$",
@@ -205,7 +192,6 @@
       "explanation": "Each test supplies different values through standard input. Read the supplied data with Scanner and calculate or transform those values instead of relying on fixed sample values. The output checks allow harmless whitespace differences while still checking the required labels, values, and order."
     },
     "java-t1-02-03": {
-      "course": "programming_fundamentals",
       "category": "Variables and Types",
       "title": "Print literals and escaped characters",
       "instructions": "Print exactly one line containing `Welcome to \"Java\"!` including the double quotation marks around Java. You must write the embedded quotation marks using the `\\\"` escape sequence. In a second output line, print the two words `red` and `blue` separated by a tab escape (`\t`). The checker permits one or more whitespace characters between the words.",
@@ -225,7 +211,6 @@
       },
       "checks": [
         {
-          "id": "escaped-quote",
           "type": "stdout",
           "input": "",
           "expected": "(?s)^\\s*Welcome\\s+to\\s+\"Java\"!\\s+red\\s+blue\\s*$",
@@ -238,7 +223,6 @@
       "explanation": "The tests compile and run the submitted single source file. They inspect System.out for the required result using regular-expression matching so harmless leading, trailing, and repeated whitespace does not cause a false failure. The required words, values, and output order must still be correct."
     },
     "java-t1-02-04": {
-      "course": "programming_fundamentals",
       "category": "Variables and Types",
       "title": "Replace a magic number with a final constant",
       "instructions": "Declare `final int MAXIMUM_TICKETS = 8;`. Read the number of tickets already sold with `Scanner`, then use the named constant to calculate how many tickets remain. Print `Remaining: <value>`. Do not repeat the literal 8 in the calculation; the purpose is to make the meaning of the fixed maximum explicit. Follow the uppercase-with-underscores convention for the constant name. Do not print a prompt.",
@@ -260,7 +244,6 @@
       },
       "checks": [
         {
-          "id": "final-remaining-scanner",
           "type": "stdout",
           "input": "3\n",
           "expected": "(?s)^\\s*Remaining:\\s*5\\s*$",
@@ -269,7 +252,6 @@
           "regex": true
         },
         {
-          "id": "final-remaining-scanner-2",
           "type": "stdout",
           "input": "6\n",
           "expected": "(?s)^\\s*Remaining:\\s*2\\s*$",
@@ -282,7 +264,6 @@
       "explanation": "Each test supplies different values through standard input. Read the supplied data with Scanner and calculate or transform those values instead of relying on fixed sample values. The output checks allow harmless whitespace differences while still checking the required labels, values, and order."
     },
     "java-t1-03-01": {
-      "course": "programming_fundamentals",
       "category": "Operators and Expressions",
       "title": "Calculate quotient and remainder",
       "instructions": "Read two integers from standard input as `dividend` and `divisor` using `Scanner`. Calculate both the integer quotient using `/` and the remainder using `%`. Print `Quotient: <value>` and `Remainder: <value>` on separate lines. Do not calculate the answers manually in the output statements. Do not print a prompt; the tests do not supply a zero divisor.",
@@ -304,7 +285,6 @@
       },
       "checks": [
         {
-          "id": "quotient-remainder-scanner",
           "type": "stdout",
           "input": "13\n5\n",
           "expected": "(?s)^\\s*Quotient:\\s*2\\s+Remainder:\\s*3\\s*$",
@@ -313,7 +293,6 @@
           "regex": true
         },
         {
-          "id": "quotient-remainder-scanner-2",
           "type": "stdout",
           "input": "-17\n5\n",
           "expected": "(?s)^\\s*Quotient:\\s*-3\\s+Remainder:\\s*-2\\s*$",
@@ -326,7 +305,6 @@
       "explanation": "Each test supplies different values through standard input. Read the supplied data with Scanner and calculate or transform those values instead of relying on fixed sample values. The output checks allow harmless whitespace differences while still checking the required labels, values, and order."
     },
     "java-t1-03-02": {
-      "course": "programming_fundamentals",
       "category": "Operators and Expressions",
       "title": "Trace pre- and post-increment",
       "instructions": "Read an integer starting value with `Scanner` and store it in `value`. First assign `value++` to `postResult`, then assign `++value` to `preResult`. Print `Post result: <value>`, `Pre result: <value>`, and `Final value: <value>`. The order matters: post-increment uses the old value before changing the variable, while pre-increment changes the variable before its value is used. Do not print a prompt.",
@@ -347,7 +325,6 @@
       },
       "checks": [
         {
-          "id": "increment-order-scanner",
           "type": "stdout",
           "input": "10\n",
           "expected": "(?s)^\\s*Post\\s+result:\\s*10\\s+Pre\\s+result:\\s*12\\s+Final\\s+value:\\s*12\\s*$",
@@ -356,7 +333,6 @@
           "regex": true
         },
         {
-          "id": "increment-order-scanner-2",
           "type": "stdout",
           "input": "3\n",
           "expected": "(?s)^\\s*Post\\s+result:\\s*3\\s+Pre\\s+result:\\s*5\\s+Final\\s+value:\\s*5\\s*$",
@@ -369,7 +345,6 @@
       "explanation": "Each test supplies different values through standard input. Read the supplied data with Scanner and calculate or transform those values instead of relying on fixed sample values. The output checks allow harmless whitespace differences while still checking the required labels, values, and order."
     },
     "java-t1-03-03": {
-      "course": "programming_fundamentals",
       "category": "Operators and Expressions",
       "title": "Use decrement and unary operators",
       "instructions": "Read an integer `count` and a byte value `small` from standard input with `Scanner`. Calculate `before = --count`, then `after = count--`. Also calculate `negative = -count` after the post-decrement. Assign `+small` to an `int` variable named `promoted`. Print `Before: <value>`, `After: <value>`, `Negative: <value>`, and `Promoted: <value>` on separate lines. This checks both decrement positions, unary minus, and unary plus promotion. Do not print a prompt.",
@@ -391,7 +366,6 @@
       },
       "checks": [
         {
-          "id": "decrement-unary-scanner",
           "type": "stdout",
           "input": "6\n4\n",
           "expected": "(?s)^\\s*Before:\\s*5\\s+After:\\s*5\\s+Negative:\\s*-4\\s+Promoted:\\s*4\\s*$",
@@ -400,7 +374,6 @@
           "regex": true
         },
         {
-          "id": "decrement-unary-scanner-2",
           "type": "stdout",
           "input": "9\n12\n",
           "expected": "(?s)^\\s*Before:\\s*8\\s+After:\\s*8\\s+Negative:\\s*-7\\s+Promoted:\\s*12\\s*$",
@@ -413,7 +386,6 @@
       "explanation": "Each test supplies different values through standard input. Read the supplied data with Scanner and calculate or transform those values instead of relying on fixed sample values. The output checks allow harmless whitespace differences while still checking the required labels, values, and order."
     },
     "java-t1-03-04": {
-      "course": "programming_fundamentals",
       "category": "Operators and Expressions",
       "title": "Convert numeric types explicitly",
       "instructions": "Read an integer `whole`, a decimal `precise`, and two integers for a division operation using `Scanner`. Assign `whole` to a `double` variable without a cast. Explicitly cast `precise` to an `int`; the cast truncates the fractional part and does not round it. Calculate floating-point division by casting the first division operand to `double`, then print `Widened: <value>`, `Narrowed: <value>`, and `Division: <value>` with three digits after the decimal point. Do not print a prompt.",
@@ -435,7 +407,6 @@
       },
       "checks": [
         {
-          "id": "casts-output-scanner",
           "type": "stdout",
           "input": "100\n100.8\n10\n3\n",
           "expected": "(?s)^\\s*Widened:\\s*100(?:\\.0+)?\\s+Narrowed:\\s*100\\s+Division:\\s*3\\.333\\s*$",
@@ -444,7 +415,6 @@
           "regex": true
         },
         {
-          "id": "casts-output-scanner-2",
           "type": "stdout",
           "input": "42\n42.9\n7\n2\n",
           "expected": "(?s)^\\s*Widened:\\s*42(?:\\.0+)?\\s+Narrowed:\\s*42\\s+Division:\\s*3\\.500\\s*$",
@@ -457,7 +427,6 @@
       "explanation": "Each test supplies different values through standard input. Read the supplied data with Scanner and calculate or transform those values instead of relying on fixed sample values. The output checks allow harmless whitespace differences while still checking the required labels, values, and order."
     },
     "java-t1-03-05": {
-      "course": "programming_fundamentals",
       "category": "Operators and Expressions",
       "title": "Update values with compound assignment",
       "instructions": "Read a starting `score` and five integer operands with `Scanner`: the values to add, subtract, multiply, divide, and use as the remainder divisor. Apply `+=`, `-=`, `*=`, `/=`, and `%=` in that order, using the corresponding input value for each operation. Print the final value as `Score: <value>`. Each compound operator must perform its calculation and store the result back into `score`. The division and remainder operands supplied by the tests are non-zero. Do not print a prompt.",
@@ -478,7 +447,6 @@
       },
       "checks": [
         {
-          "id": "compound-assignment-scanner-scanner",
           "type": "stdout",
           "input": "20\n5\n3\n2\n4\n3\n",
           "expected": "(?s)^\\s*Score:\\s*2\\s*$",
@@ -487,7 +455,6 @@
           "regex": true
         },
         {
-          "id": "compound-assignment-scanner-scanner-2",
           "type": "stdout",
           "input": "17\n4\n2\n3\n5\n4\n",
           "expected": "(?s)^\\s*Score:\\s*3\\s*$",
@@ -500,7 +467,6 @@
       "explanation": "Each test supplies different values through standard input. Read the supplied data with Scanner and calculate or transform those values instead of relying on fixed sample values. The output checks allow harmless whitespace differences while still checking the required labels, values, and order."
     },
     "java-t1-03-06": {
-      "course": "programming_fundamentals",
       "category": "Operators and Expressions",
       "title": "Make operator precedence explicit",
       "instructions": "Read integer values `a`, `b`, and `c` from standard input using `Scanner`. Calculate `a + b * c` and `(a + b) * c`. Print the results on separate lines as `First: <value>` and `Second: <value>`. Use parentheses to make the intended evaluation order obvious. Do not print a prompt.",
@@ -521,7 +487,6 @@
       },
       "checks": [
         {
-          "id": "precedence-output-scanner",
           "type": "stdout",
           "input": "4\n3\n2\n",
           "expected": "(?s)^\\s*First:\\s*10\\s+Second:\\s*14\\s*$",
@@ -530,7 +495,6 @@
           "regex": true
         },
         {
-          "id": "precedence-output-scanner-2",
           "type": "stdout",
           "input": "2\n5\n3\n",
           "expected": "(?s)^\\s*First:\\s*17\\s+Second:\\s*21\\s*$",
@@ -543,7 +507,6 @@
       "explanation": "Each test supplies different values through standard input. Read the supplied data with Scanner and calculate or transform those values instead of relying on fixed sample values. The output checks allow harmless whitespace differences while still checking the required labels, values, and order."
     },
     "java-t1-04-01": {
-      "course": "programming_fundamentals",
       "category": "Expressions and Scope",
       "title": "Build expressions and statements",
       "instructions": "Read a decimal `price` and an integer `quantity` from standard input using `Scanner`. Use an expression to calculate the total, assign the result in an assignment statement, and display it with a method-call statement. Print `Total: <value>`. Your source must include a declaration statement, an assignment statement, and a `System.out.println` method-call statement. Do not print a prompt.",
@@ -564,7 +527,6 @@
       },
       "checks": [
         {
-          "id": "expression-total-scanner",
           "type": "stdout",
           "input": "12.5\n4\n",
           "expected": "(?s)^\\s*Total:\\s*50(?:\\.0+)?\\s*$",
@@ -573,7 +535,6 @@
           "regex": true
         },
         {
-          "id": "expression-total-scanner-2",
           "type": "stdout",
           "input": "2.75\n6\n",
           "expected": "(?s)^\\s*Total:\\s*16\\.5(?:0+)?\\s*$",
@@ -586,7 +547,6 @@
       "explanation": "Each test supplies different values through standard input. Read the supplied data with Scanner and calculate or transform those values instead of relying on fixed sample values. The output checks allow harmless whitespace differences while still checking the required labels, values, and order."
     },
     "java-t1-04-02": {
-      "course": "programming_fundamentals",
       "category": "Expressions and Scope",
       "title": "Observe nested block scope",
       "instructions": "Read an outer message and an inner message as two complete input lines using `Scanner`. Store the outer text in `message`. Inside a nested block, declare a separate local variable named `innerMessage` and initialize it with the second line. Print the inner value inside the nested block and print the outer value after that block ends. Do not try to access the inner variable after its closing brace, and do not print a prompt.",
@@ -607,7 +567,6 @@
       },
       "checks": [
         {
-          "id": "block-scope-scanner",
           "type": "stdout",
           "input": "ready\ninside\n",
           "expected": "(?s)^\\s*Inner:\\s*inside\\s+Outer:\\s*ready\\s*$",
@@ -616,7 +575,6 @@
           "regex": true
         },
         {
-          "id": "block-scope-scanner-2",
           "type": "stdout",
           "input": "available\nprocessing\n",
           "expected": "(?s)^\\s*Inner:\\s*processing\\s+Outer:\\s*available\\s*$",
@@ -629,7 +587,6 @@
       "explanation": "Each test supplies different values through standard input. Read the supplied data with Scanner and calculate or transform those values instead of relying on fixed sample values. The output checks allow harmless whitespace differences while still checking the required labels, values, and order."
     },
     "java-t1-04-03": {
-      "course": "programming_fundamentals",
       "category": "Expressions and Scope",
       "title": "Use independent blocks and readable indentation",
       "instructions": "Read two different integers from standard input using `Scanner`. Write two separate nested blocks. Each block must declare a local integer named `value`, initialized with one of the supplied numbers. Print `Value: <first>` in the first block and `Value: <second>` in the second block. This is valid because the variables belong to separate block scopes. Indent each block and its statements clearly. Do not print a prompt.",
@@ -650,7 +607,6 @@
       },
       "checks": [
         {
-          "id": "separate-blocks-scanner",
           "type": "stdout",
           "input": "10\n20\n",
           "expected": "(?s)^\\s*Value:\\s*10\\s+Value:\\s*20\\s*$",
@@ -659,7 +615,6 @@
           "regex": true
         },
         {
-          "id": "separate-blocks-scanner-2",
           "type": "stdout",
           "input": "-4\n35\n",
           "expected": "(?s)^\\s*Value:\\s*-4\\s+Value:\\s*35\\s*$",
@@ -672,7 +627,6 @@
       "explanation": "Each test supplies different values through standard input. Read the supplied data with Scanner and calculate or transform those values instead of relying on fixed sample values. The output checks allow harmless whitespace differences while still checking the required labels, values, and order."
     },
     "java-t1-05-01": {
-      "course": "programming_fundamentals",
       "category": "Conditional Execution",
       "title": "Use an if statement for a single decision",
       "instructions": "Read an integer score from standard input. If the score is at least 10, print `success`. If it is below 10, print nothing. Use an `if` block with braces even though the block contains only one statement. Do not print a prompt. The tests include a value below the threshold and a value exactly at the threshold.",
@@ -693,7 +647,6 @@
       },
       "checks": [
         {
-          "id": "if-skip",
           "type": "stdout",
           "input": "9\n",
           "expected": "(?s)^\\s*$",
@@ -702,7 +655,6 @@
           "regex": true
         },
         {
-          "id": "if-boundary",
           "type": "stdout",
           "input": "10\n",
           "expected": "(?s)^\\s*success\\s*$",
@@ -715,7 +667,6 @@
       "explanation": "Two inputs test both paths. The empty-output test is intentional: when the condition is false, the program must skip the block without printing a fallback message."
     },
     "java-t1-05-02": {
-      "course": "programming_fundamentals",
       "category": "Conditional Execution",
       "title": "Choose between two alternatives with if else",
       "instructions": "Read an integer from standard input. Print `positive` when it is greater than zero; otherwise print `zero or negative`. Use `if...else`, braces around both branches, and no input prompt. Test a positive number and a negative number.",
@@ -736,7 +687,6 @@
       },
       "checks": [
         {
-          "id": "ifelse-positive",
           "type": "stdout",
           "input": "7\n",
           "expected": "(?s)^\\s*positive\\s*$",
@@ -745,7 +695,6 @@
           "regex": true
         },
         {
-          "id": "ifelse-negative",
           "type": "stdout",
           "input": "-2\n",
           "expected": "(?s)^\\s*zero\\s+or\\s+negative\\s*$",
@@ -758,7 +707,6 @@
       "explanation": "The tests compile and run the submitted single source file. They inspect System.out for the required result using regular-expression matching so harmless leading, trailing, and repeated whitespace does not cause a false failure. The required words, values, and output order must still be correct."
     },
     "java-t1-05-03": {
-      "course": "programming_fundamentals",
       "category": "Conditional Execution",
       "title": "Classify a score with an else-if chain",
       "instructions": "Read an integer percentage from standard input and print one grade: `A` for 90–100, `B` for 80–89, `C` for 70–79, `D` for 60–69, and `E` for values below 60. Use an ordered `if`, `else if`, `else` chain. Assume the supplied percentage is between 0 and 100. Test the 90 and 79 boundaries. Do not print extra text.",
@@ -779,7 +727,6 @@
       },
       "checks": [
         {
-          "id": "grade-a",
           "type": "stdout",
           "input": "90\n",
           "expected": "(?s)^\\s*A\\s*$",
@@ -788,7 +735,6 @@
           "regex": true
         },
         {
-          "id": "grade-c",
           "type": "stdout",
           "input": "79\n",
           "expected": "(?s)^\\s*C\\s*$",
@@ -801,7 +747,6 @@
       "explanation": "The tests compile and run the submitted single source file. They inspect System.out for the required result using regular-expression matching so harmless leading, trailing, and repeated whitespace does not cause a false failure. The required words, values, and output order must still be correct."
     },
     "java-t1-05-04": {
-      "course": "programming_fundamentals",
       "category": "Conditional Execution",
       "title": "Combine relational and logical operators",
       "instructions": "Read an integer age. Print `eligible` only when the age is at least 18 and no more than 67, inclusive. Otherwise print `not eligible`. Use `&&` to combine both relational tests. Your condition should express `age >= 18 && age <= 67`. Include tests for 17, 18, 67, and 68.",
@@ -823,7 +768,6 @@
       },
       "checks": [
         {
-          "id": "age-17",
           "type": "stdout",
           "input": "17\n",
           "expected": "(?s)^\\s*not\\s+eligible\\s*$",
@@ -832,7 +776,6 @@
           "regex": true
         },
         {
-          "id": "age-18",
           "type": "stdout",
           "input": "18\n",
           "expected": "(?s)^\\s*eligible\\s*$",
@@ -841,7 +784,6 @@
           "regex": true
         },
         {
-          "id": "age-67",
           "type": "stdout",
           "input": "67\n",
           "expected": "(?s)^\\s*eligible\\s*$",
@@ -850,7 +792,6 @@
           "regex": true
         },
         {
-          "id": "age-68",
           "type": "stdout",
           "input": "68\n",
           "expected": "(?s)^\\s*not\\s+eligible\\s*$",
@@ -863,7 +804,6 @@
       "explanation": "The tests compile and run the submitted single source file. They inspect System.out for the required result using regular-expression matching so harmless leading, trailing, and repeated whitespace does not cause a false failure. The required words, values, and output order must still be correct."
     },
     "java-t1-05-05": {
-      "course": "programming_fundamentals",
       "category": "Conditional Execution",
       "title": "Give number-guessing feedback with relational operators",
       "instructions": "Use the fixed secret value 25 and read one integer guess from standard input. Compare the guess with the secret using an `if`, `else if`, `else` chain: print `Too low` when the guess is smaller, `Too high` when it is greater, and `Correct` when it is equal. Use the relational operators `<`, `>`, and `==` for the three cases. Do not print a prompt or reveal the secret in advance.",
@@ -884,7 +824,6 @@
       },
       "checks": [
         {
-          "id": "guess-low",
           "type": "stdout",
           "input": "20\n",
           "expected": "(?s)^\\s*Too\\s+low\\s*$",
@@ -893,7 +832,6 @@
           "regex": true
         },
         {
-          "id": "guess-high",
           "type": "stdout",
           "input": "30\n",
           "expected": "(?s)^\\s*Too\\s+high\\s*$",
@@ -902,7 +840,6 @@
           "regex": true
         },
         {
-          "id": "guess-correct",
           "type": "stdout",
           "input": "25\n",
           "expected": "(?s)^\\s*Correct\\s*$",
@@ -915,7 +852,6 @@
       "explanation": "The tests compile and run the submitted single source file. They inspect System.out for the required result using regular-expression matching so harmless leading, trailing, and repeated whitespace does not cause a false failure. The required words, values, and output order must still be correct."
     },
     "java-t1-05-06": {
-      "course": "programming_fundamentals",
       "category": "Conditional Execution",
       "title": "Combine OR and NOT to test an outside range",
       "instructions": "Read an integer age. Create a boolean variable `outside` using the OR expression `age < 18 || age > 67`. Use `!outside` in an if/else statement: print `inside` when the age is from 18 through 67 inclusive, and print `outside` otherwise. Do not replace the OR expression with an unrelated calculation. The tests include values just below, at both boundaries, and just above the interval. Do not print a prompt.",
@@ -937,7 +873,6 @@
       },
       "checks": [
         {
-          "id": "outside-17",
           "type": "stdout",
           "input": "17\n",
           "expected": "(?s)^\\s*outside\\s*$",
@@ -946,7 +881,6 @@
           "regex": true
         },
         {
-          "id": "outside-18",
           "type": "stdout",
           "input": "18\n",
           "expected": "(?s)^\\s*inside\\s*$",
@@ -955,7 +889,6 @@
           "regex": true
         },
         {
-          "id": "outside-67",
           "type": "stdout",
           "input": "67\n",
           "expected": "(?s)^\\s*inside\\s*$",
@@ -964,7 +897,6 @@
           "regex": true
         },
         {
-          "id": "outside-68",
           "type": "stdout",
           "input": "68\n",
           "expected": "(?s)^\\s*outside\\s*$",
@@ -977,7 +909,6 @@
       "explanation": "The tests compile and run the submitted single source file. They inspect System.out for the required result using regular-expression matching so harmless leading, trailing, and repeated whitespace does not cause a false failure. The required words, values, and output order must still be correct."
     },
     "java-t1-06-01": {
-      "course": "programming_fundamentals",
       "category": "Switch Statements",
       "title": "Use a traditional switch with break",
       "instructions": "Read an integer representing a weekday: 0 for Monday, 1 for Tuesday, 2 for Wednesday, and 3 for Thursday. Use the traditional colon-style `switch` statement and print the matching day name in lowercase. Include a `break` after each named case and a `default` branch that prints `invalid day`. Do not print a prompt.",
@@ -998,7 +929,6 @@
       },
       "checks": [
         {
-          "id": "switch-tuesday",
           "type": "stdout",
           "input": "1\n",
           "expected": "(?s)^\\s*tuesday\\s*$",
@@ -1007,7 +937,6 @@
           "regex": true
         },
         {
-          "id": "switch-default",
           "type": "stdout",
           "input": "9\n",
           "expected": "(?s)^\\s*invalid\\s+day\\s*$",
@@ -1020,7 +949,6 @@
       "explanation": "The tests compile and run the submitted single source file. They inspect System.out for the required result using regular-expression matching so harmless leading, trailing, and repeated whitespace does not cause a false failure. The required words, values, and output order must still be correct."
     },
     "java-t1-06-02": {
-      "course": "programming_fundamentals",
       "category": "Switch Statements",
       "title": "Recognize and control traditional switch fall-through",
       "instructions": "Read a month number from 1 to 12. Use a traditional switch to print the season: months 3, 4, and 5 share `spring`; 6, 7, and 8 share `summer`; 9, 10, and 11 share `autumn`; 12, 1, and 2 share `winter`. Group labels by intentional fall-through, then use one `break` after each group. Print `invalid month` in `default`.",
@@ -1041,7 +969,6 @@
       },
       "checks": [
         {
-          "id": "fallthrough-spring",
           "type": "stdout",
           "input": "4\n",
           "expected": "(?s)^\\s*spring\\s*$",
@@ -1050,7 +977,6 @@
           "regex": true
         },
         {
-          "id": "fallthrough-winter",
           "type": "stdout",
           "input": "12\n",
           "expected": "(?s)^\\s*winter\\s*$",
@@ -1059,7 +985,6 @@
           "regex": true
         },
         {
-          "id": "fallthrough-invalid",
           "type": "stdout",
           "input": "13\n",
           "expected": "(?s)^\\s*invalid\\s+month\\s*$",
@@ -1072,7 +997,6 @@
       "explanation": "The tests compile and run the submitted single source file. They inspect System.out for the required result using regular-expression matching so harmless leading, trailing, and repeated whitespace does not cause a false failure. The required words, values, and output order must still be correct."
     },
     "java-t1-06-03": {
-      "course": "programming_fundamentals",
       "category": "Switch Statements",
       "title": "Use arrow switch and a switch expression",
       "instructions": "Read a lowercase English month name as one token. Use a Java arrow-style switch expression to assign a season String: March–May → `spring`, June–August → `summer`, September–November → `autumn`, December–February → `winter`; otherwise assign `invalid month`. Print the resulting value on one line. Use multiple labels separated by commas. The expression must cover the default case so it always returns a String. Do not use traditional fall-through.",
@@ -1094,7 +1018,6 @@
       },
       "checks": [
         {
-          "id": "arrow-switch-spring",
           "type": "stdout",
           "input": "april\n",
           "expected": "(?s)^\\s*spring\\s*$",
@@ -1103,7 +1026,6 @@
           "regex": true
         },
         {
-          "id": "arrow-switch-invalid",
           "type": "stdout",
           "input": "NotAMonth\n",
           "expected": "(?s)^\\s*invalid\\s+month\\s*$",
@@ -1116,7 +1038,6 @@
       "explanation": "The examples use case-sensitive lowercase month names, exactly as the requirements specify. The regex matcher allows surrounding whitespace but does not ignore the returned season text. This exercise uses the simplified switch syntax introduced in the supplied summary as available since Java 14."
     },
     "java-t1-06-04": {
-      "course": "programming_fundamentals",
       "category": "Switch Statements",
       "title": "Return a value from an arrow switch block with yield",
       "instructions": "Read a month as a token. Use an arrow-style switch expression to produce a season String. Group the lowercase names as follows: `march`, `april`, `may` → `spring`; `june`, `july`, `august` → `summer`; `september`, `october`, `november` → `autumn`; `december`, `january`, `february` → `winter`. For the default branch, use a block that first prints `Please use lower case English month names` and then uses `yield` to return `invalid month`. Finally print the returned season String. The invalid input test must therefore display the warning and then the returned fallback value.",
@@ -1138,7 +1059,6 @@
       },
       "checks": [
         {
-          "id": "switch-yield-invalid",
           "type": "stdout",
           "input": "MAY\n",
           "expected": "(?s)^\\s*Please\\s+use\\s+lower\\s+case\\s+English\\s+month\\s+names\\s+invalid\\s+month\\s*$",
@@ -1147,7 +1067,6 @@
           "regex": true
         },
         {
-          "id": "switch-yield-valid",
           "type": "stdout",
           "input": "may\n",
           "expected": "(?s)^\\s*spring\\s*$",
@@ -1160,7 +1079,6 @@
       "explanation": "The invalid-input test checks both the warning and the value yielded by the switch expression. The output checker tolerates whitespace between them but requires both text fragments and their order."
     },
     "java-t1-07-01": {
-      "course": "programming_fundamentals",
       "category": "Loops and Iteration",
       "title": "Repeat while a condition is true",
       "instructions": "Read a starting integer and a limit from standard input using `Scanner`. Use a `while` loop to print every integer from the supplied start through the limit, one per line. Initialize the counter before the loop, test the counter in the `while` condition, and increment it inside the loop. Always use curly braces. The loop must finish because the counter eventually exceeds the limit. Do not print a prompt.",
@@ -1181,7 +1099,6 @@
       },
       "checks": [
         {
-          "id": "while-count-scanner-scanner",
           "type": "stdout",
           "input": "1\n4\n",
           "expected": "(?s)^\\s*1\\s+2\\s+3\\s+4\\s*$",
@@ -1190,7 +1107,6 @@
           "regex": true
         },
         {
-          "id": "while-count-scanner-scanner-2",
           "type": "stdout",
           "input": "2\n5\n",
           "expected": "(?s)^\\s*2\\s+3\\s+4\\s+5\\s*$",
@@ -1203,7 +1119,6 @@
       "explanation": "Each test supplies different values through standard input. Read the supplied data with Scanner and calculate or transform those values instead of relying on fixed sample values. The output checks allow harmless whitespace differences while still checking the required labels, values, and order."
     },
     "java-t1-07-02": {
-      "course": "programming_fundamentals",
       "category": "Loops and Iteration",
       "title": "Understand a while loop that may run zero times",
       "instructions": "Read an integer limit. Start a counter at 1 and use `while (counter <= limit)` to print each counter on its own line. For input 0, the body must not run and the program must print nothing. For input 3, print 1, 2, and 3. Do not replace the while loop with a for loop.",
@@ -1224,7 +1139,6 @@
       },
       "checks": [
         {
-          "id": "while-zero",
           "type": "stdout",
           "input": "0\n",
           "expected": "(?s)^\\s*$",
@@ -1233,7 +1147,6 @@
           "regex": true
         },
         {
-          "id": "while-three",
           "type": "stdout",
           "input": "3\n",
           "expected": "(?s)^\\s*1\\s+2\\s+3\\s*$",
@@ -1246,7 +1159,6 @@
       "explanation": "The tests compile and run the submitted single source file. They inspect System.out for the required result using regular-expression matching so harmless leading, trailing, and repeated whitespace does not cause a false failure. The required words, values, and output order must still be correct."
     },
     "java-t1-07-03": {
-      "course": "programming_fundamentals",
       "category": "Loops and Iteration",
       "title": "Exit a loop with break",
       "instructions": "Read a starting value and an integer `stopBefore` from standard input with `Scanner`. Use a `while` loop with a counter initialized to the supplied starting value. Before printing each counter, check whether it has reached `stopBefore`; if so, exit immediately with `break`. Otherwise print the counter and increment it. The stopping value itself must not be printed. Do not print a prompt.",
@@ -1267,7 +1179,6 @@
       },
       "checks": [
         {
-          "id": "break-stop-scanner-scanner",
           "type": "stdout",
           "input": "1\n5\n",
           "expected": "(?s)^\\s*1\\s+2\\s+3\\s+4\\s*$",
@@ -1276,7 +1187,6 @@
           "regex": true
         },
         {
-          "id": "break-stop-scanner-scanner-2",
           "type": "stdout",
           "input": "3\n7\n",
           "expected": "(?s)^\\s*3\\s+4\\s+5\\s+6\\s*$",
@@ -1289,7 +1199,6 @@
       "explanation": "Each test supplies different values through standard input. Read the supplied data with Scanner and calculate or transform those values instead of relying on fixed sample values. The output checks allow harmless whitespace differences while still checking the required labels, values, and order."
     },
     "java-t1-07-04": {
-      "course": "programming_fundamentals",
       "category": "Loops and Iteration",
       "title": "Skip an iteration with continue",
       "instructions": "Read a starting value, a limit, and a divisor from standard input using `Scanner`. Use a `for` loop to inspect the integers from the supplied start through the limit. Use `continue` to skip values divisible by `divisor`. Print every other value separated by spaces or line breaks. Do not print a prompt; the divisor supplied by the tests is non-zero.",
@@ -1310,7 +1219,6 @@
       },
       "checks": [
         {
-          "id": "continue-skip-scanner-scanner",
           "type": "stdout",
           "input": "1\n8\n3\n",
           "expected": "(?s)^\\s*1\\s+2\\s+4\\s+5\\s+7\\s+8\\s*$",
@@ -1319,7 +1227,6 @@
           "regex": true
         },
         {
-          "id": "continue-skip-scanner-scanner-2",
           "type": "stdout",
           "input": "1\n6\n2\n",
           "expected": "(?s)^\\s*1\\s+3\\s+5\\s*$",
@@ -1332,7 +1239,6 @@
       "explanation": "Each test supplies different values through standard input. Read the supplied data with Scanner and calculate or transform those values instead of relying on fixed sample values. The output checks allow harmless whitespace differences while still checking the required labels, values, and order."
     },
     "java-t1-07-05": {
-      "course": "programming_fundamentals",
       "category": "Loops and Iteration",
       "title": "Guarantee one execution with do while",
       "instructions": "Read an integer from standard input. Use a `do...while` loop to print `Attempt: <number>`. Repeat only while the number is negative, but stop after at most two attempts so the program always terminates. Input 5 must produce one output line; input -1 must produce two. A do-while body runs before its condition is checked. Do not replace it with while.",
@@ -1353,7 +1259,6 @@
       },
       "checks": [
         {
-          "id": "do-while-once",
           "type": "stdout",
           "input": "5\n",
           "expected": "(?s)^\\s*Attempt:\\s*5\\s*$",
@@ -1362,7 +1267,6 @@
           "regex": true
         },
         {
-          "id": "do-while-negative",
           "type": "stdout",
           "input": "-1\n",
           "expected": "(?s)^\\s*Attempt:\\s*-1\\s+Attempt:\\s*-1\\s*$",
@@ -1375,7 +1279,6 @@
       "explanation": "The tests compile and run the submitted single source file. They inspect System.out for the required result using regular-expression matching so harmless leading, trailing, and repeated whitespace does not cause a false failure. The required words, values, and output order must still be correct."
     },
     "java-t1-07-06": {
-      "course": "programming_fundamentals",
       "category": "Loops and Iteration",
       "title": "Calculate a running total with for",
       "instructions": "Read an integer `n` and calculate the sum of all integers from 1 through `n` using a `for` loop. If `n` is 0, the sum is 0. Print `Sum: <result>`. Declare the loop counter in the for-loop initialization; its scope should remain limited to the loop. Test n = 5 and n = 0.",
@@ -1397,7 +1300,6 @@
       },
       "checks": [
         {
-          "id": "for-sum-five",
           "type": "stdout",
           "input": "5\n",
           "expected": "(?s)^\\s*Sum:\\s*15\\s*$",
@@ -1406,7 +1308,6 @@
           "regex": true
         },
         {
-          "id": "for-sum-zero",
           "type": "stdout",
           "input": "0\n",
           "expected": "(?s)^\\s*Sum:\\s*0\\s*$",
@@ -1419,7 +1320,6 @@
       "explanation": "The tests compile and run the submitted single source file. They inspect System.out for the required result using regular-expression matching so harmless leading, trailing, and repeated whitespace does not cause a false failure. The required words, values, and output order must still be correct."
     },
     "java-t1-08-01": {
-      "course": "programming_fundamentals",
       "category": "Methods",
       "title": "Move repeated output into a void method",
       "instructions": "Create a method with the exact declaration `public static void printWelcome()` that prints `Welcome to Java`. Call it twice from `main`. The output must contain the welcome message on two separate lines. The method has no parameters and returns no value, so use `void` and empty parentheses in its declaration.",
@@ -1439,7 +1339,6 @@
       },
       "checks": [
         {
-          "id": "void-welcome",
           "type": "stdout",
           "input": "",
           "expected": "(?s)^\\s*Welcome\\s+to\\s+Java\\s+Welcome\\s+to\\s+Java\\s*$",
@@ -1452,7 +1351,6 @@
       "explanation": "The tests compile and run the submitted single source file. They inspect System.out for the required result using regular-expression matching so harmless leading, trailing, and repeated whitespace does not cause a false failure. The required words, values, and output order must still be correct."
     },
     "java-t1-08-02": {
-      "course": "programming_fundamentals",
       "category": "Methods",
       "title": "Return a value from a method",
       "instructions": "Implement `public static int square(int number)` so that it returns the square of its argument. In `main`, read an integer using `Scanner`, pass it to `square`, store the returned value in an integer variable, and print `Square: <value>`. Do not print from inside `square`; its job is to calculate and return a value. Do not print a prompt.",
@@ -1473,7 +1371,6 @@
       },
       "checks": [
         {
-          "id": "method-square-scanner",
           "type": "stdout",
           "input": "7\n",
           "expected": "(?s)^\\s*Square:\\s*49\\s*$",
@@ -1482,7 +1379,6 @@
           "regex": true
         },
         {
-          "id": "method-square-scanner-2",
           "type": "stdout",
           "input": "-4\n",
           "expected": "(?s)^\\s*Square:\\s*16\\s*$",
@@ -1495,7 +1391,6 @@
       "explanation": "Each test supplies different values through standard input. Read the supplied data with Scanner and calculate or transform those values instead of relying on fixed sample values. The output checks allow harmless whitespace differences while still checking the required labels, values, and order."
     },
     "java-t1-08-03": {
-      "course": "programming_fundamentals",
       "category": "Methods",
       "title": "Pass multiple arguments to a method",
       "instructions": "Implement `public static double average(double first, double second, double third)`. It must return the arithmetic average of its three arguments. In `main`, read three decimal numbers using `Scanner`, pass them to `average` in the same order, and print `Average: <value>`. The declaration must include a type for each formal parameter. Do not print a prompt.",
@@ -1516,7 +1411,6 @@
       },
       "checks": [
         {
-          "id": "method-average-scanner",
           "type": "stdout",
           "input": "12.0\n15.0\n18.0\n",
           "expected": "(?s)^\\s*Average:\\s*15(?:\\.0+)?\\s*$",
@@ -1525,7 +1419,6 @@
           "regex": true
         },
         {
-          "id": "method-average-scanner-2",
           "type": "stdout",
           "input": "2.0\n4.0\n9.0\n",
           "expected": "(?s)^\\s*Average:\\s*5(?:\\.0+)?\\s*$",
@@ -1538,7 +1431,6 @@
       "explanation": "Each test supplies different values through standard input. Read the supplied data with Scanner and calculate or transform those values instead of relying on fixed sample values. The output checks allow harmless whitespace differences while still checking the required labels, values, and order."
     },
     "java-t1-08-04": {
-      "course": "programming_fundamentals",
       "category": "Methods",
       "title": "Combine input, calculation, and output methods",
       "instructions": "Read three decimal numbers using `Scanner`. Organize the program into three methods: `public static double average(double a, double b, double c)` returns the average; `public static void printResult(double value)` prints `Average: <value>`; and `main` reads the input, calls the calculation method, and passes its result to the output method. Do not duplicate the average calculation in main.",
@@ -1560,7 +1452,6 @@
       },
       "checks": [
         {
-          "id": "method-combination",
           "type": "stdout",
           "input": "10\n20\n30\n",
           "expected": "(?s)^\\s*Average:\\s*20(?:\\.0+)?\\s*$",
@@ -1569,7 +1460,6 @@
           "regex": true
         },
         {
-          "id": "method-decimals",
           "type": "stdout",
           "input": "1.5\n2.5\n5.0\n",
           "expected": "(?s)^\\s*Average:\\s*3(?:\\.0+)?\\s*$",
@@ -1582,7 +1472,6 @@
       "explanation": "The tests compile and run the submitted single source file. They inspect System.out for the required result using regular-expression matching so harmless leading, trailing, and repeated whitespace does not cause a false failure. The required words, values, and output order must still be correct."
     },
     "java-t1-09-01": {
-      "course": "programming_fundamentals",
       "category": "Objects and Classes",
       "title": "Model an object with attributes and behaviour",
       "instructions": "In this single source file, keep `Main` as the only public top-level class and add a package-private `Car` class below it. `Car` must have a `String brand` attribute, a constructor receiving the brand, and a public `start()` method that returns `<brand> is starting`. In `main`, read a complete brand name with `Scanner`, create a Car with that value, call `start()`, and print the returned String. All class definitions must stay in Main.java; do not add a package declaration or print a prompt.",
@@ -1604,7 +1493,6 @@
       },
       "checks": [
         {
-          "id": "car-start-scanner",
           "type": "stdout",
           "input": "Nova\n",
           "expected": "(?s)^\\s*Nova\\s+is\\s+starting\\s*$",
@@ -1613,7 +1501,6 @@
           "regex": true
         },
         {
-          "id": "car-start-scanner-2",
           "type": "stdout",
           "input": "Electric Roadster\n",
           "expected": "(?s)^\\s*Electric\\s+Roadster\\s+is\\s+starting\\s*$",
@@ -1626,7 +1513,6 @@
       "explanation": "Each test supplies different values through standard input. Read the supplied data with Scanner and calculate or transform those values instead of relying on fixed sample values. The output checks allow harmless whitespace differences while still checking the required labels, values, and order."
     },
     "java-t1-09-02": {
-      "course": "programming_fundamentals",
       "category": "Objects and Classes",
       "title": "Create two independent objects from one class",
       "instructions": "Define a package-private `Dog` class with a private `name` attribute, a constructor accepting a String, and a public `bark()` method returning `<name> says woof`. In `main`, read two dog names as separate input lines with `Scanner`, create two different Dog objects, and print each bark result on its own line. The two objects must keep independent attribute values. Do not print a prompt.",
@@ -1647,7 +1533,6 @@
       },
       "checks": [
         {
-          "id": "dog-instances-scanner",
           "type": "stdout",
           "input": "Milo\nLuna\n",
           "expected": "(?s)^\\s*Milo\\s+says\\s+woof\\s+Luna\\s+says\\s+woof\\s*$",
@@ -1656,7 +1541,6 @@
           "regex": true
         },
         {
-          "id": "dog-instances-scanner-2",
           "type": "stdout",
           "input": "Rex\nBella\n",
           "expected": "(?s)^\\s*Rex\\s+says\\s+woof\\s+Bella\\s+says\\s+woof\\s*$",
@@ -1669,7 +1553,6 @@
       "explanation": "Each test supplies different values through standard input. Read the supplied data with Scanner and calculate or transform those values instead of relying on fixed sample values. The output checks allow harmless whitespace differences while still checking the required labels, values, and order."
     },
     "java-t1-09-03": {
-      "course": "programming_fundamentals",
       "category": "Objects and Classes",
       "title": "Send a message and use a returned object value",
       "instructions": "Create a package-private `Rectangle` class with private integer `width` and `height` attributes, a constructor taking both values, and a public `area()` method returning their product. In `main`, read the width and height with `Scanner`, create a rectangle, call `area()`, store the result, and print `Area: <value>`. The method call must be made on the object reference using dot notation. Do not print a prompt.",
@@ -1690,7 +1573,6 @@
       },
       "checks": [
         {
-          "id": "rectangle-area-scanner",
           "type": "stdout",
           "input": "6\n4\n",
           "expected": "(?s)^\\s*Area:\\s*24\\s*$",
@@ -1699,7 +1581,6 @@
           "regex": true
         },
         {
-          "id": "rectangle-area-scanner-2",
           "type": "stdout",
           "input": "3\n9\n",
           "expected": "(?s)^\\s*Area:\\s*27\\s*$",
@@ -1712,7 +1593,6 @@
       "explanation": "Each test supplies different values through standard input. Read the supplied data with Scanner and calculate or transform those values instead of relying on fixed sample values. The output checks allow harmless whitespace differences while still checking the required labels, values, and order."
     },
     "java-t1-09-04": {
-      "course": "programming_fundamentals",
       "category": "Objects and Classes",
       "title": "Use new and distinguish class names from variables",
       "instructions": "Create two `Counter` objects using `new Counter()`. The package-private Counter class must store an integer count initialized to zero and provide `increase()` and `getCount()` methods. Read two non-negative increment counts with `Scanner`; increase the first counter that many times and the second counter the supplied number of times. Print `First: <count>` and `Second: <count>`. Keep the class definition in the same file as Main and do not print a prompt.",
@@ -1733,7 +1613,6 @@
       },
       "checks": [
         {
-          "id": "two-counters-scanner",
           "type": "stdout",
           "input": "2\n1\n",
           "expected": "(?s)^\\s*First:\\s*2\\s+Second:\\s*1\\s*$",
@@ -1742,7 +1621,6 @@
           "regex": true
         },
         {
-          "id": "two-counters-scanner-2",
           "type": "stdout",
           "input": "4\n3\n",
           "expected": "(?s)^\\s*First:\\s*4\\s+Second:\\s*3\\s*$",
@@ -1755,7 +1633,6 @@
       "explanation": "Each test supplies different values through standard input. Read the supplied data with Scanner and calculate or transform those values instead of relying on fixed sample values. The output checks allow harmless whitespace differences while still checking the required labels, values, and order."
     },
     "java-t1-10-01": {
-      "course": "programming_fundamentals",
       "category": "Random Class",
       "title": "Generate repeatable pseudo-random values with a seed",
       "instructions": "Create two `Random` objects using the same seed value 42. Call `nextInt(100)` once on each object and print both values as plain numbers without labels, separated by a space or a line break. They must match because the same seed starts the same pseudo-random sequence. Import `java.util.Random` at the beginning of the file. Do not hardcode the value returned by the generator.",
@@ -1775,7 +1652,6 @@
       },
       "checks": [
         {
-          "id": "seed-same",
           "type": "stdout",
           "input": "",
           "expected": "(?s)^\\s*(\\d+)\\s+\\1\\s*$",
@@ -1788,7 +1664,6 @@
       "explanation": "The tests compile and run the submitted single source file. They inspect System.out for the required result using regular-expression matching so harmless leading, trailing, and repeated whitespace does not cause a false failure. The required words, values, and output order must still be correct."
     },
     "java-t1-10-02": {
-      "course": "programming_fundamentals",
       "category": "Random Class",
       "title": "Generate values inside an exclusive upper bound",
       "instructions": "Create a `Random` object and call `nextInt(6)`. Convert the generated result to a six-sided die value by adding 1. Print only the die value. The allowed results are 1, 2, 3, 4, 5, or 6. The test checks the range rather than one particular random result.",
@@ -1808,7 +1683,6 @@
       },
       "checks": [
         {
-          "id": "random-die-range",
           "type": "stdout",
           "input": "",
           "expected": "(?s)^\\s*[1-6]\\s*$",
@@ -1821,7 +1695,6 @@
       "explanation": "The tests compile and run the submitted single source file. They inspect System.out for the required result using regular-expression matching so harmless leading, trailing, and repeated whitespace does not cause a false failure. The required words, values, and output order must still be correct."
     },
     "java-t1-10-03": {
-      "course": "programming_fundamentals",
       "category": "Random Class",
       "title": "Use the Random methods and interval boundaries",
       "instructions": "Use one `Random` object to generate four values and print them on separate lines: (1) `nextInt(50) + 50`, which must be 50–99; (2) `nextInt(100, 200)`, which must be 100–199; (3) `nextDouble()`, which must be at least 0 and less than 1; and (4) `nextBoolean()`, which must be either `true` or `false`. Import `java.util.Random`. Print only the four values, without labels. Do not hardcode or constrain the random values beyond the specified bounds.",
@@ -1842,7 +1715,6 @@
       },
       "checks": [
         {
-          "id": "random-ranges",
           "type": "stdout",
           "input": "",
           "expected": "(?s)^\\s*(?:5[0-9]|[6-9][0-9])\\s+(?:1[0-9]{2})\\s+(?:0(?:\\.\\d+)?|0?\\.\\d+|[1-9](?:\\.\\d+)?[eE]-\\d+)\\s+(?:true|false)\\s*$",
@@ -1855,7 +1727,6 @@
       "explanation": "The tests compile and run the submitted single source file. They inspect System.out for the required result using regular-expression matching so harmless leading, trailing, and repeated whitespace does not cause a false failure. The required words, values, and output order must still be correct."
     },
     "java-t1-11-01": {
-      "course": "programming_fundamentals",
       "category": "References and Memory",
       "title": "Distinguish primitive copies from shared references",
       "instructions": "Read four integers with `Scanner`: an original primitive value, a replacement value, an initial Box value, and an updated Box value. Copy the original primitive to `copy`, then change `original` to the replacement value and show that `copy` remains unchanged. Create one `Box` object, assign its reference to two variables, change its value through the first reference, and read the changed value through the second. Print `Primitive copy: <copy>` and `Shared object: <updated value>`. Keep Box in this source file. Do not print a prompt.",
@@ -1876,7 +1747,6 @@
       },
       "checks": [
         {
-          "id": "copy-vs-reference-scanner",
           "type": "stdout",
           "input": "5\n9\n3\n12\n",
           "expected": "(?s)^\\s*Primitive\\s+copy:\\s*5\\s+Shared\\s+object:\\s*12\\s*$",
@@ -1885,7 +1755,6 @@
           "regex": true
         },
         {
-          "id": "copy-vs-reference-scanner-2",
           "type": "stdout",
           "input": "-2\n8\n40\n41\n",
           "expected": "(?s)^\\s*Primitive\\s+copy:\\s*-2\\s+Shared\\s+object:\\s*41\\s*$",
@@ -1898,7 +1767,6 @@
       "explanation": "Each test supplies different values through standard input. Read the supplied data with Scanner and calculate or transform those values instead of relying on fixed sample values. The output checks allow harmless whitespace differences while still checking the required labels, values, and order."
     },
     "java-t1-11-02": {
-      "course": "programming_fundamentals",
       "category": "References and Packages",
       "title": "Use imports and fully qualified class names",
       "instructions": "Generate a deterministic integer between 0 and 9 with `new java.util.Random(<any fixed seed>).nextInt(10)`, using the fully qualified class name rather than an import. Also print the value of `Math.PI` to three decimal places using `System.out.printf`. `Math` belongs to `java.lang`, which is imported automatically. Print a line beginning `Random:` followed by a value between 0 and 9, then a line beginning `PI:` followed by 3.142. Do not write a package declaration.",
@@ -1919,7 +1787,6 @@
       },
       "checks": [
         {
-          "id": "qualified-names",
           "type": "stdout",
           "input": "",
           "expected": "(?s)^\\s*Random:\\s*[0-9]\\s+PI:\\s*3\\.142\\s*$",
@@ -1932,7 +1799,6 @@
       "explanation": "The tests compile and run the submitted single source file. They inspect System.out for the required result using regular-expression matching so harmless leading, trailing, and repeated whitespace does not cause a false failure. The required words, values, and output order must still be correct."
     },
     "java-t1-11-03": {
-      "course": "programming_fundamentals",
       "category": "References and Memory",
       "title": "Understand null and garbage-collection eligibility",
       "instructions": "Read a complete line of text with `Scanner`. Create a `StringBuilder` object and assign it to a reference named `builder`. Append the supplied text, print it, then assign `null` to `builder` and print `Reference cleared`. This exercise demonstrates when the object becomes eligible for garbage collection: no reference in this program points to it after the assignment. Do not call `System.gc()` and do not claim that memory is reclaimed immediately. Do not print a prompt.",
@@ -1954,7 +1820,6 @@
       },
       "checks": [
         {
-          "id": "null-cleared-scanner",
           "type": "stdout",
           "input": "temporary\n",
           "expected": "(?s)^\\s*temporary\\s+Reference\\s+cleared\\s*$",
@@ -1963,7 +1828,6 @@
           "regex": true
         },
         {
-          "id": "null-cleared-scanner-2",
           "type": "stdout",
           "input": "short-lived object\n",
           "expected": "(?s)^\\s*short-lived\\s+object\\s+Reference\\s+cleared\\s*$",
@@ -1976,7 +1840,6 @@
       "explanation": "Each test supplies different values through standard input. Read the supplied data with Scanner and calculate or transform those values instead of relying on fixed sample values. The output checks allow harmless whitespace differences while still checking the required labels, values, and order."
     },
     "java-t1-11-04": {
-      "course": "programming_fundamentals",
       "category": "References and Packages",
       "title": "Use a wildcard import for java.util classes",
       "instructions": "At the very top of the file, write exactly one import statement: `import java.util.*;`. Use `Scanner` to read a complete player name from one input line, including any spaces. Use `Random` with a fixed seed and `nextInt(6) + 1` to generate one die value from 1 through 6. Print exactly two labeled lines: `Player: <name>` and `Die: <value>`. The tests use two different multi-word names. Do not write a package declaration, use fully qualified names, or print a prompt.",
@@ -1998,7 +1861,6 @@
       },
       "checks": [
         {
-          "id": "wildcard-name-one",
           "type": "stdout",
           "input": "Ada Lovelace\n",
           "expected": "(?s)^\\s*Player:\\s*Ada\\s+Lovelace\\s+Die:\\s*[1-6]\\s*$",
@@ -2007,7 +1869,6 @@
           "regex": true
         },
         {
-          "id": "wildcard-name-two",
           "type": "stdout",
           "input": "Grace Hopper\n",
           "expected": "(?s)^\\s*Player:\\s*Grace\\s+Hopper\\s+Die:\\s*[1-6]\\s*$",
@@ -2020,7 +1881,6 @@
       "explanation": "The tests compile and run the submitted single source file. They inspect System.out for the required result using regular-expression matching so harmless leading, trailing, and repeated whitespace does not cause a false failure. The required words, values, and output order must still be correct."
     },
     "java-t1-12-01": {
-      "course": "programming_fundamentals",
       "category": "Strings",
       "title": "Create strings, concatenate, and use a text block",
       "instructions": "Read a greeting as one complete line using `Scanner`. Concatenate it with the literal ` Java!` and print the result. Then create a text block named `notice` containing two lines: `First line` and `Second line`, and print the text block. Use triple double quotes for the text block and keep all content in this one source file. Do not print a prompt.",
@@ -2042,7 +1902,6 @@
       },
       "checks": [
         {
-          "id": "string-text-block-scanner",
           "type": "stdout",
           "input": "Hello\n",
           "expected": "(?s)^\\s*Hello\\s+Java!\\s*\\nFirst\\s+line\\s*\\nSecond\\s+line\\s*$",
@@ -2051,7 +1910,6 @@
           "regex": true
         },
         {
-          "id": "string-text-block-scanner-2",
           "type": "stdout",
           "input": "Welcome\n",
           "expected": "(?s)^\\s*Welcome\\s+Java!\\s+First\\s+line\\s+Second\\s+line\\s*$",
@@ -2064,7 +1922,6 @@
       "explanation": "Each test supplies different values through standard input. Read the supplied data with Scanner and calculate or transform those values instead of relying on fixed sample values. The output checks allow harmless whitespace differences while still checking the required labels, values, and order."
     },
     "java-t1-12-02": {
-      "course": "programming_fundamentals",
       "category": "Strings and Input",
       "title": "Read one word and a complete line with Scanner",
       "instructions": "Read an integer age, then read a full name that may contain a space. The input consists of the age on the first line and the full name on the second line. Use `nextInt()` for the age, call `nextLine()` once to consume the leftover newline, and then call `nextLine()` again to read the complete name. Print `Age: <age>` and `Name: <full name>` on separate lines. Do not print prompts.",
@@ -2085,7 +1942,6 @@
       },
       "checks": [
         {
-          "id": "scanner-full-name",
           "type": "stdout",
           "input": "19\nAda Lovelace\n",
           "expected": "(?s)^\\s*Age:\\s*19\\s+Name:\\s*Ada\\s+Lovelace\\s*$",
@@ -2094,7 +1950,6 @@
           "regex": true
         },
         {
-          "id": "scanner-name-variation",
           "type": "stdout",
           "input": "22\nJean Marie Curie\n",
           "expected": "(?s)^\\s*Age:\\s*22\\s+Name:\\s*Jean\\s+Marie\\s+Curie\\s*$",
@@ -2107,7 +1962,6 @@
       "explanation": "Both tests send a name containing spaces on the line after the integer. The test accepts ordinary spacing around labels and words, but it still requires the complete name to be present and in the correct order."
     },
     "java-t1-12-03": {
-      "course": "programming_fundamentals",
       "category": "Strings",
       "title": "Use common String inspection methods",
       "instructions": "Read four complete lines with `Scanner`: a word, a comparison word for `equals()`, a comparison word for `equalsIgnoreCase()`, and a word to compare lexicographically. Use `length()` and `charAt(0)` to print the length and first character. Use `equals()` and `equalsIgnoreCase()` with the supplied comparison words. Use `compareTo()` and print whether the first word comes before the final comparison word. Also create an empty String and print the result of `isEmpty()`. Do not print a prompt.",
@@ -2129,7 +1983,6 @@
       },
       "checks": [
         {
-          "id": "string-methods-scanner",
           "type": "stdout",
           "input": "Java\nJava\nJAVA\nKotlin\n",
           "expected": "(?s)^\\s*Length:\\s*4\\s+First:\\s*J\\s+Exact:\\s*true\\s+Ignore\\s+case:\\s*true\\s+Before\\s+comparison:\\s*true\\s+Empty:\\s*true\\s*$",
@@ -2138,7 +1991,6 @@
           "regex": true
         },
         {
-          "id": "string-methods-scanner-2",
           "type": "stdout",
           "input": "Python\nPython\npython\nJava\n",
           "expected": "(?s)^\\s*Length:\\s*6\\s+First:\\s*P\\s+Exact:\\s*true\\s+Ignore\\s+case:\\s*true\\s+Before\\s+comparison:\\s*false\\s+Empty:\\s*true\\s*$",
@@ -2151,7 +2003,6 @@
       "explanation": "Each test supplies different values through standard input. Read the supplied data with Scanner and calculate or transform those values instead of relying on fixed sample values. The output checks allow harmless whitespace differences while still checking the required labels, values, and order."
     },
     "java-t1-12-04": {
-      "course": "programming_fundamentals",
       "category": "Strings",
       "title": "Transform and extract String content",
       "instructions": "Read one complete line containing two words separated by whitespace using `Scanner`. Use `strip()` to remove surrounding whitespace. Use `indexOf()` to find the separator and `substring()` to extract the first and remaining words. Convert the first word with `toUpperCase()` and the remaining text with `toLowerCase()`. Print `Word: <first>`, `Upper: <uppercase first>`, and `Lower: <lowercase remainder>` on separate lines. Do not modify the original String in place or print a prompt.",
@@ -2172,7 +2023,6 @@
       },
       "checks": [
         {
-          "id": "string-transform-scanner",
           "type": "stdout",
           "input": "  Java Programming  \n",
           "expected": "(?s)^\\s*Word:\\s*Java\\s+Upper:\\s*JAVA\\s+Lower:\\s*programming\\s*$",
@@ -2181,7 +2031,6 @@
           "regex": true
         },
         {
-          "id": "string-transform-scanner-2",
           "type": "stdout",
           "input": "  Python BASICS  \n",
           "expected": "(?s)^\\s*Word:\\s*Python\\s+Upper:\\s*PYTHON\\s+Lower:\\s*basics\\s*$",
@@ -2194,7 +2043,6 @@
       "explanation": "Each test supplies different values through standard input. Read the supplied data with Scanner and calculate or transform those values instead of relying on fixed sample values. The output checks allow harmless whitespace differences while still checking the required labels, values, and order."
     },
     "java-t1-12-05": {
-      "course": "programming_fundamentals",
       "category": "Strings",
       "title": "Compare String content with equals, not ==",
       "instructions": "Read a complete line with `Scanner` and store it in `first`. Assign that same reference to `second`, then create `third` with `new String(first)`. Print the results of `first == second`, `first == third`, and `first.equals(third)` on separate lines. The expected results are `true`, `false`, and `true` for any non-null input String. This demonstrates reference identity versus content equality; in normal application code, do not create a String with `new String(...)` just to compare it.",
@@ -2216,7 +2064,6 @@
       },
       "checks": [
         {
-          "id": "string-equality-scanner",
           "type": "stdout",
           "input": "abc\n",
           "expected": "(?s)^\\s*true\\s+false\\s+true\\s*$",
@@ -2225,7 +2072,6 @@
           "regex": true
         },
         {
-          "id": "string-equality-scanner-2",
           "type": "stdout",
           "input": "Java strings\n",
           "expected": "(?s)^\\s*true\\s+false\\s+true\\s*$",
@@ -2238,7 +2084,6 @@
       "explanation": "Each test supplies different values through standard input. Read the supplied data with Scanner and calculate or transform those values instead of relying on fixed sample values. The output checks allow harmless whitespace differences while still checking the required labels, values, and order."
     },
     "java-t1-12-06": {
-      "course": "programming_fundamentals",
       "category": "Strings",
       "title": "Observe String immutability and concat",
       "instructions": "Read an original String and a suffix as two complete input lines using `Scanner`. Call `original.concat(suffix)` without assigning the returned String, then print `Original: <original>`. Next, assign `original.concat(suffix)` to a new variable and print `Combined: <combined>`. This proves that concat returns a new String rather than changing the original object. Do not print a prompt.",
@@ -2259,7 +2104,6 @@
       },
       "checks": [
         {
-          "id": "string-immutable-scanner",
           "type": "stdout",
           "input": "abc\ndef\n",
           "expected": "(?s)^\\s*Original:\\s*abc\\s+Combined:\\s*abcdef\\s*$",
@@ -2268,7 +2112,6 @@
           "regex": true
         },
         {
-          "id": "string-immutable-scanner-2",
           "type": "stdout",
           "input": "Hello\n Java!\n",
           "expected": "(?s)^\\s*Original:\\s*Hello\\s+Combined:\\s*Hello\\s+Java!\\s*$",
@@ -2281,7 +2124,6 @@
       "explanation": "Each test supplies different values through standard input. Read the supplied data with Scanner and calculate or transform those values instead of relying on fixed sample values. The output checks allow harmless whitespace differences while still checking the required labels, values, and order."
     },
     "java-t1-12-07": {
-      "course": "programming_fundamentals",
       "category": "Strings and Input",
       "title": "Compare Scanner next and nextLine",
       "instructions": "Read the first token from standard input with `next()` and then read the rest of that same line with `nextLine()`. The input line is `Ada Lovelace Byron`. Print `First token: Ada` and `Rest of line: Lovelace Byron`. Do not call `nextLine()` before `next()`. This exercise isolates the difference between token-based and line-based input.",
@@ -2302,7 +2144,6 @@
       },
       "checks": [
         {
-          "id": "scanner-token-line",
           "type": "stdout",
           "input": "Ada Lovelace Byron\n",
           "expected": "(?s)^\\s*First\\s+token:\\s*Ada\\s+Rest\\s+of\\s+line:\\s*Lovelace\\s+Byron\\s*$",
@@ -2315,7 +2156,6 @@
       "explanation": "The solution removes the separator space with stripLeading() so the visible remainder is easy to read. The test permits normal spacing and verifies that the complete remainder is present."
     },
     "java-t1-13-01": {
-      "course": "programming_fundamentals",
       "category": "StringBuilder",
       "title": "Build and modify text with StringBuilder",
       "instructions": "Read an initial String and a suffix as complete lines using `Scanner`. Create a `StringBuilder` initialized with the first value. Append the suffix and then `!` using chained calls. Print the builder length, its first character, and its final String contents using `toString()`. Use `append` and take advantage of the fact that append returns the same builder so calls can be chained. The initial String must not be empty. Do not print a prompt.",
@@ -2337,7 +2177,6 @@
       },
       "checks": [
         {
-          "id": "builder-append-scanner",
           "type": "stdout",
           "input": "Java\n Rocks\n",
           "expected": "(?s)^\\s*Length:\\s*11\\s+First:\\s*J\\s+Text:\\s*Java\\s+Rocks!\\s*$",
@@ -2346,7 +2185,6 @@
           "regex": true
         },
         {
-          "id": "builder-append-scanner-2",
           "type": "stdout",
           "input": "Code\n Works\n",
           "expected": "(?s)^\\s*Length:\\s*11\\s+First:\\s*C\\s+Text:\\s*Code\\s+Works!\\s*$",
@@ -2359,7 +2197,6 @@
       "explanation": "Each test supplies different values through standard input. Read the supplied data with Scanner and calculate or transform those values instead of relying on fixed sample values. The output checks allow harmless whitespace differences while still checking the required labels, values, and order."
     },
     "java-t1-13-02": {
-      "course": "programming_fundamentals",
       "category": "StringBuilder",
       "title": "Insert, replace, remove, and reverse builder text",
       "instructions": "Read a String of at least six characters from standard input using `Scanner`. Start a `StringBuilder` with that text. Insert `X` at index 3, change the character at index 0 to `A`, delete the character at index 2, and replace the characters from index 2 (inclusive) to index 4 (exclusive) with `YZ`. Print the resulting text, then call `reverse()` and print the reversed text. Check your index positions after each modification. Do not print a prompt.",
@@ -2382,7 +2219,6 @@
       },
       "checks": [
         {
-          "id": "builder-edits-scanner",
           "type": "stdout",
           "input": "abcdef\n",
           "expected": "(?s)^\\s*AbYZef\\s+feZYbA\\s*$",
@@ -2391,7 +2227,6 @@
           "regex": true
         },
         {
-          "id": "builder-edits-scanner-2",
           "type": "stdout",
           "input": "ghijkl\n",
           "expected": "(?s)^\\s*AhYZkl\\s+lkZYhA\\s*$",
@@ -2404,7 +2239,6 @@
       "explanation": "Each test supplies different values through standard input. Read the supplied data with Scanner and calculate or transform those values instead of relying on fixed sample values. The output checks allow harmless whitespace differences while still checking the required labels, values, and order."
     },
     "java-t1-13-03": {
-      "course": "programming_fundamentals",
       "category": "StringBuilder",
       "title": "Use StringBuilder for repeated concatenation",
       "instructions": "Create an empty `StringBuilder`. Append the characters `J`, `a`, `v`, and `a` through four chained calls. Then append `!`. Print the length and the final String. Expected output: `Length: 5` and `Text: Java!`. This is the builder pattern shown in the summary and illustrates why a mutable builder is useful when text is assembled through repeated changes.",
@@ -2424,7 +2258,6 @@
       },
       "checks": [
         {
-          "id": "builder-chain",
           "type": "stdout",
           "input": "",
           "expected": "(?s)^\\s*Length:\\s*5\\s+Text:\\s*Java!\\s*$",
@@ -2437,7 +2270,6 @@
       "explanation": "The tests compile and run the submitted single source file. They inspect System.out for the required result using regular-expression matching so harmless leading, trailing, and repeated whitespace does not cause a false failure. The required words, values, and output order must still be correct."
     },
     "java-t1-13-04": {
-      "course": "programming_fundamentals",
       "category": "StringBuilder",
       "title": "Find and extract text inside a StringBuilder",
       "instructions": "Read a complete sentence with `Scanner`. Use `indexOf(\"Java\")` to find the starting index of `Java`. Use `substring(start, end)` on the builder to extract exactly `Java`; print `Index: <index>` and `Found: Java`. Then insert `Really ` at the start of the builder and print the entire modified text. The supplied sentence must contain `Java`. Remember that StringBuilder is mutable, while substring returns a String. Do not print a prompt.",
@@ -2458,7 +2290,6 @@
       },
       "checks": [
         {
-          "id": "builder-search-substring-scanner",
           "type": "stdout",
           "input": "Learn Java Today\n",
           "expected": "(?s)^\\s*Index:\\s*6\\s+Found:\\s*Java\\s+Really\\s+Learn\\s+Java\\s+Today\\s*$",
@@ -2467,7 +2298,6 @@
           "regex": true
         },
         {
-          "id": "builder-search-substring-scanner-2",
           "type": "stdout",
           "input": "Please Learn Java Today\n",
           "expected": "(?s)^\\s*Index:\\s*13\\s+Found:\\s*Java\\s+Really\\s+Please\\s+Learn\\s+Java\\s+Today\\s*$",
@@ -2480,7 +2310,6 @@
       "explanation": "Each test supplies different values through standard input. Read the supplied data with Scanner and calculate or transform those values instead of relying on fixed sample values. The output checks allow harmless whitespace differences while still checking the required labels, values, and order."
     },
     "java-t1-14-01": {
-      "course": "programming_fundamentals",
       "category": "Formatted Output",
       "title": "Format values with printf and format specifiers",
       "instructions": "Read an integer, a single character, a String token, and a boolean from standard input using `Scanner`. Use `System.out.printf` to display them in one line. Use `%d`, `%c`, `%s`, and `%b` in that order, separated by spaces, then print a newline using `%n`. Do not use string concatenation to build that line, and do not print a prompt.",
@@ -2502,7 +2331,6 @@
       },
       "checks": [
         {
-          "id": "printf-types-scanner",
           "type": "stdout",
           "input": "12\nA\nstudent\ntrue\n",
           "expected": "(?s)^\\s*12\\s+A\\s+student\\s+true\\s*$",
@@ -2511,7 +2339,6 @@
           "regex": true
         },
         {
-          "id": "printf-types-scanner-2",
           "type": "stdout",
           "input": "7\nZ\nteacher\nfalse\n",
           "expected": "(?s)^\\s*7\\s+Z\\s+teacher\\s+false\\s*$",
@@ -2524,7 +2351,6 @@
       "explanation": "Each test supplies different values through standard input. Read the supplied data with Scanner and calculate or transform those values instead of relying on fixed sample values. The output checks allow harmless whitespace differences while still checking the required labels, values, and order."
     },
     "java-t1-14-02": {
-      "course": "programming_fundamentals",
       "category": "Formatted Output",
       "title": "Control width, alignment, precision, and grouping",
       "instructions": "Read a decimal, a word, and an integer from standard input with `Scanner`. Format the decimal with minimum width 8 and two decimal places (`%8.2f`); the word left-aligned in a minimum width of 8 (`%-8s`); and the integer with a thousands separator (`%,d`). Place each formatted value on its own line. Width is a minimum, not a maximum, and the decimal is rounded to the requested precision. Do not print a prompt.",
@@ -2546,7 +2372,6 @@
       },
       "checks": [
         {
-          "id": "printf-width-scanner",
           "type": "stdout",
           "input": "12.3456\nJava\n1234567\n",
           "expected": "(?s)^\\s*12\\.35\\s+Java\\s+1,234,567\\s*$",
@@ -2555,7 +2380,6 @@
           "regex": true
         },
         {
-          "id": "printf-width-scanner-2",
           "type": "stdout",
           "input": "9.995\nCode\n9876543\n",
           "expected": "(?s)^\\s*10\\.00\\s+Code\\s+9,876,543\\s*$",
@@ -2568,7 +2392,6 @@
       "explanation": "Each test supplies different values through standard input. Read the supplied data with Scanner and calculate or transform those values instead of relying on fixed sample values. The output checks allow harmless whitespace differences while still checking the required labels, values, and order."
     },
     "java-t1-14-03": {
-      "course": "programming_fundamentals",
       "category": "Formatted Output",
       "title": "Create a formatted String with String.format",
       "instructions": "Read an item count, a decimal amount, and a percentage as an integer from standard input using `Scanner`. Use `String.format` to create a String in the exact pattern `<count> items cost €<amount> (<percentage>%)`. Use `%d` for the item count, `%.2f` for the amount, and `%d%%` for the percentage. Store the formatted result in a String variable and print that variable. The result must be built by String.format rather than by concatenating the pieces. Do not print a prompt.",
@@ -2589,7 +2412,6 @@
       },
       "checks": [
         {
-          "id": "string-format-scanner",
           "type": "stdout",
           "input": "4\n3.5\n10\n",
           "expected": "(?s)^\\s*4\\s+items\\s+cost\\s+€3\\.50\\s+\\(10%\\)\\s*$",
@@ -2598,7 +2420,6 @@
           "regex": true
         },
         {
-          "id": "string-format-scanner-2",
           "type": "stdout",
           "input": "12\n19.995\n25\n",
           "expected": "(?s)^\\s*12\\s+items\\s+cost\\s+€20\\.00\\s+\\(25%\\)\\s*$",
@@ -2611,7 +2432,6 @@
       "explanation": "Each test supplies different values through standard input. Read the supplied data with Scanner and calculate or transform those values instead of relying on fixed sample values. The output checks allow harmless whitespace differences while still checking the required labels, values, and order."
     },
     "java-t1-15-01": {
-      "course": "programming_fundamentals",
       "category": "Class Design",
       "title": "Translate a simple class design into one source file",
       "instructions": "Create a package-private `Book` class below the public Main class. Give it two private attributes: `String title` and `int pages`. Add a constructor that receives both values and a public method `summary()` that returns `<title> (<pages> pages)`. In `main`, read a complete title line and a page count with `Scanner`, create a Book from those values, and print its summary. Think of the class as the UML blueprint and the object as one instance with concrete values. Keep the class in Main.java and do not print a prompt.",
@@ -2633,7 +2453,6 @@
       },
       "checks": [
         {
-          "id": "book-model-scanner",
           "type": "stdout",
           "input": "The Hobbit\n310\n",
           "expected": "(?s)^\\s*The\\s+Hobbit\\s+\\(310\\s+pages\\)\\s*$",
@@ -2642,7 +2461,6 @@
           "regex": true
         },
         {
-          "id": "book-model-scanner-2",
           "type": "stdout",
           "input": "Clean Code\n464\n",
           "expected": "(?s)^\\s*Clean\\s+Code\\s+\\(464\\s+pages\\)\\s*$",
@@ -2655,7 +2473,6 @@
       "explanation": "Each test supplies different values through standard input. Read the supplied data with Scanner and calculate or transform those values instead of relying on fixed sample values. The output checks allow harmless whitespace differences while still checking the required labels, values, and order."
     },
     "java-t1-15-02": {
-      "course": "programming_fundamentals",
       "category": "Class Design",
       "title": "Understand access modifiers and package access",
       "instructions": "Create a package-private class `Account` with a private `int balance` attribute, a package-access (no modifier) `int internalCode` attribute, a protected `String category` attribute, and a public `getBalance()` method. Add a public constructor that initializes all three attributes. In `main`, read the balance, category, and internal code with `Scanner`, create an Account, and print the balance, category, and code on separate lines as `Balance: <value>`, `Category: <value>`, and `Code: <value>`, using public methods or same-package access as appropriate. Do not mark Account public because Main is the public class in this file. Do not print a prompt.",
@@ -2678,7 +2495,6 @@
       },
       "checks": [
         {
-          "id": "account-access-scanner",
           "type": "stdout",
           "input": "125\nsavings\n7\n",
           "expected": "(?s)^\\s*Balance:\\s*125\\s+Category:\\s*savings\\s+Code:\\s*7\\s*$",
@@ -2687,7 +2503,6 @@
           "regex": true
         },
         {
-          "id": "account-access-scanner-2",
           "type": "stdout",
           "input": "980\ncurrent\n42\n",
           "expected": "(?s)^\\s*Balance:\\s*980\\s+Category:\\s*current\\s+Code:\\s*42\\s*$",
@@ -2700,7 +2515,6 @@
       "explanation": "Each test supplies different values through standard input. Read the supplied data with Scanner and calculate or transform those values instead of relying on fixed sample values. The output checks allow harmless whitespace differences while still checking the required labels, values, and order."
     },
     "java-t1-15-03": {
-      "course": "programming_fundamentals",
       "category": "Class Design",
       "title": "Observe default values of class attributes",
       "instructions": "Create a package-private `Defaults` class with attributes `int count`, `double amount`, `boolean ready`, `char marker`, and `String label` declared without explicit initial values. Add a `display()` method that prints their values on one line separated by spaces. In Main, create a Defaults object and call display. The displayed values should be `0 0.0 false 0 null`; print the numeric Unicode value of the char as `(int) marker` so the invisible zero character is visible as `0`. Do not declare these as local variables; the exercise concerns automatic attribute initialization.",
@@ -2721,7 +2535,6 @@
       },
       "checks": [
         {
-          "id": "default-fields",
           "type": "stdout",
           "input": "",
           "expected": "(?s)^\\s*0\\s+0\\.0\\s+false\\s+0\\s+null\\s*$",
@@ -2734,7 +2547,6 @@
       "explanation": "The tests compile and run the submitted single source file. They inspect System.out for the required result using regular-expression matching so harmless leading, trailing, and repeated whitespace does not cause a false failure. The required words, values, and output order must still be correct."
     },
     "java-t1-15-04": {
-      "course": "programming_fundamentals",
       "category": "Class Design",
       "title": "Recognize a class declaration and its deferred modifiers",
       "instructions": "Keep the class declaration simple: create a package-private `Coordinate` class with two private double attributes and a public method that returns their sum. In `main`, read two decimal coordinates with `Scanner`, instantiate the class with those values, and print `Sum: <value>`. After completing the program, review the general class declaration form from the guide and identify which syntax words (`abstract`, `final`, `extends`, `implements`) are named in the course but not explained in this term. Do not add inheritance or interfaces to this exercise, and do not print a prompt.",
@@ -2755,7 +2567,6 @@
       },
       "checks": [
         {
-          "id": "coordinate-class-scanner",
           "type": "stdout",
           "input": "2.5\n3.5\n",
           "expected": "(?s)^\\s*Sum:\\s*6(?:\\.0+)?\\s*$",
@@ -2764,7 +2575,6 @@
           "regex": true
         },
         {
-          "id": "coordinate-class-scanner-2",
           "type": "stdout",
           "input": "1.25\n4.75\n",
           "expected": "(?s)^\\s*Sum:\\s*6(?:\\.0+)?\\s*$",
@@ -2777,7 +2587,6 @@
       "explanation": "Each test supplies different values through standard input. Read the supplied data with Scanner and calculate or transform those values instead of relying on fixed sample values. The output checks allow harmless whitespace differences while still checking the required labels, values, and order."
     },
     "java-t1-16-01": {
-      "course": "programming_fundamentals",
       "category": "Class Methods and Encapsulation",
       "title": "Distinguish attributes from local variables with this",
       "instructions": "Create a package-private `Sample` class with a private attribute `int number`. Initialize the attribute through the constructor. Add a method `show(int localValue)` that declares a local variable named `number` and initializes it from `localValue`; print the local value and `this.number` on separate lines. In `main`, read the field value and local value with `Scanner`, create a Sample, and call `show`. This demonstrates how a local variable can hide an attribute with the same name and how `this.number` refers to the object field. Do not print a prompt.",
@@ -2798,7 +2607,6 @@
       },
       "checks": [
         {
-          "id": "this-shadowing-scanner-scanner",
           "type": "stdout",
           "input": "42\n7\n",
           "expected": "(?s)^\\s*7\\s+42\\s*$",
@@ -2807,7 +2615,6 @@
           "regex": true
         },
         {
-          "id": "this-shadowing-scanner-scanner-2",
           "type": "stdout",
           "input": "100\n3\n",
           "expected": "(?s)^\\s*3\\s+100\\s*$",
@@ -2820,7 +2627,6 @@
       "explanation": "Each test supplies different values through standard input. Read the supplied data with Scanner and calculate or transform those values instead of relying on fixed sample values. The output checks allow harmless whitespace differences while still checking the required labels, values, and order."
     },
     "java-t1-16-02": {
-      "course": "programming_fundamentals",
       "category": "Class Methods and Encapsulation",
       "title": "Pass primitive arguments by value",
       "instructions": "Create a method `public static void changeValue(int number)` that assigns 99 to its parameter. In `main`, read an integer from standard input, store it in a local variable, call the method with that variable, and print the caller variable as `After call: <value>`. This demonstrates that the parameter receives a copy of the primitive value; changing the parameter does not change the caller variable. Do not print a prompt.",
@@ -2841,7 +2647,6 @@
       },
       "checks": [
         {
-          "id": "pass-by-value-primitive-scanner",
           "type": "stdout",
           "input": "10\n",
           "expected": "(?s)^\\s*After\\s+call:\\s*10\\s*$",
@@ -2850,7 +2655,6 @@
           "regex": true
         },
         {
-          "id": "pass-by-value-primitive-scanner-2",
           "type": "stdout",
           "input": "-25\n",
           "expected": "(?s)^\\s*After\\s+call:\\s*-25\\s*$",
@@ -2863,7 +2667,6 @@
       "explanation": "Each test supplies different values through standard input. Read the supplied data with Scanner and calculate or transform those values instead of relying on fixed sample values. The output checks allow harmless whitespace differences while still checking the required labels, values, and order."
     },
     "java-t1-16-03": {
-      "course": "programming_fundamentals",
       "category": "Class Methods and Encapsulation",
       "title": "Write getters and validated setters",
       "instructions": "Create a package-private `Car` class with private attributes `String brand` and `int speed`. Provide a public constructor that initializes both values. Add `getBrand()` and `getSpeed()` getters. Add `setSpeed(int speed)` that changes the attribute only when the proposed speed is between -20 and 300 inclusive; otherwise keep the old value unchanged. In `main`, read a brand, an initial speed, and a speed update with `Scanner`; construct the car, try the update, then print `Brand: <brand>` and `Speed: <speed>`. The tests include an invalid update. Do not print a prompt.",
@@ -2885,7 +2688,6 @@
       },
       "checks": [
         {
-          "id": "setter-validation-scanner",
           "type": "stdout",
           "input": "Nova\n80\n500\n",
           "expected": "(?s)^\\s*Brand:\\s*Nova\\s+Speed:\\s*80\\s*$",
@@ -2894,7 +2696,6 @@
           "regex": true
         },
         {
-          "id": "setter-validation-scanner-2",
           "type": "stdout",
           "input": "Roadster\n-10\n-30\n",
           "expected": "(?s)^\\s*Brand:\\s*Roadster\\s+Speed:\\s*-10\\s*$",
@@ -2907,7 +2708,6 @@
       "explanation": "Each test supplies different values through standard input. Read the supplied data with Scanner and calculate or transform those values instead of relying on fixed sample values. The output checks allow harmless whitespace differences while still checking the required labels, values, and order."
     },
     "java-t1-16-04": {
-      "course": "programming_fundamentals",
       "category": "Class Methods and Encapsulation",
       "title": "Calculate derived values through getters",
       "instructions": "Create a `Rectangle` class with private `width` and `height` attributes, a constructor, validated setters that accept only positive values, getters for each dimension, `getArea()`, and `getPerimeter()`. In `main`, read width, height, and a proposed new width with `Scanner`. Construct a rectangle, attempt to set the width to the supplied proposed value, and print `Width: <value>`, `Height: <value>`, `Area: <value>`, and `Perimeter: <value>` on separate lines. The tests include an invalid update, which must leave width unchanged. Do not print a prompt.",
@@ -2929,7 +2729,6 @@
       },
       "checks": [
         {
-          "id": "rectangle-encapsulation-scanner",
           "type": "stdout",
           "input": "5\n3\n-4\n",
           "expected": "(?s)^\\s*Width:\\s*5\\s+Height:\\s*3\\s+Area:\\s*15\\s+Perimeter:\\s*16\\s*$",
@@ -2938,7 +2737,6 @@
           "regex": true
         },
         {
-          "id": "rectangle-encapsulation-scanner-2",
           "type": "stdout",
           "input": "8\n2\n0\n",
           "expected": "(?s)^\\s*Width:\\s*8\\s+Height:\\s*2\\s+Area:\\s*16\\s+Perimeter:\\s*20\\s*$",
@@ -2951,7 +2749,6 @@
       "explanation": "Each test supplies different values through standard input. Read the supplied data with Scanner and calculate or transform those values instead of relying on fixed sample values. The output checks allow harmless whitespace differences while still checking the required labels, values, and order."
     },
     "java-t1-16-05": {
-      "course": "programming_fundamentals",
       "category": "Class Methods and Encapsulation",
       "title": "Overload methods with different parameter lists",
       "instructions": "Create a `Reporter` class with two overloaded methods named `report`: `report()` returns `General report`, and `report(String unit)` returns `Report for <unit>`. Read a unit name with `Scanner`, call both overloads from `main`, and print their return values on separate lines. The methods have the same name but different parameter lists, so the compiler can select the correct method from the call. Do not print a prompt.",
@@ -2972,7 +2769,6 @@
       },
       "checks": [
         {
-          "id": "method-overload-scanner",
           "type": "stdout",
           "input": "sales\n",
           "expected": "(?s)^\\s*General\\s+report\\s+Report\\s+for\\s+sales\\s*$",
@@ -2981,7 +2777,6 @@
           "regex": true
         },
         {
-          "id": "method-overload-scanner-2",
           "type": "stdout",
           "input": "finance\n",
           "expected": "(?s)^\\s*General\\s+report\\s+Report\\s+for\\s+finance\\s*$",
@@ -2994,7 +2789,6 @@
       "explanation": "Each test supplies different values through standard input. Read the supplied data with Scanner and calculate or transform those values instead of relying on fixed sample values. The output checks allow harmless whitespace differences while still checking the required labels, values, and order."
     },
     "java-t1-16-06": {
-      "course": "programming_fundamentals",
       "category": "Class Methods and Encapsulation",
       "title": "Overload methods by parameter type",
       "instructions": "Create a class `Formatter` with two methods named `describe`: `describe(int value)` returns `Integer: <value>` and `describe(double value)` returns `Decimal: <value>`. Read one integer and one decimal value with `Scanner`, call both overloads, and print their returned Strings on separate lines. The parameter types are different, so each call resolves to a different method signature. Do not print a prompt.",
@@ -3015,7 +2809,6 @@
       },
       "checks": [
         {
-          "id": "overload-types-scanner",
           "type": "stdout",
           "input": "8\n8.5\n",
           "expected": "(?s)^\\s*Integer:\\s*8\\s+Decimal:\\s*8\\.5\\s*$",
@@ -3024,7 +2817,6 @@
           "regex": true
         },
         {
-          "id": "overload-types-scanner-2",
           "type": "stdout",
           "input": "-3\n2.25\n",
           "expected": "(?s)^\\s*Integer:\\s*-3\\s+Decimal:\\s*2\\.25\\s*$",
@@ -3037,7 +2829,6 @@
       "explanation": "Each test supplies different values through standard input. Read the supplied data with Scanner and calculate or transform those values instead of relying on fixed sample values. The output checks allow harmless whitespace differences while still checking the required labels, values, and order."
     },
     "java-t1-17-01": {
-      "course": "programming_fundamentals",
       "category": "Constructors",
       "title": "Observe the generated default constructor",
       "instructions": "Create a package-private `Marker` class that declares one integer attribute `code` and one String attribute `label`, but declares no constructor. In main, instantiate it with `new Marker()` and print the two fields through public getters that you add. Expected output: `Code: 0` and `Label: null`. This demonstrates that Java supplies a no-argument default constructor only when the class declares no constructor at all.",
@@ -3057,7 +2848,6 @@
       },
       "checks": [
         {
-          "id": "default-constructor",
           "type": "stdout",
           "input": "",
           "expected": "(?s)^\\s*Code:\\s*0\\s+Label:\\s*null\\s*$",
@@ -3070,7 +2860,6 @@
       "explanation": "The tests compile and run the submitted single source file. They inspect System.out for the required result using regular-expression matching so harmless leading, trailing, and repeated whitespace does not cause a false failure. The required words, values, and output order must still be correct."
     },
     "java-t1-17-02": {
-      "course": "programming_fundamentals",
       "category": "Constructors",
       "title": "Overload constructors for different initialization options",
       "instructions": "Create a `Point` class with private double coordinates `x` and `y`. Implement a no-argument constructor that sets both coordinates to 0.0 and a two-argument constructor that initializes them from supplied values. Add getters. In `main`, read two decimal coordinates with `Scanner`, create one origin point and one point using the supplied values, then print `Origin: 0.0,0.0` and `Point: <x>,<y>` on separate lines (x and y separated by a comma, no space). Constructor names must match the class name and must not have a return type. Do not print a prompt.",
@@ -3091,7 +2880,6 @@
       },
       "checks": [
         {
-          "id": "constructor-overloads-scanner",
           "type": "stdout",
           "input": "9.0\n1.1\n",
           "expected": "(?s)^\\s*Origin:\\s*0\\.0,0\\.0\\s+Point:\\s*9\\.0,1\\.1\\s*$",
@@ -3100,7 +2888,6 @@
           "regex": true
         },
         {
-          "id": "constructor-overloads-scanner-2",
           "type": "stdout",
           "input": "-2.5\n4.0\n",
           "expected": "(?s)^\\s*Origin:\\s*0\\.0,0\\.0\\s+Point:\\s*-2\\.5,4\\.0\\s*$",
@@ -3113,7 +2900,6 @@
       "explanation": "Each test supplies different values through standard input. Read the supplied data with Scanner and calculate or transform those values instead of relying on fixed sample values. The output checks allow harmless whitespace differences while still checking the required labels, values, and order."
     },
     "java-t1-17-03": {
-      "course": "programming_fundamentals",
       "category": "Constructors",
       "title": "Validate constructor input before storing it",
       "instructions": "Create a `Car` class with a private speed attribute. Use the valid interval -20 through 300. The constructor must receive an initial speed and call a `setSpeed` method that validates the value. If the supplied value is invalid, leave speed at its default value 0. Read two initial speeds with `Scanner`, create one Car for each, then print `First speed: <value>` and `Second speed: <value>` on separate lines. Do not assign the constructor parameter directly to the field without validation, and do not print a prompt.",
@@ -3134,7 +2920,6 @@
       },
       "checks": [
         {
-          "id": "constructor-validation-scanner",
           "type": "stdout",
           "input": "80\n500\n",
           "expected": "(?s)^\\s*First\\s+speed:\\s*80\\s+Second\\s+speed:\\s*0\\s*$",
@@ -3143,7 +2928,6 @@
           "regex": true
         },
         {
-          "id": "constructor-validation-scanner-2",
           "type": "stdout",
           "input": "-20\n301\n",
           "expected": "(?s)^\\s*First\\s+speed:\\s*-20\\s+Second\\s+speed:\\s*0\\s*$",
@@ -3156,7 +2940,6 @@
       "explanation": "Each test supplies different values through standard input. Read the supplied data with Scanner and calculate or transform those values instead of relying on fixed sample values. The output checks allow harmless whitespace differences while still checking the required labels, values, and order."
     },
     "java-t1-17-04": {
-      "course": "programming_fundamentals",
       "category": "Constructors",
       "title": "Create a copy constructor",
       "instructions": "Create a `Rectangle` class with private integer attributes `x`, `y`, `height`, and `width`. Implement a four-argument constructor and a copy constructor `Rectangle(Rectangle other)` that copies all four values into a new object. Add getters for each field. The four-argument constructor takes its parameters in the order x, y, height, width. In `main`, read the four values with `Scanner`, create a source rectangle and a copy, and print x, y, height, and width of the copy in that order, as plain numbers separated by spaces or line breaks. The copy must be a distinct object with the same initial attribute values. Do not print a prompt.",
@@ -3177,7 +2960,6 @@
       },
       "checks": [
         {
-          "id": "copy-constructor-scanner",
           "type": "stdout",
           "input": "2\n3\n4\n5\n",
           "expected": "(?s)^\\s*2\\s+3\\s+4\\s+5\\s*$",
@@ -3186,7 +2968,6 @@
           "regex": true
         },
         {
-          "id": "copy-constructor-scanner-2",
           "type": "stdout",
           "input": "-1\n8\n12\n7\n",
           "expected": "(?s)^\\s*-1\\s+8\\s+12\\s+7\\s*$",
@@ -3199,7 +2980,6 @@
       "explanation": "Each test supplies different values through standard input. Read the supplied data with Scanner and calculate or transform those values instead of relying on fixed sample values. The output checks allow harmless whitespace differences while still checking the required labels, values, and order."
     },
     "java-t1-17-05": {
-      "course": "programming_fundamentals",
       "category": "Constructors",
       "title": "Reuse constructor initialization with this(...)",
       "instructions": "Create a `Point` class with a two-argument constructor that initializes x and y. Add a no-argument constructor whose first statement is `this(1.0, 1.0);`. Add getters and print the default point's coordinates as `1.0,1.0` (x and y separated by a comma, no space). The constructor call must be the first statement in the no-argument constructor. This avoids duplicating initialization logic.",
@@ -3219,7 +2999,6 @@
       },
       "checks": [
         {
-          "id": "constructor-delegation",
           "type": "stdout",
           "input": "",
           "expected": "(?s)^\\s*1\\.0,1\\.0\\s*$",
@@ -3232,7 +3011,6 @@
       "explanation": "The tests compile and run the submitted single source file. They inspect System.out for the required result using regular-expression matching so harmless leading, trailing, and repeated whitespace does not cause a false failure. The required words, values, and output order must still be correct."
     },
     "java-t1-18-01": {
-      "course": "programming_fundamentals",
       "category": "toString",
       "title": "Override toString to describe an object",
       "instructions": "Create a `Person` class with private `firstName` and `lastName` attributes. Initialize them in the constructor and override `toString()` with `@Override` so it returns `firstName + \" \" + lastName`. In `main`, read the first and last names as two input lines with `Scanner`, create a Person, and print the Person object directly with `System.out.println(person)`. The output must contain the supplied name, not the default class-name and hash-code text. Do not print a prompt.",
@@ -3254,7 +3032,6 @@
       },
       "checks": [
         {
-          "id": "person-tostring-scanner",
           "type": "stdout",
           "input": "Ada\nLovelace\n",
           "expected": "(?s)^\\s*Ada\\s+Lovelace\\s*$",
@@ -3263,7 +3040,6 @@
           "regex": true
         },
         {
-          "id": "person-tostring-scanner-2",
           "type": "stdout",
           "input": "Grace\nHopper\n",
           "expected": "(?s)^\\s*Grace\\s+Hopper\\s*$",
@@ -3276,7 +3052,6 @@
       "explanation": "Each test supplies different values through standard input. Read the supplied data with Scanner and calculate or transform those values instead of relying on fixed sample values. The output checks allow harmless whitespace differences while still checking the required labels, values, and order."
     },
     "java-t1-18-02": {
-      "course": "programming_fundamentals",
       "category": "toString",
       "title": "Create a useful Rectangle toString representation",
       "instructions": "Create a `Rectangle` class with private integer attributes `x`, `y`, `width`, and `height`; initialize them through a constructor. Add `getArea()` and `getPerimeter()`. Override `toString()` so that it returns exactly this structure: `Rectangle[x=<x>, y=<y>, width=<width>, height=<height>, area=<area>, perimeter=<perimeter>]`. In `main`, read x, y, width, and height with `Scanner`, create the rectangle, and print it. Whitespace around punctuation may differ, but all labels and calculated values must be included in the correct order. Do not print a prompt.",
@@ -3298,7 +3073,6 @@
       },
       "checks": [
         {
-          "id": "rectangle-tostring-scanner",
           "type": "stdout",
           "input": "2\n3\n5\n4\n",
           "expected": "(?s)^\\s*Rectangle\\s*\\[\\s*x\\s*=\\s*2\\s*,\\s*y\\s*=\\s*3\\s*,\\s*width\\s*=\\s*5\\s*,\\s*height\\s*=\\s*4\\s*,\\s*area\\s*=\\s*20\\s*,\\s*perimeter\\s*=\\s*18\\s*\\]\\s*$",
@@ -3307,7 +3081,6 @@
           "regex": true
         },
         {
-          "id": "rectangle-tostring-scanner-2",
           "type": "stdout",
           "input": "-1\n8\n7\n2\n",
           "expected": "(?s)^\\s*Rectangle\\s*\\[\\s*x\\s*=\\s*-1\\s*,\\s*y\\s*=\\s*8\\s*,\\s*width\\s*=\\s*7\\s*,\\s*height\\s*=\\s*2\\s*,\\s*area\\s*=\\s*14\\s*,\\s*perimeter\\s*=\\s*18\\s*\\]\\s*$",
@@ -3320,7 +3093,6 @@
       "explanation": "Each test supplies different values through standard input. Read the supplied data with Scanner and calculate or transform those values instead of relying on fixed sample values. The output checks allow harmless whitespace differences while still checking the required labels, values, and order."
     },
     "java-t1-19-01": {
-      "course": "programming_fundamentals",
       "category": "Math Class",
       "title": "Use Math max, min, and abs",
       "instructions": "Read two integers for comparison and one integer for an absolute-value calculation using `Scanner`. Use `Math.max(first, second)`, `Math.min(first, second)`, and `Math.abs(value)` to calculate three values. Print `Max: <value>`, `Min: <value>`, and `Absolute: <value>`. Do not write your own comparison or absolute-value algorithm; call the Math methods listed in the course. Do not print a prompt.",
@@ -3342,7 +3114,6 @@
       },
       "checks": [
         {
-          "id": "math-basic-scanner",
           "type": "stdout",
           "input": "12\n7\n-9\n",
           "expected": "(?s)^\\s*Max:\\s*12\\s+Min:\\s*7\\s+Absolute:\\s*9\\s*$",
@@ -3351,7 +3122,6 @@
           "regex": true
         },
         {
-          "id": "math-basic-scanner-2",
           "type": "stdout",
           "input": "-4\n15\n6\n",
           "expected": "(?s)^\\s*Max:\\s*15\\s+Min:\\s*-4\\s+Absolute:\\s*6\\s*$",
@@ -3364,7 +3134,6 @@
       "explanation": "Each test supplies different values through standard input. Read the supplied data with Scanner and calculate or transform those values instead of relying on fixed sample values. The output checks allow harmless whitespace differences while still checking the required labels, values, and order."
     },
     "java-t1-19-02": {
-      "course": "programming_fundamentals",
       "category": "Math Class",
       "title": "Calculate powers and square roots",
       "instructions": "Read a base, an integer exponent, and a non-negative number from standard input using `Scanner`. Calculate the power with `Math.pow(base, exponent)` and the square root with `Math.sqrt(number)`. Print `Power: <value>` and `Root: <value>`. Both methods return double values, so keep the values as doubles when printing. Do not print a prompt.",
@@ -3385,7 +3154,6 @@
       },
       "checks": [
         {
-          "id": "math-pow-sqrt-scanner",
           "type": "stdout",
           "input": "3\n4\n81\n",
           "expected": "(?s)^\\s*Power:\\s*81(?:\\.0+)?\\s+Root:\\s*9(?:\\.0+)?\\s*$",
@@ -3394,7 +3162,6 @@
           "regex": true
         },
         {
-          "id": "math-pow-sqrt-scanner-2",
           "type": "stdout",
           "input": "2\n5\n144\n",
           "expected": "(?s)^\\s*Power:\\s*32(?:\\.0+)?\\s+Root:\\s*12(?:\\.0+)?\\s*$",
@@ -3407,7 +3174,6 @@
       "explanation": "Each test supplies different values through standard input. Read the supplied data with Scanner and calculate or transform those values instead of relying on fixed sample values. The output checks allow harmless whitespace differences while still checking the required labels, values, and order."
     },
     "java-t1-19-03": {
-      "course": "programming_fundamentals",
       "category": "Math Class",
       "title": "Use Math.PI and Math.E in a formula",
       "instructions": "Read a decimal radius from standard input using `Scanner`. Use `Math.PI` to calculate the circumference with `2 * Math.PI * radius`. Also print `Math.E`. Display the circumference with two digits after the decimal point using printf, followed by E with three digits after the decimal point. Use labels `Circumference:` and `E:`. Do not hardcode the mathematical constants or print a prompt.",
@@ -3428,7 +3194,6 @@
       },
       "checks": [
         {
-          "id": "math-constants-scanner",
           "type": "stdout",
           "input": "2\n",
           "expected": "(?s)^\\s*Circumference:\\s*12\\.57\\s+E:\\s*2\\.718\\s*$",
@@ -3437,7 +3202,6 @@
           "regex": true
         },
         {
-          "id": "math-constants-scanner-2",
           "type": "stdout",
           "input": "5\n",
           "expected": "(?s)^\\s*Circumference:\\s*31\\.42\\s+E:\\s*2\\.718\\s*$",
@@ -3450,7 +3214,6 @@
       "explanation": "Each test supplies different values through standard input. Read the supplied data with Scanner and calculate or transform those values instead of relying on fixed sample values. The output checks allow harmless whitespace differences while still checking the required labels, values, and order."
     },
     "java-t1-20-01": {
-      "course": "programming_fundamentals",
       "category": "Integrated Capstone",
       "title": "Capstone: Console order calculator",
       "instructions": "Build a small console order calculator in one source file. Read an item name as a full line, read an integer quantity, and read a decimal unit price. Calculate the subtotal, then apply a discount: 10% when quantity is at least 10, otherwise 0%. Use a named `final` constant for the discount threshold or rate, a method `calculateTotal(double unitPrice, int quantity, double discountRate)` that returns the final total, and a ternary or if statement to select the discount. Use `StringBuilder` to assemble exactly three labeled lines: `Item: <name>`, `Quantity: <quantity>`, and `Total: €<amount>`. Append line separators between them, use `String.format(\"%.2f\", total)` for the amount, and print the builder contents. Do not print prompts. After reading the item name, use nextLine correctly; the name may contain spaces. The tests include a quantity below and above the discount threshold.",
@@ -3473,7 +3236,6 @@
       },
       "checks": [
         {
-          "id": "order-no-discount",
           "type": "stdout",
           "input": "Notebook\n3\n2.50\n",
           "expected": "(?s)^\\s*Item:\\s*Notebook\\s+Quantity:\\s*3\\s+Total:\\s*€7\\.50\\s*$",
@@ -3482,7 +3244,6 @@
           "regex": true
         },
         {
-          "id": "order-discount",
           "type": "stdout",
           "input": "Graph Paper\n10\n2.00\n",
           "expected": "(?s)^\\s*Item:\\s*Graph\\s+Paper\\s+Quantity:\\s*10\\s+Total:\\s*€18\\.00\\s*$",
@@ -3495,7 +3256,6 @@
       "explanation": "The tests provide a full item name (including spaces in the second test), quantity, and unit price. Output matching tolerates surrounding whitespace but requires the exact item text, quantity, euro symbol, decimal point, and two decimal places. Do not print prompts or debug lines."
     },
     "java-t1-20-02": {
-      "course": "programming_fundamentals",
       "category": "Integrated Capstone",
       "title": "Capstone: Validated rectangle geometry model",
       "instructions": "Create a package-private `Rectangle` class in Main.java with private x, y, width, and height attributes. Provide a no-argument constructor that delegates with `this(...)`, a four-argument constructor, and a copy constructor. Ensure width and height are validated as positive using setters. Provide getters, `getArea()`, `getPerimeter()`, and an overridden `toString()` that includes position, dimensions, area, and perimeter. In `main`, read x, y, width, height, and a proposed replacement width using `Scanner`. Create an original rectangle, make a copy with the copy constructor, attempt to set the copy width to the supplied replacement value, then print the original and the copy, one per line. The tests supply an invalid replacement width, so both printed lines must show the original dimensions. Keep Main as the only public top-level class. Do not print a prompt.",
@@ -3518,7 +3278,6 @@
       },
       "checks": [
         {
-          "id": "rectangle-capstone-scanner",
           "type": "stdout",
           "input": "2\n3\n5\n4\n-10\n",
           "expected": "(?s)^\\s*Rectangle\\s*\\[\\s*x\\s*=\\s*2\\s*,\\s*y\\s*=\\s*3\\s*,\\s*width\\s*=\\s*5\\s*,\\s*height\\s*=\\s*4\\s*,\\s*area\\s*=\\s*20\\s*,\\s*perimeter\\s*=\\s*18\\s*\\]\\s+Rectangle\\s*\\[\\s*x\\s*=\\s*2\\s*,\\s*y\\s*=\\s*3\\s*,\\s*width\\s*=\\s*5\\s*,\\s*height\\s*=\\s*4\\s*,\\s*area\\s*=\\s*20\\s*,\\s*perimeter\\s*=\\s*18\\s*\\]\\s*$",
@@ -3527,7 +3286,6 @@
           "regex": true
         },
         {
-          "id": "rectangle-capstone-scanner-2",
           "type": "stdout",
           "input": "-1\n8\n7\n2\n0\n",
           "expected": "(?s)^\\s*Rectangle\\s*\\[\\s*x\\s*=\\s*-1\\s*,\\s*y\\s*=\\s*8\\s*,\\s*width\\s*=\\s*7\\s*,\\s*height\\s*=\\s*2\\s*,\\s*area\\s*=\\s*14\\s*,\\s*perimeter\\s*=\\s*18\\s*\\]\\s+Rectangle\\s*\\[\\s*x\\s*=\\s*-1\\s*,\\s*y\\s*=\\s*8\\s*,\\s*width\\s*=\\s*7\\s*,\\s*height\\s*=\\s*2\\s*,\\s*area\\s*=\\s*14\\s*,\\s*perimeter\\s*=\\s*18\\s*\\]\\s*$",
@@ -3540,7 +3298,6 @@
       "explanation": "Each test supplies different values through standard input. Read the supplied data with Scanner and calculate or transform those values instead of relying on fixed sample values. The output checks allow harmless whitespace differences while still checking the required labels, values, and order."
     },
     "java-t1-20-03": {
-      "course": "programming_fundamentals",
       "category": "Integrated Capstone",
       "title": "Capstone: Three-round randomized quiz",
       "instructions": "Build a three-question arithmetic quiz. Use `Random` with seed 42 to generate two integers from 1 through 10 inclusive for each question: call `random.nextInt(10) + 1` for the first operand and then again for the second, in every round. A `for` loop must repeat exactly three rounds. For each round, display `Question <round>: <a> + <b> = ?` with `System.out.printf`, read one integer answer, and use an if/else to print `Correct` or `Incorrect: <correct answer>`. Put the calculation in `public static int add(int a, int b)`. After the loop, print `Score: <correct count>/3`. The six generated operands are repeatable in this order: 1, 4, 9, 5, 1, 6. Do not print prompts or extra lines.",
@@ -3565,7 +3322,6 @@
       },
       "checks": [
         {
-          "id": "quiz-all-correct",
           "type": "stdout",
           "input": "5\n14\n7\n",
           "expected": "(?s)^\\s*Question\\s+1:\\s*1\\s*\\+\\s*4\\s*=\\s*\\?\\s+Correct\\s+Question\\s+2:\\s*9\\s*\\+\\s*5\\s*=\\s*\\?\\s+Correct\\s+Question\\s+3:\\s*1\\s*\\+\\s*6\\s*=\\s*\\?\\s+Correct\\s+Score:\\s*3\\s*/\\s*3\\s*$",
@@ -3574,7 +3330,6 @@
           "regex": true
         },
         {
-          "id": "quiz-mixed-answers",
           "type": "stdout",
           "input": "0\n14\n0\n",
           "expected": "(?s)^\\s*Question\\s+1:\\s*1\\s*\\+\\s*4\\s*=\\s*\\?\\s+Incorrect:\\s*5\\s+Question\\s+2:\\s*9\\s*\\+\\s*5\\s*=\\s*\\?\\s+Correct\\s+Question\\s+3:\\s*1\\s*\\+\\s*6\\s*=\\s*\\?\\s+Incorrect:\\s*7\\s+Score:\\s*1\\s*/\\s*3\\s*$",

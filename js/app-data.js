@@ -1,8 +1,6 @@
 "use strict";
 
 function normalizeLibrary(map) {
-  // A single subject may be supplied directly as { title, terms }, while
-  // multi-subject libraries remain objects keyed by their subject IDs.
   const isSingleSubject = Boolean(
     map &&
     typeof map === "object" &&
@@ -12,19 +10,25 @@ function normalizeLibrary(map) {
       (map.terms && typeof map.terms === "object") ||
       map.file),
   );
+
   const entries = isSingleSubject
     ? [[map.id || map.slug || "relational-database", map]]
     : Object.entries(map || {});
+
   return entries.map(([id, entry]) => {
+    const resolveFile = (file) =>
+      file ? `reference/${id}/${file}` : undefined;
+
     let terms;
+
     if (Array.isArray(entry?.terms)) {
       terms = entry.terms.map((t, i) =>
         typeof t === "string"
-          ? { label: `Term ${i + 1}`, file: t }
+          ? { label: `Term ${i + 1}`, file: resolveFile(t) }
           : {
               ...t,
               label: t?.name ?? t?.label ?? `Term ${i + 1}`,
-              file: t?.file,
+              file: resolveFile(t?.file),
             },
       );
     } else if (entry?.terms && typeof entry.terms === "object") {
@@ -32,20 +36,29 @@ function normalizeLibrary(map) {
         .map(([label, t]) => ({
           ...(t && typeof t === "object" && !Array.isArray(t) ? t : {}),
           label,
-          file: typeof t === "string" ? t : t?.file,
+          file: resolveFile(typeof t === "string" ? t : t?.file),
         }))
         .sort((x, y) =>
           x.label.localeCompare(y.label, undefined, { numeric: true }),
         );
-    } else terms = entry?.file ? [{ label: "Term 1", file: entry.file }] : [];
-    // A learning entry may link one exercise package for every term, or
-    // define a default packageId inherited by terms that do not override it.
+    } else {
+      terms = entry?.file
+        ? [{ label: "Term 1", file: resolveFile(entry.file) }]
+        : [];
+    }
+
     const defaultPackageId = entry?.packageId ?? entry?.exercisePackageId;
+
     terms = terms.map((t) => ({
       ...t,
       packageId: t.packageId ?? t.exercisePackageId ?? defaultPackageId,
     }));
-    return { ...entry, id, terms: terms.filter((t) => t.file) };
+
+    return {
+      ...entry,
+      id,
+      terms: terms.filter((t) => t.file),
+    };
   });
 }
 async function loadContent() {
@@ -72,7 +85,9 @@ async function loadContent() {
   const files = [];
 
   try {
-    const manifest = await (await fetchAppResource("content/manifest.json")).json();
+    const manifest = await (
+      await fetchAppResource("content/manifest.json")
+    ).json();
 
     if (!compatibleManifest(manifest))
       throw new Error(
@@ -104,15 +119,16 @@ async function loadContent() {
 
     for (const [manifestId, entry] of packageEntries) {
       for (const f of entry.files || []) {
+        const loc = "content/packages/" + manifestId + "/" + f;
         try {
-          const r = await fetchAppResource("content/" + f);
+          const r = await fetchAppResource(loc);
 
           if (!r.ok) throw new Error("HTTP " + r.status);
 
           const pkg = await r.json();
 
           files.push({
-            name: "content/" + f,
+            name: loc,
             src: "bundled",
             // The package file's own packageId/version win; the manifest
             // entry fills them in when the file omits them.
@@ -125,7 +141,7 @@ async function loadContent() {
           });
         } catch (e) {
           S.errors.push({
-            file: "content/" + f,
+            file: loc,
             id: "(file)",
             field: "$",
             msg: "Cannot load or parse: " + e.message,
@@ -157,7 +173,8 @@ async function loadContent() {
     };
     startupProgress.update({
       title: "Restoring available practice content",
-      detail: "The content manifest could not be loaded; continuing with saved/imported content…",
+      detail:
+        "The content manifest could not be loaded; continuing with saved/imported content…",
       value: 80,
     });
   }
@@ -343,8 +360,7 @@ function normalizeExerciseCheck(check, kind = "generic") {
       next.regex = matcher === "regex";
       if (matcher === "contains") next.contains = true;
       else if (matcher === "regex" || matcher === "exact") delete next.contains;
-      if (["regex", "contains", "exact"].includes(matcher))
-        delete next.matcher;
+      if (["regex", "contains", "exact"].includes(matcher)) delete next.matcher;
     } else {
       next.regex = next.regex === true;
     }
@@ -375,7 +391,11 @@ function normalizeExercisePackageSchema(pkg) {
 
       // Java and terminal keep their distinct runtime settings nested, while
       // shared exercise content (checks, solution, explanation) lives at root.
-      if (serviceKey && exercise[serviceKey] && typeof exercise[serviceKey] === "object") {
+      if (
+        serviceKey &&
+        exercise[serviceKey] &&
+        typeof exercise[serviceKey] === "object"
+      ) {
         const service = { ...exercise[serviceKey] };
         if (!Array.isArray(exercise.checks) && Array.isArray(service.checks))
           exercise.checks = service.checks;
@@ -397,8 +417,11 @@ function normalizeExercisePackageSchema(pkg) {
         exercise[serviceKey] = service;
       }
 
-      if (type === "sql-query" && exercise.solution === undefined &&
-          exercise.referenceSolution !== undefined) {
+      if (
+        type === "sql-query" &&
+        exercise.solution === undefined &&
+        exercise.referenceSolution !== undefined
+      ) {
         exercise.solution = exercise.referenceSolution;
       }
       delete exercise.referenceSolution;
@@ -408,7 +431,9 @@ function normalizeExercisePackageSchema(pkg) {
       if (exercise.checks === undefined && exercise.expected !== undefined) {
         const expected = exercise.expected;
         exercise.checks =
-          type === "command-text" && expected && typeof expected === "object" &&
+          type === "command-text" &&
+          expected &&
+          typeof expected === "object" &&
           !Array.isArray(expected)
             ? [
                 ...(expected.accepted || []).map((value) => ({
@@ -435,14 +460,19 @@ function normalizeExercisePackageSchema(pkg) {
         exercise.checks = exercise.checks.map((check) =>
           normalizeExerciseCheck(
             check,
-            type === "java-ex" ? "java" : type === "terminal" ? "terminal" : "generic",
+            type === "java-ex"
+              ? "java"
+              : type === "terminal"
+                ? "terminal"
+                : "generic",
           ),
         );
       }
 
       // The common optional fields are stable even for older imported files.
       if (exercise.hints == null) exercise.hints = [];
-      else if (typeof exercise.hints === "string") exercise.hints = [exercise.hints];
+      else if (typeof exercise.hints === "string")
+        exercise.hints = [exercise.hints];
       return [id, exercise];
     }),
   );
@@ -506,24 +536,29 @@ function packageForCoreValidation(pkg) {
     ...pkg,
     exercises: Object.fromEntries(
       Object.entries(pkg.exercises || {}).map(([id, exercise]) => {
-        if (!exercise || typeof exercise !== "object" || Array.isArray(exercise))
+        if (
+          !exercise ||
+          typeof exercise !== "object" ||
+          Array.isArray(exercise)
+        )
           return [id, exercise];
         const adapted = exerciseWithCoreAliases(exercise);
         if (adapted.type === "java-ex") {
           const java = { ...(adapted.java || {}) };
-          if (Array.isArray(java.checks)) java.checks = java.checks.map((check) => {
-            const next = { ...check };
-            const matcher =
-              next.regex === true
-                ? "regex"
-                : next.contains === true
-                  ? "contains"
-                  : "";
-            delete next.regex;
-            delete next.contains;
-            if (matcher) next.matcher = matcher;
-            return next;
-          });
+          if (Array.isArray(java.checks))
+            java.checks = java.checks.map((check) => {
+              const next = { ...check };
+              const matcher =
+                next.regex === true
+                  ? "regex"
+                  : next.contains === true
+                    ? "contains"
+                    : "";
+              delete next.regex;
+              delete next.contains;
+              if (matcher) next.matcher = matcher;
+              return next;
+            });
           adapted.java = java;
           delete adapted.checks;
           delete adapted.solution;
@@ -622,7 +657,9 @@ function addPackage(f, ctx) {
 
   // A question may omit `hints`; the practice UI simply hides the hint
   // control for an empty list.
-  const pkg = normalizeOptionalExerciseHints(normalizeExercisePackageSchema(f.pkg));
+  const pkg = normalizeOptionalExerciseHints(
+    normalizeExercisePackageSchema(f.pkg),
+  );
 
   const validationPkg = packageForCoreValidation(pkg);
   const errs = validatePackage(validationPkg, f.name, c);
@@ -649,10 +686,7 @@ function addPackage(f, ctx) {
     ...ex,
     id,
     // Java is a programming-fundamentals subject, not a separate course tab.
-    course:
-      ex.type === "java-ex" && ex.course === "java"
-        ? "programming_fundamentals"
-        : ex.course,
+    course: pkg.course,
     term: packageTerm,
     canvas: ex.canvas ?? packageCanvas,
     packageId: pkg.packageId,
@@ -894,11 +928,7 @@ async function gradeSqlOnDatabase(
     };
   }
 
-  const reference = await runSqlInRollbackTransaction(
-    db,
-    ds,
-    ex.solution,
-  );
+  const reference = await runSqlInRollbackTransaction(db, ds, ex.solution);
   if (reference.status === "rejected") {
     return {
       correct: false,

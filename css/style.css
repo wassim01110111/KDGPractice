@@ -1488,15 +1488,6 @@ nav.reference-tabs a.reference-tab.on {
   background: var(--ac);
   border-color: var(--ac);
 }
-.reference-tab-label {
-  color: var(--mut);
-  font-size: 0.7rem;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-}
-nav.reference-tabs a.reference-tab.on .reference-tab-label {
-  color: rgb(255 255 255 / 78%);
-}
 .reference-tab strong {
   font-size: 1rem;
 }
@@ -9811,6 +9802,9 @@ textarea:hover:not(:disabled) {
       user-select: none;
       -webkit-user-drag: none;
     }
+  }
+  .reference-tab strong {
+    font-size: 1.4rem;
   }
   .exercise-split-layout {
     display: grid;

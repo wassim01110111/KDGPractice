@@ -4,9 +4,9 @@
   "version": "1.2.0",
   "term": 1,
   "datasets": {},
+  "course": "operating_system_fundamentals",
   "exercises": {
     "os-fundamentals-001": {
-      "course": "os",
       "category": "Fundamentals",
       "title": "Print Working Directory",
       "instructions": "Write the command to print your current working directory.",
@@ -28,7 +28,6 @@
       ]
     },
     "os-fundamentals-002": {
-      "course": "os",
       "category": "Fundamentals",
       "title": "Identify Current User",
       "instructions": "Write the command that displays the effective username of the current shell session.",
@@ -58,7 +57,6 @@
       ]
     },
     "os-fundamentals-003": {
-      "course": "os",
       "category": "Fundamentals",
       "title": "Show Date and Time",
       "instructions": "Write the command to display the current date and time.",
@@ -80,7 +78,6 @@
       ]
     },
     "os-fundamentals-004": {
-      "course": "os",
       "category": "Fundamentals",
       "title": "View Command History",
       "instructions": "Write the command to show a numbered list of previously executed commands.",
@@ -102,7 +99,6 @@
       ]
     },
     "os-fundamentals-005": {
-      "course": "os",
       "category": "Fundamentals",
       "title": "Manual Page Access",
       "instructions": "Write the command to open the manual page for the `ls` command.",
@@ -128,7 +124,6 @@
       ]
     },
     "os-fundamentals-006": {
-      "course": "os",
       "category": "Fundamentals",
       "title": "Absolute Path Concept",
       "instructions": "What type of path starts explicitly with the root slash `/`?",
@@ -142,7 +137,6 @@
       "checks": [0]
     },
     "os-fundamentals-007": {
-      "course": "os",
       "category": "Fundamentals",
       "title": "Inode Metadata",
       "instructions": "Write the command to show a long directory listing with each entry’s inode number.",
@@ -180,7 +174,6 @@
       ]
     },
     "os-fundamentals-008": {
-      "course": "os",
       "category": "Fundamentals",
       "title": "Parent Directory Reference",
       "instructions": "In relative pathing, what symbol represents the parent directory?",
@@ -206,7 +199,6 @@
       ]
     },
     "os-fundamentals-009": {
-      "course": "os",
       "category": "Fundamentals",
       "title": "Current Directory Reference",
       "instructions": "What symbol represents the current directory in relative paths?",
@@ -232,7 +224,6 @@
       ]
     },
     "os-fundamentals-010": {
-      "course": "os",
       "category": "Fundamentals",
       "title": "List Inode Numbers Explicitly",
       "instructions": "Write the command to list file names with their inode numbers in long format.",
@@ -262,7 +253,6 @@
       ]
     },
     "os-fundamentals-011": {
-      "course": "os",
       "category": "Fundamentals",
       "title": "Display Current User ID",
       "instructions": "Write the command to print your user ID and group IDs.",
@@ -284,7 +274,6 @@
       ]
     },
     "os-shell-basics-012": {
-      "course": "os",
       "category": "Shell Syntax",
       "title": "Combine Short Options",
       "instructions": "Write a command to list all files (including hidden ones) in long format for the `/etc` directory by combining `-l` and `-a` into a single combined option string.",
@@ -346,7 +335,6 @@
       ]
     },
     "os-shell-basics-013": {
-      "course": "os",
       "category": "Shell Syntax",
       "title": "Repeat Last Command",
       "instructions": "Write the shell shorthand symbol used to repeat the immediately preceding command.",
@@ -368,7 +356,6 @@
       ]
     },
     "os-shell-basics-015": {
-      "course": "os",
       "category": "Shell Syntax",
       "title": "Command Separator",
       "instructions": "Write a single-line command sequence using a semicolon to change directory to `/tmp` and then list its contents.",
@@ -390,7 +377,6 @@
       ]
     },
     "os-shell-basics-016": {
-      "course": "os",
       "category": "Shell Syntax",
       "title": "Brace Expansion Creation",
       "instructions": "Write a brace expansion expression with `touch` to create three files named `log1.txt`, `log2.txt`, and `log3.txt` in one command.",
@@ -420,7 +406,6 @@
       ]
     },
     "os-shell-basics-017": {
-      "course": "os",
       "category": "Shell Syntax",
       "title": "Directory Tree Brace Expansion",
       "instructions": "Write a command using `mkdir -p` and brace expansion to create a directory structure `project/src`, `project/docs`, and `project/tests` all at once.",
@@ -450,7 +435,6 @@
       ]
     },
     "os-shell-basics-020": {
-      "course": "os",
       "category": "Shell Syntax",
       "title": "Exit Shell",
       "instructions": "Write the command or shortcut key sequence to exit the current shell session.",
@@ -500,7 +484,6 @@
       ]
     },
     "os-shell-basics-021": {
-      "course": "os",
       "category": "Shell Syntax",
       "title": "Execute a Numbered History Entry",
       "instructions": "In Bash, write the history expansion that reruns command number 3 from the current history list.",
@@ -522,7 +505,6 @@
       ]
     },
     "os-shell-basics-022": {
-      "course": "os",
       "category": "Shell Syntax",
       "title": "Echo Variable",
       "instructions": "Write an `echo` command to print the value of a shell variable `USER`.",
@@ -552,7 +534,6 @@
       ]
     },
     "os-shell-basics-023": {
-      "course": "os",
       "category": "Shell Syntax",
       "title": "Long Options Prefix",
       "instructions": "Write the standard prefix formatting (number of dashes) for long options in Linux commands.",
@@ -574,7 +555,6 @@
       ]
     },
     "os-shell-basics-025": {
-      "course": "os",
       "category": "Shell Syntax",
       "title": "Brace Expansion Letters",
       "instructions": "Write a brace expansion expression to echo letters `a`, `b`, and `c` separated by spaces.",
@@ -600,7 +580,6 @@
       ]
     },
     "os-wildcards-027": {
-      "course": "os",
       "category": "Wildcards",
       "title": "Match Any Characters",
       "instructions": "Write a wildcard pattern to match any filename ending in `.txt`.",
@@ -622,7 +601,6 @@
       ]
     },
     "os-wildcards-028": {
-      "course": "os",
       "category": "Wildcards",
       "title": "Match Single Character",
       "instructions": "Write a wildcard pattern to match `file1.txt`, `file2.txt`, etc., where exactly one single character replaces the question mark in `file?.txt`.",
@@ -644,7 +622,6 @@
       ]
     },
     "os-wildcards-029": {
-      "course": "os",
       "category": "Wildcards",
       "title": "Character List Bracket",
       "instructions": "Write a wildcard pattern using brackets to match files starting with `a`, `b`, or `c` followed by anything.",
@@ -670,7 +647,6 @@
       ]
     },
     "os-wildcards-030": {
-      "course": "os",
       "category": "Wildcards",
       "title": "Negated Bracket Wildcard",
       "instructions": "Write a Bash filename-glob pattern that matches names whose first character is not a digit from 0 through 9.",
@@ -696,7 +672,6 @@
       ]
     },
     "os-wildcards-031": {
-      "course": "os",
       "category": "Wildcards",
       "title": "Digit Range Wildcard",
       "instructions": "Write a Bash filename-glob pattern that matches a name beginning with `log`, followed by exactly one digit, followed by `.txt`.",
@@ -722,7 +697,6 @@
       ]
     },
     "os-wildcards-032": {
-      "course": "os",
       "category": "Wildcards",
       "title": "Hidden Files Globbing",
       "instructions": "True or False: Standard wildcards like `*` match leading dots, so they automatically match hidden files without explicit notation.",
@@ -738,7 +712,6 @@
       "checks": [0]
     },
     "os-wildcards-034": {
-      "course": "os",
       "category": "Wildcards",
       "title": "Letter Range Brace Expansion",
       "instructions": "Write a brace expansion expression to generate letters `a` through `c`.",
@@ -764,7 +737,6 @@
       ]
     },
     "os-wildcards-035": {
-      "course": "os",
       "category": "Wildcards",
       "title": "Comma Brace Expansion",
       "instructions": "Write a brace expansion expression to generate `file1.txt` and `file2.txt`.",
@@ -790,7 +762,6 @@
       ]
     },
     "os-wildcards-036": {
-      "course": "os",
       "category": "Wildcards",
       "title": "List Log Files Glob",
       "instructions": "Write a `ls` command using a wildcard to list all `.log` files in the current directory.",
@@ -812,7 +783,6 @@
       ]
     },
     "os-wildcards-037": {
-      "course": "os",
       "category": "Wildcards",
       "title": "Match Specific Range",
       "instructions": "Write a wildcard pattern matching any single lowercase letter from `a` to `z` followed by `.txt`.",
@@ -838,7 +808,6 @@
       ]
     },
     "os-wildcards-039": {
-      "course": "os",
       "category": "Wildcards",
       "title": "List Files Starting with Letter",
       "instructions": "Write an `ls` command using a wildcard to list files starting with `a`.",
@@ -860,7 +829,6 @@
       ]
     },
     "os-wildcards-040": {
-      "course": "os",
       "category": "Wildcards",
       "title": "List Single Character Extension",
       "instructions": "Write an `ls` command using `?` to list files named `fileX.txt` where `X` is any single character.",
@@ -882,7 +850,6 @@
       ]
     },
     "os-wildcards-041": {
-      "course": "os",
       "category": "Wildcards",
       "title": "Match Zero or More",
       "instructions": "Which wildcard symbol matches any number of characters, including zero characters?",
@@ -904,7 +871,6 @@
       ]
     },
     "os-navigation-042": {
-      "course": "os",
       "category": "Navigation",
       "title": "Change Directory Home",
       "instructions": "Write the command to change your current directory to your home directory.",
@@ -942,7 +908,6 @@
       ]
     },
     "os-navigation-043": {
-      "course": "os",
       "category": "Navigation",
       "title": "Go Back Previous Directory",
       "instructions": "Write the command to return to the previous directory you were in.",
@@ -968,7 +933,6 @@
       ]
     },
     "os-navigation-044": {
-      "course": "os",
       "category": "Navigation",
       "title": "Go Up Parent Directory",
       "instructions": "Write the command to move up one directory level.",
@@ -994,7 +958,6 @@
       ]
     },
     "os-navigation-045": {
-      "course": "os",
       "category": "Navigation",
       "title": "List Long Format",
       "instructions": "Write the `ls` command to list directory contents in long format.",
@@ -1016,7 +979,6 @@
       ]
     },
     "os-navigation-046": {
-      "course": "os",
       "category": "Navigation",
       "title": "List Hidden Files",
       "instructions": "Write the `ls` command that lists every entry, including hidden entries and the special `.` and `..` entries.",
@@ -1042,7 +1004,6 @@
       ]
     },
     "os-navigation-047": {
-      "course": "os",
       "category": "Navigation",
       "title": "List Directory Itself",
       "instructions": "Write the command to list the attributes and details of the `/etc` directory itself rather than its contents.",
@@ -1076,7 +1037,6 @@
       ]
     },
     "os-navigation-048": {
-      "course": "os",
       "category": "Navigation",
       "title": "Recursive Listing",
       "instructions": "Which `ls` option recursively lists the contents of subdirectories? Give the option only (for example, `-R`).",
@@ -1110,7 +1070,6 @@
       ]
     },
     "os-navigation-049": {
-      "course": "os",
       "category": "Navigation",
       "title": "Human Readable Sizes",
       "instructions": "Which `ls` option makes file sizes human-readable (for example, KiB or MiB) when combined with `-l`? Give the option only.",
@@ -1146,7 +1105,6 @@
       ]
     },
     "os-navigation-051": {
-      "course": "os",
       "category": "Navigation",
       "title": "Print Date Format",
       "instructions": "Write the `date` command option to format output as `YYYY-MM-DD` (using `%F`).",
@@ -1172,7 +1130,6 @@
       ]
     },
     "os-navigation-052": {
-      "course": "os",
       "category": "Navigation",
       "title": "Quit Manual Page",
       "instructions": "What key do you press to quit out of a `man` manual page view?",
@@ -1194,7 +1151,6 @@
       ]
     },
     "os-navigation-053": {
-      "course": "os",
       "category": "Navigation",
       "title": "Search in Man Page",
       "instructions": "Which symbol/character do you type inside `man` to start searching for text?",
@@ -1216,7 +1172,6 @@
       ]
     },
     "os-navigation-054": {
-      "course": "os",
       "category": "Navigation",
       "title": "Root Directory Path",
       "instructions": "Write the command to change your directory to the topmost root directory `/`.",
@@ -1242,7 +1197,6 @@
       ]
     },
     "os-navigation-055": {
-      "course": "os",
       "category": "Navigation",
       "title": "Combined Listing Options",
       "instructions": "Write an `ls` command that combines long format, hidden files, and human-readable sizes.",
@@ -1304,7 +1258,6 @@
       ]
     },
     "os-navigation-056": {
-      "course": "os",
       "category": "Navigation",
       "title": "List One Per Line",
       "instructions": "Which `ls` option forces one entry per line? Give the option only.",
@@ -1338,7 +1291,6 @@
       ]
     },
     "os-navigation-059": {
-      "course": "os",
       "category": "Navigation",
       "title": "Navigation MCQ Concept",
       "instructions": "Which command prints the absolute path of the current working directory?",
@@ -1352,7 +1304,6 @@
       "checks": [0]
     },
     "os-navigation-060": {
-      "course": "os",
       "category": "Navigation",
       "title": "List Specific Path",
       "instructions": "Write an `ls` command to list the contents of `/var/log` in long format.",
@@ -1382,7 +1333,6 @@
       ]
     },
     "os-file-inspection-062": {
-      "course": "os",
       "category": "File Inspection",
       "title": "Check File Type",
       "instructions": "Write the command to determine the type of a file named `document.pdf`.",
@@ -1408,7 +1358,6 @@
       ]
     },
     "os-file-inspection-063": {
-      "course": "os",
       "category": "File Inspection",
       "title": "View Metadata Stat",
       "instructions": "Write the command to display detailed metadata (size, inode, permissions, timestamps) for `notes.txt`.",
@@ -1434,7 +1383,6 @@
       ]
     },
     "os-file-inspection-064": {
-      "course": "os",
       "category": "File Inspection",
       "title": "Print Entire File",
       "instructions": "Write the command to print the entire contents of `notes.txt` to the terminal screen.",
@@ -1460,7 +1408,6 @@
       ]
     },
     "os-file-inspection-065": {
-      "course": "os",
       "category": "File Inspection",
       "title": "View First Lines",
       "instructions": "Write the command to display the first 5 lines of `notes.txt`.",
@@ -1494,7 +1441,6 @@
       ]
     },
     "os-file-inspection-066": {
-      "course": "os",
       "category": "File Inspection",
       "title": "View Last Lines",
       "instructions": "Write the command to display the last 20 lines of `logfile.txt`.",
@@ -1528,7 +1474,6 @@
       ]
     },
     "os-file-inspection-067": {
-      "course": "os",
       "category": "File Inspection",
       "title": "Follow Log File",
       "instructions": "Which `tail` option continuously follows a growing file and prints newly appended lines? Give the option (`-f` or its long form); including `tail` is also acceptable.",
@@ -1570,7 +1515,6 @@
       ]
     },
     "os-file-inspection-068": {
-      "course": "os",
       "category": "File Inspection",
       "title": "Page by Page Viewer",
       "instructions": "Which command starts the `less` pager, which supports forward and backward scrolling and searching? Give the command name only; no filename is specified.",
@@ -1594,7 +1538,6 @@
       ]
     },
     "os-file-inspection-069": {
-      "course": "os",
       "category": "File Inspection",
       "title": "Count Lines Words Bytes",
       "instructions": "Write the command to count the number of lines, words, and bytes in `notes.txt`.",
@@ -1624,7 +1567,6 @@
       ]
     },
     "os-file-inspection-070": {
-      "course": "os",
       "category": "File Inspection",
       "title": "Count Lines Only",
       "instructions": "Write the command to count strictly the number of lines in `notes.txt`.",
@@ -1654,7 +1596,6 @@
       ]
     },
     "os-file-inspection-071": {
-      "course": "os",
       "category": "File Inspection",
       "title": "Byte vs Character Count",
       "instructions": "Which pair of `wc` options counts bytes and characters, respectively, including when text contains non-ASCII characters?",
@@ -1673,7 +1614,6 @@
       "checks": [0]
     },
     "os-file-inspection-072": {
-      "course": "os",
       "category": "File Inspection",
       "title": "Join Multiple Files",
       "instructions": "Write a `cat` command that combines and prints the contents of `a.txt` and `b.txt` together.",
@@ -1699,7 +1639,6 @@
       ]
     },
     "os-file-inspection-073": {
-      "course": "os",
       "category": "File Inspection",
       "title": "Head First Ten",
       "instructions": "Write a `head` command to display the first 10 lines of `data.txt`. You may use the default line count or specify 10 explicitly.",
@@ -1747,7 +1686,6 @@
       ]
     },
     "os-file-inspection-074": {
-      "course": "os",
       "category": "File Inspection",
       "title": "Quit Less Pager",
       "instructions": "Write the key pressed inside `less` or `man` to quit the view.",
@@ -1773,7 +1711,6 @@
       ]
     },
     "os-file-inspection-075": {
-      "course": "os",
       "category": "File Inspection",
       "title": "Tail Last Ten",
       "instructions": "Write a `tail` command to display the last 10 lines of `data.txt`. You may use the default line count or specify 10 explicitly.",
@@ -1821,7 +1758,6 @@
       ]
     },
     "os-file-inspection-076": {
-      "course": "os",
       "category": "File Inspection",
       "title": "Command Comparison",
       "instructions": "Which inspection command allows scrolling both forward and backward through a file?",
@@ -1835,7 +1771,6 @@
       "checks": [2]
     },
     "os-file-management-077": {
-      "course": "os",
       "category": "File Management",
       "title": "Create Directory",
       "instructions": "Write the command to create a new directory named `archive`.",
@@ -1861,7 +1796,6 @@
       ]
     },
     "os-file-management-078": {
-      "course": "os",
       "category": "File Management",
       "title": "Create Parent Directories",
       "instructions": "Which `mkdir` option creates missing parent directories and does not fail just because a directory already exists? Give the option only.",
@@ -1891,7 +1825,6 @@
       ]
     },
     "os-file-management-079": {
-      "course": "os",
       "category": "File Management",
       "title": "Create Empty File",
       "instructions": "Write the command to create an empty file named `empty.txt` or update its timestamp.",
@@ -1917,7 +1850,6 @@
       ]
     },
     "os-file-management-080": {
-      "course": "os",
       "category": "File Management",
       "title": "Copy File",
       "instructions": "Write the command to copy `source.txt` to `backup.txt`.",
@@ -1943,7 +1875,6 @@
       ]
     },
     "os-file-management-081": {
-      "course": "os",
       "category": "File Management",
       "title": "Copy Directory Recursively",
       "instructions": "Which `cp` option enables recursive copying of a directory tree? Give the option only.",
@@ -1981,7 +1912,6 @@
       ]
     },
     "os-file-management-082": {
-      "course": "os",
       "category": "File Management",
       "title": "Interactive Copy Prompt",
       "instructions": "Which `cp` option prompts before overwriting an existing destination file? Give the option only.",
@@ -2011,7 +1941,6 @@
       ]
     },
     "os-file-management-083": {
-      "course": "os",
       "category": "File Management",
       "title": "Move or Rename File",
       "instructions": "Write the command to rename `old.txt` to `new.txt`.",
@@ -2037,7 +1966,6 @@
       ]
     },
     "os-file-management-084": {
-      "course": "os",
       "category": "File Management",
       "title": "Interactive Move Prompt",
       "instructions": "Which `mv` option prompts before overwriting an existing destination file? Give the option only.",
@@ -2067,7 +1995,6 @@
       ]
     },
     "os-file-management-085": {
-      "course": "os",
       "category": "File Management",
       "title": "Remove File",
       "instructions": "Write the command to delete a file named `temp.txt`.",
@@ -2093,7 +2020,6 @@
       ]
     },
     "os-file-management-086": {
-      "course": "os",
       "category": "File Management",
       "title": "Remove Directory Recursively",
       "instructions": "Write the command with options to delete a directory named `old_dir` and all its contents recursively.",
@@ -2139,7 +2065,6 @@
       ]
     },
     "os-file-management-087": {
-      "course": "os",
       "category": "File Management",
       "title": "Force Remove",
       "instructions": "Which `rm` option forces removal without prompting and ignores nonexistent-file errors? Give the option only.",
@@ -2169,7 +2094,6 @@
       ]
     },
     "os-file-management-088": {
-      "course": "os",
       "category": "File Management",
       "title": "Remove Empty Directory",
       "instructions": "Write the command specifically used to remove an **empty** directory.",
@@ -2195,7 +2119,6 @@
       ]
     },
     "os-file-management-089": {
-      "course": "os",
       "category": "File Management",
       "title": "Copy Multiple into Dir",
       "instructions": "Write a `cp` command to copy `a.txt` and `b.txt` into an existing directory `backup/`.",
@@ -2229,7 +2152,6 @@
       ]
     },
     "os-file-management-090": {
-      "course": "os",
       "category": "File Management",
       "title": "Move into Directory",
       "instructions": "Write a `mv` command to move `report.txt` into the `docs/` directory.",
@@ -2255,7 +2177,6 @@
       ]
     },
     "os-file-management-091": {
-      "course": "os",
       "category": "File Management",
       "title": "Recycle Bin Warning",
       "instructions": "True or False: Linux command-line deletion via `rm` moves deleted files to a temporary desktop recycle bin.",
@@ -2269,7 +2190,6 @@
       "checks": [0]
     },
     "os-file-management-092": {
-      "course": "os",
       "category": "File Management",
       "title": "Create Multiple Empty",
       "instructions": "Write a `touch` command to create two empty files `one.txt` and `two.txt` simultaneously.",
@@ -2303,7 +2223,6 @@
       ]
     },
     "os-file-management-093": {
-      "course": "os",
       "category": "File Management",
       "title": "Nested Mkdir",
       "instructions": "Write a `mkdir` command to create `project/src/core` in a single command.",
@@ -2329,7 +2248,6 @@
       ]
     },
     "os-file-management-094": {
-      "course": "os",
       "category": "File Management",
       "title": "Copy Directory Command",
       "instructions": "Write the complete command to copy directory `dir1` to `dir2` recursively.",
@@ -2363,7 +2281,6 @@
       ]
     },
     "os-file-management-095": {
-      "course": "os",
       "category": "File Management",
       "title": "Interactive Rm",
       "instructions": "Which `rm` option asks for confirmation before removing each file? Give the option only.",
@@ -2393,7 +2310,6 @@
       ]
     },
     "os-file-management-096": {
-      "course": "os",
       "category": "File Management",
       "title": "Touch Update Timestamp",
       "instructions": "Write a `touch` command to update the modification timestamp of `existing.txt` without changing its contents.",
@@ -2419,7 +2335,6 @@
       ]
     },
     "os-text-utilities-097": {
-      "course": "os",
       "category": "Text Utilities",
       "title": "Echo Text",
       "instructions": "Write the `echo` command to print `Hello World` to standard output.",
@@ -2453,7 +2368,6 @@
       ]
     },
     "os-text-utilities-098": {
-      "course": "os",
       "category": "Text Utilities",
       "title": "Echo Escape Sequences",
       "instructions": "Which `echo` option enables interpretation of backslash escape sequences such as `\\n`? Give the option only.",
@@ -2475,7 +2389,6 @@
       ]
     },
     "os-text-utilities-099": {
-      "course": "os",
       "category": "Text Utilities",
       "title": "Cut Fields Column",
       "instructions": "Write a `cut` command to extract the first column/field from `/etc/passwd` using `:` as the delimiter.",
@@ -2521,7 +2434,6 @@
       ]
     },
     "os-text-utilities-100": {
-      "course": "os",
       "category": "Text Utilities",
       "title": "Sort Numerically",
       "instructions": "Which `sort` option sorts numbers numerically instead of lexicographically? Give the option only.",
@@ -2551,7 +2463,6 @@
       ]
     },
     "os-text-utilities-101": {
-      "course": "os",
       "category": "Text Utilities",
       "title": "Sort Reverse",
       "instructions": "Which `sort` option reverses the sort order? Give the option only.",
@@ -2581,7 +2492,6 @@
       ]
     },
     "os-text-utilities-102": {
-      "course": "os",
       "category": "Text Utilities",
       "title": "Uniq Count Occurrences",
       "instructions": "Which `uniq` option displays each line with its occurrence count? Give the option only.",
@@ -2611,7 +2521,6 @@
       ]
     },
     "os-text-utilities-103": {
-      "course": "os",
       "category": "Text Utilities",
       "title": "Uniq Duplicate Lines",
       "instructions": "Which `uniq` option outputs only lines that occur more than once? Give the option only.",
@@ -2641,7 +2550,6 @@
       ]
     },
     "os-text-utilities-104": {
-      "course": "os",
       "category": "Text Utilities",
       "title": "Tr Translate Lower Upper",
       "instructions": "Write a `tr` command to translate all lowercase letters to uppercase from standard input.",
@@ -2675,7 +2583,6 @@
       ]
     },
     "os-text-utilities-105": {
-      "course": "os",
       "category": "Text Utilities",
       "title": "Tr Delete Characters",
       "instructions": "Which `tr` option deletes the specified characters from the input? Give the option only.",
@@ -2705,7 +2612,6 @@
       ]
     },
     "os-text-utilities-106": {
-      "course": "os",
       "category": "Text Utilities",
       "title": "Tee Command Save",
       "instructions": "Write a command using `tee` to save standard output to `output.txt` while also displaying it on screen.",
@@ -2731,7 +2637,6 @@
       ]
     },
     "os-text-utilities-107": {
-      "course": "os",
       "category": "Text Utilities",
       "title": "Tee Append Option",
       "instructions": "Which `tee` option appends to the output file instead of overwriting it? Give the option only.",
@@ -2761,7 +2666,6 @@
       ]
     },
     "os-text-utilities-108": {
-      "course": "os",
       "category": "Text Utilities",
       "title": "Sort Requirement for Uniq",
       "instructions": "True or False: `uniq` only collapses **consecutive** duplicate lines, so sorting the input first is typically required.",
@@ -2775,7 +2679,6 @@
       "checks": [0]
     },
     "os-text-utilities-109": {
-      "course": "os",
       "category": "Text Utilities",
       "title": "Process Status Ps",
       "instructions": "Write a command to display all running processes in a user-oriented process listing.",
@@ -2797,7 +2700,6 @@
       ]
     },
     "os-text-utilities-114": {
-      "course": "os",
       "category": "Text Utilities",
       "title": "Sort Numeric Flag",
       "instructions": "Write a `sort` command to sort `numbers.txt` in numeric order.",
@@ -2827,7 +2729,6 @@
       ]
     },
     "os-text-utilities-115": {
-      "course": "os",
       "category": "Text Utilities",
       "title": "Tr Squeeze Option",
       "instructions": "Which `tr` option squeezes repeated characters into a single occurrence? Give the option only.",
@@ -2857,7 +2758,6 @@
       ]
     },
     "os-redirection-117": {
-      "course": "os",
       "category": "Redirection",
       "title": "Stdout Overwrite",
       "instructions": "Write a command to redirect standard output of `ls` into `list.txt`, overwriting the file.",
@@ -2887,7 +2787,6 @@
       ]
     },
     "os-redirection-118": {
-      "course": "os",
       "category": "Redirection",
       "title": "Stdout Append",
       "instructions": "Write a command to append the output of `date` to `log.txt` without overwriting existing content.",
@@ -2917,7 +2816,6 @@
       ]
     },
     "os-redirection-119": {
-      "course": "os",
       "category": "Redirection",
       "title": "Stderr Redirection",
       "instructions": "Write a command that lists a path which does not exist (/doesnotexist) and saves the resulting error message in `error.txt`.",
@@ -2943,7 +2841,6 @@
       ]
     },
     "os-redirection-120": {
-      "course": "os",
       "category": "Redirection",
       "title": "Discard Errors",
       "instructions": "Write a redirection syntax to discard all standard error messages by sending them to `/dev/null`.",
@@ -2965,7 +2862,6 @@
       ]
     },
     "os-redirection-121": {
-      "course": "os",
       "category": "Redirection",
       "title": "Redirect Both Stdout Stderr",
       "instructions": "Write a Bash command that searches `/etc` for a file named `passwd` and redirects both standard output and standard error into `all_output.log`.",
@@ -2995,7 +2891,6 @@
       ]
     },
     "os-redirection-122": {
-      "course": "os",
       "category": "Redirection",
       "title": "Stdin Redirection",
       "instructions": "Write a command using `<` to sort contents of `unsorted.txt` and save to `sorted.txt`.",
@@ -3021,7 +2916,6 @@
       ]
     },
     "os-redirection-123": {
-      "course": "os",
       "category": "Redirection",
       "title": "Pipe Connector",
       "instructions": "Write a command using a pipe to count the number of entries listed by `ls`.",
@@ -3043,7 +2937,6 @@
       ]
     },
     "os-redirection-124": {
-      "course": "os",
       "category": "Redirection",
       "title": "Stream Descriptors",
       "instructions": "What is the numeric file descriptor number for standard error?",
@@ -3057,7 +2950,6 @@
       "checks": [2]
     },
     "os-redirection-125": {
-      "course": "os",
       "category": "Redirection",
       "title": "Dev Null Purpose",
       "instructions": "What special file acts as a bit bucket that discards everything written to it?",
@@ -3079,7 +2971,6 @@
       ]
     },
     "os-redirection-126": {
-      "course": "os",
       "category": "Redirection",
       "title": "Stderr to Stdout Syntax",
       "instructions": "Write the redirection fragment that sends standard error to the same destination as standard output.",
@@ -3101,7 +2992,6 @@
       ]
     },
     "os-redirection-127": {
-      "course": "os",
       "category": "Redirection",
       "title": "Pipe vs Redirection",
       "instructions": "True or False: A pipe (`|`) connects the stdout of one command to the stdin of another command, whereas redirection connects a command to a file.",
@@ -3115,7 +3005,6 @@
       "checks": [0]
     },
     "os-redirection-128": {
-      "course": "os",
       "category": "Redirection",
       "title": "Combine Stderr and Stdout Portable",
       "instructions": "Write the portable command syntax to send both stdout and stderr of `cmd` to `out.txt` without using `&>`.",
@@ -3141,7 +3030,6 @@
       ]
     },
     "os-redirection-129": {
-      "course": "os",
       "category": "Redirection",
       "title": "Stdin Descriptor",
       "instructions": "What is the numeric file descriptor number for standard input?",
@@ -3163,7 +3051,6 @@
       ]
     },
     "os-redirection-130": {
-      "course": "os",
       "category": "Redirection",
       "title": "Stdout Descriptor",
       "instructions": "What is the numeric file descriptor number for standard output?",
@@ -3185,7 +3072,6 @@
       ]
     },
     "os-redirection-131": {
-      "course": "os",
       "category": "Redirection",
       "title": "Overwrite Warning",
       "instructions": "True or False: Using `>` empties the target file before the command runs.",
@@ -3199,7 +3085,6 @@
       "checks": [0]
     },
     "os-links-132": {
-      "course": "os",
       "category": "Links",
       "title": "Create Symbolic Link",
       "instructions": "Write the command to create a symbolic (soft) link named `soft.txt` pointing to `target.txt`.",
@@ -3225,7 +3110,6 @@
       ]
     },
     "os-links-133": {
-      "course": "os",
       "category": "Links",
       "title": "Create Hard Link",
       "instructions": "Write the command to create a hard link named `hard.txt` pointing to `target.txt`.",
@@ -3251,7 +3135,6 @@
       ]
     },
     "os-links-134": {
-      "course": "os",
       "category": "Links",
       "title": "Inode Sharing Concept",
       "instructions": "True or False: A hard link shares the exact same inode number as the original file.",
@@ -3265,7 +3148,6 @@
       "checks": [0]
     },
     "os-links-135": {
-      "course": "os",
       "category": "Links",
       "title": "Symbolic Link Target Type",
       "instructions": "True or False: A symbolic link stores a path (text) pointing to the target, whereas a hard link points directly to an inode.",
@@ -3279,7 +3161,6 @@
       "checks": [0]
     },
     "os-links-136": {
-      "course": "os",
       "category": "Links",
       "title": "Cross Filesystem Hard Link",
       "instructions": "True or False: Hard links can span across different disk partitions and file systems.",
@@ -3293,7 +3174,6 @@
       "checks": [1]
     },
     "os-links-137": {
-      "course": "os",
       "category": "Links",
       "title": "Directory Hard Link Restriction",
       "instructions": "True or False: Standard users can create hard links to directories.",
@@ -3307,7 +3187,6 @@
       "checks": [1]
     },
     "os-links-138": {
-      "course": "os",
       "category": "Links",
       "title": "Original Deleted Soft Link",
       "instructions": "What happens to a symbolic link if its original target file is deleted?",
@@ -3326,7 +3205,6 @@
       "hints": []
     },
     "os-links-139": {
-      "course": "os",
       "category": "Links",
       "title": "Original Deleted Hard Link",
       "instructions": "What happens to a hard link if its original filename is deleted?",
@@ -3345,7 +3223,6 @@
       "hints": []
     },
     "os-links-140": {
-      "course": "os",
       "category": "Links",
       "title": "Symlink Directory Creation",
       "instructions": "Write a command to create a symbolic link named `hosts_link` in `/tmp/links` that points to `/etc/hosts`.",
@@ -3371,7 +3248,6 @@
       ]
     },
     "os-links-141": {
-      "course": "os",
       "category": "Links",
       "title": "List Inode Command",
       "instructions": "Which `ls` option displays inode numbers alongside filenames? Give the option only.",
@@ -3401,7 +3277,6 @@
       ]
     },
     "os-links-142": {
-      "course": "os",
       "category": "Links",
       "title": "Link Indicator in Ls",
       "instructions": "When listing files with `ls -l`, what letter starts the permissions string for a symbolic link?",
@@ -3427,7 +3302,6 @@
       ]
     },
     "os-links-143": {
-      "course": "os",
       "category": "Links",
       "title": "Link Definition",
       "instructions": "What does an inode store?",
@@ -3446,7 +3320,6 @@
       "hints": []
     },
     "os-quoting-144": {
-      "course": "os",
       "category": "Quoting",
       "title": "Single Quote Behavior",
       "instructions": "True or False: Single quotes `' '` prevent all shell expansions, including variable expansion and wildcards.",
@@ -3460,7 +3333,6 @@
       "checks": [0]
     },
     "os-quoting-145": {
-      "course": "os",
       "category": "Quoting",
       "title": "Double Quote Behavior",
       "instructions": "True or False: Double quotes `\" \"` allow variable expansion and command substitution while preventing wildcard expansion.",
@@ -3474,7 +3346,6 @@
       "checks": [0]
     },
     "os-quoting-146": {
-      "course": "os",
       "category": "Quoting",
       "title": "Variable in Double Quotes",
       "instructions": "Given `name=\"Alice\"`, what does `echo \"Hello $name\"` output?",
@@ -3496,7 +3367,6 @@
       ]
     },
     "os-quoting-147": {
-      "course": "os",
       "category": "Quoting",
       "title": "Variable in Single Quotes",
       "instructions": "Given `name=\"Alice\"`, what does `echo 'Hello $name'` output?",
@@ -3518,7 +3388,6 @@
       ]
     },
     "os-quoting-148": {
-      "course": "os",
       "category": "Quoting",
       "title": "Filename with Spaces",
       "instructions": "Write a command to create a single file named `my file.txt` with a space using quotes.",
@@ -3552,7 +3421,6 @@
       ]
     },
     "os-quoting-149": {
-      "course": "os",
       "category": "Quoting",
       "title": "Prevent Wildcard Expansion",
       "instructions": "Write a command using quotes around `*` so `echo` literally prints an asterisk `*` instead of expanding filenames.",
@@ -3582,7 +3450,6 @@
       ]
     },
     "os-quoting-150": {
-      "course": "os",
       "category": "Quoting",
       "title": "Single Quote Escaping",
       "instructions": "True or False: A single-quoted string can contain a literal single quote inside it if you just use standard typing.",
@@ -3596,7 +3463,6 @@
       "checks": [1]
     },
     "os-quoting-151": {
-      "course": "os",
       "category": "Quoting",
       "title": "Backslash Escape Single",
       "instructions": "Write an `echo` command that prints the text `it's` by escaping the apostrophe outside single quotes.",
@@ -3618,7 +3484,6 @@
       ]
     },
     "os-quoting-152": {
-      "course": "os",
       "category": "Quoting",
       "title": "Command Substitution Quoting",
       "instructions": "True or False: Command substitution `$(cmd)` is evaluated inside double quotes but not inside single quotes.",
@@ -3632,7 +3497,6 @@
       "checks": [0]
     },
     "os-quoting-154": {
-      "course": "os",
       "category": "Quoting",
       "title": "Wildcard Globbing Quote",
       "instructions": "Why must pattern arguments in commands like `find -name \"*.txt\"` be quoted?",
@@ -3651,7 +3515,6 @@
       "hints": []
     },
     "os-quoting-155": {
-      "course": "os",
       "category": "Quoting",
       "title": "Quote Purpose Summary",
       "instructions": "What is the primary purpose of quoting in the shell?",
@@ -3670,7 +3533,6 @@
       "hints": []
     },
     "os-permissions-186": {
-      "course": "os",
       "category": "Permissions",
       "title": "Directory Execute Meaning",
       "instructions": "In a brief phrase, what does execute (`x`) permission on a directory allow a user to do?",
@@ -3689,7 +3551,6 @@
       "checks": [0]
     },
     "os-users-groups-156": {
-      "course": "os",
       "category": "Users and Groups",
       "title": "Switch User",
       "instructions": "Write the command to switch user account to `bob` starting a full login shell.",
@@ -3719,7 +3580,6 @@
       ]
     },
     "os-users-groups-157": {
-      "course": "os",
       "category": "Users and Groups",
       "title": "Sudo Switch User",
       "instructions": "Write a `sudo` command to start a login shell as `bob` using your own sudo rights.",
@@ -3749,7 +3609,6 @@
       ]
     },
     "os-users-groups-158": {
-      "course": "os",
       "category": "Users and Groups",
       "title": "Create User Home",
       "instructions": "Which `useradd` option creates the user's home directory automatically? Give the option only.",
@@ -3779,7 +3638,6 @@
       ]
     },
     "os-users-groups-159": {
-      "course": "os",
       "category": "Users and Groups",
       "title": "Delete User Home",
       "instructions": "Which `userdel` option also removes the user's home directory and mail spool? Give the option only.",
@@ -3809,7 +3667,6 @@
       ]
     },
     "os-users-groups-160": {
-      "course": "os",
       "category": "Users and Groups",
       "title": "Add User to Group",
       "instructions": "Which combined `usermod` option adds supplementary groups while preserving existing supplementary memberships? Give the option only.",
@@ -3843,7 +3700,6 @@
       ]
     },
     "os-users-groups-161": {
-      "course": "os",
       "category": "Users and Groups",
       "title": "Create Group",
       "instructions": "Write the command to create a new group named `developers`.",
@@ -3873,7 +3729,6 @@
       ]
     },
     "os-users-groups-162": {
-      "course": "os",
       "category": "Users and Groups",
       "title": "Show User Groups",
       "instructions": "Write the command to display the groups to which the current user belongs.",
@@ -3899,7 +3754,6 @@
       ]
     },
     "os-users-groups-163": {
-      "course": "os",
       "category": "Users and Groups",
       "title": "Show User ID",
       "instructions": "Write the command that displays the current user’s UID, primary GID, and supplementary group memberships.",
@@ -3921,7 +3775,6 @@
       ]
     },
     "os-users-groups-164": {
-      "course": "os",
       "category": "Users and Groups",
       "title": "Change Password",
       "instructions": "Write the command to change your own password.",
@@ -3943,7 +3796,6 @@
       ]
     },
     "os-users-groups-165": {
-      "course": "os",
       "category": "Users and Groups",
       "title": "Passwd File Path",
       "instructions": "Which file stores basic account and user information, one line per user?",
@@ -3962,7 +3814,6 @@
       "checks": [0]
     },
     "os-users-groups-166": {
-      "course": "os",
       "category": "Users and Groups",
       "title": "Shadow File Path",
       "instructions": "Which file stores encrypted password hashes and aging data, readable only by root?",
@@ -3984,7 +3835,6 @@
       ]
     },
     "os-users-groups-167": {
-      "course": "os",
       "category": "Users and Groups",
       "title": "Sudoers Editor",
       "instructions": "What is the mandatory safe tool used to edit `/etc/sudoers` configuration files?",
@@ -4010,7 +3860,6 @@
       ]
     },
     "os-users-groups-168": {
-      "course": "os",
       "category": "Users and Groups",
       "title": "Lock Password",
       "instructions": "Which `usermod` option locks a user's password? Give the option only.",
@@ -4040,7 +3889,6 @@
       ]
     },
     "os-users-groups-169": {
-      "course": "os",
       "category": "Users and Groups",
       "title": "Unlock Password",
       "instructions": "Which `usermod` option unlocks a user's password? Give the option only.",
@@ -4070,7 +3918,6 @@
       ]
     },
     "os-users-groups-170": {
-      "course": "os",
       "category": "Users and Groups",
       "title": "Password Aging Chage",
       "instructions": "Write the command to list password-aging and expiration information for user `alice`.",
@@ -4108,7 +3955,6 @@
       ]
     },
     "os-users-groups-171": {
-      "course": "os",
       "category": "Users and Groups",
       "title": "Force Password Change",
       "instructions": "Write the command that forces user `alice` to change their password at the next login by setting the last-change date to zero.",
@@ -4154,7 +4000,6 @@
       ]
     },
     "os-users-groups-172": {
-      "course": "os",
       "category": "Users and Groups",
       "title": "Noninteractive Chpasswd",
       "instructions": "Write a command using `chpasswd` to set a user (wassim in group acs103) password non-interactively via pipe.",
@@ -4180,7 +4025,6 @@
       ]
     },
     "os-users-groups-173": {
-      "course": "os",
       "category": "Users and Groups",
       "title": "Root UID Number",
       "instructions": "What is the numeric User ID (UID) of the root superuser account?",
@@ -4202,7 +4046,6 @@
       ]
     },
     "os-users-groups-174": {
-      "course": "os",
       "category": "Users and Groups",
       "title": "Group File Path",
       "instructions": "Which file stores group definitions and member lists?",
@@ -4224,7 +4067,6 @@
       ]
     },
     "os-users-groups-175": {
-      "course": "os",
       "category": "Users and Groups",
       "title": "Newgrp Command",
       "instructions": "Which command starts a new shell with a different primary group active?",
@@ -4246,7 +4088,6 @@
       ]
     },
     "os-permissions-176": {
-      "course": "os",
       "category": "Permissions",
       "title": "Chmod Numeric 755",
       "instructions": "Write a `chmod` command using octal notation to set permissions `755` on `script.sh`.",
@@ -4276,7 +4117,6 @@
       ]
     },
     "os-permissions-177": {
-      "course": "os",
       "category": "Permissions",
       "title": "Chmod Symbolic Add Execute",
       "instructions": "Write a `chmod` command using symbolic notation to add execute permission for the owner on `script.sh`.",
@@ -4302,7 +4142,6 @@
       ]
     },
     "os-permissions-178": {
-      "course": "os",
       "category": "Permissions",
       "title": "Chmod Remove Group Write",
       "instructions": "Write a `chmod` command using symbolic notation to remove write permission from the group on `file.txt`.",
@@ -4328,7 +4167,6 @@
       ]
     },
     "os-permissions-179": {
-      "course": "os",
       "category": "Permissions",
       "title": "Numeric Octal Values",
       "instructions": "In octal permission values, what numerical value represents read (`r`)?",
@@ -4342,7 +4180,6 @@
       "checks": [0]
     },
     "os-permissions-180": {
-      "course": "os",
       "category": "Permissions",
       "title": "Numeric Write Value",
       "instructions": "In octal permissions, what numerical value represents write (`w`)?",
@@ -4364,7 +4201,6 @@
       ]
     },
     "os-permissions-181": {
-      "course": "os",
       "category": "Permissions",
       "title": "Numeric Execute Value",
       "instructions": "In octal permissions, what numerical value represents execute (`x`)?",
@@ -4386,7 +4222,6 @@
       ]
     },
     "os-permissions-182": {
-      "course": "os",
       "category": "Permissions",
       "title": "Chown Command Owner",
       "instructions": "Write the command to change the owner of `file.txt` to `alice`.",
@@ -4420,7 +4255,6 @@
       ]
     },
     "os-permissions-183": {
-      "course": "os",
       "category": "Permissions",
       "title": "Chown Owner and Group",
       "instructions": "Write the command to change the owner of `file.txt` to `alice` and group to `developers` simultaneously.",
@@ -4454,7 +4288,6 @@
       ]
     },
     "os-permissions-184": {
-      "course": "os",
       "category": "Permissions",
       "title": "Chgrp Command",
       "instructions": "Write the command to change only the group ownership of `file.txt` to `developers`.",
@@ -4492,7 +4325,6 @@
       ]
     },
     "os-permissions-185": {
-      "course": "os",
       "category": "Permissions",
       "title": "Umask Display",
       "instructions": "Write the command to display the current umask value.",
@@ -4514,7 +4346,6 @@
       ]
     },
     "os-permissions-187": {
-      "course": "os",
       "category": "Permissions",
       "title": "Sticky Bit Purpose",
       "instructions": "In a shared writable directory, what restriction does the sticky bit place on deleting or renaming files?",
@@ -4533,7 +4364,6 @@
       "hints": []
     },
     "os-permissions-188": {
-      "course": "os",
       "category": "Permissions",
       "title": "SUID Bit Meaning",
       "instructions": "When an executable has SUID set, whose effective user privileges does the process use?",
@@ -4552,7 +4382,6 @@
       "hints": []
     },
     "os-permissions-189": {
-      "course": "os",
       "category": "Permissions",
       "title": "SGID Directory Meaning",
       "instructions": "When a file is created inside an SGID directory, which group does it normally inherit?",
@@ -4571,7 +4400,6 @@
       "hints": []
     },
     "os-permissions-190": {
-      "course": "os",
       "category": "Permissions",
       "title": "Sticky Bit Octal",
       "instructions": "What leading octal digit represents the sticky bit when setting permissions with `chmod` (e.g., `1777`)?",
@@ -4593,7 +4421,6 @@
       ]
     },
     "os-permissions-191": {
-      "course": "os",
       "category": "Permissions",
       "title": "SUID Bit Octal",
       "instructions": "What leading octal digit represents the SUID bit?",
@@ -4615,7 +4442,6 @@
       ]
     },
     "os-permissions-192": {
-      "course": "os",
       "category": "Permissions",
       "title": "SGID Bit Octal",
       "instructions": "What leading octal digit represents the SGID bit?",
@@ -4637,7 +4463,6 @@
       ]
     },
     "os-permissions-193": {
-      "course": "os",
       "category": "Permissions",
       "title": "Recursive Chmod",
       "instructions": "Write a `chmod` command to set permissions `750` recursively on `myfolder/`.",
@@ -4663,7 +4488,6 @@
       ]
     },
     "os-permissions-194": {
-      "course": "os",
       "category": "Permissions",
       "title": "Octal Mode for Owner-Only File Access",
       "instructions": "What octal permission mode corresponds to owner read/write access and no permissions for group or others (`rw-------`)?",
@@ -4697,7 +4521,6 @@
       ]
     },
     "os-permissions-195": {
-      "course": "os",
       "category": "Permissions",
       "title": "Octal Mode for Owner-Only Directory Access",
       "instructions": "What three-digit octal mode corresponds to owner read, write, and execute permission and no permissions for group or others (`rwx------`)?",
@@ -4731,7 +4554,6 @@
       ]
     },
     "os-permissions-196": {
-      "course": "os",
       "category": "Permissions",
       "title": "Default File Umask 022",
       "instructions": "If the umask is `022`, what default permission do new regular files receive?",
@@ -4765,7 +4587,6 @@
       ]
     },
     "os-permissions-197": {
-      "course": "os",
       "category": "Permissions",
       "title": "Default Dir Umask 022",
       "instructions": "If the umask is `022`, what default permission do new directories receive?",
@@ -4799,7 +4620,6 @@
       ]
     },
     "os-permissions-198": {
-      "course": "os",
       "category": "Permissions",
       "title": "Delete File Requirement",
       "instructions": "To delete a file within a directory, what permission do you need on the **parent directory**?",
@@ -4818,7 +4638,6 @@
       "hints": []
     },
     "os-permissions-199": {
-      "course": "os",
       "category": "Permissions",
       "title": "Set Umask Value",
       "instructions": "Write the command to set the umask to `027` for the current shell session.",
@@ -4844,7 +4663,6 @@
       ]
     },
     "os-find-201": {
-      "course": "os",
       "category": "Find",
       "title": "Find by Name",
       "instructions": "Write a `find` command to search your home directory `~` for files named `*.txt` (ensure pattern is quoted).",
@@ -4882,7 +4700,6 @@
       ]
     },
     "os-find-202": {
-      "course": "os",
       "category": "Find",
       "title": "Find by Type Directory",
       "instructions": "Write a `find` command to search the current directory `.` for directories only (`-type d`).",
@@ -4908,7 +4725,6 @@
       ]
     },
     "os-find-203": {
-      "course": "os",
       "category": "Find",
       "title": "Find by Type File",
       "instructions": "Write a `find` command to search `/var` for regular files only (`-type f`).",
@@ -4934,7 +4750,6 @@
       ]
     },
     "os-find-204": {
-      "course": "os",
       "category": "Find",
       "title": "Find by Owner",
       "instructions": "Write a `find` command to search `/` for filesystem entries owned by user `alice`, suppressing permission errors.",
@@ -4964,7 +4779,6 @@
       ]
     },
     "os-find-205": {
-      "course": "os",
       "category": "Find",
       "title": "Find Modified Days Ago",
       "instructions": "Write a `find` command to search your home directory for files modified more than 7 days ago (`-mtime +7`).",
@@ -4990,7 +4804,6 @@
       ]
     },
     "os-find-206": {
-      "course": "os",
       "category": "Find",
       "title": "Find Modified Minutes Ago",
       "instructions": "Write a `find` command to search your home directory for files modified within the last 10 minutes (`-mmin -10`).",
@@ -5016,7 +4829,6 @@
       ]
     },
     "os-find-207": {
-      "course": "os",
       "category": "Find",
       "title": "Find Size Greater Than",
       "instructions": "Write a `find` command to search `/` for files larger than 100 MiB (`-size +100M`, hiding errors).",
@@ -5038,7 +4850,6 @@
       ]
     },
     "os-find-211": {
-      "course": "os",
       "category": "Find",
       "title": "Numeric Argument Plus Meaning",
       "instructions": "In `find` numeric arguments, what does `+n` mean (e.g., `-mtime +7`)?",
@@ -5057,7 +4868,6 @@
       "checks": [0]
     },
     "os-find-212": {
-      "course": "os",
       "category": "Find",
       "title": "Numeric Argument Minus Meaning",
       "instructions": "In `find` numeric arguments, what does `-n` mean (e.g., `-mmin -10`)?",
@@ -5076,7 +4886,6 @@
       "hints": []
     },
     "os-find-213": {
-      "course": "os",
       "category": "Find",
       "title": "Find Type Code File",
       "instructions": "In the `find -type` test, which single-letter value selects regular files?",
@@ -5098,7 +4907,6 @@
       ]
     },
     "os-find-214": {
-      "course": "os",
       "category": "Find",
       "title": "Find Type Code Directory",
       "instructions": "In the `find -type` test, which single-letter value selects directories?",
@@ -5120,7 +4928,6 @@
       ]
     },
     "os-find-215": {
-      "course": "os",
       "category": "Find",
       "title": "Find Wildcard Quoting",
       "instructions": "Why must `-name` wildcard patterns like `\"*.txt\"` be quoted when using `find`?",
@@ -5139,7 +4946,6 @@
       "hints": []
     },
     "os-archives-216": {
-      "course": "os",
       "category": "Archives",
       "title": "Tar Create Gzip",
       "instructions": "Write a `tar` command to create a compressed gzip archive named `backup.tar.gz` from `myfolder/`.",
@@ -5173,7 +4979,6 @@
       ]
     },
     "os-archives-217": {
-      "course": "os",
       "category": "Archives",
       "title": "Tar Extract Gzip",
       "instructions": "Write a `tar` command to extract a gzip tar archive named `backup.tar.gz` in the current directory.",
@@ -5211,7 +5016,6 @@
       ]
     },
     "os-archives-218": {
-      "course": "os",
       "category": "Archives",
       "title": "Tar List Contents",
       "instructions": "Write a `tar` command to list the contents of `backup.tar.gz` without extracting it.",
@@ -5241,7 +5045,6 @@
       ]
     },
     "os-archives-219": {
-      "course": "os",
       "category": "Archives",
       "title": "Tar Extract to Directory",
       "instructions": "Write only the `tar` option and its directory argument for extracting into `/tmp/restore` (do not write the full `tar` command).",
@@ -5271,7 +5074,6 @@
       ]
     },
     "os-archives-220": {
-      "course": "os",
       "category": "Archives",
       "title": "Tar Compression Flags",
       "instructions": "Which `tar` option (short or long form) selects gzip compression? Give the option only.",
@@ -5301,7 +5103,6 @@
       ]
     },
     "os-archives-221": {
-      "course": "os",
       "category": "Archives",
       "title": "Tar Bzip2 Flag",
       "instructions": "Which `tar` option (short or long form) selects bzip2 compression? Give the option only.",
@@ -5331,7 +5132,6 @@
       ]
     },
     "os-archives-222": {
-      "course": "os",
       "category": "Archives",
       "title": "Tar Xz Flag",
       "instructions": "Which `tar` option (short or long form) selects xz compression? Give the option only.",
@@ -5361,7 +5161,6 @@
       ]
     },
     "os-archives-223": {
-      "course": "os",
       "category": "Archives",
       "title": "Scp Remote Copy",
       "instructions": "Write an `scp` command to copy a local file `report.txt` to a remote user `alice` at host `192.168.1.10` into `/home/alice/`.",
@@ -5387,7 +5186,6 @@
       ]
     },
     "os-archives-224": {
-      "course": "os",
       "category": "Archives",
       "title": "Scp Recursive Directory",
       "instructions": "Which `scp` option copies a directory recursively? Give the option only.",
@@ -5413,7 +5211,6 @@
       ]
     },
     "os-archives-225": {
-      "course": "os",
       "category": "Archives",
       "title": "Tar Create Flag",
       "instructions": "Which `tar` operation option creates a new archive? Give the option only.",
@@ -5443,7 +5240,6 @@
       ]
     },
     "os-archives-226": {
-      "course": "os",
       "category": "Archives",
       "title": "Tar Extract Flag",
       "instructions": "Which `tar` operation option extracts an archive? Give the option only.",
@@ -5473,7 +5269,6 @@
       ]
     },
     "os-archives-227": {
-      "course": "os",
       "category": "Archives",
       "title": "Scp Remote Source",
       "instructions": "Write an `scp` command to copy a remote file `/home/alice/report.txt` from `alice@192.168.1.10` to the current local directory `.`.",
@@ -5499,7 +5294,6 @@
       ]
     },
     "os-archives-228": {
-      "course": "os",
       "category": "Archives",
       "title": "Tar Archive Filename Argument",
       "instructions": "In `tar -czf backup.tar.gz project/`, which argument is the archive filename supplied by the `-f` option?",
@@ -5521,7 +5315,6 @@
       ]
     },
     "os-archives-229": {
-      "course": "os",
       "category": "Archives",
       "title": "Tar Uncompressed Create",
       "instructions": "Write a `tar` command to create an uncompressed archive named `archive.tar` from `folder/`.",
@@ -5547,7 +5340,6 @@
       ]
     },
     "os-archives-230": {
-      "course": "os",
       "category": "Archives",
       "title": "Scp Port Option",
       "instructions": "Which capital-letter `scp` option specifies a non-default SSH port? Give the option only.",
@@ -5573,7 +5365,6 @@
       ]
     },
     "os-directories-231": {
-      "course": "os",
       "category": "Directories",
       "title": "Config Directory Path",
       "instructions": "Which standard top-level directory stores system-wide configuration files?",
@@ -5595,7 +5386,6 @@
       ]
     },
     "os-directories-232": {
-      "course": "os",
       "category": "Directories",
       "title": "Temporary Directory Path",
       "instructions": "Which standard directory stores temporary files and is world-writable with the sticky bit?",
@@ -5617,7 +5407,6 @@
       ]
     },
     "os-directories-233": {
-      "course": "os",
       "category": "Directories",
       "title": "Variable Logs Directory",
       "instructions": "Which standard directory stores variable data including system logs in `/var/log`?",
@@ -5639,7 +5428,6 @@
       ]
     },
     "os-directories-234": {
-      "course": "os",
       "category": "Directories",
       "title": "Home Directory Path",
       "instructions": "Which standard directory contains user home directories?",
@@ -5661,7 +5449,6 @@
       ]
     },
     "os-directories-235": {
-      "course": "os",
       "category": "Directories",
       "title": "Root Home Directory",
       "instructions": "What is the home directory path for the `root` superuser?",
@@ -5683,7 +5470,6 @@
       ]
     },
     "os-directories-236": {
-      "course": "os",
       "category": "Directories",
       "title": "User Executable Directory",
       "instructions": "Which standard directory contains ordinary user command binaries in the filesystem hierarchy?",
@@ -5709,7 +5495,6 @@
       ]
     },
     "os-directories-237": {
-      "course": "os",
       "category": "Directories",
       "title": "Device Files Directory",
       "instructions": "Which standard directory contains device files representing hardware and special files like `/dev/null`?",
@@ -5731,7 +5516,6 @@
       ]
     },
     "os-directories-238": {
-      "course": "os",
       "category": "Directories",
       "title": "Boot Files Directory",
       "instructions": "Which standard directory stores Linux kernel and boot loader files?",
@@ -5753,7 +5537,6 @@
       ]
     },
     "os-directories-239": {
-      "course": "os",
       "category": "Directories",
       "title": "Runtime State Directory",
       "instructions": "Which directory stores runtime state information since boot (PID files, sockets)?",
@@ -5775,7 +5558,6 @@
       ]
     },
     "os-directories-240": {
-      "course": "os",
       "category": "Directories",
       "title": "Etc Passwd Purpose",
       "instructions": "What specific file inside `/etc` stores basic user account records?",
@@ -5789,7 +5571,6 @@
       "checks": [0]
     },
     "os-directories-241": {
-      "course": "os",
       "category": "Directories",
       "title": "Root Filesystem Purpose",
       "instructions": "What does the root slash `/` represent in the Linux filesystem hierarchy?",
@@ -5808,7 +5589,6 @@
       "hints": []
     },
     "os-directories-242": {
-      "course": "os",
       "category": "Directories",
       "title": "Log Files Location",
       "instructions": "Where are system log files typically located within `/var`?",
@@ -5830,7 +5610,6 @@
       ]
     },
     "os-environment-243": {
-      "course": "os",
       "category": "Environment",
       "title": "Create Local Variable",
       "instructions": "Write the shell syntax to create a local shell variable named `GREETING` with value `hello` (no spaces around `=`).",
@@ -5860,7 +5639,6 @@
       ]
     },
     "os-environment-244": {
-      "course": "os",
       "category": "Environment",
       "title": "Export Environment Variable",
       "instructions": "Write the command to export a shell variable `GREETING` so it becomes available to child processes.",
@@ -5898,7 +5676,6 @@
       ]
     },
     "os-environment-245": {
-      "course": "os",
       "category": "Environment",
       "title": "Print Environment Variables",
       "instructions": "Write the command to display all current environment variables.",
@@ -5924,7 +5701,6 @@
       ]
     },
     "os-environment-246": {
-      "course": "os",
       "category": "Environment",
       "title": "Path Variable Purpose",
       "instructions": "What environment variable defines the colon-separated list of directories searched for executable commands?",
@@ -5938,7 +5714,6 @@
       "checks": [0]
     },
     "os-environment-247": {
-      "course": "os",
       "category": "Environment",
       "title": "Create Command Alias",
       "instructions": "Write a command to create an alias named `ll` that shortcuts to `ls -la`.",
@@ -5964,7 +5739,6 @@
       ]
     },
     "os-environment-248": {
-      "course": "os",
       "category": "Environment",
       "title": "Remove Alias",
       "instructions": "Write the command to remove an alias named `ll`.",
@@ -5986,7 +5760,6 @@
       ]
     },
     "os-environment-249": {
-      "course": "os",
       "category": "Environment",
       "title": "Bashrc File Path",
       "instructions": "What is the name of the per-user Bash configuration file located in the home directory?",
@@ -6020,7 +5793,6 @@
       ]
     },
     "os-environment-250": {
-      "course": "os",
       "category": "Environment",
       "title": "Source Bashrc",
       "instructions": "Write the command to reload your `~/.bashrc` configuration file in the current shell session without restarting.",
@@ -6058,7 +5830,6 @@
       ]
     },
     "os-environment-251": {
-      "course": "os",
       "category": "Environment",
       "title": "Path Append Syntax",
       "instructions": "Write a command to append a directory `~/bin` to the existing `PATH` variable correctly.",
@@ -6088,7 +5859,6 @@
       ]
     },
     "os-environment-252": {
-      "course": "os",
       "category": "Environment",
       "title": "Show Path Variable",
       "instructions": "Write an `echo` command to print the contents of the `PATH` environment variable.",
@@ -6114,7 +5884,6 @@
       ]
     },
     "os-vim-253": {
-      "course": "os",
       "category": "Vim",
       "title": "Enter Insert Mode",
       "instructions": "Which key pressed in Normal mode enters Insert mode so you can type text in Vim?",
@@ -6136,7 +5905,6 @@
       ]
     },
     "os-vim-254": {
-      "course": "os",
       "category": "Vim",
       "title": "Return to Normal Mode",
       "instructions": "Which key do you press to return to Normal mode from Insert mode in Vim?",
@@ -6170,7 +5938,6 @@
       ]
     },
     "os-vim-255": {
-      "course": "os",
       "category": "Vim",
       "title": "Save and Quit Command",
       "instructions": "What command-line mode command saves changes and quits Vim simultaneously?",
@@ -6200,7 +5967,6 @@
       ]
     },
     "os-vim-256": {
-      "course": "os",
       "category": "Vim",
       "title": "Quit Discard Changes",
       "instructions": "What command-line mode command quits Vim immediately discarding any unsaved changes?",
@@ -6226,7 +5992,6 @@
       ]
     },
     "os-vim-257": {
-      "course": "os",
       "category": "Vim",
       "title": "Delete Line Command",
       "instructions": "What two-letter Normal mode command deletes (cuts) the current line in Vim?",
@@ -6248,7 +6013,6 @@
       ]
     },
     "os-vim-258": {
-      "course": "os",
       "category": "Vim",
       "title": "Yank Line Command",
       "instructions": "What two-letter Normal mode command yanks (copies) the current line in Vim?",
@@ -6270,7 +6034,6 @@
       ]
     },
     "os-vim-259": {
-      "course": "os",
       "category": "Vim",
       "title": "Paste Command",
       "instructions": "What key in Normal mode pastes previously yanked or deleted text after the cursor?",
@@ -6292,7 +6055,6 @@
       ]
     },
     "os-vim-260": {
-      "course": "os",
       "category": "Vim",
       "title": "Undo Command",
       "instructions": "What single key in Normal mode undoes the last change in Vim?",
@@ -6314,7 +6076,6 @@
       ]
     },
     "os-vim-263": {
-      "course": "os",
       "category": "Vim",
       "title": "Search Forward",
       "instructions": "What symbol typed in Normal mode starts searching forward for text in Vim?",
@@ -6336,7 +6097,6 @@
       ]
     },
     "os-vim-264": {
-      "course": "os",
       "category": "Vim",
       "title": "Vim Modal Nature",
       "instructions": "True or False: Vim is a modal editor, meaning keys perform different functions depending on whether you are in Normal mode or Insert mode.",
@@ -6350,7 +6110,6 @@
       "checks": [0]
     },
     "os-vim-266": {
-      "course": "os",
       "category": "Vim",
       "title": "Save Only Command",
       "instructions": "What command-line mode command saves (writes) changes without exiting Vim?",
@@ -6376,7 +6135,6 @@
       ]
     },
     "os-vim-267": {
-      "course": "os",
       "category": "Vim",
       "title": "Open Line Below",
       "instructions": "What single Normal mode key opens a new line directly below the current line and enters Insert mode?",
@@ -6398,7 +6156,6 @@
       ]
     },
     "os-fundamentals-268": {
-      "course": "os",
       "category": "Fundamentals",
       "title": "Kernel Responsibilities",
       "instructions": "A program needs CPU time, memory, access to a disk, and communication with hardware. Which system component coordinates these core resources?",
@@ -6417,7 +6174,6 @@
       "checks": [1]
     },
     "os-fundamentals-269": {
-      "course": "os",
       "category": "Fundamentals",
       "title": "Kernel and Hardware Access",
       "instructions": "Why do ordinary applications normally request hardware services through the operating-system kernel rather than accessing devices directly?",
@@ -6438,7 +6194,6 @@
       "checks": [0]
     },
     "os-fundamentals-270": {
-      "course": "os",
       "category": "Fundamentals",
       "title": "Linux Distributions Share a Kernel",
       "instructions": "Two machines run different GNU/Linux distributions. Which statement best describes their relationship?",
@@ -6457,7 +6212,6 @@
       "checks": [1]
     },
     "os-fundamentals-271": {
-      "course": "os",
       "category": "Fundamentals",
       "title": "Free Software Freedom to Modify",
       "instructions": "A developer wants to inspect the source code of a program and adapt it for a local requirement. Which free-software freedom directly supports this?",
@@ -6476,7 +6230,6 @@
       "checks": [1]
     },
     "os-fundamentals-272": {
-      "course": "os",
       "category": "Fundamentals",
       "title": "Multi-User Operating System",
       "instructions": "Several people log in to the same Linux server at the same time using separate accounts. Which operating-system capability does this demonstrate?",
@@ -6495,7 +6248,6 @@
       "checks": [0]
     },
     "os-fundamentals-273": {
-      "course": "os",
       "category": "Fundamentals",
       "title": "Multitasking",
       "instructions": "A Linux server runs a web service while processing a backup and accepting terminal sessions. Which capability allows these activities to make progress concurrently?",
@@ -6514,7 +6266,6 @@
       "checks": [0]
     },
     "os-fundamentals-274": {
-      "course": "os",
       "category": "Fundamentals",
       "title": "Terminal and Shell Roles",
       "instructions": "You open a terminal window and type `pwd`. Which component interprets the command and starts the requested program or built-in?",
@@ -6535,7 +6286,6 @@
       "checks": [0]
     },
     "os-fundamentals-275": {
-      "course": "os",
       "category": "Fundamentals",
       "title": "Command Structure",
       "instructions": "In the command `ls -l /var/log`, which part is the argument specifying the target directory?",
@@ -6551,7 +6301,6 @@
       "checks": [2]
     },
     "os-fundamentals-276": {
-      "course": "os",
       "category": "Fundamentals",
       "title": "Linux Kernel Language",
       "instructions": "UNIX is largely written in which programming language, supporting portability across processor architectures?",
@@ -6565,7 +6314,6 @@
       "checks": [0]
     },
     "os-fundamentals-277": {
-      "course": "os",
       "category": "Fundamentals",
       "title": "GNU and Linux",
       "instructions": "Which description best distinguishes GNU from Linux in the GNU/Linux system?",
@@ -6586,7 +6334,6 @@
       "checks": [0]
     },
     "os-networking-278": {
-      "course": "os",
       "category": "Networking",
       "title": "IPv4 Address Structure",
       "instructions": "Which is a valid description of an IPv4 address?",
@@ -6605,7 +6352,6 @@
       "checks": [0]
     },
     "os-networking-279": {
-      "course": "os",
       "category": "Networking",
       "title": "IPv6 Address Structure",
       "instructions": "An address contains hexadecimal groups separated by colons, such as `2001:0db8:...`. Which protocol version is it?",
@@ -6619,7 +6365,6 @@
       "checks": [1]
     },
     "os-networking-280": {
-      "course": "os",
       "category": "Networking",
       "title": "Loopback Address",
       "instructions": "A service running on your own machine must be reached through the local host interface. Which IPv4 address is the loopback address?",
@@ -6641,7 +6386,6 @@
       ]
     },
     "os-networking-281": {
-      "course": "os",
       "category": "Networking",
       "title": "DNS Purpose",
       "instructions": "You enter `www.kdg.be` in a browser. What does DNS provide before the browser connects to the server?",
@@ -6660,7 +6404,6 @@
       "checks": [0]
     },
     "os-networking-282": {
-      "course": "os",
       "category": "Networking",
       "title": "HTTP and HTTPS Ports",
       "instructions": "A web server offers ordinary HTTP and HTTPS. Which pair of default ports is used in that order?",
@@ -6692,7 +6435,6 @@
       ]
     },
     "os-networking-283": {
-      "course": "os",
       "category": "Networking",
       "title": "SSH Default Port",
       "instructions": "A remote Linux server accepts SSH connections using the standard port. Which port should the client normally reach?",
@@ -6714,7 +6456,6 @@
       ]
     },
     "os-networking-284": {
-      "course": "os",
       "category": "Networking",
       "title": "Find Linux Interface Addresses",
       "instructions": "Using the modern Linux `ip` utility, write a command that displays network interfaces and their IP addresses.",
@@ -6756,7 +6497,6 @@
       ]
     },
     "os-networking-285": {
-      "course": "os",
       "category": "Networking",
       "title": "SSH Remote Login",
       "instructions": "You have the username `student` and the remote server address `server.example`. Write the command to open a remote text-shell session.",
@@ -6778,7 +6518,6 @@
       ]
     },
     "os-networking-286": {
-      "course": "os",
       "category": "Networking",
       "title": "SSH Host Fingerprint",
       "instructions": "During the first SSH connection, the client asks you to confirm a host key fingerprint. What is the main purpose of checking it?",
@@ -6799,7 +6538,6 @@
       "checks": [0]
     },
     "os-directories-287": {
-      "course": "os",
       "category": "Directories",
       "title": "Administrative Binary Directory",
       "instructions": "Where are many system-administration executable commands located in the standard filesystem hierarchy?",
@@ -6825,7 +6563,6 @@
       ]
     },
     "os-directories-288": {
-      "course": "os",
       "category": "Directories",
       "title": "Variable Data Directory",
       "instructions": "A service stores changing data such as logs, mail queues, or databases. Which top-level directory is intended for this kind of data?",
@@ -6847,7 +6584,6 @@
       ]
     },
     "os-directories-289": {
-      "course": "os",
       "category": "Directories",
       "title": "Filesystem Case Sensitivity",
       "instructions": "A script refers to `/etc/Passwd`, but the actual file is `/etc/passwd`. What should you expect on a case-sensitive Linux filesystem?",
@@ -6868,7 +6604,6 @@
       "checks": [1]
     },
     "os-navigation-290": {
-      "course": "os",
       "category": "Navigation",
       "title": "Home Directory of Another User",
       "instructions": "Write a Bash path expression that refers to the home directory of user `alice`.",
@@ -6894,7 +6629,6 @@
       ]
     },
     "os-navigation-291": {
-      "course": "os",
       "category": "Navigation",
       "title": "Trailing Slash in a Path",
       "instructions": "What does a trailing slash in `/var/log/` communicate about the path?",
@@ -6913,7 +6647,6 @@
       "checks": [0]
     },
     "os-navigation-292": {
-      "course": "os",
       "category": "Navigation",
       "title": "Relative Path Depends on CWD",
       "instructions": "You are in `/home/alice/docs`. What absolute path does `../notes.txt` refer to?",
@@ -6935,7 +6668,6 @@
       ]
     },
     "os-file-inspection-293": {
-      "course": "os",
       "category": "File Inspection",
       "title": "File Type Does Not Depend on Extension",
       "instructions": "A file is named `report.txt`, but its contents are a PNG image. Which command helps identify its actual file type?",
@@ -6959,7 +6691,6 @@
       ]
     },
     "os-file-inspection-294": {
-      "course": "os",
       "category": "File Inspection",
       "title": "Access Modify Change Birth Times",
       "instructions": "Which command displays file timestamps including access, modification, status change, and birth information for the file notes.txt?",
@@ -6993,7 +6724,6 @@
       ]
     },
     "os-file-inspection-295": {
-      "course": "os",
       "category": "File Inspection",
       "title": "Longest Line Length",
       "instructions": "Write a command to display the length of the longest line in `notes.txt`.",
@@ -7023,7 +6753,6 @@
       ]
     },
     "os-file-inspection-296": {
-      "course": "os",
       "category": "File Inspection",
       "title": "Numbered File Output",
       "instructions": "Write a command to display `/etc/passwd` with line numbers.",
@@ -7053,7 +6782,6 @@
       ]
     },
     "os-file-inspection-297": {
-      "course": "os",
       "category": "File Inspection",
       "title": "Tail From a Specific Line",
       "instructions": "Write a command that displays `/etc/passwd` starting at line 30 and continues through the end of the file.",
@@ -7081,7 +6809,6 @@
       ]
     },
     "os-text-utilities-298": {
-      "course": "os",
       "category": "Text Utilities",
       "title": "Number Lines in a Stream",
       "instructions": "Write a command that numbers each line arriving on standard input.",
@@ -7107,7 +6834,6 @@
       ]
     },
     "os-text-utilities-299": {
-      "course": "os",
       "category": "Text Utilities",
       "title": "Compare Two Text Files",
       "instructions": "Two files should contain identical text, but you need to see their differences. Which command compares them?",
@@ -7129,7 +6855,6 @@
       ]
     },
     "os-text-utilities-300": {
-      "course": "os",
       "category": "Text Utilities",
       "title": "Sort by a Specific Field",
       "instructions": "Write a `sort` command that sorts `records.txt` using the second whitespace-delimited field as the sort key.",
@@ -7159,7 +6884,6 @@
       ]
     },
     "os-text-utilities-301": {
-      "course": "os",
       "category": "Text Utilities",
       "title": "Case-Insensitive Sorting",
       "instructions": "Which `sort` option ignores case differences when comparing text? Give the option only.",
@@ -7189,7 +6913,6 @@
       ]
     },
     "os-text-utilities-302": {
-      "course": "os",
       "category": "Text Utilities",
       "title": "Transform Standard Input",
       "instructions": "Why does `tr` normally appear with a pipe or input redirection when processing a file?",
@@ -7208,7 +6931,6 @@
       "checks": [0]
     },
     "os-text-utilities-303": {
-      "course": "os",
       "category": "Text Utilities",
       "title": "Echo Without a Trailing Newline",
       "instructions": "Write an `echo` command that prints `Ready` without adding a newline at the end.",
@@ -7236,7 +6958,6 @@
       ]
     },
     "os-text-utilities-304": {
-      "course": "os",
       "category": "Text Utilities",
       "title": "Extract Two Fields",
       "instructions": "Write a command to extract fields 1 and 5 from `/etc/passwd`, using the colon as the delimiter.",
@@ -7276,7 +6997,6 @@
       ]
     },
     "os-text-utilities-305": {
-      "course": "os",
       "category": "Text Utilities",
       "title": "Unique Lines in a Pipeline",
       "instructions": "A file contains repeated animal names on separate lines. Write a pipeline that sorts the names and then removes adjacent duplicates.",
@@ -7298,7 +7018,6 @@
       ]
     },
     "os-text-utilities-306": {
-      "course": "os",
       "category": "Text Utilities",
       "title": "Save and Display a Process List",
       "instructions": "Write a pipeline that displays all running processes, saves the same output in `processes.txt`, and leaves the stream available to continue through the pipe.",
@@ -7322,7 +7041,6 @@
       ]
     },
     "os-text-utilities-307": {
-      "course": "os",
       "category": "Text Utilities",
       "title": "Pipe Data into a Pager",
       "instructions": "Write a pipeline to display a long listing of `/usr/bin` one screen at a time.",
@@ -7344,7 +7062,6 @@
       ]
     },
     "os-text-utilities-308": {
-      "course": "os",
       "category": "Text Utilities",
       "title": "Count Running Processes",
       "instructions": "Write a command pipeline that counts the lines in the full process listing produced by `ps aux`.",
@@ -7366,7 +7083,6 @@
       ]
     },
     "os-help-309": {
-      "course": "os",
       "category": "Help & Documentation",
       "title": "Quick Help for an Executable",
       "instructions": "You know a command name but need a short summary of its options without opening a manual page. What should you append to the command?",
@@ -7388,7 +7104,6 @@
       ]
     },
     "os-help-310": {
-      "course": "os",
       "category": "Help & Documentation",
       "title": "Help for a Shell Built-in",
       "instructions": "Write the Bash command that displays built-in help for `cd`.",
@@ -7410,7 +7125,6 @@
       ]
     },
     "os-help-311": {
-      "course": "os",
       "category": "Help & Documentation",
       "title": "Identify a Built-in or Executable",
       "instructions": "Write a command that determines whether `cd` is a shell built-in or an external executable.",
@@ -7444,7 +7158,6 @@
       ]
     },
     "os-help-312": {
-      "course": "os",
       "category": "Help & Documentation",
       "title": "Manual Page for a File Format",
       "instructions": "You need documentation for the format of `/etc/passwd`, not the interactive password-changing command. Which manual page should you open?",
@@ -7474,7 +7187,6 @@
       ]
     },
     "os-help-313": {
-      "course": "os",
       "category": "Help & Documentation",
       "title": "Search Manual Page Descriptions",
       "instructions": "You have forgotten the command name for changing file permissions. Which command searches manual-page names and short descriptions for the keyword `permission`?",
@@ -7508,7 +7220,6 @@
       ]
     },
     "os-help-314": {
-      "course": "os",
       "category": "Help & Documentation",
       "title": "Manual Sections for Commands",
       "instructions": "Which manual section normally describes commands that users can run from the shell?",
@@ -7538,7 +7249,6 @@
       ]
     },
     "os-help-315": {
-      "course": "os",
       "category": "Help & Documentation",
       "title": "Package Documentation Directory",
       "instructions": "A package installs README files, examples, and sample configuration files. Which standard directory should you inspect for this documentation?",
@@ -7564,7 +7274,6 @@
       ]
     },
     "os-help-316": {
-      "course": "os",
       "category": "Help & Documentation",
       "title": "Optional Notation in a Synopsis",
       "instructions": "In a manual-page synopsis, what do square brackets around an option or argument normally indicate?",
@@ -7583,7 +7292,6 @@
       "checks": [0]
     },
     "os-help-317": {
-      "course": "os",
       "category": "Help & Documentation",
       "title": "Navigate Info Documentation",
       "instructions": "Which key quits the interactive `pinfo` reader?",
@@ -7607,7 +7315,6 @@
       ]
     },
     "os-users-groups-318": {
-      "course": "os",
       "category": "Users and Groups",
       "title": "Read the Seven Passwd Fields",
       "instructions": "In an `/etc/passwd` record, which field contains the user’s login shell?",
@@ -7626,7 +7333,6 @@
       "checks": [3]
     },
     "os-users-groups-319": {
-      "course": "os",
       "category": "Users and Groups",
       "title": "Passwd Password Placeholder",
       "instructions": "An `/etc/passwd` line contains `x` in its second field. What does that indicate?",
@@ -7647,7 +7353,6 @@
       "checks": [0]
     },
     "os-users-groups-320": {
-      "course": "os",
       "category": "Users and Groups",
       "title": "Group Record Fields",
       "instructions": "What does the fourth colon-separated field in `/etc/group` contain?",
@@ -7666,7 +7371,6 @@
       "checks": [1]
     },
     "os-users-groups-321": {
-      "course": "os",
       "category": "Users and Groups",
       "title": "Primary Group Location",
       "instructions": "Where is a user’s primary group ID recorded?",
@@ -7685,7 +7389,6 @@
       "checks": [0]
     },
     "os-users-groups-322": {
-      "course": "os",
       "category": "Users and Groups",
       "title": "System and Regular UID Ranges",
       "instructions": "Which statement about Linux account ID ranges is correct?",
@@ -7704,7 +7407,6 @@
       "checks": [0]
     },
     "os-users-groups-323": {
-      "course": "os",
       "category": "Users and Groups",
       "title": "Create a User with a Home Directory",
       "instructions": "Write a command to create user `alice` and create the user’s home directory.",
@@ -7742,7 +7444,6 @@
       ]
     },
     "os-users-groups-324": {
-      "course": "os",
       "category": "Users and Groups",
       "title": "Set a User Login Shell",
       "instructions": "Write a command to set user `alice`’s login shell to `/bin/bash`.",
@@ -7780,7 +7481,6 @@
       ]
     },
     "os-users-groups-325": {
-      "course": "os",
       "category": "Users and Groups",
       "title": "Add a User to a Primary Group",
       "instructions": "Write a command to change `alice`’s primary group to `engineers`.",
@@ -7818,7 +7518,6 @@
       ]
     },
     "os-users-groups-326": {
-      "course": "os",
       "category": "Users and Groups",
       "title": "Add Supplementary Groups Safely",
       "instructions": "Write a command to add `alice` to supplementary groups `devteam` and `ops` without removing her existing supplementary memberships.",
@@ -7870,7 +7569,6 @@
       ]
     },
     "os-users-groups-327": {
-      "course": "os",
       "category": "Users and Groups",
       "title": "Create a Group with a GID",
       "instructions": "Write a command to create group `engineers` with the explicitly assigned GID `4000`.",
@@ -7908,7 +7606,6 @@
       ]
     },
     "os-users-groups-328": {
-      "course": "os",
       "category": "Users and Groups",
       "title": "Create a System Group",
       "instructions": "Write a command to create a system group named `infra`.",
@@ -7946,7 +7643,6 @@
       ]
     },
     "os-users-groups-329": {
-      "course": "os",
       "category": "Users and Groups",
       "title": "Rename a Group",
       "instructions": "Write a command to rename the existing group `qa` to `quality`.",
@@ -7986,7 +7682,6 @@
       ]
     },
     "os-users-groups-330": {
-      "course": "os",
       "category": "Users and Groups",
       "title": "Change a Group GID",
       "instructions": "Write a command to change the GID of `devteam` to `3500`.",
@@ -8024,7 +7719,6 @@
       ]
     },
     "os-users-groups-331": {
-      "course": "os",
       "category": "Users and Groups",
       "title": "Switch the Active Primary Group",
       "instructions": "A user needs a temporary shell using group `ops` as the primary group. Which command should they run?",
@@ -8046,7 +7740,6 @@
       ]
     },
     "os-users-groups-332": {
-      "course": "os",
       "category": "Users and Groups",
       "title": "Delete a User but Keep Home",
       "instructions": "Which command removes user `alice`’s account records while leaving the home directory on disk?",
@@ -8072,7 +7765,6 @@
       ]
     },
     "os-users-groups-333": {
-      "course": "os",
       "category": "Users and Groups",
       "title": "Delete a User and Home",
       "instructions": "Which command removes user `alice` and also removes the home directory and mail spool?",
@@ -8108,7 +7800,6 @@
       ]
     },
     "os-users-groups-334": {
-      "course": "os",
       "category": "Users and Groups",
       "title": "Default Account Configuration",
       "instructions": "Which file contains default account settings such as UID/GID ranges and the default umask?",
@@ -8130,7 +7821,6 @@
       ]
     },
     "os-users-groups-335": {
-      "course": "os",
       "category": "Users and Groups",
       "title": "Prevent Interactive Service Login",
       "instructions": "Which login shell can be assigned to a service account to prevent normal interactive logins?",
@@ -8156,7 +7846,6 @@
       ]
     },
     "os-users-groups-336": {
-      "course": "os",
       "category": "Users and Groups",
       "title": "Password Status",
       "instructions": "Write the command to display the password status of user `dev1`.",
@@ -8194,7 +7883,6 @@
       ]
     },
     "os-users-groups-337": {
-      "course": "os",
       "category": "Users and Groups",
       "title": "Password Aging Policy",
       "instructions": "A user must change a password every 45 days, cannot change it more than once per day, and must receive a warning 7 days before expiry. Write the command for user `qaeng`.",
@@ -8244,7 +7932,6 @@
       ]
     },
     "os-users-groups-338": {
-      "course": "os",
       "category": "Users and Groups",
       "title": "Password Aging Field Meaning",
       "instructions": "In a `chage` policy, what does the `-W` option set?",
@@ -8263,7 +7950,6 @@
       "checks": [0]
     },
     "os-users-groups-339": {
-      "course": "os",
       "category": "Users and Groups",
       "title": "Unlock a User Account",
       "instructions": "Write the command to unlock the password for user `tempuser`.",
@@ -8301,7 +7987,6 @@
       ]
     },
     "os-users-groups-340": {
-      "course": "os",
       "category": "Users and Groups",
       "title": "Sudo Rule Group Prefix",
       "instructions": "In a sudoers rule, what does a leading percent sign in `%wheel` identify?",
@@ -8320,7 +8005,6 @@
       "checks": [0]
     },
     "os-users-groups-341": {
-      "course": "os",
       "category": "Users and Groups",
       "title": "One Elevated Command",
       "instructions": "Write the generic command syntax for running one command with elevated privileges through `sudo`, without starting a separate root shell.",
@@ -8352,7 +8036,6 @@
       ]
     },
     "os-shell-syntax-342": {
-      "course": "os",
       "category": "Shell Syntax",
       "title": "Search Command History Interactively",
       "instructions": "You remember part of a long command but not its history number. Which Bash shortcut searches command history interactively?",
@@ -8402,7 +8085,6 @@
       ]
     },
     "os-shell-syntax-343": {
-      "course": "os",
       "category": "Shell Syntax",
       "title": "Tab Completion",
       "instructions": "You have typed the first few characters of an existing command or filename at the Bash prompt. Which key can complete it?",
@@ -8436,7 +8118,6 @@
       ]
     },
     "os-shell-syntax-347": {
-      "course": "os",
       "category": "Shell Syntax",
       "title": "Command Substitution",
       "instructions": "Write a shell expression that prints `Today is ` followed by the output of `date +%F`.",
@@ -8476,7 +8157,6 @@
       ]
     },
     "os-shell-syntax-348": {
-      "course": "os",
       "category": "Shell Syntax",
       "title": "Escape a Space in a Filename",
       "instructions": "Write a `touch` command that creates one file named `My File.txt` by escaping the space rather than quoting the name.",
@@ -8500,7 +8180,6 @@
       ]
     },
     "os-shell-syntax-349": {
-      "course": "os",
       "category": "Shell Syntax",
       "title": "Brace Expansion versus Globbing",
       "instructions": "You need to generate the names `report1.txt`, `report2.txt`, and `report3.txt` even if none exists yet. Which shell feature creates those strings before the command runs?",
@@ -8521,7 +8200,6 @@
       "checks": [0]
     },
     "os-environment-350": {
-      "course": "os",
       "category": "Environment",
       "title": "Login Shell Configuration",
       "instructions": "Which conventional per-user Bash startup file does Bash check first for a login shell, if that file exists?",
@@ -8553,7 +8231,6 @@
       ]
     },
     "os-environment-351": {
-      "course": "os",
       "category": "Environment",
       "title": "Interactive Non-Login Shell Configuration",
       "instructions": "Which per-user Bash file is read when an interactive, non-login Bash shell starts?",
@@ -8589,7 +8266,6 @@
       ]
     },
     "os-environment-352": {
-      "course": "os",
       "category": "Environment",
       "title": "Start a Login Bash Shell",
       "instructions": "Write the command that starts a new Bash login shell.",
@@ -8615,7 +8291,6 @@
       ]
     },
     "os-environment-353": {
-      "course": "os",
       "category": "Environment",
       "title": "Remove a Shell Variable",
       "instructions": "Write the command that removes the shell variable `project` from the current shell.",
@@ -8637,7 +8312,6 @@
       ]
     },
     "os-environment-355": {
-      "course": "os",
       "category": "Environment",
       "title": "Alias Expansion Scope",
       "instructions": "An alias works at an interactive prompt but not inside an ordinary shell script. Which statement explains this behavior?",
@@ -8656,7 +8330,6 @@
       "checks": [0]
     },
     "os-environment-356": {
-      "course": "os",
       "category": "Environment",
       "title": "Braced Variable Name",
       "instructions": "A variable named `course` contains `os`. Which expression appends `_linux` to its value without treating `course_linux` as the variable name?",
@@ -8678,7 +8351,6 @@
       ]
     },
     "os-environment-357": {
-      "course": "os",
       "category": "Environment",
       "title": "Environment Versus Shell Variables",
       "instructions": "Which command displays environment variables inherited by child processes, rather than all shell variables and functions?",
@@ -8704,7 +8376,6 @@
       ]
     },
     "os-environment-358": {
-      "course": "os",
       "category": "Environment",
       "title": "Find How a Command Is Resolved",
       "instructions": "Write a command to determine how Bash resolves the name `ll` after an alias has been defined.",
@@ -8736,7 +8407,6 @@
       ]
     },
     "os-vim-359": {
-      "course": "os",
       "category": "Vim",
       "title": "Move in Normal Mode",
       "instructions": "Which four home-row keys move the cursor left, down, up, and right, respectively, in Vim Normal mode?",
@@ -8758,7 +8428,6 @@
       ]
     },
     "os-vim-360": {
-      "course": "os",
       "category": "Vim",
       "title": "Delete One Character",
       "instructions": "In Vim Normal mode, which key deletes the character under the cursor?",
@@ -8780,7 +8449,6 @@
       ]
     },
     "os-vim-361": {
-      "course": "os",
       "category": "Vim",
       "title": "Insert at Start of Line",
       "instructions": "Which Vim Normal mode key enters Insert mode at the beginning of the current line?",
@@ -8802,7 +8470,6 @@
       ]
     },
     "os-vim-362": {
-      "course": "os",
       "category": "Vim",
       "title": "Append at End of Line",
       "instructions": "Which Vim Normal mode key enters Insert mode at the end of the current line?",
@@ -8824,7 +8491,6 @@
       ]
     },
     "os-vim-363": {
-      "course": "os",
       "category": "Vim",
       "title": "Open a Line Above",
       "instructions": "Which Vim Normal mode key opens a new line above the current line and enters Insert mode?",
@@ -8846,7 +8512,6 @@
       ]
     },
     "os-vim-364": {
-      "course": "os",
       "category": "Vim",
       "title": "Visual Character Selection",
       "instructions": "Which key starts character-wise Visual mode in Vim?",
@@ -8868,7 +8533,6 @@
       ]
     },
     "os-vim-365": {
-      "course": "os",
       "category": "Vim",
       "title": "Visual Line Selection",
       "instructions": "Which key starts line-wise Visual mode in Vim?",
@@ -8890,7 +8554,6 @@
       ]
     },
     "os-vim-366": {
-      "course": "os",
       "category": "Vim",
       "title": "Visual Block Selection",
       "instructions": "Which Vim shortcut starts block/column Visual mode?",
@@ -8932,7 +8595,6 @@
       ]
     },
     "os-vim-367": {
-      "course": "os",
       "category": "Vim",
       "title": "Copy Three Lines",
       "instructions": "Write the Vim Normal mode command that yanks (copies) the current line and the next two lines.",
@@ -8954,7 +8616,6 @@
       ]
     },
     "os-vim-368": {
-      "course": "os",
       "category": "Vim",
       "title": "Paste Before the Cursor",
       "instructions": "Which Vim Normal mode key puts yanked or deleted text before the cursor line?",
@@ -8976,7 +8637,6 @@
       ]
     },
     "os-vim-369": {
-      "course": "os",
       "category": "Vim",
       "title": "Continue Search",
       "instructions": "After searching forward in Vim with `/term`, which key moves to the next matching occurrence?",
@@ -8998,7 +8658,6 @@
       ]
     },
     "os-vim-370": {
-      "course": "os",
       "category": "Vim",
       "title": "Save As a Different Name",
       "instructions": "Write the Vim command-line mode command to save the current buffer as `newfile.txt` without closing Vim.",
@@ -9024,7 +8683,6 @@
       ]
     },
     "os-vim-371": {
-      "course": "os",
       "category": "Vim",
       "title": "Quit Without Changes",
       "instructions": "Which Vim command quits when there are no unsaved changes?",
@@ -9050,7 +8708,6 @@
       ]
     },
     "os-permissions-372": {
-      "course": "os",
       "category": "Permissions",
       "title": "Read Permission on a Directory",
       "instructions": "A user has read permission on a directory but no execute permission. What can they generally do?",
@@ -9069,7 +8726,6 @@
       "checks": [0]
     },
     "os-permissions-373": {
-      "course": "os",
       "category": "Permissions",
       "title": "Write and Execute on a Directory",
       "instructions": "Why does deleting a file normally depend on write and execute permission on its parent directory?",
@@ -9088,7 +8744,6 @@
       "checks": [0]
     },
     "os-permissions-374": {
-      "course": "os",
       "category": "Permissions",
       "title": "Create Files in a Shared SGID Directory",
       "instructions": "A team directory has group `projectteam` and mode `2775`. What group ownership should newly created files normally inherit?",
@@ -9118,7 +8773,6 @@
       ]
     },
     "os-permissions-375": {
-      "course": "os",
       "category": "Permissions",
       "title": "Recognize SGID in a Listing",
       "instructions": "A directory’s group-execute position is shown as lowercase `s` in `ls -l`. Which special permission does that indicate?",
@@ -9152,7 +8806,6 @@
       ]
     },
     "os-permissions-376": {
-      "course": "os",
       "category": "Permissions",
       "title": "Recognize Sticky Bit in a Listing",
       "instructions": "A shared writable directory ends its permission string with `t`. Which special permission is set?",
@@ -9186,7 +8839,6 @@
       ]
     },
     "os-permissions-377": {
-      "course": "os",
       "category": "Permissions",
       "title": "Sticky Directory Deletion Rule",
       "instructions": "In a sticky, world-writable directory such as `/tmp`, which users can delete or rename a file?",
@@ -9207,7 +8859,6 @@
       "checks": [0]
     },
     "os-permissions-378": {
-      "course": "os",
       "category": "Permissions",
       "title": "SUID on a Shell Script",
       "instructions": "Does setting SUID on a shell script make it run with the file owner’s effective privileges in the same way as a normal executable?",
@@ -9228,7 +8879,6 @@
       "checks": [0]
     },
     "os-permissions-379": {
-      "course": "os",
       "category": "Permissions",
       "title": "Set SGID on a Shared Directory",
       "instructions": "Write a `chmod` command to set mode `2775` on `team_project`.",
@@ -9260,7 +8910,6 @@
       ]
     },
     "os-permissions-380": {
-      "course": "os",
       "category": "Permissions",
       "title": "Umask 027 for New Files",
       "instructions": "A shell has umask `0027`. What permissions will a newly created regular file normally receive?",
@@ -9294,7 +8943,6 @@
       ]
     },
     "os-permissions-381": {
-      "course": "os",
       "category": "Permissions",
       "title": "Umask 027 for New Directories",
       "instructions": "A shell has umask `0027`. What permissions will a newly created directory normally receive?",
@@ -9328,7 +8976,6 @@
       ]
     },
     "os-permissions-382": {
-      "course": "os",
       "category": "Permissions",
       "title": "Umask 0007 for Shared Files",
       "instructions": "A collaborative shell uses umask `0007`. What permissions will a newly created regular file normally receive?",
@@ -9362,7 +9009,6 @@
       ]
     },
     "os-permissions-383": {
-      "course": "os",
       "category": "Permissions",
       "title": "Display Symbolic Umask",
       "instructions": "Write the command that displays the current umask in symbolic form.",
@@ -9388,7 +9034,6 @@
       ]
     },
     "os-permissions-384": {
-      "course": "os",
       "category": "Permissions",
       "title": "Change Ownership Recursively",
       "instructions": "Write a command to change the owner to `webadmin` and group to `developers` for `/var/www/html` and everything below it.",
@@ -9428,7 +9073,6 @@
       ]
     },
     "os-permissions-385": {
-      "course": "os",
       "category": "Permissions",
       "title": "Who Can Change a File Owner",
       "instructions": "Which user normally has permission to change a file’s owner to another user?",
@@ -9447,7 +9091,6 @@
       "checks": [0]
     },
     "os-find-386": {
-      "course": "os",
       "category": "Find",
       "title": "Find Symbolic Links",
       "instructions": "Write a command to find symbolic links below the current directory.",
@@ -9473,7 +9116,6 @@
       ]
     },
     "os-find-387": {
-      "course": "os",
       "category": "Find",
       "title": "Find by Group Ownership",
       "instructions": "Write a command to find files below `/home` that belong to group `projectteam`.",
@@ -9495,7 +9137,6 @@
       ]
     },
     "os-find-388": {
-      "course": "os",
       "category": "Find",
       "title": "Find Unowned Files",
       "instructions": "Which `find` predicate selects files whose user account no longer exists?",
@@ -9517,7 +9158,6 @@
       ]
     },
     "os-find-389": {
-      "course": "os",
       "category": "Find",
       "title": "Find Files by Access Time",
       "instructions": "Write a command to find files under `/home` that were accessed less than five minutes ago.",
@@ -9539,7 +9179,6 @@
       ]
     },
     "os-find-390": {
-      "course": "os",
       "category": "Find",
       "title": "Find Files by Status-Change Time",
       "instructions": "Write a command to find files under `/home` whose metadata/status changed less than ten minutes ago.",
@@ -9561,7 +9200,6 @@
       ]
     },
     "os-find-391": {
-      "course": "os",
       "category": "Find",
       "title": "Delete Matching Files with Find",
       "instructions": "Write a command to delete files named `*.torrent` below your home directory using `find`’s own delete action.",
@@ -9599,7 +9237,6 @@
       ]
     },
     "os-find-392": {
-      "course": "os",
       "category": "Find",
       "title": "Execute a Command on Each Match",
       "instructions": "Write a command using `find -exec` to move every filesystem entry larger than 10 MiB found under your home directory to `~/Desktop`.",
@@ -9629,7 +9266,6 @@
       ]
     },
     "os-archives-393": {
-      "course": "os",
       "category": "Archives",
       "title": "Tar Does Not Compress by Default",
       "instructions": "You create `backup.tar` with `tar -cf`. What does the resulting archive do by itself?",
@@ -9648,7 +9284,6 @@
       "checks": [0]
     },
     "os-archives-394": {
-      "course": "os",
       "category": "Archives",
       "title": "Tar Preserves Metadata",
       "instructions": "Why is a tar archive useful for backups compared with simply concatenating file contents?",
@@ -9667,7 +9302,6 @@
       "checks": [0]
     },
     "os-archives-395": {
-      "course": "os",
       "category": "Archives",
       "title": "Inspect an Archive Before Extraction",
       "instructions": "Write a command to list the contents of `backup.tar.gz` verbosely without extracting it.",
@@ -9697,7 +9331,6 @@
       ]
     },
     "os-archives-396": {
-      "course": "os",
       "category": "Archives",
       "title": "Extract a Tarball to a Destination",
       "instructions": "Write a command to extract `backup.tar.gz` into `/tmp/restore`.",
@@ -9735,7 +9368,6 @@
       ]
     },
     "os-archives-397": {
-      "course": "os",
       "category": "Archives",
       "title": "Tar Absolute-Path Safety",
       "instructions": "Why does tar normally remove a leading slash from absolute paths stored in an archive?",
@@ -9754,7 +9386,6 @@
       "checks": [0]
     },
     "os-archives-398": {
-      "course": "os",
       "category": "Archives",
       "title": "Dangerous Tar Absolute-Names Option",
       "instructions": "Which `tar` option preserves absolute pathnames, including their leading slash, during extraction? Give the option only.",
@@ -9784,7 +9415,6 @@
       ]
     },
     "os-archives-399": {
-      "course": "os",
       "category": "Archives",
       "title": "Secure Copy Uses SSH",
       "instructions": "Why can `scp` transfer files to a server that already accepts SSH logins without configuring a separate FTP service?",
@@ -9805,7 +9435,6 @@
       "checks": [0]
     },
     "os-archives-400": {
-      "course": "os",
       "category": "Archives",
       "title": "Rsync Versus SCP for Updates",
       "instructions": "You repeatedly synchronize a large directory and only a small part changes each time. Which tool is described as transferring only modified data blocks?",
@@ -9829,7 +9458,6 @@
       ]
     },
     "os-shell-scripts-401": {
-      "course": "os",
       "category": "Shell Scripts",
       "title": "Shebang Line",
       "instructions": "A Bash script must identify the interpreter that should run it. What line should appear first in the script?",
@@ -9855,7 +9483,6 @@
       ]
     },
     "os-shell-scripts-402": {
-      "course": "os",
       "category": "Shell Scripts",
       "title": "Make a Script Executable",
       "instructions": "Write the command that adds execute permission to `hello.sh` for all users according to the exercise workflow.",
@@ -9887,7 +9514,6 @@
       ]
     },
     "os-users-groups-403": {
-      "course": "os",
       "category": "Users and Groups",
       "title": "Create a Group with Automatically Assigned GID",
       "instructions": "Write a command to create a local group named `ops` without specifying its GID.",
@@ -9917,7 +9543,6 @@
       ]
     },
     "os-users-groups-404": {
-      "course": "os",
       "category": "Users and Groups",
       "title": "Delete a Group",
       "instructions": "Write a command to delete the local group named `quality`.",
@@ -9947,7 +9572,6 @@
       ]
     },
     "os-users-groups-405": {
-      "course": "os",
       "category": "Users and Groups",
       "title": "Add a Supplementary Group to a User",
       "instructions": "Which `usermod` option appends supplementary group membership without replacing existing supplementary groups? Give the option only.",
@@ -9983,7 +9607,6 @@
       ]
     },
     "os-users-groups-406": {
-      "course": "os",
       "category": "Users and Groups",
       "title": "Primary Group versus Supplementary Group",
       "instructions": "A user belongs to one primary group and several supplementary groups. Which statement is correct?",
@@ -10004,7 +9627,6 @@
       "checks": [0]
     },
     "os-users-groups-407": {
-      "course": "os",
       "category": "Users and Groups",
       "title": "User Private Group",
       "instructions": "What is the name of the arrangement in which a regular user has a private primary group with the same name as the account?",
@@ -10034,7 +9656,6 @@
       ]
     },
     "os-shell-syntax-408": {
-      "course": "os",
       "category": "Shell Syntax",
       "title": "Root and Regular User Prompts",
       "instructions": "Which character commonly ends the Bash prompt when the current shell is running as the root superuser?",
@@ -10056,7 +9677,6 @@
       ]
     },
     "os-shell-syntax-409": {
-      "course": "os",
       "category": "Shell Syntax",
       "title": "Regular User Prompt",
       "instructions": "Which character commonly ends the Bash prompt for a regular, non-root user?",
@@ -10078,7 +9698,6 @@
       ]
     },
     "os-shell-syntax-410": {
-      "course": "os",
       "category": "Shell Syntax",
       "title": "Single Quotes Suppress Expansion",
       "instructions": "Write an `echo` command that prints the literal text `$HOME` without expanding the variable.",
@@ -10102,7 +9721,6 @@
       ]
     },
     "os-shell-syntax-411": {
-      "course": "os",
       "category": "Shell Syntax",
       "title": "Double Quotes Preserve Spaces and Allow Variables",
       "instructions": "A variable named `name` should expand inside a greeting, and the greeting should remain one argument even if the value contains spaces. Which command form does this?",
@@ -10126,7 +9744,6 @@
       ]
     },
     "os-file-inspection-412": {
-      "course": "os",
       "category": "File Inspection",
       "title": "File Extension Does Not Determine Type",
       "instructions": "A file named `image.txt` contains binary image data. Which statement about its type is correct on Linux?",
@@ -10147,7 +9764,6 @@
       "checks": [1]
     },
     "os-file-inspection-413": {
-      "course": "os",
       "category": "File Inspection",
       "title": "View a File One Line at a Time",
       "instructions": "When viewing a long file with `more`, which key advances the display by exactly one line?",
@@ -10185,7 +9801,6 @@
       ]
     },
     "os-redirection-414": {
-      "course": "os",
       "category": "Redirection",
       "title": "Standard Input File Descriptor",
       "instructions": "What numeric file descriptor represents standard input?",
@@ -10207,7 +9822,6 @@
       ]
     },
     "os-redirection-415": {
-      "course": "os",
       "category": "Redirection",
       "title": "Standard Output File Descriptor",
       "instructions": "What numeric file descriptor represents standard output?",
@@ -10229,7 +9843,6 @@
       ]
     },
     "os-redirection-416": {
-      "course": "os",
       "category": "Redirection",
       "title": "Append Standard Error",
       "instructions": "Write the redirection operator that appends a command’s standard-error output to an existing file rather than overwriting it.",
@@ -10257,7 +9870,6 @@
       ]
     },
     "os-redirection-417": {
-      "course": "os",
       "category": "Redirection",
       "title": "Redirect Both Output Streams",
       "instructions": "Write the Bash redirection operator that sends both standard output and standard error to the same file.",
@@ -10283,7 +9895,6 @@
       ]
     },
     "os-find-418": {
-      "course": "os",
       "category": "Find",
       "title": "Find Recently Modified Files",
       "instructions": "Write a command to find items under `/home` modified less than ten minutes ago.",
@@ -10305,7 +9916,6 @@
       ]
     },
     "os-find-419": {
-      "course": "os",
       "category": "Find",
       "title": "Find Files with a Specific User Owner",
       "instructions": "Write a command to find files under `/home` owned by user `andrew`.",
@@ -10327,7 +9937,6 @@
       ]
     },
     "os-find-420": {
-      "course": "os",
       "category": "Find",
       "title": "Find Objects with Missing User Account",
       "instructions": "Which `find` predicate identifies filesystem objects whose numeric owner has no matching user account?",
@@ -10349,7 +9958,6 @@
       ]
     },
     "os-find-421": {
-      "course": "os",
       "category": "Find",
       "title": "Find Files by Size Range",
       "instructions": "Write a command to find files under `/usr/bin` larger than 2 MiB and smaller than 10 MiB.",
@@ -10375,7 +9983,6 @@
       ]
     },
     "os-archives-422": {
-      "course": "os",
       "category": "Archives",
       "title": "Create a Gzip Archive Verbosely",
       "instructions": "Write a `tar` command to create `backup.tar.gz` from `project/`, showing the files as they are added.",
@@ -10409,7 +10016,6 @@
       ]
     },
     "os-archives-423": {
-      "course": "os",
       "category": "Archives",
       "title": "Create an XZ-Compressed Archive",
       "instructions": "Which `tar` command creates an xz-compressed archive named `backup.tar.xz` from `project/`?",
@@ -10439,7 +10045,6 @@
       ]
     },
     "os-archives-424": {
-      "course": "os",
       "category": "Archives",
       "title": "Copy a Directory to a Remote Server",
       "instructions": "Write an `scp` command to copy the local directory `reports/` recursively to `/home/alice/` on `alice@server.example`.",
@@ -10461,7 +10066,6 @@
       ]
     },
     "os-archives-425": {
-      "course": "os",
       "category": "Archives",
       "title": "Use a Custom SSH Port with SCP",
       "instructions": "Write an `scp` command to copy `report.txt` to `alice@server.example:/home/alice/` using SSH port `2222`.",
@@ -10487,7 +10091,6 @@
       ]
     },
     "os-networking-500": {
-      "course": "os",
       "category": "Networking",
       "title": "Recognize a Local IPv4 Address",
       "instructions": "Which address is in one of the local-network IPv4 ranges identified in the course?",
@@ -10508,7 +10111,6 @@
       "checks": [0]
     },
     "os-networking-501": {
-      "course": "os",
       "category": "Networking",
       "title": "IP Address and Port",
       "instructions": "A client must contact the web service on a remote machine. Which pair identifies the destination described in the networking lesson?",
@@ -10529,7 +10131,6 @@
       "checks": [0]
     },
     "os-shell-syntax-502": {
-      "course": "os",
       "category": "Shell Syntax",
       "title": "Use set to Inspect Shell State",
       "instructions": "Which Bash built-in displays shell variables and functions, including values that are not exported to child processes?",
@@ -10551,7 +10152,6 @@
       ]
     },
     "os-shell-scripts-503": {
-      "course": "os",
       "category": "Shell Scripts",
       "title": "Run a Script Found through PATH",
       "instructions": "After adding the personal `bin` directory to `PATH`, write the command used to run the executable script `hello.sh` from that directory.",
@@ -10575,7 +10175,6 @@
       ]
     },
     "os-permissions-504": {
-      "course": "os",
       "category": "Permissions",
       "title": "Strict Umask Profile",
       "instructions": "A shell uses umask `0077`. What permissions will a newly created regular file normally receive?",
@@ -10609,7 +10208,6 @@
       ]
     },
     "os-permissions-505": {
-      "course": "os",
       "category": "Permissions",
       "title": "Uppercase S in a Permission Listing",
       "instructions": "In the owner-execute position of an `ls -l` permission string, what does an uppercase `S` indicate?",
@@ -10630,7 +10228,6 @@
       "checks": [0]
     },
     "os-find-506": {
-      "course": "os",
       "category": "Find",
       "title": "Find by Metadata Change Time",
       "instructions": "Write a command to find items under `/home` whose metadata changed less than ten minutes ago.",
@@ -10652,7 +10249,6 @@
       ]
     },
     "os-users-groups-507": {
-      "course": "os",
       "category": "Users and Groups",
       "title": "Set the Default Editor Environment Variable",
       "instructions": "Write a shell command that exports `EDITOR` with the value `vim` to child processes.",

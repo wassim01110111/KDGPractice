@@ -3,9 +3,9 @@
   "packageId": "programming-fundamentals-java-theory",
   "version": "3.0.0",
   "term": 1,
+  "course": "programming_fundamentals",
   "exercises": {
     "pfj-001": {
-      "course": "programming_fundamentals",
       "category": "Programming Languages and the Java Platform",
       "title": "Choosing a compiled deployment",
       "instructions": "A team builds a C++ application and must distribute it to computers with two different processor architectures. The source code is unchanged. What must the team normally prepare for deployment?",
@@ -23,12 +23,9 @@
         "Distinguish portable source code from the machine-specific binary produced by compilation."
       ],
       "explanation": "The source can be portable, but the compiled binary is produced for a particular target processor. The team therefore needs a suitable build for each architecture.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-002": {
-      "course": "programming_fundamentals",
       "category": "Programming Languages and the Java Platform",
       "title": "Interpreted-language deployment trade-off",
       "instructions": "A Python program is copied from a developer’s computer to a server. The source file is present, but the program cannot start because the server lacks the required language runtime. Which explanation best fits this situation?",
@@ -46,12 +43,9 @@
         "Think about what performs the translation/execution on the target system."
       ],
       "explanation": "In the interpreted-language model from the course, the interpreter is required on each target system. Portable source alone is not enough if the runtime is missing.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-003": {
-      "course": "programming_fundamentals",
       "category": "Programming Languages and the Java Platform",
       "title": "Why Java bytecode is portable",
       "instructions": "A `.class` file produced on an ARM development computer is moved to an Intel computer. Both computers have a suitable Java platform installed. Why can the same bytecode run on both?",
@@ -69,12 +63,9 @@
         "Identify what the JVM does and what is shared between the two machines."
       ],
       "explanation": "Java compilation produces bytecode for the JVM rather than native instructions for one processor. Each system’s JVM provides the processor-specific execution layer.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-004": {
-      "course": "programming_fundamentals",
       "category": "Programming Languages and the Java Platform",
       "title": "Selecting the required Java installation",
       "instructions": "A developer must write Java code, compile it, debug it and run the resulting program. Which installation is intended to provide the necessary development tools as well as the runtime?",
@@ -82,22 +73,14 @@
       "type": "mcq-single",
       "provenance": "M1_Basic_concepts.pdf",
       "contentVersion": 3,
-      "options": [
-        "JDK",
-        "JRE only",
-        "JVM only",
-        "IDE only"
-      ],
+      "options": ["JDK", "JRE only", "JVM only", "IDE only"],
       "hints": [
         "Separate the runtime needed by users from the toolset needed by developers."
       ],
       "explanation": "The JDK includes the JRE and development tools such as the compiler and debugger. A JRE is sufficient for running bytecode, but not for the full development workflow.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-005": {
-      "course": "programming_fundamentals",
       "category": "Programming Languages and the Java Platform",
       "title": "Java build and run sequence",
       "instructions": "You have written `Hello.java` and want to compile and then run it from the command line. Which sequence is correct?",
@@ -115,12 +98,9 @@
         "One command compiles source into bytecode; the other starts the JVM for the compiled class."
       ],
       "explanation": "`javac` compiles the `.java` source and creates a `.class` file. The `java` command then launches the JVM to execute the class; the class name is used without the extension.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-006": {
-      "course": "programming_fundamentals",
       "category": "The Java Platform and Your First Java Program",
       "title": "Resolving a Scanner compilation error",
       "instructions": "A program contains\n```java\nScanner keyboard = new Scanner(System.in);\n```\nbut the compiler reports that it cannot find the symbol `Scanner`. The program has no import statements. Which change addresses the likely cause?",
@@ -138,12 +118,9 @@
         "Consider whether Scanner is automatically available in every source file or belongs to a library package."
       ],
       "explanation": "Scanner is in `java.util`, not in the automatically imported `java.lang` package. Importing `java.util.Scanner` makes the class name available to the source file.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-007": {
-      "course": "programming_fundamentals",
       "category": "The Java Platform and Your First Java Program",
       "title": "Finding the application entry point",
       "instructions": "A Java application contains several classes and many methods. When the application is launched in the basic structure taught in this course, where does execution begin?",
@@ -161,12 +138,9 @@
         "Think about the method the runtime looks for when starting a basic Java application."
       ],
       "explanation": "The course’s first-program structure uses\n```java\npublic static void main(String[] args)\n```\nas the application entry point. Other methods are called from executing code; their presence alone does not start them.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-008": {
-      "course": "programming_fundamentals",
       "category": "The Java Platform and Your First Java Program",
       "title": "Using packages to organise a project",
       "instructions": "Two teams both create a class named `Report`, but the classes serve unrelated parts of a larger application. Which design choice best helps organise the code and distinguish the two classes?",
@@ -184,12 +158,9 @@
         "Consider how a package relates to a group of source files and to class names."
       ],
       "explanation": "Packages group related source files and help prevent naming conflicts. Two classes can share a simple name when their package-qualified names differ.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-009": {
-      "course": "programming_fundamentals",
       "category": "Programming Algorithms and Flowcharts",
       "title": "Making an algorithm usable by a simple robot",
       "instructions": "You are writing instructions for a robot that must order a pizza. The instruction “choose a suitable pizza” is too vague for the robot to carry out. What is the best next step when refining the algorithm?",
@@ -207,12 +178,9 @@
         "Ask whether each step tells the machine exactly what information to use and what action to perform."
       ],
       "explanation": "An algorithm must be elaborated to the level understood by the system executing it. A useful refinement specifies concrete actions such as requesting input, presenting choices, testing selections, repeating where needed and computing the amount due.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-010": {
-      "course": "programming_fundamentals",
       "category": "Programming Algorithms and Flowcharts",
       "title": "Ordering the steps in a sum algorithm",
       "instructions": "A program must ask the user for two numbers and display their sum. Which sequence of algorithmic steps is logically complete?",
@@ -230,12 +198,9 @@
         "A calculation cannot use values that have not yet been obtained."
       ],
       "explanation": "Both inputs must be available before the addition can be performed. The calculated result is then sent to the output step.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-011": {
-      "course": "programming_fundamentals",
       "category": "Programming Algorithms and Flowcharts",
       "title": "Selecting the necessary algorithm actions",
       "instructions": "A guessing game repeatedly asks for a number until the guess matches a stored answer. After each guess it reports whether the guess is too low or too high. Which algorithm actions are essential to this task? Select all that apply.",
@@ -254,15 +219,9 @@
         "Trace one unsuccessful guess and then a successful guess. What must the algorithm do in both cases?"
       ],
       "explanation": "The algorithm must obtain each guess, compare it with the answer, select the low/high/correct response and repeat until the guess is correct. It therefore uses input, testing, repetition and comparison.",
-      "checks": [
-        0,
-        1,
-        2,
-        3
-      ]
+      "checks": [0, 1, 2, 3]
     },
     "pfj-012": {
-      "course": "programming_fundamentals",
       "category": "Programming Languages and the Java Platform",
       "title": "Comparing language implementation trade-offs",
       "instructions": "A project prioritises direct execution speed and does not mind producing a different executable for each processor type. Which language-implementation approach best matches those priorities in the course comparison?",
@@ -280,12 +239,9 @@
         "Compare the course’s stated execution-speed and processor-dependency trade-offs."
       ],
       "explanation": "The compiled-language model produces binary code that the target processor can execute directly. The course associates this with fast execution, but also with platform-specific binaries and recompilation when code changes.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-013": {
-      "course": "programming_fundamentals",
       "category": "The Java Platform and Your First Java Program",
       "title": "Understanding Java platform components",
       "instructions": "A student says: “The JDK, JRE and JVM are three names for the same thing.” Which response is the most accurate?",
@@ -303,12 +259,9 @@
         "Think of the execution engine, the runtime package around it, and the extra tools used to develop programs."
       ],
       "explanation": "The JVM is the virtual processor for bytecode. The JRE combines the JVM and Java API needed to run programs. The JDK contains the JRE plus tools such as compilation and debugging utilities.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-014": {
-      "course": "programming_fundamentals",
       "category": "Variables, Types, Conversions and Operators",
       "title": "Choosing suitable variable types",
       "instructions": "A program stores a person’s age in whole years, a measured distance that may contain decimals, and whether a door is locked. Which type choices are most suitable?",
@@ -326,12 +279,9 @@
         "Match each value to whether it is a whole number, a potentially fractional number or a true/false state."
       ],
       "explanation": "Age is naturally represented as an integer count, a measured distance may require a floating-point type, and a lock state has two logical values. `int`, `double` and `boolean` fit those roles.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-015": {
-      "course": "programming_fundamentals",
       "category": "Variables, Types, Conversions and Operators",
       "title": "Preventing accidental reassignment of a constant",
       "instructions": "A program uses the same VAT percentage in several calculations. The percentage should remain unchanged while the program runs. Which implementation best expresses that requirement?",
@@ -349,12 +299,9 @@
         "Look for the language feature that prevents reassignment after initialization and avoids repeated literal values."
       ],
       "explanation": "A `final` variable cannot be reassigned after initialization. Defining the rate once makes the intention explicit and avoids inconsistent copies of the same literal throughout the program.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-016": {
-      "course": "programming_fundamentals",
       "category": "Variables, Types, Conversions and Operators",
       "title": "Fixing a narrowing conversion",
       "instructions": "The following assignment does not compile:\n```java\ndouble price = 12.75;\nint whole = price;\n```\nThe programmer intentionally wants an integer conversion and accepts losing the fractional part. Which change is appropriate?",
@@ -372,12 +319,9 @@
         "The conversion goes from a floating-point type to an integer type, so consider an explicit cast."
       ],
       "explanation": "Assigning a `double` to an `int` is a narrowing conversion and is not allowed implicitly. `(int) price` makes the conversion explicit; the fractional part is discarded rather than rounded.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-017": {
-      "course": "programming_fundamentals",
       "category": "Variables, Types, Conversions and Operators",
       "title": "Predicting integer and floating-point division",
       "instructions": "What values are produced by the following statements, in order?\n```java\nint a = 5;\nint b = 2;\ndouble x = a / b;\ndouble y = (double) a / b;\n```",
@@ -395,12 +339,9 @@
         "Determine the type of the division before considering the type of the variable receiving its result."
       ],
       "explanation": "In `a / b`, both operands are integers, so integer division produces `2`; assigning that result to a `double` gives `2.0`. Casting `a` before division makes the operation floating-point and produces `2.5`.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-018": {
-      "course": "programming_fundamentals",
       "category": "Variables, Types, Conversions and Operators",
       "title": "Understanding truncation when casting",
       "instructions": "What is the value of `n` after this statement?\n```java\ndouble amount = 8.9;\nint n = (int) amount;\n```",
@@ -408,22 +349,14 @@
       "type": "mcq-single",
       "provenance": "M2_Variables_Operators.pdf",
       "contentVersion": 3,
-      "options": [
-        "8",
-        "9",
-        "8.9",
-        "The statement cannot compile"
-      ],
+      "options": ["8", "9", "8.9", "The statement cannot compile"],
       "hints": [
         "An explicit cast to an integer does not perform the same operation as rounding to the nearest integer."
       ],
       "explanation": "Casting this positive floating-point value to `int` discards the fractional part. It does not round 8.9 up to 9.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-019": {
-      "course": "programming_fundamentals",
       "category": "Variables, Types, Conversions and Operators",
       "title": "Using modulo to identify repeating cycles",
       "instructions": "A program numbers items from zero and must perform a special action on every fifth item: item 0, 5, 10, 15, and so on. Which condition identifies those item numbers?",
@@ -441,12 +374,9 @@
         "The remainder is zero exactly when the number is divisible by five."
       ],
       "explanation": "The modulo operator returns the remainder after division. A remainder of zero identifies multiples of five, including zero.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-020": {
-      "course": "programming_fundamentals",
       "category": "Variables, Types, Conversions and Operators",
       "title": "Tracing pre-increment and post-increment",
       "instructions": "What are the final values of `first`, `second` and `i`? \n```java\nint i = 4;\nint first = i++;\nint second = ++i;\n```",
@@ -464,12 +394,9 @@
         "Trace each statement separately: post-increment uses the old value first; pre-increment changes the value before it is used."
       ],
       "explanation": "Initially `i` is 4. `i++` assigns 4 to `first` and then changes `i` to 5. `++i` changes `i` to 6 before assigning it to `second`.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-021": {
-      "course": "programming_fundamentals",
       "category": "Variables, Types, Conversions and Operators",
       "title": "Combining arithmetic and assignment",
       "instructions": "Start with these declarations:\n```java\nint total = 12;\nint step = 5;\n```\nThen execute these statements:\n```java\ntotal += step;\nstep *= 2;\ntotal %= step;\n```\nWhat are the resulting values of `total` and `step`?",
@@ -487,12 +414,9 @@
         "Rewrite each compound assignment as an ordinary calculation followed by assignment, then evaluate in order."
       ],
       "explanation": "`total += step` gives 17. `step *= 2` gives 10. Finally, `total %= step` means `total = 17 % 10`, leaving 7.",
-      "checks": [
-        1
-      ]
+      "checks": [1]
     },
     "pfj-022": {
-      "course": "programming_fundamentals",
       "category": "Variables, Types, Conversions and Operators",
       "title": "Building a valid range condition",
       "instructions": "A program classifies people aged from 18 through 67 inclusive as being in the active age range. Which condition correctly includes both boundary values and excludes values outside the range?",
@@ -510,12 +434,9 @@
         "Both limits must be satisfied, and “through” means the endpoints are included."
       ],
       "explanation": "The `&&` operator requires both comparisons to be true. Using `>=` and `<=` includes ages 18 and 67.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-023": {
-      "course": "programming_fundamentals",
       "category": "Variables, Types, Conversions and Operators",
       "title": "Using OR to detect invalid values",
       "instructions": "A valid score must be between 0 and 100 inclusive. Which condition detects a score that is outside this range?",
@@ -533,12 +454,9 @@
         "An invalid value is either below the minimum or above the maximum; it cannot be both at once."
       ],
       "explanation": "A value is outside the allowed range when at least one boundary is violated. `||` correctly detects either case; `&&` would require an impossible value to be below zero and above 100 at the same time.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-024": {
-      "course": "programming_fundamentals",
       "category": "Variables, Types, Conversions and Operators",
       "title": "Negating a logical condition",
       "instructions": "A boolean variable `available` is true when a seat can be booked. Which expression is true exactly when the seat is not available?",
@@ -556,12 +474,9 @@
         "Use the unary logical operator that reverses a boolean value."
       ],
       "explanation": "`!` negates its operand: true becomes false and false becomes true. Therefore `!available` represents the unavailable state.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-025": {
-      "course": "programming_fundamentals",
       "category": "Variables, Types, Conversions and Operators",
       "title": "Applying operator precedence",
       "instructions": "What value is assigned to `result`?\n```java\nint result = 2 + 3 * 4;\n```",
@@ -569,22 +484,12 @@
       "type": "mcq-single",
       "provenance": "M2_Variables_Operators.pdf",
       "contentVersion": 3,
-      "options": [
-        "14",
-        "20",
-        "24",
-        "11"
-      ],
-      "hints": [
-        "Multiplication has higher precedence than addition."
-      ],
+      "options": ["14", "20", "24", "11"],
+      "hints": ["Multiplication has higher precedence than addition."],
       "explanation": "The multiplication is evaluated first: 3 × 4 = 12. Then 2 is added, so the result is 14. Parentheses would make a different intended grouping explicit.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-026": {
-      "course": "programming_fundamentals",
       "category": "Variables, Types, Conversions and Operators",
       "title": "Making an expression unambiguous",
       "instructions": "A shop calculates a discount on the combined prices of two items. Which expression clearly applies the discount rate to the sum of both prices?",
@@ -598,16 +503,11 @@
         "`priceA * discountRate + priceB`",
         "`priceA + priceB / discountRate`"
       ],
-      "hints": [
-        "The subtotal must be calculated before the rate is applied."
-      ],
+      "hints": ["The subtotal must be calculated before the rate is applied."],
       "explanation": "Parentheses group the two prices into one subtotal, and multiplication then applies the discount rate to that subtotal. Without the parentheses, multiplication binds more tightly than addition.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-027": {
-      "course": "programming_fundamentals",
       "category": "Variables, Types, Conversions and Operators",
       "title": "Choosing between AND and OR",
       "instructions": "A user may enter a command only if they are an administrator and the account is active. Which condition represents that rule?",
@@ -621,16 +521,11 @@
         "`!isAdministrator && !accountActive`",
         "`isAdministrator == accountActive`"
       ],
-      "hints": [
-        "The rule requires both independent requirements to hold."
-      ],
+      "hints": ["The rule requires both independent requirements to hold."],
       "explanation": "Both administrator status and active-account status are mandatory, so the conditions must be joined with logical AND (`&&`). OR would allow either one alone to grant access.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-028": {
-      "course": "programming_fundamentals",
       "category": "Variables, Types, Conversions and Operators",
       "title": "Using a compound assignment correctly",
       "instructions": "A running total is stored in `sum`. A newly read value is stored in `next`. Which statement adds `next` to the existing total without replacing the total with `next`?",
@@ -648,12 +543,9 @@
         "The operation must both calculate the sum and store it back in the original variable."
       ],
       "explanation": "`sum += next` is equivalent to `sum = sum + next`. A plain assignment would discard the previous total; `==` compares values rather than updating one.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-029": {
-      "course": "programming_fundamentals",
       "category": "Variables, Types, Conversions and Operators",
       "title": "Choosing a character representation",
       "instructions": "A program must store one individual character, such as the grade letter `B`, rather than an arbitrary-length name. Which declaration is most appropriate?",
@@ -671,12 +563,9 @@
         "A single character literal uses a different form from a text String."
       ],
       "explanation": "A `char` stores one character and uses single quotes around the character literal. A String represents text and uses double quotes.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-030": {
-      "course": "programming_fundamentals",
       "category": "Variables, Types, Conversions and Operators",
       "title": "Producing a quoted word in output",
       "instructions": "A program must print exactly `Welcome to \"Java\"` on one line. Which statement correctly writes the quotation marks as part of the output?",
@@ -694,12 +583,9 @@
         "The double quotes that delimit a String literal must be distinguished from quotes that should appear in the output."
       ],
       "explanation": "The inner quotation marks must be escaped as `\\\"` so they are treated as characters in the String rather than as the end of the literal.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-031": {
-      "course": "programming_fundamentals",
       "category": "Variables, Types, Conversions and Operators",
       "title": "Selecting a conditional expression",
       "instructions": "A variable `status` should receive the String `\"adult\"` when `age >= 18`, and `\"minor\"` otherwise. Which assignment expresses this compact two-way choice?",
@@ -717,12 +603,9 @@
         "A conditional expression has a condition followed by the true value and the false value, separated by `?` and `:`."
       ],
       "explanation": "The ternary operator evaluates the boolean condition and yields one of the two String values. Its result can be assigned directly to `status`.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-032": {
-      "course": "programming_fundamentals",
       "category": "Variables, Types, Conversions and Operators",
       "title": "Choosing integer or floating-point arithmetic",
       "instructions": "A program calculates an average from two integer test scores and must preserve fractional results. Which expression ensures the division is performed using floating-point arithmetic?",
@@ -740,12 +623,9 @@
         "At least one operand in the division must be floating point before the division takes place."
       ],
       "explanation": "Casting the sum to `double` before dividing makes the division floating-point. Dividing two integers first would discard any fractional part, even if the result were later assigned to a double.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-033": {
-      "course": "programming_fundamentals",
       "category": "Variables, Types, Conversions and Operators",
       "title": "Replacing repeated literal values with a named constant",
       "instructions": "Several methods compare a temperature against the same maximum allowed value. Later, the value may need to change. Which design is most maintainable?",
@@ -763,12 +643,9 @@
         "Look for a single source of truth that cannot accidentally be changed at runtime."
       ],
       "explanation": "A shared `final` constant avoids duplicated “magic numbers” and keeps all comparisons consistent when the allowed limit changes.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-034": {
-      "course": "programming_fundamentals",
       "category": "Flow Control, Scope and Functions",
       "title": "Choosing a branch structure for a grade calculation",
       "instructions": "A program assigns A for scores of at least 90, B for 80–89, C for 70–79, D for 60–69 and E below 60. Which ordering makes an `if / else if` chain work correctly?",
@@ -786,12 +663,9 @@
         "An `else if` chain executes the first matching branch, so consider what happens to a score of 95 if the lowest threshold is tested first."
       ],
       "explanation": "Testing from the highest threshold down ensures that a score such as 95 matches A immediately. If 60 were tested first, every higher score would be classified as E before later tests could run.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-035": {
-      "course": "programming_fundamentals",
       "category": "Flow Control, Scope and Functions",
       "title": "Checking inclusive grade boundaries",
       "instructions": "Using the grade rules A: 90 and above, B: 80–89, C: 70–79, D: 60–69, E: below 60, what grade should a score of exactly 80 receive?",
@@ -799,22 +673,14 @@
       "type": "mcq-single",
       "provenance": "M3_FlowControl_Functions.pdf",
       "contentVersion": 3,
-      "options": [
-        "B",
-        "A",
-        "C",
-        "D"
-      ],
+      "options": ["B", "A", "C", "D"],
       "hints": [
         "Check the lower boundary of each band; the band beginning at 80 includes 80."
       ],
       "explanation": "A score of 80 is below 90 but is at least 80, so it belongs to the B range.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-036": {
-      "course": "programming_fundamentals",
       "category": "Flow Control, Scope and Functions",
       "title": "Identifying a fall-through bug in switch",
       "instructions": "What is printed by this code?\n```java\nint choice = 1;\nswitch (choice) {\n    case 1:\n        System.out.print(\"A\");\n    case 2:\n        System.out.print(\"B\");\n        break;\n    default:\n        System.out.print(\"C\");\n}\n```",
@@ -822,22 +688,14 @@
       "type": "mcq-single",
       "provenance": "M3_FlowControl_Functions.pdf",
       "contentVersion": 3,
-      "options": [
-        "AB",
-        "A",
-        "B",
-        "ABC"
-      ],
+      "options": ["AB", "A", "B", "ABC"],
       "hints": [
         "In a traditional switch, follow execution after the first matching label until a `break` is reached."
       ],
       "explanation": "Case 1 matches and prints A. Because there is no `break` after that statement, execution continues into case 2, prints B, and then stops at its `break`.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-037": {
-      "course": "programming_fundamentals",
       "category": "Flow Control, Scope and Functions",
       "title": "Using switch for grouped choices",
       "instructions": "A program maps the month names `march`, `april` and `may` to the same result, `spring`. In a traditional switch, how can the cases share one output block without repeating the output statement?",
@@ -855,12 +713,9 @@
         "Multiple labels can lead to the same sequence of statements when no statement separates them."
       ],
       "explanation": "Adjacent case labels can share one block. Execution enters at the matched label and continues to the common output until `break` exits the switch.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-038": {
-      "course": "programming_fundamentals",
       "category": "Flow Control, Scope and Functions",
       "title": "Handling an unexpected switch value",
       "instructions": "A menu program supports options 1, 2 and 3. The user may enter any integer. What should happen when the input does not match one of the supported options?",
@@ -878,12 +733,9 @@
         "Consider how the program can provide a defined response when no case matches."
       ],
       "explanation": "A `default` branch provides the fallback behavior for values not matched by a listed case, such as displaying an invalid-option message.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-039": {
-      "course": "programming_fundamentals",
       "category": "Flow Control, Scope and Functions",
       "title": "Understanding a switch expression",
       "instructions": "A method assigns the result of this switch expression:\n```java\nString season = switch (month) {\n    ...\n};\n```\nSome possible month values are not handled by any listed case. Why must the switch expression provide a result for those remaining values?",
@@ -901,12 +753,9 @@
         "The result is assigned to a variable, so consider what happens when the input does not match any listed alternative."
       ],
       "explanation": "A switch expression must yield a value. If not every possible input is covered by its cases, a default branch is needed to supply the missing result.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-040": {
-      "course": "programming_fundamentals",
       "category": "Flow Control, Scope and Functions",
       "title": "Returning a value from a switch block",
       "instructions": "In a switch expression, one case contains several statements inside `{ ... }` and must produce the String `\"invalid\"` as the expression result. Which construct supplies that value?",
@@ -924,12 +773,9 @@
         "A multi-statement case block in a switch expression needs an explicit value-producing statement."
       ],
       "explanation": "`yield` supplies the value returned by that case block to the switch expression. Printing text is a side effect and does not provide the expression’s result.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-041": {
-      "course": "programming_fundamentals",
       "category": "Flow Control, Scope and Functions",
       "title": "Choosing while for an unknown number of attempts",
       "instructions": "A program keeps asking a user to enter a password until the correct password is supplied. The number of attempts is unknown in advance. Which loop is a natural fit?",
@@ -947,12 +793,9 @@
         "Choose a loop whose continuation can be based on a condition rather than a predetermined count."
       ],
       "explanation": "A `while` loop repeats while its condition is true. The number of attempts is data-dependent, so a condition-controlled loop fits the task.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-042": {
-      "course": "programming_fundamentals",
       "category": "Flow Control, Scope and Functions",
       "title": "Diagnosing an infinite while loop",
       "instructions": "Why does this loop never finish?\n```java\nint counter = 0;\nwhile (counter < 5) {\n    System.out.println(counter);\n}\n```",
@@ -970,12 +813,9 @@
         "Trace the variable used by the condition and check whether the loop body changes it."
       ],
       "explanation": "`counter` starts at 0 and is never modified inside the loop. Therefore `counter < 5` remains true forever. A terminating loop needs progress toward a state where its condition becomes false.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-043": {
-      "course": "programming_fundamentals",
       "category": "Flow Control, Scope and Functions",
       "title": "Choosing do-while for a menu",
       "instructions": "A program must display a menu at least once, then ask whether the user wants to see it again. Which loop structure directly supports the requirement that the body runs before the condition is checked?",
@@ -993,12 +833,9 @@
         "Compare whether the condition is checked before or after the first execution of the body."
       ],
       "explanation": "A `do ... while` loop executes its body first and tests its condition afterward, so the menu is shown at least once.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-044": {
-      "course": "programming_fundamentals",
       "category": "Flow Control, Scope and Functions",
       "title": "Counting an inclusive range with for",
       "instructions": "Which loop prints every integer from 1 through 5, including both endpoints?",
@@ -1016,12 +853,9 @@
         "The upper-bound comparison must still be true when the counter is exactly 5."
       ],
       "explanation": "Starting at 1 and using `i <= 5` includes 5. Using `< 5` would stop before printing the upper endpoint.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-045": {
-      "course": "programming_fundamentals",
       "category": "Flow Control, Scope and Functions",
       "title": "Tracing a for loop",
       "instructions": "What sequence is printed?\n```java\nfor (int i = 2; i <= 8; i += 2) {\n    System.out.print(i + \" \");\n}\n```",
@@ -1029,22 +863,14 @@
       "type": "mcq-single",
       "provenance": "M3_FlowControl_Functions.pdf",
       "contentVersion": 3,
-      "options": [
-        "`2 4 6 8`",
-        "`2 4 6`",
-        "`2 3 4 5 6 7 8`",
-        "`4 6 8 10`"
-      ],
+      "options": ["`2 4 6 8`", "`2 4 6`", "`2 3 4 5 6 7 8`", "`4 6 8 10`"],
       "hints": [
         "Start with the initialization, check the condition before each iteration, then apply the modification after the body."
       ],
       "explanation": "The counter starts at 2 and increases by 2 after each print. The values 2, 4, 6 and 8 satisfy `i <= 8`; after 8 the counter becomes 10 and the loop ends.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-046": {
-      "course": "programming_fundamentals",
       "category": "Flow Control, Scope and Functions",
       "title": "Translating a for loop into while",
       "instructions": "Which `while` loop is equivalent to\n```java\nfor (int i = 0; i < 4; i++) {\n    System.out.println(i);\n}\n```\n?",
@@ -1062,12 +888,9 @@
         "Preserve the for loop’s order: initialize once, check before the body, then increment after the body."
       ],
       "explanation": "The equivalent while loop places initialization before the loop and moves the modification to the end of the body. This preserves the first printed value (0) and the same stopping condition.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-047": {
-      "course": "programming_fundamentals",
       "category": "Flow Control, Scope and Functions",
       "title": "Distinguishing break from continue",
       "instructions": "What is printed by this code?\n```java\nfor (int i = 1; i <= 5; i++) {\n    if (i == 3) continue;\n    if (i == 5) break;\n    System.out.print(i);\n}\n```",
@@ -1075,22 +898,14 @@
       "type": "mcq-single",
       "provenance": "M3_FlowControl_Functions.pdf",
       "contentVersion": 3,
-      "options": [
-        "`124`",
-        "`1234`",
-        "`12345`",
-        "`12`"
-      ],
+      "options": ["`124`", "`1234`", "`12345`", "`12`"],
       "hints": [
         "`continue` skips the rest of the current iteration; `break` exits the loop entirely."
       ],
       "explanation": "At i=1 and i=2 the values are printed. At i=3, `continue` skips the print. At i=4 it prints 4. At i=5, `break` exits before printing, giving `124`.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-048": {
-      "course": "programming_fundamentals",
       "category": "Flow Control, Scope and Functions",
       "title": "Understanding variable scope in nested blocks",
       "instructions": "Consider:\n```java\nint total = 10;\nif (total > 0) {\n    int bonus = 5;\n    System.out.println(total + bonus);\n}\nSystem.out.println(total);\n```\nWhich statement is valid?",
@@ -1108,12 +923,9 @@
         "A variable declared in an outer block can be used in a nested block; a variable declared in the nested block does not escape it."
       ],
       "explanation": "`total` is declared in the method block and is visible inside and after the `if`. `bonus` is local to the `if` block, so it can be used in the first print but not outside that block.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-049": {
-      "course": "programming_fundamentals",
       "category": "Flow Control, Scope and Functions",
       "title": "Fixing a scope error",
       "instructions": "A method declares\n```java\nint result = 0;\n```\ninside an `if` block but tries to return `result` after the closing brace of that block. What is the simplest structural fix?",
@@ -1131,12 +943,9 @@
         "The variable must be declared in a scope that includes both the assignment and the return statement."
       ],
       "explanation": "The return statement cannot see a variable declared only inside the `if` block. Declaring it in the enclosing method block makes it visible both inside the conditional and at the return point.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-050": {
-      "course": "programming_fundamentals",
       "category": "Flow Control, Scope and Functions",
       "title": "Using separate blocks for separate local variables",
       "instructions": "A method contains two separate `if` blocks. Each block declares a local variable named `message`, and neither block uses the other block’s variable. Why can these declarations coexist?",
@@ -1154,12 +963,9 @@
         "Compare the visibility regions created by the two pairs of curly braces."
       ],
       "explanation": "The first `message` exists only in its declaring block, and the second exists only in the other block. Their scopes do not overlap, so the names do not conflict.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-051": {
-      "course": "programming_fundamentals",
       "category": "Functions and Method Basics",
       "title": "Refactoring duplicated steps into a function",
       "instructions": "A program asks for three amounts using nearly identical input code. The same input procedure may be needed elsewhere. Which change best improves reuse and reduces duplication?",
@@ -1177,12 +983,9 @@
         "Look for a named block of code that can be called repeatedly from different locations."
       ],
       "explanation": "A method packages a reusable algorithm. Calling it for each amount avoids repeating the same implementation and makes the main workflow shorter and easier to read.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-052": {
-      "course": "programming_fundamentals",
       "category": "Functions and Method Basics",
       "title": "Returning an average from a method",
       "instructions": "A method receives three `double` values and calculates their average. The caller must store that average in a variable. Which method design fits the task?",
@@ -1200,12 +1003,9 @@
         "The caller needs a value it can assign and use in later calculations."
       ],
       "explanation": "The method should return a `double`, because the average is a numeric result that the caller must receive. A `void` method performs an action but does not produce a value for assignment.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-053": {
-      "course": "programming_fundamentals",
       "category": "Functions and Method Basics",
       "title": "Choosing a void method",
       "instructions": "A method’s only responsibility is to display a formatted report. The caller does not need a result for further calculations. Which return type is appropriate?",
@@ -1213,22 +1013,14 @@
       "type": "mcq-single",
       "provenance": "M3_FlowControl_Functions.pdf",
       "contentVersion": 3,
-      "options": [
-        "`void`",
-        "`int`",
-        "`double`",
-        "`boolean`"
-      ],
+      "options": ["`void`", "`int`", "`double`", "`boolean`"],
       "hints": [
         "Choose a return type based on whether the method must give a value back to its caller."
       ],
       "explanation": "The method only performs output and has no result to return. `void` expresses that contract; the other types would require a value of the corresponding type.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-054": {
-      "course": "programming_fundamentals",
       "category": "Functions and Method Basics",
       "title": "Using a returned method value in an expression",
       "instructions": "A method `average(a, b, c)` returns a `double`. Which call can use its return value directly in a larger expression?",
@@ -1246,12 +1038,9 @@
         "A non-void method call evaluates to a value that can participate in another expression."
       ],
       "explanation": "A method returning `double` produces a value, so the result can be multiplied and assigned. A void method call has no result and cannot be used in an arithmetic expression.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-055": {
-      "course": "programming_fundamentals",
       "category": "Objects, References, Random, Strings and Formatting",
       "title": "Distinguishing a class from an object",
       "instructions": "A program models cars. It defines common fields such as colour, speed and direction, and methods such as start and brake. A particular red car with its own speed is created from that definition. Which statement is correct?",
@@ -1269,12 +1058,9 @@
         "Separate the general description shared by a type from one individual instance with its own state."
       ],
       "explanation": "The class is the blueprint that describes the shared structure and behavior. Each particular car created from it is a distinct object with its own attribute values.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-056": {
-      "course": "programming_fundamentals",
       "category": "Objects, References, Random, Strings and Formatting",
       "title": "Choosing attributes and methods for an object",
       "instructions": "You are designing a `Ship` class. Which design best separates information describing a ship from actions the ship can perform?",
@@ -1292,12 +1078,9 @@
         "Classify each item as information about the current state or an action the object can perform."
       ],
       "explanation": "Capacity and length describe state and belong in attributes. Docking and lowering an anchor describe behavior and belong in methods.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-057": {
-      "course": "programming_fundamentals",
       "category": "Objects, References, Random, Strings and Formatting",
       "title": "Creating distinct object instances",
       "instructions": "A program creates two variables with these declarations:\n```java\nRandom first = new Random(10);\nRandom second = new Random(10);\n```\nWhich statement best describes the two variables?",
@@ -1315,12 +1098,9 @@
         "Each execution of `new` creates an object; a seed controls the generated sequence, not object identity."
       ],
       "explanation": "Each `new Random(10)` call creates a distinct object. Because the seeds are equal, each instance produces the same pseudo-random sequence, but the references point to separate objects.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-058": {
-      "course": "programming_fundamentals",
       "category": "Objects, References, Random, Strings and Formatting",
       "title": "Generating a fair six-sided die roll",
       "instructions": "A `Random` object named `generator` is already available. Which expression produces an integer die result from 1 through 6 inclusive?",
@@ -1338,12 +1118,9 @@
         "The one-argument `nextInt` starts at zero and excludes its bound; shift the range if the die starts at one."
       ],
       "explanation": "`nextInt(6)` yields 0, 1, 2, 3, 4 or 5. Adding one shifts the possible outcomes to 1 through 6.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-059": {
-      "course": "programming_fundamentals",
       "category": "Objects, References, Random, Strings and Formatting",
       "title": "Generating an inclusive two-digit range",
       "instructions": "A lottery program needs a random integer from 50 through 99 inclusive. Which expression produces exactly that range using the two-argument method?",
@@ -1357,16 +1134,11 @@
         "`generator.nextInt(100) + 50`",
         "`generator.nextInt(49, 100)`"
       ],
-      "hints": [
-        "The origin is included and the upper bound is excluded."
-      ],
+      "hints": ["The origin is included and the upper bound is excluded."],
       "explanation": "`nextInt(50, 100)` can return 50 up to 99. The second argument is exclusive, so using 99 would omit 99.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-060": {
-      "course": "programming_fundamentals",
       "category": "Objects, References, Random, Strings and Formatting",
       "title": "Using a seed for repeatable tests",
       "instructions": "A developer wants a lottery simulation to generate the same sequence of pseudo-random values every time during debugging. Which approach best supports repeatable tests?",
@@ -1384,12 +1156,9 @@
         "A seeded pseudo-random generator reproduces its sequence when initialized with the same seed."
       ],
       "explanation": "The same seed produces the same pseudo-random sequence. Fixing the seed makes test runs repeatable, which helps locate and reproduce errors.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-061": {
-      "course": "programming_fundamentals",
       "category": "Objects, References, Random, Strings and Formatting",
       "title": "Understanding shared object references",
       "instructions": "After executing these statements:\n```java\nPlayer p1 = new Player(\"Ada\", 3);\nPlayer p2 = p1;\np1.extraLife();\n```\nwhat does `p2.getLives()` return, assuming `extraLife()` adds one life to the player?",
@@ -1407,12 +1176,9 @@
         "The second assignment copies a reference, not a separate copy of the object."
       ],
       "explanation": "`p1` and `p2` refer to the same Player object. Updating its state through `p1` is therefore visible when the object is accessed through `p2`.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-062": {
-      "course": "programming_fundamentals",
       "category": "Objects, References, Random, Strings and Formatting",
       "title": "Contrasting primitive and reference assignment",
       "instructions": "Consider this code:\n```java\nint a = 7;\nint b = a;\na++;\n```\nWhat is the value of `b` afterward, and why?",
@@ -1430,12 +1196,9 @@
         "Primitive assignment copies the current value rather than creating an alias to the original variable."
       ],
       "explanation": "`b = a` copies the value 7 into `b`. Incrementing `a` later changes only `a`, so `b` remains 7. This differs from assigning one object reference to another.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-063": {
-      "course": "programming_fundamentals",
       "category": "Objects, References, Random, Strings and Formatting",
       "title": "Recognising when an object becomes eligible for collection",
       "instructions": "A method creates a `Random` object and stores its reference in a local variable. The method ends, and no other variable refers to that object. What is the consequence?",
@@ -1453,12 +1216,9 @@
         "Consider whether any reference remains and whether garbage collection is immediate or automatic."
       ],
       "explanation": "When no references remain, the object is eligible for garbage collection. Java manages this automatically; the course notes that collection is not immediate.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-064": {
-      "course": "programming_fundamentals",
       "category": "Objects, References, Random, Strings and Formatting",
       "title": "Selecting an import strategy",
       "instructions": "A class in one package needs to use a library class named `Random` from `java.util`. Which option allows the source to refer to it by the simple name `Random`?",
@@ -1476,12 +1236,9 @@
         "An import makes a class name available without writing its fully qualified package name each time."
       ],
       "explanation": "The explicit import identifies `java.util.Random`, after which the simple class name can be used. Without an import, the fully qualified name must be written.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-065": {
-      "course": "programming_fundamentals",
       "category": "Objects, References, Random, Strings and Formatting",
       "title": "Understanding String immutability",
       "instructions": "What is printed?\n```java\nString word = \"cat\";\nword.concat(\"fish\");\nSystem.out.println(word);\n```",
@@ -1499,12 +1256,9 @@
         "A String method that appears to modify text may instead return a different String object."
       ],
       "explanation": "String objects are immutable. `concat` returns a new String, but the code does not store that returned value. The variable `word` still refers to the original `\"cat\"`.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-066": {
-      "course": "programming_fundamentals",
       "category": "Objects, References, Random, Strings and Formatting",
       "title": "Keeping the result of a String operation",
       "instructions": "Suppose `word` is initialized as follows:\n```java\nString word = \"cat\";\n```\nThe program wants to keep `word` unchanged and also store the result of adding `\"fish\"`. Which statement creates the new result?",
@@ -1522,12 +1276,9 @@
         "Since Strings cannot be changed in place, the method’s returned String must be stored if it is needed."
       ],
       "explanation": "`concat` returns a new String. Assigning the result to `combined` preserves the original `word` reference and stores the combined text separately.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-067": {
-      "course": "programming_fundamentals",
       "category": "Objects, References, Random, Strings and Formatting",
       "title": "Comparing String contents rather than references",
       "instructions": "Two String variables may refer to different String objects but contain the same characters. Which method should be used to test whether their text is equal?",
@@ -1545,12 +1296,9 @@
         "Separate object identity from equality of the character contents."
       ],
       "explanation": "`equals()` compares String contents. `==` compares whether the two references identify the same object, which is not the intended test when comparing text.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-068": {
-      "course": "programming_fundamentals",
       "category": "Objects, References, Random, Strings and Formatting",
       "title": "Predicting String reference comparisons",
       "instructions": "Consider these declarations:\n```java\nString a = \"abc\";\nString b = \"abc\";\nString c = new String(\"abc\");\n```\nWhich statement is correct?",
@@ -1564,16 +1312,11 @@
         "`a == c` must be true because the contents match",
         "All three variables must refer to separate objects"
       ],
-      "hints": [
-        "Use `equals` for the text and `==` for reference identity."
-      ],
+      "hints": ["Use `equals` for the text and `==` for reference identity."],
       "explanation": "The explicit `new String` creates a distinct object, so `a == c` is false. Their characters are the same, so `a.equals(c)` is true.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-069": {
-      "course": "programming_fundamentals",
       "category": "Objects, References, Random, Strings and Formatting",
       "title": "Choosing next or nextLine for user input",
       "instructions": "A user enters the full name `Ada Lovelace`. The program must store the entire name, including the space. Which Scanner call is suitable?",
@@ -1581,22 +1324,14 @@
       "type": "mcq-single",
       "provenance": "M4_OO_Programming_Objects.pdf",
       "contentVersion": 3,
-      "options": [
-        "`nextLine()`",
-        "`next()`",
-        "`nextInt()`",
-        "`nextBoolean()`"
-      ],
+      "options": ["`nextLine()`", "`next()`", "`nextInt()`", "`nextBoolean()`"],
       "hints": [
         "One method reads only up to the next whitespace; the other reads the remainder of the line."
       ],
       "explanation": "`nextLine()` reads the complete line, including spaces, up to the newline. `next()` would stop after `Ada` because it ends at whitespace.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-070": {
-      "course": "programming_fundamentals",
       "category": "Objects, References, Random, Strings and Formatting",
       "title": "Fixing the Scanner nextInt-nextLine issue",
       "instructions": "A program reads an age and then a name:\n```java\nint age = keyboard.nextInt();\nString name = keyboard.nextLine();\n```\nThe name is unexpectedly empty. What is the appropriate fix?",
@@ -1614,12 +1349,9 @@
         "The Enter key leaves a line terminator in the input buffer after the integer has been read."
       ],
       "explanation": "`nextInt()` reads the number but leaves the line terminator behind. The immediate `nextLine()` consumes that leftover line break and returns an empty String. An extra `nextLine()` clears it before reading the name.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-071": {
-      "course": "programming_fundamentals",
       "category": "Objects, References, Random, Strings and Formatting",
       "title": "Choosing StringBuilder for repeated modifications",
       "instructions": "A program builds a long message by appending hundreds of pieces of text inside a loop. Which class is the better fit for this pattern, and why?",
@@ -1637,12 +1369,9 @@
         "Consider which of the two text classes is mutable and is designed for repeated changes."
       ],
       "explanation": "`StringBuilder` is mutable. Appending text changes the builder rather than creating a new String object on every operation, making it more suitable for frequent modifications.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-072": {
-      "course": "programming_fundamentals",
       "category": "Objects, References, Random, Strings and Formatting",
       "title": "Tracing chained StringBuilder calls",
       "instructions": "What text is printed?\n```java\nStringBuilder builder = new StringBuilder(\"A\");\nbuilder.append(\"B\").append(\"C\");\nSystem.out.println(builder);\n```",
@@ -1650,22 +1379,14 @@
       "type": "mcq-single",
       "provenance": "M4_OO_Programming_Objects.pdf",
       "contentVersion": 3,
-      "options": [
-        "`ABC`",
-        "`A`",
-        "`BC`",
-        "`CBA`"
-      ],
+      "options": ["`ABC`", "`A`", "`BC`", "`CBA`"],
       "hints": [
         "Each append adds its argument to the current end of the same builder; the calls can be chained."
       ],
       "explanation": "The first append changes the builder to `AB`; the second changes it to `ABC`. Printing the builder displays its current content.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-073": {
-      "course": "programming_fundamentals",
       "category": "Objects, References, Random, Strings and Formatting",
       "title": "Predicting StringBuilder reverse",
       "instructions": "What is printed?\n```java\nStringBuilder builder = new StringBuilder(\"drawer\");\nbuilder.reverse();\nSystem.out.println(builder);\n```",
@@ -1673,22 +1394,14 @@
       "type": "mcq-single",
       "provenance": "M4_OO_Programming_Objects.pdf",
       "contentVersion": 3,
-      "options": [
-        "`reward`",
-        "`drawer`",
-        "`draw`",
-        "`rewarddrawer`"
-      ],
+      "options": ["`reward`", "`drawer`", "`draw`", "`rewarddrawer`"],
       "hints": [
         "The method reverses the order of the characters in the builder."
       ],
       "explanation": "`reverse()` reverses the content in place. The characters in `drawer` read backward as `reward`.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-074": {
-      "course": "programming_fundamentals",
       "category": "Objects, References, Random, Strings and Formatting",
       "title": "Understanding left-to-right String concatenation",
       "instructions": "What is printed by this statement?\n```java\nSystem.out.println(3 + 7 + \" items \" + 3 + 7);\n```",
@@ -1706,12 +1419,9 @@
         "Before a String is reached, `+` performs numeric addition; after a String is involved, it concatenates from left to right."
       ],
       "explanation": "The first two operands are integers, so `3 + 7` becomes 10. Once the String is encountered, later `+` operations concatenate text, giving `10 items 37`.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-075": {
-      "course": "programming_fundamentals",
       "category": "Objects, References, Random, Strings and Formatting",
       "title": "Building formatted text versus printing it",
       "instructions": "A method must return a formatted invoice line as a String so another method can store or process it later. Which call is appropriate?",
@@ -1729,12 +1439,9 @@
         "Distinguish methods that display output from the method that returns a String value."
       ],
       "explanation": "`String.format` creates and returns a formatted String object. `printf` and `format` on `System.out` write formatted output to the console.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-076": {
-      "course": "programming_fundamentals",
       "category": "Objects, References, Random, Strings and Formatting",
       "title": "Formatting a monetary value",
       "instructions": "An invoice must display a decimal amount with exactly two digits after the decimal point. Which format specifier is intended for this requirement?",
@@ -1742,22 +1449,14 @@
       "type": "mcq-single",
       "provenance": "M4_OO_Programming_Objects.pdf",
       "contentVersion": 3,
-      "options": [
-        "`%.2f`",
-        "`%d`",
-        "`%s`",
-        "`%c`"
-      ],
+      "options": ["`%.2f`", "`%d`", "`%s`", "`%c`"],
       "hints": [
         "Choose the floating-point specifier and set the requested number of decimal places."
       ],
       "explanation": "`%f` formats a floating-point number. The `.2` precision requests two digits after the decimal point; the formatter rounds to that precision.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-077": {
-      "course": "programming_fundamentals",
       "category": "Objects, References, Random, Strings and Formatting",
       "title": "Aligning formatted output",
       "instructions": "A report lists city names in a column of at least 12 character positions, with the text aligned to the left. Which specifier matches that requirement?",
@@ -1765,22 +1464,14 @@
       "type": "mcq-single",
       "provenance": "M4_OO_Programming_Objects.pdf",
       "contentVersion": 3,
-      "options": [
-        "`%-12s`",
-        "`%12s`",
-        "`%12d`",
-        "`%.12f`"
-      ],
+      "options": ["`%-12s`", "`%12s`", "`%12d`", "`%.12f`"],
       "hints": [
         "For a String, the width sets a minimum field size and the minus sign requests left alignment."
       ],
       "explanation": "`%s` is the String conversion, `12` sets a minimum width of 12 positions, and `-` left-aligns the value within that field.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-078": {
-      "course": "programming_fundamentals",
       "category": "Classes, Attributes, Methods, Constructors and Math",
       "title": "Designing a Rectangle class",
       "instructions": "A `Rectangle` object must remember its position and dimensions, and calculate its area and perimeter. Which class design best matches that responsibility?",
@@ -1798,12 +1489,9 @@
         "Separate the state each rectangle must retain from the calculations it can perform using that state."
       ],
       "explanation": "Position and dimensions describe each rectangle’s state and belong in instance attributes. Area and perimeter are behaviors/calculations based on those attributes and belong in methods.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-079": {
-      "course": "programming_fundamentals",
       "category": "Classes, Attributes, Methods, Constructors and Math",
       "title": "Protecting object state from direct changes",
       "instructions": "A `Rectangle` class must prevent client code from assigning a negative width directly. Which design provides the appropriate control?",
@@ -1821,12 +1509,9 @@
         "Consider where validation can be enforced so every change to the attribute passes through the same rule."
       ],
       "explanation": "A private attribute prevents client code from modifying the field directly. A public setter can validate the proposed width and update the field only when it satisfies the class invariant.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-080": {
-      "course": "programming_fundamentals",
       "category": "Classes, Attributes, Methods, Constructors and Math",
       "title": "Understanding private attribute access",
       "instructions": "A field\n```java\nprivate int speed;\n```\nis declared in class `Car`. A separate application class creates a Car object and tries to read `myCar.speed`. What should happen?",
@@ -1844,12 +1529,9 @@
         "Access is determined by the declared accessibility modifier, not by which class creates the object."
       ],
       "explanation": "A private field is accessible inside its own class only. Client code must use a public method such as a getter when the class chooses to expose that information.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-081": {
-      "course": "programming_fundamentals",
       "category": "Classes, Attributes, Methods, Constructors and Math",
       "title": "Distinguishing field defaults from local variables",
       "instructions": "A class declares\n```java\nprivate int count;\n```\nand a method declares\n```java\nint result;\n```\nwithout assigning either variable. Which statement is correct?",
@@ -1867,12 +1549,9 @@
         "Compare instance attributes with local variables declared inside a method."
       ],
       "explanation": "Instance attributes receive default values based on their types; an integral attribute defaults to 0. Local variables are not automatically initialized, so the method must assign `result` before using it.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-082": {
-      "course": "programming_fundamentals",
       "category": "Classes, Attributes, Methods, Constructors and Math",
       "title": "Avoiding a null reference failure",
       "instructions": "A field is declared as\n```java\nprivate String name;\n```\nand is never assigned a String object. The constructor then calls `name.length()`. What is the likely runtime result?",
@@ -1890,12 +1569,9 @@
         "An object reference field has a default value; consider whether that value supports method calls."
       ],
       "explanation": "Object-reference attributes default to `null`, not to an empty String. Calling an instance method through a null reference causes a `NullPointerException`.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-083": {
-      "course": "programming_fundamentals",
       "category": "Classes, Attributes, Methods, Constructors and Math",
       "title": "Using this to access a shadowed attribute",
       "instructions": "A class contains the following field and method:\n```java\nprivate int width = 10;\npublic void setWidth(int width) {\n    width = width;\n}\n```\nWhy does this method fail to update the object’s attribute?",
@@ -1913,12 +1589,9 @@
         "When a parameter and an attribute share a name, use the `this` reference to identify the current object’s field."
       ],
       "explanation": "Inside the method, the unqualified name `width` refers to the parameter. `width = width` therefore changes nothing. The intended assignment is `this.width = width`.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-084": {
-      "course": "programming_fundamentals",
       "category": "Classes, Attributes, Methods, Constructors and Math",
       "title": "Correcting a setter with a shadowed parameter",
       "instructions": "Which implementation correctly stores the new x-coordinate in the current Rectangle object?",
@@ -1936,12 +1609,9 @@
         "The parameter provides the new value; the object’s field is the destination."
       ],
       "explanation": "`this.x` identifies the current object’s attribute, while the unqualified `x` on the right refers to the parameter. The assignment copies the supplied value into the field.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-085": {
-      "course": "programming_fundamentals",
       "category": "Classes, Attributes, Methods, Constructors and Math",
       "title": "Validating values in a setter",
       "instructions": "A Car accepts speeds from -20 to 300 inclusive. Its current speed is 50. The setter checks the proposed value and updates the field only when it falls in that interval. What should happen after `setSpeed(500)`?",
@@ -1959,12 +1629,9 @@
         "Check whether 500 satisfies both the minimum and maximum constraints."
       ],
       "explanation": "500 is above the allowed maximum, so the validating setter rejects it and leaves the existing valid state unchanged. This is the purpose of validating the parameter before assigning it.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-086": {
-      "course": "programming_fundamentals",
       "category": "Classes, Attributes, Methods, Constructors and Math",
       "title": "Choosing which attributes should have setters",
       "instructions": "A class stores a calculated identifier that must never change after the object is created. The application may need to display the identifier. Which public interface is the safer design?",
@@ -1982,12 +1649,9 @@
         "Encapsulation does not require every attribute to be freely changeable; expose only the operations the object should support."
       ],
       "explanation": "A getter can expose the identifier without allowing clients to modify it. Omitting a setter helps preserve the object’s invariant after construction.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-087": {
-      "course": "programming_fundamentals",
       "category": "Classes, Attributes, Methods, Constructors and Math",
       "title": "Using a method return value correctly",
       "instructions": "A method `getWidth()` returns an `int`, while `setWidth(int width)` returns `void`. Which statement is valid?",
@@ -2005,12 +1669,9 @@
         "A getter produces a value; a void setter performs an action without returning one."
       ],
       "explanation": "`getWidth()` returns an integer that can be assigned to `current`. A void method has no result to assign or print, and the result of a getter call is not an assignable field.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-088": {
-      "course": "programming_fundamentals",
       "category": "Classes, Attributes, Methods, Constructors and Math",
       "title": "Identifying a valid overloaded method",
       "instructions": "A class has `report()` and the programmer wants a second version that reports speed in a caller-supplied unit. Which declaration is a valid overload?",
@@ -2028,12 +1689,9 @@
         "Overloading requires the same method name but a different parameter list; changing only the return type is insufficient."
       ],
       "explanation": "`report(String unit)` has the same name and a different parameter list, so calls can be resolved by their arguments. A method cannot be overloaded by return type alone.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-089": {
-      "course": "programming_fundamentals",
       "category": "Classes, Attributes, Methods, Constructors and Math",
       "title": "Understanding constructor availability",
       "instructions": "A class `Point` initially declares no constructors. A programmer later adds only `Point(double x, double y)`. Which statement about `new Point()` is correct?",
@@ -2051,12 +1709,9 @@
         "The compiler supplies a no-argument default constructor only when the class declares no constructor at all."
       ],
       "explanation": "Once a constructor is declared, Java no longer generates the automatic no-argument default constructor. The class must explicitly declare `Point()` if clients should still be able to call `new Point()`.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-090": {
-      "course": "programming_fundamentals",
       "category": "Classes, Attributes, Methods, Constructors and Math",
       "title": "Choosing constructor responsibilities",
       "instructions": "A `Point` object must be created with initial x and y coordinates. Which design best ensures those values are established as part of object creation?",
@@ -2074,12 +1729,9 @@
         "A constructor runs when a new instance is created and is intended to initialize its state."
       ],
       "explanation": "A parameterized constructor receives the initial coordinate values and stores them in the new object. This ensures the object is initialized at creation rather than relying on unrestricted client-side changes.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-091": {
-      "course": "programming_fundamentals",
       "category": "Classes, Attributes, Methods, Constructors and Math",
       "title": "Preventing invalid state during construction",
       "instructions": "A Car constructor currently assigns its speed parameter directly, so `new Car(-1000)` creates an invalid object. The class already has a setter that checks the allowed speed range. What is the best change?",
@@ -2097,12 +1749,9 @@
         "The constructor must enforce the same state rules as later updates."
       ],
       "explanation": "Calling the validating setter from the constructor applies the same rule at initialization time. Otherwise, invalid data can enter through construction even though later setter calls are checked.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-092": {
-      "course": "programming_fundamentals",
       "category": "Classes, Attributes, Methods, Constructors and Math",
       "title": "Reusing constructor initialization logic",
       "instructions": "A class has a constructor `Circle(double radius)` that performs validation. The no-argument constructor should create a circle with radius 1.0 while reusing that validation. Which implementation is appropriate?",
@@ -2120,12 +1769,9 @@
         "A constructor can delegate to another constructor in the same class using `this(arguments)`; the call must be first."
       ],
       "explanation": "`this(1.0)` invokes the parameterized constructor and reuses its validation. A constructor delegation call must be the first statement in the constructor body.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-093": {
-      "course": "programming_fundamentals",
       "category": "Classes, Attributes, Methods, Constructors and Math",
       "title": "Recognising constructor delegation order",
       "instructions": "A constructor contains these statements:\n```java\nSystem.out.println(\"starting\");\nthis(5);\n```\nWhy is this structure invalid?",
@@ -2139,16 +1785,11 @@
         "A constructor cannot call another constructor",
         "The delegated constructor must have no parameters"
       ],
-      "hints": [
-        "Recall the placement rule for constructor chaining."
-      ],
+      "hints": ["Recall the placement rule for constructor chaining."],
       "explanation": "Constructor chaining with `this(...)` must appear first so that the target constructor performs initialization before any other statements in the delegating constructor.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-094": {
-      "course": "programming_fundamentals",
       "category": "Classes, Attributes, Methods, Constructors and Math",
       "title": "Using a copy constructor to create a separate object",
       "instructions": "A new Rectangle must start with the same x, y, height and width values as an existing Rectangle, but must be a separate object so later changes do not affect the original. Which approach matches that requirement?",
@@ -2166,12 +1807,9 @@
         "The requirement is for equal initial state but distinct object identity."
       ],
       "explanation": "A copy constructor can read the original object’s attributes and initialize a newly allocated Rectangle with those values. Merely assigning the original reference would make both variables point to the same object.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-095": {
-      "course": "programming_fundamentals",
       "category": "Classes, Attributes, Methods, Constructors and Math",
       "title": "Understanding the default toString result",
       "instructions": "A class has no custom `toString()` method. A program executes this statement:\n```java\nSystem.out.println(myObject);\n```\nWhat kind of output should the programmer expect from the inherited default implementation?",
@@ -2189,12 +1827,9 @@
         "Consider what the inherited Object implementation provides when a class does not override the method."
       ],
       "explanation": "The default `toString()` representation is based on the class name and hash code and is generally not meaningful to users. A class should override it when a readable description is required.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-096": {
-      "course": "programming_fundamentals",
       "category": "Classes, Attributes, Methods, Constructors and Math",
       "title": "Predicting output after overriding toString",
       "instructions": "A class `Guide` defines this method:\n```java\npublic String toString() {\n    return \"Answer: \" + answer;\n}\n```\nThe field `answer` is 42. What does this statement display?\n```java\nSystem.out.println(guide);\n```",
@@ -2202,22 +1837,14 @@
       "type": "mcq-single",
       "provenance": "M5_Classes.pdf",
       "contentVersion": 3,
-      "options": [
-        "`Answer: 42`",
-        "`Guide@42`",
-        "`guide`",
-        "`42 Answer:`"
-      ],
+      "options": ["`Answer: 42`", "`Guide@42`", "`guide`", "`42 Answer:`"],
       "hints": [
         "When an object is passed to println, its String representation is obtained through toString."
       ],
       "explanation": "The overridden method returns `Answer: 42`. `println` invokes `toString()` for the object, so printing the object displays that returned String.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-097": {
-      "course": "programming_fundamentals",
       "category": "Classes, Attributes, Methods, Constructors and Math",
       "title": "Choosing Math methods for a calculation",
       "instructions": "A program needs the positive magnitude of a possibly negative number, the square root of a value, and one number raised to a power. Which set of calls uses the appropriate Math methods?",
@@ -2235,12 +1862,9 @@
         "Match each mathematical operation to the corresponding utility method."
       ],
       "explanation": "`Math.abs` returns an absolute value, `Math.sqrt` returns a square root, and `Math.pow` raises its first argument to the power of the second. These are static utility methods called on the Math class.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-098": {
-      "course": "programming_fundamentals",
       "category": "Classes, Attributes, Methods, Constructors and Math",
       "title": "Calculating rectangle measurements",
       "instructions": "A Rectangle has width 8 and height 3. Which pair of results should its `getArea()` and `getPerimeter()` methods return?",
@@ -2258,12 +1882,9 @@
         "Area multiplies the two dimensions; perimeter adds all four sides."
       ],
       "explanation": "The area is 8 × 3 = 24. The perimeter is 2 × (8 + 3) = 22.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-099": {
-      "course": "programming_fundamentals",
       "category": "Classes, Attributes, Methods, Constructors and Math",
       "title": "Separating a local variable from an attribute",
       "instructions": "A class has the following field:\n```java\nprivate int number = 42;\n```\nIts method declares this local variable:\n```java\nint number = 7;\n```\nThe method then prints `number` followed by `this.number`. What is printed?",
@@ -2281,12 +1902,9 @@
         "An unqualified name resolves to the local variable when one shadows the field; `this` explicitly selects the current object’s attribute."
       ],
       "explanation": "Inside the method, `number` refers to the local variable initialized to 7. `this.number` refers to the object attribute initialized to 42.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-100": {
-      "course": "programming_fundamentals",
       "category": "Classes, Attributes, Methods, Constructors and Math",
       "title": "Understanding the effect of pass by value",
       "instructions": "A method receives an `int` parameter and increments that parameter. The caller passes its own variable `count`. After the method returns, what happens to the caller’s variable?",
@@ -2304,12 +1922,9 @@
         "The method parameter is initialized with the argument value; it is a separate local variable."
       ],
       "explanation": "The value of the primitive argument is copied into the method parameter. Incrementing the parameter changes only that local copy, not the caller’s variable.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-101": {
-      "course": "programming_fundamentals",
       "category": "Programming Languages and the Java Platform",
       "title": "Recognising compiled-language advantages",
       "instructions": "A team is evaluating a traditional compiled-language workflow. Which characteristics are advantages identified for that workflow in the course comparison? Select all that apply.",
@@ -2328,15 +1943,9 @@
         "Separate the benefits of compiling in advance from the limitation that the generated binary is target-specific."
       ],
       "explanation": "The course lists compile-time checks, fast direct execution and source code that is not readable on the target as advantages. Source code is portable, but the compiled binary is platform-dependent; the original source is not interpreted on every run.",
-      "checks": [
-        0,
-        1,
-        2,
-        3
-      ]
+      "checks": [0, 1, 2, 3]
     },
     "pfj-102": {
-      "course": "programming_fundamentals",
       "category": "Programming Languages and the Java Platform",
       "title": "Recognising interpreted-language trade-offs",
       "instructions": "A team distributes a Python script to different operating systems. Which statements describe the interpreted-language model presented in the course? Select all that apply.",
@@ -2356,15 +1965,9 @@
         "Think about what must be installed on the target and when the source-to-execution transformation takes place."
       ],
       "explanation": "Interpreted source is portable when a suitable interpreter is installed. The interpreter is needed on each target and translation occurs during execution. The course lists the lack of compile-time checks and readable source as disadvantages.",
-      "checks": [
-        0,
-        1,
-        2,
-        3
-      ]
+      "checks": [0, 1, 2, 3]
     },
     "pfj-103": {
-      "course": "programming_fundamentals",
       "category": "The Java Platform and Your First Java Program",
       "title": "Separating the roles of an IDE and a runtime",
       "instructions": "A user only needs to run an already compiled Java application. The computer has a suitable Java runtime installed but no development environment. Which statement is correct?",
@@ -2382,12 +1985,9 @@
         "Distinguish tools that help a developer write and debug code from components required to execute bytecode."
       ],
       "explanation": "An IDE assists development, but it is not required to run a compiled Java program. The runtime (including the JVM and Java API) is what the target needs to execute bytecode.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-104": {
-      "course": "programming_fundamentals",
       "category": "Variables, Types, Conversions and Operators",
       "title": "Recognising safe and explicit numeric conversions",
       "instructions": "Which statements about the following Java conversions are correct? Select all that apply.",
@@ -2406,14 +2006,9 @@
         "Consider whether the destination can represent the source value without narrowing and when the division itself is evaluated."
       ],
       "explanation": "Converting an `int` to `double` is a widening conversion. Converting a `double` to `int` is narrowing and requires an explicit cast; the cast discards the fractional part. The type of the operands determines whether division is integer or floating-point.",
-      "checks": [
-        0,
-        1,
-        2
-      ]
+      "checks": [0, 1, 2]
     },
     "pfj-105": {
-      "course": "programming_fundamentals",
       "category": "Variables, Types, Conversions and Operators",
       "title": "Recognising equivalent range conditions",
       "instructions": "Which expressions both test whether `age` is between 18 and 67 inclusive? Select all that apply.",
@@ -2431,13 +2026,9 @@
         "One expression can state that both limits hold; another can state that neither invalid condition holds."
       ],
       "explanation": "The first expression checks both inclusive bounds. The second negates the cases outside the range, making it logically equivalent. The OR condition is true for almost every age, and the strict comparisons exclude 18 and 67.",
-      "checks": [
-        0,
-        1
-      ]
+      "checks": [0, 1]
     },
     "pfj-106": {
-      "course": "programming_fundamentals",
       "category": "Objects, References, Random, Strings and Formatting",
       "title": "Using String methods to validate a code",
       "instructions": "What is the value of `valid`?\n```java\nString code = \"A7Q\";\nboolean valid = code.length() == 3 && code.charAt(0) == 'A';\n```",
@@ -2455,12 +2046,9 @@
         "Evaluate the length check and the first-character check separately, then combine them with AND."
       ],
       "explanation": "The String contains three characters, so `length() == 3` is true. Its character at index 0 is `A`, so the second comparison is also true. Both conditions hold, making `valid` true.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-107": {
-      "course": "programming_fundamentals",
       "category": "Objects, References, Random, Strings and Formatting",
       "title": "Distinguishing String and StringBuilder behavior",
       "instructions": "Which statements correctly describe the behavior of `String` and `StringBuilder` in Java? Select all that apply.",
@@ -2479,15 +2067,9 @@
         "Compare whether each class is mutable and what happens to the object when text is appended or concatenated."
       ],
       "explanation": "String is immutable, so operations such as `concat` return a new String. StringBuilder is mutable; append changes its existing contents and is more efficient for repeated modifications. Appending does not create a new builder each time.",
-      "checks": [
-        0,
-        1,
-        2,
-        3
-      ]
+      "checks": [0, 1, 2, 3]
     },
     "pfj-108": {
-      "course": "programming_fundamentals",
       "category": "Objects, References, Random, Strings and Formatting",
       "title": "Matching format specifiers to data",
       "instructions": "A report must display an integer count, a decimal amount, a name, a single character and a boolean status. Which format-specifier mapping is correct?",
@@ -2505,12 +2087,9 @@
         "Match each conversion with the Java value type it is intended to format."
       ],
       "explanation": "`%d` formats integer values, `%f` floating-point values, `%s` Strings, `%c` characters and `%b` booleans. Each specifier must have a corresponding argument of a compatible type.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-109": {
-      "course": "programming_fundamentals",
       "category": "Classes, Attributes, Methods, Constructors and Math",
       "title": "Choosing package-level access",
       "instructions": "A field must be accessible to classes in the same package but not directly accessible to unrelated classes in other packages. Which declaration provides that access level?",
@@ -2528,12 +2107,9 @@
         "Compare package access with private, protected and public access."
       ],
       "explanation": "Omitting an access modifier gives package access: classes in the same package can access the field, while unrelated classes in other packages cannot. Private is narrower; protected and public provide broader access.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-110": {
-      "course": "programming_fundamentals",
       "category": "Classes, Attributes, Methods, Constructors and Math",
       "title": "Matching a public class to its source file",
       "instructions": "A source file is named `Shape.java`, but its public top-level class is declared as follows:\n```java\npublic class Rectangle\n```\nWhat must be corrected for the code to follow the Java file-naming rule taught in the course?",
@@ -2551,12 +2127,9 @@
         "The file name and the public top-level class name must match, including capitalization."
       ],
       "explanation": "A public top-level class must be declared in a source file with the same name. Renaming the file to `Rectangle.java` brings the file and class declaration into sync.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-111": {
-      "course": "programming_fundamentals",
       "category": "Objects, References, Random, Strings and Formatting",
       "title": "Printing a percent sign with a format string",
       "instructions": "A report must contain the text `21% VAT`. Which formatting call correctly uses a value for the number and prints a literal percent sign?",
@@ -2574,12 +2147,9 @@
         "In a format string, percent introduces a conversion specifier; a literal percent sign needs its own escape form."
       ],
       "explanation": "`%d` formats the integer 21. `%%` produces a literal percent character, so the output is `21% VAT`.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-112": {
-      "course": "programming_fundamentals",
       "category": "Classes, Attributes, Methods, Constructors and Math",
       "title": "Using Math constants and comparison methods",
       "instructions": "A calculation needs the Java value of pi and must choose the larger of two measurements. Which expression uses the Math class appropriately?",
@@ -2597,12 +2167,9 @@
         "The course presents PI as a constant and max as a static method of the Math utility class."
       ],
       "explanation": "`Math.PI` accesses the static constant, and `Math.max(first, second)` returns the larger of the two values. Static members are called using the class name rather than creating a Math object.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-113": {
-      "course": "programming_fundamentals",
       "category": "Objects, References, Random, Strings and Formatting",
       "title": "Simulating a coin toss",
       "instructions": "A program must simulate a fair coin toss and store the result as a boolean. Which code can directly produce `true` or `false` with equal probability?",
@@ -2616,16 +2183,11 @@
         "`generator.nextInt(1)`",
         "`generator.nextInt(1, 1)`"
       ],
-      "hints": [
-        "Choose the Random method whose result type is boolean."
-      ],
+      "hints": ["Choose the Random method whose result type is boolean."],
       "explanation": "`nextBoolean()` returns either true or false. `nextDouble()` returns a number in the interval from 0 inclusive to 1 exclusive, while the integer expressions shown do not produce a two-outcome range.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-114": {
-      "course": "programming_fundamentals",
       "category": "Objects, References, Random, Strings and Formatting",
       "title": "Generating a probability value",
       "instructions": "A simulation needs a random decimal value that is at least 0.0 but always less than 1.0. Which Random method directly returns a value in that interval?",
@@ -2643,12 +2205,9 @@
         "Consider which method returns a floating-point value rather than an integer or boolean."
       ],
       "explanation": "`nextDouble()` returns a double in the interval 0 inclusive to 1 exclusive. The integer methods return whole numbers, and `nextBoolean()` returns a logical value.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-115": {
-      "course": "programming_fundamentals",
       "category": "Objects, References, Random, Strings and Formatting",
       "title": "Handling case-insensitive user input",
       "instructions": "A program should accept either `yes`, `YES` or `Yes` as confirmation. The user’s input is stored in a String named `answer`. Which test directly handles these casing variations?",
@@ -2666,12 +2225,9 @@
         "The comparison should check the complete text while deliberately ignoring uppercase/lowercase differences."
       ],
       "explanation": "`equalsIgnoreCase` compares the String contents without considering casing. Comparing with `==` tests reference identity, while checking only the first character or length is not sufficient.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-116": {
-      "course": "programming_fundamentals",
       "category": "Classes, Attributes, Methods, Constructors and Math",
       "title": "Predicting default values for several attributes",
       "instructions": "A class declares\n```java\ndouble price;\nboolean active;\nString name;\n```\nand does not assign values in its constructor. What are the initial values of these attributes?",
@@ -2689,12 +2245,9 @@
         "Instance attributes receive defaults based on their declared types; a reference is not automatically an empty object."
       ],
       "explanation": "A floating-point attribute defaults to 0.0, a boolean attribute to false, and an object-reference attribute such as String to null.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     },
     "pfj-117": {
-      "course": "programming_fundamentals",
       "category": "Classes, Attributes, Methods, Constructors and Math",
       "title": "Using Math.min for a lower bound",
       "instructions": "A program must select the smaller of two measurements without writing an `if` statement. Which call does that directly?",
@@ -2712,9 +2265,7 @@
         "Use the Math method whose purpose is to return the minimum of two values."
       ],
       "explanation": "`Math.min(a, b)` returns the smaller argument. `Math.max` returns the larger, while `abs` and `sqrt` perform different operations.",
-      "checks": [
-        0
-      ]
+      "checks": [0]
     }
   }
 }

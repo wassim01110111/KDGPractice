@@ -574,12 +574,7 @@ async function pageLibrary(root, arg, termArg, view) {
           class: "reference-tab" + (r === cur ? " on" : ""),
           "aria-current": r === cur ? "page" : false,
         },
-        h(
-          "span",
-          { class: "reference-tab-label" },
-          r.id.replace(/[_-]/g, " ").toUpperCase(),
-        ),
-        h("strong", {}, r.title),
+        h("strong", {}, globalThis.Core.initcap(r.id)),
       ),
     ),
   );
@@ -819,9 +814,15 @@ async function pageLibrary(root, arg, termArg, view) {
       syncSearchPanelToViewport();
     });
   };
-  viewport?.addEventListener("resize", scheduleSearchPanelViewportSync, { passive: true });
-  viewport?.addEventListener("scroll", scheduleSearchPanelViewportSync, { passive: true });
-  addEventListener("scroll", scheduleSearchPanelViewportSync, { passive: true });
+  viewport?.addEventListener("resize", scheduleSearchPanelViewportSync, {
+    passive: true,
+  });
+  viewport?.addEventListener("scroll", scheduleSearchPanelViewportSync, {
+    passive: true,
+  });
+  addEventListener("scroll", scheduleSearchPanelViewportSync, {
+    passive: true,
+  });
   // Pass the app theme to html canvases (as data-theme) so they can follow it.
   const syncFrameTheme = () => {
     const el = frame?.contentDocument?.documentElement;
@@ -1196,8 +1197,6 @@ async function pageLibrary(root, arg, termArg, view) {
     const f = h("iframe", {
       class: "canvas-frame",
       title: `${cur.title} \u2013 ${term.label}`,
-      sandbox:
-        "allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads",
     });
     if (r.headers.has("X-ACS-Cache-Time")) {
       // A cached response cannot be assigned to an iframe URL directly. Load
@@ -1355,4 +1354,3 @@ async function pageLibrary(root, arg, termArg, view) {
   }
   await showTerm(termIndex);
 }
-

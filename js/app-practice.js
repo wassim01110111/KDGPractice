@@ -572,7 +572,7 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
   const exerciseTypeOptions = [
     { key: "mcq", label: "Multiple choice questions" },
     { key: "interactive", label: "Interactive" },
-    { key: "other", label: "Other (text / fill-in)" },
+    { key: "other", label: "Other" },
   ];
   const validExerciseTypeKeys = new Set(
     exerciseTypeOptions.map((option) => option.key),
@@ -941,7 +941,9 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
     items = filtered.filter((exercise) => {
       const key = keyOf(exercise);
       // The active exercise stays pinned even when a filter no longer matches.
-      return key === selectedKey || matchesPracticeStatus(exercise, statusIndexes);
+      return (
+        key === selectedKey || matchesPracticeStatus(exercise, statusIndexes)
+      );
     });
     if (selectedExercise && !items.some((e) => keyOf(e) === selectedKey)) {
       items.unshift(selectedExercise);
@@ -2184,392 +2186,396 @@ async function runExam(root, st) {
       let score = 0,
         gradable = 0;
       const rows = [];
-    const sqlItems = exs
-      .filter((exercise) => exercise.type === "sql-query")
-      .map((exercise) => ({ exercise, answer: st.answers[keyOf(exercise)] }));
-    gradingProgress.update({
-      detail: sqlItems.length
-        ? `Checking ${sqlItems.length} SQL submission${sqlItems.length === 1 ? "" : "s"}…`
-        : "No SQL submissions need checking; preparing other graders…",
-      value: 8,
-    });
-    const sqlGrades = await gradeSqlBatch(
-      sqlItems.map(({ exercise, answer }) => ({ ex: exercise, answer })),
-      ({ phase, exercise, completed, total }) => {
-        const fraction = total
-          ? Math.min(1, (completed + (phase === "check" ? 1 : 0)) / total)
-          : 1;
-        gradingProgress.update({
-          detail:
-            phase === "prepare"
-              ? `Preparing SQL dataset for ${total} submitted question${total === 1 ? "" : "s"}…`
-              : `Checking ${exercise?.title || "SQL exercise"} (${Math.min(total, completed + 1)} of ${total})…`,
-          value: 8 + fraction * 27,
-        });
-      },
-    );
-    gradingProgress.update({
-      detail: "SQL checks finished. Loading specialized graders…",
-      value: 36,
-    });
-    let javaModule = null;
-    let terminalModule = null;
-    const javaWork = exs.some(
-      (exercise) =>
-        exercise.type === "java-ex" && st.touched?.[keyOf(exercise)],
-    );
-    const terminalWork = exs.some(
-      (exercise) =>
-        exercise.type === "terminal" &&
-        st.answers[keyOf(exercise)] === "terminal-workspace",
-    );
-    const moduleLoads = [];
-    if (javaWork || terminalWork) {
+      const sqlItems = exs
+        .filter((exercise) => exercise.type === "sql-query")
+        .map((exercise) => ({ exercise, answer: st.answers[keyOf(exercise)] }));
       gradingProgress.update({
-        detail: "Loading Java and terminal grading modules…",
-        value: null,
+        detail: sqlItems.length
+          ? `Checking ${sqlItems.length} SQL submission${sqlItems.length === 1 ? "" : "s"}…`
+          : "No SQL submissions need checking; preparing other graders…",
+        value: 8,
       });
-    }
-    if (javaWork) {
-      moduleLoads.push(
-        loadJavaModule().then((module) => {
-          javaModule = module;
-        }),
-      );
-    }
-    if (terminalWork) {
-      moduleLoads.push(
-        loadTerminalModule().then((module) => {
-          terminalModule = module;
-        }),
-      );
-    }
-    const moduleResults = await Promise.allSettled(moduleLoads);
-    const moduleLoadError = moduleResults.find(
-      (result) => result.status === "rejected",
-    );
-    if (moduleLoadError) {
-      // Individual rows below retain a readable per-question module error.
-      gradingProgress.update({
-        title: "Grading your exam",
-        detail: `A specialized grader could not load: ${moduleLoadError.reason?.message || String(moduleLoadError.reason)}. Continuing with available checks…`,
-        value: 39,
-      });
-    } else {
-      gradingProgress.update({
-        detail: "Specialized graders are ready. Checking each exam question…",
-        value: 40,
-      });
-    }
-    for (let questionIndex = 0; questionIndex < exs.length; questionIndex++) {
-      const ex = exs[questionIndex];
-      gradingProgress.update({
-        detail: `Grading question ${questionIndex + 1} of ${exs.length}: ${ex.title || ex.id}`,
-        value: 40 + (questionIndex / Math.max(1, exs.length)) * 48,
-      });
-      const key = keyOf(ex),
-        a = st.answers[key];
-      let ok = null;
-      if (ex.type === "sql-query") {
-        const g = sqlGrades.get(key) || {
-          correct: false,
-          error: "No SQL grading result was produced.",
-        };
-        ok = g.correct;
-        rows.push({
-          ex,
-          ok,
-          a,
-          note:
-            g.error ||
-            (g.correct === true
-              ? "SQL automatic checks passed."
-              : g.correct === false
-                ? "The SQL result did not match the expected output."
-                : "This SQL question is not automatically graded."),
-        });
-      } else if (ex.type === "java-ex") {
-        const submittedSource =
-          typeof a === "string" ? a : String(ex.java?.preCode ?? "");
-        if (!st.touched?.[key]) {
-          ok = false;
-          rows.push({
-            ex,
-            ok,
-            a: submittedSource,
-            note: "No Java answer was submitted; compilation was skipped.",
+      const sqlGrades = await gradeSqlBatch(
+        sqlItems.map(({ exercise, answer }) => ({ ex: exercise, answer })),
+        ({ phase, exercise, completed, total }) => {
+          const fraction = total
+            ? Math.min(1, (completed + (phase === "check" ? 1 : 0)) / total)
+            : 1;
+          gradingProgress.update({
+            detail:
+              phase === "prepare"
+                ? `Preparing SQL dataset for ${total} submitted question${total === 1 ? "" : "s"}…`
+                : `Checking ${exercise?.title || "SQL exercise"} (${Math.min(total, completed + 1)} of ${total})…`,
+            value: 8 + fraction * 27,
           });
-        } else {
-          try {
-            if (!javaModule) javaModule = await loadJavaModule();
-            const result = await javaModule.checkJavaExercise({
-              exercise: ex,
-              source: submittedSource,
-            });
-            ok = result.success === true;
-            const checks = (result.checks || []).filter(
-              (check) => check.feedback || !check.passed,
-            );
-            const javaScore = result.score || { earned: 0, total: 0 };
-            rows.push({
-              ex,
-              ok,
-              a: submittedSource,
-              note:
-                `Java automatic checks: ${javaScore.earned ?? 0} / ${javaScore.total ?? 0} points` +
-                (checks.length
-                  ? `\n${checks.map((check) => `${check.passed ? "\u2713" : "\u2717"} ${check.description}: ${check.feedback || (check.passed ? "Passed" : "Failed")}`).join("\n")}`
-                  : ""),
-            });
-          } catch (error) {
-            ok = false;
-            rows.push({
-              ex,
-              ok,
-              a: submittedSource,
-              note: `Java grading failed: ${error?.message || String(error)}`,
-            });
-          }
-        }
-      } else if (ex.type === "terminal") {
-        if (a !== "terminal-workspace") {
-          ok = false;
+        },
+      );
+      gradingProgress.update({
+        detail: "SQL checks finished. Loading specialized graders…",
+        value: 36,
+      });
+      let javaModule = null;
+      let terminalModule = null;
+      const javaWork = exs.some(
+        (exercise) =>
+          exercise.type === "java-ex" && st.touched?.[keyOf(exercise)],
+      );
+      const terminalWork = exs.some(
+        (exercise) =>
+          exercise.type === "terminal" &&
+          st.answers[keyOf(exercise)] === "terminal-workspace",
+      );
+      const moduleLoads = [];
+      if (javaWork || terminalWork) {
+        gradingProgress.update({
+          detail: "Loading Java and terminal grading modules…",
+          value: null,
+        });
+      }
+      if (javaWork) {
+        moduleLoads.push(
+          loadJavaModule().then((module) => {
+            javaModule = module;
+          }),
+        );
+      }
+      if (terminalWork) {
+        moduleLoads.push(
+          loadTerminalModule().then((module) => {
+            terminalModule = module;
+          }),
+        );
+      }
+      const moduleResults = await Promise.allSettled(moduleLoads);
+      const moduleLoadError = moduleResults.find(
+        (result) => result.status === "rejected",
+      );
+      if (moduleLoadError) {
+        // Individual rows below retain a readable per-question module error.
+        gradingProgress.update({
+          title: "Grading your exam",
+          detail: `A specialized grader could not load: ${moduleLoadError.reason?.message || String(moduleLoadError.reason)}. Continuing with available checks…`,
+          value: 39,
+        });
+      } else {
+        gradingProgress.update({
+          detail: "Specialized graders are ready. Checking each exam question…",
+          value: 40,
+        });
+      }
+      for (let questionIndex = 0; questionIndex < exs.length; questionIndex++) {
+        const ex = exs[questionIndex];
+        gradingProgress.update({
+          detail: `Grading question ${questionIndex + 1} of ${exs.length}: ${ex.title || ex.id}`,
+          value: 40 + (questionIndex / Math.max(1, exs.length)) * 48,
+        });
+        const key = keyOf(ex),
+          a = st.answers[key];
+        let ok = null;
+        if (ex.type === "sql-query") {
+          const g = sqlGrades.get(key) || {
+            correct: false,
+            error: "No SQL grading result was produced.",
+          };
+          ok = g.correct;
           rows.push({
             ex,
             ok,
             a,
-            note: "Terminal workspace was not opened during this exam.",
+            note:
+              g.error ||
+              (g.correct === true
+                ? "SQL automatic checks passed."
+                : g.correct === false
+                  ? "The SQL result did not match the expected output."
+                  : "This SQL question is not automatically graded."),
           });
-        } else {
-          try {
-            if (!terminalModule) terminalModule = await loadTerminalModule();
-            const result = await terminalModule.gradeTerminalAttempt({
-              exercise: ex,
-              packageId: ex.packageId,
-              exerciseId: ex.id,
-              attemptId: st.id,
-            });
-            ok = result.passed;
-            const checks = (result.checks || []).filter(
-              (check) => check.feedback || !check.passed,
-            );
+        } else if (ex.type === "java-ex") {
+          const submittedSource =
+            typeof a === "string" ? a : String(ex.java?.preCode ?? "");
+          if (!st.touched?.[key]) {
+            ok = false;
             rows.push({
               ex,
               ok,
-              a,
-              note:
-                `Terminal workspace: ${result.score} / ${result.maxScore} points` +
-                (checks.length
-                  ? `\n${checks.map((check) => `${check.passed ? "\u2713" : "\u2717"} ${check.description}: ${check.feedback || (check.passed ? "Passed" : "Failed")}`).join("\n")}`
-                  : ""),
+              a: submittedSource,
+              note: "No Java answer was submitted; compilation was skipped.",
             });
-          } catch (error) {
+          } else {
+            try {
+              if (!javaModule) javaModule = await loadJavaModule();
+              const result = await javaModule.checkJavaExercise({
+                exercise: ex,
+                source: submittedSource,
+              });
+              ok = result.success === true;
+              const checks = (result.checks || []).filter(
+                (check) => check.feedback || !check.passed,
+              );
+              const javaScore = result.score || { earned: 0, total: 0 };
+              rows.push({
+                ex,
+                ok,
+                a: submittedSource,
+                note:
+                  `Java automatic checks: ${javaScore.earned ?? 0} / ${javaScore.total ?? 0} points` +
+                  (checks.length
+                    ? `\n${checks.map((check) => `${check.passed ? "\u2713" : "\u2717"} ${check.description}: ${check.feedback || (check.passed ? "Passed" : "Failed")}`).join("\n")}`
+                    : ""),
+              });
+            } catch (error) {
+              ok = false;
+              rows.push({
+                ex,
+                ok,
+                a: submittedSource,
+                note: `Java grading failed: ${error?.message || String(error)}`,
+              });
+            }
+          }
+        } else if (ex.type === "terminal") {
+          if (a !== "terminal-workspace") {
             ok = false;
             rows.push({
               ex,
               ok,
               a,
-              note: `Terminal grading failed: ${error?.message || String(error)}`,
+              note: "Terminal workspace was not opened during this exam.",
             });
+          } else {
+            try {
+              if (!terminalModule) terminalModule = await loadTerminalModule();
+              const result = await terminalModule.gradeTerminalAttempt({
+                exercise: ex,
+                packageId: ex.packageId,
+                exerciseId: ex.id,
+                attemptId: st.id,
+              });
+              ok = result.passed;
+              const checks = (result.checks || []).filter(
+                (check) => check.feedback || !check.passed,
+              );
+              rows.push({
+                ex,
+                ok,
+                a,
+                note:
+                  `Terminal workspace: ${result.score} / ${result.maxScore} points` +
+                  (checks.length
+                    ? `\n${checks.map((check) => `${check.passed ? "\u2713" : "\u2717"} ${check.description}: ${check.feedback || (check.passed ? "Passed" : "Failed")}`).join("\n")}`
+                    : ""),
+              });
+            } catch (error) {
+              ok = false;
+              rows.push({
+                ex,
+                ok,
+                a,
+                note: `Terminal grading failed: ${error?.message || String(error)}`,
+              });
+            }
           }
+        } else {
+          ok = gradeExerciseAnswer(ex, a);
+          rows.push({
+            ex,
+            ok,
+            a,
+            note: ex.checkComment || ex.gradingComment || ex.feedback || "",
+          });
         }
-      } else {
-        ok = gradeExerciseAnswer(ex, a);
-        rows.push({
-          ex,
-          ok,
-          a,
-          note: ex.checkComment || ex.gradingComment || ex.feedback || "",
+        if (ok !== null) {
+          gradable++;
+          if (ok) score++;
+          await rec(ex, ok, "exam");
+        }
+        gradingProgress.update({
+          detail: `Checked ${questionIndex + 1} of ${exs.length} exam questions.`,
+          value: 40 + ((questionIndex + 1) / Math.max(1, exs.length)) * 48,
         });
       }
-      if (ok !== null) {
-        gradable++;
-        if (ok) score++;
-        await rec(ex, ok, "exam");
-      }
+
+      // Preserve generated grading details and any authored exercise-level
+      // check comment. A Set prevents repeating comments already used as the
+      // primary feedback for self-check questions.
       gradingProgress.update({
-        detail: `Checked ${questionIndex + 1} of ${exs.length} exam questions.`,
-        value: 40 + ((questionIndex + 1) / Math.max(1, exs.length)) * 48,
+        detail: "Preparing question feedback and exam history…",
+        value: 90,
       });
-    }
+      for (const row of rows) {
+        const feedbackParts = [
+          row.note,
+          row.ex.checkComment,
+          row.ex.gradingComment,
+          row.ex.feedback,
+        ]
+          .filter((part) => typeof part === "string")
+          .map((part) => part.trim())
+          .filter(Boolean);
+        row.note = [...new Set(feedbackParts)].join("\n\n");
+      }
 
-    // Preserve generated grading details and any authored exercise-level
-    // check comment. A Set prevents repeating comments already used as the
-    // primary feedback for self-check questions.
-    gradingProgress.update({
-      detail: "Preparing question feedback and exam history…",
-      value: 90,
-    });
-    for (const row of rows) {
-      const feedbackParts = [
-        row.note,
-        row.ex.checkComment,
-        row.ex.gradingComment,
-        row.ex.feedback,
-      ]
-        .filter((part) => typeof part === "string")
-        .map((part) => part.trim())
-        .filter(Boolean);
-      row.note = [...new Set(feedbackParts)].join("\n\n");
-    }
-
-    const savedHistory = await kv.get("examHistory", []);
-    const hist = Array.isArray(savedHistory) ? savedHistory : [];
-    const questionSnapshots = rows.map((row) => {
-      const key = keyOf(row.ex);
-      const answered = Boolean(st.touched?.[key]);
-      const answer =
-        !answered || row.ex.type === "terminal"
-          ? null
-          : Array.isArray(row.a)
-            ? row.a.slice()
-            : row.a && typeof row.a === "object"
-              ? JSON.parse(JSON.stringify(row.a))
-              : row.a;
-      const checkComment =
-        row.note ||
-        row.checkComment ||
-        row.ex.checkComment ||
-        row.ex.gradingComment ||
-        row.ex.feedback ||
-        "";
-      return {
-        id: key,
-        packageId: row.ex.packageId,
-        exerciseId: row.ex.id,
-        title: row.ex.title,
-        type: row.ex.type,
-        answer,
-        answered,
-        visited: Boolean(st.visited?.[key]),
-        flagged: Boolean(st.flags?.[key]),
-        correct: row.ok,
-        feedback: checkComment,
-        explanation: row.ex.explanation || "",
-      };
-    });
-    hist.push({
-      date: Date.now(),
-      ids: st.ids,
-      score,
-      total: gradable,
-      cfg: st.cfg,
-      questions: questionSnapshots,
-    });
-    gradingProgress.update({
-      detail: "Saving the completed exam and achievement progress…",
-      value: 96,
-    });
-    await kv.set("examHistory", hist);
-    achOnExam({
-      score,
-      gradable,
-      usedMs: st.startedAt ? Date.now() - st.startedAt : Infinity,
-      limitMs: (st.cfg?.mins || 0) * 60000,
-      answered: exs.filter((ex) => Boolean(st.touched[keyOf(ex)])).length,
-      timedOut: autoSubmitted,
-    });
-    st.submitted = true;
-    await discardExamState();
-    gradingProgress.complete("Exam graded. Preparing your results…");
-    root.replaceChildren(
-      h(
-        "section",
-        { class: "exam-results" },
+      const savedHistory = await kv.get("examHistory", []);
+      const hist = Array.isArray(savedHistory) ? savedHistory : [];
+      const questionSnapshots = rows.map((row) => {
+        const key = keyOf(row.ex);
+        const answered = Boolean(st.touched?.[key]);
+        const answer =
+          !answered || row.ex.type === "terminal"
+            ? null
+            : Array.isArray(row.a)
+              ? row.a.slice()
+              : row.a && typeof row.a === "object"
+                ? JSON.parse(JSON.stringify(row.a))
+                : row.a;
+        const checkComment =
+          row.note ||
+          row.checkComment ||
+          row.ex.checkComment ||
+          row.ex.gradingComment ||
+          row.ex.feedback ||
+          "";
+        return {
+          id: key,
+          packageId: row.ex.packageId,
+          exerciseId: row.ex.id,
+          title: row.ex.title,
+          type: row.ex.type,
+          answer,
+          answered,
+          visited: Boolean(st.visited?.[key]),
+          flagged: Boolean(st.flags?.[key]),
+          correct: row.ok,
+          feedback: checkComment,
+          explanation: row.ex.explanation || "",
+        };
+      });
+      hist.push({
+        date: Date.now(),
+        ids: st.ids,
+        score,
+        total: gradable,
+        cfg: st.cfg,
+        questions: questionSnapshots,
+      });
+      gradingProgress.update({
+        detail: "Saving the completed exam and achievement progress…",
+        value: 96,
+      });
+      await kv.set("examHistory", hist);
+      achOnExam({
+        score,
+        gradable,
+        usedMs: st.startedAt ? Date.now() - st.startedAt : Infinity,
+        limitMs: (st.cfg?.mins || 0) * 60000,
+        answered: exs.filter((ex) => Boolean(st.touched[keyOf(ex)])).length,
+        timedOut: autoSubmitted,
+      });
+      st.submitted = true;
+      await discardExamState();
+      gradingProgress.complete("Exam graded. Preparing your results…");
+      root.replaceChildren(
         h(
-          "div",
-          { class: "exam-score-card card" },
-          h("p", { class: "eyebrow" }, "EXAM COMPLETE"),
-          h("h1", {}, `Score: ${score} / ${gradable}`),
+          "section",
+          { class: "exam-results" },
           h(
-            "p",
-            {},
-            gradable < exs.length
-              ? "Self-check questions are not included in the score."
-              : `${exs.length} questions completed`,
-          ),
-        ),
-        gradable < exs.length
-          ? h(
-              "p",
-              { class: "exam-self-check-note" },
-              "Self-check questions are not scored automatically.",
-            )
-          : "",
-        ...rows.map((r) =>
-          h(
-            "article",
-            { class: "exam-result-card card" },
+            "div",
+            { class: "exam-score-card card" },
+            h("p", { class: "eyebrow" }, "EXAM COMPLETE"),
+            h("h1", {}, `Score: ${score} / ${gradable}`),
             h(
-              "div",
-              { class: "exam-result-heading" },
-              h("h2", {}, r.ex.title),
-              h(
-                "span",
-                {
-                  class:
-                    "exam-result-status " +
-                    (r.ok ? "ok" : r.ok === false ? "bad" : "meta"),
-                },
-                r.ok ? "Correct" : r.ok === false ? "Incorrect" : "Self-check",
-              ),
+              "p",
+              {},
+              gradable < exs.length
+                ? "Self-check questions are not included in the score."
+                : `${exs.length} questions completed`,
             ),
-            r.note
-              ? h(
-                  "pre",
+          ),
+          gradable < exs.length
+            ? h(
+                "p",
+                { class: "exam-self-check-note" },
+                "Self-check questions are not scored automatically.",
+              )
+            : "",
+          ...rows.map((r) =>
+            h(
+              "article",
+              { class: "exam-result-card card" },
+              h(
+                "div",
+                { class: "exam-result-heading" },
+                h("h2", {}, r.ex.title),
+                h(
+                  "span",
                   {
                     class:
-                      r.ex.type === "terminal" || r.ex.type === "java-ex"
-                        ? "exam-result-note"
-                        : "err",
+                      "exam-result-status " +
+                      (r.ok ? "ok" : r.ok === false ? "bad" : "meta"),
                   },
-                  r.note,
-                )
-              : "",
-            r.ex.type === "terminal"
-              ? h(
-                  "div",
-                  { class: "exam-answer-review" },
-                  h("h3", {}, "Your answer"),
-                  h(
-                    "p",
-                    {},
-                    "The terminal workspace was graded from its final virtual filesystem state. The per-check result is shown above.",
-                  ),
-                )
-              : h(
-                  "details",
-                  { class: "exam-answer-review" },
-                  h("summary", {}, "Review answers"),
-                  h(
+                  r.ok
+                    ? "Correct"
+                    : r.ok === false
+                      ? "Incorrect"
+                      : "Self-check",
+                ),
+              ),
+              r.note
+                ? h(
+                    "pre",
+                    {
+                      class:
+                        r.ex.type === "terminal" || r.ex.type === "java-ex"
+                          ? "exam-result-note"
+                          : "err",
+                    },
+                    r.note,
+                  )
+                : "",
+              r.ex.type === "terminal"
+                ? h(
                     "div",
-                    { class: "exam-answer-comparison" },
+                    { class: "exam-answer-review" },
+                    h("h3", {}, "Your answer"),
+                    h(
+                      "p",
+                      {},
+                      "The terminal workspace was graded from its final virtual filesystem state. The per-check result is shown above.",
+                    ),
+                  )
+                : h(
+                    "details",
+                    { class: "exam-answer-review" },
+                    h("summary", {}, "Review answers"),
                     h(
                       "div",
-                      {},
-                      h("h3", {}, "Your answer"),
+                      { class: "exam-answer-comparison" },
                       h(
-                        "pre",
+                        "div",
                         {},
-                        st.touched?.[keyOf(r.ex)]
-                          ? answerText(r.ex, r.a)
-                          : "No answer was submitted for this question.",
+                        h("h3", {}, "Your answer"),
+                        h(
+                          "pre",
+                          {},
+                          st.touched?.[keyOf(r.ex)]
+                            ? answerText(r.ex, r.a)
+                            : "No answer was submitted for this question.",
+                        ),
+                      ),
+                      h(
+                        "div",
+                        {},
+                        h("h3", {}, "Expected answer"),
+                        h("pre", {}, expectedText(r.ex)),
                       ),
                     ),
-                    h(
-                      "div",
-                      {},
-                      h("h3", {}, "Expected answer"),
-                      h("pre", {}, expectedText(r.ex)),
-                    ),
                   ),
-                ),
-            r.ex.explanation ? h("p", {}, r.ex.explanation) : "",
+              r.ex.explanation ? h("p", {}, r.ex.explanation) : "",
+            ),
           ),
         ),
-      ),
-      await historyView(),
-    );
+        await historyView(),
+      );
     } catch (error) {
       console.error("Exam grading failed:", error);
       gradingProgress.fail(

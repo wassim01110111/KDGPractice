@@ -20,9 +20,9 @@
       "sql": "-- ******************************\n-- DROP Tables\n-- ******************************\nDROP TABLE IF EXISTS departments CASCADE;\nDROP TABLE IF EXISTS employees CASCADE;\nDROP TABLE IF EXISTS projects CASCADE;\nDROP TABLE IF EXISTS locations CASCADE;\nDROP TABLE IF EXISTS tasks CASCADE;\nDROP TABLE IF EXISTS family_members CASCADE;\n\n-- ******************************\n-- CREATE Tables\n-- ******************************\nCREATE TABLE departments (\n    department_id              numeric(2)       \n\t\tCONSTRAINT pk_departments PRIMARY KEY,\n    department_name            varchar(30)\n\t\tCONSTRAINT nn_department_name NOT NULL,\n    manager_id         CHAR(9),   \n    mgr_start_date     DATE\n);  \n\nCREATE TABLE employees (\n    employee_id             CHAR(9)         \n\t\tCONSTRAINT pk_employees PRIMARY KEY,\n    last_name          varchar(25)    \n\t\tCONSTRAINT nn_last_name NOT NULL,\n    first_name            varchar(25)    \n\t\tCONSTRAINT nn_first_name NOT NULL,\n    infix       varchar(25),\n    street               varchar(50),\n    location              varchar(25),\n    province           CHAR(2), \n    postal_code            varchar(7),\n    birth_date           DATE, \n    salary             numeric(7,2)     \n\t\tCONSTRAINT ck_salary CHECK (salary <= 85000),\n    parking_spot       numeric(4)       \n\t\tCONSTRAINT un_parking_spot UNIQUE,\n    gender            CHAR(1),\n    department_id     numeric(2)   \n\t\tCONSTRAINT fk_emp_department_id REFERENCES departments(department_id),\n    manager_id         CHAR(9)\n    \tCONSTRAINT fk_emp_manager_id REFERENCES employees(employee_id) \n);  \n\nCREATE TABLE projects (\n    project_id         numeric(2)           CONSTRAINT pk_projects PRIMARY KEY,\n    project_name       varchar(40)        CONSTRAINT nn_project_name NOT NULL,\n    location           varchar(25),\n    department_id      numeric(2)           CONSTRAINT fk_proj_department_id REFERENCES departments(department_id)\n);\n\nCREATE TABLE locations (\n    department_id          numeric (2)          CONSTRAINT fk_loc_dep REFERENCES departments(department_id), \n    location          varchar(20),\t\t\t\t\n    CONSTRAINT pk_locations  PRIMARY KEY (department_id, location)\n); \n\nCREATE TABLE tasks (\n    employee_id         CHAR(9)         CONSTRAINT fk_tasks_emp REFERENCES   employees(employee_id),                \n    project_id         numeric(2)       CONSTRAINT fk_tasks_proj REFERENCES   projects(project_id), \n    hours            numeric(5,1),    CONSTRAINT pk_tasks PRIMARY KEY (employee_id, project_id)\n);\n\nCREATE TABLE family_members (\n                                employee_id         CHAR(9)\n                                    CONSTRAINT fk_fam_emp REFERENCES employees(employee_id),\n                                name            varchar(50),\n                                gender        CHAR(1)\n                                    CONSTRAINT c_gender CHECK (gender IN('M', 'F', 'X'))\n                                    CONSTRAINT nn_gender NOT NULL,\n                                birth_date       DATE\n                                    CONSTRAINT nn_birth_date NOT NULL\n                                    CONSTRAINT c_birth_date\n                                        CHECK (birth_date\n                                            BETWEEN to_date ('20-03-1950', 'DD-MM-YYYY')\n                                            AND to_date ('01-01-2022', 'DD-MM-YYYY')),\n                                relationship       varchar(15)\n                                    CONSTRAINT nn_relationship NOT NULL,\n                                CONSTRAINT pk_family_members PRIMARY KEY (employee_id, name)\n);\n\n\n------------------------------------------------\n------   INSERT THE DATA INTO TABLES  ----------\n------------------------------------------------\n\nDELETE FROM tasks WHERE 1 = 1;\nDELETE FROM projects WHERE 1 = 1;\nDELETE FROM locations WHERE 1 = 1;\nDELETE FROM family_members WHERE 1 = 1;\nDELETE FROM employees WHERE 1 = 1;\nDELETE FROM departments WHERE 1 = 1;\n\n-- Rijen van de tabel departments.  Het SOFI-nummer van de afdelingsmanager\n-- en de datum van indiensttreding zijn null.\n\nINSERT INTO departments(department_id,department_name,manager_id,mgr_start_date)\nVALUES (7, 'Production', NULL, NULL );\nINSERT INTO departments(department_id,department_name,manager_id,mgr_start_date)\nVALUES (3, 'Administration', NULL, NULL);\nINSERT INTO departments(department_id,department_name,manager_id,mgr_start_date)\nVALUES (1, 'Headquarters', NULL, NULL );\n\nINSERT INTO departments (department_id, department_name, manager_id, mgr_start_date)\nVALUES\n    (8, 'Marketing', '123456789',              to_date('2010-05-25', 'YYYY-MM-DD')),\n    (9, 'Sales', '234567890',                  to_date('2009-12-12', 'YYYY-MM-DD')),\n    (10, 'Finance', '345678901',               to_date('2012-03-18', 'YYYY-MM-DD')),\n    (11, 'Research', '456789012',              to_date('2011-08-23', 'YYYY-MM-DD')),\n    (12, 'Development', '567890123',           to_date('2013-11-30', 'YYYY-MM-DD')),\n    (13, 'Customer Service', '678901234',      to_date('2008-02-14', 'YYYY-MM-DD')),\n    (14, 'Information Technology', '789012345',to_date('2014-05-07', 'YYYY-MM-DD')),\n    (15, 'Human Resources', '890123456',       to_date('2015-02-22', 'YYYY-MM-DD')),\n    (16, 'Logistics', '901234567',             to_date('2017-06-10', 'YYYY-MM-DD')),\n    (17, 'Procurement', '012345678',           to_date('2016-01-04', 'YYYY-MM-DD')),\n    (18, 'Quality Control', '123456789',       to_date('2010-10-08', 'YYYY-MM-DD')),\n    (19, 'Legal', NULL,                 to_date('2009-06-15', 'YYYY-MM-DD')),\n    (20, 'Engineering', '345678901',           to_date('2012-09-18', 'YYYY-MM-DD')),\n    (21, 'Facilities', '456789012',            to_date('2011-05-23', 'YYYY-MM-DD')),\n    (22, 'Security', '567890123',              to_date('2013-08-30', 'YYYY-MM-DD')),\n    (23, 'Public Relations', '678901234',       to_date('2008-11-14', 'YYYY-MM-DD')),\n    (24, 'Media', '789012345',                 to_date('2014-04-07', 'YYYY-MM-DD')),\n    (25, 'Advertising', '890123456',           to_date('2015-01-22', 'YYYY-MM-DD')),\n    (26, 'Design', '901234567',                to_date('2017-05-10', 'YYYY-MM-DD')),\n    (27, 'Production Planning', '012345678',   to_date('2016-01-02', 'YYYY-MM-DD'));\n\n--SELECT DISTINCT manager_id from departments order by 1;\n\n\n-- Rijen van de tabel employees.\nINSERT INTO employees ( employee_id,last_name,first_name,infix,street,location,province,postal_code,birth_date,salary,parking_spot,gender,department_id,manager_id)\nVALUES ( '999666666', 'Bordoloi', 'Bijoy', NULL,\n         'Zuidelijke Rondweg 12', 'Eindhoven', 'NB', '6202 EK',\n         TO_DATE ('10-11-1977', 'DD-MM-YYYY'), 55000, 1, 'M', 1, NULL );\nINSERT INTO employees (employee_id,last_name,first_name,infix,street,location,province,postal_code,birth_date,salary,parking_spot,gender,department_id,manager_id)\nVALUES ( '999555555', 'Jochems', 'Suzan',\n         NULL, 'Nuthseweg 17', 'maastricht', 'LI', '9394 LR',\n         TO_DATE('20-06-1981', 'DD-MM-YYYY'), 43000, 3, 'F',\n         3, '999666666' );\nINSERT INTO employees (employee_id,last_name,first_name,infix,street,location,province,postal_code,birth_date,salary,parking_spot,gender,department_id,manager_id)\nVALUES ( '999444444', 'Zuiderweg', 'Willem',\n         NULL, 'Lindberghdreef 303', 'Oegstgeest', 'ZH', '2340 RV',\n         TO_DATE('12-08-1985', 'DD-MM-YYYY'), 43000, 32, 'M',\n         7, '999666666' );\nINSERT INTO employees (employee_id,last_name,first_name,infix,street,location,province,postal_code,birth_date,salary,parking_spot,gender,department_id,manager_id)\nVALUES ( '999887777', 'Muiden', 'Martina',\n         'van der', 'Hoofdstraat 14', 'Maarssen', 'UT', '9394 LM',\n         TO_DATE('19-07-1988', 'DD-MM-YYYY'), 25000, 402, 'F',\n         3, '999555555' );\nINSERT INTO employees (employee_id,last_name,first_name,infix,street,location,province,postal_code,birth_date,salary,parking_spot,gender,department_id,manager_id)\nVALUES( '999222222', 'Amelsvoort', 'Henk',\n        'van', 'Zeestraat 14', 'Maastricht', 'LI', '9394 MK',\n        TO_DATE('29-03-1979', 'DD-MM-YYYY'), 25000, 422, 'M',\n        3, '999555555' );\nINSERT INTO employees (employee_id,last_name,first_name,infix,street,location,province,postal_code,birth_date,salary,parking_spot,gender,department_id,manager_id)\nVALUES ( '999111111', 'Bock', 'Douglas',\n         NULL, 'Monteverdidreef 2', 'Oegstgeest', 'ZH', '6312 CB',\n         TO_DATE('01-09-1965', 'DD-MM-YYYY'), 30000, 542, 'M',\n         7, '999444444' );\nINSERT INTO employees (employee_id,last_name,first_name,infix,street,location,province,postal_code,birth_date,salary,parking_spot,gender,department_id,manager_id)\nVALUES ( '999333333', 'Joosten', 'Dennis',\n         NULL, 'Eikenstraat 10', 'Groningen', 'GR', '6623 HK',\n         TO_DATE('15-09-1982', 'DD-MM-YYYY'), 38000, 332, 'M',\n         7, '999444444' );\nINSERT INTO employees (employee_id,last_name,first_name,infix,street,location,province,postal_code,birth_date,salary,parking_spot,gender,department_id,manager_id)\nVALUES ( '999888888', 'Pregers', 'Shanya',\n         NULL, 'Overtoomweg 44', 'Eindhoven', 'NB', '6202 MR',\n         TO_DATE('31-07-1982', 'DD-MM-YYYY'), 25000, 296, 'F',\n         7, '999444444' );\n\nINSERT INTO employees(\n    employee_id,last_name,first_name,infix,street,location,\n    province,postal_code,birth_date,salary,parking_spot,\n    gender,department_id,manager_id)\nVALUES\n    ('123456789', 'Wong', 'Emely', NULL, 'Main St 456', 'New York', 'NY', '10001', to_date('1980-06-15', 'YYYY-MM-DD'), 65000.00, 543, 'M', 8, 345678901),\n    ('234567890', 'Johnson', 'Mary', 'A', '2nd Ave 456', 'New York', 'NY', '10002', to_date('1982-03-20', 'YYYY-MM-DD'), 45000.00, 544, 'F', 9, 345678901),\n    ('345678901', 'Garcia', 'David', NULL, '3rd St 789', 'Los Angeles', 'CA', '90001', to_date('1985-09-10', 'YYYY-MM-DD'), 75000.00, 545, 'M', NULL, NULL),\n    ('456789045', 'Brown', 'Emma', '', 'Water St', 'Calgary', 'AB', 'T2T 2T2', to_date('1991-05-17', 'YYYY-MM-DD'), 80000.00, 556, 'F', 11, '345678901'),\n    ('456789012', 'Davis', 'Jennifer', NULL, '4th Ave 345', 'Los Angeles', 'CA', '90002', to_date('1975-12-05', 'YYYY-MM-DD'), 60000.00, 546, 'F', 11, 345678901),\n    ('567890123', 'Rodriguez', 'Michael', NULL, '5th St 678', 'Chicago', 'IL', '60001', to_date('1978-02-25', 'YYYY-MM-DD'), 80000.00, 547, 'M', 12, 345678901),\n    ('678901234', 'Wilson', 'Sarah', NULL, '6th Ave 901', 'Chicago', 'IL', '60002', to_date('1989-11-18', 'YYYY-MM-DD'), 55000.00, 548, 'F', 13, 456789045),\n    ('789012345', 'Martinez', 'Christopher', NULL, '7th St 234', 'Houston', 'TX', '77001', to_date('1983-07-08', 'YYYY-MM-DD'), 70000.00, 549, 'M', 14, 456789045),\n    ('890123456', 'Anderson', 'Jessica', NULL, '8th Ave 567', 'Houston', 'TX', '77002', to_date('1981-01-30', 'YYYY-MM-DD'), NULL, NULL, 'F', 15, NULL),\n    ('901234567', 'Thomas', 'James', 'B', '9th St 890', 'Philadelphia', 'PA', '19101', to_date('1987-04-12', 'YYYY-MM-DD'), 65000.00, 551, 'M', 16, 123456789),\n    ('012345678', 'Jackson', 'Ashley', 'D', '10th Ave 123', 'Philadelphia', 'PA', '19102', to_date('1984-08-05', 'YYYY-MM-DD'), 75000.00, 552, 'F', 17, 123456789),\n    ('123456790', 'Smith', 'John', '', 'Main St', 'Toronto', 'ON', 'M1M 1M1', NULL, 50000.00, 553, 'M', 8, 567890123),\n    ('234567891', 'Jones', 'Emily', 'van der', 'King St', 'Vancouver', 'BC', 'V2V 2V2', to_date('1992-07-23', 'YYYY-MM-DD'), 65000.00, 554, 'F', 9, '123456789'),\n    ('345678902', 'Lee', 'Michael', '', 'Queen St', 'Montreal', 'QC', 'H3H 3H3', to_date('1993-11-04', 'YYYY-MM-DD'), 70000.00, 555, 'X', 10, '234567890'),\n    ('567890124', 'Wilson', 'James', '', 'Park Ave', 'Halifax', 'NS', 'B3B 3B3', to_date('1994-08-11', 'YYYY-MM-DD'), 55000.00, 557, 'M', 12, '456789012'),\n    ('678901235', 'Garcia', 'Isabella', '', 'Broadway', 'Toronto', 'ON', 'M2M 2M2', to_date('1990-01-05', 'YYYY-MM-DD'), 60000.00, 558, 'F', 13, '567890123'),\n    ('789012346', 'Smith', 'Noah', '', 'Granville St', 'Vancouver', 'BC', NULL, to_date('1993-03-29', 'YYYY-MM-DD'), 75000.00, 559, 'M', 14, '678901234'),\n    ('890123457', 'Johnson', 'Olivia', '', 'St Catherine St', 'Montreal', NULL, 'H4H 4H4', to_date('1992-06-30', 'YYYY-MM-DD'), 65000.00, 560, 'F', 15, '789012345'),\n    ('901234568', 'Martinez', 'Daniel', '', '10th Ave SW', NULL, 'AB', 'T3T 3T3', to_date('1991-12-19', 'YYYY-MM-DD'), 85000.00, 561, 'M', 16, '234567890'),\n    ('012345679', 'Taylor', 'Sophia', '', NULL, 'Halifax', 'NS', 'B4B 4B4', to_date('1994-09-21', 'YYYY-MM-DD'), 50000.00, 562, 'F', 17, '678901234');\n\n\nSELECT employee_id, last_name, first_name, manager_id from employees order by manager_id, employee_id;\n\nINSERT INTO employees(employee_id, last_name, first_name, infix, street, location, province, postal_code, birth_date, salary, parking_spot, gender, department_id, manager_id)\nVALUES ('100001001', 'Smith', 'John', NULL, 'Main St. 123', 'New York', 'NY', '10001', to_date('1990-01-01', 'YYYY-MM-DD'), 50000.00, 563, 'M', 8, '123456789');\n\nINSERT INTO employees(employee_id, last_name, first_name, infix, street, location, province, postal_code, birth_date, salary, parking_spot, gender, department_id, manager_id)\nVALUES ('100001002', 'Johnson', 'Jessica', NULL, 'Broadway 456', 'New York', 'NY', '10001', to_date('1991-02-15', 'YYYY-MM-DD'), 60000.00, 564, 'F', 8, '123456789');\n\nINSERT INTO employees(employee_id, last_name, first_name, infix, street, location, province, postal_code, birth_date, salary, parking_spot, gender, department_id, manager_id)\nVALUES ('100001003', 'Lee', 'David', NULL, 'Oak St. 789', 'Los Angeles', 'CA', '90001', to_date('1988-05-07', 'YYYY-MM-DD'), 55000.00, 565, 'M', 9, '234567890');\n\nINSERT INTO employees(employee_id, last_name, first_name, infix, street, location, province, postal_code, birth_date, salary, parking_spot, gender, department_id, manager_id)\nVALUES ('100001004', 'Garcia', 'Maria', NULL, '1st St. 456', 'Los Angeles', 'CA', '90001', to_date('1993-11-28', 'YYYY-MM-DD'), 65000.00, 566, 'F', 9, '234567890');\n\nINSERT INTO employees(employee_id, last_name, first_name, infix, street, location, province, postal_code, birth_date, salary, parking_spot, gender, department_id, manager_id)\nVALUES ('100001005', 'Kim', 'Andrew', NULL, '3rd St. 789', 'San Francisco', 'CA', '94101', to_date('1989-07-15', 'YYYY-MM-DD'), 55000.00, 567, 'M', 10, '456789012');\n\nINSERT INTO employees(employee_id, last_name, first_name, infix, street, location, province, postal_code, birth_date, salary, parking_spot, gender, department_id, manager_id)\nVALUES ('100001006', 'Nguyen', 'Van', NULL, '4th St. 123', 'San Francisco', 'CA', '94101', to_date('1990-12-31', 'YYYY-MM-DD'), 60000.00, 568, 'M', 10, '456789012');\n\n-- SELECT CONCAT('INSERT INTO locations (department_id,location) VALUES (',\n--               d.department_id,\n--               ',''',\n--               e.location,\n--               ''' );')\n-- from employees e\n--          JOIN departments d ON (e.employee_id = d.manager_id);\n\n\n-- Rijen van de tabel locations.\nINSERT INTO locations (department_id,location) VALUES (1, 'Eindhoven');\nINSERT INTO locations (department_id,location) VALUES (3, 'Maastricht');\nINSERT INTO locations (department_id,location) VALUES (7, 'Oegstgeest');\nINSERT INTO locations (department_id,location) VALUES (7, 'Groningen');\nINSERT INTO locations (department_id,location) VALUES (7, 'Eindhoven');\n\nINSERT INTO locations (department_id,location) VALUES (8,'New York' );\nINSERT INTO locations (department_id,location) VALUES (9,'New York' );\nINSERT INTO locations (department_id,location) VALUES (10,'Los Angeles' );\nINSERT INTO locations (department_id,location) VALUES (11,'Los Angeles' );\nINSERT INTO locations (department_id,location) VALUES (12,'Chicago' );\nINSERT INTO locations (department_id,location) VALUES (13,'Chicago' );\nINSERT INTO locations (department_id,location) VALUES (14,'Houston' );\nINSERT INTO locations (department_id,location) VALUES (15,'Houston' );\nINSERT INTO locations (department_id,location) VALUES (16,'Philadelphia' );\nINSERT INTO locations (department_id,location) VALUES (17,'Philadelphia' );\nINSERT INTO locations (department_id,location) VALUES (18,'New York' );\nINSERT INTO locations (department_id,location) VALUES (19,'New York' );\nINSERT INTO locations (department_id,location) VALUES (20,'Los Angeles' );\nINSERT INTO locations (department_id,location) VALUES (21,'Los Angeles' );\nINSERT INTO locations (department_id,location) VALUES (22,'Chicago' );\nINSERT INTO locations (department_id,location) VALUES (23,'Chicago' );\nINSERT INTO locations (department_id,location) VALUES (24,'Houston' );\nINSERT INTO locations (department_id,location) VALUES (25,'Houston' );\nINSERT INTO locations (department_id,location) VALUES (26,'Philadelphia' );\n\n--SELECT * from departments;\n\n\n\n-- Rijen van de tabel projects.\nINSERT INTO projects (project_id,project_name,location,department_id)\nVALUES (1, 'Ordermanagement', 'Oegstgeest', 7);\nINSERT INTO projects (project_id,project_name,location,department_id)\nVALUES (2, 'Salaryadministration', 'Groningen', 7);\nINSERT INTO projects (project_id,project_name,location,department_id)\nVALUES (3, 'Warehouse', 'Eindhoven', 7);\nINSERT INTO projects (project_id,project_name,location,department_id)\nVALUES (10, 'Inventory', 'Maastricht', 3);\nINSERT INTO projects (project_id,project_name,location,department_id)\nVALUES (20, 'HumanResources', 'Eindhoven', 1);\nINSERT INTO projects (project_id,project_name,location,department_id)\nVALUES (30, 'Debtors', 'Maastricht', 3);\n\nINSERT INTO projects(project_id, project_name, location, department_id)\nVALUES (40, 'Production Optimization', 'New York', 8),\n       (41, 'Social Media Campaign', 'San Francisco', 9),\n       (42, 'Tax Management', 'Chicago', 10),\n       (43, 'Product Development', 'Los Angeles', 11),\n       (44, 'R&D of New Technology', NULL, 12),\n       (45, 'Customer Retention', 'Miami', 13),\n       (46, 'Database Migration', 'Seattle', 14),\n       (47, 'Recruiting and Hiring', 'Austin', 15),\n       (48, 'Inventory Management', 'Houston', 16),\n       (49, 'Procurement Process Improvement', 'Boston', 17),\n       (50, 'Quality Control Audit', 'Philadelphia', NULL),\n       (51, 'Intellectual Property Law', 'Denver', 19),\n       (52, 'Engineering Design', 'Phoenix', 20),\n       (53, 'Office Renovation', 'Las Vegas', 21),\n       (54, 'Security Audit', 'Portland', 22),\n       (55, 'Public Relations Campaign', 'San Antonio', 23),\n       (56, 'Ad Campaign', 'Nashville', 24),\n       (57, 'Website Redesign', 'Columbus', 25),\n       (58, 'Packaging Design', 'Detroit', 26),\n       (59, 'Process Improvement', 'Memphis', 27);\n\n\n--SELECT * from projects;\n\n-- Rijen van de tabel tasks.\nINSERT INTO tasks (employee_id,project_id,hours)\nVALUES ( '999111111', 1, 31.4);\nINSERT INTO tasks (employee_id,project_id,hours)\nVALUES ( '999111111', 2, 8.5);\nINSERT INTO tasks (employee_id,project_id,hours)\nVALUES ( '999333333', 3, 42.1);\nINSERT INTO tasks (employee_id,project_id,hours)\nVALUES ( '999888888', 1, 21.0);\nINSERT INTO tasks (employee_id,project_id,hours)\nVALUES ( '999888888', 2, 22.0);\nINSERT INTO tasks (employee_id,project_id,hours)\nVALUES ( '999444444', 2, 12.2);\nINSERT INTO tasks (employee_id,project_id,hours)\nVALUES ( '999444444', 3, 10.5);\nINSERT INTO tasks (employee_id,project_id,hours)\nVALUES ( '999444444', 1, NULL);\nINSERT INTO tasks (employee_id,project_id,hours)\nVALUES ( '999444444', 10, 10.1);\nINSERT INTO tasks (employee_id,project_id,hours)\nVALUES ( '999444444', 20, 11.8);\nINSERT INTO tasks (employee_id,project_id,hours)\nVALUES ( '999887777', 30, 30.8);\nINSERT INTO tasks (employee_id,project_id,hours)\nVALUES ( '999887777', 10, 10.2);\nINSERT INTO tasks (employee_id,project_id,hours)\nVALUES ( '999222222', 10, 34.5);\nINSERT INTO tasks (employee_id,project_id,hours)\nVALUES ( '999222222', 30, 5.1);\nINSERT INTO tasks (employee_id,project_id,hours)\nVALUES ( '999555555', 30, 19.2);\nINSERT INTO tasks (employee_id,project_id,hours)\nVALUES ( '999555555', 20, 14.8);\nINSERT INTO tasks (employee_id,project_id,hours)\nVALUES ( '999666666', 20, NULL);\n\n\n-- Employee 123456789\nINSERT INTO tasks (employee_id, project_id, hours) VALUES ('123456789', 40, 45.2);\nINSERT INTO tasks (employee_id, project_id, hours) VALUES ('123456789', 45, 87.1);\nINSERT INTO tasks (employee_id, project_id, hours) VALUES ('123456789', 58, 12.6);\n\n-- Employee 234567890\nINSERT INTO tasks (employee_id, project_id, hours) VALUES ('234567890', 42, 68.5);\nINSERT INTO tasks (employee_id, project_id, hours) VALUES ('234567890', 51, 90.0);\n\n-- Employee 345678901\nINSERT INTO tasks (employee_id, project_id, hours) VALUES ('345678901', 46, 23.8);\nINSERT INTO tasks (employee_id, project_id, hours) VALUES ('345678901', 53, 50.1);\nINSERT INTO tasks (employee_id, project_id, hours) VALUES ('345678901', 57, 17.2);\n\n-- Employee 456789012\nINSERT INTO tasks (employee_id, project_id, hours) VALUES ('456789012', 40, 75.3);\nINSERT INTO tasks (employee_id, project_id, hours) VALUES ('456789012', 47, 98.6);\nINSERT INTO tasks (employee_id, project_id, hours) VALUES ('456789012', 50, 32.0);\n\n-- Employee 567890123\nINSERT INTO tasks (employee_id, project_id, hours) VALUES ('567890123', 43, 54.7);\nINSERT INTO tasks (employee_id, project_id, hours) VALUES ('567890123', 48, 41.8);\n\n-- Employee 678901234\nINSERT INTO tasks (employee_id, project_id, hours) VALUES ('678901234', 49, 79.2);\n\n-- Employee 789012345\nINSERT INTO tasks (employee_id, project_id, hours) VALUES ('789012345', 44, 67.1);\nINSERT INTO tasks (employee_id, project_id, hours) VALUES ('789012345', 52, 99.9);\nINSERT INTO tasks (employee_id, project_id, hours) VALUES ('789012345', 58, 7.9);\n\n-- Employee 890123456\nINSERT INTO tasks (employee_id, project_id, hours) VALUES ('890123456', 41, 24.3);\nINSERT INTO tasks (employee_id, project_id, hours) VALUES ('890123456', 46, 12.1);\nINSERT INTO tasks (employee_id, project_id, hours) VALUES ('890123456', 53, 61.5);\n\n-- Employee 901234567\nINSERT INTO tasks (employee_id, project_id, hours) VALUES ('901234567', 42, 36.7);\nINSERT INTO tasks (employee_id, project_id, hours) VALUES ('901234567', 47, 87.3);\n\n-- Employee 012345678\nINSERT INTO tasks (employee_id, project_id, hours) VALUES ('012345678', 45, 93.5);\n\n-- Employee 123456790\nINSERT INTO tasks (employee_id, project_id, hours) VALUES ('123456790', 50, 12.4);\n\nINSERT INTO tasks (employee_id, project_id, hours)\nVALUES ('234567891', 40, 32.5),\n       ('234567891', 43, 78.2),\n       ('345678902', 44, 12.1),\n       ('345678902', 45, 97.4),\n       ('345678902', 46, 51.3),\n       ('456789045', 47, 63.7),\n       ('567890124', 50, 44.2),\n       ('567890124', 51, 84.5),\n       ('678901235', 53, 17.8),\n       ('789012346', 54, 39.1),\n       ('789012346', 55, 65.8),\n       ('890123457', 56, 27.3),\n       ('890123457', 57, 94.9),\n       ('012345679', 58, 23.4),\n       ('100001001', 41, 96.2),\n       ('100001002', 42, 52.6),\n       ('100001002', 44, 11.8),\n       ('100001004', 46, 88.7),\n       ('100001005', 49, 45.2),\n       ('100001006', 52, 71.4);\n\n\n-- SELECT * from tasks;\n\n\n-- SELECT employee_id, date_part('year', age(birth_date)) as age, birth_date, gender from employees;\n\n--Given following employee_id's and their corresponding age and birthdate\n-- employee_id, age, birthdate, gender\n-- 999666666,45,1977-11-10,M\n-- 999555555,41,1981-06-20,F\n-- 999444444,37,1985-08-12,M\n-- 999887777,34,1988-07-19,F\n-- 999222222,43,1979-03-29,M\n-- 999111111,57,1965-09-01,M\n-- 999333333,40,1982-09-15,M\n-- 999888888,40,1982-07-31,F\n\n-- -- rijen van de tabel family_members\n-- INSERT INTO family_members (employee_id,name,gender,birth_date,relationship)\n-- VALUES ( '999444444', 'Josefine', 'F',\n--          TO_DATE ('04-05-2006', 'DD-MM-YYYY'), 'DAUGHTER');\n-- INSERT INTO family_members (employee_id,name,gender,birth_date,relationship)\n-- VALUES ( '999444444', 'Andrew', 'M',\n--          TO_DATE('25-10-2008', 'DD-MM-YYYY'), 'SON');\n-- INSERT INTO family_members (employee_id,name,gender,birth_date,relationship)\n-- VALUES ( '999444444', 'Suzan', 'F',\n--          TO_DATE('05-03-1985', 'DD-MM-YYYY'), 'PARTNER');\n-- INSERT INTO family_members (employee_id,name,gender,birth_date,relationship)\n-- VALUES ( '999555555', 'Alex', 'M',\n--          TO_DATE('28-02-1978', 'DD-MM-YYYY'), 'PARTNER');\n-- INSERT INTO family_members (employee_id,name,gender,birth_date,relationship)\n-- VALUES ( '999111111', 'Jos', 'M',\n--          TO_DATE('01-01-1988', 'DD-MM-YYYY'), 'SON');\n-- INSERT INTO family_members (employee_id,name,gender,birth_date,relationship)\n-- VALUES ( '999111111', 'Diana', 'F',\n--          TO_DATE ('31-12-1988', 'DD-MM-YYYY'), 'DAUGHTER');\n-- INSERT INTO family_members (employee_id,name,gender,birth_date,relationship)\n-- VALUES ( '999111111', 'Mary', 'F',\n--          TO_DATE('05-05-1967', 'DD-MM-YYYY'), 'PARTNER');\n\n--SELECT * from employees;\nINSERT INTO family_members (employee_id, name, gender, birth_date, relationship)\nVALUES\n    ('999666666', 'John Bordoloi', 'M', to_date('1998-04-20', 'YYYY-MM-DD'), 'SON'),\n    ('999666666', 'Jane Bordoloi', 'F', to_date('2001-01-12', 'YYYY-MM-DD'), 'DAUGHTER'),\n    ('999666666', 'Mary Smith', 'F', to_date('1978-05-05', 'YYYY-MM-DD'), 'PARTNER'),\n    ('999666666', 'Sarah Bordoloi', 'F', to_date('1952-08-08', 'YYYY-MM-DD'), 'MOTHER'),\n    ('999555555', 'David Lee', 'M', to_date('2010-02-28', 'YYYY-MM-DD'), 'SON'),\n    ('999555555', 'Emma Lee', 'F', to_date('2014-09-01', 'YYYY-MM-DD'), 'DAUGHTER'),\n    ('999555555', 'Amanda Lee', 'F', to_date('1985-11-22', 'YYYY-MM-DD'), 'PARTNER'),\n    ('999555555', 'Mary Lee', 'F', to_date('1958-04-01', 'YYYY-MM-DD'), 'MOTHER'),\n    ('999444444', 'William Zuiderweg', 'M', to_date('2013-06-10', 'YYYY-MM-DD'), 'SON'),\n    ('999444444', 'Lily Zuiderweg', 'F', to_date('2018-01-05', 'YYYY-MM-DD'), 'DAUGHTER'),\n    ('999444444', 'Jennifer Davis', 'F', to_date('1990-08-20', 'YYYY-MM-DD'), 'PARTNER'),\n    ('999444444', 'Julia Zuiderweg', 'F', to_date('1959-11-11', 'YYYY-MM-DD'), 'MOTHER'),\n    ('999887777', 'Andrew Williams', 'M', to_date('2013-02-13', 'YYYY-MM-DD'), 'SON'),\n    ('999887777', 'Olivia Williams', 'F', to_date('2015-07-19', 'YYYY-MM-DD'), 'DAUGHTER'),\n    ('999887777', 'Sarah Williams', 'F', to_date('1989-11-03', 'YYYY-MM-DD'), 'PARTNER'),\n    ('999887777', 'Julia Muiden', 'F', to_date('1960-03-04', 'YYYY-MM-DD'), 'MOTHER'),\n    ('999222222', 'Jacob Amelsvoort', 'M', to_date('2012-09-20', 'YYYY-MM-DD'), 'SON'),\n    ('999222222', 'Sophia Amelsvoort', 'F', to_date('2014-04-12', 'YYYY-MM-DD'), 'DAUGHTER'),\n    ('999222222', 'Laura Brown', 'F', to_date('1981-02-17', 'YYYY-MM-DD'), 'PARTNER'),\n    ('999222222', 'Emily Amelsvoort', 'F', to_date('1952-07-22', 'YYYY-MM-DD'), 'MOTHER'),\n    ('999111111', 'Michael Bock', 'M', to_date('1995-03-20', 'YYYY-MM-DD'), 'SON'),\n    ('999111111', 'Elizabeth Bock', 'F', to_date('1996-05-25', 'YYYY-MM-DD'), 'DAUGHTER'),\n    ('999111111', 'Karen Johnson', 'F', to_date('1955-12-06', 'YYYY-MM-DD'), 'PARTNER');\n\nINSERT INTO family_members (employee_id, name, gender, birth_date, relationship)\nVALUES ('999111111', 'Tomas Bock', 'M', to_date('2020-05-20', 'YYYY-MM-DD'), 'GRANDCHILD');\n\n-- 123456789,42,1980-06-15\n-- 234567890,40,1982-03-20\n-- 345678901,37,1985-09-10\n-- 456789012,47,1975-12-05\n\nINSERT INTO family_members (employee_id, name, gender, birth_date, relationship)\nVALUES\n    ('123456789', 'John Smith', 'M', to_date('1990-05-15', 'YYYY-MM-DD'), 'SON'),\n    ('123456789', 'Jane Smith', 'F', to_date('1993-07-01', 'YYYY-MM-DD'), 'DAUGHTER'),\n    ('123456789', 'Mary Smith', 'F', to_date('1955-01-01', 'YYYY-MM-DD'), 'MOTHER'),\n    ('123456789', 'David Jansen', 'M', to_date('1970-11-10', 'YYYY-MM-DD'), 'PARTNER'),\n    ('234567890', 'Mike Johnson', 'M', to_date('2010-01-01', 'YYYY-MM-DD'), 'SON'),\n    ('234567890', 'Emily Johnson', 'F', to_date('2015-02-14', 'YYYY-MM-DD'), 'DAUGHTER'),\n    ('345678901', 'Adam Garcia', 'M', to_date('2012-12-31', 'YYYY-MM-DD'), 'SON'),\n    ('345678901', 'Samantha Garcia', 'F', to_date('2014-03-01', 'YYYY-MM-DD'), 'DAUGHTER'),\n    ('456789012', 'Lisa Brown', 'F', to_date('1978-06-01', 'YYYY-MM-DD'), 'PARTNER'),\n    ('456789012', 'Lucas Brown', 'X', to_date('2008-04-01', 'YYYY-MM-DD'), 'SON'),\n    ('456789012', 'Ethan Brown', 'M', to_date('2011-05-01', 'YYYY-MM-DD'), 'SON');\n\n\n-- 567890123,44,1978-02-25\n-- 678901234,33,1989-11-18\n-- 789012345,39,1983-07-08\n-- 890123456,42,1981-01-30\n\nINSERT INTO family_members (employee_id, name, gender, birth_date, relationship)\nVALUES\n    ('567890123', 'John Rodriguez', 'M', to_date('15-06-2005', 'DD-MM-YYYY'), 'SON'),\n    ('567890123', 'Samantha Rodriguez', 'F', to_date('22-09-2012', 'DD-MM-YYYY'), 'DAUGHTER'),\n    ('567890123', 'Jane Smith', 'F', to_date('02-05-1981', 'DD-MM-YYYY'), 'PARTNER'),\n    ('567890123', 'Mary Rodriguez', 'F', to_date('12-10-1950', 'DD-MM-YYYY'), 'MOTHER'),\n    ('678901234', 'Matthew Davis', 'M', to_date('04-03-2018', 'DD-MM-YYYY'), 'SON'),\n    ('678901234', 'Robert Davis', 'M', to_date('16-07-2019', 'DD-MM-YYYY'), 'SON'),\n    ('789012345', 'Emily Martinez', 'F', to_date('08-07-2010', 'DD-MM-YYYY'), 'DAUGHTER'),\n    ('789012345', 'Sarah Brown', 'M', to_date('25-05-1983', 'DD-MM-YYYY'), 'PARTNER'),\n    ('890123456', 'Amy Wilson', 'F', to_date('22-02-2010', 'DD-MM-YYYY'), 'DAUGHTER'),\n    ('890123456', 'Sophia Wilson', 'F', to_date('07-08-2014', 'DD-MM-YYYY'), 'DAUGHTER'),\n    ('890123456', 'David Wilson', 'M', to_date('12-11-1950', 'DD-MM-YYYY'), 'GRANDCHILD'),\n    ('890123456', 'Elizabeth Wilson', 'F', to_date('01-06-1954', 'DD-MM-YYYY'), 'MOTHER_IN_LAW'),\n    ('890123456', 'Melissa Wilson', 'F', to_date('28-02-1995', 'DD-MM-YYYY'), 'PARTNER')\n;\n\n\n-- 901234567,35,1987-04-12\n-- 012345678,38,1984-08-05\n-- 123456790,32,1990-03-15\n-- 234567891,30,1992-07-23\n-- 345678902,29,1993-11-04\n\n\nINSERT INTO family_members (employee_id, name, gender, birth_date, relationship) VALUES\n     ('901234567', 'Samantha Smith', 'F', to_date('11-12-1990', 'DD-MM-YYYY'), 'DAUGHTER'),\n     ('901234567', 'Tom Smith', 'M', to_date('03-08-2010', 'DD-MM-YYYY'), 'GRANDCHILD'),\n     ('901234567', 'Sophie Smith', 'F', to_date('09-06-2015', 'DD-MM-YYYY'), 'GRANDCHILD'),\n     ('901234567', 'John Smith', 'M', to_date('20-01-1960', 'DD-MM-YYYY'), 'PARTNER'),\n     ('012345678', 'Emily Johnson', 'F', to_date('08-03-1991', 'DD-MM-YYYY'), 'DAUGHTER'),\n     ('012345678', 'Daniel Brown', 'M', to_date('18-11-2018', 'DD-MM-YYYY'), 'GRANDCHILD'),\n     ('012345678', 'Lucas Brown', 'M', to_date('14-05-2020', 'DD-MM-YYYY'), 'GRANDCHILD'),\n     ('012345678', 'Bob Johnson', 'F', to_date('11-06-1993', 'DD-MM-YYYY'), 'PARTNER'),\n     ('123456790', 'Joshua Smith', 'M', to_date('05-09-2017', 'DD-MM-YYYY'), 'SON'),\n     ('123456790', 'Sarah Smith', 'F', to_date('12-08-2021', 'DD-MM-YYYY'), 'DAUGHTER'),\n     ('123456790', 'Mary Smith', 'F', to_date('25-09-1960', 'DD-MM-YYYY'), 'MOTHER'),\n     ('234567891', 'Ethan Lee', 'M', to_date('23-06-2019', 'DD-MM-YYYY'), 'SON'),\n     ('234567891', 'Brian Jones', 'M', to_date('05-09-1960', 'DD-MM-YYYY'), 'FATHER'),\n     ('345678902', 'Oliver Lee', 'M', to_date('18-07-2019', 'DD-MM-YYYY'), 'SON'),\n     ('345678902', 'Alice Jackson', 'F', to_date('05-04-1995', 'DD-MM-YYYY'), 'PARTNER');\n\n\n\n-- 456789045,31,1991-05-17\n-- 567890124,28,1994-08-11\n-- 678901235,33,1990-01-05\n-- 789012346,29,1993-03-29\n-- 890123457,30,1992-06-30\n\nINSERT INTO family_members VALUES\n       ('456789045', 'Anna Jones', 'F', to_date('1992-01-10', 'YYYY-MM-DD'), 'DAUGHTER'),\n       ('456789045', 'John Jones', 'M', to_date('1994-07-21', 'YYYY-MM-DD'), 'SON'),\n       ('456789045', 'Sarah Jones', 'F', to_date('1988-04-05', 'YYYY-MM-DD'), 'PARTNER'),\n       ('567890124', 'Michael Wilson', 'M', to_date('1998-11-15', 'YYYY-MM-DD'), 'SON'),\n       ('567890124', 'Lily Lee', 'F', to_date('1996-05-07', 'YYYY-MM-DD'), 'PARTNER'),\n       ('678901235', 'Emma Garcia', 'M', to_date('1965-12-23', 'YYYY-MM-DD'), 'MOTHER'),\n       ('789012346', 'Emily Wilson', 'F', to_date('2017-09-02', 'YYYY-MM-DD'), 'DAUGHTER'),\n       ('789012346', 'Samantha Wilson', 'F', to_date('2019-03-28', 'YYYY-MM-DD'), 'DAUGHTER'),\n       ('789012346', 'John Wilson', 'M', to_date('1994-01-16', 'YYYY-MM-DD'), 'PARTNER'),\n       ('890123457', 'Avery Johnson', 'F', to_date('2018-06-14', 'YYYY-MM-DD'), 'DAUGHTER'),\n       ('890123457', 'Sofie Johnson', 'F', to_date('2021-02-07', 'YYYY-MM-DD'), 'DAUGHTER'),\n       ('890123457', 'Brian Johnson', 'M', to_date('1990-09-18', 'YYYY-MM-DD'), 'PARTNER');\n\n\n\n-- 901234568,31,1991-12-19,M\n-- 012345679,28,1994-09-21,F\n-- 100001001,33,1990-01-01,M\n-- 100001002,31,1991-02-15,F\n\nINSERT INTO family_members (employee_id, name, gender, birth_date, relationship)\nVALUES\n-- Employee 901234568\n('901234568', 'Mary Smith', 'F', to_date('1994-03-05', 'YYYY-MM-DD'), 'PARTNER'),\n('901234568', 'John Martinez Jr.', 'M', to_date('2016-07-12', 'YYYY-MM-DD'), 'SON'),\n('901234568', 'Sarah Martinez', 'F', to_date('2020-01-22', 'YYYY-MM-DD'), 'DAUGHTER'),\n-- Employee 012345679\n('012345679', 'Mark Johnson', 'M', to_date('1991-10-15', 'YYYY-MM-DD'), 'PARTNER'),\n('012345679', 'Ann Johnson', 'F', to_date('2018-06-03', 'YYYY-MM-DD'), 'DAUGHTER'),\n-- Employee 100001001\n('100001001', 'Amy Brown', 'F', to_date('1992-04-20', 'YYYY-MM-DD'), 'PARTNER'),\n('100001001', 'Tom Brown', 'M', to_date('2018-12-11', 'YYYY-MM-DD'), 'SON'),\n-- Employee 100001002\n('100001002', 'Emma Smith', 'F', to_date('2019-01-05', 'YYYY-MM-DD'), 'DAUGHTER'),\n('100001002', 'Julia Smith', 'F', to_date('1992-09-28', 'YYYY-MM-DD'), 'PARTNER')\n;\n\n\n-- 100001003,34,1988-05-07,M\n-- 100001004,29,1993-11-28,F\n-- 100001005,33,1989-07-15,M\n-- 100001006,32,1990-12-31,M\n\nINSERT INTO family_members (employee_id, name, gender, birth_date, relationship)\nVALUES\n    ('100001003', 'Bob Segers', 'F', to_date('01-01-1990', 'DD-MM-YYYY'), 'PARTNER'),\n    ('100001003', 'Benjamin Segers', 'M', to_date('01-01-2015', 'DD-MM-YYYY'), 'SON'),\n    ('100001003', 'Sophia Segers', 'F', to_date('01-01-2018', 'DD-MM-YYYY'), 'DAUGHTER'),\n    ('100001004', 'Oliver Garcia', 'M', to_date('01-01-2016', 'DD-MM-YYYY'), 'SON'),\n    ('100001005', 'Ava Kim', 'F', to_date('01-01-2010', 'DD-MM-YYYY'), 'DAUGHTER'),\n    ('100001005', 'William Kim', 'M', to_date('01-01-2013', 'DD-MM-YYYY'), 'SON'),\n    ('100001005', 'Jacob Kim', 'M', to_date('01-01-2021', 'DD-MM-YYYY'), 'SON'),\n    ('100001005', 'Emma Kim', 'F', to_date('01-01-2022', 'DD-MM-YYYY'), 'DAUGHTER'),\n    ('100001006', 'Lucas Nguyen', 'M', to_date('01-01-2015', 'DD-MM-YYYY'), 'SON'),\n    ('100001006', 'Ella Nguyen', 'F', to_date('01-01-2018', 'DD-MM-YYYY'), 'DAUGHTER'),\n    ('100001006', 'Noah Nguyen', 'M', to_date('01-01-2021', 'DD-MM-YYYY'), 'SON');\n\n\n\n\n\n-- Werk de rijen van de tabel departments bij met het SOFI-nummer\n-- van de manager en diens datum indiensttreding.\nUPDATE departments SET manager_id = '999444444',\n                       mgr_start_date = TO_DATE ('22-05-2008', 'DD-MM-YYYY')\nWHERE department_id = '7';\nUPDATE departments SET manager_id = '999555555',\n                       mgr_start_date = TO_DATE ('01-01-2011', 'DD-MM-YYYY')\nWHERE department_id = '3';\nUPDATE departments SET manager_id = '999666666',\n                       mgr_start_date = TO_DATE ('19-06-2001', 'DD-MM-YYYY')\nWHERE department_id = '1';\n\n\n\n-- Einde van het script\n\n\nALTER TABLE departments\nADD CONSTRAINT fk_dep_emp FOREIGN KEY (manager_id) REFERENCES employees(employee_id) ;\n\n-- the numbers should correspond\nSELECT COUNT(*), '# departments is 23'      FROM departments    UNION\nSELECT COUNT(*), '# locations is 24'        FROM locations      UNION\nSELECT COUNT(*), '# projects is 26'         FROM projects       UNION\nSELECT COUNT(*), '# employees is 34'        FROM employees      UNION\nSELECT COUNT(*), '# tasks is 61'           FROM tasks           UNION\nSELECT COUNT(*), '# family_members is 95'   FROM family_members;\n\n\n--SELECT * from projects;\n"
     }
   },
+  "course": "relational_database_fundamentals",
   "exercises": {
     "w2-enterprise-e01": {
-      "course": "sql",
       "category": "select",
       "title": "Week 2 · Entreprise · Exercise 1",
       "instructions": "Provide full details of all projects completed within the company.",
@@ -41,7 +41,6 @@
       "solution": "SELECT * from projects;"
     },
     "w2-enterprise-e02": {
-      "course": "sql",
       "category": "select",
       "title": "Week 2 · Entreprise · Exercise 2",
       "instructions": "For all projects, print the project name and department number of the supporting department",
@@ -60,7 +59,6 @@
       "solution": "select projects.project_name, projects.department_id from projects;"
     },
     "w2-enterprise-e03-a": {
-      "course": "sql",
       "category": "select",
       "title": "Week 2 · Entreprise · Exercise 3 A",
       "instructions": "Modify the previous SELECT so that you get the following results table:\n\n**Context from Exercise 2:** The previous query listed each project's name and the department number supporting it:\n\n```sql\nSELECT projects.project_name, projects.department_id\nFROM projects;\n```",
@@ -79,7 +77,6 @@
       "solution": "select 'project', projects.project_id, 'is handled by', projects.department_id from projects;"
     },
     "w2-enterprise-e03-b": {
-      "course": "sql",
       "category": "select",
       "title": "Week 2 · Entreprise · Exercise 3 B",
       "instructions": "Now make sure that the headers for the constant columns remain blank.\nFYI: column names are printed in bold below, the words 'text' and 'numeric' indicate the data type of that column\n\n**Context from Exercise 3A:** The query being refined returns four columns: the constant text `project`, the project ID, the constant text `is handled by`, and the department ID.\n\n```sql\nSELECT 'project', projects.project_id, 'is handled by', projects.department_id\nFROM projects;\n```",
@@ -98,7 +95,6 @@
       "solution": "select 'project' as \" \", projects.project_id, 'is handled by' as \" \", projects.department_id from projects;"
     },
     "w2-enterprise-e03-c": {
-      "course": "sql",
       "category": "select",
       "title": "Week 2 · Entreprise · Exercise 3 C",
       "instructions": "Make sure you print everything in 1 column and give the whole column the header \"projects with department\".\nFYI: column names in IntelliJ are sometimes shown with quotes, sometimes not.\n\n**Context from Exercise 3B:** The previous query has four columns in this order: the constant text `Project`, `project_id`, the constant text `is handled by`, and `department_id`. The two constant columns have blank headings.\n\n```sql\nSELECT 'Project' AS \" \" , projects.project_id,\n       'is handled by' AS \" \" , projects.department_id\nFROM projects;\n```",
@@ -117,7 +113,6 @@
       "solution": "select 'Project ' || projects.project_id || ' is handled by ' || projects.department_id AS \"projects with departments\" from projects;"
     },
     "w2-enterprise-e04": {
-      "course": "sql",
       "category": "select",
       "title": "Interpret date subtraction",
       "instructions": "Run the supplied expression `SELECT current_date - birth_date FROM FAMILY_MEMBERS;`. What does the result represent for each family member?",
@@ -132,13 +127,10 @@
         "The weekday on which the person was born"
       ],
       "explanation": "Subtracting one PostgreSQL date from another returns the number of days between the dates.",
-      "checks": [
-        1
-      ],
+      "checks": [1],
       "hints": []
     },
     "w2-enterprise-e05-a": {
-      "course": "sql",
       "category": "select",
       "title": "Diagnose three SQL errors",
       "instructions": "Exercise 5a asks you to explain the errors in three statements. Which diagnosis correctly identifies all three?\n\n**SQL context:** The source package does not preserve the complete statements. It retains these fragments and schema detail:\n\n```sql\n-- Statement 1: SELECT statement, with its FROM clause omitted\nSELECT ...;\n\n-- Statement 2: refers to this table name\nSELECT ... FROM TASK;\n\n-- Statement 3: refers to this column on departments\nSELECT start_date\nFROM departments;\n```\n\nIn the supplied Enterprise schema, the departments date column is named `mgr_start_date`.",
@@ -153,13 +145,10 @@
         "All three statements are valid SQL and return the intended data"
       ],
       "explanation": "The supplied solution identifies the missing FROM clause in the first statement and the TASK/TASKS table-name typo in the second. The supplied Enterprise schema defines mgr_start_date, not start_date, for departments.",
-      "checks": [
-        0
-      ],
+      "checks": [0],
       "hints": []
     },
     "w2-enterprise-e05-b": {
-      "course": "sql",
       "category": "select",
       "title": "Spot a missing comma in SELECT",
       "instructions": "The query should return last_name, salary and department_id. What is wrong with \n```sql\nSELECT last_name, salary department_id \nFROM EMPLOYEES;\n```?",
@@ -174,13 +163,10 @@
         "The query must use SELECT DISTINCT"
       ],
       "explanation": "The supplied solution identifies the missing comma. Without it, department_id is interpreted as an alias for salary.",
-      "checks": [
-        0
-      ],
+      "checks": [0],
       "hints": []
     },
     "w2-enterprise-e06-a": {
-      "course": "sql",
       "category": "select",
       "title": "Week 2 · Entreprise · Exercise 6 A",
       "instructions": "A survey is requested of the places of residence of the company's employees.\nThis gives the result table below:",
@@ -199,7 +185,6 @@
       "solution": "select location from employees;"
     },
     "w2-enterprise-e06-b": {
-      "course": "sql",
       "category": "select",
       "title": "Week 2 · Entreprise · Exercise 6 B",
       "instructions": "Take a critical look at the results table and write a query that gives a better result:\n\n**Context from Exercise 6A:** The initial query returns the employees' location values directly, including repeated values and their original capitalization:\n\n```sql\nSELECT location\nFROM employees;\n```",
@@ -218,7 +203,6 @@
       "solution": "SELECT DISTINCT initcap(location) location\nFROM employees;"
     },
     "w2-enterprise-e07": {
-      "course": "sql",
       "category": "select",
       "title": "Week 2 · Entreprise · Exercise 7",
       "instructions": "We want to know in which departments employees are employed and what their place of residence is. Write the query.",
@@ -237,7 +221,6 @@
       "solution": "select department_id, location from employees order by location;"
     },
     "w2-enterprise-e08-a": {
-      "course": "sql",
       "category": "select",
       "title": "Week 2 · Entreprise · Exercise 8 A",
       "instructions": "SELECT without table\n\nquery for today's date.",
@@ -256,7 +239,6 @@
       "solution": "select current_date;"
     },
     "w2-enterprise-e08-b": {
-      "course": "sql",
       "category": "select",
       "title": "Week 2 · Entreprise · Exercise 8 B",
       "instructions": "SELECT without table\n\ncalculate a 15% discount on 150. You should obtain the following results table",
@@ -275,7 +257,6 @@
       "solution": "select 150*(1-0.15) as Calculation;"
     },
     "w2-enterprise-e08-c": {
-      "course": "sql",
       "category": "select",
       "title": "Week 2 · Entreprise · Exercise 8 C",
       "instructions": "SELECT without table\n\nUse the separate words \"Data Retrieval\", \" Chapter 3-4\" and \"SQL\" to obtain the following results table in one instruction. Also note the column title!",
@@ -294,7 +275,6 @@
       "solution": "select 'SQL ' || 'Data Retrieval ' || 'Chapter 3-4'  \"Best Course\";"
     },
     "w2-enterprise-e09": {
-      "course": "sql",
       "category": "select",
       "title": "Week 2 · Entreprise · Exercise 9",
       "instructions": "Which people belong to the family of employee 999111111? You must obtain exactly the following table of results.",
@@ -313,7 +293,6 @@
       "solution": "select employee_id employee, name \"NAME FAMILY MEMBER\", relationship, gender from family_members where employee_id='999111111' order by name;"
     },
     "w2-enterprise-e10": {
-      "course": "sql",
       "category": "select",
       "title": "Week 2 · Entreprise · Exercise 10",
       "instructions": "Provide all information about the administration department?",
@@ -332,7 +311,6 @@
       "solution": "select department_id, department_name, manager_id, mgr_start_date from departments where department_name='Administration';"
     },
     "w2-enterprise-e11": {
-      "course": "sql",
       "category": "select",
       "title": "Week 2 · Entreprise · Exercise 11",
       "instructions": "We would like an overview of all employees with residence in Maastricht and use the following instruction\n\n```sql\nSELECT employee_id, last_name, location\nFROM EMPLOYEES\nWHERE location='Maastricht';\n```\n\nThis gives the following table of results:\n\nWhy is employee 999555555 not in the results table?\nModify the query in an efficient way.",
@@ -351,7 +329,6 @@
       "solution": "select * from employees where employee_id='999555555';"
     },
     "w2-enterprise-e12": {
-      "course": "sql",
       "category": "select",
       "title": "Week 2 · Entreprise · Exercise 12",
       "instructions": "Which employees worked between 20 and 35 hours (both inclusive) on project 10? Display the employee number, project number, and number of hours worked.",
@@ -370,7 +347,6 @@
       "solution": "select employee_id, project_id, hours  from tasks where hours between 20 and 35 and project_id=10;"
     },
     "w2-enterprise-e13": {
-      "course": "sql",
       "category": "select",
       "title": "Week 2 · Entreprise · Exercise 13",
       "instructions": "On which projects did employee 999222222 work less than 10 hours? Provide project number and number of hours.",
@@ -389,7 +365,6 @@
       "solution": "select  project_id, hours from tasks where employee_id='999222222' and hours < 10;"
     },
     "w2-enterprise-e14": {
-      "course": "sql",
       "category": "select",
       "title": "Week 2 · Entreprise · Exercise 14",
       "instructions": "Which employees are from the province of Groningen (GR) or Noord Brabant (NB)?\nSolve in 2 ways!",
@@ -408,7 +383,6 @@
       "solution": "select employee_id, last_name, province from employees where province='GR' or province='NB';"
     },
     "w2-enterprise-e15": {
-      "course": "sql",
       "category": "select",
       "title": "Week 2 · Entreprise · Exercise 15",
       "instructions": "Are there any employees with first name Suzan, Martina, Henk or Douglas and in which department do they work? Sort by department number (in descending order) and within that alphabetically by first name.",
@@ -427,7 +401,6 @@
       "solution": "select department_id, first_name from employees\nwhere first_name in ('Suzan', 'Martina', 'Henk', 'Douglas') order by department_id desc, first_name;"
     },
     "w2-enterprise-e16": {
-      "course": "sql",
       "category": "select",
       "title": "Week 2 · Entreprise · Exercise 16",
       "instructions": "We want to include in our results table:\nName, department number, and salary of employees in department 7 earning less than 40000\n\n- name, department number, and salary of employee 999666666",
@@ -446,7 +419,6 @@
       "solution": "select last_name, salary, department_id from employees where (salary<40000 and department_id=7) or employee_id='999666666';"
     },
     "w2-enterprise-e17": {
-      "course": "sql",
       "category": "select",
       "title": "Week 2 · Entreprise · Exercise 17",
       "instructions": "Which employees do not live in Maarssen and neither in Eindhoven?",
@@ -465,7 +437,6 @@
       "solution": "select last_name, department_id from employees where not LOWER(location) in ('maarssen', 'eindhoven');"
     },
     "w2-enterprise-e18-a": {
-      "course": "sql",
       "category": "select",
       "title": "Week 2 · Entreprise · Exercise 18 A",
       "instructions": "Summarize the contents of the table TASKS.\n\nSort by HOURS in ascending order.\nEnsure that rows with a NULL value for HOURS are displayed first.",
@@ -484,7 +455,6 @@
       "solution": "select employee_id, project_id, hours  from tasks order by hours NULLS first;"
     },
     "w2-enterprise-e18-b": {
-      "course": "sql",
       "category": "select",
       "title": "Week 2 · Entreprise · Exercise 18 B",
       "instructions": "Summarize the contents of the table TASKS.\n\nSort by HOURS in descending order.\nMake sure that rows with a NULL value for HOURS are shown last.",
@@ -503,7 +473,6 @@
       "solution": "select employee_id, project_id, hours  from tasks order by hours desc NULLS last;"
     },
     "w2-enterprise-e19": {
-      "course": "sql",
       "category": "select",
       "title": "Week 2 · Entreprise · Exercise 19",
       "instructions": "List the employees and their place of residence whose place of residence begins with an \"m\" or \"o\" and who have a salary greater than 30000€.",
@@ -522,7 +491,6 @@
       "solution": "select last_name, location, salary from employees where left(lower(location), 1) in ('m','o') and salary>30000 order by last_name desc;"
     },
     "w2-enterprise-e20": {
-      "course": "sql",
       "category": "select",
       "title": "Week 2 · Entreprise · Exercise 20",
       "instructions": "Give the names of family members born in 1988",
@@ -541,7 +509,6 @@
       "solution": "select name from family_members where EXTRACT(YEAR FROM birth_date) = 1988;"
     },
     "w2-enterprise-e21": {
-      "course": "sql",
       "category": "fetch",
       "title": "Week 2 · Entreprise · Exercise 21",
       "instructions": "Provide the employees with the lowest salary",
@@ -560,7 +527,6 @@
       "solution": "select first_name, last_name, salary  from employees order by salary, first_name desc\nFETCH first 3 rows only;"
     },
     "w2-enterprise-e22": {
-      "course": "sql",
       "category": "fetch",
       "title": "Week 2 · Entreprise · Exercise 22",
       "instructions": "Provide the 3 oldest employees.",
@@ -579,7 +545,6 @@
       "solution": "select first_name, last_name, birth_date from employees order by birth_date fetch first 3 rows only;"
     },
     "w2-enterprise-e23": {
-      "course": "sql",
       "category": "fetch",
       "title": "Week 2 · Entreprise · Exercise 23",
       "instructions": "Provide the employee ID for the employees on the 4th, 5th and 6th place, if you sort by hours performed, from most to least, without taking the NULL into account",
@@ -598,7 +563,6 @@
       "solution": "select employee_id, project_id, hours from tasks where hours is not null order by hours desc limit 3 offset 3;"
     },
     "w2-sa-e01": {
-      "course": "sql",
       "category": "select",
       "title": "Week 2 · Student Admin · Exercise 1",
       "instructions": "Give the names of all instructors who live at '518 West 120th'",
@@ -617,7 +581,6 @@
       "solution": "SELECT salutation, last_name,first_name,street_address from instructors where street_address = '518 West 120th';"
     },
     "w2-sa-e02": {
-      "course": "sql",
       "category": "select",
       "title": "Week 2 · Student Admin · Exercise 2",
       "instructions": "List all students with the surname 'Grant'. Sort by address title and within address title by first name.",
@@ -636,7 +599,6 @@
       "solution": "select salutation, first_name, last_name from students where last_name = 'Grant' order by street_address, first_name;"
     },
     "w2-sa-e03": {
-      "course": "sql",
       "category": "select",
       "title": "Week 2 · Student Admin · Exercise 3",
       "instructions": "Give all students who are addressed as \"Ms.\" AND who call either \"Allende\" or \"Grant. Sort by last name.",
@@ -655,7 +617,6 @@
       "solution": "select student_id, salutation, students.first_name, students.last_name from students where salutation='Ms.' AND (last_name='Grant' or last_name='Allende') order by last_name;"
     },
     "w2-sa-e04": {
-      "course": "sql",
       "category": "select",
       "title": "Week 2 · Student Admin · Exercise 4",
       "instructions": "List the enrollment(s) for which a final grade has already been obtained",
@@ -674,7 +635,6 @@
       "solution": "select student_id, section_id, enroll_date, final_grade from enrollments where final_grade <> 0;"
     },
     "w2-sa-e05": {
-      "course": "sql",
       "category": "select",
       "title": "Week 2 · Student Admin · Exercise 5",
       "instructions": "Which students live in a municipality with zip code 10048,11102 or 11209?\nPlease note that the zip codes are of type VARCHAR!",
@@ -693,7 +653,6 @@
       "solution": "select first_name || ' ' || last_name as \"Name\", street_address as \"Address\", zip from students where zip = '10048' or zip = '11102' or zip='11209';"
     },
     "w2-sa-e06": {
-      "course": "sql",
       "category": "select",
       "title": "Week 2 · Student Admin · Exercise 6",
       "instructions": "Which students have first name Yvonne AND live in a location with a zip code equal to 10029 and which students have last name Zuckerberg ?",
@@ -712,7 +671,6 @@
       "solution": "select student_id, first_name as first, last_name as last, zip from students where (first_name='Yvonne' and zip='11209') or last_name='Zuckerberg';"
     },
     "w2-sa-e07": {
-      "course": "sql",
       "category": "select",
       "title": "Week 2 · Student Admin · Exercise 7",
       "instructions": "Provide the description of all courses with a prerequisite less than 122.",
@@ -731,7 +689,6 @@
       "solution": "select description, prerequisite from courses where prerequisite<122;"
     },
     "w2-sa-e08": {
-      "course": "sql",
       "category": "select",
       "title": "Week 2 · Student Admin · Exercise 8",
       "instructions": "List all instructors except instructor ‘Schorin’.",
@@ -750,7 +707,6 @@
       "solution": "select salutation,last_name as \"LAST NAME\", first_name as \"FIRST NAME\", phone  from instructors where last_name!='Schorin';"
     },
     "w2-sa-e09": {
-      "course": "sql",
       "category": "select",
       "title": "ORDER BY with DISTINCT",
       "instructions": "The statement selects DISTINCT first_name and last_name, but orders by student_id. What problem does the supplied exercise identify?\n\n**Statement being evaluated:**\n\n```sql\nSELECT DISTINCT first_name, last_name\nFROM students\nORDER BY student_id;\n```",
@@ -765,13 +721,10 @@
         "ORDER BY cannot be used with a WHERE clause"
       ],
       "explanation": "The supplied solution says student_id cannot be used in ORDER BY here because it is not selected as an attribute.",
-      "checks": [
-        0
-      ],
+      "checks": [0],
       "hints": []
     },
     "w2-sa-e10": {
-      "course": "sql",
       "category": "select",
       "title": "Week 2 · Student Admin · Exercise 10",
       "instructions": "In the following instruction, rewrite the ORDER BY option in 2 other ways:\n\n```sql\nSELECT description \"desc\", prerequisite \"pre\"\nFROM courses\nWHERE prerequisite IS NOT NULL\nORDER BY description;\n```",
@@ -790,7 +743,6 @@
       "solution": "SELECT description \"desc\", prerequisite \"pre\"\nFROM courses\nWHERE prerequisite IS NOT NULL\nORDER BY 1;"
     },
     "w2-sa-e11": {
-      "course": "sql",
       "category": "select",
       "title": "Week 2 · Student Admin · Exercise 11",
       "instructions": "Give the description of the courses for which the cost is 1195 and the prerequisite is 20 or 25.",
@@ -809,7 +761,6 @@
       "solution": "select description, cost, prerequisite from courses where cost=1195 AND prerequisite in (20,25);"
     },
     "w2-sa-e12": {
-      "course": "sql",
       "category": "select",
       "title": "Check BETWEEN boundaries",
       "instructions": "Does `WHERE cost BETWEEN 1500 AND 1000` successfully select costs in the intended range?",
@@ -824,13 +775,10 @@
         "Yes; the bounds are interpreted as an unordered pair"
       ],
       "explanation": "The supplied solution says the minimum and maximum values are swapped. BETWEEN expects the lower bound first and the upper bound second.",
-      "checks": [
-        1
-      ],
+      "checks": [1],
       "hints": []
     },
     "w2-sa-e13": {
-      "course": "sql",
       "category": "select",
       "title": "Correct the NOT comparison",
       "instructions": "What is the issue with `WHERE prerequisite NOT >= 140`?",
@@ -845,13 +793,10 @@
         "The condition is valid and needs no change"
       ],
       "explanation": "The supplied solution rewrites the condition as `NOT prerequisite >= 140` and notes that `< 140` is another equivalent form.",
-      "checks": [
-        0
-      ],
+      "checks": [0],
       "hints": []
     },
     "w2-sa-e14": {
-      "course": "sql",
       "category": "select",
       "title": "Week 2 · Student Admin · Exercise 14",
       "instructions": "Write this statement in a different way!\n\n```sql\nSELECT description\nFROM grade_types\nWHERE description >= 'Midterm' AND description <=\n'Project';\n```",
@@ -870,7 +815,6 @@
       "solution": "SELECT description\nFROM grade_types\nWHERE description BETWEEN 'Midterm' AND 'Project';"
     },
     "w2-sa-e15": {
-      "course": "sql",
       "category": "select",
       "title": "Week 2 · Student Admin · Exercise 15",
       "instructions": "Write this statement in a different way!\n\n```sql\nSELECT city\nFROM zipcodes;\nWHERE state != 'NY' ;\n```",
@@ -889,7 +833,6 @@
       "solution": "SELECT city FROM zipcodes WHERE NOT state ='NY';"
     },
     "w2-sa-e16": {
-      "course": "sql",
       "category": "select",
       "title": "Week 2 · Student Admin · Exercise 16",
       "instructions": "List students who have a zip code between 5000 and 6825. Sort the table first by zip code and within zip code by last name.",
@@ -908,7 +851,6 @@
       "solution": "select student_id, last_name, zip  from students where zip between '05000' and '06825' order by zip, last_name;"
     },
     "w2-sa-e17": {
-      "course": "sql",
       "category": "select",
       "title": "Week 2 · Student Admin · Exercise 17",
       "instructions": "Look at the solution to question 16. Write the query using IN, assuming you now know the zip codes. The RT should be the same, except that you should show the last name in reverse alphabetical order.",
@@ -927,7 +869,6 @@
       "solution": "select student_id, last_name, zip  from students where zip in ('06483','06605','06798','06820') order by zip, last_name desc;"
     },
     "w2-sa-e18": {
-      "course": "sql",
       "category": "select",
       "title": "Week 2 · Student Admin · Exercise 18",
       "instructions": "Show students who have either a first name Brian, Angel or Yvonne or their last name is Torres.\nSort by last name and in the case of the same last name sort by first name.",
@@ -946,7 +887,6 @@
       "solution": "select student_id, first_name first, last_name last from students where first_name in ('Brian', 'Angel','Yvonne') or last_name = 'Torres' order by  last_name, first_name;"
     },
     "w2-sa-e19": {
-      "course": "sql",
       "category": "select",
       "title": "Week 2 · Student Admin · Exercise 19",
       "instructions": "Which students registered before February 03, 2021?",
@@ -965,7 +905,6 @@
       "solution": "select student_id, first_name first, last_name last, registration_date registration from students where registration_date < '2021-02-03';"
     },
     "w2-sa-e20": {
-      "course": "sql",
       "category": "select",
       "title": "Week 2 · Student Admin · Exercise 20",
       "instructions": "List grades between 3 and 4, boundaries included",
@@ -984,7 +923,6 @@
       "solution": "select letter_grade, grade_point, max_grade, min_grade from grade_conversions where grade_point between 3 and 4;"
     },
     "w2-sa-e21": {
-      "course": "sql",
       "category": "select",
       "title": "Week 2 · Student Admin · Exercise 21",
       "instructions": "List the courses where the course number is less than 100. Pay attention to the sorting order!",
@@ -1003,7 +941,6 @@
       "solution": "select  course_no, description, prerequisite from courses where course_no<100 order by prerequisite;"
     },
     "w3-enterprise-e01": {
-      "course": "sql",
       "category": "text-function",
       "title": "Week 3 · Entreprise · Exercise 1",
       "instructions": "Give the employee numbers of those with children under 18?",
@@ -1022,7 +959,6 @@
       "solution": "select DISTINCT employee_id from family_members where relationship in ('DAUGHTER', 'SON') and age(birth_date)<'18 years';"
     },
     "w3-enterprise-e02": {
-      "course": "sql",
       "category": "text-function",
       "title": "Week 3 · Entreprise · Exercise 2",
       "instructions": "Which employees from Eindhoven or Maarssen are older than 30?",
@@ -1041,7 +977,6 @@
       "solution": "select employee_id, last_name, location, AGE(birth_date) age from employees where age(birth_date) > '30 years' and lower(location) in ('eindhoven', 'maarssen');"
     },
     "w3-enterprise-e03": {
-      "course": "sql",
       "category": "text-function",
       "title": "Week 3 · Entreprise · Exercise 3",
       "instructions": "Which employees have a partner with an age between 35y and 50y? Give the number of the employee and the age of that partner.",
@@ -1060,7 +995,6 @@
       "solution": "select employee_id, age(birth_date) \"age partner\" from family_members where age(birth_date) > '35 years' and age(birth_date) < '50 years' and relationship ='PARTNER';"
     },
     "w3-enterprise-e04": {
-      "course": "sql",
       "category": "date-function",
       "title": "Week 3 · Entreprise · Exercise 4",
       "instructions": "For each employee, give the date when he/she will retire. Assume that the retirement age is 65 and that one retires on his/her birthday.",
@@ -1079,7 +1013,6 @@
       "solution": "select first_name, last_name, to_char(birth_date, 'DD Month YYYY') \"Date of birth\", TO_CHAR(birth_date + INTERVAL '65 years', 'day DD Month YYYY') pension from employees where age(birth_date) < '65 years';"
     },
     "w3-enterprise-e05-a": {
-      "course": "sql",
       "category": "date-function",
       "title": "Week 3 · Entreprise · Exercise 5 A",
       "instructions": "Enter the date of birth of family members in the format below. Note the order.",
@@ -1098,7 +1031,6 @@
       "solution": "select name, to_char(birth_date, 'day DD month YYYY') \"born on\"  from family_members order by birth_date desc;"
     },
     "w3-enterprise-e05-b": {
-      "course": "sql",
       "category": "text-function",
       "title": "Week 3 · Entreprise · Exercise 5 B",
       "instructions": "Do the same but provide a custom format.\n\n**Context from Exercise 5A:** The previous query listed family members and formatted their birth dates with the `day DD month YYYY` format mask, sorted by birth date descending.\n\n```sql\nSELECT name, TO_CHAR(birth_date, 'day DD month YYYY') AS \"born on\"\nFROM family_members\nORDER BY birth_date DESC;\n```",
@@ -1117,7 +1049,6 @@
       "solution": "select name, to_char(birth_date, 'FMday DD FMMonth YYYY') \"born on\"  from family_members order by birth_date desc;"
     },
     "w3-enterprise-e05-c": {
-      "course": "sql",
       "category": "text-function",
       "title": "Week 3 · Entreprise · Exercise 5 C",
       "instructions": "And now put this in \"French”\n\n**Context from Exercise 5B:** The previous exercise kept the same family-member rows and sort order, but used a custom format mask to remove padding from the day and month names.\n\n```sql\nSELECT name, TO_CHAR(birth_date, 'FMday DD FMMonth YYYY') AS \"born on\"\nFROM family_members\nORDER BY birth_date DESC;\n```",
@@ -1136,7 +1067,6 @@
       "solution": "select name, to_char(birth_date, 'TMday DD TMMonth YYYY') \"born on\"  from family_members order by birth_date desc;"
     },
     "w3-enterprise-e06-a": {
-      "course": "sql",
       "category": "text-function",
       "title": "Week 3 · Entreprise · Exercise 6 A",
       "instructions": "Provide the full name of each employee! Please provide a solution that:\n\nDoes not use a function",
@@ -1155,7 +1085,6 @@
       "solution": "select first_name || ' ' || last_name name  from employees;"
     },
     "w3-enterprise-e06-b": {
-      "course": "sql",
       "category": "text-function",
       "title": "Week 3 · Entreprise · Exercise 6 B",
       "instructions": "Provide the full name of each employee! Please provide a solution that:\n\nOnly uses the function concat",
@@ -1174,7 +1103,6 @@
       "solution": "select concat(first_name, ' ', last_name) name from employees;"
     },
     "w3-enterprise-e06-c": {
-      "course": "sql",
       "category": "text-function",
       "title": "Week 3 · Entreprise · Exercise 6 C",
       "instructions": "Provide the full name of each employee! Please provide a solution that:\n\nUses functions concat, lpad (to add a blank) and length each used once",
@@ -1193,7 +1121,6 @@
       "solution": "select concat(first_name, lpad(last_name, length(last_name)+1, ' ')) from employees;"
     },
     "w3-enterprise-e07-a": {
-      "course": "sql",
       "category": "text-function",
       "title": "Week 3 · Entreprise · Exercise 7 A",
       "instructions": "Get the address of all employees to which you apply the following:\n\nConvert all characters to lowercase",
@@ -1212,7 +1139,6 @@
       "solution": "select lower(street) new_address   from employees;"
     },
     "w3-enterprise-e07-b": {
-      "course": "sql",
       "category": "text-function",
       "title": "Week 3 · Entreprise · Exercise 7 B",
       "instructions": "Get the address of all employees to which you apply the following:\n\nRemove the initial 'z' from the address",
@@ -1231,7 +1157,6 @@
       "solution": "select ltrim(lower(street), 'z') new_address   from employees;"
     },
     "w3-enterprise-e07-c": {
-      "course": "sql",
       "category": "text-function",
       "title": "Week 3 · Entreprise · Exercise 7 C",
       "instructions": "Get the address of all employees to which you apply the following:\n\nShow 30 characters each, if the address is shorter complete the string with '\\*' characters",
@@ -1250,7 +1175,6 @@
       "solution": "select rpad(ltrim(lower(street), 'z'), 30, '*') new_address  from employees;"
     },
     "w3-enterprise-e08": {
-      "course": "sql",
       "category": "text-function",
       "title": "Week 3 · Entreprise · Exercise 8",
       "instructions": "List all employees with the letter 'o' in their name and first name? Use a text function.",
@@ -1269,7 +1193,6 @@
       "solution": "select first_name, last_name from employees where first_name like '%o%' and last_name like '%o%';"
     },
     "w3-enterprise-e09": {
-      "course": "sql",
       "category": "text-function",
       "title": "Week 3 · Entreprise · Exercise 9",
       "instructions": "List all employees who have 2 O's in a row in their last name and no other O's.",
@@ -1288,7 +1211,6 @@
       "solution": "select last_name from employees where last_name like '%oo%' AND length(last_name) - length(replace(last_name, 'o', ''))=2;"
     },
     "w3-enterprise-e10": {
-      "course": "sql",
       "category": "text-function",
       "title": "Week 3 · Entreprise · Exercise 10",
       "instructions": "In employees' addresses, replace all the letters 'e' with an 'o' except the first 'e'.",
@@ -1307,7 +1229,6 @@
       "solution": "select substr(street, 1, position('e' in street)) ||\n       replace(substr(street, position('e' in street)+1), 'e','o')\nfrom employees;"
     },
     "w3-enterprise-e11": {
-      "course": "sql",
       "category": "numeric-function",
       "title": "Week 3 · Entreprise · Exercise 11",
       "instructions": "Form an email address for each employee. Form: 3 first characters of first name + \".\" + 3 first characters of the last name + \"@\" + name of the department + \".be\". All must be in lower case. Do not use a || sign.",
@@ -1326,7 +1247,6 @@
       "solution": "select concat(lower(substr(first_name, 1, 3)), '.', lower(substr(last_name, 1, 3)), '@', lower(d.department_name), '.be') from employees e\njoin departments d on e.department_id = d.department_id\norder by e.first_name;"
     },
     "w3-sa-e01": {
-      "course": "sql",
       "category": "data-function",
       "title": "Week 3 · Student Admin · Exercise 1",
       "instructions": "List all cities with zip code less than 5000 and cities located in the state of WV. Show city and state as in RT below. Note the order.",
@@ -1345,7 +1265,6 @@
       "solution": "select city, initcap(state) as \"state\" from zipcodes where zip::integer<5000 or upper(state) = 'WV' order by state, city;"
     },
     "w3-sa-e02": {
-      "course": "sql",
       "category": "text-function",
       "title": "Week 3 · Student Admin · Exercise 2",
       "instructions": "Show all cities from the state of CT. Only those cities that start with letters between A and M.\nHave a close look at the formatting of the results.",
@@ -1364,7 +1283,6 @@
       "solution": "select rpad(city, 20, '.') \"CITY\" from zipcodes where upper(state) = 'CT' and substr(city, 1, 1) between 'A' and 'M';"
     },
     "w3-sa-e03": {
-      "course": "sql",
       "category": "text-function",
       "title": "Week 3 · Student Admin · Exercise 3",
       "instructions": "Display only those names where the letter 'a' appears only after the 8th position in the name. In a separate column, indicate the position of the letter 'a' in the student's name.",
@@ -1383,7 +1301,6 @@
       "solution": "select last_name, position('a' in last_name) \"Letter a\" from students where position('a' in substr(last_name, 1, 8))=0 and position('a' in last_name)!=0;"
     },
     "w3-sa-e04": {
-      "course": "sql",
       "category": "numeric-function",
       "title": "Week 3 · Student Admin · Exercise 4",
       "instructions": "Display a list of all students with student_id less than 106. Give the number of days since the row was created. The result below was generated on 19/10/2021.",
@@ -1402,7 +1319,6 @@
       "solution": "select student_id, last_name, students.created_date, current_date-created_date || ' days ago' created_date from students where student_id<106;"
     },
     "w3-sa-e05": {
-      "course": "sql",
       "category": "data-function",
       "title": "Week 3 · Student Admin · Exercise 5",
       "instructions": "What course sections were registered for in October 2021? Hint: use distinct.",
@@ -1421,7 +1337,6 @@
       "solution": "select * from sections where start_date_time between '2021-10-01' and '2021-10-31';"
     },
     "w3-sa-e06": {
-      "course": "sql",
       "category": "numeric-function",
       "title": "Week 3 · Student Admin · Exercise 6",
       "instructions": "Give the different cost prices of the courses, the same price increased by 50% and this price rounded off in the last column. Cost can’t be equal to 0.",
@@ -1440,7 +1355,6 @@
       "solution": "select distinct cost, cost*1.5 \"cost + 50%\", round(cost*1.5) \"cost + 50 with rounding\" from courses where cost is not null;"
     },
     "w3-sa-e07": {
-      "course": "sql",
       "category": "date-function",
       "title": "Week 3 · Student Admin · Exercise 7",
       "instructions": "List the students numbered 123, 161 and 190 and their respective registration dates in the following formats.",
@@ -1459,7 +1373,6 @@
       "solution": "select last_name, registration_date, to_char(registration_date, 'DD-MM-YYYY') \"REG.DATE\", to_char(registration_date, 'dy') \"day\" from students where student_id in (123,161,190);"
     },
     "w3-sa-e08": {
-      "course": "sql",
       "category": "text-function",
       "title": "Week 3 · Student Admin · Exercise 8",
       "instructions": "List the students with a last name beginning with 'E'. First, carefully review the results table.",
@@ -1478,7 +1391,6 @@
       "solution": "select substr(first_name, 1,1) || ' ' || initcap(last_name) Name   from students where upper(substr(last_name, 1,1)) = 'E'\norder by last_name;"
     },
     "w3-sa-e09": {
-      "course": "sql",
       "category": "text-function",
       "title": "Week 3 · Student Admin · Exercise 9",
       "instructions": "List all students who have a '.' in their first name and are addressed as 'Ms.'\nSort by last name, those with the fewest letters first.",
@@ -1497,7 +1409,6 @@
       "solution": "select student_id, salutation, first_name, last_name from students where first_name like '%.%' and salutation = 'Ms.' order by length(last_name), last_name;"
     },
     "w3-sa-e10": {
-      "course": "sql",
       "category": "text-function",
       "title": "Week 3 · Student Admin · Exercise 10",
       "instructions": "Which students have the letter Y in their first name AND live in a location with a zip code equal to 10025 or have a last name whose first letter is between W and Z?",
@@ -1516,7 +1427,6 @@
       "solution": "select student_id, first_name, last_name, zip from students where (lower(first_name) like '%y%' and zip::integer =10025) or upper(substr(last_name, 1,1)) between 'W' and 'Z';"
     },
     "w3-sa-e11": {
-      "course": "sql",
       "category": "data-function",
       "title": "Week 3 · Student Admin · Exercise 11",
       "instructions": "Give the description of courses that begin with 'Intro to' and have no prerequisite.",
@@ -1535,7 +1445,6 @@
       "solution": "select description, prerequisite from courses where description like 'Intro to%' and prerequisite is null;"
     },
     "w3-sa-e12": {
-      "course": "sql",
       "category": "text-function",
       "title": "Week 3 · Student Admin · Exercise 12",
       "instructions": "Have the system count how many letters are in the following text, \"I count this amount of letters”.\nSee the result below. What is your result?",
@@ -1554,7 +1463,6 @@
       "solution": "select length('I count this amount of letters') \"Total letters\";"
     },
     "w3-sa-e13": {
-      "course": "sql",
       "category": "text-function",
       "title": "Week 3 · Student Admin · Exercise 13",
       "instructions": "Give all students who are addressed as 'Ms.' And who are called either \"Allende\" or \"Grant. Sort by last name , those with the fewest letters first.",
@@ -1573,7 +1481,6 @@
       "solution": "select student_id, salutation, first_name, last_name from students where salutation = 'Ms.' and last_name in ('Allende', 'Grant')\norder by length(last_name), last_name;"
     },
     "w3-sa-e14": {
-      "course": "sql",
       "category": "text-function",
       "title": "Week 3 · Student Admin · Exercise 14",
       "instructions": "List all instructors who have the letter o in their last name in the 2nd place.",
@@ -1592,7 +1499,6 @@
       "solution": "select last_name \"LAST NAME\", first_name \"FIRST NAME\" from instructors where substr(last_name, 2, 1) = 'o';"
     },
     "w3-sa-e15": {
-      "course": "sql",
       "category": "date-function",
       "title": "Week 3 · Student Admin · Exercise 15",
       "instructions": "Using the notation below, display today's date. (Of course, you will get a different result depending on the day).",
@@ -1611,7 +1517,6 @@
       "solution": "select 'today it is the ' || to_char(current_date, 'DD/MM/YYYY')||'****' \"What day is it?\";"
     },
     "w3-sa-e16": {
-      "course": "sql",
       "category": "date-function",
       "title": "Week 3 · Student Admin · Exercise 16",
       "instructions": "Using the notation below, show today's date.",
@@ -1630,7 +1535,6 @@
       "solution": "select 'today it is the ' || rpad(to_char(current_date, 'Day'), 10, '*')||' the '||to_char(current_date, 'DDTH') \"What day is it?\";"
     },
     "w3-sa-e17": {
-      "course": "sql",
       "category": "text-function",
       "title": "Week 3 · Student Admin · Exercise 17",
       "instructions": "Now write a query that replaces the word \"Java\" with \"C#\" in the description column.",
@@ -1649,7 +1553,6 @@
       "solution": "select course_no, replace(description, 'Java', 'C#') from courses where description like '%Java%'\norder by course_no;"
     },
     "w3-sa-e18": {
-      "course": "sql",
       "category": "numeric-function",
       "title": "Week 3 · Student Admin · Exercise 18",
       "instructions": "The points for ProjectAdministration (grade_type_code='PA') should be reduced to 20. They must be rounded to the whole. Results are only part of the output.",
@@ -1668,7 +1571,6 @@
       "solution": "select student_id, section_id, grade_type_code, round(numeric_grade/5, 0) numeric_grade_op_20 from grades where grade_type_code = 'PA';"
     },
     "w3-sa-e19": {
-      "course": "sql",
       "category": "date-function",
       "title": "Week 3 · Student Admin · Exercise 19",
       "instructions": "How many months is this academic year already going (obviously you will get a different result depending on the day).",
@@ -1687,7 +1589,6 @@
       "solution": "SELECT date_part('months', AGE(\n                current_date,\n                TO_DATE('01-09-' || TO_CHAR(current_date, 'YYYY'), 'DD-MM-YYYY')\n                          )) \"Months passed AY\";"
     },
     "w3-sa-e20": {
-      "course": "sql",
       "category": "date-function",
       "title": "Week 3 · Student Admin · Exercise 20",
       "instructions": "For sections between 80 and 89 (both incl), determine which day they start. Note the spelling of the dates!",
@@ -1706,7 +1607,6 @@
       "solution": "select section_id, to_char(start_date_time, 'DD/MM/YYYY day') from sections where section_id between 80 and 89;"
     },
     "w3-sa-e21-a": {
-      "course": "sql",
       "category": "date-function",
       "title": "Week 3 · Student Admin · Exercise 21 A",
       "instructions": "Tip: check out the format masks in the 'databases 1' course\n\nList the entries for section 117. Note the way the date is written.",
@@ -1725,7 +1625,6 @@
       "solution": "select student_id, section_id, to_char(enroll_date, 'DD month YYYY') \"enrollment date\" from enrollments where section_id=117;"
     },
     "w3-sa-e21-b": {
-      "course": "sql",
       "category": "date-function",
       "title": "Week 3 · Student Admin · Exercise 21 B",
       "instructions": "Tip: check out the format masks in the 'databases 1' course\n\nAdjust the date from the above query so that you get the following result table:\n\n**Context from Exercise 21A:** Use the same enrollment rows for `section_id = 117`. The previous query formatted `enroll_date` as `DD month YYYY`:\n\n```sql\nSELECT student_id, section_id,\n       TO_CHAR(enroll_date, 'DD month YYYY') AS \"enrollment date\"\nFROM enrollments\nWHERE section_id = 117;\n```",
@@ -1744,7 +1643,6 @@
       "solution": "select student_id, section_id, 'The '||to_char(enroll_date, 'DDth') || ' in the ' || to_char(enroll_date, 'WWth') ||' week of the year '|| to_char(enroll_date, 'YYYY') \"enrollment date\" from enrollments where section_id=117;"
     },
     "w4-enterprise-e01": {
-      "course": "sql",
       "category": "join",
       "title": "Week 4 · Entreprise · Exercise 1",
       "instructions": "Perform the following query. Critically examine the results table. What do you notice?\n\n```sql\nSELECT d.department_id\n,department_name\n,project_id\n,project_name\n   ,location\nFROM DEPARTMENTS d, PROJECTS ;\n```\n\nWhat is the cause of this and how do you fix it?\nRewrite the query and check the result table again",
@@ -1763,7 +1661,6 @@
       "solution": "SELECT d.department_id\n     ,department_name\n     ,project_id\n     ,project_name\n     ,location\nFROM DEPARTMENTS d\n    join PROJECTS p on d.department_id = p.department_id\norder by department_id;"
     },
     "w4-enterprise-e02": {
-      "course": "sql",
       "category": "join",
       "title": "Week 4 · Entreprise · Exercise 2",
       "instructions": "Make a list of all department managers with their employee number, name, salary and the numbers of their assigned parking spaces.",
@@ -1782,7 +1679,6 @@
       "solution": "select d.department_id, d.manager_id, last_name, salary, parking_spot from departments d\njoin employees e on d.manager_id = e.employee_id\norder by department_id;"
     },
     "w4-enterprise-e03": {
-      "course": "sql",
       "category": "join",
       "title": "Week 4 · Entreprise · Exercise 3",
       "instructions": "Management needs a list of the projects and the employees working on those projects. The results table should include:\nname of the project\nlocation of the project\nname of the employee\nDepartment to which the employee is assigned",
@@ -1801,7 +1697,6 @@
       "solution": "select project_name, p.location, concat(first_name, ' ', last_name) full_name, e.department_id from projects p\njoin tasks t on t.project_id = p.project_id\njoin employees e on e.employee_id = t.employee_id\norder by department_id, last_name;"
     },
     "w4-enterprise-e04": {
-      "course": "sql",
       "category": "join",
       "title": "Week 4 · Entreprise · Exercise 4",
       "instructions": "Now limit the results table of the previous query to projects localized in Eindhoven or managed by department Administration.\n\n**Context from the previous query (Exercise 3):** It joined projects to tasks and employees, returning the project name and location, the employee's full name, and the employee's department ID.\n\n```sql\nSELECT project_name, p.location,\n       CONCAT(first_name, ' ', last_name) AS full_name,\n       e.department_id\nFROM projects p\nJOIN tasks t ON t.project_id = p.project_id\nJOIN employees e ON e.employee_id = t.employee_id\nORDER BY department_id, last_name;\n```",
@@ -1820,7 +1715,6 @@
       "solution": "select project_name, p.location, concat(first_name, ' ', last_name) full_name, e.department_id \"Department of Employee\" ,p.department_id \"Department supporting the project\" from projects p\njoin tasks t on t.project_id = p.project_id\njoin employees e on e.employee_id = t.employee_id\norder by p.department_id, last_name;"
     },
     "w4-enterprise-e05": {
-      "course": "sql",
       "category": "join",
       "title": "Week 4 · Entreprise · Exercise 5",
       "instructions": "List employees with their children.\nPlease note the sorting!!!",
@@ -1839,7 +1733,6 @@
       "solution": "select concat(first_name, ' ', last_name) employee_name, f.name name, f.gender gender, to_char(f.birth_date, 'DD-MM-YYYY') \"Date of Birth\"   from employees e\njoin family_members f on f.employee_id = e.employee_id\norder by f.birth_date;"
     },
     "w4-enterprise-e06": {
-      "course": "sql",
       "category": "self-join",
       "title": "Week 4 · Entreprise · Exercise 6",
       "instructions": "Which male employees have a different residence from employee Jochems?",
@@ -1858,7 +1751,6 @@
       "solution": "select e.last_name \"last_name Jochems\", e.location \"city Jochems\", r.last_name, r.location city from employees r\nleft join employees e on e.last_name='Jochems'\nwhere r.gender='M' and e.location != r.location\norder by r.last_name;"
     },
     "w4-enterprise-e07": {
-      "course": "sql",
       "category": "self-join",
       "title": "Week 4 · Entreprise · Exercise 7",
       "instructions": "List employees who have their birth date in the same month. Note the order of the rows.",
@@ -1877,7 +1769,6 @@
       "solution": "select e1.employee_id, e1.last_name, e1.birth_date from employees e1\njoin employees e2 on extract(month from e1.birth_date) = extract(month from e2.birth_date) and e1.employee_id != e2.employee_id\norder by extract(month from e1.birth_date);"
     },
     "w4-enterprise-e08": {
-      "course": "sql",
       "category": "self-join",
       "title": "Week 4 · Entreprise · Exercise 8",
       "instructions": "Which projects are supported by the same department as project 3? Please provide all project data",
@@ -1896,7 +1787,6 @@
       "solution": "select pr.project_id, pr.project_name, pr.location, pr.department_id from projects pr\nleft join projects po on po.project_id = 3\nwhere pr.department_id = po.department_id;"
     },
     "w4-enterprise-e09": {
-      "course": "sql",
       "category": "self-join",
       "title": "Week 4 · Entreprise · Exercise 9",
       "instructions": "A self join with a foreign key that points to a primary table is called recursive because you can apply it multiple times. Show the workers for whom Bordoloi is the boss of their boss",
@@ -1915,7 +1805,6 @@
       "solution": "select e1.last_name, e2.last_name, e3.last_name from employees e1\njoin employees e2 on e2.employee_id = e1.manager_id\njoin employees e3 on e3.employee_id = e2.manager_id\nwhere e3.last_name = 'Bordoloi';"
     },
     "w4-sa-e01": {
-      "course": "sql",
       "category": "join",
       "title": "Week 4 · Student Admin · Exercise 1",
       "instructions": "Provide the last name, city, state and zip code for all students with a zip code less than 03000. Sort by the zip code.\nNote the headings and use the CAST function (look up in slides Week 3)",
@@ -1934,7 +1823,6 @@
       "solution": "select last_name, s.zip, state, city from students s\njoin zipcodes z on s.zip = z.zip\nwhere s.zip::integer < 3000\norder by s.zip;"
     },
     "w4-sa-e02": {
-      "course": "sql",
       "category": "join",
       "title": "Week 4 · Student Admin · Exercise 2",
       "instructions": "Provide the first and last name,student_id and enrollment date of students who registered for courses before February 3, 2021 and sort by last name.",
@@ -1953,7 +1841,6 @@
       "solution": "select distinct first_name, last_name, s.student_id, e.enroll_date from students s\njoin enrollments e on s.student_id = e.student_id\nwhere enroll_date< to_date('2021-02-03', 'YYYY-MM-DD')\norder by last_name;"
     },
     "w4-sa-e03": {
-      "course": "sql",
       "category": "join",
       "title": "Week 4 · Student Admin · Exercise 3",
       "instructions": "Provide the course number, course description, and section number of courses for which sequencing does not apply . Sort by course number and section number",
@@ -1972,7 +1859,6 @@
       "solution": "select c.course_no, description, section_no from courses c\njoin sections s on c.course_no  = s.course_no\nwhere c.prerequisite is null\norder by c.course_no, s.section_no;"
     },
     "w4-sa-e04": {
-      "course": "sql",
       "category": "join",
       "title": "Week 4 · Student Admin · Exercise 4",
       "instructions": "Select the student number, course number, enrollment date and section number for students enrolled in the course ' Intro to Information Systems'",
@@ -1991,7 +1877,6 @@
       "solution": "select s.student_id, c.course_no, to_char(enroll_date, 'MM/DD/YYYY HH:MI AM'), e.section_id from students s\njoin enrollments e on s.student_id = e.student_id\njoin sections se on se.section_id = e.section_id\njoin courses c on c.course_no = se.course_no\nwhere c.description = 'Intro to Information Systems'\norder by s.student_id;"
     },
     "w4-sa-e05": {
-      "course": "sql",
       "category": "join",
       "title": "Week 4 · Student Admin · Exercise 5",
       "instructions": "Select students and teachers who have the same zip code",
@@ -2010,7 +1895,6 @@
       "solution": "select student_id, instructor_id, s.zip \"Student ZIP\", i.zip \"Instructor ZIP\" from students s\njoin instructors i on i.zip = s.zip;"
     },
     "w4-sa-e06": {
-      "course": "sql",
       "category": "join",
       "title": "Week 4 · Student Admin · Exercise 6",
       "instructions": "Show the student number, course number, and section number of students enrolled in a section taught by an instructor living in zip code 10025. Must be for courses with no sequencing.",
@@ -2029,7 +1913,6 @@
       "solution": "select c.course_no, se.section_id, s.student_id from students s\njoin enrollments e on s.student_id = e.student_id\njoin sections se on se.section_id = e.section_id\njoin courses c on c.course_no = se.course_no\njoin instructors i on se.instructor_id = i.instructor_id\nwhere i.zip = '10025' and c.prerequisite is null\norder by s.student_id;"
     },
     "w4-sa-e07": {
-      "course": "sql",
       "category": "join",
       "title": "Week 4 · Student Admin · Exercise 7",
       "instructions": "Create a mailing list of teachers who have taught sections with start dates in April 2021.",
@@ -2048,7 +1931,6 @@
       "solution": "select concat(first_name, ' ', last_name) name, street_address, zip city_state_zip, s.start_date_time, section_id section from instructors i\njoin sections s on i.instructor_id = s.instructor_id\nwhere to_char(s.start_date_time, 'YYYY-MM') = '2021-04'\norder by name, s.start_date_time;"
     },
     "w4-sa-e08": {
-      "course": "sql",
       "category": "join",
       "title": "Week 4 · Student Admin · Exercise 8",
       "instructions": "List enrolled students (student number) living in Connecticut (state = 'CT').",
@@ -2067,7 +1949,6 @@
       "solution": "select student_id, first_name, last_name from students s\nleft join zipcodes z on z.zip = s.zip\nwhere z.state = 'CT';"
     },
     "w4-sa-e09": {
-      "course": "sql",
       "category": "join",
       "title": "Week 4 · Student Admin · Exercise 9",
       "instructions": "Show all points earned by student Daniel Wicelinski for section_id 87.",
@@ -2086,7 +1967,6 @@
       "solution": "select concat(first_name, ' ', last_name) name, section_id, concat(grade_type_code, ' ', grade_code_occurrence) evaluation_type, numeric_grade grade from students s\njoin grades g on s.student_id = g.student_id\nwhere section_id=87 and concat(first_name, ' ', last_name) = 'Daniel Wicelinski';"
     },
     "w4-sa-e10": {
-      "course": "sql",
       "category": "join",
       "title": "Week 4 · Student Admin · Exercise 10",
       "instructions": "For all students enrolled in course_no 420, please provide the numeric grade and the letter grade they obtained for their final examinations (grade_type_code=FI).",
@@ -2105,7 +1985,6 @@
       "solution": "select g.student_id, first_name, last_name, se.course_no, numeric_grade, letter_grade, g.section_id from students s\njoin grades g on s.student_id = g.student_id\njoin sections se on se.section_id = g.section_id\nleft join grade_conversions on numeric_grade <= max_grade and numeric_grade>=min_grade\nwhere course_no = 420 and grade_type_code='FI';"
     },
     "w4-sa-e11": {
-      "course": "sql",
       "category": "join",
       "title": "Week 4 · Student Admin · Exercise 11",
       "instructions": "Display the student number, last name, section_id,percent_of_final_grade, grade_type_code, and numeric_grade for students who received 80 or less for their class project (grade_type_code = 'PJ').\nSort the results by the student's last name..",
@@ -2124,7 +2003,6 @@
       "solution": "select distinct g.student_id, first_name, last_name, g.section_id, percent_of_final_grade pct, g.grade_type_code, numeric_grade grade from students s\njoin grades g on s.student_id = g.student_id\njoin grade_type_weights gw on gw.grade_type_code = g.grade_type_code\nwhere g.grade_type_code='PJ' and numeric_grade<=80\norder by numeric_grade desc;"
     },
     "w4-sa-e12": {
-      "course": "sql",
       "category": "join",
       "title": "Week 4 · Student Admin · Exercise 12",
       "instructions": "Select course description, section number and location for sections continuing at location L211. Sort by course description",
@@ -2143,7 +2021,6 @@
       "solution": "select lower(description), section_no, se.location, se.capacity from courses c\njoin sections se on se.course_no = c.course_no\nwhere se.location = 'L211'\norder by description desc;"
     },
     "w4-sa-e13": {
-      "course": "sql",
       "category": "join",
       "title": "Week 4 · Student Admin · Exercise 13",
       "instructions": "Display the course description(s), section number(s), start date(s) and time(s) of the courses for which Joseph German has enrolled.",
@@ -2162,7 +2039,6 @@
       "solution": "select description, section_no, start_date_time from students s\njoin enrollments e on e.student_id = s.student_id\njoin sections se on se.section_id = e.section_id\njoin courses c on c.course_no = se.course_no\nwhere concat(first_name, ' ', last_name) = 'Joseph German';"
     },
     "w4-sa-e14": {
-      "course": "sql",
       "category": "join",
       "title": "Week 4 · Student Admin · Exercise 14",
       "instructions": "List courses for which class participation grade_type_code=PA) accounts for at least 25% of total points Sort the result by course_no",
@@ -2181,7 +2057,6 @@
       "solution": "select c.course_no, description, s.section_id from courses c\njoin sections s on c.course_no = s.course_no\njoin grade_type_weights gw on s.section_id = gw.section_id\nwhere gw.grade_type_code = 'PA' and percent_of_final_grade>=25\norder by s.section_id;"
     },
     "w4-sa-e15": {
-      "course": "sql",
       "category": "join",
       "title": "Week 4 · Student Admin · Exercise 15",
       "instructions": "Display first and last names and numeric_grade for students who earned 99 or more points on the class project (grade_type_code='PJ').",
@@ -2200,7 +2075,6 @@
       "solution": "select first_name, last_name, numeric_grade from students s\njoin enrollments e on e.student_id = s.student_id\njoin grades g on e.section_id = g.section_id\nwhere numeric_grade>=99 and grade_type_code='PJ';"
     },
     "w4-sa-e16": {
-      "course": "sql",
       "category": "join",
       "title": "Week 4 · Student Admin · Exercise 16",
       "instructions": "For students with zip code 10956, select the numeric grades they achieved on quizzes.",
@@ -2219,7 +2093,6 @@
       "solution": "select e.student_id, last_name, first_name, e.section_id, concat(grade_type_code, ' ', grade_code_occurrence) quiz, numeric_grade from students s\njoin enrollments e on e.student_id = s.student_id\njoin grades g on g.section_id = e.section_id\nwhere zip='10956' and grade_type_code='QZ';"
     },
     "w4-sa-e17": {
-      "course": "sql",
       "category": "join",
       "title": "Week 4 · Student Admin · Exercise 17",
       "instructions": "List course numbers, section numbers with first and last names of instructors for courses that have course number 20 as prerequisite.",
@@ -2238,7 +2111,6 @@
       "solution": "select c.course_no, section_no, first_name, last_name from courses c\njoin sections s on c.course_no = s.course_no\njoin instructors i on i.instructor_id = s.instructor_id\nwhere prerequisite = 20\norder by course_no, section_no;"
     },
     "w4-sa-e18": {
-      "course": "sql",
       "category": "join",
       "title": "Compare two student/instructor joins",
       "instructions": "What is the difference between the two supplied SELECT statements that compare student and instructor ZIP codes?\n\n**SQL context:** The two statements compare these two join paths. Query 1 matches students and instructors directly on ZIP code. Query 2 follows a student's enrollment to the section and its instructor, then compares the ZIP codes. The source package preserves the join paths but not the original SELECT lists.\n\n**Query 1 — direct ZIP-code match:**\n```sql\nFROM students s\nJOIN instructors i ON i.zip = s.zip\n```\n\n**Query 2 — instructor of an enrolled section:**\n```sql\nFROM students s\nJOIN enrollments en ON en.student_id = s.student_id\nJOIN sections sec ON sec.section_id = en.section_id\nJOIN instructors i ON i.instructor_id = sec.instructor_id\nWHERE i.zip = s.zip\n```",
@@ -2253,13 +2125,10 @@
         "The second query compares ZIP codes without joining the student table"
       ],
       "explanation": "The supplied solution describes the first query as matching on ZIP code alone. The second follows the student’s enrollment to a section and its instructor before checking the ZIP codes.",
-      "checks": [
-        0
-      ],
+      "checks": [0],
       "hints": []
     },
     "w4-sa-e19": {
-      "course": "sql",
       "category": "join",
       "title": "Week 4 · Student Admin · Exercise 19",
       "instructions": "For courses with prerequisites, provide the description of the course and the description of the course(s) that are prerequisite",
@@ -2278,7 +2147,6 @@
       "solution": "select c.course_no course, c.description, c.prerequisite, c2.description \"description prerequisite\" from courses c\njoin courses c2 on c.prerequisite = c2.course_no\nwhere c.prerequisite is not null\norder by c.course_no;"
     },
     "w4-sa-e20": {
-      "course": "sql",
       "category": "join",
       "title": "Week 4 · Student Admin · Exercise 20",
       "instructions": "Display the student number, last name and address of students who have the same address and zip code. Sort by address",
@@ -2297,7 +2165,6 @@
       "solution": "select distinct s.student_id, s.last_name, s.street_address from students s\njoin students s2 on s.street_address = s2.street_address and s.zip = s2.zip and s.student_id != s2.student_id\norder by  s.street_address;"
     },
     "w4-sa-e21": {
-      "course": "sql",
       "category": "join",
       "title": "Week 4 · Student Admin · Exercise 21",
       "instructions": "Provide a list of instructors who live in the same municipality (who have the same zip code)",
@@ -2316,7 +2183,6 @@
       "solution": "select distinct i.first_name, i.last_name, i.zip from instructors i\njoin instructors i2 on i.zip = i2.zip and i.instructor_id != i2.instructor_id\norder by zip, first_name;"
     },
     "w4-sa-e22": {
-      "course": "sql",
       "category": "join",
       "title": "Week 4 · Student Admin · Exercise 22",
       "instructions": "Are any classrooms overbooked (i.e. determine if any sections are programmed at the same time and location)?",
@@ -2335,7 +2201,6 @@
       "solution": "select distinct s.section_id, to_char(s.start_date_time, 'DD-MON-YYYY HH24:MI') starttijd, s.location from sections s\njoin sections s2 on s.start_date_time = s2.start_date_time and s.location = s2.location and s.section_id != s2.section_id\norder by starttijd;"
     },
     "w4-sa-e23": {
-      "course": "sql",
       "category": "join",
       "title": "Week 4 · Student Admin · Exercise 23",
       "instructions": "Which students scored lower on their final exam (FI) for section 95 (=section_id) than student Maria Martin?",
@@ -2354,7 +2219,6 @@
       "solution": "select distinct s.student_id, s.last_name, s.first_name from students s\njoin students maria on concat(maria.first_name, ' ', maria.last_name) = 'Maria Martin'\njoin grades g on g.student_id = s.student_id and g.section_id = 95 and g.grade_type_code='FI'\njoin grades marig on maria.student_id = marig.student_id and marig.section_id =95 and marig.grade_type_code = 'FI'\nwhere marig.numeric_grade>g.numeric_grade\norder by student_id desc;"
     },
     "w4-sa-e24": {
-      "course": "sql",
       "category": "join",
       "title": "Week 4 · Student Admin · Exercise 24",
       "instructions": "For section_id=99, determine which students received a lower grade on their final exam (FI) than on their midterm exam (MT). Display the student_id and the grades for their midterm and final exam.",
@@ -2373,7 +2237,6 @@
       "solution": "select s.student_id, mt.numeric_grade \"Midterm Grade\", fi.numeric_grade \"Final Grade\" from students s\njoin grades mt on s.student_id = mt.student_id and mt.grade_type_code = 'MT' and mt.grade_code_occurrence=1\njoin grades fi on s.student_id = fi.student_id and fi.grade_type_code = 'FI' and fi.grade_code_occurrence=1\nwhere fi.numeric_grade<mt.numeric_grade and fi.section_id=99 and mt.section_id=99;"
     },
     "w5-enterprise-big-e01": {
-      "course": "sql",
       "category": "aggregate",
       "title": "Understand aggregate query errors",
       "instructions": "The exercise asks you to explain the errors in two statements: an aggregate condition in WHERE, and a SELECT that combines employee_id with SUM(hours) without grouping. Which explanation matches the supplied solution?\n\n**SQL context:** The original statements are not preserved in full. The recorded problem patterns are:\n\n1. One statement places an aggregate condition in its `WHERE` clause (`WHERE` with an aggregate such as `SUM(...)`).\n2. The other selects `employee_id` together with `SUM(hours)` but has no `GROUP BY` clause:\n\n```sql\nSELECT employee_id, SUM(hours)\nFROM tasks;\n```",
@@ -2388,13 +2251,10 @@
         "The table names should be singular"
       ],
       "explanation": "The supplied solution identifies both issues: aggregate functions are not allowed in WHERE, and a non-aggregated selected column must be grouped.",
-      "checks": [
-        0
-      ],
+      "checks": [0],
       "hints": []
     },
     "w5-enterprise-big-e02": {
-      "course": "sql",
       "category": "aggregate",
       "title": "Compare COUNT(column) and SUM(column)",
       "instructions": "The exercise compares the hours rows for employee 999444444 with COUNT(hours) and SUM(hours). What is the correct conclusion?",
@@ -2409,13 +2269,10 @@
         "SUM(hours) returns the largest hours value"
       ],
       "explanation": "The supplied solution says COUNT(hours) counts rows where hours is not NULL, while SUM(hours) adds the available hours values.",
-      "checks": [
-        0
-      ],
+      "checks": [0],
       "hints": []
     },
     "w5-enterprise-big-e03": {
-      "course": "sql",
       "category": "aggregate",
       "title": "SUM versus COUNT",
       "instructions": "What is the difference between `SELECT SUM(salary) FROM employees` and `SELECT COUNT(salary) FROM employees`?",
@@ -2430,13 +2287,10 @@
         "COUNT includes NULL salary values while SUM excludes all employees"
       ],
       "explanation": "The supplied solution describes SUM as adding salary values and COUNT(salary) as counting rows with a known (non-NULL) salary.",
-      "checks": [
-        0
-      ],
+      "checks": [0],
       "hints": []
     },
     "w5-enterprise-big-e04": {
-      "course": "sql",
       "category": "aggregate",
       "title": "Compare COUNT(*) and COUNT(hours)",
       "instructions": "Why can `COUNT(*)` and `COUNT(hours)` return different results for the tasks table?",
@@ -2451,13 +2305,10 @@
         "The functions count different tables"
       ],
       "explanation": "COUNT(*) counts rows regardless of column values. COUNT(hours) counts only rows where hours is not NULL.",
-      "checks": [
-        0
-      ],
+      "checks": [0],
       "hints": []
     },
     "w5-enterprise-big-e05": {
-      "course": "sql",
       "category": "aggregate",
       "title": "Week 5 · Entreprise BIG · Exercise 5",
       "instructions": "Return the number of projects that staff are currently working on.",
@@ -2476,7 +2327,6 @@
       "solution": "select count(department_id) count_projects\nfrom projects;"
     },
     "w5-enterprise-big-e06": {
-      "course": "sql",
       "category": "aggregate",
       "title": "Week 5 · Entreprise BIG · Exercise 6",
       "instructions": "How many hours were spent on average on project 30?",
@@ -2495,7 +2345,6 @@
       "solution": "select round(avg(hours)) number_of_hours\nfrom tasks\nwhere project_id = 30;"
     },
     "w5-enterprise-big-e07": {
-      "course": "sql",
       "category": "aggregate",
       "title": "Week 5 · Entreprise BIG · Exercise 7",
       "instructions": "How many staff members have children?",
@@ -2514,7 +2363,6 @@
       "solution": "select count(distinct employee_id) employees_with_kids\nfrom family_members;"
     },
     "w5-enterprise-big-e08": {
-      "course": "sql",
       "category": "aggregate",
       "title": "Week 5 · Entreprise BIG · Exercise 8",
       "instructions": "What is the highest number of hours spent on Project 20?",
@@ -2533,7 +2381,6 @@
       "solution": "select max(hours) \"highest amount hours\"\nfrom tasks\nwhere project_id = 20;"
     },
     "w5-enterprise-big-e09": {
-      "course": "sql",
       "category": "aggregate",
       "title": "Week 5 · Entreprise BIG · Exercise 9",
       "instructions": "What is the date of birth of employee 999111111’s youngest child?",
@@ -2552,7 +2399,6 @@
       "solution": "select max(birth_date) as youngest_child\nfrom family_members\nwhere  employee_id='999111111' and lower(relationship) in ('daughter', 'son');"
     },
     "w5-enterprise-big-e10": {
-      "course": "sql",
       "category": "aggregate",
       "title": "Week 5 · Entreprise BIG · Exercise 10",
       "instructions": "What is the average length of employees’ surnames?",
@@ -2571,7 +2417,6 @@
       "solution": "select round(avg(length(last_name)))\nfrom employees;"
     },
     "w5-enterprise-big-e11": {
-      "course": "sql",
       "category": "aggregate",
       "title": "Week 5 · Entreprise BIG · Exercise 11",
       "instructions": "For each project, give the number of staff working on that project.",
@@ -2590,7 +2435,6 @@
       "solution": "select project_id, count(employee_id) as number_of_employees\nfrom tasks\ngroup by project_id\norder by project_id;"
     },
     "w5-enterprise-big-e12": {
-      "course": "sql",
       "category": "aggregate",
       "title": "Week 5 · Entreprise BIG · Exercise 12",
       "instructions": "For each department, state the number of staff who come from the province of Limburg (LI).",
@@ -2609,7 +2453,6 @@
       "solution": "select department_id, count(employee_id) number_employees\nfrom employees\nwhere lower(province) = 'li'\ngroup by department_id;"
     },
     "w5-enterprise-big-e13": {
-      "course": "sql",
       "category": "aggregate",
       "title": "Week 5 · Entreprise BIG · Exercise 13",
       "instructions": "State the number of subordinates for each manager.",
@@ -2628,7 +2471,6 @@
       "solution": "select manager_id, count(employee_id)\nfrom employees\nwhere manager_id is not null\ngroup by manager_id;"
     },
     "w5-enterprise-big-e14": {
-      "course": "sql",
       "category": "aggregate",
       "title": "Week 5 · Entreprise BIG · Exercise 14",
       "instructions": "How many projects does a department support per location?",
@@ -2647,7 +2489,6 @@
       "solution": "select p.department_id, p.location, count(project_id)\nfrom projects p\ngroup by p.department_id, p.location\norder by p.department_id;"
     },
     "w5-enterprise-big-e15": {
-      "course": "sql",
       "category": "aggregate",
       "title": "Choose WHERE or HAVING",
       "instructions": "The task asks for the average salary per department, considering only employees earning more than 30,000. Which supplied query is correct?\n\n**SQL context:** Compare the condition placement for this task (average salary by department, using only employees whose salary is above 30,000):\n\n- **Query A:** applies the row condition `salary > 30000` in `WHERE`, before `GROUP BY department_id`.\n- **Query B:** attempts to place the aggregate condition `AVG(salary) > 30000` in `WHERE`.\n\nThe source package does not retain the complete SELECT lists for the two supplied queries.",
@@ -2662,13 +2503,10 @@
         "Neither query can use AVG"
       ],
       "explanation": "The supplied solution selects Query A because WHERE filters individual employees before grouping. HAVING is used for conditions on aggregated groups.",
-      "checks": [
-        0
-      ],
+      "checks": [0],
       "hints": []
     },
     "w5-enterprise-big-e16-q1": {
-      "course": "sql",
       "category": "aggregate",
       "title": "Identify row-level filtering",
       "instructions": "In Exercise 16, which query filters out individual employees before the groups are calculated?\n\n```sql \n-- Query A \nSELECT department_id, AVG(salary) \nFROM employees \nWHERE salary > 30000 \nGROUP BY department_id; \n-- Query B \nSELECT department_id, AVG(salary) \nFROM employees \nGROUP BY department_id \nWHERE AVG(salary) > 30000; \n```",
@@ -2683,13 +2521,10 @@
         "Neither query filters rows or groups"
       ],
       "explanation": "The supplied solution identifies Query A. WHERE filters individual rows before GROUP BY.",
-      "checks": [
-        0
-      ],
+      "checks": [0],
       "hints": []
     },
     "w5-enterprise-big-e16-q2": {
-      "course": "sql",
       "category": "aggregate",
       "title": "Identify group-level filtering",
       "instructions": "In Exercise 16, which query filters entire groups after aggregation?\n\n```sql \n-- Query A \nSELECT department_id, AVG(salary) \nFROM employees \nWHERE salary > 30000 \nGROUP BY department_id; \n-- Query B \nSELECT department_id, AVG(salary) \nFROM employees \nGROUP BY department_id \nWHERE AVG(salary) > 30000; \n```",
@@ -2704,13 +2539,10 @@
         "Neither query filters groups"
       ],
       "explanation": "The supplied solution identifies Query B. HAVING filters groups after the COUNT aggregate has been calculated.",
-      "checks": [
-        1
-      ],
+      "checks": [1],
       "hints": []
     },
     "w5-enterprise-big-e17": {
-      "course": "sql",
       "category": "aggregate",
       "title": "Week 5 · Entreprise BIG · Exercise 17",
       "instructions": "Give the average salary of female employees per department, but only show departments where the average salary of those female employees is higher than 30,000.\nThe desired structure is as follows:\n\n```sql\nSELECT department_id, AVG(salary)\nFROM employees\nWHERE ...\nGROUP BY ...\nHAVING ...;\n```\n\nWhat would change if you tried to include gender = 'F' in the HAVING clause?",
@@ -2729,7 +2561,6 @@
       "solution": "select department_id, avg(salary)\nfrom employees\nwhere lower(gender) = 'f'\ngroup by department_id\nhaving avg(salary)> 30000;"
     },
     "w5-enterprise-big-e18": {
-      "course": "sql",
       "category": "aggregate",
       "title": "Week 5 · Entreprise BIG · Exercise 18",
       "instructions": "Show how many sons and how many daughters an employee has\nBut only for those employees who have more than one child of the same sex. Solve this in a single statement.",
@@ -2748,7 +2579,6 @@
       "solution": "select employee_id, relationship, count(name)\nfrom family_members\nwhere lower(relationship) in ('son', 'daughter')\ngroup by employee_id, relationship\nhaving count(name) >1\norder by employee_id;"
     },
     "w5-enterprise-big-e19": {
-      "course": "sql",
       "category": "aggregate",
       "title": "Week 5 · Entreprise BIG · Exercise 19",
       "instructions": "For each department, state the number of female employees who earn less than 33,000 and have a parking space.",
@@ -2767,7 +2597,6 @@
       "solution": "select department_id, count(employee_id) aantal\nfrom employees\nwhere lower(gender) = 'f' and salary< 33000 and parking_spot>0\ngroup by department_id;"
     },
     "w5-enterprise-big-e20": {
-      "course": "sql",
       "category": "aggregate",
       "title": "Week 5 · Entreprise BIG · Exercise 20",
       "instructions": "For each employee, state the number of PROJECTS on which they are or have been working. Note the resulting table.",
@@ -2786,7 +2615,6 @@
       "solution": "select e.first_name, e.last_name, count(project_id) \"number of PROJECTS\"\nfrom tasks t\njoin employees e on e.employee_id = t.employee_id\ngroup by e.employee_id, e.first_name\norder by e.first_name;"
     },
     "w5-enterprise-big-e21": {
-      "course": "sql",
       "category": "aggregate",
       "title": "Week 5 · Entreprise BIG · Exercise 21",
       "instructions": "For employees with grandchildren, state the number of grandchildren. Pay close attention to the RT.",
@@ -2805,7 +2633,6 @@
       "solution": "select concat(e.first_name, ' ', e.infix, ' ', e.last_name) employee_name, count(relationship) \"number of grandchildren\"\nfrom family_members f\njoin employees e on e.employee_id = f.employee_id\nwhere lower(relationship)='grandchild'\ngroup by e.employee_id, e.first_name\norder by e.first_name;"
     },
     "w5-enterprise-big-e22": {
-      "course": "sql",
       "category": "aggregate",
       "title": "Filter rows before grouping",
       "instructions": "Which of the two supplied queries does the exercise solution say performs best, and why?\n\n**SQL context:** The source compares two versions of a grouped query. One version applies a row filter in `WHERE` before `GROUP BY`; the other applies a condition in `HAVING` after grouping. The full query text and exact filter expressions are not retained in the package.",
@@ -2820,13 +2647,10 @@
         "Both are guaranteed to have identical performance on every database"
       ],
       "explanation": "The supplied solution chooses Solution 1: it filters rows in WHERE before the grouping step, leaving fewer rows to group.",
-      "checks": [
-        0
-      ],
+      "checks": [0],
       "hints": []
     },
     "w5-enterprise-big-e23-1": {
-      "course": "sql",
       "category": "outer-join",
       "title": "Choose an INNER JOIN",
       "instructions": "Which join type shows only employees who are linked to an existing department?",
@@ -2841,13 +2665,10 @@
         "FULL OUTER JOIN"
       ],
       "explanation": "The supplied solution uses an INNER JOIN, retaining only employees with a matching department.",
-      "checks": [
-        0
-      ],
+      "checks": [0],
       "hints": []
     },
     "w5-enterprise-big-e23-2": {
-      "course": "sql",
       "category": "outer-join",
       "title": "Preserve all employees",
       "instructions": "Which join type shows all employees, including employees without a department, when employees is the left table?",
@@ -2862,13 +2683,10 @@
         "CROSS JOIN"
       ],
       "explanation": "The supplied solution uses LEFT JOIN from employees to departments, which preserves every employee row.",
-      "checks": [
-        1
-      ],
+      "checks": [1],
       "hints": []
     },
     "w5-enterprise-big-e23-3": {
-      "course": "sql",
       "category": "outer-join",
       "title": "Preserve all departments",
       "instructions": "Which join type shows all departments, including departments without employees, when employees is the left table?",
@@ -2883,13 +2701,10 @@
         "CROSS JOIN"
       ],
       "explanation": "The supplied solution uses RIGHT JOIN from employees to departments, preserving every department row on the right.",
-      "checks": [
-        2
-      ],
+      "checks": [2],
       "hints": []
     },
     "w5-enterprise-big-e23-4": {
-      "course": "sql",
       "category": "outer-join",
       "title": "Preserve both tables",
       "instructions": "Which join type shows all employees and all departments, including unmatched rows on either side?",
@@ -2904,13 +2719,10 @@
         "FULL OUTER JOIN"
       ],
       "explanation": "The supplied solution uses FULL JOIN, retaining matched rows and unmatched rows from both tables.",
-      "checks": [
-        3
-      ],
+      "checks": [3],
       "hints": []
     },
     "w5-enterprise-big-e24": {
-      "course": "sql",
       "category": "outer-join",
       "title": "Find the NULL-extended side of a LEFT JOIN",
       "instructions": "According to the supplied solution, which table provides the temporary NULL row when a Research department has no corresponding employee in the LEFT JOIN?\n\n**SQL context:** Consider a query that preserves every department and looks for matching employees, including the Research department when no employee matches it:\n\n```sql\nSELECT ...\nFROM departments d\nLEFT JOIN employees e ON e.department_id = d.department_id\nWHERE d.department_name = 'Research';\n```",
@@ -2925,13 +2737,10 @@
         "Neither table; NULL is added to the departments table"
       ],
       "explanation": "The supplied solution says the NULL-extended row comes from employees because there is no corresponding employee. The same solution block also states `null null` for the two displayed values; that value note should be reviewed against the query output.",
-      "checks": [
-        1
-      ],
+      "checks": [1],
       "hints": []
     },
     "w5-enterprise-big-e25-1": {
-      "course": "sql",
       "category": "outer-join",
       "title": "Check whether hours IS NULL is a safe anti-join test",
       "instructions": "The proposed query filters with `WHERE t.hours IS NULL` to find employees who are not working on any projects. Is this test always safe?\n\n**SQL context:** The proposed anti-join pattern is:\n\n```sql\nSELECT ...\nFROM employees e\nLEFT JOIN tasks t ON t.employee_id = e.employee_id\nWHERE t.hours IS NULL;\n```\n\nA row in `tasks` can have a NULL value in `hours`; the test is intended to distinguish that case from an employee with no matching task row.",
@@ -2946,13 +2755,10 @@
         "No; LEFT JOIN cannot be used with a WHERE clause"
       ],
       "explanation": "The supplied solution says this is not always safe because a task record may exist with hours set to NULL.",
-      "checks": [
-        0
-      ],
+      "checks": [0],
       "hints": []
     },
     "w5-enterprise-big-e25-2": {
-      "course": "sql",
       "category": "outer-join",
       "title": "Check the NULL property of hours",
       "instructions": "Before using `t.hours IS NULL` to determine whether a task row exists, what must you know?\n\n**SQL context:** This question concerns the same LEFT JOIN test:\n\n```sql\nFROM employees e\nLEFT JOIN tasks t ON t.employee_id = e.employee_id\nWHERE t.hours IS NULL;\n```\n\nThe join matches rows using `employee_id`; the condition being assessed checks `hours`.",
@@ -2967,13 +2773,10 @@
         "Whether hours is sorted in ascending order"
       ],
       "explanation": "The supplied solution says you need to know whether hours can be NULL. If it can, NULL hours do not prove that no task row exists.",
-      "checks": [
-        0
-      ],
+      "checks": [0],
       "hints": []
     },
     "w5-enterprise-big-e25-3": {
-      "course": "sql",
       "category": "outer-join",
       "title": "Choose a reliable task-row test",
       "instructions": "Which attribute does the supplied solution prefer for establishing that no matching tasks row exists?\n\n**SQL context:** This question concerns the same LEFT JOIN from `employees` to `tasks`, matched on `employee_id`, with the proposed no-match test `t.hours IS NULL`. The attribute used to test for an unmatched task row must be considered in light of the join key and the columns that can contain NULL values.",
@@ -2988,13 +2791,10 @@
         "e.last_name IS NULL"
       ],
       "explanation": "The supplied solution recommends t.employee_id IS NULL because employee_id is the join key and is non-NULL in an existing tasks row.",
-      "checks": [
-        1
-      ],
+      "checks": [1],
       "hints": []
     },
     "w5-enterprise-big-e26": {
-      "course": "sql",
       "category": "outer-join",
       "title": "Identify the incorrect NULL statement",
       "instructions": "Given that employee_id is a primary key, last_name is NOT NULL, and parking_spot may be NULL, which statement is incorrect?",
@@ -3009,13 +2809,10 @@
         "A primary key automatically has a NOT NULL property"
       ],
       "explanation": "The supplied solution marks statement 3 as false: parking_spot is allowed to be NULL in the real employees table, so a NULL there does not by itself prove an OUTER JOIN created the result row.",
-      "checks": [
-        2
-      ],
+      "checks": [2],
       "hints": []
     },
     "w5-enterprise-big-e27": {
-      "course": "sql",
       "category": "outer-join",
       "title": "Week 5 · Entreprise BIG · Exercise 27",
       "instructions": "List all employees aged between 30 and 35, along with the projects they are working on.",
@@ -3034,7 +2831,6 @@
       "solution": "select e.last_name, e.first_name, age(e.birth_date), t.project_id\nfrom employees e\nleft join tasks t on e.employee_id = t.employee_id\nwhere extract('years' from age(e.birth_date)) between 30 and 35 \norder by e.last_name;"
     },
     "w5-enterprise-big-e28": {
-      "course": "sql",
       "category": "outer-join",
       "title": "Week 5 · Entreprise BIG · Exercise 28",
       "instructions": "List the employees who have not yet been assigned to any project. We want the first name and surname of these employees in the results table.",
@@ -3053,7 +2849,6 @@
       "solution": "select last_name, first_name\nfrom employees e\nleft join tasks t on t.employee_id = e.employee_id\nwhere t.project_id is null;"
     },
     "w5-enterprise-big-e29": {
-      "course": "sql",
       "category": "outer-join",
       "title": "Week 5 · Entreprise BIG · Exercise 29",
       "instructions": "For each employee aged between 30 and 35, state the number of projects they have worked on. Take a critical look at your results table!",
@@ -3072,7 +2867,6 @@
       "solution": "select e.last_name, e.first_name, count(t.project_id)\nfrom employees e\nleft join tasks t on e.employee_id = t.employee_id\nwhere extract('years' from age(e.birth_date)) between 30 and 35 \ngroup by e.employee_id, e.last_name\norder by e.last_name;"
     },
     "w5-enterprise-big-e30": {
-      "course": "sql",
       "category": "outer-join",
       "title": "Week 5 · Entreprise BIG · Exercise 30",
       "instructions": "List all departments and the projects they support (if any).\nThe results table should include: department name, project name and project location.",
@@ -3091,7 +2885,6 @@
       "solution": "select d.department_name, p.project_name, p.location\nfrom departments d\nleft join projects p on p.department_id = d.department_id;"
     },
     "w5-enterprise-big-e31-a": {
-      "course": "sql",
       "category": "outer-join",
       "title": "Week 5 · Entreprise BIG · Exercise 31 A",
       "instructions": "List all employees whose surname begins with the letter ‘G’ or ‘J’ and also state the name of the department in which they work. Also provide the names of their family members.",
@@ -3110,7 +2903,6 @@
       "solution": "select e.employee_id, e.last_name, d.department_name, f.name family_member\nfrom employees e\nleft join departments d on e.department_id = d.department_id\nleft join family_members f on f.employee_id = e.employee_id\nwhere lower(substr(e.last_name, 1, 1)) in ('g', 'j')\norder by e.last_name;"
     },
     "w5-enterprise-big-e31-b": {
-      "course": "sql",
       "category": "outer-join",
       "title": "Week 5 · Entreprise BIG · Exercise 31 B",
       "instructions": "Suppose that each employee is always assigned to a department. (Let’s assume for the moment that there is a NOT NULL constraint on the `department_id` column in the `employees` table).\nHow can we then adapt the previous solution?\n\n**Context from Exercise 31A, previous solution:** The earlier query listed employees whose surnames begin with G or J, along with their department and family-member names. It used LEFT JOIN for both relationships:\n\n```sql\nSELECT e.employee_id, e.last_name, d.department_name, f.name AS family_member\nFROM employees e\nLEFT JOIN departments d ON e.department_id = d.department_id\nLEFT JOIN family_members f ON f.employee_id = e.employee_id\nWHERE LOWER(SUBSTR(e.last_name, 1, 1)) IN ('g', 'j')\nORDER BY e.last_name;\n```",
@@ -3129,7 +2921,6 @@
       "solution": "select e.employee_id, e.last_name, d.department_name, f.name family_member\nfrom employees e\njoin departments d on e.department_id = d.department_id\nleft join family_members f on f.employee_id = e.employee_id\nwhere lower(substr(e.last_name, 1, 1)) in ('g', 'j')\norder by e.last_name;"
     },
     "w5-enterprise-big-e32": {
-      "course": "sql",
       "category": "outer-join",
       "title": "Week 5 · Entreprise BIG · Exercise 32",
       "instructions": "List all employees whose first name begins with the letter B, D, G, L or M, along with the projects they are working on.\nIn the results table, we want the surname, first name, project name and the number of hours that employee worked on that project. Note the order.",
@@ -3148,7 +2939,6 @@
       "solution": "select e.last_name, e.first_name, p.project_name, t.hours\nfrom employees e\nleft join tasks t on e.employee_id = t.employee_id\nleft join projects p on t.project_id = p.project_id\nwhere lower(substr(e.first_name, 1,1)) in ('b','d','g','l','m')\norder by p.project_name;"
     },
     "w5-enterprise-big-e33": {
-      "course": "sql",
       "category": "outer-join",
       "title": "Week 5 · Entreprise BIG · Exercise 33",
       "instructions": "List all employees who are not managers of any other employee.",
@@ -3167,7 +2957,6 @@
       "solution": "select e.employee_id, e.last_name\nfrom employees e\nleft join employees e2 on e2.manager_id = e.employee_id\nwhere e2.manager_id is null\norder by e.employee_id;"
     },
     "w5-enterprise-big-e34": {
-      "course": "sql",
       "category": "outer-join",
       "title": "Week 5 · Entreprise BIG · Exercise 34",
       "instructions": "List all employees who are not the manager of another employee or who do not have a manager. Tip: Think carefully first about what type of join you need.",
@@ -3186,7 +2975,6 @@
       "solution": "select e.employee_id, e.last_name\nfrom employees e\n         left join employees e2 on e2.manager_id = e.employee_id\nwhere e2.manager_id is null\norder by e.last_name;"
     },
     "w5-enterprise-combo": {
-      "course": "sql",
       "category": "aggregate-join",
       "title": "Week 5 · Entreprise · Combo exercise",
       "instructions": "List the projects, for which the total hours worked is more than 30, and display\nhow many employees worked (ie. performed tasks) on this project\nand the project name\nand the name of the department that supports this project\nSort by project name.\nMake sure the you get exactly the output as shown below.\n(e.g. 3 columns, aliases, constants and concatenations)\n\n```\n+-----------+-------------------------------------+------------------------------------------+\n|#employees |project                              |department                                |\n+-----------+-------------------------------------+------------------------------------------+\n|3 employees|perform tasks on Debtors             |which is supported by dept. Administration|\n|3 employees|perform tasks on Inventory           |which is supported by dept. Administration|\n|3 employees|perform tasks on Ordermanagement     |which is supported by dept. Production    |\n|3 employees|perform tasks on Salaryadministration|which is supported by dept. Production    |\n|2 employees|perform tasks on Warehouse           |which is supported by dept. Production    |\n+-----------+-------------------------------------+------------------------------------------+\n```",
@@ -3205,7 +2993,6 @@
       "solution": "select concat(count(e.employee_id), ' employees'), concat('perform tasks on ', p.project_name) project, concat('which is supported by dept. ', d.department_name)\nfrom tasks t\nleft join employees e on e.employee_id = t.employee_id\njoin projects p on p.project_id = t.project_id\njoin departments d on p.department_id = d.department_id\ngroup by t.project_id, p.project_name, d.department_name\nhaving sum(t.hours) >30\norder by p.project_name;"
     },
     "w5-sa-e01-a": {
-      "course": "sql",
       "category": "aggregate",
       "title": "Week 5 · Student Admin · Exercise 1 A",
       "instructions": "How many entries are currently in the database?",
@@ -3224,7 +3011,6 @@
       "solution": "select count(*) number_of_enrollments\nfrom enrollments;"
     },
     "w5-sa-e01-b": {
-      "course": "sql",
       "category": "aggregate",
       "title": "Week 5 · Student Admin · Exercise 1 B",
       "instructions": "How many different sections are there entries for?",
@@ -3243,7 +3029,6 @@
       "solution": "select count(*) \"Number of Different sections\"\nfrom sections;"
     },
     "w5-sa-e01-c": {
-      "course": "sql",
       "category": "aggregate",
       "title": "Week 5 · Student Admin · Exercise 1 C",
       "instructions": "Give the total capacity, average capacity, minimum and maximum capacity of all sections",
@@ -3262,7 +3047,6 @@
       "solution": "select sum(capacity) total_capacity, round(avg(capacity)) average_capacity, min(capacity) minimum_capacity, max(capacity) maximum_capacity\nfrom sections;"
     },
     "w5-sa-e02": {
-      "course": "sql",
       "category": "aggregate",
       "title": "Week 5 · Student Admin · Exercise 2",
       "instructions": "How expensive is the most expensive course taught?",
@@ -3281,7 +3065,6 @@
       "solution": "select max(cost) expensive_course\nfrom courses;"
     },
     "w5-sa-e03": {
-      "course": "sql",
       "category": "aggregate",
       "title": "Week 5 · Student Admin · Exercise 3",
       "instructions": "On what date did the very first student registration take place and the most recent date?",
@@ -3300,7 +3083,6 @@
       "solution": "select min(enroll_date) First, max(enroll_date) \"Most Recent\"\nfrom enrollments;"
     },
     "w5-sa-e04": {
-      "course": "sql",
       "category": "aggregate",
       "title": "Week 5 · Student Admin · Exercise 4",
       "instructions": "How many courses have no prequisites? (prequisite)",
@@ -3319,7 +3101,6 @@
       "solution": "select count(*) \"courses without Prerequisites\"\nfrom courses\nwhere prerequisite is null;"
     },
     "w5-sa-e05": {
-      "course": "sql",
       "category": "aggregate",
       "title": "Week 5 · Student Admin · Exercise 5",
       "instructions": "How many students are currently enrolled in sections?",
@@ -3338,7 +3119,6 @@
       "solution": "select count(distinct s.student_id) \"Number enlisted students\"\nfrom students s\njoin enrollments e on s.student_id = e.student_id\njoin sections se on se.section_id = e.section_id;"
     },
     "w5-sa-e06": {
-      "course": "sql",
       "category": "aggregate",
       "title": "Week 5 · Student Admin · Exercise 6",
       "instructions": "Which course description comes alphabetically first and which last?",
@@ -3357,7 +3137,6 @@
       "solution": "select min(description) \"first in order\", max(description) \"last in order\"\nfrom courses;"
     },
     "w5-sa-e07": {
-      "course": "sql",
       "category": "aggregate",
       "title": "Week 5 · Student Admin · Exercise 7",
       "instructions": "Provide the date of the most recent enrollment.",
@@ -3376,7 +3155,6 @@
       "solution": "select max(enroll_date) \"most recent subscription\"\nfrom enrollments;"
     },
     "w5-sa-e08": {
-      "course": "sql",
       "category": "aggregate",
       "title": "Week 5 · Student Admin · Exercise 8",
       "instructions": "For each location, provide the number of sections, total capacity, minimum and maximum capacity.",
@@ -3395,7 +3173,6 @@
       "solution": "select location, count(*) \"Number of sections\", sum(capacity) \"to capacity\", min(capacity) \"Minimum capacity\", max(capacity) \"Maximum capacity\"\nfrom sections\ngroup by location;"
     },
     "w5-sa-e09-a": {
-      "course": "sql",
       "category": "aggregate",
       "title": "Week 5 · Student Admin · Exercise 9 A",
       "instructions": "For each location and instructor_id, provide the number of sections, total capacity, minimum and maximum capacity. Sort by location.",
@@ -3414,7 +3191,6 @@
       "solution": "select s.location, i.instructor_id, count(s.section_id) \"Number of sections\", sum(s.capacity) \"tot_cap\", min(s.capacity) \"min_cap\", max(s.capacity) \"max_cap\"\nfrom instructors i\njoin sections s on i.instructor_id = s.instructor_id\ngroup by s.location, i.instructor_id\norder by s.location;"
     },
     "w5-sa-e09-b": {
-      "course": "sql",
       "category": "aggregate",
       "title": "Week 5 · Student Admin · Exercise 9 B",
       "instructions": "For each location and instructor_id, provide the number of sections, total capacity, minimum and maximum capacity. The result table should show only rows with total capacity greater than 50. Provide output sorted by total capacity.",
@@ -3433,7 +3209,6 @@
       "solution": "select s.location, i.instructor_id, count(s.section_id) \"Number of sections\", sum(s.capacity) \"tot_cap\", min(s.capacity) \"min_cap\", max(s.capacity) \"max_cap\"\nfrom instructors i\njoin sections s on i.instructor_id = s.instructor_id\ngroup by s.location, i.instructor_id\nhaving sum(capacity) >50\norder by sum(capacity) desc;"
     },
     "w5-sa-e09-c": {
-      "course": "sql",
       "category": "aggregate",
       "title": "Week 5 · Student Admin · Exercise 9 C",
       "instructions": "For each location and instructor_id, provide the number of sections, total capacity, minimum and maximum capacity. In the results table, only rows should be shown regarding a total capacity greater than 50.We are also only interested in the courses with COURSE_NO greater than 99. Return the output sorted by total capacity.",
@@ -3452,7 +3227,6 @@
       "solution": "select s.location, i.instructor_id, count(s.section_id) \"Number of sections\", sum(s.capacity)  tot_cap, min(s.capacity) min_cap, max(s.capacity) max_cap\nfrom instructors i\njoin sections s on i.instructor_id = s.instructor_id\nwhere s.course_no >99\ngroup by s.location, i.instructor_id\nhaving sum(s.capacity) >50\norder by sum(s.capacity) desc, s.location;"
     },
     "w5-sa-e09-d": {
-      "course": "sql",
       "category": "aggregate",
       "title": "Week 5 · Student Admin · Exercise 9 d",
       "instructions": "Provide the total capacity for each location. The location name must begin with 'L5' and the location must have been used at least 3 times.",
@@ -3471,7 +3245,6 @@
       "solution": "select location, sum(capacity) \"Total Capacity\"\nfrom sections s\nwhere lower(substr(location, 1, 2)) = 'l5'\ngroup by location\nhaving count(location) >= 3\norder by sum(capacity) desc;"
     },
     "w5-sa-e10": {
-      "course": "sql",
       "category": "aggregate",
       "title": "Week 5 · Student Admin · Exercise 10",
       "instructions": "List the points students averaged per section on their homeworks. The results table should include only students who averaged less than 80 points. Sort by student and section.",
@@ -3490,7 +3263,6 @@
       "solution": "select student_id, section_id, round(avg(numeric_grade)) average_grade_homeworks\nfrom grades\nwhere grade_type_code = 'HM'\ngroup by student_id, section_id\nhaving avg(numeric_grade)<80\norder by student_id, section_id;"
     },
     "w5-sa-e11": {
-      "course": "sql",
       "category": "aggregate",
       "title": "Week 5 · Student Admin · Exercise 11",
       "instructions": "Which student seniors are enrolled in more than 2 course sections?",
@@ -3509,7 +3281,6 @@
       "solution": "select student_id, count(section_id) \"Number of sections\"\nfrom enrollments\ngroup by student_id\nhaving count(section_id) > 2;"
     },
     "w5-sa-e12": {
-      "course": "sql",
       "category": "aggregate",
       "title": "Week 5 · Student Admin · Exercise 12",
       "instructions": "For each course taught by instructor Fernand Hanks (instructor_id=101), display the average capacity and rounded average capacity.",
@@ -3528,7 +3299,6 @@
       "solution": "select s.course_no \"course #\", avg(s.capacity) \"Avg. Capacity\", round(avg(capacity)) \"Avg. capacity without decimals\"\nfrom sections s\nwhere s.instructor_id = 101\ngroup by s.course_no;"
     },
     "w5-sa-e13": {
-      "course": "sql",
       "category": "aggregate",
       "title": "Week 5 · Student Admin · Exercise 13",
       "instructions": "For each course cost, show how many courses have this cost.",
@@ -3547,7 +3317,6 @@
       "solution": "select cost, count(course_no)\nfrom courses\ngroup by cost\norder by cost;"
     },
     "w5-sa-e14": {
-      "course": "sql",
       "category": "aggregate",
       "title": "Week 5 · Student Admin · Exercise 14",
       "instructions": "On what dates was course section 90 registered and how many registrations were there on each of those dates?",
@@ -3566,7 +3335,6 @@
       "solution": "select enroll_date, count(c.section_id)\nfrom sections c\njoin enrollments e on c.section_id = e.section_id\nwhere c.section_id = 90\ngroup by enroll_date;"
     },
     "w5-sa-e15": {
-      "course": "sql",
       "category": "aggregate",
       "title": "Week 5 · Student Admin · Exercise 15",
       "instructions": "For each company in which more than 4 students are employed, indicate how many students they employ.",
@@ -3585,7 +3353,6 @@
       "solution": "select employer, count(s.student_id)\nfrom students s\ngroup by employer\nhaving count(s.student_id)>4;"
     },
     "w5-sa-e16": {
-      "course": "sql",
       "category": "aggregate",
       "title": "Week 5 · Student Admin · Exercise 16",
       "instructions": "For each instructor, determine how many different courses he/she teaches.",
@@ -3604,7 +3371,6 @@
       "solution": "select i.instructor_id, count(c.course_no)\nfrom instructors i\n join sections s on i.instructor_id = s.instructor_id\n join courses c on c.course_no = s.course_no\ngroup by i.instructor_id\norder by i.instructor_id;"
     },
     "w5-sa-e17": {
-      "course": "sql",
       "category": "aggregate",
       "title": "Week 5 · Student Admin · Exercise 17",
       "instructions": "For the sections concerning the course 'Intro to Programming' (section_id between 85 and 93), determine the highest grade obtained on the Midterm exam (grade_type_code ='MT').",
@@ -3623,7 +3389,6 @@
       "solution": "select s.section_id, max(numeric_grade) \"highest graded\"\nfrom sections s\njoin grades g on s.section_id = g.section_id\nwhere s.section_id between 85 and 93 and grade_type_code='MT'\ngroup by s.section_id\norder by s.section_id;"
     },
     "w5-sa-e18": {
-      "course": "sql",
       "category": "aggregate",
       "title": "Week 5 · Student Admin · Exercise 18",
       "instructions": "For students who enrolled in more than 2 sections, determine the average grade they achieved on all their evaluations.",
@@ -3642,7 +3407,6 @@
       "solution": "select s.student_id, round(avg(numeric_grade))\nfrom students s\njoin enrollments e on s.student_id = e.student_id\njoin grades g on g.section_id = e.section_id\ngroup by s.student_id\nhaving count(distinct g.section_id)>2\norder by s.student_id;"
     },
     "w5-sa-e19": {
-      "course": "sql",
       "category": "aggregate",
       "title": "Week 5 · Student Admin · Exercise 19",
       "instructions": "List regions (zip view) from which there are more than 5 students",
@@ -3661,7 +3425,6 @@
       "solution": "select z.zip, count(s.student_id)\nfrom students s\njoin zipcodes z on s.zip = z.zip\ngroup by z.zip\nhaving count(s.student_id) > 5;"
     },
     "w5-sa-e20": {
-      "course": "sql",
       "category": "outer-join",
       "title": "Week 5 · Student Admin · Exercise 20",
       "instructions": "Show all courses that do not have sections.",
@@ -3680,7 +3443,6 @@
       "solution": "select c.course_no, c.description\nfrom courses c\nleft join sections s on s.course_no = c.course_no\nwhere s.section_id is null\norder by course_no;"
     },
     "w5-sa-e21": {
-      "course": "sql",
       "category": "outer-join",
       "title": "Week 5 · Student Admin · Exercise 21",
       "instructions": "Show the description of all courses with prerequisite course 350. In the result, also show the sections and their location. Courses that do not have a section should also be shown.",
@@ -3699,7 +3461,6 @@
       "solution": "select c.description, c.prerequisite prereq,  s.section_id, s.location\nfrom courses c\nleft join sections s on c.course_no = s.course_no\nwhere c.prerequisite = 350;"
     },
     "w5-sa-e22": {
-      "course": "sql",
       "category": "outer-join",
       "title": "Week 5 · Student Admin · Exercise 22",
       "instructions": "Which teachers did not teach course sections yet. Please also list which state they are from.",
@@ -3718,7 +3479,6 @@
       "solution": "select concat(i.last_name, ' ', i.first_name) \"name lecturer\", z.state\nfrom instructors i\nleft join zipcodes z on i.zip = z.zip\nleft join sections s on i.instructor_id = s.instructor_id\nwhere s.section_id is null;"
     },
     "w5-sa-e23": {
-      "course": "sql",
       "category": "outer-join",
       "title": "Week 5 · Student Admin · Exercise 23",
       "instructions": "Show the unpopular courses (= courses for which there are no enrollments yet).",
