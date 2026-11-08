@@ -546,7 +546,9 @@ function renderCheckResults(target, result) {
           "",
           `${check.pointsEarned ?? (check.passed ? check.points : 0)} / ${check.points ?? 0} points`,
         ),
-        check.feedback ? element("p", "", check.feedback) : "",
+        check.feedback
+          ? element("span", "ot-feedback", check.feedback.replace(/\\n/g, "\n"))
+          : "",
       ]),
     );
     if (!check.passed && check.actual !== undefined) {

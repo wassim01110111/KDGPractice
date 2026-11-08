@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.Objects;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
@@ -51,9 +52,33 @@ import javax.tools.ToolProvider;
  *   cleanup -             -            -            <classes-dir>
  *
  * JSON paths may be paths in the host filesystem or a browser virtual filesystem.
+ *
+ * Regex generation is available through the nested
+ * ExerciseRunner.RegexStringGenerator utility. Keeping it nested means the
+ * entire runner and generator can be shipped as this one Java source file.
  */
 public final class ExerciseRunner {
     private ExerciseRunner() { }
+
+    /** Generate a string that matches a regular expression. */
+    public static String generateFromRegex(String regex) {
+        return RegexStringGenerator.generateFromRegex(regex);
+    }
+
+    /** Generate a string that matches a regular expression using custom limits. */
+    public static String generateFromRegex(String regex, RegexStringGenerator.Options options) {
+        return RegexStringGenerator.generateFromRegex(regex, options);
+    }
+
+    /** Generate a string that matches an already compiled Pattern. */
+    public static String generateFromRegex(Pattern pattern) {
+        return RegexStringGenerator.generateFromRegex(pattern);
+    }
+
+    /** Generate a string from an already compiled Pattern using custom options. */
+    public static String generateFromRegex(Pattern pattern, RegexStringGenerator.Options options) {
+        return RegexStringGenerator.generateFromRegex(pattern, options);
+    }
 
     public static void main(String[] args) {
         if (args.length != 5) {
@@ -393,7 +418,7 @@ public final class ExerciseRunner {
                 case "strict": present = Modifier.isStrict(modifiers); break;
                 case "transient": present = Modifier.isTransient(modifiers); break;
                 case "volatile": present = Modifier.isVolatile(modifiers); break;
-                case "default": present = false; break; // Interface default methods are not represented by a modifier bit.
+                case "default": present = false; break;
                 default: return CheckOutcome.fail("Unknown modifier: " + modifier, Modifier.toString(modifiers));
             }
             if (!present) return CheckOutcome.fail(label + " must be " + modifier + ". Actual modifiers: " + Modifier.toString(modifiers) + ".", Modifier.toString(modifiers));
@@ -441,10 +466,46 @@ public final class ExerciseRunner {
                         }
                     }
                     boolean full = Boolean.TRUE.equals(check.get("fullMatch"));
-                    boolean passed = full ? Pattern.compile(expected, flags).matcher(actual).matches()
-                            : Pattern.compile(expected, flags).matcher(actual).find();
-                    return new Match(passed, passed ? "Regular expression matched."
-                            : "The output did not match the regular expression " + quote(expected) + ".");
+                    Pattern compiled = Pattern.compile(expected, flags);
+                    java.util.regex.Matcher regexMatcher = compiled.matcher(actual);
+                    boolean passed = full ? regexMatcher.matches() : regexMatcher.find();
+                    if (passed) {
+                        return new Match(true, "Regular expression matched.");
+                    }
+
+                    // A mismatch is different from a parse error. Include the exact
+                    // captured text so whitespace, prompts, BOMs and escape sequences
+                    // are visible in grader feedback.
+                    String preview = actual;
+                    final int previewLimit = 1000;
+                    if (preview.length() > previewLimit) {
+                        preview = preview.substring(0, previewLimit) + "… (truncated)";
+                    }
+                    String mode = full ? "full match" : "substring search";
+
+                    // Show a concrete example instead of exposing the regex syntax.
+                    // Generate from the already-compiled Pattern so external flags
+                    // from the check configuration are preserved as well.
+                    String example = null;
+                    try {
+                        String candidate = RegexStringGenerator.generateFromRegex(
+                                compiled, new RegexStringGenerator.Options().fullMatch(full));
+                        java.util.regex.Matcher exampleMatcher = compiled.matcher(candidate);
+                        boolean exampleMatches = full
+                                ? exampleMatcher.matches()
+                                : exampleMatcher.find();
+                        if (exampleMatches) example = candidate;
+                    } catch (RuntimeException ignored) {
+                        // Some valid regexes cannot be solved by the bounded generator.
+                        // In that case, still provide useful captured-output diagnostics.
+                    }
+
+                    String exampleText = example == null
+                            ? "Expected output must satisfy the configured matching rule. "
+                            : "For example, matching text could be:\n" + quote(example);
+
+                    return new Match(false,
+                            "The output did not match (" + mode + "). " + exampleText);
                 } catch (PatternSyntaxException error) {
                     return new Match(false, "Invalid regular expression: " + error.getDescription());
                 }
@@ -546,7 +607,6 @@ public final class ExerciseRunner {
             Class<?> mainType = Class.forName(mainClass, true, loader);
             Method main = mainType.getMethod("main", String[].class);
             if (!Modifier.isStatic(main.getModifiers())) throw new NoSuchMethodException("main(String[]) must be static.");
-            // Supports a public main method on a package-private launcher class.
             main.setAccessible(true);
             main.invoke(null, (Object) new String[0]);
         } catch (Throwable error) {
@@ -872,4 +932,766 @@ public final class ExerciseRunner {
             private IllegalArgumentException error(String message) { return new IllegalArgumentException(message + " at JSON offset " + at); }
         }
     }
+
+    public static final class RegexStringGenerator {
+        private RegexStringGenerator() { }
+
+        /**
+         * Bounded, validation-driven sample generator for java.util.regex.Pattern.
+         * It deliberately validates every generated sample with Pattern itself;
+         * the parser below only proposes candidates and is not a replacement regex engine.
+         */
+        public static final class Options {
+            public int maxAttempts = 512;
+            public int maxLength = 100_000;
+            public int maxRepeat = 6;
+            public String lineSeparator = "\n";
+            /** null = infer for String patterns / preserve Pattern flags. */
+            public Boolean multiline = null;
+            /** true uses Matcher.matches(); false uses Matcher.find(). */
+            public boolean fullMatch = false;
+            public boolean useBasicFallback = true;
+
+            public Options() { }
+            public Options maxAttempts(int value) {
+                if (value < 1) throw new IllegalArgumentException("maxAttempts must be at least 1");
+                maxAttempts = value; return this;
+            }
+            public Options maxLength(int value) {
+                if (value < 1) throw new IllegalArgumentException("maxLength must be at least 1");
+                maxLength = value; return this;
+            }
+            public Options maxRepeat(int value) {
+                if (value < 0) throw new IllegalArgumentException("maxRepeat cannot be negative");
+                maxRepeat = value; return this;
+            }
+            public Options lineSeparator(String value) {
+                lineSeparator = Objects.requireNonNull(value, "lineSeparator"); return this;
+            }
+            public Options multiline(boolean value) { multiline = value; return this; }
+            public Options fullMatch(boolean value) { fullMatch = value; return this; }
+            public Options useBasicFallback(boolean value) { useBasicFallback = value; return this; }
+        }
+
+        public static String generateFromRegex(String regex) {
+            return generateFromRegex(regex, new Options());
+        }
+
+        public static String generateFromRegex(String regex, Options options) {
+            Objects.requireNonNull(regex, "regex");
+            Options actual = options == null ? new Options() : options;
+            int flags = 0;
+            if (actual.multiline != null) {
+                if (actual.multiline) flags |= Pattern.MULTILINE;
+            } else if (looksLikeMultilineLookaround(regex)) {
+                flags |= Pattern.MULTILINE;
+            }
+            return generate(regex, flags, actual);
+        }
+
+        public static String generateFromRegex(Pattern pattern) {
+            return generateFromRegex(pattern, new Options());
+        }
+
+        public static String generateFromRegex(Pattern pattern, Options options) {
+            Objects.requireNonNull(pattern, "pattern");
+            Options actual = options == null ? new Options() : options;
+            int flags = pattern.flags();
+            if (actual.multiline != null) {
+                if (actual.multiline) flags |= Pattern.MULTILINE;
+                else flags &= ~Pattern.MULTILINE;
+            }
+            return generate(pattern.pattern(), flags, actual);
+        }
+
+        private static String generate(String source, int flags, Options options) {
+            if ((flags & Pattern.LITERAL) != 0) {
+                if (source.length() > options.maxLength) throw new IllegalArgumentException("Literal pattern exceeds maxLength");
+                return source;
+            }
+            if (source.length() > Math.max(4096L, options.maxLength * 4L)) {
+                throw new IllegalArgumentException("Regex source is too large");
+            }
+            final Pattern validator;
+            try {
+                validator = Pattern.compile(source, flags);
+            } catch (PatternSyntaxException ex) {
+                throw new IllegalArgumentException("Invalid Java regular expression: " + ex.getDescription(), ex);
+            }
+
+            // Fast path for exact lines required by positive lookaheads. This avoids
+            // factorial searching for common file-list / multi-line constraint regexes.
+            List<String> requiredLines = extractRequiredLines(source);
+            if (!requiredLines.isEmpty()) {
+                String lineCandidate = tryLineCandidates(requiredLines, validator, options);
+                if (lineCandidate != null) return lineCandidate;
+            }
+
+            if (options.useBasicFallback) {
+                Parser parser = new Parser(source, options.maxRepeat, (flags & Pattern.COMMENTS) != 0);
+                Node root = parser.parse();
+                Map<String, List<String>> sharedAtomSamples = new LinkedHashMap<>();
+                for (int attempt = 0; attempt < options.maxAttempts; attempt++) {
+                    GenerationContext context = new GenerationContext(flags, attempt, sharedAtomSamples);
+                    String candidate = generateNode(root, attempt, context, options);
+                    if (candidate.length() <= options.maxLength && matches(validator, candidate, options)) {
+                        return candidate;
+                    }
+
+                    // Context variations are inexpensive and help with word boundaries,
+                    // negative assertions, and lookarounds whose best sample needs padding.
+                    String[] prefixes = {"a", "0", "_", " ", "\n", "!"};
+                    String[] suffixes = {"a", "0", "_", " ", "\n", "!"};
+                    for (int p = 0; p < prefixes.length; p++) {
+                        String prefix = prefixes[(attempt + p) % prefixes.length];
+                        String suffix = suffixes[(attempt * 3 + p) % suffixes.length];
+                        String[] variants = {prefix + candidate, candidate + suffix, prefix + candidate + suffix};
+                        for (String variant : variants) {
+                            if (variant.length() <= options.maxLength && matches(validator, variant, options)) {
+                                return variant;
+                            }
+                        }
+                    }
+                }
+            }
+
+            throw new IllegalArgumentException(
+                    "Could not generate a matching sample within " + options.maxAttempts +
+                    " attempts. The regex may be unsatisfiable or may require a search beyond the configured bounds.");
+        }
+
+        private static boolean matches(Pattern pattern, String candidate, Options options) {
+            java.util.regex.Matcher matcher = pattern.matcher(candidate);
+            return options.fullMatch ? matcher.matches() : matcher.find();
+        }
+
+        private static boolean looksLikeMultilineLookaround(String source) {
+            boolean lookaround = source.contains("(?=") || source.contains("(?!") ||
+                    source.contains("(?<=") || source.contains("(?<!");
+            return lookaround && source.indexOf('^') >= 0 && source.indexOf('$') >= 0;
+        }
+
+        // ---------------------- Positive-lookahead line solver ----------------------
+
+        private static String tryLineCandidates(List<String> required, Pattern validator, Options options) {
+            List<String> lines = new ArrayList<>(new LinkedHashSet<>(required));
+            if (lines.isEmpty()) return null;
+            List<List<String>> candidates = new ArrayList<>();
+            candidates.add(new ArrayList<>(lines));
+            if (lines.size() > 1) {
+                List<String> reversed = new ArrayList<>(lines);
+                Collections.reverse(reversed);
+                candidates.add(reversed);
+                for (int shift = 1; shift < lines.size() && candidates.size() < options.maxAttempts; shift++) {
+                    List<String> rotated = new ArrayList<>();
+                    rotated.addAll(lines.subList(shift, lines.size()));
+                    rotated.addAll(lines.subList(0, shift));
+                    candidates.add(rotated);
+                }
+                if (lines.size() <= 9 && candidates.size() < options.maxAttempts) {
+                    addPermutations(new ArrayList<>(lines), 0, candidates, options.maxAttempts);
+                }
+            }
+            Set<String> seen = new LinkedHashSet<>();
+            for (List<String> order : candidates) {
+                if (seen.size() >= options.maxAttempts) break;
+                String candidate = String.join(options.lineSeparator, order);
+                if (seen.add(candidate) && candidate.length() <= options.maxLength && matches(validator, candidate, options)) {
+                    return candidate;
+                }
+            }
+            return null;
+        }
+
+        private static void addPermutations(List<String> values, int index,
+                                            List<List<String>> output, int limit) {
+            if (output.size() >= limit) return;
+            if (index == values.size()) { output.add(new ArrayList<>(values)); return; }
+            for (int i = index; i < values.size() && output.size() < limit; i++) {
+                Collections.swap(values, index, i);
+                addPermutations(values, index + 1, output, limit);
+                Collections.swap(values, index, i);
+            }
+        }
+
+        private static List<String> extractRequiredLines(String source) {
+            List<String> result = new ArrayList<>();
+            scanForPositiveLookaheads(source, 0, source.length(), result);
+            return new ArrayList<>(new LinkedHashSet<>(result));
+        }
+
+        private static void scanForPositiveLookaheads(String text, int from, int to, List<String> output) {
+            for (int i = from; i < to; i++) {
+                char c = text.charAt(i);
+                if (c == '\\') { i++; continue; }
+                if (c == '[') { i = skipCharacterClass(text, i, to); continue; }
+                if (c != '(') continue;
+                Group group = inspectGroup(text, i, to);
+                if (group.kind == GroupKind.POSITIVE_LOOKAHEAD) {
+                    extractLinesFromAssertion(text, group.bodyStart, group.close, output);
+                    scanForPositiveLookaheads(text, group.bodyStart, group.close, output);
+                } else if (group.kind == GroupKind.GROUP) {
+                    scanForPositiveLookaheads(text, group.bodyStart, group.close, output);
+                }
+                i = group.close;
+            }
+        }
+
+        private static void extractLinesFromAssertion(String text, int from, int to, List<String> output) {
+            for (int i = from; i < to; i++) {
+                char c = text.charAt(i);
+                if (c == '\\') { i++; continue; }
+                if (c == '[') { i = skipCharacterClass(text, i, to); continue; }
+                if (c != '(') {
+                    if (c == '^') {
+                        LiteralLine literal = readLiteralLine(text, i + 1, to);
+                        if (literal != null) { output.add(literal.value); i = literal.end; }
+                    }
+                    continue;
+                }
+                Group group = inspectGroup(text, i, to);
+                if (group.kind == GroupKind.GROUP || group.kind == GroupKind.POSITIVE_LOOKAHEAD) {
+                    extractLinesFromAssertion(text, group.bodyStart, group.close, output);
+                }
+                i = group.close;
+            }
+        }
+
+        private static LiteralLine readLiteralLine(String text, int start, int limit) {
+            StringBuilder value = new StringBuilder();
+            for (int i = start; i < limit; i++) {
+                char c = text.charAt(i);
+                if (c == '$') return value.length() == 0 ? null : new LiteralLine(value.toString(), i);
+                if (c == '\\') {
+                    if (++i >= limit) return null;
+                    char escaped = text.charAt(i);
+                    Character decoded = decodeLiteralEscape(text, escaped, i, limit);
+                    if (decoded == null) return null;
+                    value.append(decoded.charValue());
+                    if (escaped == 'x') i += 2;
+                    else if (escaped == 'u') i += 4;
+                    continue;
+                }
+                if (".*+?{}[]()|^".indexOf(c) >= 0) return null;
+                value.append(c);
+            }
+            return null;
+        }
+
+        private static Character decodeLiteralEscape(String text, char escaped, int at, int limit) {
+            switch (escaped) {
+                case 't': return '\t';
+                case 'f': return '\f';
+                case 'v': return '\u000B';
+                case 'x':
+                    if (at + 2 >= limit) return null;
+                    try { return (char) Integer.parseInt(text.substring(at + 1, at + 3), 16); }
+                    catch (NumberFormatException ex) { return null; }
+                case 'u':
+                    if (at + 4 >= limit) return null;
+                    try { return (char) Integer.parseInt(text.substring(at + 1, at + 5), 16); }
+                    catch (NumberFormatException ex) { return null; }
+                case 'n': case 'r': return null;
+                default: return Character.isLetterOrDigit(escaped) ? null : escaped;
+            }
+        }
+
+        private static int skipCharacterClass(String text, int start, int limit) {
+            boolean escaped = false;
+            int depth = 1;
+            for (int i = start + 1; i < limit; i++) {
+                char c = text.charAt(i);
+                if (escaped) { escaped = false; continue; }
+                if (c == '\\') { escaped = true; continue; }
+                if (c == '[') depth++;
+                else if (c == ']' && --depth == 0) return i;
+            }
+            throw new IllegalArgumentException("Unclosed character class at position " + start);
+        }
+
+        private enum GroupKind { GROUP, POSITIVE_LOOKAHEAD, NEGATIVE_LOOKAHEAD,
+            POSITIVE_LOOKBEHIND, NEGATIVE_LOOKBEHIND }
+        private static final class Group {
+            final GroupKind kind; final int bodyStart; final int close;
+            Group(GroupKind kind, int bodyStart, int close) {
+                this.kind = kind; this.bodyStart = bodyStart; this.close = close;
+            }
+        }
+
+        private static Group inspectGroup(String text, int start, int limit) {
+            GroupKind kind = GroupKind.GROUP;
+            int bodyStart = start + 1;
+            if (text.startsWith("(?=", start)) { kind = GroupKind.POSITIVE_LOOKAHEAD; bodyStart = start + 3; }
+            else if (text.startsWith("(?!", start)) { kind = GroupKind.NEGATIVE_LOOKAHEAD; bodyStart = start + 3; }
+            else if (text.startsWith("(?<=", start)) { kind = GroupKind.POSITIVE_LOOKBEHIND; bodyStart = start + 4; }
+            else if (text.startsWith("(?<!", start)) { kind = GroupKind.NEGATIVE_LOOKBEHIND; bodyStart = start + 4; }
+            else if (text.startsWith("(?:", start) || text.startsWith("(?>", start)) { bodyStart = start + 3; }
+            else if (text.startsWith("(?<", start)) {
+                int nameEnd = text.indexOf('>', start + 3);
+                if (nameEnd >= 0 && nameEnd < limit) bodyStart = nameEnd + 1;
+            } else if (text.startsWith("(?", start)) {
+                int p = start + 2;
+                while (p < limit && (Character.isLetter(text.charAt(p)) || text.charAt(p) == '-')) p++;
+                bodyStart = p < limit && text.charAt(p) == ':' ? p + 1 : p + 1;
+            }
+            return new Group(kind, bodyStart, findGroupClose(text, start, limit));
+        }
+
+        private static int findGroupClose(String text, int start, int limit) {
+            int depth = 0; boolean escaped = false;
+            for (int i = start; i < limit; i++) {
+                char c = text.charAt(i);
+                if (escaped) { escaped = false; continue; }
+                if (c == '\\') { escaped = true; continue; }
+                if (c == '[') { i = skipCharacterClass(text, i, limit); continue; }
+                if (c == '(') depth++;
+                else if (c == ')' && --depth == 0) return i;
+            }
+            throw new IllegalArgumentException("Unclosed group at position " + start);
+        }
+
+        private static final class LiteralLine {
+            final String value; final int end;
+            LiteralLine(String value, int end) { this.value = value; this.end = end; }
+        }
+
+        // ------------------------- Candidate AST and parser -------------------------
+
+        private interface Node { }
+        private static final class Empty implements Node { }
+        private static final class Literal implements Node {
+            final String value; Literal(String value) { this.value = value; }
+        }
+        /** regexFragment is compiled as a standalone Java regex atom/predicate. */
+        private static final class Atom implements Node {
+            final String regexFragment; Atom(String regexFragment) { this.regexFragment = regexFragment; }
+        }
+        private static final class Sequence implements Node {
+            final List<Node> nodes; Sequence(List<Node> nodes) { this.nodes = nodes; }
+        }
+        private static final class Alternative implements Node {
+            final List<Node> alternatives; Alternative(List<Node> alternatives) { this.alternatives = alternatives; }
+        }
+        private static final class Repeat implements Node {
+            final Node node; final int min; final int max;
+            Repeat(Node node, int min, int max) { this.node = node; this.min = min; this.max = max; }
+        }
+        private enum AssertionKind { POSITIVE_AHEAD, NEGATIVE_AHEAD, POSITIVE_BEHIND, NEGATIVE_BEHIND }
+        private static final class Assertion implements Node {
+            final AssertionKind kind; final Node node;
+            Assertion(AssertionKind kind, Node node) { this.kind = kind; this.node = node; }
+        }
+        private static final class Capture implements Node {
+            final int index; final String name; final Node node;
+            Capture(int index, String name, Node node) { this.index = index; this.name = name; this.node = node; }
+        }
+        private static final class BackReference implements Node {
+            final Integer index; final String name;
+            BackReference(Integer index, String name) { this.index = index; this.name = name; }
+        }
+        private static final class Boundary implements Node {
+            final boolean wordBoundary; Boundary(boolean wordBoundary) { this.wordBoundary = wordBoundary; }
+        }
+
+        private static final class Parser {
+            private final String source;
+            private final int maxRepeat;
+            private int pos;
+            private int nextGroup = 1;
+            private boolean comments;
+
+            Parser(String source, int maxRepeat, boolean comments) {
+                this.source = source; this.maxRepeat = maxRepeat; this.comments = comments;
+            }
+
+            Node parse() {
+                Node root = expression();
+                if (pos != source.length()) throw new IllegalArgumentException("Unsupported regex syntax at position " + pos);
+                return root;
+            }
+
+            private char peek() { return pos < source.length() ? source.charAt(pos) : '\0'; }
+            private char take() { return pos < source.length() ? source.charAt(pos++) : '\0'; }
+
+            private void skipIgnored() {
+                if (!comments) return;
+                while (pos < source.length()) {
+                    char c = source.charAt(pos);
+                    if (Character.isWhitespace(c)) { pos++; continue; }
+                    if (c == '#') {
+                        while (pos < source.length() && source.charAt(pos) != '\n' && source.charAt(pos) != '\r') pos++;
+                        continue;
+                    }
+                    break;
+                }
+            }
+
+            private Node expression() {
+                List<Node> alternatives = new ArrayList<>();
+                alternatives.add(sequence());
+                skipIgnored();
+                while (peek() == '|') { take(); alternatives.add(sequence()); skipIgnored(); }
+                return alternatives.size() == 1 ? alternatives.get(0) : new Alternative(alternatives);
+            }
+
+            private Node sequence() {
+                List<Node> nodes = new ArrayList<>();
+                skipIgnored();
+                while (pos < source.length() && peek() != ')' && peek() != '|') {
+                    nodes.add(quantified());
+                    skipIgnored();
+                }
+                return new Sequence(nodes);
+            }
+
+            private Node quantified() {
+                Node node = atom();
+                skipIgnored();
+                int min = 1, max = 1;
+                char q = peek();
+                if (q == '*') { take(); min = 0; max = maxRepeat; }
+                else if (q == '+') { take(); min = 1; max = Math.max(1, maxRepeat); }
+                else if (q == '?') { take(); min = 0; max = 1; }
+                else if (q == '{') {
+                    int saved = pos;
+                    take();
+                    String lower = digits();
+                    if (!lower.isEmpty()) {
+                        try { min = Integer.parseInt(lower); }
+                        catch (NumberFormatException ex) { throw new IllegalArgumentException("Quantifier is too large", ex); }
+                        max = min;
+                        if (peek() == ',') {
+                            take(); String upper = digits();
+                            if (upper.isEmpty()) max = Math.max(min, maxRepeat);
+                            else {
+                                try { max = Math.max(min, Math.min(Integer.parseInt(upper), Math.max(min, maxRepeat))); }
+                                catch (NumberFormatException ex) { throw new IllegalArgumentException("Quantifier is too large", ex); }
+                            }
+                        }
+                        if (take() != '}') throw new IllegalArgumentException("Invalid quantifier at position " + saved);
+                    } else pos = saved;
+                }
+                if (min != 1 || max != 1) node = new Repeat(node, min, max);
+                // Lazy and possessive suffixes affect backtracking, not sample validity.
+                if (peek() == '?' || peek() == '+') take();
+                return node;
+            }
+
+            private String digits() {
+                StringBuilder out = new StringBuilder();
+                while (Character.isDigit(peek())) out.append(take());
+                return out.toString();
+            }
+
+            private Node atom() {
+                skipIgnored();
+                char c = take();
+                if (c == '\0') throw new IllegalArgumentException("Unexpected end of regex");
+                if (c == '^' || c == '$') return new Empty();
+                if (c == '.') return new Atom(".");
+                if (c == '[') return characterClass();
+                if (c == '\\') return escaped();
+                if (c == '(') return group();
+                return new Literal(String.valueOf(c));
+            }
+
+            private Node characterClass() {
+                int start = pos - 1;
+                int end = skipCharacterClass(source, start, source.length());
+                String raw = source.substring(start, end + 1);
+                pos = end + 1;
+                return new Atom(raw);
+            }
+
+            private Node escaped() {
+                char e = take();
+                if (e == '\0') throw new IllegalArgumentException("Incomplete escape");
+                switch (e) {
+                    case 'n': return new Literal("\n");
+                    case 'r': return new Literal("\r");
+                    case 't': return new Literal("\t");
+                    case 'f': return new Literal("\f");
+                    case 'a': return new Literal("\u0007");
+                    case 'e': return new Literal("\u001B");
+                    case 'b': return new Boundary(true);
+                    case 'B': return new Boundary(false);
+                    case 'A': case 'G': case 'Z': case 'z': return new Empty();
+                    case 'd': case 'D': case 's': case 'S': case 'w': case 'W':
+                    case 'h': case 'H': case 'v': case 'V': case 'R': case 'X':
+                        return new Atom("\\" + e);
+                    case 'N': {
+                        if (take() != '{') throw new IllegalArgumentException("Expected { after \\N");
+                        String name = readUntil('}');
+                        try { return new Literal(new String(Character.toChars(Character.codePointOf(name)))); }
+                        catch (RuntimeException ex) { throw new IllegalArgumentException("Unknown Unicode character name: " + name, ex); }
+                    }
+                    case 'p': case 'P': {
+                        if (take() != '{') throw new IllegalArgumentException("Expected { after \\" + e);
+                        String property = readUntil('}');
+                        return new Atom("\\" + e + "{" + property + "}");
+                    }
+                    case 'x': {
+                        if (peek() == '{') {
+                            take(); String hex = readUntil('}');
+                            try { return new Literal(new String(Character.toChars(Integer.parseInt(hex, 16)))); }
+                            catch (RuntimeException ex) { throw new IllegalArgumentException("Invalid code point escape", ex); }
+                        }
+                        return new Literal(readHex(2));
+                    }
+                    case 'u': return new Literal(readHex(4));
+                    case 'c': {
+                        char control = take();
+                        if (control == '\0') throw new IllegalArgumentException("Incomplete control escape");
+                        return new Literal(String.valueOf((char) (control ^ 64)));
+                    }
+                    case 'Q': {
+                        int end = source.indexOf("\\E", pos);
+                        if (end < 0) { String value = source.substring(pos); pos = source.length(); return new Literal(value); }
+                        String value = source.substring(pos, end); pos = end + 2; return new Literal(value);
+                    }
+                    case 'k': {
+                        if (take() != '<') throw new IllegalArgumentException("Expected < after \\k");
+                        return new BackReference(null, readUntil('>'));
+                    }
+                    case '0': {
+                        StringBuilder octal = new StringBuilder();
+                        while (octal.length() < 3 && peek() >= '0' && peek() <= '7') octal.append(take());
+                        if (octal.length() == 0) return new Literal("\0");
+                        return new Literal(String.valueOf((char) Integer.parseInt(octal.toString(), 8)));
+                    }
+                    default:
+                        if (e >= '1' && e <= '9') {
+                            StringBuilder number = new StringBuilder().append(e);
+                            while (Character.isDigit(peek())) number.append(take());
+                            try { return new BackReference(Integer.valueOf(number.toString()), null); }
+                            catch (NumberFormatException ex) { throw new IllegalArgumentException("Invalid backreference", ex); }
+                        }
+                        if ("\\.^$|?*+()[]{}-".indexOf(e) >= 0) return new Literal(String.valueOf(e));
+                        // Pattern.compile() has already checked validity. Preserve other
+                        // Java escapes as atoms rather than guessing their meaning.
+                        return new Atom("\\" + e);
+                }
+            }
+
+            private String readUntil(char terminator) {
+                int start = pos;
+                while (pos < source.length() && peek() != terminator) take();
+                if (take() != terminator) throw new IllegalArgumentException("Unterminated escape/group name");
+                return source.substring(start, pos - 1);
+            }
+
+            private String readHex(int count) {
+                if (pos + count > source.length()) throw new IllegalArgumentException("Incomplete hexadecimal escape");
+                String hex = source.substring(pos, pos + count); pos += count;
+                try { return String.valueOf((char) Integer.parseInt(hex, 16)); }
+                catch (NumberFormatException ex) { throw new IllegalArgumentException("Invalid hexadecimal escape: " + hex, ex); }
+            }
+
+            private Node group() {
+                if (peek() != '?') {
+                    int group = nextGroup++;
+                    Node body = expressionUntilClose();
+                    return new Capture(group, null, body);
+                }
+                take();
+                char next = take();
+                if (next == ':') return expressionUntilClose();
+                if (next == '=') return new Assertion(AssertionKind.POSITIVE_AHEAD, expressionUntilClose());
+                if (next == '!') return new Assertion(AssertionKind.NEGATIVE_AHEAD, expressionUntilClose());
+                if (next == '<') {
+                    char direction = take();
+                    if (direction == '=' || direction == '!') {
+                        Node body = expressionUntilClose();
+                        return new Assertion(direction == '=' ? AssertionKind.POSITIVE_BEHIND : AssertionKind.NEGATIVE_BEHIND, body);
+                    }
+                    // Named capturing group: (?<name>...). The first name
+                    // character was consumed while distinguishing lookbehind.
+                    StringBuilder name = new StringBuilder();
+                    if (direction != '\0') name.append(direction);
+                    while (peek() != '>' && peek() != '\0') name.append(take());
+                    if (take() != '>') throw new IllegalArgumentException("Malformed named capturing group");
+                    int group = nextGroup++;
+                    return new Capture(group, name.toString(), expressionUntilClose());
+                }
+                if (next == '>') return expressionUntilClose(); // atomic group (?>...)
+
+                // Inline flags: (?im-s) or scoped flags (?im-s:...). Pattern.compile
+                // applies the actual flags; the candidate parser only needs the body.
+                int modifierStart = pos - 1;
+                StringBuilder modifier = new StringBuilder().append(next);
+                while (peek() != ':' && peek() != ')' && peek() != '\0') modifier.append(take());
+                boolean oldComments = comments;
+                applyCommentModifier(modifier.toString());
+                if (peek() == ')') { take(); return new Empty(); }
+                if (take() == ':') {
+                    Node body = expression();
+                    if (take() != ')') throw new IllegalArgumentException("Unclosed inline-flag group");
+                    comments = oldComments;
+                    return body;
+                }
+                comments = oldComments;
+                throw new IllegalArgumentException("Unsupported inline modifier at position " + modifierStart);
+            }
+
+            private void applyCommentModifier(String modifier) {
+                boolean disable = false;
+                for (int i = 0; i < modifier.length(); i++) {
+                    char c = modifier.charAt(i);
+                    if (c == '-') { disable = true; continue; }
+                    if (c == 'x') comments = !disable;
+                }
+            }
+
+            private Node expressionUntilClose() {
+                Node body = expression();
+                skipIgnored();
+                if (take() != ')') throw new IllegalArgumentException("Unclosed group");
+                return body;
+            }
+        }
+
+        private static final class GenerationContext {
+            final int flags;
+            final int attempt;
+            final Map<Integer, String> numberedGroups = new LinkedHashMap<>();
+            final Map<String, String> namedGroups = new LinkedHashMap<>();
+            final Map<String, List<String>> atomSamples;
+            GenerationContext(int flags, int attempt, Map<String, List<String>> atomSamples) {
+                this.flags = flags; this.attempt = attempt; this.atomSamples = atomSamples;
+            }
+        }
+
+        private static String generateNode(Node node, int attempt, GenerationContext context, Options options) {
+            if (node instanceof Empty) return "";
+            if (node instanceof Literal) return ((Literal) node).value;
+            if (node instanceof Atom) return chooseAtomSample(((Atom) node).regexFragment, attempt, context);
+            if (node instanceof Boundary) return ((Boundary) node).wordBoundary ? "" : "a";
+            if (node instanceof BackReference) {
+                BackReference ref = (BackReference) node;
+                String value = ref.index != null ? context.numberedGroups.get(ref.index) : context.namedGroups.get(ref.name);
+                return value == null ? "" : value;
+            }
+            if (node instanceof Capture) {
+                Capture capture = (Capture) node;
+                String value = generateNode(capture.node, attempt, context, options);
+                context.numberedGroups.put(capture.index, value);
+                if (capture.name != null) context.namedGroups.put(capture.name, value);
+                return value;
+            }
+            if (node instanceof Assertion) {
+                Assertion assertion = (Assertion) node;
+                switch (assertion.kind) {
+                    case POSITIVE_AHEAD:
+                        return generateNode(assertion.node, attempt + 1, context, options);
+                    case POSITIVE_BEHIND:
+                        return generateNode(assertion.node, attempt + 1, context, options);
+                    case NEGATIVE_AHEAD:
+                    case NEGATIVE_BEHIND:
+                    default: return "";
+                }
+            }
+            if (node instanceof Sequence) {
+                StringBuilder out = new StringBuilder();
+                StringBuilder pendingAhead = new StringBuilder();
+                int index = 0;
+                for (Node child : ((Sequence) node).nodes) {
+                    if (child instanceof Assertion) {
+                        Assertion assertion = (Assertion) child;
+                        if (assertion.kind == AssertionKind.POSITIVE_AHEAD) {
+                            String hint = generateNode(assertion.node, attempt, context, options);
+                            mergeHint(pendingAhead, hint);
+                        } else if (assertion.kind == AssertionKind.POSITIVE_BEHIND) {
+                            out.append(generateNode(assertion.node, attempt, context, options));
+                        }
+                        index++;
+                        continue;
+                    }
+                    String chunk = generateNode(child, attempt, context, options);
+                    if (pendingAhead.length() > 0) {
+                        String pending = pendingAhead.toString();
+                        if (pending.startsWith(chunk)) {
+                            out.append(chunk); pendingAhead.delete(0, chunk.length());
+                        } else if (chunk.startsWith(pending)) {
+                            out.append(chunk); pendingAhead.setLength(0);
+                        } else {
+                            out.append(pending).append(chunk); pendingAhead.setLength(0);
+                        }
+                    } else out.append(chunk);
+                    index++;
+                }
+                out.append(pendingAhead);
+                return out.toString();
+            }
+            if (node instanceof Alternative) {
+                List<Node> alternatives = ((Alternative) node).alternatives;
+                return generateNode(alternatives.get(Math.floorMod(attempt, alternatives.size())), attempt + 1, context, options);
+            }
+            if (node instanceof Repeat) {
+                Repeat repeat = (Repeat) node;
+                int width = repeat.max - repeat.min + 1;
+                int count = repeat.min + Math.floorMod(attempt, Math.max(1, width));
+                StringBuilder out = new StringBuilder();
+                for (int i = 0; i < count; i++) {
+                    out.append(generateNode(repeat.node, attempt + i, context, options));
+                    if (out.length() > options.maxLength) break;
+                }
+                return out.toString();
+            }
+            throw new IllegalArgumentException("Unknown candidate node: " + node.getClass().getSimpleName());
+        }
+
+        private static void mergeHint(StringBuilder pending, String hint) {
+            if (hint == null || hint.isEmpty()) return;
+            if (pending.length() == 0) { pending.append(hint); return; }
+            String old = pending.toString();
+            if (old.contains(hint)) return;
+            if (hint.contains(old)) { pending.setLength(0); pending.append(hint); return; }
+            // Concatenation gives overlapping prefix constraints the best chance;
+            // final validation rejects incompatible assertions.
+            pending.append(hint);
+        }
+
+        private static String chooseAtomSample(String fragment, int attempt, GenerationContext context) {
+            String cacheKey = context.flags + "\u0000" + fragment;
+            List<String> samples = context.atomSamples.get(cacheKey);
+            if (samples == null) {
+                samples = findAtomSamples(fragment, context.flags);
+                context.atomSamples.put(cacheKey, samples);
+            }
+            if (samples.isEmpty()) {
+                throw new IllegalArgumentException("No sample character found for regex atom: " + fragment);
+            }
+            return samples.get(Math.floorMod(attempt, samples.size()));
+        }
+
+        private static List<String> findAtomSamples(String fragment, int flags) {
+            final Pattern predicate;
+            try { predicate = Pattern.compile("^(?:" + fragment + ")$", flags); }
+            catch (PatternSyntaxException ex) {
+                throw new IllegalArgumentException("Could not sample regex atom " + fragment + ": " + ex.getDescription(), ex);
+            }
+            List<String> samples = new ArrayList<>();
+            String[] common = {
+                "a", "A", "0", "1", "_", "-", ".", " ", "\t", "\n", "\r", "\r\n",
+                "!", "@", "#", "$", "%", "Ω", "Ж", "中", "あ", "é", "€", "😀"
+            };
+            for (String candidate : common) addIfMatches(predicate, candidate, samples);
+            // Search Unicode only when the readable/common pool has no match.
+            if (samples.isEmpty()) {
+                for (int cp = 32; cp <= 0x2FFF && samples.size() < 48; cp++) {
+                    if (cp >= 0xD800 && cp <= 0xDFFF) continue;
+                    addIfMatches(predicate, new String(Character.toChars(cp)), samples);
+                }
+                int[] extra = {0x3042, 0x4E2D, 0xAC00, 0x1F600, 0x1F680, 0x1D400};
+                for (int cp : extra) addIfMatches(predicate, new String(Character.toChars(cp)), samples);
+            }
+            return samples;
+        }
+
+        private static void addIfMatches(Pattern predicate, String candidate, List<String> samples) {
+            if (samples.size() >= 48 || samples.contains(candidate)) return;
+            if (predicate.matcher(candidate).matches()) samples.add(candidate);
+        }
+    }
+
 }

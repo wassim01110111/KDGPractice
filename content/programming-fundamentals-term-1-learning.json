@@ -2043,7 +2043,7 @@
             "id": "string-text-block-scanner",
             "type": "stdout",
             "input": "Hello\n",
-            "expected": "(?s)^\\s*Hello\\s+Java!\\s+First\\s+line\\s+Second\\s+line\\s*$",
+            "expected": "(?s)^\\s*Hello\\s+Java!\\s*\\nFirst\\s+line\\s*\\nSecond\\s+line\\s*$",
             "matcher": "regex",
             "points": 0.5,
             "description": "Concatenates the greeting Hello with the fixed suffix."

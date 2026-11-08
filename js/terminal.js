@@ -6089,29 +6089,308 @@ function restoreArchiveNode(fs, raw, targetPath) {
 function generateFromRegex(input, options = {}) {
   const maxRepeat = options.maxRepeat ?? 3;
   const maxAttempts = options.maxAttempts ?? 100;
+  const maxLength = options.maxLength ?? 10000;
 
   let source;
   let flags = "";
+  const isRegExp = input instanceof RegExp;
 
-  if (input instanceof RegExp) {
+  if (isRegExp) {
     source = input.source;
-    flags = input.flags;
+    flags = input.flags.replace(/[gy]/g, "");
   } else {
     source = String(input);
+  }
 
-    // Support common inline dotAll syntax.
-    if (source.startsWith("(?s)")) {
-      source = source.slice(4);
-      flags += "s";
+  // Support leading inline flags: (?ims)
+  while (true) {
+    const inline = source.match(/^\(\?([ims]+)\)/);
+    if (!inline) break;
+
+    for (const flag of inline[1]) {
+      if (!flags.includes(flag)) flags += flag;
     }
+
+    source = source.slice(inline[0].length);
+  }
+
+  // Infer multiline mode for line-based lookahead patterns.
+  // Override with options.multiline if needed.
+  const hasLineLookahead =
+    /\(\?[=!]/.test(source) && /\^[\s\S]*\$/.test(source);
+
+  const multiline = options.multiline ?? (!isRegExp && hasLineLookahead);
+
+  if (multiline && !flags.includes("m")) {
+    flags += "m";
   }
 
   const original = new RegExp(source, flags);
 
+  function readGroup(text, start) {
+    let depth = 0;
+    let escaped = false;
+    let inClass = false;
+
+    for (let i = start; i < text.length; i++) {
+      const c = text[i];
+
+      if (escaped) {
+        escaped = false;
+        continue;
+      }
+
+      if (c === "\\") {
+        escaped = true;
+        continue;
+      }
+
+      if (c === "[" && !inClass) {
+        inClass = true;
+        continue;
+      }
+
+      if (c === "]" && inClass) {
+        inClass = false;
+        continue;
+      }
+
+      if (inClass) continue;
+
+      if (c === "(") depth++;
+
+      if (c === ")") {
+        depth--;
+
+        if (depth === 0) return i;
+      }
+    }
+
+    throw new Error("Unclosed group at position " + start);
+  }
+
+  function groupInfo(text, start) {
+    if (text.startsWith("(?=", start)) {
+      return { kind: "positive", bodyStart: start + 3 };
+    }
+
+    if (text.startsWith("(?!", start)) {
+      return { kind: "negative", bodyStart: start + 3 };
+    }
+
+    if (text.startsWith("(?<=", start)) {
+      return { kind: "lookbehind", bodyStart: start + 4 };
+    }
+
+    if (text.startsWith("(?<!", start)) {
+      return {
+        kind: "negativeLookbehind",
+        bodyStart: start + 4,
+      };
+    }
+
+    if (text.startsWith("(?:", start)) {
+      return { kind: "group", bodyStart: start + 3 };
+    }
+
+    if (text.startsWith("(?", start)) {
+      throw new Error("Unsupported inline group modifier at position " + start);
+    }
+
+    return { kind: "group", bodyStart: start + 1 };
+  }
+
+  // Collect positive lookaheads without treating assertions inside
+  // negative assertions as unconditional requirements.
+  function collectPositiveLookaheads(text, output = []) {
+    let escaped = false;
+    let inClass = false;
+
+    for (let i = 0; i < text.length; i++) {
+      const c = text[i];
+
+      if (escaped) {
+        escaped = false;
+        continue;
+      }
+
+      if (c === "\\") {
+        escaped = true;
+        continue;
+      }
+
+      if (c === "[" && !inClass) {
+        inClass = true;
+        continue;
+      }
+
+      if (c === "]" && inClass) {
+        inClass = false;
+        continue;
+      }
+
+      if (inClass || c !== "(") continue;
+
+      const info = groupInfo(text, i);
+      const end = readGroup(text, i);
+      const body = text.slice(info.bodyStart, end);
+
+      if (info.kind === "positive") {
+        output.push(body);
+        collectPositiveLookaheads(body, output);
+      } else if (info.kind === "group") {
+        collectPositiveLookaheads(body, output);
+      }
+
+      // Negative assertions are enforced during final validation.
+      i = end;
+    }
+
+    return output;
+  }
+
+  function decodeEscape(c) {
+    const controls = {
+      n: "\n",
+      r: "\r",
+      t: "\t",
+      f: "\f",
+      v: "\v",
+      0: "\0",
+    };
+
+    if (Object.prototype.hasOwnProperty.call(controls, c)) {
+      return controls[c];
+    }
+
+    if ("\\.^$|?*+()[]{}-".includes(c) || c === "/") {
+      return c;
+    }
+
+    return null;
+  }
+
+  // Extract exact literal lines from ^...$ expressions.
+  function extractAnchoredLiterals(text) {
+    const found = [];
+    let escaped = false;
+    let inClass = false;
+
+    for (let i = 0; i < text.length; i++) {
+      const c = text[i];
+
+      if (escaped) {
+        escaped = false;
+        continue;
+      }
+
+      if (c === "\\") {
+        escaped = true;
+        continue;
+      }
+
+      if (c === "[" && !inClass) {
+        inClass = true;
+        continue;
+      }
+
+      if (c === "]" && inClass) {
+        inClass = false;
+        continue;
+      }
+
+      if (inClass || c !== "^") continue;
+
+      let value = "";
+      let valid = true;
+      let j = i + 1;
+
+      for (; j < text.length; j++) {
+        const x = text[j];
+
+        if (x === "\\") {
+          const next = text[++j];
+
+          if (next === undefined) {
+            valid = false;
+            break;
+          }
+
+          const decoded = decodeEscape(next);
+
+          if (decoded === null) {
+            valid = false;
+            break;
+          }
+
+          value += decoded;
+          continue;
+        }
+
+        if (x === "$") break;
+
+        if (".^*+?()[]{}|".includes(x)) {
+          valid = false;
+          break;
+        }
+
+        value += x;
+      }
+
+      if (valid && j < text.length && text[j] === "$" && value.length > 0) {
+        found.push(value);
+        i = j;
+      }
+    }
+
+    return found;
+  }
+
+  const positiveBodies = collectPositiveLookaheads(source);
+
+  const requiredLines = [
+    ...new Set(positiveBodies.flatMap(extractAnchoredLiterals)),
+  ];
+
+  function validate(candidate) {
+    if (candidate.length > maxLength) return false;
+
+    original.lastIndex = 0;
+
+    return original.test(candidate);
+  }
+
+  // Generate candidates satisfying all extracted positive
+  // line requirements, then validate all assertions.
+  if (requiredLines.length) {
+    const separator = options.separator ?? "\n";
+
+    const orders = [requiredLines];
+
+    for (let i = 1; i < requiredLines.length; i++) {
+      orders.push(requiredLines.slice(i).concat(requiredLines.slice(0, i)));
+    }
+
+    orders.push([...requiredLines].reverse());
+
+    for (
+      let attempt = 0;
+      attempt < Math.min(maxAttempts, orders.length);
+      attempt++
+    ) {
+      const candidate = orders[attempt].join(separator);
+
+      if (validate(candidate)) {
+        return candidate;
+      }
+    }
+  }
+
+  // Generic AST-based fallback.
   let pos = 0;
 
-  function peek() {
-    return source[pos];
+  function peek(offset = 0) {
+    return source[pos + offset];
   }
 
   function consume() {
@@ -6126,7 +6405,9 @@ function generateFromRegex(input, options = {}) {
       alternatives.push(parseSequence());
     }
 
-    return { type: "alt", alternatives };
+    return alternatives.length === 1
+      ? alternatives[0]
+      : { type: "alt", alternatives };
   }
 
   function parseSequence() {
@@ -6157,19 +6438,19 @@ function generateFromRegex(input, options = {}) {
       min = 0;
       max = 1;
     } else if (peek() === "{") {
-      const remaining = source.slice(pos);
-      const match = remaining.match(/^\{(\d+)(?:,(\d*))?\}/);
+      const m = source.slice(pos).match(/^\{(\d+)(?:,(\d*))?\}/);
 
-      if (match) {
-        pos += match[0].length;
-        min = Number(match[1]);
+      if (m) {
+        pos += m[0].length;
+
+        min = Number(m[1]);
 
         max =
-          match[2] === undefined
+          m[2] === undefined
             ? min
-            : match[2] === ""
+            : m[2] === ""
               ? maxRepeat
-              : Math.min(Number(match[2]), maxRepeat);
+              : Math.min(Number(m[2]), maxRepeat);
       }
     }
 
@@ -6177,116 +6458,138 @@ function generateFromRegex(input, options = {}) {
       node = { type: "repeat", node, min, max };
     }
 
-    // Ignore lazy quantifier modifier.
+    // Lazy quantifier modifier.
     if (peek() === "?") consume();
 
     return node;
   }
 
   function parseAtom() {
-    const char = consume();
+    const c = consume();
 
-    if (char === undefined) {
+    if (c === undefined) {
       throw new Error("Unexpected end of regex");
     }
 
-    if (char === "^" || char === "$") {
+    if (c === "^" || c === "$") {
       return { type: "empty" };
     }
 
-    if (char === ".") {
-      return { type: "dot" };
+    if (c === ".") {
+      return { type: "literal", value: "a" };
     }
 
-    if (char === "[") {
+    if (c === "\\") {
+      const e = consume();
+
+      if (e === undefined) {
+        throw new Error("Incomplete escape");
+      }
+
+      const controls = {
+        n: "\n",
+        r: "\r",
+        t: "\t",
+        f: "\f",
+        v: "\v",
+      };
+
+      if (e in controls) {
+        return { type: "literal", value: controls[e] };
+      }
+
+      if (e === "d") {
+        return { type: "class", content: "0-9" };
+      }
+
+      if (e === "D") {
+        return { type: "class", content: "^0-9" };
+      }
+
+      if (e === "w") {
+        return {
+          type: "class",
+          content: "a-zA-Z0-9_",
+        };
+      }
+
+      if (e === "W") {
+        return {
+          type: "class",
+          content: "^a-zA-Z0-9_",
+        };
+      }
+
+      if (e === "s") {
+        return {
+          type: "class",
+          content: " \\t\\n\\r\\f\\v",
+        };
+      }
+
+      if (e === "S") {
+        return {
+          type: "class",
+          content: "^ \\t\\n\\r\\f\\v",
+        };
+      }
+
+      if ("bBAZz".includes(e)) {
+        return { type: "empty" };
+      }
+
+      if (e === "x" || e === "u") {
+        const size = e === "x" ? 2 : 4;
+        const hex = source.slice(pos, pos + size);
+
+        if (!new RegExp("^[0-9a-f]{" + size + "}$", "i").test(hex)) {
+          throw new Error("Invalid hex escape");
+        }
+
+        pos += size;
+
+        return {
+          type: "literal",
+          value: String.fromCharCode(parseInt(hex, 16)),
+        };
+      }
+
+      return { type: "literal", value: e };
+    }
+
+    if (c === "[") {
       let content = "";
       let escaped = false;
+      let closed = false;
 
       while (pos < source.length) {
-        const c = consume();
+        const x = consume();
 
-        if (c === "]" && !escaped) break;
+        if (x === "]" && !escaped) {
+          closed = true;
+          break;
+        }
 
-        content += c;
+        content += x;
 
-        if (c === "\\" && !escaped) {
+        if (x === "\\" && !escaped) {
           escaped = true;
         } else {
           escaped = false;
         }
       }
 
+      if (!closed) {
+        throw new Error("Unclosed character class");
+      }
+
       return { type: "class", content };
     }
 
-    if (char === "\\") {
-      const escaped = consume();
+    if (c === "(") {
+      const info = groupInfo(source, pos - 1);
 
-      if (escaped === undefined) {
-        throw new Error("Incomplete escape");
-      }
-
-      if (escaped === "d") return { type: "literal", value: "0" };
-      if (escaped === "w") return { type: "literal", value: "a" };
-      if (escaped === "s") return { type: "literal", value: " " };
-
-      if (escaped === "D") return { type: "class", content: "^0-9" };
-      if (escaped === "W") return { type: "class", content: "^a-zA-Z0-9_" };
-      if (escaped === "S")
-        return { type: "class", content: "^ \\t\\n\\r\\f\\v" };
-
-      if (escaped === "n") return { type: "literal", value: "\n" };
-      if (escaped === "r") return { type: "literal", value: "\r" };
-      if (escaped === "t") return { type: "literal", value: "\t" };
-      if (escaped === "f") return { type: "literal", value: "\f" };
-      if (escaped === "v") return { type: "literal", value: "\v" };
-
-      // Zero-width assertions.
-      if ("bBAZz".includes(escaped)) {
-        return { type: "empty" };
-      }
-
-      // Hexadecimal escape.
-      if (escaped === "x") {
-        const hex = source.slice(pos, pos + 2);
-        if (!/^[0-9a-f]{2}$/i.test(hex)) {
-          throw new Error("Invalid hex escape");
-        }
-        pos += 2;
-        return {
-          type: "literal",
-          value: String.fromCharCode(parseInt(hex, 16)),
-        };
-      }
-
-      // Unicode escape.
-      if (escaped === "u") {
-        const hex = source.slice(pos, pos + 4);
-        if (!/^[0-9a-f]{4}$/i.test(hex)) {
-          throw new Error("Invalid Unicode escape");
-        }
-        pos += 4;
-        return {
-          type: "literal",
-          value: String.fromCharCode(parseInt(hex, 16)),
-        };
-      }
-
-      return { type: "literal", value: escaped };
-    }
-
-    if (char === "(") {
-      if (peek() === "?") {
-        consume();
-
-        if (peek() === ":") {
-          consume();
-        } else {
-          throw new Error(
-            "Lookarounds and inline group modifiers are not supported",
-          );
-        }
-      }
+      pos = info.bodyStart;
 
       const node = parseExpression();
 
@@ -6294,52 +6597,56 @@ function generateFromRegex(input, options = {}) {
         throw new Error("Unclosed group");
       }
 
-      return node;
+      return info.kind === "group" ? node : { type: info.kind, node };
     }
 
-    return { type: "literal", value: char };
+    return { type: "literal", value: c };
   }
 
-  function generate(node) {
+  function generate(node, attempt) {
     switch (node.type) {
       case "empty":
+      case "positive":
+      case "negative":
+      case "lookbehind":
+      case "negativeLookbehind":
         return "";
 
       case "literal":
         return node.value;
 
-      case "dot":
-        return "\na".slice(1);
-
       case "class": {
-        const regex = new RegExp("^(?:[" + node.content + "])$", flags);
+        const re = new RegExp("^(?:[" + node.content + "])$", flags);
 
         const candidates =
           "aAzZ019_ -!@#$%^&*()[]{} \t\n\r" +
           "abcdefghijklmnopqrstuvwxyz" +
-          "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
-          "0123456789";
+          "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
-        for (const c of candidates) {
-          if (regex.test(c)) return c;
+        for (const ch of candidates) {
+          if (re.test(ch)) return ch;
         }
 
         throw new Error(
-          "Could not find a character for class: [" + node.content + "]",
+          "No candidate for character class [" + node.content + "]",
         );
       }
 
       case "seq":
-        return node.nodes.map(generate).join("");
+        return node.nodes.map((n) => generate(n, attempt)).join("");
 
       case "alt":
-        return generate(node.alternatives[0]);
+        return generate(
+          node.alternatives[attempt % node.alternatives.length],
+          attempt,
+        );
 
       case "repeat": {
-        const count = node.min;
-        return Array.from({ length: count }, () => generate(node.node)).join(
-          "",
-        );
+        const count = node.min + (attempt % (node.max - node.min + 1));
+
+        return Array.from({ length: count }, () =>
+          generate(node.node, attempt),
+        ).join("");
       }
 
       default:
@@ -6347,26 +6654,26 @@ function generateFromRegex(input, options = {}) {
     }
   }
 
-  // Try different alternatives if the first generated candidate
-  // doesn't pass validation.
+  pos = 0;
+
+  const ast = parseExpression();
+
+  if (pos !== source.length) {
+    throw new Error("Unexpected regex syntax at position " + pos);
+  }
+
   for (let attempt = 0; attempt < maxAttempts; attempt++) {
-    try {
-      const result = generate(parseExpression());
+    const candidate = generate(ast, attempt);
 
-      if (original.test(result)) {
-        return result;
-      }
-    } catch (error) {
-      if (attempt === maxAttempts - 1) throw error;
+    if (validate(candidate)) {
+      return candidate;
     }
-
-    // Reset parser for another attempt.
-    pos = 0;
   }
 
   throw new Error(
     "Could not generate a matching string. " +
-      "The pattern may use unsupported regex features.",
+      "The pattern may require constraints beyond " +
+      "this generator's bounded search.",
   );
 }
 
@@ -6482,7 +6789,7 @@ function gradeFilesystem(
                           // as an invalid grading regex.
                         }
                       }
-                      feedback = `File content bryv did not match the required pattern: ${example}`;
+                      feedback = `File content did not match the required pattern: ${example.replaceAll("\n", "")}`;
                     }
                   } catch (error) {
                     feedback = `Invalid check regex: ${error.message}`;
@@ -8486,7 +8793,10 @@ export async function mountTerminalExercise({
         continue;
       }
       if (character === ";" || character === "|" || character === "&") {
-        if ((character === "|" || character === "&") && before[i + 1] === character)
+        if (
+          (character === "|" || character === "&") &&
+          before[i + 1] === character
+        )
           i++;
         segmentStart = i + 1;
         tokenStart = i + 1;
@@ -8499,24 +8809,44 @@ export async function mountTerminalExercise({
     // A token containing an opening quote is matched using its content. The
     // quote itself stays in the input, while inserted shell metacharacters
     // remain escaped when they are not already protected by that quote.
-    const openingQuote = rawPrefix[0] === "'" || rawPrefix[0] === '"'
-      ? rawPrefix[0]
-      : "";
-    const prefix = (openingQuote ? rawPrefix.slice(1) : rawPrefix).replace(/\\(.)/g, "$1");
+    const openingQuote =
+      rawPrefix[0] === "'" || rawPrefix[0] === '"' ? rawPrefix[0] : "";
+    const prefix = (openingQuote ? rawPrefix.slice(1) : rawPrefix).replace(
+      /\\(.)/g,
+      "$1",
+    );
     const priorText = before.slice(segmentStart, tokenStart).trim();
     const priorWords = priorText ? priorText.split(/\s+/) : [];
     const isCommandPosition = () => {
       if (!priorWords.length) return true;
-      if (priorWords.length === 1 && ["sudo", "command", "env", "nohup", "time"].includes(priorWords[0]))
+      if (
+        priorWords.length === 1 &&
+        ["sudo", "command", "env", "nohup", "time"].includes(priorWords[0])
+      )
         return true;
       // Common sudo option forms: sudo -u USER COMMAND and sudo -g GROUP COMMAND.
       if (priorWords[0] === "sudo") {
         let i = 1;
         while (i < priorWords.length) {
           const word = priorWords[i];
-          if (["-u", "--user", "-g", "--group", "-h", "--host", "-p", "--prompt"].includes(word)) {
+          if (
+            [
+              "-u",
+              "--user",
+              "-g",
+              "--group",
+              "-h",
+              "--host",
+              "-p",
+              "--prompt",
+            ].includes(word)
+          ) {
             i += 2;
-          } else if (/^-(?:[AHEknPSbV]|-preserve-env(?:=.*)?|-reset-timestamp)$/.test(word)) {
+          } else if (
+            /^-(?:[AHEknPSbV]|-preserve-env(?:=.*)?|-reset-timestamp)$/.test(
+              word,
+            )
+          ) {
             i++;
           } else {
             return false;
@@ -8528,7 +8858,8 @@ export async function mountTerminalExercise({
     };
 
     let candidates = [];
-    const commandPosition = isCommandPosition() && !prefix.includes("/") && !prefix.startsWith("~");
+    const commandPosition =
+      isCommandPosition() && !prefix.includes("/") && !prefix.startsWith("~");
     if (commandPosition) {
       candidates = [...new Set([...BUILTINS, ...shell.aliases.keys()])]
         .filter((name) => name.startsWith(prefix))
@@ -8539,17 +8870,22 @@ export async function mountTerminalExercise({
         expandedPrefix = shell.env.HOME + expandedPrefix.slice(1);
       const slash = expandedPrefix.lastIndexOf("/");
       const directory = slash >= 0 ? expandedPrefix.slice(0, slash + 1) : "";
-      const basename = slash >= 0 ? expandedPrefix.slice(slash + 1) : expandedPrefix;
+      const basename =
+        slash >= 0 ? expandedPrefix.slice(slash + 1) : expandedPrefix;
       const originalSlash = prefix.lastIndexOf("/");
-      const originalDirectory = originalSlash >= 0 ? prefix.slice(0, originalSlash + 1) : "";
+      const originalDirectory =
+        originalSlash >= 0 ? prefix.slice(0, originalSlash + 1) : "";
       const directoryPath = directory || ".";
       try {
         const node = shell.fs.resolve(directoryPath).node;
         if (node.type === "directory") {
           candidates = [...node.children.values()]
             .filter((entry) => entry.name.startsWith(basename))
-            .map((entry) =>
-              originalDirectory + entry.name + (entry.type === "directory" ? "/" : ""),
+            .map(
+              (entry) =>
+                originalDirectory +
+                entry.name +
+                (entry.type === "directory" ? "/" : ""),
             )
             .sort();
         }
@@ -8561,19 +8897,28 @@ export async function mountTerminalExercise({
     if (!candidates.length) return;
     const unique = candidates.length === 1;
     const replacement = unique ? candidates[0] : commonPrefix(candidates);
-    const shouldInsert = replacement.length > prefix.length || (unique && !replacement.endsWith("/"));
+    const shouldInsert =
+      replacement.length > prefix.length ||
+      (unique && !replacement.endsWith("/"));
     if (shouldInsert) {
       // Keep paths with spaces and shell metacharacters usable when inserted
       // into an unquoted token. Inside an already-open quote, preserve spaces
       // and escape only the matching quote/backslash characters.
       const escapedReplacement = openingQuote
-        ? replacement.replace(new RegExp(`[\\\\${openingQuote}]`, "g"), "\\\\$&")
+        ? replacement.replace(
+            new RegExp(`[\\\\${openingQuote}]`, "g"),
+            "\\\\$&",
+          )
         : replacement.replace(/([\\\s"'`$&;()])/g, "\\$1");
-      const suffix = unique && !replacement.endsWith("/")
-        ? openingQuote ? openingQuote + " " : " "
-        : "";
+      const suffix =
+        unique && !replacement.endsWith("/")
+          ? openingQuote
+            ? openingQuote + " "
+            : " "
+          : "";
       const inserted = escapedReplacement + suffix;
-      const nextValue = value.slice(0, tokenStart) + inserted + value.slice(cursor);
+      const nextValue =
+        value.slice(0, tokenStart) + inserted + value.slice(cursor);
       input.value = nextValue;
       const nextCursor = tokenStart + inserted.length;
       try {
