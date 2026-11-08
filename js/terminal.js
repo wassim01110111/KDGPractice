@@ -7644,8 +7644,15 @@ export async function mountTerminalExercise({
   const output = (value, error = false) =>
     appendOutput(screen, value, error ? "err" : "");
   const syncInputHighlight = () => {
-    input.style.height = "auto";
-    input.style.height = `${input.scrollHeight}px`;
+    // The terminal control is a single-line input. Do not size it from
+    // scrollHeight: unlike a textarea, an input does not grow with its text
+    // and some browsers report a zero scrollHeight for it.
+    if (input.tagName === "TEXTAREA") {
+      input.style.height = "auto";
+      input.style.height = `${input.scrollHeight}px`;
+    } else {
+      input.style.height = "";
+    }
     if (activePromptMode === "secret")
       inputHighlightContent.textContent = "•".repeat(input.value.length);
     else if (input.value)
@@ -8446,15 +8453,83 @@ export async function mountTerminalExercise({
     return prefix;
   };
   const completeInput = () => {
-    if (!shell || activePrompt || outputBusy) return;
+    if (!shell || activePrompt || outputBusy || input.disabled) return;
+
     const value = input.value;
     const cursor = input.selectionStart ?? value.length;
     const before = value.slice(0, cursor);
-    const match = before.match(/(?:^|[\s;|&])([^\s;|&]*)$/);
-    const prefix = match ? match[1] : "";
-    const start = cursor - prefix.length;
+
+    // Find the current token without treating whitespace or shell operators
+    // inside quotes/escaped sequences as token boundaries. Also remember the
+    // start of the current command segment so command names can be completed
+    // after ;, |, &&, and || (and after sudo).
+    let quote = null;
+    let escaped = false;
+    let tokenStart = 0;
+    let segmentStart = 0;
+    for (let i = 0; i < before.length; i++) {
+      const character = before[i];
+      if (escaped) {
+        escaped = false;
+        continue;
+      }
+      if (character === "\\" && quote !== "'") {
+        escaped = true;
+        continue;
+      }
+      if (quote) {
+        if (character === quote) quote = null;
+        continue;
+      }
+      if (character === "'" || character === '"') {
+        quote = character;
+        continue;
+      }
+      if (character === ";" || character === "|" || character === "&") {
+        if ((character === "|" || character === "&") && before[i + 1] === character)
+          i++;
+        segmentStart = i + 1;
+        tokenStart = i + 1;
+        continue;
+      }
+      if (/\s/.test(character)) tokenStart = i + 1;
+    }
+
+    const rawPrefix = before.slice(tokenStart);
+    // A token containing an opening quote is matched using its content. The
+    // quote itself stays in the input, while inserted shell metacharacters
+    // remain escaped when they are not already protected by that quote.
+    const openingQuote = rawPrefix[0] === "'" || rawPrefix[0] === '"'
+      ? rawPrefix[0]
+      : "";
+    const prefix = (openingQuote ? rawPrefix.slice(1) : rawPrefix).replace(/\\(.)/g, "$1");
+    const priorText = before.slice(segmentStart, tokenStart).trim();
+    const priorWords = priorText ? priorText.split(/\s+/) : [];
+    const isCommandPosition = () => {
+      if (!priorWords.length) return true;
+      if (priorWords.length === 1 && ["sudo", "command", "env", "nohup", "time"].includes(priorWords[0]))
+        return true;
+      // Common sudo option forms: sudo -u USER COMMAND and sudo -g GROUP COMMAND.
+      if (priorWords[0] === "sudo") {
+        let i = 1;
+        while (i < priorWords.length) {
+          const word = priorWords[i];
+          if (["-u", "--user", "-g", "--group", "-h", "--host", "-p", "--prompt"].includes(word)) {
+            i += 2;
+          } else if (/^-(?:[AHEknPSbV]|-preserve-env(?:=.*)?|-reset-timestamp)$/.test(word)) {
+            i++;
+          } else {
+            return false;
+          }
+        }
+        return true;
+      }
+      return false;
+    };
+
     let candidates = [];
-    if (!before.slice(0, start).trim()) {
+    const commandPosition = isCommandPosition() && !prefix.includes("/") && !prefix.startsWith("~");
+    if (commandPosition) {
       candidates = [...new Set([...BUILTINS, ...shell.aliases.keys()])]
         .filter((name) => name.startsWith(prefix))
         .sort();
@@ -8464,33 +8539,51 @@ export async function mountTerminalExercise({
         expandedPrefix = shell.env.HOME + expandedPrefix.slice(1);
       const slash = expandedPrefix.lastIndexOf("/");
       const directory = slash >= 0 ? expandedPrefix.slice(0, slash + 1) : "";
-      const basename =
-        slash >= 0 ? expandedPrefix.slice(slash + 1) : expandedPrefix;
+      const basename = slash >= 0 ? expandedPrefix.slice(slash + 1) : expandedPrefix;
+      const originalSlash = prefix.lastIndexOf("/");
+      const originalDirectory = originalSlash >= 0 ? prefix.slice(0, originalSlash + 1) : "";
       const directoryPath = directory || ".";
       try {
         const node = shell.fs.resolve(directoryPath).node;
         if (node.type === "directory") {
           candidates = [...node.children.values()]
             .filter((entry) => entry.name.startsWith(basename))
-            .map(
-              (entry) =>
-                directory +
-                entry.name +
-                (entry.type === "directory" ? "/" : ""),
+            .map((entry) =>
+              originalDirectory + entry.name + (entry.type === "directory" ? "/" : ""),
             )
             .sort();
         }
-      } catch {}
+      } catch {
+        // A non-existent path prefix has no filesystem completions.
+      }
     }
+
     if (!candidates.length) return;
-    const replacement =
-      candidates.length === 1 ? candidates[0] : commonPrefix(candidates);
-    if (replacement.length > prefix.length) {
-      const escaped = replacement.replace(/([\\s"'`$&;()])/g, "\\\\$1");
-      input.setRangeText(escaped, start, cursor, "end");
+    const unique = candidates.length === 1;
+    const replacement = unique ? candidates[0] : commonPrefix(candidates);
+    const shouldInsert = replacement.length > prefix.length || (unique && !replacement.endsWith("/"));
+    if (shouldInsert) {
+      // Keep paths with spaces and shell metacharacters usable when inserted
+      // into an unquoted token. Inside an already-open quote, preserve spaces
+      // and escape only the matching quote/backslash characters.
+      const escapedReplacement = openingQuote
+        ? replacement.replace(new RegExp(`[\\\\${openingQuote}]`, "g"), "\\\\$&")
+        : replacement.replace(/([\\\s"'`$&;()])/g, "\\$1");
+      const suffix = unique && !replacement.endsWith("/")
+        ? openingQuote ? openingQuote + " " : " "
+        : "";
+      const inserted = escapedReplacement + suffix;
+      const nextValue = value.slice(0, tokenStart) + inserted + value.slice(cursor);
+      input.value = nextValue;
+      const nextCursor = tokenStart + inserted.length;
+      try {
+        input.setSelectionRange(nextCursor, nextCursor);
+      } catch {
+        // Older embedded browsers may not expose selection APIs on inputs.
+      }
       syncInputHighlight();
     }
-    if (candidates.length > 1) output(candidates.join("    ") + "\\n");
+    if (candidates.length > 1) output(candidates.join("    ") + "\n");
   };
   const updateReverseSearch = () => {
     if (!reverseSearch) return;
@@ -8511,13 +8604,17 @@ export async function mountTerminalExercise({
   });
   input.addEventListener("keydown", (event) => {
     if (reverseSearch) {
-      if (event.key === "Enter") {
+      if (event.key === "Enter" || event.key === "Tab") {
         event.preventDefault();
         input.value = reverseSearch.match || input.value;
         reverseSearch = null;
         input.placeholder = "Type a command and press Enter";
+        try {
+          input.setSelectionRange(input.value.length, input.value.length);
+        } catch {}
         syncInputHighlight();
         status.textContent = "Ready";
+        if (event.key === "Tab") completeInput();
       } else if (
         event.key === "Escape" ||
         ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "g")
@@ -8545,8 +8642,8 @@ export async function mountTerminalExercise({
         completeSecret(value);
         return;
       }
-      // The textarea can receive synthetic events even while disabled. Guard
-      // this path too, so an early Enter never dereferences an unready shell.
+      // Guard synthetic/racing events too, so an early Enter never
+      // dereferences an unready shell.
       if (!shell || disposed) {
         event.preventDefault();
         return;
@@ -8659,8 +8756,19 @@ export async function mountTerminalExercise({
       }
     } else if (key === "ArrowUp" || key === "ArrowDown")
       input.dispatchEvent(new KeyboardEvent("keydown", { key }));
-    else if (key === "Tab") completeInput();
-    else if (key === "Escape") {
+    else if (key === "Tab") {
+      if (reverseSearch) {
+        input.value = reverseSearch.match || input.value;
+        reverseSearch = null;
+        input.placeholder = "Type a command and press Enter";
+        try {
+          input.setSelectionRange(input.value.length, input.value.length);
+        } catch {}
+        syncInputHighlight();
+        status.textContent = "Ready";
+      }
+      completeInput();
+    } else if (key === "Escape") {
       if (activePrompt) completeSecret("");
     }
     focusInput();

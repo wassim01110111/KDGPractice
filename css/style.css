@@ -8410,7 +8410,9 @@ body.exercise-split-dragging {
 }
 .os-terminal .ot-input-row {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
+
   gap: 0.7rem;
   min-height: 3.2rem;
   padding: 0.55rem 0.95rem;
@@ -9770,8 +9772,6 @@ textarea:hover:not(:disabled) {
   }
   .os-terminal .ot-input-row {
     padding: 0.7rem 0.55rem;
-    flex-direction: column;
-    align-items: flex-start;
   }
   .os-terminal .ot-prompt {
     font-size: 12px;
