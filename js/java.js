@@ -879,13 +879,15 @@ function loadCodeMirror() {
     import("https://esm.sh/@codemirror/lang-java@6.0.2"),
     import("https://esm.sh/@codemirror/theme-one-dark"),
     import("https://esm.sh/@codemirror/state@6"),
+    import("https://esm.sh/@codemirror/commands@6"),
   ])
-    .then(([core, language, javaLanguage, oneDark, state]) => ({
+    .then(([core, language, javaLanguage, oneDark, state, commands]) => ({
       ...core,
       ...language,
       ...javaLanguage,
       ...oneDark,
       ...state,
+      ...commands,
     }))
     .catch((error) => {
       codeMirrorModulePromise = null;
@@ -1473,8 +1475,15 @@ export async function mountJavaExercise({
   });
 
   try {
-    const { basicSetup, EditorView, java, indentUnit, oneDark, Compartment } =
-      await loadCodeMirror();
+    const {
+      basicSetup,
+      EditorView,
+      java,
+      indentUnit,
+      oneDark,
+      Compartment,
+      indentLess,
+    } = await loadCodeMirror();
     if (disposed) return { getSource, dispose: () => {} };
     themeCompartment = new Compartment();
     const activeTheme = () =>
@@ -1494,13 +1503,20 @@ export async function mountJavaExercise({
           keydown(event, view) {
             if (
               event.key !== "Tab" ||
-              event.shiftKey ||
               event.altKey ||
               event.ctrlKey ||
               event.metaKey
             )
               return false;
+
             event.preventDefault();
+            if (event.shiftKey) {
+              // Match IDE behavior: reduce indentation on the current line
+              // or every selected line, using the configured indent unit.
+              indentLess(view);
+              return true;
+            }
+
             const selection = view.state.selection.main;
             const spaces = "    ";
             view.dispatch({
@@ -1548,16 +1564,62 @@ export async function mountJavaExercise({
       fallback.addEventListener("keydown", (event) => {
         if (
           event.key !== "Tab" ||
-          event.shiftKey ||
           event.altKey ||
           event.ctrlKey ||
           event.metaKey
         )
           return;
         event.preventDefault();
+
+        const value = fallback.value;
         const start = fallback.selectionStart;
         const end = fallback.selectionEnd;
-        fallback.setRangeText("    ", start, end, "end");
+
+        if (event.shiftKey) {
+          // Textarea fallback: outdent the current line or selected lines.
+          const firstLineStart = value.lastIndexOf("\n", start - 1) + 1;
+          const lastLineStart =
+            end > start && value[end - 1] === "\n"
+              ? value.lastIndexOf("\n", end - 2) + 1
+              : value.lastIndexOf("\n", Math.max(start, end - 1)) + 1;
+          const edits = [];
+          for (
+            let lineStart = firstLineStart;
+            lineStart <= lastLineStart && lineStart < value.length;
+          ) {
+            let remove = 0;
+            if (value[lineStart] === "\t") remove = 1;
+            else {
+              while (
+                remove < 4 &&
+                value[lineStart + remove] === " "
+              ) remove++;
+            }
+            if (remove) edits.push({ from: lineStart, to: lineStart + remove });
+            const newline = value.indexOf("\n", lineStart);
+            if (newline < 0) break;
+            lineStart = newline + 1;
+          }
+
+          const mapPosition = (position) =>
+            position -
+            edits.reduce(
+              (total, edit) =>
+                total + Math.min(edit.to - edit.from, Math.max(0, position - edit.from)),
+              0,
+            );
+          const nextStart = mapPosition(start);
+          const nextEnd = mapPosition(end);
+          let nextValue = value;
+          for (const edit of edits.reverse()) {
+            nextValue =
+              nextValue.slice(0, edit.from) + nextValue.slice(edit.to);
+          }
+          fallback.value = nextValue;
+          fallback.setSelectionRange(nextStart, nextEnd);
+        } else {
+          fallback.setRangeText("    ", start, end, "end");
+        }
         source = fallback.value;
         onChange(source);
       });
