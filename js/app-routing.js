@@ -10,6 +10,7 @@ const ROUTE_OUT_MS = 140,
 const SITE_VERSION_CHECK_INTERVAL = 60 * 60 * 1000;
 const SITE_VERSION_NOTICE_DURATION = 60 * 1000;
 let siteVersion = null;
+let siteVersionLastRetrievedAt = null;
 let siteVersionLastCheckedAt = 0;
 let siteVersionPendingNotice = null;
 let siteVersionForceApplied = null;
@@ -17,6 +18,45 @@ let siteVersionCheckPromise = null;
 let siteVersionDismissedThisSession = null;
 let siteVersionNoticeTimer = 0;
 let siteVersionNoticeElement = null;
+let makerVersionDetailsElement = null;
+
+function formatSiteVersionRetrievedTime(timestamp) {
+  if (timestamp === null || timestamp === undefined) return "--:--";
+  const date = new Date(timestamp);
+  return `${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}`;
+}
+function renderMakerVersionDetails({ unavailable = false } = {}) {
+  if (!makerVersionDetailsElement?.isConnected) return;
+  const rows = [];
+  if (siteVersion === null) {
+    rows.push(
+      h(
+        "p",
+        { class: "maker-secret-version" },
+        unavailable
+          ? "Website version: unavailable"
+          : "Website version: checking…",
+      ),
+    );
+  } else {
+    rows.push(
+      h(
+        "p",
+        {},
+        h("strong", {}, "[ VER ] "),
+        `Website version: ${siteVersion} · Last retrieved: ${formatSiteVersionRetrievedTime(siteVersionLastRetrievedAt)}`,
+      ),
+    );
+  }
+  if (
+    siteVersion !== null &&
+    siteVersionPendingNotice !== null &&
+    siteVersionPendingNotice > siteVersion
+  ) {
+    rows.push(h("p", {}, `New version available: ${siteVersionPendingNotice}`));
+  }
+  makerVersionDetailsElement.replaceChildren(...rows);
+}
 
 function numericSiteVersion(value) {
   if (value === null || value === undefined || value === "") return null;
@@ -51,7 +91,11 @@ function showPendingSiteVersionNotice() {
       "div",
       { class: "site-update-copy" },
       h("strong", {}, "The website has been updated."),
-      h("p", {}, "Reload to get the latest version, or discard this notice for now."),
+      h(
+        "p",
+        {},
+        "Reload to get the latest version, or discard this notice for now.",
+      ),
     ),
     h(
       "div",
@@ -140,7 +184,18 @@ async function checkSiteVersion() {
 
       // The first successful fetch establishes the version this page runs.
       // Keep it unchanged for this page's lifetime, even after finding an update.
-      if (siteVersion === null) siteVersion = incomingVersion;
+      if (siteVersion === null) {
+        siteVersion = incomingVersion;
+        siteVersionLastRetrievedAt = Date.now();
+      } else if (incomingVersion === siteVersion) {
+        // Refresh the confirmation time whenever version.json still reports
+        // the exact version served by this page.
+        siteVersionLastRetrievedAt = Date.now();
+        if (siteVersionPendingNotice !== null) {
+          siteVersionPendingNotice = null;
+          hideSiteVersionNotice(incomingVersion, { dismissed: false });
+        }
+      }
 
       const appliedForceKey = `${siteVersion}:${forceUpdate ?? 0}`;
       // forceUpdate is the minimum version allowed to keep running. Reload when
@@ -153,7 +208,9 @@ async function checkSiteVersion() {
         siteVersionForceApplied = appliedForceKey;
         siteVersionPendingNotice = null;
         hideSiteVersionNotice(incomingVersion, { dismissed: false });
-        await reloadSiteWithoutCache(`forced-${incomingVersion}-${forceUpdate}`);
+        await reloadSiteWithoutCache(
+          `forced-${incomingVersion}-${forceUpdate}`,
+        );
         return;
       }
 
@@ -163,6 +220,7 @@ async function checkSiteVersion() {
         siteVersionPendingNotice = incomingVersion;
       }
       showPendingSiteVersionNotice();
+      renderMakerVersionDetails();
     } catch (error) {
       // Version checks are opportunistic: a network failure must never block navigation.
       console.warn("Website version check skipped:", error);
@@ -760,6 +818,11 @@ function openMakerSecretConsole() {
   makerSecretOpen = true;
   achTrack((stats) => void stats.signToggles++, { full: false });
 
+  const makerVersionDetails = h("div", {
+    class: "maker-secret-version-details",
+    "aria-live": "polite",
+  });
+  makerVersionDetailsElement = makerVersionDetails;
   const dialog = h(
     "dialog",
     {
@@ -767,34 +830,90 @@ function openMakerSecretConsole() {
       "aria-labelledby": "maker-secret-title",
       "aria-describedby": "maker-secret-description",
     },
-    h("div", { class: "maker-secret-content" },
+    h(
+      "div",
+      { class: "maker-secret-content" },
       h("p", { class: "maker-secret-kicker" }, "UNLISTED // DEVELOPER CHANNEL"),
       h("h2", { id: "maker-secret-title" }, "Well, this is awkward."),
-      h("p", { id: "maker-secret-description", class: "maker-secret-description" },
-        "You found the maintenance console. It mostly contains things the developer meant to fix later."),
-      h("div", { class: "maker-secret-log", "aria-label": "Developer console diagnostics" },
-        h("p", {}, h("strong", {}, "[ OK ] "), "CSS cascade: contained (mostly)"),
-        h("p", {}, h("strong", {}, "[ OK ] "), "Study progress: safely stored"),
-        h("p", {}, h("strong", {}, "[ WARN ] "), "One more tiny refactor is pending"),
-        h("p", {}, h("strong", {}, "[ INFO ] "), "Coffee dependency: unresolved"),
-        h("p", { class: "maker-secret-success" }, "ACCESS GRANTED // YOU WERE NEVER SUPPOSED TO FIND THIS"),
+      h(
+        "p",
+        { id: "maker-secret-description", class: "maker-secret-description" },
+        "You found the maintenance console. It mostly contains things the developer meant to fix later.",
       ),
-      h("div", { class: "maker-secret-footer" },
+      h(
+        "div",
+        {
+          class: "maker-secret-log",
+          "aria-label": "Developer console diagnostics",
+        },
+        h(
+          "p",
+          {},
+          h("strong", {}, "[ OK ] "),
+          "CSS cascade: contained (mostly)",
+        ),
+        h("p", {}, h("strong", {}, "[ OK ] "), "Study progress: safely stored"),
+        h(
+          "p",
+          {},
+          h("strong", {}, "[ WARN ] "),
+          "One more tiny refactor is pending",
+        ),
+        h(
+          "p",
+          {},
+          h("strong", {}, "[ INFO ] "),
+          "Coffee dependency: unresolved",
+        ),
+        h(
+          "p",
+          { class: "maker-secret-success" },
+          "ACCESS GRANTED // YOU WERE NEVER SUPPOSED TO FIND THIS",
+        ),
+        makerVersionDetails,
+      ),
+      h(
+        "div",
+        { class: "maker-secret-footer" },
         h("span", {}, "SESSION: LOCAL ONLY"),
-        h("button", { type: "button", class: "sec", onclick: () => dialog.close() }, "Back to work"),
+        h(
+          "button",
+          { type: "button", class: "sec", onclick: () => dialog.close() },
+          "Back to work",
+        ),
       ),
     ),
   );
 
-  dialog.addEventListener("close", () => {
-    dialog.remove();
-    makerSecretOpen = false;
-    if (wassimSign instanceof HTMLElement && wassimSign.isConnected) {
-      try { wassimSign.focus({ preventScroll: true }); }
-      catch { wassimSign.focus(); }
-    }
-  }, { once: true });
+  dialog.addEventListener(
+    "close",
+    () => {
+      dialog.remove();
+      if (makerVersionDetailsElement === makerVersionDetails)
+        makerVersionDetailsElement = null;
+      makerSecretOpen = false;
+      if (wassimSign instanceof HTMLElement && wassimSign.isConnected) {
+        try {
+          wassimSign.focus({ preventScroll: true });
+        } catch {
+          wassimSign.focus();
+        }
+      }
+    },
+    { once: true },
+  );
   document.body.append(dialog);
+  // Render only after the version rows are connected to the document. The
+  // earlier pre-append render is intentionally repeated here so the log is
+  // populated even when version.json was fetched during initial page loading.
+  renderMakerVersionDetails({
+    unavailable: siteVersion === null && !siteVersionCheckPromise,
+  });
+  // Reuse the shared hourly checker. Its completion refreshes the log whether
+  // it confirms the current version or discovers a newer published version.
+  void Promise.resolve(checkSiteVersion()).then(() => {
+    renderMakerVersionDetails({ unavailable: siteVersion === null });
+  });
   if (typeof dialog.showModal === "function") dialog.showModal();
   else dialog.setAttribute("open", "");
 }
@@ -837,14 +956,18 @@ if (wassimSign) {
       "Maker signature. Press and hold while distractions are enabled to open a hidden console.",
     );
   }
-  wassimSign.addEventListener("click", (event) => {
-    if (!makerSecretTriggered) return;
-    makerSecretTriggered = false;
-    clearTimeout(makerSecretSuppressTimer);
-    makerSecretSuppressTimer = 0;
-    event.preventDefault();
-    event.stopImmediatePropagation();
-  }, true);
+  wassimSign.addEventListener(
+    "click",
+    (event) => {
+      if (!makerSecretTriggered) return;
+      makerSecretTriggered = false;
+      clearTimeout(makerSecretSuppressTimer);
+      makerSecretSuppressTimer = 0;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+    },
+    true,
+  );
   wassimSign.addEventListener("contextmenu", (event) => {
     if (makerSecretHolding) event.preventDefault();
   });
