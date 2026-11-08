@@ -5,7 +5,6 @@
       "version": "0.0.1",
       "files": [
         "os-course.json",
-        "os-terminal-intro.json",
         "os-term-1-canvas.json",
         "os-learning-term-1.json"
       ]
@@ -25,8 +24,7 @@
       "files": [
         "programming-fundamentals-theory-t1.json",
         "programming-fundamentals-term-1-learning.json",
-        "programming-fundamentals-term-1-canvas.json",
-        "java-playground-smoke-test.json"
+        "programming-fundamentals-term-1-canvas.json"
       ]
     }
   },
