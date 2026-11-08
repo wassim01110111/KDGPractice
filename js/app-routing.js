@@ -5,36 +5,19 @@ const ROUTE_OUT_MS = 140,
   ROUTE_EASE = "cubic-bezier(0.22, 1, 0.36, 1)";
 
 // Check content/version.json at most once per hour, independently of navigation.
-// A dismissed notice is only dismissed for this page lifetime: pending update
-// metadata remains in localStorage so a reload can show the notice again.
+// The first successful fetch establishes this page's version for its lifetime.
+// All version-check state stays in memory and is reset by a full page reload.
 const SITE_VERSION_CHECK_INTERVAL = 60 * 60 * 1000;
 const SITE_VERSION_NOTICE_DURATION = 60 * 1000;
-const SITE_VERSION_KEYS = Object.freeze({
-  checkedAt: "acs-site-version:checked-at",
-  current: "acs-site-version:current",
-  pending: "acs-site-version:pending-notice",
-  forceApplied: "acs-site-version:force-applied",
-});
+let siteVersion = null;
+let siteVersionLastCheckedAt = 0;
+let siteVersionPendingNotice = null;
+let siteVersionForceApplied = null;
 let siteVersionCheckPromise = null;
 let siteVersionDismissedThisSession = null;
 let siteVersionNoticeTimer = 0;
 let siteVersionNoticeElement = null;
 
-function readSiteVersionValue(key) {
-  try {
-    return localStorage.getItem(key);
-  } catch (_) {
-    return null;
-  }
-}
-function writeSiteVersionValue(key, value) {
-  try {
-    if (value == null) localStorage.removeItem(key);
-    else localStorage.setItem(key, String(value));
-  } catch (_) {
-    // Storage can be disabled; the in-memory path still provides this session's UI.
-  }
-}
 function numericSiteVersion(value) {
   if (value === null || value === undefined || value === "") return null;
   const number = Number(value);
@@ -48,7 +31,7 @@ function hideSiteVersionNotice(version, { dismissed = true } = {}) {
   siteVersionNoticeElement = null;
 }
 function showPendingSiteVersionNotice() {
-  const version = readSiteVersionValue(SITE_VERSION_KEYS.pending);
+  const version = siteVersionPendingNotice;
   if (version == null || version === "") return;
   if (siteVersionDismissedThisSession === String(version)) return;
   if (siteVersionNoticeElement?.dataset.version === String(version)) return;
@@ -79,7 +62,7 @@ function showPendingSiteVersionNotice() {
           type: "button",
           class: "site-update-reload",
           onclick: () => {
-            writeSiteVersionValue(SITE_VERSION_KEYS.pending, null);
+            siteVersionPendingNotice = null;
             hideSiteVersionNotice(version, { dismissed: true });
             void reloadSiteWithoutCache(version);
           },
@@ -124,24 +107,21 @@ async function reloadSiteWithoutCache(version) {
   location.replace(target.href);
 }
 async function checkSiteVersion() {
-  // A stored pending notice is replayed on reload even when the one-hour
-  // network-check window has not elapsed. The session dismissal resets on reload.
   showPendingSiteVersionNotice();
 
-  const lastCheckedAt = numericSiteVersion(
-    readSiteVersionValue(SITE_VERSION_KEYS.checkedAt),
-  ) || 0;
-  if (Date.now() - lastCheckedAt < SITE_VERSION_CHECK_INTERVAL)
+  if (Date.now() - siteVersionLastCheckedAt < SITE_VERSION_CHECK_INTERVAL)
     return siteVersionCheckPromise;
   if (siteVersionCheckPromise) return siteVersionCheckPromise;
 
+  // Throttle attempts as well as successful requests, so a failing endpoint
+  // cannot be requested repeatedly by route changes or visibility events.
+  siteVersionLastCheckedAt = Date.now();
   siteVersionCheckPromise = (async () => {
     try {
       const versionUrl = new URL(
         appResourceUrl("content/version.json", document.baseURI),
       );
-      // Both Fetch's cache mode and a unique query string avoid a cached version
-      // response; this endpoint is intentionally checked independently of assets.
+      // Avoid a cached version response; this check is independent of assets.
       versionUrl.searchParams.set("_version_check", String(Date.now()));
       const response = await fetch(versionUrl.href, {
         cache: "no-store",
@@ -158,32 +138,30 @@ async function checkSiteVersion() {
       if (incomingVersion === null)
         throw new Error("content/version.json must contain a numeric version.");
 
-      const previousVersion = numericSiteVersion(
-        readSiteVersionValue(SITE_VERSION_KEYS.current),
-      );
-      const currentVersion = previousVersion ?? incomingVersion;
-      const appliedForceKey = `${incomingVersion}:${forceUpdate ?? 0}`;
-      writeSiteVersionValue(SITE_VERSION_KEYS.checkedAt, Date.now());
+      // The first successful fetch establishes the version this page runs.
+      // Keep it unchanged for this page's lifetime, even after finding an update.
+      if (siteVersion === null) siteVersion = incomingVersion;
 
-      // forceUpdate is a minimum client version. Compare it with the previously
-      // fetched version, using the incoming version as the first-visit baseline.
+      const appliedForceKey = `${siteVersion}:${forceUpdate ?? 0}`;
+      // forceUpdate is the minimum version allowed to keep running. Reload when
+      // this page's version is lower than that threshold.
       if (
         forceUpdate !== null &&
-        forceUpdate > currentVersion &&
-        readSiteVersionValue(SITE_VERSION_KEYS.forceApplied) !== appliedForceKey
+        siteVersion < forceUpdate &&
+        siteVersionForceApplied !== appliedForceKey
       ) {
-        writeSiteVersionValue(SITE_VERSION_KEYS.current, incomingVersion);
-        writeSiteVersionValue(SITE_VERSION_KEYS.pending, null);
-        writeSiteVersionValue(SITE_VERSION_KEYS.forceApplied, appliedForceKey);
+        siteVersionForceApplied = appliedForceKey;
+        siteVersionPendingNotice = null;
         hideSiteVersionNotice(incomingVersion, { dismissed: false });
         await reloadSiteWithoutCache(`forced-${incomingVersion}-${forceUpdate}`);
         return;
       }
 
-      if (previousVersion !== null && incomingVersion !== previousVersion) {
-        writeSiteVersionValue(SITE_VERSION_KEYS.pending, incomingVersion);
+      // A higher fetched version means an update is available. Keep the original
+      // page version as the comparison baseline until the user reloads.
+      if (siteVersion < incomingVersion) {
+        siteVersionPendingNotice = incomingVersion;
       }
-      writeSiteVersionValue(SITE_VERSION_KEYS.current, incomingVersion);
       showPendingSiteVersionNotice();
     } catch (error) {
       // Version checks are opportunistic: a network failure must never block navigation.
