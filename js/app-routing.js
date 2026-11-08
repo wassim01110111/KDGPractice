@@ -7,7 +7,7 @@ const ROUTE_OUT_MS = 140,
 // Check content/version.json at most once per hour, independently of navigation.
 // The first successful fetch establishes this page's version for its lifetime.
 // All version-check state stays in memory and is reset by a full page reload.
-const SITE_VERSION_CHECK_INTERVAL = 60 * 60 * 1000;
+const SITE_VERSION_CHECK_INTERVAL = 30 * 60 * 1000;
 const SITE_VERSION_NOTICE_DURATION = 60 * 1000;
 let siteVersion = null;
 let siteVersionLastRetrievedAt = null;
