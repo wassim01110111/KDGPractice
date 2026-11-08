@@ -4,6 +4,21 @@
  * evaluates student input, spawns host processes, or reads host files.
  */
 const TERMINAL_VERSION = 1;
+
+// Show a concrete string accepted by package-provided regexes. Some valid
+// JavaScript expressions exceed the bounded generator's supported syntax, so
+// retain the original pattern as a safe feedback fallback in those cases.
+const describeExerciseRegex = (regex) => {
+  const source = String(regex ?? "");
+  try {
+    // Inline modifiers such as (?s) are handled by generateFromRegex itself.
+    const sample = globalThis.Core?.generateFromRegex?.(source);
+    if (typeof sample === "string") return sample === "" ? '""' : sample;
+  } catch (_) {
+    // Keep grading feedback available even when no sample can be generated.
+  }
+  return source;
+};
 const MAX_FILE_BYTES = 1024 * 1024;
 const MAX_TOTAL_BYTES = 8 * 1024 * 1024;
 const MAX_NODES = 5000;
@@ -6086,597 +6101,6 @@ function restoreArchiveNode(fs, raw, targetPath) {
   parent.children.set(name, build(raw, parent, name));
 }
 
-function generateFromRegex(input, options = {}) {
-  const maxRepeat = options.maxRepeat ?? 3;
-  const maxAttempts = options.maxAttempts ?? 100;
-  const maxLength = options.maxLength ?? 10000;
-
-  let source;
-  let flags = "";
-  const isRegExp = input instanceof RegExp;
-
-  if (isRegExp) {
-    source = input.source;
-    flags = input.flags.replace(/[gy]/g, "");
-  } else {
-    source = String(input);
-  }
-
-  // Support leading inline flags: (?ims)
-  while (true) {
-    const inline = source.match(/^\(\?([ims]+)\)/);
-    if (!inline) break;
-
-    for (const flag of inline[1]) {
-      if (!flags.includes(flag)) flags += flag;
-    }
-
-    source = source.slice(inline[0].length);
-  }
-
-  // Infer multiline mode for line-based lookahead patterns.
-  // Override with options.multiline if needed.
-  const hasLineLookahead =
-    /\(\?[=!]/.test(source) && /\^[\s\S]*\$/.test(source);
-
-  const multiline = options.multiline ?? (!isRegExp && hasLineLookahead);
-
-  if (multiline && !flags.includes("m")) {
-    flags += "m";
-  }
-
-  const original = new RegExp(source, flags);
-
-  function readGroup(text, start) {
-    let depth = 0;
-    let escaped = false;
-    let inClass = false;
-
-    for (let i = start; i < text.length; i++) {
-      const c = text[i];
-
-      if (escaped) {
-        escaped = false;
-        continue;
-      }
-
-      if (c === "\\") {
-        escaped = true;
-        continue;
-      }
-
-      if (c === "[" && !inClass) {
-        inClass = true;
-        continue;
-      }
-
-      if (c === "]" && inClass) {
-        inClass = false;
-        continue;
-      }
-
-      if (inClass) continue;
-
-      if (c === "(") depth++;
-
-      if (c === ")") {
-        depth--;
-
-        if (depth === 0) return i;
-      }
-    }
-
-    throw new Error("Unclosed group at position " + start);
-  }
-
-  function groupInfo(text, start) {
-    if (text.startsWith("(?=", start)) {
-      return { kind: "positive", bodyStart: start + 3 };
-    }
-
-    if (text.startsWith("(?!", start)) {
-      return { kind: "negative", bodyStart: start + 3 };
-    }
-
-    if (text.startsWith("(?<=", start)) {
-      return { kind: "lookbehind", bodyStart: start + 4 };
-    }
-
-    if (text.startsWith("(?<!", start)) {
-      return {
-        kind: "negativeLookbehind",
-        bodyStart: start + 4,
-      };
-    }
-
-    if (text.startsWith("(?:", start)) {
-      return { kind: "group", bodyStart: start + 3 };
-    }
-
-    if (text.startsWith("(?", start)) {
-      throw new Error("Unsupported inline group modifier at position " + start);
-    }
-
-    return { kind: "group", bodyStart: start + 1 };
-  }
-
-  // Collect positive lookaheads without treating assertions inside
-  // negative assertions as unconditional requirements.
-  function collectPositiveLookaheads(text, output = []) {
-    let escaped = false;
-    let inClass = false;
-
-    for (let i = 0; i < text.length; i++) {
-      const c = text[i];
-
-      if (escaped) {
-        escaped = false;
-        continue;
-      }
-
-      if (c === "\\") {
-        escaped = true;
-        continue;
-      }
-
-      if (c === "[" && !inClass) {
-        inClass = true;
-        continue;
-      }
-
-      if (c === "]" && inClass) {
-        inClass = false;
-        continue;
-      }
-
-      if (inClass || c !== "(") continue;
-
-      const info = groupInfo(text, i);
-      const end = readGroup(text, i);
-      const body = text.slice(info.bodyStart, end);
-
-      if (info.kind === "positive") {
-        output.push(body);
-        collectPositiveLookaheads(body, output);
-      } else if (info.kind === "group") {
-        collectPositiveLookaheads(body, output);
-      }
-
-      // Negative assertions are enforced during final validation.
-      i = end;
-    }
-
-    return output;
-  }
-
-  function decodeEscape(c) {
-    const controls = {
-      n: "\n",
-      r: "\r",
-      t: "\t",
-      f: "\f",
-      v: "\v",
-      0: "\0",
-    };
-
-    if (Object.prototype.hasOwnProperty.call(controls, c)) {
-      return controls[c];
-    }
-
-    if ("\\.^$|?*+()[]{}-".includes(c) || c === "/") {
-      return c;
-    }
-
-    return null;
-  }
-
-  // Extract exact literal lines from ^...$ expressions.
-  function extractAnchoredLiterals(text) {
-    const found = [];
-    let escaped = false;
-    let inClass = false;
-
-    for (let i = 0; i < text.length; i++) {
-      const c = text[i];
-
-      if (escaped) {
-        escaped = false;
-        continue;
-      }
-
-      if (c === "\\") {
-        escaped = true;
-        continue;
-      }
-
-      if (c === "[" && !inClass) {
-        inClass = true;
-        continue;
-      }
-
-      if (c === "]" && inClass) {
-        inClass = false;
-        continue;
-      }
-
-      if (inClass || c !== "^") continue;
-
-      let value = "";
-      let valid = true;
-      let j = i + 1;
-
-      for (; j < text.length; j++) {
-        const x = text[j];
-
-        if (x === "\\") {
-          const next = text[++j];
-
-          if (next === undefined) {
-            valid = false;
-            break;
-          }
-
-          const decoded = decodeEscape(next);
-
-          if (decoded === null) {
-            valid = false;
-            break;
-          }
-
-          value += decoded;
-          continue;
-        }
-
-        if (x === "$") break;
-
-        if (".^*+?()[]{}|".includes(x)) {
-          valid = false;
-          break;
-        }
-
-        value += x;
-      }
-
-      if (valid && j < text.length && text[j] === "$" && value.length > 0) {
-        found.push(value);
-        i = j;
-      }
-    }
-
-    return found;
-  }
-
-  const positiveBodies = collectPositiveLookaheads(source);
-
-  const requiredLines = [
-    ...new Set(positiveBodies.flatMap(extractAnchoredLiterals)),
-  ];
-
-  function validate(candidate) {
-    if (candidate.length > maxLength) return false;
-
-    original.lastIndex = 0;
-
-    return original.test(candidate);
-  }
-
-  // Generate candidates satisfying all extracted positive
-  // line requirements, then validate all assertions.
-  if (requiredLines.length) {
-    const separator = options.separator ?? "\n";
-
-    const orders = [requiredLines];
-
-    for (let i = 1; i < requiredLines.length; i++) {
-      orders.push(requiredLines.slice(i).concat(requiredLines.slice(0, i)));
-    }
-
-    orders.push([...requiredLines].reverse());
-
-    for (
-      let attempt = 0;
-      attempt < Math.min(maxAttempts, orders.length);
-      attempt++
-    ) {
-      const candidate = orders[attempt].join(separator);
-
-      if (validate(candidate)) {
-        return candidate;
-      }
-    }
-  }
-
-  // Generic AST-based fallback.
-  let pos = 0;
-
-  function peek(offset = 0) {
-    return source[pos + offset];
-  }
-
-  function consume() {
-    return source[pos++];
-  }
-
-  function parseExpression() {
-    const alternatives = [parseSequence()];
-
-    while (peek() === "|") {
-      consume();
-      alternatives.push(parseSequence());
-    }
-
-    return alternatives.length === 1
-      ? alternatives[0]
-      : { type: "alt", alternatives };
-  }
-
-  function parseSequence() {
-    const nodes = [];
-
-    while (pos < source.length && peek() !== ")" && peek() !== "|") {
-      nodes.push(parseQuantified());
-    }
-
-    return { type: "seq", nodes };
-  }
-
-  function parseQuantified() {
-    let node = parseAtom();
-    let min = 1;
-    let max = 1;
-
-    if (peek() === "*") {
-      consume();
-      min = 0;
-      max = maxRepeat;
-    } else if (peek() === "+") {
-      consume();
-      min = 1;
-      max = maxRepeat;
-    } else if (peek() === "?") {
-      consume();
-      min = 0;
-      max = 1;
-    } else if (peek() === "{") {
-      const m = source.slice(pos).match(/^\{(\d+)(?:,(\d*))?\}/);
-
-      if (m) {
-        pos += m[0].length;
-
-        min = Number(m[1]);
-
-        max =
-          m[2] === undefined
-            ? min
-            : m[2] === ""
-              ? maxRepeat
-              : Math.min(Number(m[2]), maxRepeat);
-      }
-    }
-
-    if (min !== 1 || max !== 1) {
-      node = { type: "repeat", node, min, max };
-    }
-
-    // Lazy quantifier modifier.
-    if (peek() === "?") consume();
-
-    return node;
-  }
-
-  function parseAtom() {
-    const c = consume();
-
-    if (c === undefined) {
-      throw new Error("Unexpected end of regex");
-    }
-
-    if (c === "^" || c === "$") {
-      return { type: "empty" };
-    }
-
-    if (c === ".") {
-      return { type: "literal", value: "a" };
-    }
-
-    if (c === "\\") {
-      const e = consume();
-
-      if (e === undefined) {
-        throw new Error("Incomplete escape");
-      }
-
-      const controls = {
-        n: "\n",
-        r: "\r",
-        t: "\t",
-        f: "\f",
-        v: "\v",
-      };
-
-      if (e in controls) {
-        return { type: "literal", value: controls[e] };
-      }
-
-      if (e === "d") {
-        return { type: "class", content: "0-9" };
-      }
-
-      if (e === "D") {
-        return { type: "class", content: "^0-9" };
-      }
-
-      if (e === "w") {
-        return {
-          type: "class",
-          content: "a-zA-Z0-9_",
-        };
-      }
-
-      if (e === "W") {
-        return {
-          type: "class",
-          content: "^a-zA-Z0-9_",
-        };
-      }
-
-      if (e === "s") {
-        return {
-          type: "class",
-          content: " \\t\\n\\r\\f\\v",
-        };
-      }
-
-      if (e === "S") {
-        return {
-          type: "class",
-          content: "^ \\t\\n\\r\\f\\v",
-        };
-      }
-
-      if ("bBAZz".includes(e)) {
-        return { type: "empty" };
-      }
-
-      if (e === "x" || e === "u") {
-        const size = e === "x" ? 2 : 4;
-        const hex = source.slice(pos, pos + size);
-
-        if (!new RegExp("^[0-9a-f]{" + size + "}$", "i").test(hex)) {
-          throw new Error("Invalid hex escape");
-        }
-
-        pos += size;
-
-        return {
-          type: "literal",
-          value: String.fromCharCode(parseInt(hex, 16)),
-        };
-      }
-
-      return { type: "literal", value: e };
-    }
-
-    if (c === "[") {
-      let content = "";
-      let escaped = false;
-      let closed = false;
-
-      while (pos < source.length) {
-        const x = consume();
-
-        if (x === "]" && !escaped) {
-          closed = true;
-          break;
-        }
-
-        content += x;
-
-        if (x === "\\" && !escaped) {
-          escaped = true;
-        } else {
-          escaped = false;
-        }
-      }
-
-      if (!closed) {
-        throw new Error("Unclosed character class");
-      }
-
-      return { type: "class", content };
-    }
-
-    if (c === "(") {
-      const info = groupInfo(source, pos - 1);
-
-      pos = info.bodyStart;
-
-      const node = parseExpression();
-
-      if (consume() !== ")") {
-        throw new Error("Unclosed group");
-      }
-
-      return info.kind === "group" ? node : { type: info.kind, node };
-    }
-
-    return { type: "literal", value: c };
-  }
-
-  function generate(node, attempt) {
-    switch (node.type) {
-      case "empty":
-      case "positive":
-      case "negative":
-      case "lookbehind":
-      case "negativeLookbehind":
-        return "";
-
-      case "literal":
-        return node.value;
-
-      case "class": {
-        const re = new RegExp("^(?:[" + node.content + "])$", flags);
-
-        const candidates =
-          "aAzZ019_ -!@#$%^&*()[]{} \t\n\r" +
-          "abcdefghijklmnopqrstuvwxyz" +
-          "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-
-        for (const ch of candidates) {
-          if (re.test(ch)) return ch;
-        }
-
-        throw new Error(
-          "No candidate for character class [" + node.content + "]",
-        );
-      }
-
-      case "seq":
-        return node.nodes.map((n) => generate(n, attempt)).join("");
-
-      case "alt":
-        return generate(
-          node.alternatives[attempt % node.alternatives.length],
-          attempt,
-        );
-
-      case "repeat": {
-        const count = node.min + (attempt % (node.max - node.min + 1));
-
-        return Array.from({ length: count }, () =>
-          generate(node.node, attempt),
-        ).join("");
-      }
-
-      default:
-        throw new Error("Unknown AST node: " + node.type);
-    }
-  }
-
-  pos = 0;
-
-  const ast = parseExpression();
-
-  if (pos !== source.length) {
-    throw new Error("Unexpected regex syntax at position " + pos);
-  }
-
-  for (let attempt = 0; attempt < maxAttempts; attempt++) {
-    const candidate = generate(ast, attempt);
-
-    if (validate(candidate)) {
-      return candidate;
-    }
-  }
-
-  throw new Error(
-    "Could not generate a matching string. " +
-      "The pattern may require constraints beyond " +
-      "this generator's bounded search.",
-  );
-}
-
 function gradeFilesystem(
   fs,
   checks,
@@ -6773,23 +6197,12 @@ function gradeFilesystem(
                 }
 
                 let contentPassed = false;
-                if (check.regex !== undefined) {
+                if (check.regex === true) {
                   try {
                     const regex = new RegExp(check.expected, check.flags || "");
                     contentPassed = regex.test(entry.content);
                     if (!contentPassed) {
-                      let example = String(check.expected ?? "");
-                      if (check.regex) {
-                        try {
-                          example = generateFromRegex(check.expected);
-                        } catch {
-                          // The grader uses JavaScript RegExp, which supports
-                          // lookarounds; the optional example generator does not.
-                          // Show the actual pattern instead of misreporting it
-                          // as an invalid grading regex.
-                        }
-                      }
-                      feedback = `File content did not match the required pattern: ${example.replaceAll("\n", "")}`;
+                      feedback = `File content did not match the required pattern: ${describeExerciseRegex(check.expected, check.flags)}`;
                     }
                   } catch (error) {
                     feedback = `Invalid check regex: ${error.message}`;
@@ -6845,24 +6258,12 @@ function gradeFilesystem(
                     passed = commandAndOutputMatched;
                     if (!passed) {
                       if (!commandWasRun) {
-                        if (check.regex) {
-                          try {
-                            feedback = `No command-history entry matched: ${generateFromRegex(check.commandExpected)}`;
-                          } catch {
-                            feedback = `No command-history entry matched: ${check.commandExpected}`;
-                            // The grader uses JavaScript RegExp, which supports
-                            // lookarounds; the optional example generator does not.
-                            // Show the actual pattern instead of misreporting it
-                            // as an invalid grading regex.
-                          }
-                        } else {
-                          feedback = `No command-history entry matched: ${check.commandExpected}`;
-                        }
+                        feedback = `No command-history entry matched: ${describeExerciseRegex(check.commandExpected, check.commandFlags)}`;
                       } else if (outputRegex && !commandOutputCaptured)
                         feedback =
                           "The command was found in history, but its output was not captured. Run it again to verify intendedOutput.";
                       else if (outputRegex)
-                        feedback = `The command was run, but its output did not match: ${check.intendedOutput}`;
+                        feedback = `The command was run, but its output did not match: ${describeExerciseRegex(check.intendedOutput, check.intendedOutputFlags)}`;
                       else
                         feedback =
                           "The command-history requirement was not met.";
@@ -7015,8 +6416,14 @@ function gradeFilesystem(
 }
 
 function validateExercise(exercise) {
-  const config = exercise?.terminal;
-  if (!ownPlain(config))
+  const terminalConfig = exercise?.terminal;
+  const config = {
+    ...(terminalConfig || {}),
+    checks: exercise?.checks ?? terminalConfig?.checks,
+    solution: exercise?.solution ?? terminalConfig?.solution,
+    explanation: exercise?.explanation ?? terminalConfig?.explanation,
+  };
+  if (!ownPlain(terminalConfig))
     throw new Error(
       "Terminal exercise is missing its terminal configuration object",
     );
@@ -7026,9 +6433,9 @@ function validateExercise(exercise) {
   )
     throw new Error(`Unsupported terminal profile '${config.profile}'`);
   if (config.checks !== undefined && !Array.isArray(config.checks))
-    throw new Error("terminal.checks must be an array");
+    throw new Error("checks must be an array");
   if (!Array.isArray(config.checks) || config.checks.length === 0)
-    throw new Error("terminal.checks must contain at least one grading check");
+    throw new Error("checks must contain at least one grading check");
   if (
     config.solution !== undefined &&
     (!Array.isArray(config.solution) ||
@@ -7041,7 +6448,7 @@ function validateExercise(exercise) {
       ))
   )
     throw new Error(
-      "terminal.solution must be an array of non-empty steps (maximum 8192 characters each)",
+      "solution must be an array of non-empty steps (maximum 8192 characters each)",
     );
   if (
     config.initialFilesystem !== undefined &&
@@ -7081,54 +6488,49 @@ function validateExercise(exercise) {
     "directory_contents",
   ]);
   for (const [i, check] of (config.checks || []).entries()) {
-    if (!ownPlain(check))
-      throw new Error(`terminal.checks[${i}] must be an object`);
+    if (!ownPlain(check)) throw new Error(`checks[${i}] must be an object`);
+    if (check.regex !== undefined && typeof check.regex !== "boolean")
+      throw new Error(`checks[${i}].regex must be a boolean`);
     if (!supported.has(check.type))
-      throw new Error(
-        `terminal.checks[${i}] has unsupported type '${check.type}'`,
-      );
+      throw new Error(`checks[${i}] has unsupported type '${check.type}'`);
     if (typeof check.path !== "string" || !check.path.trim())
-      throw new Error(`terminal.checks[${i}].path must be a non-empty string`);
+      throw new Error(`checks[${i}].path must be a non-empty string`);
     if (check.commandExpected !== undefined) {
       if (check.type !== "contains")
         throw new Error(
-          `terminal.checks[${i}].commandExpected is only supported on contains checks`,
+          `checks[${i}].commandExpected is only supported on contains checks`,
         );
       if (typeof check.commandExpected !== "string" || !check.commandExpected)
         throw new Error(
-          `terminal.checks[${i}].commandExpected must be a command-history regex string`,
+          `checks[${i}].commandExpected must be a command-history regex string`,
         );
       if (check.commandExpected.length > 2048)
-        throw new Error(
-          `terminal.checks[${i}].commandExpected regex is too long`,
-        );
+        throw new Error(`checks[${i}].commandExpected regex is too long`);
       if (
         check.commandFlags !== undefined &&
         typeof check.commandFlags !== "string"
       )
-        throw new Error(`terminal.checks[${i}].commandFlags must be a string`);
+        throw new Error(`checks[${i}].commandFlags must be a string`);
       if (
         check.intendedOutput !== undefined &&
         (typeof check.intendedOutput !== "string" ||
           check.intendedOutput.length > 2048)
       )
         throw new Error(
-          `terminal.checks[${i}].intendedOutput must be a regex string (maximum 2048 characters)`,
+          `checks[${i}].intendedOutput must be a regex string (maximum 2048 characters)`,
         );
       if (
         check.intendedOutputFlags !== undefined &&
         typeof check.intendedOutputFlags !== "string"
       )
-        throw new Error(
-          `terminal.checks[${i}].intendedOutputFlags must be a string`,
-        );
+        throw new Error(`checks[${i}].intendedOutputFlags must be a string`);
       try {
         new RegExp(check.commandExpected, check.commandFlags || "");
         if (check.intendedOutput !== undefined)
           new RegExp(check.intendedOutput, check.intendedOutputFlags || "");
       } catch (error) {
         throw new Error(
-          `terminal.checks[${i}] has an invalid command-history regex: ${error.message}`,
+          `checks[${i}] has an invalid command-history regex: ${error.message}`,
         );
       }
     } else if (
@@ -7137,7 +6539,7 @@ function validateExercise(exercise) {
       check.commandFlags !== undefined
     ) {
       throw new Error(
-        `terminal.checks[${i}] requires commandExpected when command-history options are supplied`,
+        `checks[${i}] requires commandExpected when command-history options are supplied`,
       );
     }
     if (
@@ -7155,14 +6557,12 @@ function validateExercise(exercise) {
       ].includes(check.type) &&
       check.expected === undefined
     )
-      throw new Error(`terminal.checks[${i}] requires expected`);
+      throw new Error(`checks[${i}] requires expected`);
     if (
       check.points !== undefined &&
       (!Number.isFinite(check.points) || check.points < 0)
     )
-      throw new Error(
-        `terminal.checks[${i}].points must be a non-negative number`,
-      );
+      throw new Error(`checks[${i}].points must be a non-negative number`);
   }
   for (const [i, entry] of (config.initialFilesystem || []).entries()) {
     if (

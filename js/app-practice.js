@@ -41,12 +41,12 @@ const SANDBOX_JAVA_STARTER = `public class Main {
 // Minimal exercise descriptor: a runnable Main class, no automatic checks
 // (so the Check button and test results stay hidden) and no instructions.
 const SANDBOX_JAVA_EXERCISE = {
+  checks: [],
   java: {
     sourceFile: "Main.java",
     mainClass: "Main",
     preCode: SANDBOX_JAVA_STARTER,
     stdin: "",
-    checks: [],
   },
 };
 function readSandboxJavaCode() {
@@ -1638,7 +1638,7 @@ async function pageExam(root, isCurrent = () => true) {
               }
               const examExercises = getTermFilteredExercises();
               const r = generateExam(
-                examExercises,
+                examExercises.map(exerciseWithCoreAliases),
                 {
                   courses: cfg.courses,
                   dist: {
@@ -2374,7 +2374,7 @@ async function runExam(root, st) {
           }
         }
       } else {
-        ok = gradeOS(ex, a);
+        ok = gradeExerciseAnswer(ex, a);
         rows.push({
           ex,
           ok,

@@ -10,6 +10,42 @@ const ROUTE_OUT_MS = 140,
 const SITE_VERSION_CHECK_INTERVAL = 30 * 60 * 1000;
 const SITE_VERSION_NOTICE_DURATION = 60 * 1000;
 let siteVersion = null;
+// Set only during the first successful version fetch after a page load.
+let newVer = false;
+window.newVer = false;
+
+// java.js waits on this promise (resolves to the newVer boolean) to decide
+// whether cached Java modules may be used. It is settled exactly once: by the
+// first version fetch, by a failed fetch (false), or by the startup fallback.
+let resolveVersionDecision = () => {};
+let versionDecisionSettled = false;
+window.__ACS_VERSION_DECISION__ = new Promise((resolve) => {
+  resolveVersionDecision = resolve;
+});
+function settleVersionDecision(value) {
+  if (versionDecisionSettled) return false;
+  versionDecisionSettled = true;
+  resolveVersionDecision(value === true);
+  return true;
+}
+// Preload the Java modules and boot the runtime. force re-runs the preload
+// after the cache was emptied because newVer turned out to be true late.
+function startJavaPreload({ newVer: isNew = false, force = false } = {}) {
+  if (typeof window.__ACS_LOAD_JAVA_MODULE__ !== "function") return;
+  void window
+    .__ACS_LOAD_JAVA_MODULE__()
+    .then(async (module) => {
+      if (force && typeof module.clearJavaModuleCache === "function")
+        await module.clearJavaModuleCache();
+      return module.preloadJava({ newVer: isNew, force });
+    })
+    .catch((error) => console.warn("Java runtime preload failed:", error));
+}
+// If version.json is slow or unreachable, still preload on startup using the
+// cache; a late newVer=true result below clears it and reloads.
+setTimeout(() => {
+  if (settleVersionDecision(false)) startJavaPreload({ newVer: false });
+}, 5000);
 let siteVersionLastRetrievedAt = null;
 let siteVersionLastCheckedAt = 0;
 let siteVersionPendingNotice = null;
@@ -187,6 +223,24 @@ async function checkSiteVersion() {
       if (siteVersion === null) {
         siteVersion = incomingVersion;
         siteVersionLastRetrievedAt = Date.now();
+        const versionKey = "acs-site-version";
+        let storedVersion = null;
+        try { storedVersion = localStorage.getItem(versionKey); } catch (_) {}
+        newVer = storedVersion === null || storedVersion !== String(incomingVersion);
+        window.newVer = newVer;
+        window.__ACS_SITE_VERSION__ = incomingVersion;
+        try { localStorage.setItem(versionKey, String(incomingVersion)); } catch (_) {}
+        // Preload the Java modules once the startup version decision is known.
+        // newVer -> java.js empties its module cache and refetches; otherwise
+        // the cached modules are used. Java exercises opened meanwhile join this
+        // same in-flight preload instead of starting another one.
+        if (settleVersionDecision(newVer)) {
+          startJavaPreload({ newVer });
+        } else if (newVer) {
+          // An earlier failure/timeout already told Java "not new": correct it
+          // now so a stale module cache is not kept for future loads.
+          startJavaPreload({ newVer: true, force: true });
+        }
       } else if (incomingVersion === siteVersion) {
         // Refresh the confirmation time whenever version.json still reports
         // the exact version served by this page.
@@ -224,6 +278,9 @@ async function checkSiteVersion() {
     } catch (error) {
       // Version checks are opportunistic: a network failure must never block navigation.
       console.warn("Website version check skipped:", error);
+      // No version known: treat as not new and preload from the cache.
+      if (siteVersion === null && settleVersionDecision(false))
+        startJavaPreload({ newVer: false });
     } finally {
       siteVersionCheckPromise = null;
     }

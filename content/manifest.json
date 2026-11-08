@@ -1,30 +1,30 @@
 {
   "schemaVersion": 1,
   "packages": {
-    "os1": {
+    "os": {
       "version": "0.0.1",
       "files": [
-        "os-course.json",
-        "os-term-1-canvas.json",
-        "os-learning-term-1.json"
+        "packages/os/os-course.json",
+        "packages/os/os-term-1-canvas.json",
+        "packages/os/os-learning-term-1.json"
       ]
     },
     "sql": {
       "version": "0.0.1",
       "files": [
-        "sql-course.json",
-        "sql-theory-course.json",
-        "sql-canvas-1.json",
-        "sql-extreme-t1.json",
-        "sql-relational-learning-term-1.json"
+        "packages/sql/sql-course.json",
+        "packages/sql/sql-theory-course.json",
+        "packages/sql/sql-canvas-1.json",
+        "packages/sql/sql-extreme-t1.json",
+        "packages/sql/sql-relational-learning-term-1.json"
       ]
     },
-    "prog1t": {
+    "programming-fundamentals": {
       "version": "0.0.1",
       "files": [
-        "programming-fundamentals-theory-t1.json",
-        "programming-fundamentals-term-1-learning.json",
-        "programming-fundamentals-term-1-canvas.json"
+        "packages/programming-fundamentals/programming-fundamentals-theory-t1.json",
+        "packages/programming-fundamentals/programming-fundamentals-term-1-learning.json",
+        "packages/programming-fundamentals/programming-fundamentals-term-1-canvas.json"
       ]
     }
   },

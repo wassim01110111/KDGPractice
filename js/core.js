@@ -15,9 +15,19 @@
   const JAVA_TYPES = ["java-ex"];
   const NON_SQL_TYPES = [...OS_TYPES, ...JAVA_TYPES];
   const JAVA_CHECK_TYPES = new Set([
-    "stdout", "stderr", "classExists", "fieldExists", "fieldModifier",
-    "fieldValue", "methodExists", "methodModifier", "methodReturn",
-    "constructorExists", "classModifier", "inheritance", "instanceOf",
+    "stdout",
+    "stderr",
+    "classExists",
+    "fieldExists",
+    "fieldModifier",
+    "fieldValue",
+    "methodExists",
+    "methodModifier",
+    "methodReturn",
+    "constructorExists",
+    "classModifier",
+    "inheritance",
+    "instanceOf",
   ]);
   function compatibleSchemaVersion(version, supported) {
     const match = String(version).match(/^(\d+)(?:\.0+)*$/);
@@ -148,6 +158,600 @@
   // lastAttempt: { exerciseKey: ms }
   // Every installed exercise can be selected for an exam. The old
   // `examEligible` property is accepted as inert legacy package metadata.
+
+  function generateFromRegex(input, options = {}) {
+    const maxRepeat = options.maxRepeat ?? 3;
+    const maxAttempts = options.maxAttempts ?? 100;
+    const maxLength = options.maxLength ?? 10000;
+
+    let source;
+    let flags = "";
+    const isRegExp = input instanceof RegExp;
+
+    if (isRegExp) {
+      source = input.source;
+      flags = input.flags.replace(/[gy]/g, "");
+    } else {
+      source = String(input);
+    }
+
+    // Support leading inline flags: (?ims)
+    while (true) {
+      const inline = source.match(/^\(\?([ims]+)\)/);
+      if (!inline) break;
+
+      for (const flag of inline[1]) {
+        if (!flags.includes(flag)) flags += flag;
+      }
+
+      source = source.slice(inline[0].length);
+    }
+
+    // Infer multiline mode for line-based lookahead patterns.
+    // Override with options.multiline if needed.
+    const hasLineLookahead =
+      /\(\?[=!]/.test(source) && /\^[\s\S]*\$/.test(source);
+
+    const multiline = options.multiline ?? (!isRegExp && hasLineLookahead);
+
+    if (multiline && !flags.includes("m")) {
+      flags += "m";
+    }
+
+    const original = new RegExp(source, flags);
+
+    function readGroup(text, start) {
+      let depth = 0;
+      let escaped = false;
+      let inClass = false;
+
+      for (let i = start; i < text.length; i++) {
+        const c = text[i];
+
+        if (escaped) {
+          escaped = false;
+          continue;
+        }
+
+        if (c === "\\") {
+          escaped = true;
+          continue;
+        }
+
+        if (c === "[" && !inClass) {
+          inClass = true;
+          continue;
+        }
+
+        if (c === "]" && inClass) {
+          inClass = false;
+          continue;
+        }
+
+        if (inClass) continue;
+
+        if (c === "(") depth++;
+
+        if (c === ")") {
+          depth--;
+
+          if (depth === 0) return i;
+        }
+      }
+
+      throw new Error("Unclosed group at position " + start);
+    }
+
+    function groupInfo(text, start) {
+      if (text.startsWith("(?=", start)) {
+        return { kind: "positive", bodyStart: start + 3 };
+      }
+
+      if (text.startsWith("(?!", start)) {
+        return { kind: "negative", bodyStart: start + 3 };
+      }
+
+      if (text.startsWith("(?<=", start)) {
+        return { kind: "lookbehind", bodyStart: start + 4 };
+      }
+
+      if (text.startsWith("(?<!", start)) {
+        return {
+          kind: "negativeLookbehind",
+          bodyStart: start + 4,
+        };
+      }
+
+      if (text.startsWith("(?:", start)) {
+        return { kind: "group", bodyStart: start + 3 };
+      }
+
+      if (text.startsWith("(?", start)) {
+        throw new Error(
+          "Unsupported inline group modifier at position " + start,
+        );
+      }
+
+      return { kind: "group", bodyStart: start + 1 };
+    }
+
+    // Collect positive lookaheads without treating assertions inside
+    // negative assertions as unconditional requirements.
+    function collectPositiveLookaheads(text, output = []) {
+      let escaped = false;
+      let inClass = false;
+
+      for (let i = 0; i < text.length; i++) {
+        const c = text[i];
+
+        if (escaped) {
+          escaped = false;
+          continue;
+        }
+
+        if (c === "\\") {
+          escaped = true;
+          continue;
+        }
+
+        if (c === "[" && !inClass) {
+          inClass = true;
+          continue;
+        }
+
+        if (c === "]" && inClass) {
+          inClass = false;
+          continue;
+        }
+
+        if (inClass || c !== "(") continue;
+
+        const info = groupInfo(text, i);
+        const end = readGroup(text, i);
+        const body = text.slice(info.bodyStart, end);
+
+        if (info.kind === "positive") {
+          output.push(body);
+          collectPositiveLookaheads(body, output);
+        } else if (info.kind === "group") {
+          collectPositiveLookaheads(body, output);
+        }
+
+        // Negative assertions are enforced during final validation.
+        i = end;
+      }
+
+      return output;
+    }
+
+    function decodeEscape(c) {
+      const controls = {
+        n: "\n",
+        r: "\r",
+        t: "\t",
+        f: "\f",
+        v: "\v",
+        0: "\0",
+      };
+
+      if (Object.prototype.hasOwnProperty.call(controls, c)) {
+        return controls[c];
+      }
+
+      if ("\\.^$|?*+()[]{}-".includes(c) || c === "/") {
+        return c;
+      }
+
+      return null;
+    }
+
+    // Extract exact literal lines from ^...$ expressions.
+    function extractAnchoredLiterals(text) {
+      const found = [];
+      let escaped = false;
+      let inClass = false;
+
+      for (let i = 0; i < text.length; i++) {
+        const c = text[i];
+
+        if (escaped) {
+          escaped = false;
+          continue;
+        }
+
+        if (c === "\\") {
+          escaped = true;
+          continue;
+        }
+
+        if (c === "[" && !inClass) {
+          inClass = true;
+          continue;
+        }
+
+        if (c === "]" && inClass) {
+          inClass = false;
+          continue;
+        }
+
+        if (inClass || c !== "^") continue;
+
+        let value = "";
+        let valid = true;
+        let j = i + 1;
+
+        for (; j < text.length; j++) {
+          const x = text[j];
+
+          if (x === "\\") {
+            const next = text[++j];
+
+            if (next === undefined) {
+              valid = false;
+              break;
+            }
+
+            const decoded = decodeEscape(next);
+
+            if (decoded === null) {
+              valid = false;
+              break;
+            }
+
+            value += decoded;
+            continue;
+          }
+
+          if (x === "$") break;
+
+          if (".^*+?()[]{}|".includes(x)) {
+            valid = false;
+            break;
+          }
+
+          value += x;
+        }
+
+        if (valid && j < text.length && text[j] === "$" && value.length > 0) {
+          found.push(value);
+          i = j;
+        }
+      }
+
+      return found;
+    }
+
+    const positiveBodies = collectPositiveLookaheads(source);
+
+    const requiredLines = [
+      ...new Set(positiveBodies.flatMap(extractAnchoredLiterals)),
+    ];
+
+    function validate(candidate) {
+      if (candidate.length > maxLength) return false;
+
+      original.lastIndex = 0;
+
+      return original.test(candidate);
+    }
+
+    // Generate candidates satisfying all extracted positive
+    // line requirements, then validate all assertions.
+    if (requiredLines.length) {
+      const separator = options.separator ?? "\n";
+
+      const orders = [requiredLines];
+
+      for (let i = 1; i < requiredLines.length; i++) {
+        orders.push(requiredLines.slice(i).concat(requiredLines.slice(0, i)));
+      }
+
+      orders.push([...requiredLines].reverse());
+
+      for (
+        let attempt = 0;
+        attempt < Math.min(maxAttempts, orders.length);
+        attempt++
+      ) {
+        const candidate = orders[attempt].join(separator);
+
+        if (validate(candidate)) {
+          return candidate;
+        }
+      }
+    }
+
+    // Generic AST-based fallback.
+    let pos = 0;
+
+    function peek(offset = 0) {
+      return source[pos + offset];
+    }
+
+    function consume() {
+      return source[pos++];
+    }
+
+    function parseExpression() {
+      const alternatives = [parseSequence()];
+
+      while (peek() === "|") {
+        consume();
+        alternatives.push(parseSequence());
+      }
+
+      return alternatives.length === 1
+        ? alternatives[0]
+        : { type: "alt", alternatives };
+    }
+
+    function parseSequence() {
+      const nodes = [];
+
+      while (pos < source.length && peek() !== ")" && peek() !== "|") {
+        nodes.push(parseQuantified());
+      }
+
+      return { type: "seq", nodes };
+    }
+
+    function parseQuantified() {
+      let node = parseAtom();
+      let min = 1;
+      let max = 1;
+
+      if (peek() === "*") {
+        consume();
+        min = 0;
+        max = maxRepeat;
+      } else if (peek() === "+") {
+        consume();
+        min = 1;
+        max = maxRepeat;
+      } else if (peek() === "?") {
+        consume();
+        min = 0;
+        max = 1;
+      } else if (peek() === "{") {
+        const m = source.slice(pos).match(/^\{(\d+)(?:,(\d*))?\}/);
+
+        if (m) {
+          pos += m[0].length;
+
+          min = Number(m[1]);
+
+          max =
+            m[2] === undefined
+              ? min
+              : m[2] === ""
+                ? maxRepeat
+                : Math.min(Number(m[2]), maxRepeat);
+        }
+      }
+
+      if (min !== 1 || max !== 1) {
+        node = { type: "repeat", node, min, max };
+      }
+
+      // Lazy quantifier modifier.
+      if (peek() === "?") consume();
+
+      return node;
+    }
+
+    function parseAtom() {
+      const c = consume();
+
+      if (c === undefined) {
+        throw new Error("Unexpected end of regex");
+      }
+
+      if (c === "^" || c === "$") {
+        return { type: "empty" };
+      }
+
+      if (c === ".") {
+        return { type: "literal", value: "a" };
+      }
+
+      if (c === "\\") {
+        const e = consume();
+
+        if (e === undefined) {
+          throw new Error("Incomplete escape");
+        }
+
+        const controls = {
+          n: "\n",
+          r: "\r",
+          t: "\t",
+          f: "\f",
+          v: "\v",
+        };
+
+        if (e in controls) {
+          return { type: "literal", value: controls[e] };
+        }
+
+        if (e === "d") {
+          return { type: "class", content: "0-9" };
+        }
+
+        if (e === "D") {
+          return { type: "class", content: "^0-9" };
+        }
+
+        if (e === "w") {
+          return {
+            type: "class",
+            content: "a-zA-Z0-9_",
+          };
+        }
+
+        if (e === "W") {
+          return {
+            type: "class",
+            content: "^a-zA-Z0-9_",
+          };
+        }
+
+        if (e === "s") {
+          return {
+            type: "class",
+            content: " \\t\\n\\r\\f\\v",
+          };
+        }
+
+        if (e === "S") {
+          return {
+            type: "class",
+            content: "^ \\t\\n\\r\\f\\v",
+          };
+        }
+
+        if ("bBAZz".includes(e)) {
+          return { type: "empty" };
+        }
+
+        if (e === "x" || e === "u") {
+          const size = e === "x" ? 2 : 4;
+          const hex = source.slice(pos, pos + size);
+
+          if (!new RegExp("^[0-9a-f]{" + size + "}$", "i").test(hex)) {
+            throw new Error("Invalid hex escape");
+          }
+
+          pos += size;
+
+          return {
+            type: "literal",
+            value: String.fromCharCode(parseInt(hex, 16)),
+          };
+        }
+
+        return { type: "literal", value: e };
+      }
+
+      if (c === "[") {
+        let content = "";
+        let escaped = false;
+        let closed = false;
+
+        while (pos < source.length) {
+          const x = consume();
+
+          if (x === "]" && !escaped) {
+            closed = true;
+            break;
+          }
+
+          content += x;
+
+          if (x === "\\" && !escaped) {
+            escaped = true;
+          } else {
+            escaped = false;
+          }
+        }
+
+        if (!closed) {
+          throw new Error("Unclosed character class");
+        }
+
+        return { type: "class", content };
+      }
+
+      if (c === "(") {
+        const info = groupInfo(source, pos - 1);
+
+        pos = info.bodyStart;
+
+        const node = parseExpression();
+
+        if (consume() !== ")") {
+          throw new Error("Unclosed group");
+        }
+
+        return info.kind === "group" ? node : { type: info.kind, node };
+      }
+
+      return { type: "literal", value: c };
+    }
+
+    function generate(node, attempt) {
+      switch (node.type) {
+        case "empty":
+        case "positive":
+        case "negative":
+        case "lookbehind":
+        case "negativeLookbehind":
+          return "";
+
+        case "literal":
+          return node.value;
+
+        case "class": {
+          const re = new RegExp("^(?:[" + node.content + "])$", flags);
+
+          const candidates =
+            "aAzZ019_ -!@#$%^&*()[]{} \t\n\r" +
+            "abcdefghijklmnopqrstuvwxyz" +
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+          for (const ch of candidates) {
+            if (re.test(ch)) return ch;
+          }
+
+          throw new Error(
+            "No candidate for character class [" + node.content + "]",
+          );
+        }
+
+        case "seq":
+          return node.nodes.map((n) => generate(n, attempt)).join("");
+
+        case "alt":
+          return generate(
+            node.alternatives[attempt % node.alternatives.length],
+            attempt,
+          );
+
+        case "repeat": {
+          const count = node.min + (attempt % (node.max - node.min + 1));
+
+          return Array.from({ length: count }, () =>
+            generate(node.node, attempt),
+          ).join("");
+        }
+
+        default:
+          throw new Error("Unknown AST node: " + node.type);
+      }
+    }
+
+    pos = 0;
+
+    const ast = parseExpression();
+
+    if (pos !== source.length) {
+      throw new Error("Unexpected regex syntax at position " + pos);
+    }
+
+    for (let attempt = 0; attempt < maxAttempts; attempt++) {
+      const candidate = generate(ast, attempt);
+
+      if (validate(candidate)) {
+        return candidate;
+      }
+    }
+
+    throw new Error(
+      "Could not generate a matching string. " +
+        "The pattern may require constraints beyond " +
+        "this generator's bounded search.",
+    );
+  }
+
   function generateExam(pool, cfg, lastAttempt = {}, rnd = Math.random) {
     const dist = cfg.dist || { Easy: 5, Medium: 5, Hard: 2, Extreme: 0 };
     const selectedCourses = Array.isArray(cfg.courses)
@@ -219,7 +823,6 @@
       "instructions",
       "difficulty",
       "type",
-      "provenance",
       "contentVersion",
     ];
     for (const [id, value] of Object.entries(exercises)) {
@@ -274,61 +877,208 @@
           if (ex[f] !== undefined)
             E(id, f, "SQL-query-only field on a non-query exercise");
         });
-        if (ex.hints !== undefined && !(typeof ex.hints === "string" || (Array.isArray(ex.hints) && ex.hints.every((hint) => typeof hint === "string"))))
+        if (
+          ex.hints !== undefined &&
+          !(
+            typeof ex.hints === "string" ||
+            (Array.isArray(ex.hints) &&
+              ex.hints.every((hint) => typeof hint === "string"))
+          )
+        )
           E(id, "hints", "Must be a string or an array of strings");
         if (ex.type === "terminal") {
-          if (ex.course !== "os") E(id, "course", "terminal exercises must use course os");
+          if (ex.course !== "os")
+            E(id, "course", "terminal exercises must use course os");
           const config = ex.terminal;
           if (!config || typeof config !== "object" || Array.isArray(config)) {
-            E(id, "terminal", "Terminal exercises need a terminal configuration object");
+            E(
+              id,
+              "terminal",
+              "Terminal exercises need a terminal configuration object",
+            );
           } else {
             const supportedChecks = new Set([
-              "exists", "not_exists", "file", "directory", "content", "contains",
-              "permissions", "owner", "group", "symlink", "size", "empty",
-              "executable", "file_type", "line_count", "directory_contents",
+              "exists",
+              "not_exists",
+              "file",
+              "directory",
+              "content",
+              "contains",
+              "permissions",
+              "owner",
+              "group",
+              "symlink",
+              "size",
+              "empty",
+              "executable",
+              "file_type",
+              "line_count",
+              "directory_contents",
             ]);
             if (!Array.isArray(config.checks) || config.checks.length === 0) {
-              E(id, "terminal.checks", "Need at least one filesystem grading check");
+              E(
+                id,
+                "terminal.checks",
+                "Need at least one filesystem grading check",
+              );
             } else {
               config.checks.forEach((check, index) => {
                 const field = `terminal.checks[${index}]`;
-                if (!check || typeof check !== "object" || Array.isArray(check)) {
+                if (
+                  !check ||
+                  typeof check !== "object" ||
+                  Array.isArray(check)
+                ) {
                   E(id, field, "Must be an object");
                   return;
                 }
-                if (!supportedChecks.has(check.type)) E(id, `${field}.type`, `Unsupported check type: ${check.type}`);
-                if (typeof check.path !== "string" || !check.path.trim()) E(id, `${field}.path`, "Must be a non-empty path");
-                if (["content", "contains", "permissions", "owner", "group", "symlink", "size", "file_type", "line_count", "directory_contents"].includes(check.type) && check.expected === undefined)
+                if (!supportedChecks.has(check.type))
+                  E(
+                    id,
+                    `${field}.type`,
+                    `Unsupported check type: ${check.type}`,
+                  );
+                if (typeof check.path !== "string" || !check.path.trim())
+                  E(id, `${field}.path`, "Must be a non-empty path");
+                if (
+                  [
+                    "content",
+                    "contains",
+                    "permissions",
+                    "owner",
+                    "group",
+                    "symlink",
+                    "size",
+                    "file_type",
+                    "line_count",
+                    "directory_contents",
+                  ].includes(check.type) &&
+                  check.expected === undefined
+                )
                   E(id, `${field}.expected`, "Required for this check type");
-                if (check.points !== undefined && (!Number.isFinite(check.points) || check.points < 0)) E(id, `${field}.points`, "Must be a non-negative number");
+                if (
+                  check.points !== undefined &&
+                  (!Number.isFinite(check.points) || check.points < 0)
+                )
+                  E(id, `${field}.points`, "Must be a non-negative number");
               });
             }
-            if (Object.prototype.hasOwnProperty.call(config, "hints")) E(id, "terminal.hints", "Move hints to the exercise's top-level 'hints' field");
-            if (config.initialFilesystem !== undefined && !Array.isArray(config.initialFilesystem)) E(id, "terminal.initialFilesystem", "Must be an array");
-            if (config.preSetupCommands !== undefined && (!Array.isArray(config.preSetupCommands) || config.preSetupCommands.length > 100 || config.preSetupCommands.some((command) => typeof command !== "string" || !command.trim() || command.length > 8192))) E(id, "terminal.preSetupCommands", "Must be an array of at most 100 non-empty command strings (maximum 8192 characters each)");
-            if (config.initialDirectory !== undefined && (typeof config.initialDirectory !== "string" || !config.initialDirectory.startsWith("/"))) E(id, "terminal.initialDirectory", "Must be an absolute path");
-            if (config.profile !== undefined && !["basic-linux", "basic", "intro-linux"].includes(config.profile)) E(id, "terminal.profile", `Unsupported profile: ${config.profile}`);
+            if (Object.prototype.hasOwnProperty.call(config, "hints"))
+              E(
+                id,
+                "terminal.hints",
+                "Move hints to the exercise's top-level 'hints' field",
+              );
+            if (
+              config.initialFilesystem !== undefined &&
+              !Array.isArray(config.initialFilesystem)
+            )
+              E(id, "terminal.initialFilesystem", "Must be an array");
+            if (
+              config.preSetupCommands !== undefined &&
+              (!Array.isArray(config.preSetupCommands) ||
+                config.preSetupCommands.length > 100 ||
+                config.preSetupCommands.some(
+                  (command) =>
+                    typeof command !== "string" ||
+                    !command.trim() ||
+                    command.length > 8192,
+                ))
+            )
+              E(
+                id,
+                "terminal.preSetupCommands",
+                "Must be an array of at most 100 non-empty command strings (maximum 8192 characters each)",
+              );
+            if (
+              config.initialDirectory !== undefined &&
+              (typeof config.initialDirectory !== "string" ||
+                !config.initialDirectory.startsWith("/"))
+            )
+              E(id, "terminal.initialDirectory", "Must be an absolute path");
+            if (
+              config.profile !== undefined &&
+              !["basic-linux", "basic", "intro-linux"].includes(config.profile)
+            )
+              E(
+                id,
+                "terminal.profile",
+                `Unsupported profile: ${config.profile}`,
+              );
           }
         } else if (ex.type === "java-ex") {
           if (!["java", "programming_fundamentals"].includes(ex.course))
-            E(id, "course", "java-ex exercises must use course java or programming_fundamentals");
+            E(
+              id,
+              "course",
+              "java-ex exercises must use course java or programming_fundamentals",
+            );
           const config = ex.java;
           if (!isMap(config)) {
             E(id, "java", "Java exercises need a java configuration object");
           } else {
-            if (typeof config.sourceFile !== "string" || !config.sourceFile.trim() || !config.sourceFile.endsWith(".java"))
+            if (
+              typeof config.sourceFile !== "string" ||
+              !config.sourceFile.trim() ||
+              !config.sourceFile.endsWith(".java")
+            )
               E(id, "java.sourceFile", "Must be a non-empty .java file name");
-            if (typeof config.preCode !== "string") E(id, "java.preCode", "Must be a starter-code string");
-            if (config.solution !== undefined && typeof config.solution !== "string")
-              E(id, "java.solution", "Must be a Java source-code string when supplied");
-            if (config.mainClass !== undefined && (typeof config.mainClass !== "string" || !config.mainClass.trim()))
-              E(id, "java.mainClass", "Must be a non-empty class name when supplied");
-            if (config.stdin !== undefined && typeof config.stdin !== "string") E(id, "java.stdin", "Must be a string");
-            if (config.explanation !== undefined && typeof config.explanation !== "string") E(id, "java.explanation", "Must be a string");
-            if (config.timeoutMs !== undefined && (!Number.isInteger(config.timeoutMs) || config.timeoutMs < 1000 || config.timeoutMs > 30000))
-              E(id, "java.timeoutMs", "Must be an integer between 1000 and 30000 milliseconds");
-            if (config.additionalSources !== undefined && !(isMap(config.additionalSources) || (Array.isArray(config.additionalSources) && config.additionalSources.every((item) => isMap(item) && typeof item.name === "string" && typeof item.code === "string"))))
-              E(id, "java.additionalSources", "Must be a filename-to-source object or an array of { name, code } objects");
+            if (typeof config.preCode !== "string")
+              E(id, "java.preCode", "Must be a starter-code string");
+            if (
+              config.solution !== undefined &&
+              typeof config.solution !== "string"
+            )
+              E(
+                id,
+                "java.solution",
+                "Must be a Java source-code string when supplied",
+              );
+            if (
+              config.mainClass !== undefined &&
+              (typeof config.mainClass !== "string" || !config.mainClass.trim())
+            )
+              E(
+                id,
+                "java.mainClass",
+                "Must be a non-empty class name when supplied",
+              );
+            if (config.stdin !== undefined && typeof config.stdin !== "string")
+              E(id, "java.stdin", "Must be a string");
+            if (
+              config.explanation !== undefined &&
+              typeof config.explanation !== "string"
+            )
+              E(id, "java.explanation", "Must be a string");
+            if (
+              config.timeoutMs !== undefined &&
+              (!Number.isInteger(config.timeoutMs) ||
+                config.timeoutMs < 1000 ||
+                config.timeoutMs > 30000)
+            )
+              E(
+                id,
+                "java.timeoutMs",
+                "Must be an integer between 1000 and 30000 milliseconds",
+              );
+            if (
+              config.additionalSources !== undefined &&
+              !(
+                isMap(config.additionalSources) ||
+                (Array.isArray(config.additionalSources) &&
+                  config.additionalSources.every(
+                    (item) =>
+                      isMap(item) &&
+                      typeof item.name === "string" &&
+                      typeof item.code === "string",
+                  ))
+              )
+            )
+              E(
+                id,
+                "java.additionalSources",
+                "Must be a filename-to-source object or an array of { name, code } objects",
+              );
             if (!Array.isArray(config.checks)) {
               E(id, "java.checks", "Must be an array of automatic checks");
             } else {
@@ -338,30 +1088,160 @@
                   E(id, field, "Must be an object");
                   return;
                 }
-                if (!JAVA_CHECK_TYPES.has(check.type)) E(id, `${field}.type`, `Unsupported Java check type: ${check.type}`);
-                if (check.id !== undefined && (typeof check.id !== "string" || !check.id.trim())) E(id, `${field}.id`, "Must be a non-empty string");
-                if (check.description !== undefined && typeof check.description !== "string") E(id, `${field}.description`, "Must be a string");
-                if (check.points !== undefined && (!Number.isFinite(check.points) || check.points < 0)) E(id, `${field}.points`, "Must be a non-negative number");
-                if (["stdout", "stderr", "methodReturn", "fieldValue", "fieldModifier", "methodModifier", "classModifier"].includes(check.type) && check.expected === undefined) E(id, `${field}.expected`, "Required for this check type");
-                if (check.type === "inheritance" && check.superclass === undefined && check.expected === undefined && !(Array.isArray(check.interfaces) && check.interfaces.length)) E(id, field, "Specify a superclass and/or at least one implemented interface");
-                if (check.type === "instanceOf" && (typeof (check.expectedType ?? check.expected) !== "string" || !(check.expectedType ?? check.expected).trim())) E(id, `${field}.expectedType`, "Must specify the expected class or interface name");
-                if (["fieldExists", "fieldModifier", "fieldValue"].includes(check.type) && (typeof check.fieldName !== "string" || !check.fieldName.trim())) E(id, `${field}.fieldName`, "Must be a non-empty field name");
-                if (["methodExists", "methodModifier", "methodReturn"].includes(check.type) && (typeof check.method !== "string" || !check.method.trim())) E(id, `${field}.method`, "Must be a non-empty method name");
-                if (["classExists", "fieldExists", "fieldModifier", "fieldValue", "methodExists", "methodModifier", "methodReturn", "constructorExists", "classModifier", "inheritance", "instanceOf"].includes(check.type) && (typeof check.className !== "string" || !check.className.trim())) E(id, `${field}.className`, "Must be a non-empty class name");
-                if (check.parameterTypes !== undefined && (!Array.isArray(check.parameterTypes) || check.parameterTypes.some((item) => typeof item !== "string" || !item.trim()))) E(id, `${field}.parameterTypes`, "Must be an array of Java type names");
-                if (check.args !== undefined && !Array.isArray(check.args)) E(id, `${field}.args`, "Must be an array");
-                if (check.matcher !== undefined && !["exact", "regex", "contains"].includes(check.matcher)) E(id, `${field}.matcher`, "Must be exact, regex or contains");
-                if (check.flags !== undefined && !(typeof check.flags === "string" || (Array.isArray(check.flags) && check.flags.every((flag) => typeof flag === "string")))) E(id, `${field}.flags`, "Must be a string or array of regex flags");
-                if (check.fullMatch !== undefined && typeof check.fullMatch !== "boolean") E(id, `${field}.fullMatch`, "Must be true or false");
-                if (check.input !== undefined && typeof check.input !== "string") E(id, `${field}.input`, "Must be a string");
+                if (!JAVA_CHECK_TYPES.has(check.type))
+                  E(
+                    id,
+                    `${field}.type`,
+                    `Unsupported Java check type: ${check.type}`,
+                  );
+                if (
+                  check.id !== undefined &&
+                  (typeof check.id !== "string" || !check.id.trim())
+                )
+                  E(id, `${field}.id`, "Must be a non-empty string");
+                if (
+                  check.description !== undefined &&
+                  typeof check.description !== "string"
+                )
+                  E(id, `${field}.description`, "Must be a string");
+                if (
+                  check.points !== undefined &&
+                  (!Number.isFinite(check.points) || check.points < 0)
+                )
+                  E(id, `${field}.points`, "Must be a non-negative number");
+                if (
+                  [
+                    "stdout",
+                    "stderr",
+                    "methodReturn",
+                    "fieldValue",
+                    "fieldModifier",
+                    "methodModifier",
+                    "classModifier",
+                  ].includes(check.type) &&
+                  check.expected === undefined
+                )
+                  E(id, `${field}.expected`, "Required for this check type");
+                if (
+                  check.type === "inheritance" &&
+                  check.superclass === undefined &&
+                  check.expected === undefined &&
+                  !(Array.isArray(check.interfaces) && check.interfaces.length)
+                )
+                  E(
+                    id,
+                    field,
+                    "Specify a superclass and/or at least one implemented interface",
+                  );
+                if (
+                  check.type === "instanceOf" &&
+                  (typeof (check.expectedType ?? check.expected) !== "string" ||
+                    !(check.expectedType ?? check.expected).trim())
+                )
+                  E(
+                    id,
+                    `${field}.expectedType`,
+                    "Must specify the expected class or interface name",
+                  );
+                if (
+                  ["fieldExists", "fieldModifier", "fieldValue"].includes(
+                    check.type,
+                  ) &&
+                  (typeof check.fieldName !== "string" ||
+                    !check.fieldName.trim())
+                )
+                  E(id, `${field}.fieldName`, "Must be a non-empty field name");
+                if (
+                  ["methodExists", "methodModifier", "methodReturn"].includes(
+                    check.type,
+                  ) &&
+                  (typeof check.method !== "string" || !check.method.trim())
+                )
+                  E(id, `${field}.method`, "Must be a non-empty method name");
+                if (
+                  [
+                    "classExists",
+                    "fieldExists",
+                    "fieldModifier",
+                    "fieldValue",
+                    "methodExists",
+                    "methodModifier",
+                    "methodReturn",
+                    "constructorExists",
+                    "classModifier",
+                    "inheritance",
+                    "instanceOf",
+                  ].includes(check.type) &&
+                  (typeof check.className !== "string" ||
+                    !check.className.trim())
+                )
+                  E(id, `${field}.className`, "Must be a non-empty class name");
+                if (
+                  check.parameterTypes !== undefined &&
+                  (!Array.isArray(check.parameterTypes) ||
+                    check.parameterTypes.some(
+                      (item) => typeof item !== "string" || !item.trim(),
+                    ))
+                )
+                  E(
+                    id,
+                    `${field}.parameterTypes`,
+                    "Must be an array of Java type names",
+                  );
+                if (check.args !== undefined && !Array.isArray(check.args))
+                  E(id, `${field}.args`, "Must be an array");
+                if (
+                  check.matcher !== undefined &&
+                  !["exact", "regex", "contains"].includes(check.matcher)
+                )
+                  E(id, `${field}.matcher`, "Must be exact, regex or contains");
+                if (
+                  check.flags !== undefined &&
+                  !(
+                    typeof check.flags === "string" ||
+                    (Array.isArray(check.flags) &&
+                      check.flags.every((flag) => typeof flag === "string"))
+                  )
+                )
+                  E(
+                    id,
+                    `${field}.flags`,
+                    "Must be a string or array of regex flags",
+                  );
+                if (
+                  check.fullMatch !== undefined &&
+                  typeof check.fullMatch !== "boolean"
+                )
+                  E(id, `${field}.fullMatch`, "Must be true or false");
+                if (
+                  check.input !== undefined &&
+                  typeof check.input !== "string"
+                )
+                  E(id, `${field}.input`, "Must be a string");
               });
             }
           }
-          ["terminal", "expected", "options", "referenceSolution", "datasetId"].forEach((f) => {
-            if (ex[f] !== undefined) E(id, f, `Not used by java-ex exercises; use the dedicated 'java' configuration`);
+          [
+            "terminal",
+            "expected",
+            "options",
+            "referenceSolution",
+            "datasetId",
+          ].forEach((f) => {
+            if (ex[f] !== undefined)
+              E(
+                id,
+                f,
+                `Not used by java-ex exercises; use the dedicated 'java' configuration`,
+              );
           });
         } else {
-          if (ex.java !== undefined) E(id, "java", "Java configuration is only valid for java-ex exercises");
+          if (ex.java !== undefined)
+            E(
+              id,
+              "java",
+              "Java configuration is only valid for java-ex exercises",
+            );
           const x = ex.expected;
           if (x === undefined) E(id, "expected", "Missing expected");
           else if (MCQ_TYPES.includes(ex.type)) {
@@ -390,7 +1270,10 @@
             !(Array.isArray(x.blanks) && x.blanks.length)
           )
             E(id, "expected", "Need blanks: [[accepted,...],...]");
-          else if (ex.type === "short-answer-self-check" && typeof x !== "string")
+          else if (
+            ex.type === "short-answer-self-check" &&
+            typeof x !== "string"
+          )
             E(id, "expected", "Must be a model-answer string");
         }
       }
@@ -513,6 +1396,7 @@
   }
   const api = {
     compare,
+    generateFromRegex,
     generateExam,
     validatePackage,
     gradeOS,

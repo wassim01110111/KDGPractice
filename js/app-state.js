@@ -33,7 +33,7 @@ const appStateScript = document.currentScript;
 const appStateScriptUrl =
   appStateScript?.dataset.appSectionSrc || appStateScript?.src || location.href;
 const terminalModuleUrl = appResourceUrl("./terminal.js", appStateScriptUrl);
-const javaModuleUrl = appResourceUrl("./java.js", appStateScriptUrl);
+let javaModuleUrl = appResourceUrl("./java.js", appStateScriptUrl);
 let terminalModulePromise = null;
 let javaModulePromise = null;
 async function importAppModuleWithCacheFallback(url, kind) {
@@ -75,8 +75,18 @@ async function importAppModuleWithCacheFallback(url, kind) {
 }
 const loadTerminalModule = () =>
   (terminalModulePromise ||= importAppModuleWithCacheFallback(terminalModuleUrl, "terminal"));
-const loadJavaModule = () =>
-  (javaModulePromise ||= importAppModuleWithCacheFallback(javaModuleUrl, "java"));
+const loadJavaModule = () => {
+  if (window.newVer === true) {
+    const versionedUrl = new URL(javaModuleUrl);
+    versionedUrl.searchParams.set(
+      "__acs_java_version",
+      String(window.__ACS_SITE_VERSION__ ?? "new"),
+    );
+    javaModuleUrl = versionedUrl.href;
+  }
+  return (javaModulePromise ||= importAppModuleWithCacheFallback(javaModuleUrl, "java"));
+};
+window.__ACS_LOAD_JAVA_MODULE__ = loadJavaModule;
 
 // One registry defines every desktop split exercise. Adding a new workspace
 // type requires one entry here and the shared workspace/action-container

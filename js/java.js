@@ -7,14 +7,18 @@ export const JAVA_TIMEOUTS = Object.freeze({
   gradingMs: 60_000,
 });
 
-const WORKER_URL = new URL(
-  "./java.worker.js",
-  globalThis.__ACS_JAVA_MODULE_BASE_URL__ || import.meta.url,
-);
+const JAVA_MODULE_URL =
+  globalThis.__ACS_JAVA_MODULE_BASE_URL__ || import.meta.url;
+const WORKER_URL = new URL("./java.worker.js", JAVA_MODULE_URL);
 if (globalThis.__ACS_FORCE_CACHE_BUST__)
   WORKER_URL.searchParams.set(
     "__acs_nocache",
     String(globalThis.__ACS_FORCE_CACHE_BUST__),
+  );
+if (new URL(JAVA_MODULE_URL).searchParams.has("__acs_java_version"))
+  WORKER_URL.searchParams.set(
+    "__acs_java_version",
+    new URL(JAVA_MODULE_URL).searchParams.get("__acs_java_version"),
   );
 const statusListeners = new Set();
 let worker = null;
@@ -24,6 +28,83 @@ let activeRequest = null;
 let sequence = 0;
 let generation = 0;
 let operationQueue = Promise.resolve();
+
+// ---------------------------------------------------------------------------
+// Java module preload + cache
+//
+// Page side: the worker script.
+// Worker side (java.worker.js, told via INIT.newVer): ExerciseRunner.jar, the
+// CheerpJ runtime start-up and a warm-up compile.
+//   * Normal load  -> cached copies are used.
+//   * newVer load  -> the caches are emptied first and everything is refetched.
+//   * A run started before preload finished joins the in-flight preload and
+//     uses whatever is already loaded; it never starts a second load.
+// ---------------------------------------------------------------------------
+const VERSION_DECISION_WAIT_MS = 4_000;
+const WORKER_RUNNER_CACHE_NAME = "acs-java-runner";
+let modulesPromise = null;
+
+// Resolves to the startup newVer decision made by app-routing.js. If that
+// decision is missing or slow, assume "not new" so offline use stays fast.
+async function resolveNewVer() {
+  const decision = globalThis.__ACS_VERSION_DECISION__;
+  if (!decision || typeof decision.then !== "function") return false;
+  let timer;
+  const timeout = new Promise((resolve) => {
+    timer = setTimeout(() => resolve(false), VERSION_DECISION_WAIT_MS);
+  });
+  try {
+    return (await Promise.race([decision, timeout])) === true;
+  } catch (_) {
+    return false;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+export function clearJavaModuleCache() {
+  modulesPromise = null;
+  if (!("caches" in globalThis)) return Promise.resolve(false);
+  return caches.delete(WORKER_RUNNER_CACHE_NAME).catch(() => false);
+}
+
+export function preloadJavaModules({ newVer = false, force = false } = {}) {
+  if (modulesPromise && !force) return modulesPromise;
+  const current = (modulesPromise = (async () => {
+    const tasks = [
+      // Warm the HTTP cache for the worker script; the Worker constructor uses it.
+      fetch(WORKER_URL.href, { cache: newVer ? "reload" : "default" }).then(
+        (response) => response.arrayBuffer(),
+      ),
+    ];
+    const outcomes = await Promise.allSettled(tasks);
+    for (const outcome of outcomes)
+      if (outcome.status === "rejected")
+        console.warn("Java module preload step failed:", outcome.reason);
+  })());
+  current.catch(() => {
+    if (modulesPromise === current) modulesPromise = null;
+  });
+  return current;
+}
+
+// Startup entry point used by app-routing.js: load modules, then boot the runtime.
+// The CheerpJ worker boots immediately and never waits for the module fetches;
+// the worker takes whatever modules are already loaded when INIT is sent.
+export function preloadJava({ newVer = false, force = false } = {}) {
+  const modules = preloadJavaModules({ newVer, force }).catch((error) =>
+    console.warn("Java module preload failed:", error),
+  );
+  const runtime = initJava();
+  return Promise.all([modules, runtime]).then(([, ready]) => ready);
+}
+
+async function modulesForInit() {
+  const newVer = await resolveNewVer();
+  // Start or join the preload but do not wait for it: use what is loaded now.
+  preloadJavaModules({ newVer }).catch(() => {});
+  return { newVer };
+}
 
 function emitStatus(status, detail = "") {
   for (const listener of statusListeners) {
@@ -252,7 +333,16 @@ export function initJava() {
       "INITIALIZING",
       "Loading the Java 21 runtime (the first start can take longer)…",
     );
-    instance.postMessage({ type: "INIT", requestId });
+    modulesForInit()
+      .catch(() => ({ newVer: false }))
+      .then((modules) => {
+        if (worker !== instance || activeRequest !== request) return;
+        instance.postMessage({
+          type: "INIT",
+          requestId,
+          newVer: modules.newVer,
+        });
+      });
   });
   let wrapped;
   wrapped = promise
@@ -275,6 +365,8 @@ function enqueueOperation(operation, payload) {
     .then(async () => {
       if (taskGeneration !== generation)
         throw new Error("This Java operation was cancelled.");
+      const invalid = validateSources(payload.sources);
+      if (invalid) return invalid;
       await initJava();
       if (taskGeneration !== generation)
         throw new Error("This Java operation was cancelled.");
@@ -293,7 +385,7 @@ function enqueueOperation(operation, payload) {
             ? JAVA_TIMEOUTS.gradingMs
             : JAVA_TIMEOUTS.executionMs;
 
-      return new Promise((resolve, reject) => {
+      const rawResult = await new Promise((resolve, reject) => {
         const request = {
           kind: "execute",
           requestId,
@@ -314,6 +406,7 @@ function enqueueOperation(operation, payload) {
           config: payload.config,
         });
       });
+      return finalizeResult(operation, rawResult, payload.plan);
     });
   operationQueue = task.catch(() => {});
   return task;
@@ -341,13 +434,399 @@ function normalizeSources(config, source) {
   return sourceFiles;
 }
 
-function executionConfig(exercise, stdin = "") {
+// ---------------------------------------------------------------------------
+// Work moved out of Java: source validation, check planning, comparisons,
+// feedback text, scoring and result shaping.
+// ---------------------------------------------------------------------------
+const SOURCE_NAME_PATTERN = /^[A-Za-z0-9_$.-]+\.java$/;
+
+function validateSources(sources) {
+  const failure = (file, message) => ({
+    success: false,
+    compiled: false,
+    status: "compile-error",
+    exitCode: 1,
+    stdout: "",
+    stderr: "",
+    executionTimeMs: 0,
+    diagnostics: [{ kind: "ERROR", file, line: 0, column: 0, message }],
+  });
+  if (!Array.isArray(sources) || sources.length === 0)
+    return failure("(source)", "No Java source files were supplied.");
+  for (const source of sources) {
+    if (!SOURCE_NAME_PATTERN.test(String(source?.name ?? "")))
+      return failure(
+        String(source?.name ?? ""),
+        "Source file names must be simple .java file names without directory separators.",
+      );
+  }
+  return null;
+}
+
+// java.lang.reflect.Modifier bits.
+const MODIFIER_BITS = {
+  public: 0x1,
+  private: 0x2,
+  protected: 0x4,
+  static: 0x8,
+  final: 0x10,
+  synchronized: 0x20,
+  volatile: 0x40,
+  transient: 0x80,
+  native: 0x100,
+  abstract: 0x400,
+  strict: 0x800,
+};
+const MODIFIER_ORDER = [
+  ["public", 0x1],
+  ["protected", 0x4],
+  ["private", 0x2],
+  ["abstract", 0x400],
+  ["static", 0x8],
+  ["final", 0x10],
+  ["transient", 0x80],
+  ["volatile", 0x40],
+  ["synchronized", 0x20],
+  ["native", 0x100],
+  ["strictfp", 0x800],
+  ["interface", 0x200],
+];
+const modifiersToString = (bits) =>
+  MODIFIER_ORDER.filter(([, bit]) => (bits & bit) !== 0)
+    .map(([name]) => name)
+    .join(" ");
+
+function asList(value) {
+  if (value === undefined || value === null) return [];
+  return Array.isArray(value) ? value : [value];
+}
+
+// Split each check into what Java needs (regex flag bits) and what only JS
+// needs (id, description, points, matcher, flag errors).
+function buildCheckPlan(rawChecks) {
+  const checks = Array.isArray(rawChecks) ? rawChecks : [];
+  const meta = [];
+  const javaChecks = checks.map((check, index) => {
+    const id = String(check?.id ?? `check-${index + 1}`);
+    const entry = {
+      id,
+      description: String(check?.description ?? id),
+      points: Number.isFinite(Number(check?.points)) ? Number(check.points) : 1,
+      matcher:
+        check?.regex === true
+          ? "regex"
+          : check?.contains === true
+            ? "contains"
+            : String(check?.matcher ?? "exact").toLowerCase(),
+      flagError: null,
+    };
+    const prepared = { ...check, matcher: entry.matcher };
+    // The package schema stores regex as a boolean. The Java worker protocol
+    // retains its original matcher string and structured regex flags object.
+    delete prepared.contains;
+    delete prepared.regex;
+    if (entry.matcher === "regex") {
+      // Regex options are encoded inline in the expected pattern, not check.flags.
+      prepared.regex = { flags: 0, full: check?.fullMatch === true };
+    }
+    meta.push(entry);
+    return prepared;
+  });
+  return { javaChecks, checks, meta };
+}
+
+const pass = (actual) => ({ passed: true, feedback: "Passed.", actual });
+const fail = (feedback, actual) => ({ passed: false, feedback, actual });
+const quoteText = (value) => JSON.stringify(String(value));
+
+function describeRegex(pattern) {
+  const source = String(pattern ?? "");
+  try {
+    // Pass the original pattern so generateFromRegex can parse inline (?ims).
+    const sample = globalThis.Core?.generateFromRegex?.(source);
+    if (typeof sample === "string")
+      return { generated: true, text: sample === "" ? '""' : sample };
+  } catch (_) {
+    // Keep the original pattern visible if sample generation is unsupported.
+  }
+  return { generated: false, text: source };
+}
+
+function compareText(actual, check, entry, probe) {
+  const text = String(actual ?? "");
+  const expected = check.expected == null ? "null" : String(check.expected);
+  switch (entry.matcher) {
+    case "exact":
+      return text === expected
+        ? { passed: true, feedback: "Text matches exactly.", actual: text }
+        : fail(
+            `Expected exact text ${quoteText(expected)} but received ${quoteText(text)}.`,
+            text,
+          );
+    case "contains":
+      return text.includes(expected)
+        ? { passed: true, feedback: "Expected text was found.", actual: text }
+        : fail(`Output does not contain ${quoteText(expected)}.`, text);
+    case "regex": {
+      if (probe.regexError)
+        return fail(`Invalid regular expression: ${probe.regexError}`, text);
+      if (probe.matched === true)
+        return { passed: true, feedback: "Regular expression matched.", actual: text };
+      const mode = check.fullMatch === true ? "full match" : "substring search";
+      const described = describeRegex(check.expected);
+      return fail(
+        described.generated
+          ? `The output did not match (${mode}). For example, matching text could be:\n${described.text}`
+          : `The output did not match (${mode}). Expected output must match the regular expression:\n${described.text}`,
+        text,
+      );
+    }
+    default:
+      return fail(`Unsupported matcher: ${entry.matcher}`, text);
+  }
+}
+
+function looseNumber(value) {
+  return typeof value === "number" ? value : null;
+}
+
+function valuesEqual(actual, expected) {
+  if (actual === null || actual === undefined || expected === null || expected === undefined)
+    return (actual ?? null) === (expected ?? null);
+  const a = looseNumber(actual);
+  const e = looseNumber(expected);
+  if (a !== null && e !== null) return a === e;
+  if (typeof actual === "object" || typeof expected === "object")
+    return JSON.stringify(actual) === JSON.stringify(expected);
+  return String(actual) === String(expected);
+}
+
+function compareValue(actual, check, entry, probe) {
+  if (typeof actual === "string" && typeof check.expected === "string")
+    return compareText(actual, check, entry, probe);
+  const same = valuesEqual(actual, check.expected);
+  return {
+    passed: same,
+    feedback: same
+      ? "Returned value matches."
+      : `Expected ${JSON.stringify(check.expected)} but received ${JSON.stringify(actual)}.`,
+    actual,
+  };
+}
+
+function modifierOutcome(bits, expected, label) {
+  const actualText = modifiersToString(bits);
+  for (const raw of asList(expected).map((item) => String(item))) {
+    const name = raw.toLowerCase();
+    let present;
+    if (name === "default") present = false;
+    else if (name in MODIFIER_BITS) present = (bits & MODIFIER_BITS[name]) !== 0;
+    else return fail(`Unknown modifier: ${raw}`, actualText);
+    if (!present)
+      return fail(
+        `${label} must be ${raw}. Actual modifiers: ${actualText}.`,
+        actualText,
+      );
+  }
+  return pass(actualText);
+}
+
+function describeProbeError(probe) {
+  const message = probe.errorMessage || probe.errorType || "Check failed.";
+  switch (probe.errorType) {
+    case "ClassNotFoundException":
+      return `Class ${message} was not found.`;
+    case "NoSuchFieldException":
+      return `Field ${message} was not found.`;
+    case "NoSuchMethodException":
+      return `Method or constructor ${message} was not found.`;
+    default:
+      return message;
+  }
+}
+
+function evaluateProbe(probe, check, entry) {
+  const type = String(check?.type ?? "");
+  const className = String(check?.className ?? check?.mainClass ?? "Main");
+  if (probe.unsupported) return fail(`Unsupported check type: ${type}`, null);
+  switch (type) {
+    case "stdout":
+    case "stderr": {
+      if (probe.exception)
+        return fail(
+          `Program threw ${probe.exception.type || "an exception"}: ${probe.exception.message ?? ""}`,
+          probe.actual,
+        );
+      return compareText(probe.actual, check, entry, probe);
+    }
+    case "classExists":
+    case "methodExists":
+      return pass(probe.actual);
+    case "fieldExists": {
+      const expectedType = String(check.expectedType ?? "");
+      if (expectedType && probe.actual !== expectedType)
+        return fail(
+          `Field exists, but its type is ${probe.actual} instead of ${expectedType}.`,
+          probe.actual,
+        );
+      return pass(probe.name);
+    }
+    case "fieldModifier":
+      return modifierOutcome(probe.modifiers, check.expected, `Field ${probe.name}`);
+    case "methodModifier":
+      return modifierOutcome(probe.modifiers, check.expected, `Method ${probe.name}`);
+    case "constructorExists":
+      return Object.prototype.hasOwnProperty.call(check, "expected")
+        ? modifierOutcome(probe.modifiers, check.expected, "Constructor")
+        : pass(probe.actual);
+    case "classModifier":
+      return modifierOutcome(probe.modifiers, check.expected, `Class ${className}`);
+    case "inheritance": {
+      const expectedSuper = String(check.superclass ?? check.expected ?? "");
+      if (expectedSuper && probe.superclass !== expectedSuper)
+        return fail(
+          `Expected superclass ${expectedSuper}, found ${probe.superclass || "none"}.`,
+          probe.superclass,
+        );
+      const interfaces = Array.isArray(probe.interfaces) ? probe.interfaces : [];
+      for (const wanted of asList(check.interfaces).map(String))
+        if (!interfaces.includes(wanted))
+          return fail(
+            `Expected implemented interface ${wanted} was not found.`,
+            `[${interfaces.join(", ")}]`,
+          );
+      return pass(probe.superclass);
+    }
+    case "instanceOf": {
+      const target = String(check.expectedType ?? check.expected ?? "");
+      return {
+        passed: probe.isInstance === true,
+        feedback:
+          probe.isInstance === true
+            ? "Instance has the expected type."
+            : `Expected an instance of ${target}.`,
+        actual: probe.actual,
+      };
+    }
+    case "fieldValue":
+      return compareValue(probe.actual, check, entry, probe);
+    case "methodReturn": {
+      if (probe.notInstantiable)
+        return fail(
+          "Cannot invoke an instance method on an abstract class or interface without a concrete instance.",
+          null,
+        );
+      if (probe.thrown)
+        return fail(
+          `Method threw ${String(probe.thrown.type || "").split(".").pop()}: ${probe.thrown.message ?? ""}`,
+          probe.thrown,
+        );
+      return compareValue(probe.actual, check, entry, probe);
+    }
+    default:
+      return fail(`Unsupported check type: ${type}`, null);
+  }
+}
+
+function normalizeDiagnostics(list) {
+  if (!Array.isArray(list)) return list;
+  return list.map((item) =>
+    item && typeof item.file === "string" && item.file.includes("/")
+      ? { ...item, file: item.file.slice(item.file.lastIndexOf("/") + 1) }
+      : item,
+  );
+}
+
+// Turns the raw facts the slim Java runner returns into the full result shape.
+// Results without raw:true (compile results, or an older runner) pass through.
+async function finalizeResult(operation, raw, plan) {
+  const result = { ...(raw || {}) };
+  if (result.diagnostics) result.diagnostics = normalizeDiagnostics(result.diagnostics);
+  if (result.compileDiagnostics)
+    result.compileDiagnostics = normalizeDiagnostics(result.compileDiagnostics);
+  if (result.raw !== true) return result;
+  delete result.raw;
+
+  result.stdout = result.stdout ?? "";
+  result.stderr = result.stderr ?? "";
+  result.executionTimeMs = result.executionTimeMs ?? 0;
+
+  if (result.error) {
+    return { ...result, compiled: false, success: false, status: "error", exitCode: 1 };
+  }
+  result.compiled = true;
+
+  if (operation === "run") {
+    const failed = Boolean(result.runtimeException);
+    return {
+      ...result,
+      success: !failed,
+      status: failed ? "runtime-error" : "completed",
+      exitCode: failed ? 1 : 0,
+    };
+  }
+
+  // operation === "check"
+  const probes = Array.isArray(result.checks) ? result.checks : [];
+  const checks = plan?.checks || [];
+  const meta = plan?.meta || [];
+  let total = 0;
+  let earned = 0;
+  let allPassed = true;
+  let lastStdout = "";
+  let lastStderr = "";
+  const results = probes.map((probe, index) => {
+    const check = checks[index] || {};
+    const entry = meta[index] || { id: `check-${index + 1}`, description: `check-${index + 1}`, points: 1, matcher: "exact" };
+    total += entry.points;
+    const row = {
+      id: entry.id,
+      description: entry.description,
+      points: entry.points,
+      pointsEarned: 0,
+    };
+    let outcome;
+    if (probe.errorType) {
+      outcome = fail(describeProbeError(probe), undefined);
+      row.errorType = probe.errorType;
+    } else {
+      if (typeof probe.stdout === "string") lastStdout = probe.stdout;
+      if (typeof probe.stderr === "string") lastStderr = probe.stderr;
+      outcome = evaluateProbe(probe, check, entry);
+    }
+    row.passed = outcome.passed;
+    row.feedback = outcome.feedback;
+    if (outcome.actual !== undefined && outcome.actual !== null) row.actual = outcome.actual;
+    if (Object.prototype.hasOwnProperty.call(check, "expected")) row.expected = check.expected;
+    if (outcome.passed) {
+      earned += entry.points;
+      row.pointsEarned = entry.points;
+    } else {
+      allPassed = false;
+    }
+    return row;
+  });
+
+  const success = allPassed && probes.length > 0;
+  return {
+    ...result,
+    checks: results,
+    score: { earned, total },
+    stdout: lastStdout,
+    stderr: lastStderr,
+    success,
+    status: "graded",
+    exitCode: success ? 0 : 1,
+  };
+}
+
+function executionConfig(exercise, stdin = "", checks = []) {
   const java = exercise?.java || {};
   return {
     sourceFile: java.sourceFile || "Main.java",
     mainClass: java.mainClass || "Main",
     stdin: String(stdin ?? ""),
-    checks: Array.isArray(java.checks) ? java.checks : [],
+    checks,
     timeoutMs: java.timeoutMs,
   };
 }
@@ -357,14 +836,21 @@ export function runJavaExercise({ exercise, source, stdin = "" }) {
   return enqueueOperation("run", {
     sources: normalizeSources(exercise?.java || {}, source),
     config,
+    plan: null,
   });
 }
 
 export function checkJavaExercise({ exercise, source }) {
-  const config = executionConfig(exercise, exercise?.java?.stdin || "");
+  const plan = buildCheckPlan(exercise?.checks ?? exercise?.java?.checks);
+  const config = executionConfig(
+    exercise,
+    exercise?.java?.stdin || "",
+    plan.javaChecks,
+  );
   return enqueueOperation("check", {
     sources: normalizeSources(exercise?.java || {}, source),
     config,
+    plan,
   });
 }
 
@@ -547,7 +1033,7 @@ function renderCheckResults(target, result) {
           `${check.pointsEarned ?? (check.passed ? check.points : 0)} / ${check.points ?? 0} points`,
         ),
         check.feedback
-          ? element("span", "ot-feedback", check.feedback.replace(/\\n/g, "\n"))
+          ? element("span", "ot-feedback", check.feedback)
           : "",
       ]),
     );
@@ -588,7 +1074,16 @@ export async function mountJavaExercise({
     toolsContainer instanceof Element ? toolsContainer : container;
   if (!(toolsHost instanceof Element))
     throw new Error("A valid Java tools container is required");
-  const config = exercise?.java || {};
+  const javaConfig = exercise?.java || {};
+  const config = {
+    ...javaConfig,
+    checks: exercise?.checks ?? javaConfig.checks,
+    solution: exercise?.solution ?? javaConfig.solution,
+    explanation:
+      [exercise?.explanation, javaConfig.gradingExplanation]
+        .filter((value) => typeof value === "string" && value.trim())
+        .join("\n\n") || javaConfig.explanation,
+  };
   const originalCode = String(config.preCode ?? "");
   let source =
     initialCode === undefined || initialCode === null

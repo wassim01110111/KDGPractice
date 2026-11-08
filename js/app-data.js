@@ -325,6 +325,247 @@ async function loadContent() {
   );
   startupProgress.complete(`${S.exercises.length} exercises ready.`);
 }
+// Exercise packages use one public grading schema. Core's validator and the
+// original OS grader still consume the previous field names, so adapt only at
+// that boundary while keeping S.exercises in the canonical shape.
+function normalizeExerciseCheck(check, kind = "generic") {
+  if (!check || typeof check !== "object" || Array.isArray(check)) return check;
+  const next = { ...check };
+  if (Object.prototype.hasOwnProperty.call(next, "expectedRegex")) {
+    if (!Object.prototype.hasOwnProperty.call(next, "expected"))
+      next.expected = next.expectedRegex;
+    delete next.expectedRegex;
+    next.regex = true;
+  }
+  if (kind === "java") {
+    const matcher = String(next.matcher ?? "").toLowerCase();
+    if (matcher) {
+      next.regex = matcher === "regex";
+      if (matcher === "contains") next.contains = true;
+      else if (matcher === "regex" || matcher === "exact") delete next.contains;
+      if (["regex", "contains", "exact"].includes(matcher))
+        delete next.matcher;
+    } else {
+      next.regex = next.regex === true;
+    }
+  } else if (kind === "terminal") {
+    next.regex = next.regex === true;
+  }
+  return next;
+}
+
+function normalizeExercisePackageSchema(pkg) {
+  if (
+    !pkg ||
+    typeof pkg !== "object" ||
+    !pkg.exercises ||
+    typeof pkg.exercises !== "object" ||
+    Array.isArray(pkg.exercises)
+  )
+    return pkg;
+
+  const exercises = Object.fromEntries(
+    Object.entries(pkg.exercises).map(([id, raw]) => {
+      if (!raw || typeof raw !== "object" || Array.isArray(raw))
+        return [id, raw];
+      const exercise = { ...raw };
+      const type = exercise.type;
+      const serviceKey =
+        type === "java-ex" ? "java" : type === "terminal" ? "terminal" : null;
+
+      // Java and terminal keep their distinct runtime settings nested, while
+      // shared exercise content (checks, solution, explanation) lives at root.
+      if (serviceKey && exercise[serviceKey] && typeof exercise[serviceKey] === "object") {
+        const service = { ...exercise[serviceKey] };
+        if (!Array.isArray(exercise.checks) && Array.isArray(service.checks))
+          exercise.checks = service.checks;
+        delete service.checks;
+        if (exercise.solution === undefined && service.solution !== undefined)
+          exercise.solution = service.solution;
+        delete service.solution;
+        if (service.explanation !== undefined) {
+          if (exercise.explanation === undefined) {
+            exercise.explanation = service.explanation;
+          } else if (
+            type === "java-ex" &&
+            exercise.explanation !== service.explanation
+          ) {
+            service.gradingExplanation = service.explanation;
+          }
+          delete service.explanation;
+        }
+        exercise[serviceKey] = service;
+      }
+
+      if (type === "sql-query" && exercise.solution === undefined &&
+          exercise.referenceSolution !== undefined) {
+        exercise.solution = exercise.referenceSolution;
+      }
+      delete exercise.referenceSolution;
+
+      // `expected` was overloaded for check collections; it is now always
+      // called `checks`. Command answers are normalized to expected/regex rows.
+      if (exercise.checks === undefined && exercise.expected !== undefined) {
+        const expected = exercise.expected;
+        exercise.checks =
+          type === "command-text" && expected && typeof expected === "object" &&
+          !Array.isArray(expected)
+            ? [
+                ...(expected.accepted || []).map((value) => ({
+                  expected: value,
+                  regex: false,
+                })),
+                ...(expected.patterns || []).map((value) => ({
+                  expected: value,
+                  regex: true,
+                })),
+              ]
+            : expected;
+      }
+      delete exercise.expected;
+
+      if (exercise.expectedRegex !== undefined) {
+        const rows = Array.isArray(exercise.checks) ? [...exercise.checks] : [];
+        rows.push({ expected: exercise.expectedRegex, regex: true });
+        exercise.checks = rows;
+        delete exercise.expectedRegex;
+      }
+
+      if (Array.isArray(exercise.checks)) {
+        exercise.checks = exercise.checks.map((check) =>
+          normalizeExerciseCheck(
+            check,
+            type === "java-ex" ? "java" : type === "terminal" ? "terminal" : "generic",
+          ),
+        );
+      }
+
+      // The common optional fields are stable even for older imported files.
+      if (exercise.hints == null) exercise.hints = [];
+      else if (typeof exercise.hints === "string") exercise.hints = [exercise.hints];
+      return [id, exercise];
+    }),
+  );
+  return { ...pkg, exercises };
+}
+
+function commandChecksAsLegacyExpected(checks) {
+  const rows = Array.isArray(checks) ? checks : [];
+  return {
+    accepted: rows
+      .filter((check) => check && check.regex !== true)
+      .map((check) => check.expected),
+    patterns: rows
+      .filter((check) => check && check.regex === true)
+      .map((check) => check.expected),
+  };
+}
+
+// Add old aliases for the legacy Core functions without leaking the old schema
+// back into the canonical in-memory exercise objects.
+function exerciseWithCoreAliases(exercise) {
+  const adapted = { ...exercise };
+  // Only exercise types whose legacy Core contract used root `expected` need
+  // that alias. Java and terminal checks belonged inside their service block.
+  if (
+    adapted.checks !== undefined &&
+    adapted.expected === undefined &&
+    adapted.type !== "java-ex" &&
+    adapted.type !== "terminal"
+  ) {
+    adapted.expected =
+      adapted.type === "command-text"
+        ? commandChecksAsLegacyExpected(adapted.checks)
+        : adapted.checks;
+  }
+  if (
+    adapted.type === "sql-query" &&
+    adapted.solution !== undefined &&
+    adapted.referenceSolution === undefined
+  )
+    adapted.referenceSolution = adapted.solution;
+  if (adapted.type === "java-ex") {
+    const java = { ...(adapted.java || {}) };
+    java.checks = adapted.checks ?? java.checks;
+    java.solution = adapted.solution ?? java.solution;
+    java.explanation =
+      java.gradingExplanation ?? adapted.explanation ?? java.explanation;
+    adapted.java = java;
+  } else if (adapted.type === "terminal") {
+    const terminal = { ...(adapted.terminal || {}) };
+    terminal.checks = adapted.checks ?? terminal.checks;
+    terminal.solution = adapted.solution ?? terminal.solution;
+    terminal.explanation = adapted.explanation ?? terminal.explanation;
+    adapted.terminal = terminal;
+  }
+  return adapted;
+}
+
+function packageForCoreValidation(pkg) {
+  const legacy = {
+    ...pkg,
+    exercises: Object.fromEntries(
+      Object.entries(pkg.exercises || {}).map(([id, exercise]) => {
+        if (!exercise || typeof exercise !== "object" || Array.isArray(exercise))
+          return [id, exercise];
+        const adapted = exerciseWithCoreAliases(exercise);
+        if (adapted.type === "java-ex") {
+          const java = { ...(adapted.java || {}) };
+          if (Array.isArray(java.checks)) java.checks = java.checks.map((check) => {
+            const next = { ...check };
+            const matcher =
+              next.regex === true
+                ? "regex"
+                : next.contains === true
+                  ? "contains"
+                  : "";
+            delete next.regex;
+            delete next.contains;
+            if (matcher) next.matcher = matcher;
+            return next;
+          });
+          adapted.java = java;
+          delete adapted.checks;
+          delete adapted.solution;
+          if (java.gradingExplanation !== undefined) {
+            java.explanation = java.gradingExplanation;
+            delete java.gradingExplanation;
+            adapted.java = java;
+          } else {
+            delete adapted.explanation;
+          }
+        } else if (adapted.type === "terminal") {
+          const terminal = { ...(adapted.terminal || {}) };
+          if (Array.isArray(terminal.checks))
+            terminal.checks = terminal.checks.map((check) => {
+              const next = { ...check };
+              if (next.regex === false) delete next.regex;
+              return next;
+            });
+          adapted.terminal = terminal;
+          delete adapted.checks;
+          delete adapted.solution;
+          delete adapted.explanation;
+        } else if (adapted.type === "sql-query") {
+          delete adapted.solution;
+        } else {
+          delete adapted.checks;
+        }
+        return [id, adapted];
+      }),
+    ),
+  };
+  return legacy;
+}
+
+function gradeExerciseAnswer(exercise, answer) {
+  return gradeOS(exerciseWithCoreAliases(exercise), answer);
+}
+
+function hasSimilarExerciseAnswer(exercise, answer) {
+  return hasSimilarOSAnswer(exerciseWithCoreAliases(exercise), answer);
+}
+
 // Hints are optional package content. Normalize them before validation so
 // packages created before hints were introduced (or deliberately omitting
 // them) remain valid. Keep malformed non-string/non-array values unchanged so
@@ -381,9 +622,10 @@ function addPackage(f, ctx) {
 
   // A question may omit `hints`; the practice UI simply hides the hint
   // control for an empty list.
-  const pkg = normalizeOptionalExerciseHints(f.pkg);
+  const pkg = normalizeOptionalExerciseHints(normalizeExercisePackageSchema(f.pkg));
 
-  const errs = validatePackage(pkg, f.name, c);
+  const validationPkg = packageForCoreValidation(pkg);
+  const errs = validatePackage(validationPkg, f.name, c);
 
   if (errs.length) {
     S.errors.push(...errs);
@@ -655,12 +897,12 @@ async function gradeSqlOnDatabase(
   const reference = await runSqlInRollbackTransaction(
     db,
     ds,
-    ex.referenceSolution,
+    ex.solution,
   );
   if (reference.status === "rejected") {
     return {
       correct: false,
-      error: describeSqlError(reference.reason, ex.referenceSolution),
+      error: describeSqlError(reference.reason, ex.solution),
       res: student.value,
       setupMs,
       totalMs: Math.round(performance.now() - t0),

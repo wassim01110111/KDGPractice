@@ -31,31 +31,33 @@
           "chown student:student /home/student/Desktop /home/student/Downloads /home/student/Music /home/student/Pictures /home/student/Videos /home/student/Documents /home/student/Documents/fruits.txt /home/student/Documents/vegetables.txt",
           "chmod 755 /home/student/Desktop /home/student/Downloads /home/student/Music /home/student/Pictures /home/student/Videos /home/student/Documents /var/log",
           "chmod 644 /home/student/Documents/fruits.txt /home/student/Documents/vegetables.txt /var/log/dnf.log"
-        ],
-        "checks": [
-          {
-            "id": "content-combined-txt",
-            "type": "content",
-            "path": "/home/student/combined.txt",
-            "expected": "Apples\nOranges\nBananas\nTomatoes\nCarrots\nOnions\n",
-            "points": 1,
-            "description": "`combined.txt` contains the concatenated fruits and vegetables."
-          },
-          {
-            "id": "content-long-command-txt",
-            "type": "content",
-            "path": "/home/student/long_command.txt",
-            "expected": "This is a very long command that we are splitting across multiple lines\n",
-            "points": 1,
-            "description": "`long_command.txt` contains the output of the long `echo` command."
-          }
-        ],
-        "explanation": "The correction checks the files you saved. Everything before that is practice with command syntax, history and tab completion.",
-        "solution": [
-          "cat Documents/fruits.txt Documents/vegetables.txt > ~/combined.txt",
-          "echo \"This is a very long command that we are splitting across multiple lines\" > ~/long_command.txt"
         ]
-      }
+      },
+      "checks": [
+        {
+          "id": "content-combined-txt",
+          "type": "content",
+          "path": "/home/student/combined.txt",
+          "expected": "Apples\nOranges\nBananas\nTomatoes\nCarrots\nOnions\n",
+          "points": 1,
+          "description": "`combined.txt` contains the concatenated fruits and vegetables.",
+          "regex": false
+        },
+        {
+          "id": "content-long-command-txt",
+          "type": "content",
+          "path": "/home/student/long_command.txt",
+          "expected": "This is a very long command that we are splitting across multiple lines\n",
+          "points": 1,
+          "description": "`long_command.txt` contains the output of the long `echo` command.",
+          "regex": false
+        }
+      ],
+      "solution": [
+        "cat Documents/fruits.txt Documents/vegetables.txt > ~/combined.txt",
+        "echo \"This is a very long command that we are splitting across multiple lines\" > ~/long_command.txt"
+      ],
+      "explanation": "The correction checks the files you saved. Everything before that is practice with command syntax, history and tab completion."
     },
     "os-term-1-0202": {
       "course": "os",
@@ -81,76 +83,83 @@
           "printf 'Meeting notes - 12 August\\nAttendees: Alice, Bob, Carol\\nTopic 1: server migration\\nTopic 2: backup policy\\nTopic 3: user training\\nAction: Alice updates the wiki\\nAction: Bob schedules the training\\nAction: Carol reviews the backups\\n' > /home/student/meeting_notes.txt",
           "chown student:student /home/student/system_status.log /home/student/meeting_notes.txt",
           "chmod 644 /home/student/system_status.log /home/student/meeting_notes.txt"
-        ],
-        "checks": [
-          {
-            "id": "content-all-files-txt",
-            "type": "content",
-            "path": "/home/student/all_files.txt",
-            "expected": "INFO: system boot completed\nERROR: disk almost full\nINFO: network interface up\nERROR: connection timeout\nINFO: user student logged in\nERROR: disk almost full\nWARN: high memory usage\nERROR: connection timeout\nINFO: backup started\nERROR: backup failed\nERROR: disk almost full\nINFO: backup finished\nMeeting notes - 12 August\nAttendees: Alice, Bob, Carol\nTopic 1: server migration\nTopic 2: backup policy\nTopic 3: user training\nAction: Alice updates the wiki\nAction: Bob schedules the training\nAction: Carol reviews the backups\n",
-            "points": 1,
-            "description": "`~/all_files.txt` has the expected content."
-          },
-          {
-            "id": "content-status-head-txt",
-            "type": "content",
-            "path": "/home/student/status_head.txt",
-            "expected": "INFO: system boot completed\nERROR: disk almost full\nINFO: network interface up\nERROR: connection timeout\nINFO: user student logged in\nERROR: disk almost full\nWARN: high memory usage\nERROR: connection timeout\nINFO: backup started\nERROR: backup failed\n",
-            "points": 1,
-            "description": "`~/status_head.txt` has the expected content."
-          },
-          {
-            "id": "content-notes-tail-txt",
-            "type": "content",
-            "path": "/home/student/notes_tail.txt",
-            "expected": "Topic 2: backup policy\nTopic 3: user training\nAction: Alice updates the wiki\nAction: Bob schedules the training\nAction: Carol reviews the backups\n",
-            "points": 1,
-            "description": "`~/notes_tail.txt` has the expected content."
-          },
-          {
-            "id": "content-notes-head-txt",
-            "type": "content",
-            "path": "/home/student/notes_head.txt",
-            "expected": "Meeting notes - 12 August\nAttendees: Alice, Bob, Carol\nTopic 1: server migration\n",
-            "points": 1,
-            "description": "`~/notes_head.txt` has the expected content."
-          },
-          {
-            "id": "content-status-lines-txt",
-            "type": "content",
-            "path": "/home/student/status_lines.txt",
-            "expected": "12\n",
-            "points": 1,
-            "description": "`~/status_lines.txt` has the expected content."
-          },
-          {
-            "id": "content-notes-words-txt",
-            "type": "content",
-            "path": "/home/student/notes_words.txt",
-            "expected": "36\n",
-            "points": 1,
-            "description": "`~/notes_words.txt` has the expected content."
-          },
-          {
-            "id": "content-error-summary-txt",
-            "type": "content",
-            "path": "/home/student/error_summary.txt",
-            "expected": "      3 ERROR: disk almost full\n      2 ERROR: connection timeout\n      1 ERROR: backup failed\n",
-            "points": 1,
-            "description": "`~/error_summary.txt` has the expected content."
-          }
-        ],
-        "explanation": "The correction compares the saved files with the exact expected output of each command on the prepared log and notes files.",
-        "solution": [
-          "cat system_status.log meeting_notes.txt > ~/all_files.txt",
-          "head -n 10 system_status.log > ~/status_head.txt",
-          "tail -n 5 meeting_notes.txt > ~/notes_tail.txt",
-          "head -n 3 meeting_notes.txt > ~/notes_head.txt",
-          "wc -l < system_status.log > ~/status_lines.txt",
-          "wc -w < meeting_notes.txt > ~/notes_words.txt",
-          "printf %b '      3 ERROR: disk almost full\\n      2 ERROR: connection timeout\\n      1 ERROR: backup failed\\n' > ~/error_summary.txt"
         ]
-      }
+      },
+      "checks": [
+        {
+          "id": "content-all-files-txt",
+          "type": "content",
+          "path": "/home/student/all_files.txt",
+          "expected": "INFO: system boot completed\nERROR: disk almost full\nINFO: network interface up\nERROR: connection timeout\nINFO: user student logged in\nERROR: disk almost full\nWARN: high memory usage\nERROR: connection timeout\nINFO: backup started\nERROR: backup failed\nERROR: disk almost full\nINFO: backup finished\nMeeting notes - 12 August\nAttendees: Alice, Bob, Carol\nTopic 1: server migration\nTopic 2: backup policy\nTopic 3: user training\nAction: Alice updates the wiki\nAction: Bob schedules the training\nAction: Carol reviews the backups\n",
+          "points": 1,
+          "description": "`~/all_files.txt` has the expected content.",
+          "regex": false
+        },
+        {
+          "id": "content-status-head-txt",
+          "type": "content",
+          "path": "/home/student/status_head.txt",
+          "expected": "INFO: system boot completed\nERROR: disk almost full\nINFO: network interface up\nERROR: connection timeout\nINFO: user student logged in\nERROR: disk almost full\nWARN: high memory usage\nERROR: connection timeout\nINFO: backup started\nERROR: backup failed\n",
+          "points": 1,
+          "description": "`~/status_head.txt` has the expected content.",
+          "regex": false
+        },
+        {
+          "id": "content-notes-tail-txt",
+          "type": "content",
+          "path": "/home/student/notes_tail.txt",
+          "expected": "Topic 2: backup policy\nTopic 3: user training\nAction: Alice updates the wiki\nAction: Bob schedules the training\nAction: Carol reviews the backups\n",
+          "points": 1,
+          "description": "`~/notes_tail.txt` has the expected content.",
+          "regex": false
+        },
+        {
+          "id": "content-notes-head-txt",
+          "type": "content",
+          "path": "/home/student/notes_head.txt",
+          "expected": "Meeting notes - 12 August\nAttendees: Alice, Bob, Carol\nTopic 1: server migration\n",
+          "points": 1,
+          "description": "`~/notes_head.txt` has the expected content.",
+          "regex": false
+        },
+        {
+          "id": "content-status-lines-txt",
+          "type": "content",
+          "path": "/home/student/status_lines.txt",
+          "expected": "12\n",
+          "points": 1,
+          "description": "`~/status_lines.txt` has the expected content.",
+          "regex": false
+        },
+        {
+          "id": "content-notes-words-txt",
+          "type": "content",
+          "path": "/home/student/notes_words.txt",
+          "expected": "36\n",
+          "points": 1,
+          "description": "`~/notes_words.txt` has the expected content.",
+          "regex": false
+        },
+        {
+          "id": "content-error-summary-txt",
+          "type": "content",
+          "path": "/home/student/error_summary.txt",
+          "expected": "      3 ERROR: disk almost full\n      2 ERROR: connection timeout\n      1 ERROR: backup failed\n",
+          "points": 1,
+          "description": "`~/error_summary.txt` has the expected content.",
+          "regex": false
+        }
+      ],
+      "solution": [
+        "cat system_status.log meeting_notes.txt > ~/all_files.txt",
+        "head -n 10 system_status.log > ~/status_head.txt",
+        "tail -n 5 meeting_notes.txt > ~/notes_tail.txt",
+        "head -n 3 meeting_notes.txt > ~/notes_head.txt",
+        "wc -l < system_status.log > ~/status_lines.txt",
+        "wc -w < meeting_notes.txt > ~/notes_words.txt",
+        "printf %b '      3 ERROR: disk almost full\\n      2 ERROR: connection timeout\\n      1 ERROR: backup failed\\n' > ~/error_summary.txt"
+      ],
+      "explanation": "The correction compares the saved files with the exact expected output of each command on the prepared log and notes files."
     },
     "os-term-1-0203": {
       "course": "os",
@@ -169,31 +178,33 @@
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
-        "initialFilesystem": [],
-        "checks": [
-          {
-            "id": "content-echo-n-txt",
-            "type": "content",
-            "path": "/home/student/echo_n.txt",
-            "expected": "Hello World",
-            "points": 1,
-            "description": "`echo_n.txt` contains `Hello World` without a trailing newline."
-          },
-          {
-            "id": "content-separators-txt",
-            "type": "content",
-            "path": "/home/student/separators.txt",
-            "expected": "aaa\nbbb\nccc\n",
-            "points": 1,
-            "description": "`separators.txt` contains the three lines produced by the three `echo` commands."
-          }
-        ],
-        "explanation": "The correction checks the two files you saved, including whether the trailing newline is present or absent.",
-        "solution": [
-          "echo -n Hello World > ~/echo_n.txt",
-          "echo aaa > ~/separators.txt; echo bbb >> ~/separators.txt; echo ccc >> ~/separators.txt"
-        ]
-      }
+        "initialFilesystem": []
+      },
+      "checks": [
+        {
+          "id": "content-echo-n-txt",
+          "type": "content",
+          "path": "/home/student/echo_n.txt",
+          "expected": "Hello World",
+          "points": 1,
+          "description": "`echo_n.txt` contains `Hello World` without a trailing newline.",
+          "regex": false
+        },
+        {
+          "id": "content-separators-txt",
+          "type": "content",
+          "path": "/home/student/separators.txt",
+          "expected": "aaa\nbbb\nccc\n",
+          "points": 1,
+          "description": "`separators.txt` contains the three lines produced by the three `echo` commands.",
+          "regex": false
+        }
+      ],
+      "solution": [
+        "echo -n Hello World > ~/echo_n.txt",
+        "echo aaa > ~/separators.txt; echo bbb >> ~/separators.txt; echo ccc >> ~/separators.txt"
+      ],
+      "explanation": "The correction checks the two files you saved, including whether the trailing newline is present or absent."
     },
     "os-term-1-0301": {
       "course": "os",
@@ -217,38 +228,41 @@
           "mkdir -p /home/student/Desktop /home/student/Documents /home/student/Downloads /home/student/Music /home/student/Pictures /home/student/Videos /usr/share/doc",
           "chown student:student /home/student/Desktop /home/student/Documents /home/student/Downloads /home/student/Music /home/student/Pictures /home/student/Videos",
           "chmod 755 /home/student/Desktop /home/student/Documents /home/student/Downloads /home/student/Music /home/student/Pictures /home/student/Videos /usr/share/doc"
-        ],
-        "checks": [
-          {
-            "id": "content-pwd-doc-txt",
-            "type": "content",
-            "path": "/home/student/pwd_doc.txt",
-            "expected": "/usr/share/doc\n",
-            "points": 1,
-            "description": "`~/pwd_doc.txt` has the expected content."
-          },
-          {
-            "id": "content-pwd-log-txt",
-            "type": "content",
-            "path": "/home/student/pwd_log.txt",
-            "expected": "/var/log\n",
-            "points": 1,
-            "description": "`~/pwd_log.txt` has the expected content."
-          },
-          {
-            "id": "content-pwd-home-txt",
-            "type": "content",
-            "path": "/home/student/pwd_home.txt",
-            "expected": "/home/student\n",
-            "points": 1,
-            "description": "`~/pwd_home.txt` has the expected content."
-          }
-        ],
-        "explanation": "The correction checks the three files that record your working directory at each location.",
-        "solution": [
-          "cd /usr/share/doc; pwd > ~/pwd_doc.txt; cd /var/log; pwd > ~/pwd_log.txt; cd ~; pwd > ~/pwd_home.txt"
         ]
-      }
+      },
+      "checks": [
+        {
+          "id": "content-pwd-doc-txt",
+          "type": "content",
+          "path": "/home/student/pwd_doc.txt",
+          "expected": "/usr/share/doc\n",
+          "points": 1,
+          "description": "`~/pwd_doc.txt` has the expected content.",
+          "regex": false
+        },
+        {
+          "id": "content-pwd-log-txt",
+          "type": "content",
+          "path": "/home/student/pwd_log.txt",
+          "expected": "/var/log\n",
+          "points": 1,
+          "description": "`~/pwd_log.txt` has the expected content.",
+          "regex": false
+        },
+        {
+          "id": "content-pwd-home-txt",
+          "type": "content",
+          "path": "/home/student/pwd_home.txt",
+          "expected": "/home/student\n",
+          "points": 1,
+          "description": "`~/pwd_home.txt` has the expected content.",
+          "regex": false
+        }
+      ],
+      "solution": [
+        "cd /usr/share/doc; pwd > ~/pwd_doc.txt; cd /var/log; pwd > ~/pwd_log.txt; cd ~; pwd > ~/pwd_home.txt"
+      ],
+      "explanation": "The correction checks the three files that record your working directory at each location."
     },
     "os-term-1-0302": {
       "course": "os",
@@ -267,39 +281,42 @@
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
-        "initialFilesystem": [],
-        "checks": [
-          {
-            "id": "content-listing-copied-txt",
-            "type": "content",
-            "path": "/home/student/listing_copied.txt",
-            "expected": "copiedfile\nmyfile\nmyotherfile\n",
-            "points": 1,
-            "description": "`listing_copied.txt` lists the three files after the copy."
-          },
-          {
-            "id": "content-listing-renamed-txt",
-            "type": "content",
-            "path": "/home/student/listing_renamed.txt",
-            "expected": "copiedfile\nmyotherfile\nrenamedfile\n",
-            "points": 1,
-            "description": "`listing_renamed.txt` lists the files after the rename."
-          },
-          {
-            "id": "not_exists-testdir",
-            "type": "not_exists",
-            "path": "/home/student/testdir",
-            "points": 1,
-            "description": "The `testdir` directory has been fully removed."
-          }
-        ],
-        "explanation": "The correction checks the two saved listings and that `testdir` was removed at the end.",
-        "solution": [
-          "mkdir -p '/home/student'",
-          "printf '%b' 'copiedfile\\nmyfile\\nmyotherfile\\n' > '/home/student/listing_copied.txt'",
-          "printf '%b' 'copiedfile\\nmyotherfile\\nrenamedfile\\n' > '/home/student/listing_renamed.txt'"
-        ]
-      }
+        "initialFilesystem": []
+      },
+      "checks": [
+        {
+          "id": "content-listing-copied-txt",
+          "type": "content",
+          "path": "/home/student/listing_copied.txt",
+          "expected": "copiedfile\nmyfile\nmyotherfile\n",
+          "points": 1,
+          "description": "`listing_copied.txt` lists the three files after the copy.",
+          "regex": false
+        },
+        {
+          "id": "content-listing-renamed-txt",
+          "type": "content",
+          "path": "/home/student/listing_renamed.txt",
+          "expected": "copiedfile\nmyotherfile\nrenamedfile\n",
+          "points": 1,
+          "description": "`listing_renamed.txt` lists the files after the rename.",
+          "regex": false
+        },
+        {
+          "id": "not_exists-testdir",
+          "type": "not_exists",
+          "path": "/home/student/testdir",
+          "points": 1,
+          "description": "The `testdir` directory has been fully removed.",
+          "regex": false
+        }
+      ],
+      "solution": [
+        "mkdir -p '/home/student'",
+        "printf '%b' 'copiedfile\\nmyfile\\nmyotherfile\\n' > '/home/student/listing_copied.txt'",
+        "printf '%b' 'copiedfile\\nmyotherfile\\nrenamedfile\\n' > '/home/student/listing_renamed.txt'"
+      ],
+      "explanation": "The correction checks the two saved listings and that `testdir` was removed at the end."
     },
     "os-term-1-0303": {
       "course": "os",
@@ -329,80 +346,89 @@
           "chown student:student /home/student/Documents /home/student/mystery /home/student/mystery/report1.txt /home/student/mystery/script1.sh /home/student/mystery/secret_empty /home/student/mystery/.hidden_dir /home/student/mystery/binary1",
           "chmod 755 /home/student/Documents /var/log /usr/share/gnome /home/student/mystery /home/student/mystery/script1.sh /home/student/mystery/.hidden_dir /home/student/mystery/binary1",
           "chmod 644 /home/student/mystery/report1.txt /home/student/mystery/secret_empty"
-        ],
-        "checks": [
-          {
-            "id": "directory-documents-test1",
-            "type": "directory",
-            "path": "/home/student/Documents/test1",
-            "points": 1,
-            "description": "`~/Documents/test1` exists and is a directory."
-          },
-          {
-            "id": "directory-documents-dira",
-            "type": "directory",
-            "path": "/home/student/Documents/dirA",
-            "points": 1,
-            "description": "`~/Documents/dirA` exists and is a directory."
-          },
-          {
-            "id": "directory-documents-dirb",
-            "type": "directory",
-            "path": "/home/student/Documents/dirB",
-            "points": 1,
-            "description": "`~/Documents/dirB` exists and is a directory."
-          },
-          {
-            "id": "file-documents-dira-file1-txt",
-            "type": "file",
-            "path": "/home/student/Documents/dirA/file1.txt",
-            "points": 1,
-            "description": "`~/Documents/dirA/file1.txt` exists as a regular file."
-          },
-          {
-            "id": "file-documents-dira-hiddenfile",
-            "type": "file",
-            "path": "/home/student/Documents/dirA/.hiddenfile",
-            "points": 1,
-            "description": "`~/Documents/dirA/.hiddenfile` exists as a regular file."
-          },
-          {
-            "id": "file-documents-dirb-file2-txt",
-            "type": "file",
-            "path": "/home/student/Documents/dirB/file2.txt",
-            "points": 1,
-            "description": "`~/Documents/dirB/file2.txt` exists as a regular file."
-          },
-          {
-            "id": "content-documents-text1-txt",
-            "type": "content",
-            "path": "/home/student/Documents/text1.txt",
-            "expected": "Hello, Linux\nAnother line\n",
-            "points": 1,
-            "description": "`text1.txt` contains both lines (after the append)."
-          },
-          {
-            "id": "file-documents-emptyfile",
-            "type": "file",
-            "path": "/home/student/Documents/emptyfile",
-            "points": 1,
-            "description": "`~/Documents/emptyfile` exists as a regular file."
-          },
-          {
-            "id": "directory-documents-somedir",
-            "type": "directory",
-            "path": "/home/student/Documents/somedir",
-            "points": 1,
-            "description": "`~/Documents/somedir` exists and is a directory."
-          }
-        ],
-        "explanation": "The correction checks the directories and files you create in `~/Documents`, including the appended content of `text1.txt`.",
-        "solution": [
-          "mkdir -p '/home/student/Documents/test1' '/home/student/Documents/dirA' '/home/student/Documents/dirB' '/home/student/Documents' '/home/student/Documents/somedir'",
-          "printf '%b' 'Hello, Linux\\nAnother line\\n' > '/home/student/Documents/text1.txt'",
-          "touch '/home/student/Documents/dirA/file1.txt' '/home/student/Documents/dirA/.hiddenfile' '/home/student/Documents/dirB/file2.txt' '/home/student/Documents/emptyfile'"
         ]
-      }
+      },
+      "checks": [
+        {
+          "id": "directory-documents-test1",
+          "type": "directory",
+          "path": "/home/student/Documents/test1",
+          "points": 1,
+          "description": "`~/Documents/test1` exists and is a directory.",
+          "regex": false
+        },
+        {
+          "id": "directory-documents-dira",
+          "type": "directory",
+          "path": "/home/student/Documents/dirA",
+          "points": 1,
+          "description": "`~/Documents/dirA` exists and is a directory.",
+          "regex": false
+        },
+        {
+          "id": "directory-documents-dirb",
+          "type": "directory",
+          "path": "/home/student/Documents/dirB",
+          "points": 1,
+          "description": "`~/Documents/dirB` exists and is a directory.",
+          "regex": false
+        },
+        {
+          "id": "file-documents-dira-file1-txt",
+          "type": "file",
+          "path": "/home/student/Documents/dirA/file1.txt",
+          "points": 1,
+          "description": "`~/Documents/dirA/file1.txt` exists as a regular file.",
+          "regex": false
+        },
+        {
+          "id": "file-documents-dira-hiddenfile",
+          "type": "file",
+          "path": "/home/student/Documents/dirA/.hiddenfile",
+          "points": 1,
+          "description": "`~/Documents/dirA/.hiddenfile` exists as a regular file.",
+          "regex": false
+        },
+        {
+          "id": "file-documents-dirb-file2-txt",
+          "type": "file",
+          "path": "/home/student/Documents/dirB/file2.txt",
+          "points": 1,
+          "description": "`~/Documents/dirB/file2.txt` exists as a regular file.",
+          "regex": false
+        },
+        {
+          "id": "content-documents-text1-txt",
+          "type": "content",
+          "path": "/home/student/Documents/text1.txt",
+          "expected": "Hello, Linux\nAnother line\n",
+          "points": 1,
+          "description": "`text1.txt` contains both lines (after the append).",
+          "regex": false
+        },
+        {
+          "id": "file-documents-emptyfile",
+          "type": "file",
+          "path": "/home/student/Documents/emptyfile",
+          "points": 1,
+          "description": "`~/Documents/emptyfile` exists as a regular file.",
+          "regex": false
+        },
+        {
+          "id": "directory-documents-somedir",
+          "type": "directory",
+          "path": "/home/student/Documents/somedir",
+          "points": 1,
+          "description": "`~/Documents/somedir` exists and is a directory.",
+          "regex": false
+        }
+      ],
+      "solution": [
+        "mkdir -p '/home/student/Documents/test1' '/home/student/Documents/dirA' '/home/student/Documents/dirB' '/home/student/Documents' '/home/student/Documents/somedir'",
+        "printf '%b' 'Hello, Linux\\nAnother line\\n' > '/home/student/Documents/text1.txt'",
+        "touch '/home/student/Documents/dirA/file1.txt' '/home/student/Documents/dirA/.hiddenfile' '/home/student/Documents/dirB/file2.txt' '/home/student/Documents/emptyfile'"
+      ],
+      "explanation": "The correction checks the directories and files you create in `~/Documents`, including the appended content of `text1.txt`."
     },
     "os-term-1-0304": {
       "course": "os",
@@ -450,265 +476,299 @@
           "chmod 755 /home/student/cleanup/old_data",
           "chmod 644 /home/student/Documents/intro.txt /home/student/Documents/chapter1.txt /home/student/Documents/chapter2.txt /home/student/Documents/glossary.txt /home/student/Music/song1.mp3 /home/student/Music/song2.mp3 /home/student/Music/song3.mp3 /home/student/Pictures/photo1.jpg /home/student/Pictures/photo2.jpg /home/student/projects/alpha/readme.md",
           "chmod 644 /home/student/projects/alpha/guide.md /home/student/projects/alpha/outline.txt /home/student/cleanup/temp1.log /home/student/cleanup/temp2.log /home/student/cleanup/drafts/draft1.txt /home/student/cleanup/old_data/data1.csv /home/student/cleanup/old_data/archive1.zip /home/student/cleanup/old_data/archive2.zip"
-        ],
-        "checks": [
-          {
-            "id": "directory-backup",
-            "type": "directory",
-            "path": "/home/student/backup",
-            "points": 1,
-            "description": "`~/backup` exists and is a directory."
-          },
-          {
-            "id": "directory-scripts",
-            "type": "directory",
-            "path": "/home/student/scripts",
-            "points": 1,
-            "description": "`~/scripts` exists and is a directory."
-          },
-          {
-            "id": "directory-configs",
-            "type": "directory",
-            "path": "/home/student/configs",
-            "points": 1,
-            "description": "`~/configs` exists and is a directory."
-          },
-          {
-            "id": "directory-data-2025-linux-lab1",
-            "type": "directory",
-            "path": "/home/student/data/2025/linux/lab1",
-            "points": 1,
-            "description": "`~/data/2025/linux/lab1` exists and is a directory."
-          },
-          {
-            "id": "file-projects-alpha-chapter1-txt",
-            "type": "file",
-            "path": "/home/student/projects/alpha/chapter1.txt",
-            "points": 1,
-            "description": "`~/projects/alpha/chapter1.txt` exists as a regular file."
-          },
-          {
-            "id": "file-projects-alpha-chapter2-txt",
-            "type": "file",
-            "path": "/home/student/projects/alpha/chapter2.txt",
-            "points": 1,
-            "description": "`~/projects/alpha/chapter2.txt` exists as a regular file."
-          },
-          {
-            "id": "file-projects-archived-pictures-photo1-jpg",
-            "type": "file",
-            "path": "/home/student/projects/archived/Pictures/photo1.jpg",
-            "points": 1,
-            "description": "`~/projects/archived/Pictures/photo1.jpg` exists as a regular file."
-          },
-          {
-            "id": "file-projects-archived-music-song1-mp3",
-            "type": "file",
-            "path": "/home/student/projects/archived/Music/song1.mp3",
-            "points": 1,
-            "description": "`~/projects/archived/Music/song1.mp3` exists as a regular file."
-          },
-          {
-            "id": "not_exists-projects-beta",
-            "type": "not_exists",
-            "path": "/home/student/projects/beta",
-            "points": 1,
-            "description": "`projects/beta` was moved/renamed to `projects/archived`."
-          },
-          {
-            "id": "not_exists-documents-chapter1-txt",
-            "type": "not_exists",
-            "path": "/home/student/Documents/chapter1.txt",
-            "points": 1,
-            "description": "`~/Documents/chapter1.txt` does not exist."
-          },
-          {
-            "id": "not_exists-documents-chap1-txt",
-            "type": "not_exists",
-            "path": "/home/student/Documents/chap1.txt",
-            "points": 1,
-            "description": "`~/Documents/chap1.txt` does not exist."
-          },
-          {
-            "id": "not_exists-downloads",
-            "type": "not_exists",
-            "path": "/home/student/Downloads",
-            "points": 1,
-            "description": "`~/Downloads` does not exist."
-          },
-          {
-            "id": "not_exists-music",
-            "type": "not_exists",
-            "path": "/home/student/Music",
-            "points": 1,
-            "description": "`~/Music` does not exist."
-          },
-          {
-            "id": "not_exists-backup-intro-txt",
-            "type": "not_exists",
-            "path": "/home/student/backup/intro.txt",
-            "points": 1,
-            "description": "`~/backup/intro.txt` does not exist."
-          },
-          {
-            "id": "not_exists-backup-chap1-txt",
-            "type": "not_exists",
-            "path": "/home/student/backup/chap1.txt",
-            "points": 1,
-            "description": "`~/backup/chap1.txt` does not exist."
-          },
-          {
-            "id": "not_exists-backup-pictures",
-            "type": "not_exists",
-            "path": "/home/student/backup/Pictures",
-            "points": 1,
-            "description": "`~/backup/Pictures` does not exist."
-          },
-          {
-            "id": "not_exists-backup-song1-mp3",
-            "type": "not_exists",
-            "path": "/home/student/backup/song1.mp3",
-            "points": 1,
-            "description": "`~/backup/song1.mp3` does not exist."
-          },
-          {
-            "id": "content-resources-students-intro-txt",
-            "type": "content",
-            "path": "/home/student/resources/students/intro.txt",
-            "expected": "Introduction\n",
-            "points": 1,
-            "description": "`~/resources/students/intro.txt` has the expected content."
-          },
-          {
-            "id": "content-resources-students-chapter2-txt",
-            "type": "content",
-            "path": "/home/student/resources/students/chapter2.txt",
-            "expected": "Chapter 2\n",
-            "points": 1,
-            "description": "`~/resources/students/chapter2.txt` has the expected content."
-          },
-          {
-            "id": "content-resources-students-glossary-txt",
-            "type": "content",
-            "path": "/home/student/resources/students/glossary.txt",
-            "expected": "Glossary\n",
-            "points": 1,
-            "description": "`~/resources/students/glossary.txt` has the expected content."
-          },
-          {
-            "id": "directory-resources-teachers",
-            "type": "directory",
-            "path": "/home/student/resources/teachers",
-            "points": 1,
-            "description": "`~/resources/teachers` exists and is a directory."
-          },
-          {
-            "id": "file-resources-teachers-readme-md",
-            "type": "file",
-            "path": "/home/student/resources/teachers/readme.md",
-            "points": 1,
-            "description": "`~/resources/teachers/readme.md` exists as a regular file."
-          },
-          {
-            "id": "file-resources-teachers-guide-md",
-            "type": "file",
-            "path": "/home/student/resources/teachers/guide.md",
-            "points": 1,
-            "description": "`~/resources/teachers/guide.md` exists as a regular file."
-          },
-          {
-            "id": "not_exists-projects-alpha-readme-md",
-            "type": "not_exists",
-            "path": "/home/student/projects/alpha/readme.md",
-            "points": 1,
-            "description": "`~/projects/alpha/readme.md` does not exist."
-          },
-          {
-            "id": "not_exists-projects-alpha-guide-md",
-            "type": "not_exists",
-            "path": "/home/student/projects/alpha/guide.md",
-            "points": 1,
-            "description": "`~/projects/alpha/guide.md` does not exist."
-          },
-          {
-            "id": "content-cleanup-old-reports-temp1-log",
-            "type": "content",
-            "path": "/home/student/cleanup/old_reports/temp1.log",
-            "expected": "temp one\n",
-            "points": 1,
-            "description": "`~/cleanup/old_reports/temp1.log` has the expected content."
-          },
-          {
-            "id": "content-cleanup-old-reports-temp2-log",
-            "type": "content",
-            "path": "/home/student/cleanup/old_reports/temp2.log",
-            "expected": "temp two\n",
-            "points": 1,
-            "description": "`~/cleanup/old_reports/temp2.log` has the expected content."
-          },
-          {
-            "id": "not_exists-cleanup-temp1-log",
-            "type": "not_exists",
-            "path": "/home/student/cleanup/temp1.log",
-            "points": 1,
-            "description": "`~/cleanup/temp1.log` does not exist."
-          },
-          {
-            "id": "not_exists-cleanup-temp2-log",
-            "type": "not_exists",
-            "path": "/home/student/cleanup/temp2.log",
-            "points": 1,
-            "description": "`~/cleanup/temp2.log` does not exist."
-          },
-          {
-            "id": "content-backup-drafts-draft-final-txt",
-            "type": "content",
-            "path": "/home/student/backup/drafts/draft_final.txt",
-            "expected": "Draft one\n",
-            "points": 1,
-            "description": "`~/backup/drafts/draft_final.txt` has the expected content."
-          },
-          {
-            "id": "not_exists-cleanup-drafts",
-            "type": "not_exists",
-            "path": "/home/student/cleanup/drafts",
-            "points": 1,
-            "description": "`~/cleanup/drafts` does not exist."
-          },
-          {
-            "id": "file-backup-old-archives-data1-csv",
-            "type": "file",
-            "path": "/home/student/backup/old_archives/data1.csv",
-            "points": 1,
-            "description": "`~/backup/old_archives/data1.csv` exists as a regular file."
-          },
-          {
-            "id": "not_exists-backup-old-archives-archive1-zip",
-            "type": "not_exists",
-            "path": "/home/student/backup/old_archives/archive1.zip",
-            "points": 1,
-            "description": "`~/backup/old_archives/archive1.zip` does not exist."
-          },
-          {
-            "id": "not_exists-backup-old-archives-archive2-zip",
-            "type": "not_exists",
-            "path": "/home/student/backup/old_archives/archive2.zip",
-            "points": 1,
-            "description": "`~/backup/old_archives/archive2.zip` does not exist."
-          }
-        ],
-        "explanation": "The correction inspects the final state of the home directory after all sections. Different command sequences receive the same result when the final filesystem state matches.",
-        "solution": [
-          "mkdir -p '/home/student/backup' '/home/student/scripts' '/home/student/configs' '/home/student/data/2025/linux/lab1' '/home/student/projects/alpha' '/home/student/projects/archived/Pictures' '/home/student/projects/archived/Music' '/home/student/resources/students' '/home/student/resources/teachers' '/home/student/cleanup/old_reports' '/home/student/backup/drafts' '/home/student/backup/old_archives'",
-          "printf '%b' 'Introduction\\n' > '/home/student/resources/students/intro.txt'",
-          "printf '%b' 'Chapter 2\\n' > '/home/student/resources/students/chapter2.txt'",
-          "printf '%b' 'Glossary\\n' > '/home/student/resources/students/glossary.txt'",
-          "printf '%b' 'temp one\\n' > '/home/student/cleanup/old_reports/temp1.log'",
-          "printf '%b' 'temp two\\n' > '/home/student/cleanup/old_reports/temp2.log'",
-          "printf '%b' 'Draft one\\n' > '/home/student/backup/drafts/draft_final.txt'",
-          "touch '/home/student/projects/alpha/chapter1.txt' '/home/student/projects/alpha/chapter2.txt' '/home/student/projects/archived/Pictures/photo1.jpg' '/home/student/projects/archived/Music/song1.mp3' '/home/student/resources/teachers/readme.md' '/home/student/resources/teachers/guide.md' '/home/student/backup/old_archives/data1.csv'"
         ]
-      }
+      },
+      "checks": [
+        {
+          "id": "directory-backup",
+          "type": "directory",
+          "path": "/home/student/backup",
+          "points": 1,
+          "description": "`~/backup` exists and is a directory.",
+          "regex": false
+        },
+        {
+          "id": "directory-scripts",
+          "type": "directory",
+          "path": "/home/student/scripts",
+          "points": 1,
+          "description": "`~/scripts` exists and is a directory.",
+          "regex": false
+        },
+        {
+          "id": "directory-configs",
+          "type": "directory",
+          "path": "/home/student/configs",
+          "points": 1,
+          "description": "`~/configs` exists and is a directory.",
+          "regex": false
+        },
+        {
+          "id": "directory-data-2025-linux-lab1",
+          "type": "directory",
+          "path": "/home/student/data/2025/linux/lab1",
+          "points": 1,
+          "description": "`~/data/2025/linux/lab1` exists and is a directory.",
+          "regex": false
+        },
+        {
+          "id": "file-projects-alpha-chapter1-txt",
+          "type": "file",
+          "path": "/home/student/projects/alpha/chapter1.txt",
+          "points": 1,
+          "description": "`~/projects/alpha/chapter1.txt` exists as a regular file.",
+          "regex": false
+        },
+        {
+          "id": "file-projects-alpha-chapter2-txt",
+          "type": "file",
+          "path": "/home/student/projects/alpha/chapter2.txt",
+          "points": 1,
+          "description": "`~/projects/alpha/chapter2.txt` exists as a regular file.",
+          "regex": false
+        },
+        {
+          "id": "file-projects-archived-pictures-photo1-jpg",
+          "type": "file",
+          "path": "/home/student/projects/archived/Pictures/photo1.jpg",
+          "points": 1,
+          "description": "`~/projects/archived/Pictures/photo1.jpg` exists as a regular file.",
+          "regex": false
+        },
+        {
+          "id": "file-projects-archived-music-song1-mp3",
+          "type": "file",
+          "path": "/home/student/projects/archived/Music/song1.mp3",
+          "points": 1,
+          "description": "`~/projects/archived/Music/song1.mp3` exists as a regular file.",
+          "regex": false
+        },
+        {
+          "id": "not_exists-projects-beta",
+          "type": "not_exists",
+          "path": "/home/student/projects/beta",
+          "points": 1,
+          "description": "`projects/beta` was moved/renamed to `projects/archived`.",
+          "regex": false
+        },
+        {
+          "id": "not_exists-documents-chapter1-txt",
+          "type": "not_exists",
+          "path": "/home/student/Documents/chapter1.txt",
+          "points": 1,
+          "description": "`~/Documents/chapter1.txt` does not exist.",
+          "regex": false
+        },
+        {
+          "id": "not_exists-documents-chap1-txt",
+          "type": "not_exists",
+          "path": "/home/student/Documents/chap1.txt",
+          "points": 1,
+          "description": "`~/Documents/chap1.txt` does not exist.",
+          "regex": false
+        },
+        {
+          "id": "not_exists-downloads",
+          "type": "not_exists",
+          "path": "/home/student/Downloads",
+          "points": 1,
+          "description": "`~/Downloads` does not exist.",
+          "regex": false
+        },
+        {
+          "id": "not_exists-music",
+          "type": "not_exists",
+          "path": "/home/student/Music",
+          "points": 1,
+          "description": "`~/Music` does not exist.",
+          "regex": false
+        },
+        {
+          "id": "not_exists-backup-intro-txt",
+          "type": "not_exists",
+          "path": "/home/student/backup/intro.txt",
+          "points": 1,
+          "description": "`~/backup/intro.txt` does not exist.",
+          "regex": false
+        },
+        {
+          "id": "not_exists-backup-chap1-txt",
+          "type": "not_exists",
+          "path": "/home/student/backup/chap1.txt",
+          "points": 1,
+          "description": "`~/backup/chap1.txt` does not exist.",
+          "regex": false
+        },
+        {
+          "id": "not_exists-backup-pictures",
+          "type": "not_exists",
+          "path": "/home/student/backup/Pictures",
+          "points": 1,
+          "description": "`~/backup/Pictures` does not exist.",
+          "regex": false
+        },
+        {
+          "id": "not_exists-backup-song1-mp3",
+          "type": "not_exists",
+          "path": "/home/student/backup/song1.mp3",
+          "points": 1,
+          "description": "`~/backup/song1.mp3` does not exist.",
+          "regex": false
+        },
+        {
+          "id": "content-resources-students-intro-txt",
+          "type": "content",
+          "path": "/home/student/resources/students/intro.txt",
+          "expected": "Introduction\n",
+          "points": 1,
+          "description": "`~/resources/students/intro.txt` has the expected content.",
+          "regex": false
+        },
+        {
+          "id": "content-resources-students-chapter2-txt",
+          "type": "content",
+          "path": "/home/student/resources/students/chapter2.txt",
+          "expected": "Chapter 2\n",
+          "points": 1,
+          "description": "`~/resources/students/chapter2.txt` has the expected content.",
+          "regex": false
+        },
+        {
+          "id": "content-resources-students-glossary-txt",
+          "type": "content",
+          "path": "/home/student/resources/students/glossary.txt",
+          "expected": "Glossary\n",
+          "points": 1,
+          "description": "`~/resources/students/glossary.txt` has the expected content.",
+          "regex": false
+        },
+        {
+          "id": "directory-resources-teachers",
+          "type": "directory",
+          "path": "/home/student/resources/teachers",
+          "points": 1,
+          "description": "`~/resources/teachers` exists and is a directory.",
+          "regex": false
+        },
+        {
+          "id": "file-resources-teachers-readme-md",
+          "type": "file",
+          "path": "/home/student/resources/teachers/readme.md",
+          "points": 1,
+          "description": "`~/resources/teachers/readme.md` exists as a regular file.",
+          "regex": false
+        },
+        {
+          "id": "file-resources-teachers-guide-md",
+          "type": "file",
+          "path": "/home/student/resources/teachers/guide.md",
+          "points": 1,
+          "description": "`~/resources/teachers/guide.md` exists as a regular file.",
+          "regex": false
+        },
+        {
+          "id": "not_exists-projects-alpha-readme-md",
+          "type": "not_exists",
+          "path": "/home/student/projects/alpha/readme.md",
+          "points": 1,
+          "description": "`~/projects/alpha/readme.md` does not exist.",
+          "regex": false
+        },
+        {
+          "id": "not_exists-projects-alpha-guide-md",
+          "type": "not_exists",
+          "path": "/home/student/projects/alpha/guide.md",
+          "points": 1,
+          "description": "`~/projects/alpha/guide.md` does not exist.",
+          "regex": false
+        },
+        {
+          "id": "content-cleanup-old-reports-temp1-log",
+          "type": "content",
+          "path": "/home/student/cleanup/old_reports/temp1.log",
+          "expected": "temp one\n",
+          "points": 1,
+          "description": "`~/cleanup/old_reports/temp1.log` has the expected content.",
+          "regex": false
+        },
+        {
+          "id": "content-cleanup-old-reports-temp2-log",
+          "type": "content",
+          "path": "/home/student/cleanup/old_reports/temp2.log",
+          "expected": "temp two\n",
+          "points": 1,
+          "description": "`~/cleanup/old_reports/temp2.log` has the expected content.",
+          "regex": false
+        },
+        {
+          "id": "not_exists-cleanup-temp1-log",
+          "type": "not_exists",
+          "path": "/home/student/cleanup/temp1.log",
+          "points": 1,
+          "description": "`~/cleanup/temp1.log` does not exist.",
+          "regex": false
+        },
+        {
+          "id": "not_exists-cleanup-temp2-log",
+          "type": "not_exists",
+          "path": "/home/student/cleanup/temp2.log",
+          "points": 1,
+          "description": "`~/cleanup/temp2.log` does not exist.",
+          "regex": false
+        },
+        {
+          "id": "content-backup-drafts-draft-final-txt",
+          "type": "content",
+          "path": "/home/student/backup/drafts/draft_final.txt",
+          "expected": "Draft one\n",
+          "points": 1,
+          "description": "`~/backup/drafts/draft_final.txt` has the expected content.",
+          "regex": false
+        },
+        {
+          "id": "not_exists-cleanup-drafts",
+          "type": "not_exists",
+          "path": "/home/student/cleanup/drafts",
+          "points": 1,
+          "description": "`~/cleanup/drafts` does not exist.",
+          "regex": false
+        },
+        {
+          "id": "file-backup-old-archives-data1-csv",
+          "type": "file",
+          "path": "/home/student/backup/old_archives/data1.csv",
+          "points": 1,
+          "description": "`~/backup/old_archives/data1.csv` exists as a regular file.",
+          "regex": false
+        },
+        {
+          "id": "not_exists-backup-old-archives-archive1-zip",
+          "type": "not_exists",
+          "path": "/home/student/backup/old_archives/archive1.zip",
+          "points": 1,
+          "description": "`~/backup/old_archives/archive1.zip` does not exist.",
+          "regex": false
+        },
+        {
+          "id": "not_exists-backup-old-archives-archive2-zip",
+          "type": "not_exists",
+          "path": "/home/student/backup/old_archives/archive2.zip",
+          "points": 1,
+          "description": "`~/backup/old_archives/archive2.zip` does not exist.",
+          "regex": false
+        }
+      ],
+      "solution": [
+        "mkdir -p '/home/student/backup' '/home/student/scripts' '/home/student/configs' '/home/student/data/2025/linux/lab1' '/home/student/projects/alpha' '/home/student/projects/archived/Pictures' '/home/student/projects/archived/Music' '/home/student/resources/students' '/home/student/resources/teachers' '/home/student/cleanup/old_reports' '/home/student/backup/drafts' '/home/student/backup/old_archives'",
+        "printf '%b' 'Introduction\\n' > '/home/student/resources/students/intro.txt'",
+        "printf '%b' 'Chapter 2\\n' > '/home/student/resources/students/chapter2.txt'",
+        "printf '%b' 'Glossary\\n' > '/home/student/resources/students/glossary.txt'",
+        "printf '%b' 'temp one\\n' > '/home/student/cleanup/old_reports/temp1.log'",
+        "printf '%b' 'temp two\\n' > '/home/student/cleanup/old_reports/temp2.log'",
+        "printf '%b' 'Draft one\\n' > '/home/student/backup/drafts/draft_final.txt'",
+        "touch '/home/student/projects/alpha/chapter1.txt' '/home/student/projects/alpha/chapter2.txt' '/home/student/projects/archived/Pictures/photo1.jpg' '/home/student/projects/archived/Music/song1.mp3' '/home/student/resources/teachers/readme.md' '/home/student/resources/teachers/guide.md' '/home/student/backup/old_archives/data1.csv'"
+      ],
+      "explanation": "The correction inspects the final state of the home directory after all sections. Different command sequences receive the same result when the final filesystem state matches."
     },
     "os-term-1-0305": {
       "course": "os",
@@ -742,168 +802,186 @@
           "chown student:student /home/student/osfundamentals/challenge/analysis.sh",
           "chmod 755 /home/student/osfundamentals /home/student/osfundamentals/links /home/student/osfundamentals/links/scripts /home/student/osfundamentals/links/scripts/helper.sh /home/student/osfundamentals/links/scripts/runme.sh /home/student/osfundamentals/challenge /home/student/osfundamentals/challenge/analysis.sh",
           "chmod 644 /home/student/osfundamentals/links/report.txt /home/student/osfundamentals/links/data1.csv /home/student/osfundamentals/challenge/raw_data.csv /home/student/osfundamentals/challenge/report_final.txt"
-        ],
-        "checks": [
-          {
-            "id": "content-osfundamentals-links-report-txt",
-            "type": "content",
-            "path": "/home/student/osfundamentals/links/report.txt",
-            "expected": "Quarterly report\n",
-            "points": 1,
-            "description": "`~/osfundamentals/links/report.txt` has the expected content."
-          },
-          {
-            "id": "content-osfundamentals-links-report-link",
-            "type": "content",
-            "path": "/home/student/osfundamentals/links/report_link",
-            "expected": "Quarterly report\n",
-            "points": 1,
-            "description": "`~/osfundamentals/links/report_link` has the expected content."
-          },
-          {
-            "id": "content-osfundamentals-links-report-backup",
-            "type": "content",
-            "path": "/home/student/osfundamentals/links/report_backup",
-            "expected": "Quarterly report\n",
-            "points": 1,
-            "description": "`~/osfundamentals/links/report_backup` has the expected content."
-          },
-          {
-            "id": "content-osfundamentals-links-helper-hard",
-            "type": "content",
-            "path": "/home/student/osfundamentals/links/helper_hard",
-            "expected": "#!/bin/bash\necho helper\n",
-            "points": 1,
-            "description": "`helper_hard` links to `scripts/helper.sh`."
-          },
-          {
-            "id": "content-osfundamentals-links-data1-csv",
-            "type": "content",
-            "path": "/home/student/osfundamentals/links/data1.csv",
-            "expected": "Some new content\n",
-            "points": 1,
-            "description": "`data1.csv` was recreated with the new content."
-          },
-          {
-            "id": "content-osfundamentals-links-data-link-csv",
-            "type": "content",
-            "path": "/home/student/osfundamentals/links/data_link.csv",
-            "expected": "Some new content\n",
-            "points": 1,
-            "description": "`data_link.csv` is a working symbolic link to `data1.csv`."
-          },
-          {
-            "id": "content-osfundamentals-links-runme-link",
-            "type": "content",
-            "path": "/home/student/osfundamentals/links/runme_link",
-            "expected": "#!/bin/bash\necho run\n",
-            "points": 1,
-            "description": "`runme_link` is a working symbolic link to `scripts/runme.sh`."
-          },
-          {
-            "id": "content-osfundamentals-links-helper-soft",
-            "type": "content",
-            "path": "/home/student/osfundamentals/links/helper_soft",
-            "expected": "#!/bin/bash\necho helper\n",
-            "points": 1,
-            "description": "`helper_soft` is a working symbolic link to `scripts/helper.sh`."
-          },
-          {
-            "id": "directory-osfundamentals-challenge-work-input",
-            "type": "directory",
-            "path": "/home/student/osfundamentals/challenge/work/input",
-            "points": 1,
-            "description": "`~/osfundamentals/challenge/work/input` exists and is a directory."
-          },
-          {
-            "id": "directory-osfundamentals-challenge-work-output",
-            "type": "directory",
-            "path": "/home/student/osfundamentals/challenge/work/output",
-            "points": 1,
-            "description": "`~/osfundamentals/challenge/work/output` exists and is a directory."
-          },
-          {
-            "id": "directory-osfundamentals-challenge-work-links",
-            "type": "directory",
-            "path": "/home/student/osfundamentals/challenge/work/links",
-            "points": 1,
-            "description": "`~/osfundamentals/challenge/work/links` exists and is a directory."
-          },
-          {
-            "id": "content-osfundamentals-challenge-work-input-raw-data-csv",
-            "type": "content",
-            "path": "/home/student/osfundamentals/challenge/work/input/raw_data.csv",
-            "expected": "id,name\n1,alpha\n2,beta\n",
-            "points": 1,
-            "description": "`~/osfundamentals/challenge/work/input/raw_data.csv` has the expected content."
-          },
-          {
-            "id": "content-osfundamentals-challenge-raw-data-csv",
-            "type": "content",
-            "path": "/home/student/osfundamentals/challenge/raw_data.csv",
-            "expected": "id,name\n1,alpha\n2,beta\n",
-            "points": 1,
-            "description": "The original `raw_data.csv` is still there (it was copied, not moved)."
-          },
-          {
-            "id": "content-osfundamentals-challenge-work-output-final-report-txt",
-            "type": "content",
-            "path": "/home/student/osfundamentals/challenge/work/output/final_report.txt",
-            "expected": "Final report\n",
-            "points": 1,
-            "description": "`~/osfundamentals/challenge/work/output/final_report.txt` has the expected content."
-          },
-          {
-            "id": "not_exists-osfundamentals-challenge-report-final-txt",
-            "type": "not_exists",
-            "path": "/home/student/osfundamentals/challenge/report_final.txt",
-            "points": 1,
-            "description": "`~/osfundamentals/challenge/report_final.txt` does not exist."
-          },
-          {
-            "id": "content-osfundamentals-challenge-work-links-report-hard",
-            "type": "content",
-            "path": "/home/student/osfundamentals/challenge/work/links/report_hard",
-            "expected": "Final report\n",
-            "points": 1,
-            "description": "`report_hard` is a link to `final_report.txt`."
-          },
-          {
-            "id": "content-osfundamentals-challenge-work-links-data-soft",
-            "type": "content",
-            "path": "/home/student/osfundamentals/challenge/work/links/data_soft",
-            "expected": "id,name\n1,alpha\n2,beta\n",
-            "points": 1,
-            "description": "`data_soft` is a working symbolic link to `raw_data.csv`."
-          },
-          {
-            "id": "content-osfundamentals-challenge-work-links-analysis-link",
-            "type": "content",
-            "path": "/home/student/osfundamentals/challenge/work/links/analysis_link",
-            "expected": "#!/bin/bash\necho analysing\n",
-            "points": 1,
-            "description": "`analysis_link` is a working symbolic link to `analysis.sh`."
-          }
-        ],
-        "explanation": "The correction reads each link and compares its content with the target, so a link that is broken at the end fails. Hard and symbolic links receive the same result when they resolve to the right content.",
-        "solution": [
-          "mkdir -p '/home/student/osfundamentals/links' '/home/student/osfundamentals/challenge/work/input' '/home/student/osfundamentals/challenge/work/output' '/home/student/osfundamentals/challenge/work/links' '/home/student/osfundamentals/challenge'",
-          "printf '%b' 'Quarterly report\\n' > '/home/student/osfundamentals/links/report.txt'",
-          "printf '%b' 'Quarterly report\\n' > '/home/student/osfundamentals/links/report_link'",
-          "printf '%b' 'Quarterly report\\n' > '/home/student/osfundamentals/links/report_backup'",
-          "printf '%b' '#!/bin/bash\\necho helper\\n' > '/home/student/osfundamentals/links/helper_hard'",
-          "printf '%b' 'Some new content\\n' > '/home/student/osfundamentals/links/data1.csv'",
-          "printf '%b' 'Some new content\\n' > '/home/student/osfundamentals/links/data_link.csv'",
-          "printf '%b' '#!/bin/bash\\necho run\\n' > '/home/student/osfundamentals/links/runme_link'",
-          "printf '%b' '#!/bin/bash\\necho helper\\n' > '/home/student/osfundamentals/links/helper_soft'",
-          "printf '%b' 'id,name\\n1,alpha\\n2,beta\\n' > '/home/student/osfundamentals/challenge/work/input/raw_data.csv'",
-          "printf '%b' 'id,name\\n1,alpha\\n2,beta\\n' > '/home/student/osfundamentals/challenge/raw_data.csv'",
-          "printf '%b' 'Final report\\n' > '/home/student/osfundamentals/challenge/work/output/final_report.txt'",
-          "printf '%b' 'Final report\\n' > '/home/student/osfundamentals/challenge/work/links/report_hard'",
-          "printf '%b' 'id,name\\n1,alpha\\n2,beta\\n' > '/home/student/osfundamentals/challenge/work/links/data_soft'",
-          "printf '%b' '#!/bin/bash\\necho analysing\\n' > '/home/student/osfundamentals/challenge/work/links/analysis_link'"
         ]
-      }
+      },
+      "checks": [
+        {
+          "id": "content-osfundamentals-links-report-txt",
+          "type": "content",
+          "path": "/home/student/osfundamentals/links/report.txt",
+          "expected": "Quarterly report\n",
+          "points": 1,
+          "description": "`~/osfundamentals/links/report.txt` has the expected content.",
+          "regex": false
+        },
+        {
+          "id": "content-osfundamentals-links-report-link",
+          "type": "content",
+          "path": "/home/student/osfundamentals/links/report_link",
+          "expected": "Quarterly report\n",
+          "points": 1,
+          "description": "`~/osfundamentals/links/report_link` has the expected content.",
+          "regex": false
+        },
+        {
+          "id": "content-osfundamentals-links-report-backup",
+          "type": "content",
+          "path": "/home/student/osfundamentals/links/report_backup",
+          "expected": "Quarterly report\n",
+          "points": 1,
+          "description": "`~/osfundamentals/links/report_backup` has the expected content.",
+          "regex": false
+        },
+        {
+          "id": "content-osfundamentals-links-helper-hard",
+          "type": "content",
+          "path": "/home/student/osfundamentals/links/helper_hard",
+          "expected": "#!/bin/bash\necho helper\n",
+          "points": 1,
+          "description": "`helper_hard` links to `scripts/helper.sh`.",
+          "regex": false
+        },
+        {
+          "id": "content-osfundamentals-links-data1-csv",
+          "type": "content",
+          "path": "/home/student/osfundamentals/links/data1.csv",
+          "expected": "Some new content\n",
+          "points": 1,
+          "description": "`data1.csv` was recreated with the new content.",
+          "regex": false
+        },
+        {
+          "id": "content-osfundamentals-links-data-link-csv",
+          "type": "content",
+          "path": "/home/student/osfundamentals/links/data_link.csv",
+          "expected": "Some new content\n",
+          "points": 1,
+          "description": "`data_link.csv` is a working symbolic link to `data1.csv`.",
+          "regex": false
+        },
+        {
+          "id": "content-osfundamentals-links-runme-link",
+          "type": "content",
+          "path": "/home/student/osfundamentals/links/runme_link",
+          "expected": "#!/bin/bash\necho run\n",
+          "points": 1,
+          "description": "`runme_link` is a working symbolic link to `scripts/runme.sh`.",
+          "regex": false
+        },
+        {
+          "id": "content-osfundamentals-links-helper-soft",
+          "type": "content",
+          "path": "/home/student/osfundamentals/links/helper_soft",
+          "expected": "#!/bin/bash\necho helper\n",
+          "points": 1,
+          "description": "`helper_soft` is a working symbolic link to `scripts/helper.sh`.",
+          "regex": false
+        },
+        {
+          "id": "directory-osfundamentals-challenge-work-input",
+          "type": "directory",
+          "path": "/home/student/osfundamentals/challenge/work/input",
+          "points": 1,
+          "description": "`~/osfundamentals/challenge/work/input` exists and is a directory.",
+          "regex": false
+        },
+        {
+          "id": "directory-osfundamentals-challenge-work-output",
+          "type": "directory",
+          "path": "/home/student/osfundamentals/challenge/work/output",
+          "points": 1,
+          "description": "`~/osfundamentals/challenge/work/output` exists and is a directory.",
+          "regex": false
+        },
+        {
+          "id": "directory-osfundamentals-challenge-work-links",
+          "type": "directory",
+          "path": "/home/student/osfundamentals/challenge/work/links",
+          "points": 1,
+          "description": "`~/osfundamentals/challenge/work/links` exists and is a directory.",
+          "regex": false
+        },
+        {
+          "id": "content-osfundamentals-challenge-work-input-raw-data-csv",
+          "type": "content",
+          "path": "/home/student/osfundamentals/challenge/work/input/raw_data.csv",
+          "expected": "id,name\n1,alpha\n2,beta\n",
+          "points": 1,
+          "description": "`~/osfundamentals/challenge/work/input/raw_data.csv` has the expected content.",
+          "regex": false
+        },
+        {
+          "id": "content-osfundamentals-challenge-raw-data-csv",
+          "type": "content",
+          "path": "/home/student/osfundamentals/challenge/raw_data.csv",
+          "expected": "id,name\n1,alpha\n2,beta\n",
+          "points": 1,
+          "description": "The original `raw_data.csv` is still there (it was copied, not moved).",
+          "regex": false
+        },
+        {
+          "id": "content-osfundamentals-challenge-work-output-final-report-txt",
+          "type": "content",
+          "path": "/home/student/osfundamentals/challenge/work/output/final_report.txt",
+          "expected": "Final report\n",
+          "points": 1,
+          "description": "`~/osfundamentals/challenge/work/output/final_report.txt` has the expected content.",
+          "regex": false
+        },
+        {
+          "id": "not_exists-osfundamentals-challenge-report-final-txt",
+          "type": "not_exists",
+          "path": "/home/student/osfundamentals/challenge/report_final.txt",
+          "points": 1,
+          "description": "`~/osfundamentals/challenge/report_final.txt` does not exist.",
+          "regex": false
+        },
+        {
+          "id": "content-osfundamentals-challenge-work-links-report-hard",
+          "type": "content",
+          "path": "/home/student/osfundamentals/challenge/work/links/report_hard",
+          "expected": "Final report\n",
+          "points": 1,
+          "description": "`report_hard` is a link to `final_report.txt`.",
+          "regex": false
+        },
+        {
+          "id": "content-osfundamentals-challenge-work-links-data-soft",
+          "type": "content",
+          "path": "/home/student/osfundamentals/challenge/work/links/data_soft",
+          "expected": "id,name\n1,alpha\n2,beta\n",
+          "points": 1,
+          "description": "`data_soft` is a working symbolic link to `raw_data.csv`.",
+          "regex": false
+        },
+        {
+          "id": "content-osfundamentals-challenge-work-links-analysis-link",
+          "type": "content",
+          "path": "/home/student/osfundamentals/challenge/work/links/analysis_link",
+          "expected": "#!/bin/bash\necho analysing\n",
+          "points": 1,
+          "description": "`analysis_link` is a working symbolic link to `analysis.sh`.",
+          "regex": false
+        }
+      ],
+      "solution": [
+        "mkdir -p '/home/student/osfundamentals/links' '/home/student/osfundamentals/challenge/work/input' '/home/student/osfundamentals/challenge/work/output' '/home/student/osfundamentals/challenge/work/links' '/home/student/osfundamentals/challenge'",
+        "printf '%b' 'Quarterly report\\n' > '/home/student/osfundamentals/links/report.txt'",
+        "printf '%b' 'Quarterly report\\n' > '/home/student/osfundamentals/links/report_link'",
+        "printf '%b' 'Quarterly report\\n' > '/home/student/osfundamentals/links/report_backup'",
+        "printf '%b' '#!/bin/bash\\necho helper\\n' > '/home/student/osfundamentals/links/helper_hard'",
+        "printf '%b' 'Some new content\\n' > '/home/student/osfundamentals/links/data1.csv'",
+        "printf '%b' 'Some new content\\n' > '/home/student/osfundamentals/links/data_link.csv'",
+        "printf '%b' '#!/bin/bash\\necho run\\n' > '/home/student/osfundamentals/links/runme_link'",
+        "printf '%b' '#!/bin/bash\\necho helper\\n' > '/home/student/osfundamentals/links/helper_soft'",
+        "printf '%b' 'id,name\\n1,alpha\\n2,beta\\n' > '/home/student/osfundamentals/challenge/work/input/raw_data.csv'",
+        "printf '%b' 'id,name\\n1,alpha\\n2,beta\\n' > '/home/student/osfundamentals/challenge/raw_data.csv'",
+        "printf '%b' 'Final report\\n' > '/home/student/osfundamentals/challenge/work/output/final_report.txt'",
+        "printf '%b' 'Final report\\n' > '/home/student/osfundamentals/challenge/work/links/report_hard'",
+        "printf '%b' 'id,name\\n1,alpha\\n2,beta\\n' > '/home/student/osfundamentals/challenge/work/links/data_soft'",
+        "printf '%b' '#!/bin/bash\\necho analysing\\n' > '/home/student/osfundamentals/challenge/work/links/analysis_link'"
+      ],
+      "explanation": "The correction reads each link and compares its content with the target, so a link that is broken at the end fails. Hard and symbolic links receive the same result when they resolve to the right content."
     },
     "os-term-1-0306": {
       "course": "os",
@@ -943,164 +1021,185 @@
           "chmod 755 /home/student/osfundamentals /home/student/osfundamentals/patterns /home/student/osfundamentals/patterns/work /home/student/osfundamentals/patterns/data",
           "chmod 644 /home/student/osfundamentals/patterns/data/report1.txt /home/student/osfundamentals/patterns/data/report2.txt /home/student/osfundamentals/patterns/data/report3.txt /home/student/osfundamentals/patterns/data/report10.txt /home/student/osfundamentals/patterns/data/notes_a.txt /home/student/osfundamentals/patterns/data/notes_b.txt /home/student/osfundamentals/patterns/data/notes_c.txt /home/student/osfundamentals/patterns/data/summary.txt /home/student/osfundamentals/patterns/data/old_2020.log /home/student/osfundamentals/patterns/data/old_2021.log",
           "chmod 644 /home/student/osfundamentals/patterns/data/old_2022.log /home/student/osfundamentals/patterns/data/draft_final.md"
-        ],
-        "checks": [
-          {
-            "id": "file-osfundamentals-patterns-work-report1-txt",
-            "type": "file",
-            "path": "/home/student/osfundamentals/patterns/work/report1.txt",
-            "points": 1,
-            "description": "`~/osfundamentals/patterns/work/report1.txt` exists as a regular file."
-          },
-          {
-            "id": "file-osfundamentals-patterns-work-report2-txt",
-            "type": "file",
-            "path": "/home/student/osfundamentals/patterns/work/report2.txt",
-            "points": 1,
-            "description": "`~/osfundamentals/patterns/work/report2.txt` exists as a regular file."
-          },
-          {
-            "id": "file-osfundamentals-patterns-work-report3-txt",
-            "type": "file",
-            "path": "/home/student/osfundamentals/patterns/work/report3.txt",
-            "points": 1,
-            "description": "`~/osfundamentals/patterns/work/report3.txt` exists as a regular file."
-          },
-          {
-            "id": "file-osfundamentals-patterns-work-report10-txt",
-            "type": "file",
-            "path": "/home/student/osfundamentals/patterns/work/report10.txt",
-            "points": 1,
-            "description": "`~/osfundamentals/patterns/work/report10.txt` exists as a regular file."
-          },
-          {
-            "id": "file-osfundamentals-patterns-work-notes-a-txt",
-            "type": "file",
-            "path": "/home/student/osfundamentals/patterns/work/notes_a.txt",
-            "points": 1,
-            "description": "`~/osfundamentals/patterns/work/notes_a.txt` exists as a regular file."
-          },
-          {
-            "id": "file-osfundamentals-patterns-work-notes-b-txt",
-            "type": "file",
-            "path": "/home/student/osfundamentals/patterns/work/notes_b.txt",
-            "points": 1,
-            "description": "`~/osfundamentals/patterns/work/notes_b.txt` exists as a regular file."
-          },
-          {
-            "id": "file-osfundamentals-patterns-work-summary-txt",
-            "type": "file",
-            "path": "/home/student/osfundamentals/patterns/work/summary.txt",
-            "points": 1,
-            "description": "`~/osfundamentals/patterns/work/summary.txt` exists as a regular file."
-          },
-          {
-            "id": "file-osfundamentals-patterns-work-old-2020-log",
-            "type": "file",
-            "path": "/home/student/osfundamentals/patterns/work/old_2020.log",
-            "points": 1,
-            "description": "`~/osfundamentals/patterns/work/old_2020.log` exists as a regular file."
-          },
-          {
-            "id": "file-osfundamentals-patterns-work-old-2022-log",
-            "type": "file",
-            "path": "/home/student/osfundamentals/patterns/work/old_2022.log",
-            "points": 1,
-            "description": "`~/osfundamentals/patterns/work/old_2022.log` exists as a regular file."
-          },
-          {
-            "id": "not_exists-osfundamentals-patterns-work-old-2021-log",
-            "type": "not_exists",
-            "path": "/home/student/osfundamentals/patterns/work/old_2021.log",
-            "points": 1,
-            "description": "`old_2021.log` was not copied (it contains `1` just before `.log`)."
-          },
-          {
-            "id": "directory-osfundamentals-patterns-work-project-alpha",
-            "type": "directory",
-            "path": "/home/student/osfundamentals/patterns/work/project_alpha",
-            "points": 1,
-            "description": "`~/osfundamentals/patterns/work/project_alpha` exists and is a directory."
-          },
-          {
-            "id": "directory-osfundamentals-patterns-work-project-beta",
-            "type": "directory",
-            "path": "/home/student/osfundamentals/patterns/work/project_beta",
-            "points": 1,
-            "description": "`~/osfundamentals/patterns/work/project_beta` exists and is a directory."
-          },
-          {
-            "id": "directory-osfundamentals-patterns-work-project-gamma",
-            "type": "directory",
-            "path": "/home/student/osfundamentals/patterns/work/project_gamma",
-            "points": 1,
-            "description": "`~/osfundamentals/patterns/work/project_gamma` exists and is a directory."
-          },
-          {
-            "id": "file-osfundamentals-patterns-work-home-listing-txt",
-            "type": "file",
-            "path": "/home/student/osfundamentals/patterns/work/home_listing.txt",
-            "points": 1,
-            "description": "`~/osfundamentals/patterns/work/home_listing.txt` exists as a regular file."
-          },
-          {
-            "id": "file-osfundamentals-patterns-work-current-date-txt",
-            "type": "file",
-            "path": "/home/student/osfundamentals/patterns/work/current_date.txt",
-            "points": 1,
-            "description": "`~/osfundamentals/patterns/work/current_date.txt` exists as a regular file."
-          },
-          {
-            "id": "content-osfundamentals-patterns-work-draft-final-md",
-            "type": "content",
-            "path": "/home/student/osfundamentals/patterns/work/draft_final.md",
-            "expected": "Final draft\n",
-            "points": 1,
-            "description": "`~/osfundamentals/patterns/work/draft_final.md` has the expected content."
-          },
-          {
-            "id": "file-osfundamentals-patterns-work-project-notes-txt",
-            "type": "file",
-            "path": "/home/student/osfundamentals/patterns/work/project notes.txt",
-            "points": 1,
-            "description": "`~/osfundamentals/patterns/work/project notes.txt` exists as a regular file."
-          },
-          {
-            "id": "file-osfundamentals-patterns-work-price-100-txt",
-            "type": "file",
-            "path": "/home/student/osfundamentals/patterns/work/price_$100.txt",
-            "points": 1,
-            "description": "`~/osfundamentals/patterns/work/price_$100.txt` exists as a regular file."
-          },
-          {
-            "id": "file-osfundamentals-patterns-work-wow-txt",
-            "type": "file",
-            "path": "/home/student/osfundamentals/patterns/work/wow!.txt",
-            "points": 1,
-            "description": "`~/osfundamentals/patterns/work/wow!.txt` exists as a regular file."
-          },
-          {
-            "id": "file-osfundamentals-patterns-work-double-space-file-txt",
-            "type": "file",
-            "path": "/home/student/osfundamentals/patterns/work/double space file.txt",
-            "points": 1,
-            "description": "`~/osfundamentals/patterns/work/double space file.txt` exists as a regular file."
-          },
-          {
-            "id": "file-osfundamentals-patterns-work-single-space-file-txt",
-            "type": "file",
-            "path": "/home/student/osfundamentals/patterns/work/single space file.txt",
-            "points": 1,
-            "description": "`~/osfundamentals/patterns/work/single space file.txt` exists as a regular file."
-          }
-        ],
-        "explanation": "The correction checks which files ended up in `work/`, including the one file that must not be copied, and that the specially named files exist literally.",
-        "solution": [
-          "mkdir -p '/home/student/osfundamentals/patterns/work' '/home/student/osfundamentals/patterns/work/project_alpha' '/home/student/osfundamentals/patterns/work/project_beta' '/home/student/osfundamentals/patterns/work/project_gamma'",
-          "printf '%b' 'Final draft\\n' > '/home/student/osfundamentals/patterns/work/draft_final.md'",
-          "touch '/home/student/osfundamentals/patterns/work/report1.txt' '/home/student/osfundamentals/patterns/work/report2.txt' '/home/student/osfundamentals/patterns/work/report3.txt' '/home/student/osfundamentals/patterns/work/report10.txt' '/home/student/osfundamentals/patterns/work/notes_a.txt' '/home/student/osfundamentals/patterns/work/notes_b.txt' '/home/student/osfundamentals/patterns/work/summary.txt' '/home/student/osfundamentals/patterns/work/old_2020.log' '/home/student/osfundamentals/patterns/work/old_2022.log' '/home/student/osfundamentals/patterns/work/home_listing.txt' '/home/student/osfundamentals/patterns/work/current_date.txt' '/home/student/osfundamentals/patterns/work/project notes.txt' '/home/student/osfundamentals/patterns/work/price_$100.txt' '/home/student/osfundamentals/patterns/work/wow!.txt' '/home/student/osfundamentals/patterns/work/double space file.txt' '/home/student/osfundamentals/patterns/work/single space file.txt'"
         ]
-      }
+      },
+      "checks": [
+        {
+          "id": "file-osfundamentals-patterns-work-report1-txt",
+          "type": "file",
+          "path": "/home/student/osfundamentals/patterns/work/report1.txt",
+          "points": 1,
+          "description": "`~/osfundamentals/patterns/work/report1.txt` exists as a regular file.",
+          "regex": false
+        },
+        {
+          "id": "file-osfundamentals-patterns-work-report2-txt",
+          "type": "file",
+          "path": "/home/student/osfundamentals/patterns/work/report2.txt",
+          "points": 1,
+          "description": "`~/osfundamentals/patterns/work/report2.txt` exists as a regular file.",
+          "regex": false
+        },
+        {
+          "id": "file-osfundamentals-patterns-work-report3-txt",
+          "type": "file",
+          "path": "/home/student/osfundamentals/patterns/work/report3.txt",
+          "points": 1,
+          "description": "`~/osfundamentals/patterns/work/report3.txt` exists as a regular file.",
+          "regex": false
+        },
+        {
+          "id": "file-osfundamentals-patterns-work-report10-txt",
+          "type": "file",
+          "path": "/home/student/osfundamentals/patterns/work/report10.txt",
+          "points": 1,
+          "description": "`~/osfundamentals/patterns/work/report10.txt` exists as a regular file.",
+          "regex": false
+        },
+        {
+          "id": "file-osfundamentals-patterns-work-notes-a-txt",
+          "type": "file",
+          "path": "/home/student/osfundamentals/patterns/work/notes_a.txt",
+          "points": 1,
+          "description": "`~/osfundamentals/patterns/work/notes_a.txt` exists as a regular file.",
+          "regex": false
+        },
+        {
+          "id": "file-osfundamentals-patterns-work-notes-b-txt",
+          "type": "file",
+          "path": "/home/student/osfundamentals/patterns/work/notes_b.txt",
+          "points": 1,
+          "description": "`~/osfundamentals/patterns/work/notes_b.txt` exists as a regular file.",
+          "regex": false
+        },
+        {
+          "id": "file-osfundamentals-patterns-work-summary-txt",
+          "type": "file",
+          "path": "/home/student/osfundamentals/patterns/work/summary.txt",
+          "points": 1,
+          "description": "`~/osfundamentals/patterns/work/summary.txt` exists as a regular file.",
+          "regex": false
+        },
+        {
+          "id": "file-osfundamentals-patterns-work-old-2020-log",
+          "type": "file",
+          "path": "/home/student/osfundamentals/patterns/work/old_2020.log",
+          "points": 1,
+          "description": "`~/osfundamentals/patterns/work/old_2020.log` exists as a regular file.",
+          "regex": false
+        },
+        {
+          "id": "file-osfundamentals-patterns-work-old-2022-log",
+          "type": "file",
+          "path": "/home/student/osfundamentals/patterns/work/old_2022.log",
+          "points": 1,
+          "description": "`~/osfundamentals/patterns/work/old_2022.log` exists as a regular file.",
+          "regex": false
+        },
+        {
+          "id": "not_exists-osfundamentals-patterns-work-old-2021-log",
+          "type": "not_exists",
+          "path": "/home/student/osfundamentals/patterns/work/old_2021.log",
+          "points": 1,
+          "description": "`old_2021.log` was not copied (it contains `1` just before `.log`).",
+          "regex": false
+        },
+        {
+          "id": "directory-osfundamentals-patterns-work-project-alpha",
+          "type": "directory",
+          "path": "/home/student/osfundamentals/patterns/work/project_alpha",
+          "points": 1,
+          "description": "`~/osfundamentals/patterns/work/project_alpha` exists and is a directory.",
+          "regex": false
+        },
+        {
+          "id": "directory-osfundamentals-patterns-work-project-beta",
+          "type": "directory",
+          "path": "/home/student/osfundamentals/patterns/work/project_beta",
+          "points": 1,
+          "description": "`~/osfundamentals/patterns/work/project_beta` exists and is a directory.",
+          "regex": false
+        },
+        {
+          "id": "directory-osfundamentals-patterns-work-project-gamma",
+          "type": "directory",
+          "path": "/home/student/osfundamentals/patterns/work/project_gamma",
+          "points": 1,
+          "description": "`~/osfundamentals/patterns/work/project_gamma` exists and is a directory.",
+          "regex": false
+        },
+        {
+          "id": "file-osfundamentals-patterns-work-home-listing-txt",
+          "type": "file",
+          "path": "/home/student/osfundamentals/patterns/work/home_listing.txt",
+          "points": 1,
+          "description": "`~/osfundamentals/patterns/work/home_listing.txt` exists as a regular file.",
+          "regex": false
+        },
+        {
+          "id": "file-osfundamentals-patterns-work-current-date-txt",
+          "type": "file",
+          "path": "/home/student/osfundamentals/patterns/work/current_date.txt",
+          "points": 1,
+          "description": "`~/osfundamentals/patterns/work/current_date.txt` exists as a regular file.",
+          "regex": false
+        },
+        {
+          "id": "content-osfundamentals-patterns-work-draft-final-md",
+          "type": "content",
+          "path": "/home/student/osfundamentals/patterns/work/draft_final.md",
+          "expected": "Final draft\n",
+          "points": 1,
+          "description": "`~/osfundamentals/patterns/work/draft_final.md` has the expected content.",
+          "regex": false
+        },
+        {
+          "id": "file-osfundamentals-patterns-work-project-notes-txt",
+          "type": "file",
+          "path": "/home/student/osfundamentals/patterns/work/project notes.txt",
+          "points": 1,
+          "description": "`~/osfundamentals/patterns/work/project notes.txt` exists as a regular file.",
+          "regex": false
+        },
+        {
+          "id": "file-osfundamentals-patterns-work-price-100-txt",
+          "type": "file",
+          "path": "/home/student/osfundamentals/patterns/work/price_$100.txt",
+          "points": 1,
+          "description": "`~/osfundamentals/patterns/work/price_$100.txt` exists as a regular file.",
+          "regex": false
+        },
+        {
+          "id": "file-osfundamentals-patterns-work-wow-txt",
+          "type": "file",
+          "path": "/home/student/osfundamentals/patterns/work/wow!.txt",
+          "points": 1,
+          "description": "`~/osfundamentals/patterns/work/wow!.txt` exists as a regular file.",
+          "regex": false
+        },
+        {
+          "id": "file-osfundamentals-patterns-work-double-space-file-txt",
+          "type": "file",
+          "path": "/home/student/osfundamentals/patterns/work/double space file.txt",
+          "points": 1,
+          "description": "`~/osfundamentals/patterns/work/double space file.txt` exists as a regular file.",
+          "regex": false
+        },
+        {
+          "id": "file-osfundamentals-patterns-work-single-space-file-txt",
+          "type": "file",
+          "path": "/home/student/osfundamentals/patterns/work/single space file.txt",
+          "points": 1,
+          "description": "`~/osfundamentals/patterns/work/single space file.txt` exists as a regular file.",
+          "regex": false
+        }
+      ],
+      "solution": [
+        "mkdir -p '/home/student/osfundamentals/patterns/work' '/home/student/osfundamentals/patterns/work/project_alpha' '/home/student/osfundamentals/patterns/work/project_beta' '/home/student/osfundamentals/patterns/work/project_gamma'",
+        "printf '%b' 'Final draft\\n' > '/home/student/osfundamentals/patterns/work/draft_final.md'",
+        "touch '/home/student/osfundamentals/patterns/work/report1.txt' '/home/student/osfundamentals/patterns/work/report2.txt' '/home/student/osfundamentals/patterns/work/report3.txt' '/home/student/osfundamentals/patterns/work/report10.txt' '/home/student/osfundamentals/patterns/work/notes_a.txt' '/home/student/osfundamentals/patterns/work/notes_b.txt' '/home/student/osfundamentals/patterns/work/summary.txt' '/home/student/osfundamentals/patterns/work/old_2020.log' '/home/student/osfundamentals/patterns/work/old_2022.log' '/home/student/osfundamentals/patterns/work/home_listing.txt' '/home/student/osfundamentals/patterns/work/current_date.txt' '/home/student/osfundamentals/patterns/work/project notes.txt' '/home/student/osfundamentals/patterns/work/price_$100.txt' '/home/student/osfundamentals/patterns/work/wow!.txt' '/home/student/osfundamentals/patterns/work/double space file.txt' '/home/student/osfundamentals/patterns/work/single space file.txt'"
+      ],
+      "explanation": "The correction checks which files ended up in `work/`, including the one file that must not be copied, and that the specially named files exist literally."
     },
     "os-term-1-0399": {
       "course": "os",
@@ -1130,152 +1229,171 @@
           "chown student:student /home/student/osfundamentals /home/student/osfundamentals/capstone /home/student/osfundamentals/capstone/workspace /home/student/osfundamentals/capstone/workspace/todo.txt /home/student/osfundamentals/capstone/workspace/notes /home/student/osfundamentals/capstone/workspace/notes/meeting_jan.txt /home/student/osfundamentals/capstone/workspace/notes/meeting_feb.txt /home/student/osfundamentals/capstone/workspace/notes/archive /home/student/osfundamentals/capstone/workspace/notes/archive/old_notes.txt /home/student/osfundamentals/capstone/workspace/projects",
           "chmod 755 /home/student/osfundamentals /home/student/osfundamentals/capstone /home/student/osfundamentals/capstone/workspace /home/student/osfundamentals/capstone/workspace/notes /home/student/osfundamentals/capstone/workspace/notes/archive /home/student/osfundamentals/capstone/workspace/projects",
           "chmod 644 /home/student/osfundamentals/capstone/workspace/todo.txt /home/student/osfundamentals/capstone/workspace/notes/meeting_jan.txt /home/student/osfundamentals/capstone/workspace/notes/meeting_feb.txt /home/student/osfundamentals/capstone/workspace/notes/archive/old_notes.txt"
-        ],
-        "checks": [
-          {
-            "id": "not_exists-osfundamentals-capstone-workspace-projects-drafts",
-            "type": "not_exists",
-            "path": "/home/student/osfundamentals/capstone/workspace/projects/drafts",
-            "points": 1,
-            "description": "`projects/drafts` was removed again."
-          },
-          {
-            "id": "file-osfundamentals-capstone-workspace-projects-plan1-txt",
-            "type": "file",
-            "path": "/home/student/osfundamentals/capstone/workspace/projects/plan1.txt",
-            "points": 1,
-            "description": "`~/osfundamentals/capstone/workspace/projects/plan1.txt` exists as a regular file."
-          },
-          {
-            "id": "file-osfundamentals-capstone-workspace-projects-plan2-txt",
-            "type": "file",
-            "path": "/home/student/osfundamentals/capstone/workspace/projects/plan2.txt",
-            "points": 1,
-            "description": "`~/osfundamentals/capstone/workspace/projects/plan2.txt` exists as a regular file."
-          },
-          {
-            "id": "not_exists-osfundamentals-capstone-workspace-projects-notes-md",
-            "type": "not_exists",
-            "path": "/home/student/osfundamentals/capstone/workspace/projects/notes.md",
-            "points": 1,
-            "description": "`~/osfundamentals/capstone/workspace/projects/notes.md` does not exist."
-          },
-          {
-            "id": "file-osfundamentals-capstone-workspace-notes-project-notes-md",
-            "type": "file",
-            "path": "/home/student/osfundamentals/capstone/workspace/notes/project_notes.md",
-            "points": 1,
-            "description": "`~/osfundamentals/capstone/workspace/notes/project_notes.md` exists as a regular file."
-          },
-          {
-            "id": "content-osfundamentals-capstone-workspace-todo-txt",
-            "type": "content",
-            "path": "/home/student/osfundamentals/capstone/workspace/todo.txt",
-            "expected": "Finish the migration\n",
-            "points": 1,
-            "description": "`~/osfundamentals/capstone/workspace/todo.txt` has the expected content."
-          },
-          {
-            "id": "content-osfundamentals-capstone-workspace-todo-hardlink-txt",
-            "type": "content",
-            "path": "/home/student/osfundamentals/capstone/workspace/todo_hardlink.txt",
-            "expected": "Finish the migration\n",
-            "points": 1,
-            "description": "`todo_hardlink.txt` is a hard link to `todo.txt`."
-          },
-          {
-            "id": "file-osfundamentals-capstone-workspace-latest-notes-meeting-jan-txt",
-            "type": "file",
-            "path": "/home/student/osfundamentals/capstone/workspace/latest_notes/meeting_jan.txt",
-            "points": 1,
-            "description": "`latest_notes` is a symbolic link that resolves to the `notes` directory."
-          },
-          {
-            "id": "file-osfundamentals-capstone-workspace-projects-draft1-txt",
-            "type": "file",
-            "path": "/home/student/osfundamentals/capstone/workspace/projects/draft1.txt",
-            "points": 1,
-            "description": "`~/osfundamentals/capstone/workspace/projects/draft1.txt` exists as a regular file."
-          },
-          {
-            "id": "file-osfundamentals-capstone-workspace-projects-draft2-txt",
-            "type": "file",
-            "path": "/home/student/osfundamentals/capstone/workspace/projects/draft2.txt",
-            "points": 1,
-            "description": "`~/osfundamentals/capstone/workspace/projects/draft2.txt` exists as a regular file."
-          },
-          {
-            "id": "file-osfundamentals-capstone-workspace-projects-draft3-txt",
-            "type": "file",
-            "path": "/home/student/osfundamentals/capstone/workspace/projects/draft3.txt",
-            "points": 1,
-            "description": "`~/osfundamentals/capstone/workspace/projects/draft3.txt` exists as a regular file."
-          },
-          {
-            "id": "file-osfundamentals-capstone-workspace-projects-var-test-txt",
-            "type": "file",
-            "path": "/home/student/osfundamentals/capstone/workspace/projects/var_test.txt",
-            "points": 1,
-            "description": "`~/osfundamentals/capstone/workspace/projects/var_test.txt` exists as a regular file."
-          },
-          {
-            "id": "file-osfundamentals-capstone-workspace-homecheck-txt",
-            "type": "file",
-            "path": "/home/student/osfundamentals/capstone/workspace/homecheck.txt",
-            "points": 1,
-            "description": "`~/osfundamentals/capstone/workspace/homecheck.txt` exists as a regular file."
-          },
-          {
-            "id": "file-osfundamentals-capstone-workspace-project-notes-txt",
-            "type": "file",
-            "path": "/home/student/osfundamentals/capstone/workspace/project notes.txt",
-            "points": 1,
-            "description": "`~/osfundamentals/capstone/workspace/project notes.txt` exists as a regular file."
-          },
-          {
-            "id": "file-osfundamentals-capstone-workspace-price-100-txt",
-            "type": "file",
-            "path": "/home/student/osfundamentals/capstone/workspace/price_$100.txt",
-            "points": 1,
-            "description": "`~/osfundamentals/capstone/workspace/price_$100.txt` exists as a regular file."
-          },
-          {
-            "id": "file-osfundamentals-capstone-workspace-wow-txt",
-            "type": "file",
-            "path": "/home/student/osfundamentals/capstone/workspace/wow!.txt",
-            "points": 1,
-            "description": "`~/osfundamentals/capstone/workspace/wow!.txt` exists as a regular file."
-          },
-          {
-            "id": "file-osfundamentals-capstone-workspace-double-space-file-txt",
-            "type": "file",
-            "path": "/home/student/osfundamentals/capstone/workspace/double space file.txt",
-            "points": 1,
-            "description": "`~/osfundamentals/capstone/workspace/double space file.txt` exists as a regular file."
-          },
-          {
-            "id": "file-osfundamentals-capstone-workspace-single-space-file-txt",
-            "type": "file",
-            "path": "/home/student/osfundamentals/capstone/workspace/single space file.txt",
-            "points": 1,
-            "description": "`~/osfundamentals/capstone/workspace/single space file.txt` exists as a regular file."
-          },
-          {
-            "id": "file-osfundamentals-capstone-workspace-all-txt-files-txt",
-            "type": "file",
-            "path": "/home/student/osfundamentals/capstone/workspace/all_txt_files.txt",
-            "points": 1,
-            "description": "`~/osfundamentals/capstone/workspace/all_txt_files.txt` exists as a regular file."
-          }
-        ],
-        "explanation": "The correction checks the final state of the workspace. Files that were created and removed again (the `drafts` directory) must be gone, while the links must resolve to their targets.",
-        "solution": [
-          "mkdir -p '/home/student/osfundamentals/capstone/workspace/projects' '/home/student/osfundamentals/capstone/workspace/notes' '/home/student/osfundamentals/capstone/workspace' '/home/student/osfundamentals/capstone/workspace/latest_notes'",
-          "printf '%b' 'Finish the migration\\n' > '/home/student/osfundamentals/capstone/workspace/todo.txt'",
-          "printf '%b' 'Finish the migration\\n' > '/home/student/osfundamentals/capstone/workspace/todo_hardlink.txt'",
-          "touch '/home/student/osfundamentals/capstone/workspace/projects/plan1.txt' '/home/student/osfundamentals/capstone/workspace/projects/plan2.txt' '/home/student/osfundamentals/capstone/workspace/notes/project_notes.md' '/home/student/osfundamentals/capstone/workspace/latest_notes/meeting_jan.txt' '/home/student/osfundamentals/capstone/workspace/projects/draft1.txt' '/home/student/osfundamentals/capstone/workspace/projects/draft2.txt' '/home/student/osfundamentals/capstone/workspace/projects/draft3.txt' '/home/student/osfundamentals/capstone/workspace/projects/var_test.txt' '/home/student/osfundamentals/capstone/workspace/homecheck.txt' '/home/student/osfundamentals/capstone/workspace/project notes.txt' '/home/student/osfundamentals/capstone/workspace/price_$100.txt' '/home/student/osfundamentals/capstone/workspace/wow!.txt' '/home/student/osfundamentals/capstone/workspace/double space file.txt' '/home/student/osfundamentals/capstone/workspace/single space file.txt' '/home/student/osfundamentals/capstone/workspace/all_txt_files.txt'"
         ]
-      }
+      },
+      "checks": [
+        {
+          "id": "not_exists-osfundamentals-capstone-workspace-projects-drafts",
+          "type": "not_exists",
+          "path": "/home/student/osfundamentals/capstone/workspace/projects/drafts",
+          "points": 1,
+          "description": "`projects/drafts` was removed again.",
+          "regex": false
+        },
+        {
+          "id": "file-osfundamentals-capstone-workspace-projects-plan1-txt",
+          "type": "file",
+          "path": "/home/student/osfundamentals/capstone/workspace/projects/plan1.txt",
+          "points": 1,
+          "description": "`~/osfundamentals/capstone/workspace/projects/plan1.txt` exists as a regular file.",
+          "regex": false
+        },
+        {
+          "id": "file-osfundamentals-capstone-workspace-projects-plan2-txt",
+          "type": "file",
+          "path": "/home/student/osfundamentals/capstone/workspace/projects/plan2.txt",
+          "points": 1,
+          "description": "`~/osfundamentals/capstone/workspace/projects/plan2.txt` exists as a regular file.",
+          "regex": false
+        },
+        {
+          "id": "not_exists-osfundamentals-capstone-workspace-projects-notes-md",
+          "type": "not_exists",
+          "path": "/home/student/osfundamentals/capstone/workspace/projects/notes.md",
+          "points": 1,
+          "description": "`~/osfundamentals/capstone/workspace/projects/notes.md` does not exist.",
+          "regex": false
+        },
+        {
+          "id": "file-osfundamentals-capstone-workspace-notes-project-notes-md",
+          "type": "file",
+          "path": "/home/student/osfundamentals/capstone/workspace/notes/project_notes.md",
+          "points": 1,
+          "description": "`~/osfundamentals/capstone/workspace/notes/project_notes.md` exists as a regular file.",
+          "regex": false
+        },
+        {
+          "id": "content-osfundamentals-capstone-workspace-todo-txt",
+          "type": "content",
+          "path": "/home/student/osfundamentals/capstone/workspace/todo.txt",
+          "expected": "Finish the migration\n",
+          "points": 1,
+          "description": "`~/osfundamentals/capstone/workspace/todo.txt` has the expected content.",
+          "regex": false
+        },
+        {
+          "id": "content-osfundamentals-capstone-workspace-todo-hardlink-txt",
+          "type": "content",
+          "path": "/home/student/osfundamentals/capstone/workspace/todo_hardlink.txt",
+          "expected": "Finish the migration\n",
+          "points": 1,
+          "description": "`todo_hardlink.txt` is a hard link to `todo.txt`.",
+          "regex": false
+        },
+        {
+          "id": "file-osfundamentals-capstone-workspace-latest-notes-meeting-jan-txt",
+          "type": "file",
+          "path": "/home/student/osfundamentals/capstone/workspace/latest_notes/meeting_jan.txt",
+          "points": 1,
+          "description": "`latest_notes` is a symbolic link that resolves to the `notes` directory.",
+          "regex": false
+        },
+        {
+          "id": "file-osfundamentals-capstone-workspace-projects-draft1-txt",
+          "type": "file",
+          "path": "/home/student/osfundamentals/capstone/workspace/projects/draft1.txt",
+          "points": 1,
+          "description": "`~/osfundamentals/capstone/workspace/projects/draft1.txt` exists as a regular file.",
+          "regex": false
+        },
+        {
+          "id": "file-osfundamentals-capstone-workspace-projects-draft2-txt",
+          "type": "file",
+          "path": "/home/student/osfundamentals/capstone/workspace/projects/draft2.txt",
+          "points": 1,
+          "description": "`~/osfundamentals/capstone/workspace/projects/draft2.txt` exists as a regular file.",
+          "regex": false
+        },
+        {
+          "id": "file-osfundamentals-capstone-workspace-projects-draft3-txt",
+          "type": "file",
+          "path": "/home/student/osfundamentals/capstone/workspace/projects/draft3.txt",
+          "points": 1,
+          "description": "`~/osfundamentals/capstone/workspace/projects/draft3.txt` exists as a regular file.",
+          "regex": false
+        },
+        {
+          "id": "file-osfundamentals-capstone-workspace-projects-var-test-txt",
+          "type": "file",
+          "path": "/home/student/osfundamentals/capstone/workspace/projects/var_test.txt",
+          "points": 1,
+          "description": "`~/osfundamentals/capstone/workspace/projects/var_test.txt` exists as a regular file.",
+          "regex": false
+        },
+        {
+          "id": "file-osfundamentals-capstone-workspace-homecheck-txt",
+          "type": "file",
+          "path": "/home/student/osfundamentals/capstone/workspace/homecheck.txt",
+          "points": 1,
+          "description": "`~/osfundamentals/capstone/workspace/homecheck.txt` exists as a regular file.",
+          "regex": false
+        },
+        {
+          "id": "file-osfundamentals-capstone-workspace-project-notes-txt",
+          "type": "file",
+          "path": "/home/student/osfundamentals/capstone/workspace/project notes.txt",
+          "points": 1,
+          "description": "`~/osfundamentals/capstone/workspace/project notes.txt` exists as a regular file.",
+          "regex": false
+        },
+        {
+          "id": "file-osfundamentals-capstone-workspace-price-100-txt",
+          "type": "file",
+          "path": "/home/student/osfundamentals/capstone/workspace/price_$100.txt",
+          "points": 1,
+          "description": "`~/osfundamentals/capstone/workspace/price_$100.txt` exists as a regular file.",
+          "regex": false
+        },
+        {
+          "id": "file-osfundamentals-capstone-workspace-wow-txt",
+          "type": "file",
+          "path": "/home/student/osfundamentals/capstone/workspace/wow!.txt",
+          "points": 1,
+          "description": "`~/osfundamentals/capstone/workspace/wow!.txt` exists as a regular file.",
+          "regex": false
+        },
+        {
+          "id": "file-osfundamentals-capstone-workspace-double-space-file-txt",
+          "type": "file",
+          "path": "/home/student/osfundamentals/capstone/workspace/double space file.txt",
+          "points": 1,
+          "description": "`~/osfundamentals/capstone/workspace/double space file.txt` exists as a regular file.",
+          "regex": false
+        },
+        {
+          "id": "file-osfundamentals-capstone-workspace-single-space-file-txt",
+          "type": "file",
+          "path": "/home/student/osfundamentals/capstone/workspace/single space file.txt",
+          "points": 1,
+          "description": "`~/osfundamentals/capstone/workspace/single space file.txt` exists as a regular file.",
+          "regex": false
+        },
+        {
+          "id": "file-osfundamentals-capstone-workspace-all-txt-files-txt",
+          "type": "file",
+          "path": "/home/student/osfundamentals/capstone/workspace/all_txt_files.txt",
+          "points": 1,
+          "description": "`~/osfundamentals/capstone/workspace/all_txt_files.txt` exists as a regular file.",
+          "regex": false
+        }
+      ],
+      "solution": [
+        "mkdir -p '/home/student/osfundamentals/capstone/workspace/projects' '/home/student/osfundamentals/capstone/workspace/notes' '/home/student/osfundamentals/capstone/workspace' '/home/student/osfundamentals/capstone/workspace/latest_notes'",
+        "printf '%b' 'Finish the migration\\n' > '/home/student/osfundamentals/capstone/workspace/todo.txt'",
+        "printf '%b' 'Finish the migration\\n' > '/home/student/osfundamentals/capstone/workspace/todo_hardlink.txt'",
+        "touch '/home/student/osfundamentals/capstone/workspace/projects/plan1.txt' '/home/student/osfundamentals/capstone/workspace/projects/plan2.txt' '/home/student/osfundamentals/capstone/workspace/notes/project_notes.md' '/home/student/osfundamentals/capstone/workspace/latest_notes/meeting_jan.txt' '/home/student/osfundamentals/capstone/workspace/projects/draft1.txt' '/home/student/osfundamentals/capstone/workspace/projects/draft2.txt' '/home/student/osfundamentals/capstone/workspace/projects/draft3.txt' '/home/student/osfundamentals/capstone/workspace/projects/var_test.txt' '/home/student/osfundamentals/capstone/workspace/homecheck.txt' '/home/student/osfundamentals/capstone/workspace/project notes.txt' '/home/student/osfundamentals/capstone/workspace/price_$100.txt' '/home/student/osfundamentals/capstone/workspace/wow!.txt' '/home/student/osfundamentals/capstone/workspace/double space file.txt' '/home/student/osfundamentals/capstone/workspace/single space file.txt' '/home/student/osfundamentals/capstone/workspace/all_txt_files.txt'"
+      ],
+      "explanation": "The correction checks the final state of the workspace. Files that were created and removed again (the `drafts` directory) must be gone, while the links must resolve to their targets."
     },
     "os-term-1-0401": {
       "course": "os",
@@ -1295,57 +1413,62 @@
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
-        "initialFilesystem": [],
-        "checks": [
-          {
-            "id": "directory-osfundamentals-manpages",
-            "type": "directory",
-            "path": "/home/student/osfundamentals/manpages",
-            "points": 1,
-            "description": "`~/osfundamentals/manpages` exists and is a directory."
-          },
-          {
-            "id": "content-osfundamentals-manpages-ls-hidden-txt",
-            "type": "content",
-            "path": "/home/student/osfundamentals/manpages/ls_hidden.txt",
-            "expected": "-a\n",
-            "points": 1,
-            "description": "`~/osfundamentals/manpages/ls_hidden.txt` has the expected content."
-          },
-          {
-            "id": "content-osfundamentals-manpages-permission-cmd-txt",
-            "type": "content",
-            "path": "/home/student/osfundamentals/manpages/permission_cmd.txt",
-            "expected": "chmod\n",
-            "points": 1,
-            "description": "`~/osfundamentals/manpages/permission_cmd.txt` has the expected content."
-          },
-          {
-            "id": "content-osfundamentals-manpages-printf-section-txt",
-            "type": "content",
-            "path": "/home/student/osfundamentals/manpages/printf_section.txt",
-            "expected": "1\n",
-            "points": 1,
-            "description": "`~/osfundamentals/manpages/printf_section.txt` has the expected content."
-          },
-          {
-            "id": "content-osfundamentals-manpages-tar-gzip-txt",
-            "type": "content",
-            "path": "/home/student/osfundamentals/manpages/tar_gzip.txt",
-            "expected": "-z\n",
-            "points": 1,
-            "description": "`~/osfundamentals/manpages/tar_gzip.txt` has the expected content."
-          }
-        ],
-        "explanation": "The correction compares each answer file with the expected option, command name or section number.",
-        "solution": [
-          "mkdir -p '/home/student/osfundamentals/manpages'",
-          "printf '%b' '-a\\n' > '/home/student/osfundamentals/manpages/ls_hidden.txt'",
-          "printf '%b' 'chmod\\n' > '/home/student/osfundamentals/manpages/permission_cmd.txt'",
-          "printf '%b' '1\\n' > '/home/student/osfundamentals/manpages/printf_section.txt'",
-          "printf '%b' '-z\\n' > '/home/student/osfundamentals/manpages/tar_gzip.txt'"
-        ]
-      }
+        "initialFilesystem": []
+      },
+      "checks": [
+        {
+          "id": "directory-osfundamentals-manpages",
+          "type": "directory",
+          "path": "/home/student/osfundamentals/manpages",
+          "points": 1,
+          "description": "`~/osfundamentals/manpages` exists and is a directory.",
+          "regex": false
+        },
+        {
+          "id": "content-osfundamentals-manpages-ls-hidden-txt",
+          "type": "content",
+          "path": "/home/student/osfundamentals/manpages/ls_hidden.txt",
+          "expected": "-a\n",
+          "points": 1,
+          "description": "`~/osfundamentals/manpages/ls_hidden.txt` has the expected content.",
+          "regex": false
+        },
+        {
+          "id": "content-osfundamentals-manpages-permission-cmd-txt",
+          "type": "content",
+          "path": "/home/student/osfundamentals/manpages/permission_cmd.txt",
+          "expected": "chmod\n",
+          "points": 1,
+          "description": "`~/osfundamentals/manpages/permission_cmd.txt` has the expected content.",
+          "regex": false
+        },
+        {
+          "id": "content-osfundamentals-manpages-printf-section-txt",
+          "type": "content",
+          "path": "/home/student/osfundamentals/manpages/printf_section.txt",
+          "expected": "1\n",
+          "points": 1,
+          "description": "`~/osfundamentals/manpages/printf_section.txt` has the expected content.",
+          "regex": false
+        },
+        {
+          "id": "content-osfundamentals-manpages-tar-gzip-txt",
+          "type": "content",
+          "path": "/home/student/osfundamentals/manpages/tar_gzip.txt",
+          "expected": "-z\n",
+          "points": 1,
+          "description": "`~/osfundamentals/manpages/tar_gzip.txt` has the expected content.",
+          "regex": false
+        }
+      ],
+      "solution": [
+        "mkdir -p '/home/student/osfundamentals/manpages'",
+        "printf '%b' '-a\\n' > '/home/student/osfundamentals/manpages/ls_hidden.txt'",
+        "printf '%b' 'chmod\\n' > '/home/student/osfundamentals/manpages/permission_cmd.txt'",
+        "printf '%b' '1\\n' > '/home/student/osfundamentals/manpages/printf_section.txt'",
+        "printf '%b' '-z\\n' > '/home/student/osfundamentals/manpages/tar_gzip.txt'"
+      ],
+      "explanation": "The correction compares each answer file with the expected option, command name or section number."
     },
     "os-term-1-0402": {
       "course": "os",
@@ -1364,50 +1487,54 @@
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
-        "initialFilesystem": [],
-        "checks": [
-          {
-            "id": "content-osfundamentals-manpages-cp-preserve-txt",
-            "type": "content",
-            "path": "/home/student/osfundamentals/manpages/cp_preserve.txt",
-            "expected": "-p\n",
-            "points": 1,
-            "description": "`~/osfundamentals/manpages/cp_preserve.txt` has the expected content."
-          },
-          {
-            "id": "content-osfundamentals-manpages-ownership-cmd-txt",
-            "type": "content",
-            "path": "/home/student/osfundamentals/manpages/ownership_cmd.txt",
-            "expected": "chown\n",
-            "points": 1,
-            "description": "`~/osfundamentals/manpages/ownership_cmd.txt` has the expected content."
-          },
-          {
-            "id": "content-osfundamentals-manpages-kill-section-txt",
-            "type": "content",
-            "path": "/home/student/osfundamentals/manpages/kill_section.txt",
-            "expected": "1\n",
-            "points": 1,
-            "description": "`~/osfundamentals/manpages/kill_section.txt` has the expected content."
-          },
-          {
-            "id": "content-osfundamentals-manpages-gzip-keep-txt",
-            "type": "content",
-            "path": "/home/student/osfundamentals/manpages/gzip_keep.txt",
-            "expected": "-k\n",
-            "points": 1,
-            "description": "`~/osfundamentals/manpages/gzip_keep.txt` has the expected content."
-          }
-        ],
-        "explanation": "The correction compares each answer file with the expected option, command name or section number.",
-        "solution": [
-          "mkdir -p '/home/student/osfundamentals/manpages'",
-          "printf '%b' '-p\\n' > '/home/student/osfundamentals/manpages/cp_preserve.txt'",
-          "printf '%b' 'chown\\n' > '/home/student/osfundamentals/manpages/ownership_cmd.txt'",
-          "printf '%b' '1\\n' > '/home/student/osfundamentals/manpages/kill_section.txt'",
-          "printf '%b' '-k\\n' > '/home/student/osfundamentals/manpages/gzip_keep.txt'"
-        ]
-      }
+        "initialFilesystem": []
+      },
+      "checks": [
+        {
+          "id": "content-osfundamentals-manpages-cp-preserve-txt",
+          "type": "content",
+          "path": "/home/student/osfundamentals/manpages/cp_preserve.txt",
+          "expected": "-p\n",
+          "points": 1,
+          "description": "`~/osfundamentals/manpages/cp_preserve.txt` has the expected content.",
+          "regex": false
+        },
+        {
+          "id": "content-osfundamentals-manpages-ownership-cmd-txt",
+          "type": "content",
+          "path": "/home/student/osfundamentals/manpages/ownership_cmd.txt",
+          "expected": "chown\n",
+          "points": 1,
+          "description": "`~/osfundamentals/manpages/ownership_cmd.txt` has the expected content.",
+          "regex": false
+        },
+        {
+          "id": "content-osfundamentals-manpages-kill-section-txt",
+          "type": "content",
+          "path": "/home/student/osfundamentals/manpages/kill_section.txt",
+          "expected": "1\n",
+          "points": 1,
+          "description": "`~/osfundamentals/manpages/kill_section.txt` has the expected content.",
+          "regex": false
+        },
+        {
+          "id": "content-osfundamentals-manpages-gzip-keep-txt",
+          "type": "content",
+          "path": "/home/student/osfundamentals/manpages/gzip_keep.txt",
+          "expected": "-k\n",
+          "points": 1,
+          "description": "`~/osfundamentals/manpages/gzip_keep.txt` has the expected content.",
+          "regex": false
+        }
+      ],
+      "solution": [
+        "mkdir -p '/home/student/osfundamentals/manpages'",
+        "printf '%b' '-p\\n' > '/home/student/osfundamentals/manpages/cp_preserve.txt'",
+        "printf '%b' 'chown\\n' > '/home/student/osfundamentals/manpages/ownership_cmd.txt'",
+        "printf '%b' '1\\n' > '/home/student/osfundamentals/manpages/kill_section.txt'",
+        "printf '%b' '-k\\n' > '/home/student/osfundamentals/manpages/gzip_keep.txt'"
+      ],
+      "explanation": "The correction compares each answer file with the expected option, command name or section number."
     },
     "os-term-1-0501": {
       "course": "os",
@@ -1434,68 +1561,75 @@
           "chown student:student /home/student/osfundamentals /home/student/osfundamentals/redirection /home/student/osfundamentals/redirection/animals.txt",
           "chmod 755 /home/student/osfundamentals /home/student/osfundamentals/redirection",
           "chmod 644 /home/student/osfundamentals/redirection/animals.txt"
-        ],
-        "checks": [
-          {
-            "id": "file-osfundamentals-redirection-varlogs-txt",
-            "type": "file",
-            "path": "/home/student/osfundamentals/redirection/varlogs.txt",
-            "points": 1,
-            "description": "`~/osfundamentals/redirection/varlogs.txt` exists as a regular file."
-          },
-          {
-            "id": "content-osfundamentals-redirection-error-txt",
-            "type": "content",
-            "path": "/home/student/osfundamentals/redirection/error.txt",
-            "expected": "ls: cannot access '/doesnotexist': No such file or directory\n",
-            "points": 1,
-            "description": "`~/osfundamentals/redirection/error.txt` has the expected content."
-          },
-          {
-            "id": "file-osfundamentals-redirection-combined-txt",
-            "type": "file",
-            "path": "/home/student/osfundamentals/redirection/combined.txt",
-            "points": 1,
-            "description": "`~/osfundamentals/redirection/combined.txt` exists as a regular file."
-          },
-          {
-            "id": "file-osfundamentals-redirection-users-txt",
-            "type": "file",
-            "path": "/home/student/osfundamentals/redirection/users.txt",
-            "points": 1,
-            "description": "`~/osfundamentals/redirection/users.txt` exists as a regular file."
-          },
-          {
-            "id": "content-osfundamentals-redirection-unique-animals-txt",
-            "type": "content",
-            "path": "/home/student/osfundamentals/redirection/unique_animals.txt",
-            "expected": "bird\ncat\ndog\nfish\n",
-            "points": 1,
-            "description": "`~/osfundamentals/redirection/unique_animals.txt` has the expected content."
-          },
-          {
-            "id": "file-osfundamentals-redirection-users-upper-txt",
-            "type": "file",
-            "path": "/home/student/osfundamentals/redirection/users_upper.txt",
-            "points": 1,
-            "description": "`~/osfundamentals/redirection/users_upper.txt` exists as a regular file."
-          },
-          {
-            "id": "file-osfundamentals-redirection-processes-txt",
-            "type": "file",
-            "path": "/home/student/osfundamentals/redirection/processes.txt",
-            "points": 1,
-            "description": "`~/osfundamentals/redirection/processes.txt` exists as a regular file."
-          }
-        ],
-        "explanation": "The correction checks that each output file exists, and compares the files whose content is fully predictable (the error message and the unique animals).",
-        "solution": [
-          "mkdir -p '/home/student/osfundamentals/redirection'",
-          "printf '%b' 'ls: cannot access '\\''/doesnotexist'\\'': No such file or directory\\n' > '/home/student/osfundamentals/redirection/error.txt'",
-          "printf '%b' 'bird\\ncat\\ndog\\nfish\\n' > '/home/student/osfundamentals/redirection/unique_animals.txt'",
-          "touch '/home/student/osfundamentals/redirection/varlogs.txt' '/home/student/osfundamentals/redirection/combined.txt' '/home/student/osfundamentals/redirection/users.txt' '/home/student/osfundamentals/redirection/users_upper.txt' '/home/student/osfundamentals/redirection/processes.txt'"
         ]
-      }
+      },
+      "checks": [
+        {
+          "id": "file-osfundamentals-redirection-varlogs-txt",
+          "type": "file",
+          "path": "/home/student/osfundamentals/redirection/varlogs.txt",
+          "points": 1,
+          "description": "`~/osfundamentals/redirection/varlogs.txt` exists as a regular file.",
+          "regex": false
+        },
+        {
+          "id": "content-osfundamentals-redirection-error-txt",
+          "type": "content",
+          "path": "/home/student/osfundamentals/redirection/error.txt",
+          "expected": "ls: cannot access '/doesnotexist': No such file or directory\n",
+          "points": 1,
+          "description": "`~/osfundamentals/redirection/error.txt` has the expected content.",
+          "regex": false
+        },
+        {
+          "id": "file-osfundamentals-redirection-combined-txt",
+          "type": "file",
+          "path": "/home/student/osfundamentals/redirection/combined.txt",
+          "points": 1,
+          "description": "`~/osfundamentals/redirection/combined.txt` exists as a regular file.",
+          "regex": false
+        },
+        {
+          "id": "file-osfundamentals-redirection-users-txt",
+          "type": "file",
+          "path": "/home/student/osfundamentals/redirection/users.txt",
+          "points": 1,
+          "description": "`~/osfundamentals/redirection/users.txt` exists as a regular file.",
+          "regex": false
+        },
+        {
+          "id": "content-osfundamentals-redirection-unique-animals-txt",
+          "type": "content",
+          "path": "/home/student/osfundamentals/redirection/unique_animals.txt",
+          "expected": "bird\ncat\ndog\nfish\n",
+          "points": 1,
+          "description": "`~/osfundamentals/redirection/unique_animals.txt` has the expected content.",
+          "regex": false
+        },
+        {
+          "id": "file-osfundamentals-redirection-users-upper-txt",
+          "type": "file",
+          "path": "/home/student/osfundamentals/redirection/users_upper.txt",
+          "points": 1,
+          "description": "`~/osfundamentals/redirection/users_upper.txt` exists as a regular file.",
+          "regex": false
+        },
+        {
+          "id": "file-osfundamentals-redirection-processes-txt",
+          "type": "file",
+          "path": "/home/student/osfundamentals/redirection/processes.txt",
+          "points": 1,
+          "description": "`~/osfundamentals/redirection/processes.txt` exists as a regular file.",
+          "regex": false
+        }
+      ],
+      "solution": [
+        "mkdir -p '/home/student/osfundamentals/redirection'",
+        "printf '%b' 'ls: cannot access '\\''/doesnotexist'\\'': No such file or directory\\n' > '/home/student/osfundamentals/redirection/error.txt'",
+        "printf '%b' 'bird\\ncat\\ndog\\nfish\\n' > '/home/student/osfundamentals/redirection/unique_animals.txt'",
+        "touch '/home/student/osfundamentals/redirection/varlogs.txt' '/home/student/osfundamentals/redirection/combined.txt' '/home/student/osfundamentals/redirection/users.txt' '/home/student/osfundamentals/redirection/users_upper.txt' '/home/student/osfundamentals/redirection/processes.txt'"
+      ],
+      "explanation": "The correction checks that each output file exists, and compares the files whose content is fully predictable (the error message and the unique animals)."
     },
     "os-term-1-0502": {
       "course": "os",
@@ -1515,30 +1649,32 @@
       "terminal": {
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
-        "initialFilesystem": [],
-        "checks": [
-          {
-            "id": "directory-osfundamentals-vim",
-            "type": "directory",
-            "path": "/home/student/osfundamentals/vim",
-            "points": 1,
-            "description": "`~/osfundamentals/vim` exists and is a directory."
-          },
-          {
-            "id": "content-osfundamentals-vim-notes-txt",
-            "type": "content",
-            "path": "/home/student/osfundamentals/vim/notes.txt",
-            "expected": "My Vim Practice Notes\nDO NOT DELETE THIS LINE\npplesple\nananas\nherries\nherries\nrapes\nananas\nherries\n",
-            "points": 1,
-            "description": "`notes.txt` has the expected final content after all five exercises."
-          }
-        ],
-        "explanation": "The correction checks the final content of `notes.txt` after all five exercises were applied in order.",
-        "solution": [
-          "mkdir -p '/home/student/osfundamentals/vim'",
-          "printf '%b' 'My Vim Practice Notes\\nDO NOT DELETE THIS LINE\\npplesple\\nananas\\nherries\\nherries\\nrapes\\nananas\\nherries\\n' > '/home/student/osfundamentals/vim/notes.txt'"
-        ]
-      }
+        "initialFilesystem": []
+      },
+      "checks": [
+        {
+          "id": "directory-osfundamentals-vim",
+          "type": "directory",
+          "path": "/home/student/osfundamentals/vim",
+          "points": 1,
+          "description": "`~/osfundamentals/vim` exists and is a directory.",
+          "regex": false
+        },
+        {
+          "id": "content-osfundamentals-vim-notes-txt",
+          "type": "content",
+          "path": "/home/student/osfundamentals/vim/notes.txt",
+          "expected": "My Vim Practice Notes\nDO NOT DELETE THIS LINE\npplesple\nananas\nherries\nherries\nrapes\nananas\nherries\n",
+          "points": 1,
+          "description": "`notes.txt` has the expected final content after all five exercises.",
+          "regex": false
+        }
+      ],
+      "solution": [
+        "mkdir -p '/home/student/osfundamentals/vim'",
+        "printf '%b' 'My Vim Practice Notes\\nDO NOT DELETE THIS LINE\\npplesple\\nananas\\nherries\\nherries\\nrapes\\nananas\\nherries\\n' > '/home/student/osfundamentals/vim/notes.txt'"
+      ],
+      "explanation": "The correction checks the final content of `notes.txt` after all five exercises were applied in order."
     },
     "os-term-1-0503": {
       "course": "os",
@@ -1564,90 +1700,99 @@
           "printf '# ~/.bashrc\\n' > /home/student/.bashrc",
           "chown student:student /home/student/.bashrc",
           "chmod 644 /home/student/.bashrc"
-        ],
-        "checks": [
-          {
-            "id": "directory-osfundamentals-vars",
-            "type": "directory",
-            "path": "/home/student/osfundamentals/vars",
-            "points": 1,
-            "description": "`~/osfundamentals/vars` exists and is a directory."
-          },
-          {
-            "id": "content-osfundamentals-vars-exercise1-txt",
-            "type": "content",
-            "path": "/home/student/osfundamentals/vars/exercise1.txt",
-            "expected": "osfundamentals\nosfundamentals_linux\n",
-            "points": 1,
-            "description": "`~/osfundamentals/vars/exercise1.txt` has the expected content."
-          },
-          {
-            "id": "content-vars",
-            "type": "content",
-            "path": "/home/student/.vars",
-            "expected": "myname=\"Student\"\nexport project=linux101\n",
-            "points": 1,
-            "description": "`~/.vars` has the expected content."
-          },
-          {
-            "id": "content-osfundamentals-vars-exercise3-txt",
-            "type": "content",
-            "path": "/home/student/osfundamentals/vars/exercise3.txt",
-            "expected": "linux101\n",
-            "points": 1,
-            "description": "`~/osfundamentals/vars/exercise3.txt` has the expected content."
-          },
-          {
-            "id": "content-bashrc",
-            "type": "content",
-            "path": "/home/student/.bashrc",
-            "expected": "# ~/.bashrc\nexport PAGER=cat\nalias ll='ls -l'\n",
-            "points": 1,
-            "description": "`~/.bashrc` has the expected content."
-          },
-          {
-            "id": "file-osfundamentals-vars-exercise5-txt",
-            "type": "file",
-            "path": "/home/student/osfundamentals/vars/exercise5.txt",
-            "points": 1,
-            "description": "`~/osfundamentals/vars/exercise5.txt` exists as a regular file."
-          },
-          {
-            "id": "file-osfundamentals-vars-exercise6-txt",
-            "type": "file",
-            "path": "/home/student/osfundamentals/vars/exercise6.txt",
-            "points": 1,
-            "description": "`~/osfundamentals/vars/exercise6.txt` exists as a regular file."
-          },
-          {
-            "id": "content-bash-profile",
-            "type": "content",
-            "path": "/home/student/.bash_profile",
-            "expected": "export loginvar=\"set_in_login\"\n",
-            "points": 1,
-            "description": "`~/.bash_profile` has the expected content."
-          },
-          {
-            "id": "content-osfundamentals-vars-exercise7-txt",
-            "type": "content",
-            "path": "/home/student/osfundamentals/vars/exercise7.txt",
-            "expected": "set_in_login\n",
-            "points": 1,
-            "description": "`~/osfundamentals/vars/exercise7.txt` has the expected content."
-          }
-        ],
-        "explanation": "The correction checks the saved output files and the exact content of `~/.vars`, `~/.bashrc` and `~/.bash_profile`. `~/.bashrc` starts with a single comment line.",
-        "solution": [
-          "mkdir -p '/home/student/osfundamentals/vars' '/home/student'",
-          "printf '%b' 'osfundamentals\\nosfundamentals_linux\\n' > '/home/student/osfundamentals/vars/exercise1.txt'",
-          "printf '%b' 'myname=\"Student\"\\nexport project=linux101\\n' > '/home/student/.vars'",
-          "printf '%b' 'linux101\\n' > '/home/student/osfundamentals/vars/exercise3.txt'",
-          "printf '%b' '# ~/.bashrc\\nexport PAGER=cat\\nalias ll='\\''ls -l'\\''\\n' > '/home/student/.bashrc'",
-          "printf '%b' 'export loginvar=\"set_in_login\"\\n' > '/home/student/.bash_profile'",
-          "printf '%b' 'set_in_login\\n' > '/home/student/osfundamentals/vars/exercise7.txt'",
-          "touch '/home/student/osfundamentals/vars/exercise5.txt' '/home/student/osfundamentals/vars/exercise6.txt'"
         ]
-      }
+      },
+      "checks": [
+        {
+          "id": "directory-osfundamentals-vars",
+          "type": "directory",
+          "path": "/home/student/osfundamentals/vars",
+          "points": 1,
+          "description": "`~/osfundamentals/vars` exists and is a directory.",
+          "regex": false
+        },
+        {
+          "id": "content-osfundamentals-vars-exercise1-txt",
+          "type": "content",
+          "path": "/home/student/osfundamentals/vars/exercise1.txt",
+          "expected": "osfundamentals\nosfundamentals_linux\n",
+          "points": 1,
+          "description": "`~/osfundamentals/vars/exercise1.txt` has the expected content.",
+          "regex": false
+        },
+        {
+          "id": "content-vars",
+          "type": "content",
+          "path": "/home/student/.vars",
+          "expected": "myname=\"Student\"\nexport project=linux101\n",
+          "points": 1,
+          "description": "`~/.vars` has the expected content.",
+          "regex": false
+        },
+        {
+          "id": "content-osfundamentals-vars-exercise3-txt",
+          "type": "content",
+          "path": "/home/student/osfundamentals/vars/exercise3.txt",
+          "expected": "linux101\n",
+          "points": 1,
+          "description": "`~/osfundamentals/vars/exercise3.txt` has the expected content.",
+          "regex": false
+        },
+        {
+          "id": "content-bashrc",
+          "type": "content",
+          "path": "/home/student/.bashrc",
+          "expected": "# ~/.bashrc\nexport PAGER=cat\nalias ll='ls -l'\n",
+          "points": 1,
+          "description": "`~/.bashrc` has the expected content.",
+          "regex": false
+        },
+        {
+          "id": "file-osfundamentals-vars-exercise5-txt",
+          "type": "file",
+          "path": "/home/student/osfundamentals/vars/exercise5.txt",
+          "points": 1,
+          "description": "`~/osfundamentals/vars/exercise5.txt` exists as a regular file.",
+          "regex": false
+        },
+        {
+          "id": "file-osfundamentals-vars-exercise6-txt",
+          "type": "file",
+          "path": "/home/student/osfundamentals/vars/exercise6.txt",
+          "points": 1,
+          "description": "`~/osfundamentals/vars/exercise6.txt` exists as a regular file.",
+          "regex": false
+        },
+        {
+          "id": "content-bash-profile",
+          "type": "content",
+          "path": "/home/student/.bash_profile",
+          "expected": "export loginvar=\"set_in_login\"\n",
+          "points": 1,
+          "description": "`~/.bash_profile` has the expected content.",
+          "regex": false
+        },
+        {
+          "id": "content-osfundamentals-vars-exercise7-txt",
+          "type": "content",
+          "path": "/home/student/osfundamentals/vars/exercise7.txt",
+          "expected": "set_in_login\n",
+          "points": 1,
+          "description": "`~/osfundamentals/vars/exercise7.txt` has the expected content.",
+          "regex": false
+        }
+      ],
+      "solution": [
+        "mkdir -p '/home/student/osfundamentals/vars' '/home/student'",
+        "printf '%b' 'osfundamentals\\nosfundamentals_linux\\n' > '/home/student/osfundamentals/vars/exercise1.txt'",
+        "printf '%b' 'myname=\"Student\"\\nexport project=linux101\\n' > '/home/student/.vars'",
+        "printf '%b' 'linux101\\n' > '/home/student/osfundamentals/vars/exercise3.txt'",
+        "printf '%b' '# ~/.bashrc\\nexport PAGER=cat\\nalias ll='\\''ls -l'\\''\\n' > '/home/student/.bashrc'",
+        "printf '%b' 'export loginvar=\"set_in_login\"\\n' > '/home/student/.bash_profile'",
+        "printf '%b' 'set_in_login\\n' > '/home/student/osfundamentals/vars/exercise7.txt'",
+        "touch '/home/student/osfundamentals/vars/exercise5.txt' '/home/student/osfundamentals/vars/exercise6.txt'"
+      ],
+      "explanation": "The correction checks the saved output files and the exact content of `~/.vars`, `~/.bashrc` and `~/.bash_profile`. `~/.bashrc` starts with a single comment line."
     },
     "os-term-1-0599": {
       "course": "os",
@@ -1674,171 +1819,189 @@
           "printf '# ~/.bashrc\\n' > /home/student/.bashrc",
           "chown student:student /home/student/.bashrc",
           "chmod 644 /home/student/.bashrc"
-        ],
-        "checks": [
-          {
-            "id": "directory-osfundamentals-capstone",
-            "type": "directory",
-            "path": "/home/student/osfundamentals/capstone",
-            "points": 1,
-            "description": "`~/osfundamentals/capstone` exists and is a directory."
-          },
-          {
-            "id": "file-osfundamentals-capstone-logfiles-txt",
-            "type": "file",
-            "path": "/home/student/osfundamentals/capstone/logfiles.txt",
-            "points": 1,
-            "description": "`~/osfundamentals/capstone/logfiles.txt` exists as a regular file."
-          },
-          {
-            "id": "content-osfundamentals-capstone-students-csv",
-            "type": "content",
-            "path": "/home/student/osfundamentals/capstone/students.csv",
-            "expected": "name,department,score\nalice,IT,87\nbob,HR,92\ncarol,IT,78\ndave,Finance,85\n",
-            "points": 1,
-            "description": "`~/osfundamentals/capstone/students.csv` has the expected content."
-          },
-          {
-            "id": "content-osfundamentals-capstone-students-names-departments-txt",
-            "type": "content",
-            "path": "/home/student/osfundamentals/capstone/students_names_departments.txt",
-            "expected": "name,department\nalice,IT\nbob,HR\ncarol,IT\ndave,Finance\n",
-            "points": 1,
-            "description": "`~/osfundamentals/capstone/students_names_departments.txt` has the expected content."
-          },
-          {
-            "id": "content-osfundamentals-capstone-users-all-txt",
-            "type": "content",
-            "path": "/home/student/osfundamentals/capstone/users_all.txt",
-            "expected": "alice\nbob\ncarol\nalice\ndave\nbob\nerin\n",
-            "points": 1,
-            "description": "`~/osfundamentals/capstone/users_all.txt` has the expected content."
-          },
-          {
-            "id": "content-osfundamentals-capstone-users-sorted-txt",
-            "type": "content",
-            "path": "/home/student/osfundamentals/capstone/users_sorted.txt",
-            "expected": "alice\nalice\nbob\nbob\ncarol\ndave\nerin\n",
-            "points": 1,
-            "description": "`~/osfundamentals/capstone/users_sorted.txt` has the expected content."
-          },
-          {
-            "id": "content-osfundamentals-capstone-users-unique-txt",
-            "type": "content",
-            "path": "/home/student/osfundamentals/capstone/users_unique.txt",
-            "expected": "alice\nbob\ncarol\ndave\nerin\n",
-            "points": 1,
-            "description": "`~/osfundamentals/capstone/users_unique.txt` has the expected content."
-          },
-          {
-            "id": "content-osfundamentals-capstone-users-upper-txt",
-            "type": "content",
-            "path": "/home/student/osfundamentals/capstone/users_upper.txt",
-            "expected": "ALICE\nBOB\nCAROL\nDAVE\nERIN\n",
-            "points": 1,
-            "description": "`~/osfundamentals/capstone/users_upper.txt` has the expected content."
-          },
-          {
-            "id": "content-osfundamentals-capstone-users-top3-txt",
-            "type": "content",
-            "path": "/home/student/osfundamentals/capstone/users_top3.txt",
-            "expected": "ALICE\nBOB\nCAROL\n",
-            "points": 1,
-            "description": "`~/osfundamentals/capstone/users_top3.txt` has the expected content."
-          },
-          {
-            "id": "content-osfundamentals-capstone-users-last2-txt",
-            "type": "content",
-            "path": "/home/student/osfundamentals/capstone/users_last2.txt",
-            "expected": "BOB\nCAROL\n",
-            "points": 1,
-            "description": "`~/osfundamentals/capstone/users_last2.txt` has the expected content."
-          },
-          {
-            "id": "content-osfundamentals-capstone-users-chall-txt",
-            "type": "content",
-            "path": "/home/student/osfundamentals/capstone/users_chall.txt",
-            "expected": "ALICE\nBOB\nCAROL\n",
-            "points": 1,
-            "description": "`users_chall.txt` is the result of chaining sort, uniq, tr and head in one command."
-          },
-          {
-            "id": "content-osfundamentals-capstone-report-txt",
-            "type": "content",
-            "path": "/home/student/osfundamentals/capstone/report.txt",
-            "expected": "OS Fundamentals Capstone\nStudent Name: Student\nTasks:\n. Log Data Collected\n. Environment Configured\n. Variable Set\n. Alias Created\n. Variable Set\n. Alias Created\n",
-            "points": 1,
-            "description": "`report.txt` has the expected final content after the vim steps."
-          },
-          {
-            "id": "content-bashrc",
-            "type": "content",
-            "path": "/home/student/.bashrc",
-            "expected": "# ~/.bashrc\nmyalias=\"capstone\"\nexport capstone_env=\"lab\"\nalias showlogs='cat ~/osfundamentals/capstone/logfiles.txt'\nexport PATH=$HOME/osfundamentals/capstone/bin:$PATH\n",
-            "points": 1,
-            "description": "`~/.bashrc` has the expected content."
-          },
-          {
-            "id": "content-bash-profile",
-            "type": "content",
-            "path": "/home/student/.bash_profile",
-            "expected": "export loginvar=\"capstone_login\"\n",
-            "points": 1,
-            "description": "`~/.bash_profile` has the expected content."
-          },
-          {
-            "id": "content-osfundamentals-capstone-logincheck-txt",
-            "type": "content",
-            "path": "/home/student/osfundamentals/capstone/logincheck.txt",
-            "expected": "capstone_login\n",
-            "points": 1,
-            "description": "`~/osfundamentals/capstone/logincheck.txt` has the expected content."
-          },
-          {
-            "id": "content-osfundamentals-capstone-bin-hello-sh",
-            "type": "content",
-            "path": "/home/student/osfundamentals/capstone/bin/hello.sh",
-            "expected": "#!/bin/bash\n\necho \"Hello from Capstone!\"\n",
-            "points": 1,
-            "description": "`~/osfundamentals/capstone/bin/hello.sh` has the expected content."
-          },
-          {
-            "id": "permissions-osfundamentals-capstone-bin-hello-sh",
-            "type": "permissions",
-            "path": "/home/student/osfundamentals/capstone/bin/hello.sh",
-            "expected": "755",
-            "points": 1,
-            "description": "`~/osfundamentals/capstone/bin/hello.sh` has permissions 755."
-          },
-          {
-            "id": "file-osfundamentals-capstone-unsetcheck-txt",
-            "type": "file",
-            "path": "/home/student/osfundamentals/capstone/unsetcheck.txt",
-            "points": 1,
-            "description": "`~/osfundamentals/capstone/unsetcheck.txt` exists as a regular file."
-          }
-        ],
-        "explanation": "The correction checks every file created in the capstone folder, the exact content of the startup files, and that `hello.sh` has mode 755. `~/.bashrc` starts with a single comment line.",
-        "solution": [
-          "mkdir -p '/home/student/osfundamentals/capstone' '/home/student' '/home/student/osfundamentals/capstone/bin'",
-          "printf '%b' 'name,department,score\\nalice,IT,87\\nbob,HR,92\\ncarol,IT,78\\ndave,Finance,85\\n' > '/home/student/osfundamentals/capstone/students.csv'",
-          "printf '%b' 'name,department\\nalice,IT\\nbob,HR\\ncarol,IT\\ndave,Finance\\n' > '/home/student/osfundamentals/capstone/students_names_departments.txt'",
-          "printf '%b' 'alice\\nbob\\ncarol\\nalice\\ndave\\nbob\\nerin\\n' > '/home/student/osfundamentals/capstone/users_all.txt'",
-          "printf '%b' 'alice\\nalice\\nbob\\nbob\\ncarol\\ndave\\nerin\\n' > '/home/student/osfundamentals/capstone/users_sorted.txt'",
-          "printf '%b' 'alice\\nbob\\ncarol\\ndave\\nerin\\n' > '/home/student/osfundamentals/capstone/users_unique.txt'",
-          "printf '%b' 'ALICE\\nBOB\\nCAROL\\nDAVE\\nERIN\\n' > '/home/student/osfundamentals/capstone/users_upper.txt'",
-          "printf '%b' 'ALICE\\nBOB\\nCAROL\\n' > '/home/student/osfundamentals/capstone/users_top3.txt'",
-          "printf '%b' 'BOB\\nCAROL\\n' > '/home/student/osfundamentals/capstone/users_last2.txt'",
-          "printf '%b' 'ALICE\\nBOB\\nCAROL\\n' > '/home/student/osfundamentals/capstone/users_chall.txt'",
-          "printf '%b' 'OS Fundamentals Capstone\\nStudent Name: Student\\nTasks:\\n. Log Data Collected\\n. Environment Configured\\n. Variable Set\\n. Alias Created\\n. Variable Set\\n. Alias Created\\n' > '/home/student/osfundamentals/capstone/report.txt'",
-          "printf '%b' '# ~/.bashrc\\nmyalias=\"capstone\"\\nexport capstone_env=\"lab\"\\nalias showlogs='\\''cat ~/osfundamentals/capstone/logfiles.txt'\\''\\nexport PATH=$HOME/osfundamentals/capstone/bin:$PATH\\n' > '/home/student/.bashrc'",
-          "printf '%b' 'export loginvar=\"capstone_login\"\\n' > '/home/student/.bash_profile'",
-          "printf '%b' 'capstone_login\\n' > '/home/student/osfundamentals/capstone/logincheck.txt'",
-          "printf '%b' '#!/bin/bash\\n\\necho \"Hello from Capstone!\"\\n' > '/home/student/osfundamentals/capstone/bin/hello.sh'",
-          "touch '/home/student/osfundamentals/capstone/logfiles.txt' '/home/student/osfundamentals/capstone/unsetcheck.txt'",
-          "chmod '755' '/home/student/osfundamentals/capstone/bin/hello.sh'"
         ]
-      }
+      },
+      "checks": [
+        {
+          "id": "directory-osfundamentals-capstone",
+          "type": "directory",
+          "path": "/home/student/osfundamentals/capstone",
+          "points": 1,
+          "description": "`~/osfundamentals/capstone` exists and is a directory.",
+          "regex": false
+        },
+        {
+          "id": "file-osfundamentals-capstone-logfiles-txt",
+          "type": "file",
+          "path": "/home/student/osfundamentals/capstone/logfiles.txt",
+          "points": 1,
+          "description": "`~/osfundamentals/capstone/logfiles.txt` exists as a regular file.",
+          "regex": false
+        },
+        {
+          "id": "content-osfundamentals-capstone-students-csv",
+          "type": "content",
+          "path": "/home/student/osfundamentals/capstone/students.csv",
+          "expected": "name,department,score\nalice,IT,87\nbob,HR,92\ncarol,IT,78\ndave,Finance,85\n",
+          "points": 1,
+          "description": "`~/osfundamentals/capstone/students.csv` has the expected content.",
+          "regex": false
+        },
+        {
+          "id": "content-osfundamentals-capstone-students-names-departments-txt",
+          "type": "content",
+          "path": "/home/student/osfundamentals/capstone/students_names_departments.txt",
+          "expected": "name,department\nalice,IT\nbob,HR\ncarol,IT\ndave,Finance\n",
+          "points": 1,
+          "description": "`~/osfundamentals/capstone/students_names_departments.txt` has the expected content.",
+          "regex": false
+        },
+        {
+          "id": "content-osfundamentals-capstone-users-all-txt",
+          "type": "content",
+          "path": "/home/student/osfundamentals/capstone/users_all.txt",
+          "expected": "alice\nbob\ncarol\nalice\ndave\nbob\nerin\n",
+          "points": 1,
+          "description": "`~/osfundamentals/capstone/users_all.txt` has the expected content.",
+          "regex": false
+        },
+        {
+          "id": "content-osfundamentals-capstone-users-sorted-txt",
+          "type": "content",
+          "path": "/home/student/osfundamentals/capstone/users_sorted.txt",
+          "expected": "alice\nalice\nbob\nbob\ncarol\ndave\nerin\n",
+          "points": 1,
+          "description": "`~/osfundamentals/capstone/users_sorted.txt` has the expected content.",
+          "regex": false
+        },
+        {
+          "id": "content-osfundamentals-capstone-users-unique-txt",
+          "type": "content",
+          "path": "/home/student/osfundamentals/capstone/users_unique.txt",
+          "expected": "alice\nbob\ncarol\ndave\nerin\n",
+          "points": 1,
+          "description": "`~/osfundamentals/capstone/users_unique.txt` has the expected content.",
+          "regex": false
+        },
+        {
+          "id": "content-osfundamentals-capstone-users-upper-txt",
+          "type": "content",
+          "path": "/home/student/osfundamentals/capstone/users_upper.txt",
+          "expected": "ALICE\nBOB\nCAROL\nDAVE\nERIN\n",
+          "points": 1,
+          "description": "`~/osfundamentals/capstone/users_upper.txt` has the expected content.",
+          "regex": false
+        },
+        {
+          "id": "content-osfundamentals-capstone-users-top3-txt",
+          "type": "content",
+          "path": "/home/student/osfundamentals/capstone/users_top3.txt",
+          "expected": "ALICE\nBOB\nCAROL\n",
+          "points": 1,
+          "description": "`~/osfundamentals/capstone/users_top3.txt` has the expected content.",
+          "regex": false
+        },
+        {
+          "id": "content-osfundamentals-capstone-users-last2-txt",
+          "type": "content",
+          "path": "/home/student/osfundamentals/capstone/users_last2.txt",
+          "expected": "BOB\nCAROL\n",
+          "points": 1,
+          "description": "`~/osfundamentals/capstone/users_last2.txt` has the expected content.",
+          "regex": false
+        },
+        {
+          "id": "content-osfundamentals-capstone-users-chall-txt",
+          "type": "content",
+          "path": "/home/student/osfundamentals/capstone/users_chall.txt",
+          "expected": "ALICE\nBOB\nCAROL\n",
+          "points": 1,
+          "description": "`users_chall.txt` is the result of chaining sort, uniq, tr and head in one command.",
+          "regex": false
+        },
+        {
+          "id": "content-osfundamentals-capstone-report-txt",
+          "type": "content",
+          "path": "/home/student/osfundamentals/capstone/report.txt",
+          "expected": "OS Fundamentals Capstone\nStudent Name: Student\nTasks:\n. Log Data Collected\n. Environment Configured\n. Variable Set\n. Alias Created\n. Variable Set\n. Alias Created\n",
+          "points": 1,
+          "description": "`report.txt` has the expected final content after the vim steps.",
+          "regex": false
+        },
+        {
+          "id": "content-bashrc",
+          "type": "content",
+          "path": "/home/student/.bashrc",
+          "expected": "# ~/.bashrc\nmyalias=\"capstone\"\nexport capstone_env=\"lab\"\nalias showlogs='cat ~/osfundamentals/capstone/logfiles.txt'\nexport PATH=$HOME/osfundamentals/capstone/bin:$PATH\n",
+          "points": 1,
+          "description": "`~/.bashrc` has the expected content.",
+          "regex": false
+        },
+        {
+          "id": "content-bash-profile",
+          "type": "content",
+          "path": "/home/student/.bash_profile",
+          "expected": "export loginvar=\"capstone_login\"\n",
+          "points": 1,
+          "description": "`~/.bash_profile` has the expected content.",
+          "regex": false
+        },
+        {
+          "id": "content-osfundamentals-capstone-logincheck-txt",
+          "type": "content",
+          "path": "/home/student/osfundamentals/capstone/logincheck.txt",
+          "expected": "capstone_login\n",
+          "points": 1,
+          "description": "`~/osfundamentals/capstone/logincheck.txt` has the expected content.",
+          "regex": false
+        },
+        {
+          "id": "content-osfundamentals-capstone-bin-hello-sh",
+          "type": "content",
+          "path": "/home/student/osfundamentals/capstone/bin/hello.sh",
+          "expected": "#!/bin/bash\n\necho \"Hello from Capstone!\"\n",
+          "points": 1,
+          "description": "`~/osfundamentals/capstone/bin/hello.sh` has the expected content.",
+          "regex": false
+        },
+        {
+          "id": "permissions-osfundamentals-capstone-bin-hello-sh",
+          "type": "permissions",
+          "path": "/home/student/osfundamentals/capstone/bin/hello.sh",
+          "expected": "755",
+          "points": 1,
+          "description": "`~/osfundamentals/capstone/bin/hello.sh` has permissions 755.",
+          "regex": false
+        },
+        {
+          "id": "file-osfundamentals-capstone-unsetcheck-txt",
+          "type": "file",
+          "path": "/home/student/osfundamentals/capstone/unsetcheck.txt",
+          "points": 1,
+          "description": "`~/osfundamentals/capstone/unsetcheck.txt` exists as a regular file.",
+          "regex": false
+        }
+      ],
+      "solution": [
+        "mkdir -p '/home/student/osfundamentals/capstone' '/home/student' '/home/student/osfundamentals/capstone/bin'",
+        "printf '%b' 'name,department,score\\nalice,IT,87\\nbob,HR,92\\ncarol,IT,78\\ndave,Finance,85\\n' > '/home/student/osfundamentals/capstone/students.csv'",
+        "printf '%b' 'name,department\\nalice,IT\\nbob,HR\\ncarol,IT\\ndave,Finance\\n' > '/home/student/osfundamentals/capstone/students_names_departments.txt'",
+        "printf '%b' 'alice\\nbob\\ncarol\\nalice\\ndave\\nbob\\nerin\\n' > '/home/student/osfundamentals/capstone/users_all.txt'",
+        "printf '%b' 'alice\\nalice\\nbob\\nbob\\ncarol\\ndave\\nerin\\n' > '/home/student/osfundamentals/capstone/users_sorted.txt'",
+        "printf '%b' 'alice\\nbob\\ncarol\\ndave\\nerin\\n' > '/home/student/osfundamentals/capstone/users_unique.txt'",
+        "printf '%b' 'ALICE\\nBOB\\nCAROL\\nDAVE\\nERIN\\n' > '/home/student/osfundamentals/capstone/users_upper.txt'",
+        "printf '%b' 'ALICE\\nBOB\\nCAROL\\n' > '/home/student/osfundamentals/capstone/users_top3.txt'",
+        "printf '%b' 'BOB\\nCAROL\\n' > '/home/student/osfundamentals/capstone/users_last2.txt'",
+        "printf '%b' 'ALICE\\nBOB\\nCAROL\\n' > '/home/student/osfundamentals/capstone/users_chall.txt'",
+        "printf '%b' 'OS Fundamentals Capstone\\nStudent Name: Student\\nTasks:\\n. Log Data Collected\\n. Environment Configured\\n. Variable Set\\n. Alias Created\\n. Variable Set\\n. Alias Created\\n' > '/home/student/osfundamentals/capstone/report.txt'",
+        "printf '%b' '# ~/.bashrc\\nmyalias=\"capstone\"\\nexport capstone_env=\"lab\"\\nalias showlogs='\\''cat ~/osfundamentals/capstone/logfiles.txt'\\''\\nexport PATH=$HOME/osfundamentals/capstone/bin:$PATH\\n' > '/home/student/.bashrc'",
+        "printf '%b' 'export loginvar=\"capstone_login\"\\n' > '/home/student/.bash_profile'",
+        "printf '%b' 'capstone_login\\n' > '/home/student/osfundamentals/capstone/logincheck.txt'",
+        "printf '%b' '#!/bin/bash\\n\\necho \"Hello from Capstone!\"\\n' > '/home/student/osfundamentals/capstone/bin/hello.sh'",
+        "touch '/home/student/osfundamentals/capstone/logfiles.txt' '/home/student/osfundamentals/capstone/unsetcheck.txt'",
+        "chmod '755' '/home/student/osfundamentals/capstone/bin/hello.sh'"
+      ],
+      "explanation": "The correction checks every file created in the capstone folder, the exact content of the startup files, and that `hello.sh` has mode 755. `~/.bashrc` starts with a single comment line."
     },
     "os-term-1-1001": {
       "course": "os",
@@ -1867,42 +2030,45 @@
           "echo 'devops:devops' | chpasswd",
           "echo 'root:administrator' | chpasswd",
           "mkdir -p /etc/sudoers.d"
-        ],
-        "checks": [
-          {
-            "id": "content-etc-sudoers-d-devops",
-            "type": "content",
-            "path": "/etc/sudoers.d/devops",
-            "expected": "devops ALL=(ALL) ALL\n",
-            "points": 1,
-            "description": "`/etc/sudoers.d/devops` has the expected content."
-          },
-          {
-            "id": "content-etc-sudoers-d-opsadmin",
-            "type": "content",
-            "path": "/etc/sudoers.d/opsadmin",
-            "expected": "%opsadmin ALL=(ALL) NOPASSWD:ALL\n",
-            "points": 1,
-            "description": "`/etc/sudoers.d/opsadmin` has the expected content."
-          },
-          {
-            "id": "content-devops-groups-txt",
-            "type": "content",
-            "path": "/home/student/devops_groups.txt",
-            "expected": "devops opsadmin\n",
-            "points": 1,
-            "description": "`devops_groups.txt` shows that `devops` is a member of `opsadmin`."
-          }
-        ],
-        "explanation": "The correction checks the two sudoers drop-in files and the saved group membership of `devops`.",
-        "solution": [
-          "mkdir -p '/home/student'",
-          "sudo mkdir -p '/etc/sudoers.d'",
-          "printf '%b' 'devops ALL=(ALL) ALL\\n' | sudo tee '/etc/sudoers.d/devops' > /dev/null",
-          "printf '%b' '%opsadmin ALL=(ALL) NOPASSWD:ALL\\n' | sudo tee '/etc/sudoers.d/opsadmin' > /dev/null",
-          "printf '%b' 'devops opsadmin\\n' > '/home/student/devops_groups.txt'"
         ]
-      }
+      },
+      "checks": [
+        {
+          "id": "content-etc-sudoers-d-devops",
+          "type": "content",
+          "path": "/etc/sudoers.d/devops",
+          "expected": "devops ALL=(ALL) ALL\n",
+          "points": 1,
+          "description": "`/etc/sudoers.d/devops` has the expected content.",
+          "regex": false
+        },
+        {
+          "id": "content-etc-sudoers-d-opsadmin",
+          "type": "content",
+          "path": "/etc/sudoers.d/opsadmin",
+          "expected": "%opsadmin ALL=(ALL) NOPASSWD:ALL\n",
+          "points": 1,
+          "description": "`/etc/sudoers.d/opsadmin` has the expected content.",
+          "regex": false
+        },
+        {
+          "id": "content-devops-groups-txt",
+          "type": "content",
+          "path": "/home/student/devops_groups.txt",
+          "expected": "devops opsadmin\n",
+          "points": 1,
+          "description": "`devops_groups.txt` shows that `devops` is a member of `opsadmin`.",
+          "regex": false
+        }
+      ],
+      "solution": [
+        "mkdir -p '/home/student'",
+        "sudo mkdir -p '/etc/sudoers.d'",
+        "printf '%b' 'devops ALL=(ALL) ALL\\n' | sudo tee '/etc/sudoers.d/devops' > /dev/null",
+        "printf '%b' '%opsadmin ALL=(ALL) NOPASSWD:ALL\\n' | sudo tee '/etc/sudoers.d/opsadmin' > /dev/null",
+        "printf '%b' 'devops opsadmin\\n' > '/home/student/devops_groups.txt'"
+      ],
+      "explanation": "The correction checks the two sudoers drop-in files and the saved group membership of `devops`."
     },
     "os-term-1-1002": {
       "course": "os",
@@ -1925,56 +2091,61 @@
         "initialFilesystem": [],
         "preSetupCommands": [
           "mkdir -p /etc/sudoers.d"
-        ],
-        "checks": [
-          {
-            "id": "content-etc-sudoers-d-developers",
-            "type": "content",
-            "path": "/etc/sudoers.d/developers",
-            "expected": "%developers ALL=(ALL) /usr/bin/dnf up\n",
-            "points": 1,
-            "description": "`/etc/sudoers.d/developers` has the expected content."
-          },
-          {
-            "id": "directory-home-dev1",
-            "type": "directory",
-            "path": "/home/dev1",
-            "points": 1,
-            "description": "`/home/dev1` still exists (the user was deleted without `-r`)."
-          },
-          {
-            "id": "not_exists-home-dev3",
-            "type": "not_exists",
-            "path": "/home/dev3",
-            "points": 1,
-            "description": "`/home/dev3` was removed together with the user (`userdel -r`)."
-          },
-          {
-            "id": "content-developers-group-txt",
-            "type": "content",
-            "path": "/home/student/developers_group.txt",
-            "expected": "developers:x:2000:dev2\n",
-            "points": 1,
-            "description": "`developers_group.txt` shows that only `dev2` is left in the group."
-          },
-          {
-            "id": "content-dev2-info-txt",
-            "type": "content",
-            "path": "/home/student/dev2_info.txt",
-            "expected": "Developer Two:/srv/dev2\n",
-            "points": 1,
-            "description": "`dev2_info.txt` shows the comment and home directory of `dev2`."
-          }
-        ],
-        "explanation": "The correction checks the sudoers drop-in file, the effect of `userdel` with and without `-r` on the home directories, and the two verification files you saved.",
-        "solution": [
-          "mkdir -p '/home/dev1' '/home/student'",
-          "sudo mkdir -p '/etc/sudoers.d'",
-          "printf '%b' '%developers ALL=(ALL) /usr/bin/dnf up\\n' | sudo tee '/etc/sudoers.d/developers' > /dev/null",
-          "printf '%b' 'developers:x:2000:dev2\\n' > '/home/student/developers_group.txt'",
-          "printf '%b' 'Developer Two:/srv/dev2\\n' > '/home/student/dev2_info.txt'"
         ]
-      }
+      },
+      "checks": [
+        {
+          "id": "content-etc-sudoers-d-developers",
+          "type": "content",
+          "path": "/etc/sudoers.d/developers",
+          "expected": "%developers ALL=(ALL) /usr/bin/dnf up\n",
+          "points": 1,
+          "description": "`/etc/sudoers.d/developers` has the expected content.",
+          "regex": false
+        },
+        {
+          "id": "directory-home-dev1",
+          "type": "directory",
+          "path": "/home/dev1",
+          "points": 1,
+          "description": "`/home/dev1` still exists (the user was deleted without `-r`).",
+          "regex": false
+        },
+        {
+          "id": "not_exists-home-dev3",
+          "type": "not_exists",
+          "path": "/home/dev3",
+          "points": 1,
+          "description": "`/home/dev3` was removed together with the user (`userdel -r`).",
+          "regex": false
+        },
+        {
+          "id": "content-developers-group-txt",
+          "type": "content",
+          "path": "/home/student/developers_group.txt",
+          "expected": "developers:x:2000:dev2\n",
+          "points": 1,
+          "description": "`developers_group.txt` shows that only `dev2` is left in the group.",
+          "regex": false
+        },
+        {
+          "id": "content-dev2-info-txt",
+          "type": "content",
+          "path": "/home/student/dev2_info.txt",
+          "expected": "Developer Two:/srv/dev2\n",
+          "points": 1,
+          "description": "`dev2_info.txt` shows the comment and home directory of `dev2`.",
+          "regex": false
+        }
+      ],
+      "solution": [
+        "mkdir -p '/home/dev1' '/home/student'",
+        "sudo mkdir -p '/etc/sudoers.d'",
+        "printf '%b' '%developers ALL=(ALL) /usr/bin/dnf up\\n' | sudo tee '/etc/sudoers.d/developers' > /dev/null",
+        "printf '%b' 'developers:x:2000:dev2\\n' > '/home/student/developers_group.txt'",
+        "printf '%b' 'Developer Two:/srv/dev2\\n' > '/home/student/dev2_info.txt'"
+      ],
+      "explanation": "The correction checks the sudoers drop-in file, the effect of `userdel` with and without `-r` on the home directories, and the two verification files you saved."
     },
     "os-term-1-1003": {
       "course": "os",
@@ -2004,23 +2175,24 @@
           "echo 'bob:password' | chpasswd",
           "useradd -m charlie",
           "echo 'charlie:password' | chpasswd"
-        ],
-        "checks": [
-          {
-            "id": "content-verify-txt",
-            "type": "content",
-            "path": "/home/student/verify.txt",
-            "expected": "devteam:x:3500:alice,bob\nops:x:3002:alice,bob\nengineers:x:4000:\n",
-            "points": 1,
-            "description": "`verify.txt` shows the final state of the groups `devteam`, `ops` and `engineers`."
-          }
-        ],
-        "explanation": "The correction checks the group database content you saved after all five tasks: the changed GID of `devteam`, the members of `ops` and the new group `engineers`.",
-        "solution": [
-          "mkdir -p '/home/student'",
-          "printf '%b' 'devteam:x:3500:alice,bob\\nops:x:3002:alice,bob\\nengineers:x:4000:\\n' > '/home/student/verify.txt'"
         ]
-      }
+      },
+      "checks": [
+        {
+          "id": "content-verify-txt",
+          "type": "content",
+          "path": "/home/student/verify.txt",
+          "expected": "devteam:x:3500:alice,bob\nops:x:3002:alice,bob\nengineers:x:4000:\n",
+          "points": 1,
+          "description": "`verify.txt` shows the final state of the groups `devteam`, `ops` and `engineers`.",
+          "regex": false
+        }
+      ],
+      "solution": [
+        "mkdir -p '/home/student'",
+        "printf '%b' 'devteam:x:3500:alice,bob\\nops:x:3002:alice,bob\\nengineers:x:4000:\\n' > '/home/student/verify.txt'"
+      ],
+      "explanation": "The correction checks the group database content you saved after all five tasks: the changed GID of `devteam`, the members of `ops` and the new group `engineers`."
     },
     "os-term-1-1004": {
       "course": "os",
@@ -2048,23 +2220,24 @@
           "echo 'intern:P@ssword1' | chpasswd",
           "useradd -m tempuser",
           "echo 'tempuser:P@ssword1' | chpasswd"
-        ],
-        "checks": [
-          {
-            "id": "content-verify-txt",
-            "type": "content",
-            "path": "/home/student/verify.txt",
-            "expected": "1:45:7:\n0\n/sbin/nologin\n$\n",
-            "points": 1,
-            "description": "`verify.txt` shows the aging fields of `qaeng`, the expired password and nologin shell of `intern`, and the unlocked `tempuser`."
-          }
-        ],
-        "explanation": "The correction checks the verification file, which is derived from `/etc/shadow` and `/etc/passwd` after all tasks were applied.",
-        "solution": [
-          "mkdir -p '/home/student'",
-          "printf '%b' '1:45:7:\\n0\\n/sbin/nologin\\n$\\n' > '/home/student/verify.txt'"
         ]
-      }
+      },
+      "checks": [
+        {
+          "id": "content-verify-txt",
+          "type": "content",
+          "path": "/home/student/verify.txt",
+          "expected": "1:45:7:\n0\n/sbin/nologin\n$\n",
+          "points": 1,
+          "description": "`verify.txt` shows the aging fields of `qaeng`, the expired password and nologin shell of `intern`, and the unlocked `tempuser`.",
+          "regex": false
+        }
+      ],
+      "solution": [
+        "mkdir -p '/home/student'",
+        "printf '%b' '1:45:7:\\n0\\n/sbin/nologin\\n$\\n' > '/home/student/verify.txt'"
+      ],
+      "explanation": "The correction checks the verification file, which is derived from `/etc/shadow` and `/etc/passwd` after all tasks were applied."
     },
     "os-term-1-1101": {
       "course": "os",
@@ -2101,77 +2274,84 @@
           "chmod 666 /home/student/osfundamentals/permissions/ex1/readme.txt /home/student/osfundamentals/permissions/ex1/project/notes.txt",
           "chmod 644 /home/student/osfundamentals/permissions/ex2/shared/teamdoc.txt /home/student/osfundamentals/permissions/ex2/shared/secret.txt",
           "chmod 600 /home/student/osfundamentals/permissions/ex3/sharedir/file1.txt /home/student/osfundamentals/permissions/ex3/sharedir/file2.txt"
-        ],
-        "checks": [
-          {
-            "id": "permissions-osfundamentals-permissions-ex1-readme-txt",
-            "type": "permissions",
-            "path": "/home/student/osfundamentals/permissions/ex1/readme.txt",
-            "expected": "664",
-            "points": 1,
-            "description": "`readme.txt` has `rw-rw-r--` (write removed for others)."
-          },
-          {
-            "id": "permissions-osfundamentals-permissions-ex1-project-notes-txt",
-            "type": "permissions",
-            "path": "/home/student/osfundamentals/permissions/ex1/project/notes.txt",
-            "expected": "640",
-            "points": 1,
-            "description": "`notes.txt` has `rw-r-----`."
-          },
-          {
-            "id": "permissions-osfundamentals-permissions-ex2-shared-teamdoc-txt",
-            "type": "permissions",
-            "path": "/home/student/osfundamentals/permissions/ex2/shared/teamdoc.txt",
-            "expected": "660",
-            "points": 1,
-            "description": "`teamdoc.txt` is readable and writable by owner and group only."
-          },
-          {
-            "id": "permissions-osfundamentals-permissions-ex2-shared-secret-txt",
-            "type": "permissions",
-            "path": "/home/student/osfundamentals/permissions/ex2/shared/secret.txt",
-            "expected": "400",
-            "points": 1,
-            "description": "`secret.txt` is readable only by the owner."
-          },
-          {
-            "id": "permissions-osfundamentals-permissions-ex3-sharedir",
-            "type": "permissions",
-            "path": "/home/student/osfundamentals/permissions/ex3/sharedir",
-            "expected": "755",
-            "points": 1,
-            "description": "`sharedir` has `drwxr-xr-x`."
-          },
-          {
-            "id": "permissions-osfundamentals-permissions-ex3-sharedir-file1-txt",
-            "type": "permissions",
-            "path": "/home/student/osfundamentals/permissions/ex3/sharedir/file1.txt",
-            "expected": "644",
-            "points": 1,
-            "description": "`file1.txt` is readable by all users."
-          },
-          {
-            "id": "permissions-osfundamentals-permissions-ex3-sharedir-file2-txt",
-            "type": "permissions",
-            "path": "/home/student/osfundamentals/permissions/ex3/sharedir/file2.txt",
-            "expected": "644",
-            "points": 1,
-            "description": "`file2.txt` is readable by all users."
-          }
-        ],
-        "explanation": "The correction checks the permission bits of every file and directory. The ownership changes of Task 2 are part of the exercise and should match the expected `ls -l` output.",
-        "solution": [
-          "chmod o-w ~/osfundamentals/permissions/ex1/readme.txt",
-          "chmod 640 ~/osfundamentals/permissions/ex1/project/notes.txt",
-          "sudo chown devuser:projectteam ~/osfundamentals/permissions/ex2/shared/teamdoc.txt",
-          "sudo chgrp projectteam ~/osfundamentals/permissions/ex2/shared/secret.txt",
-          "chmod 660 ~/osfundamentals/permissions/ex2/shared/teamdoc.txt",
-          "chmod 400 ~/osfundamentals/permissions/ex2/shared/secret.txt",
-          "chmod 755 ~/osfundamentals/permissions/ex3/sharedir",
-          "chmod 644 ~/osfundamentals/permissions/ex3/sharedir/file1.txt ~/osfundamentals/permissions/ex3/sharedir/file2.txt"
         ]
-      }
+      },
+      "checks": [
+        {
+          "id": "permissions-osfundamentals-permissions-ex1-readme-txt",
+          "type": "permissions",
+          "path": "/home/student/osfundamentals/permissions/ex1/readme.txt",
+          "expected": "664",
+          "points": 1,
+          "description": "`readme.txt` has `rw-rw-r--` (write removed for others).",
+          "regex": false
+        },
+        {
+          "id": "permissions-osfundamentals-permissions-ex1-project-notes-txt",
+          "type": "permissions",
+          "path": "/home/student/osfundamentals/permissions/ex1/project/notes.txt",
+          "expected": "640",
+          "points": 1,
+          "description": "`notes.txt` has `rw-r-----`.",
+          "regex": false
+        },
+        {
+          "id": "permissions-osfundamentals-permissions-ex2-shared-teamdoc-txt",
+          "type": "permissions",
+          "path": "/home/student/osfundamentals/permissions/ex2/shared/teamdoc.txt",
+          "expected": "660",
+          "points": 1,
+          "description": "`teamdoc.txt` is readable and writable by owner and group only.",
+          "regex": false
+        },
+        {
+          "id": "permissions-osfundamentals-permissions-ex2-shared-secret-txt",
+          "type": "permissions",
+          "path": "/home/student/osfundamentals/permissions/ex2/shared/secret.txt",
+          "expected": "400",
+          "points": 1,
+          "description": "`secret.txt` is readable only by the owner.",
+          "regex": false
+        },
+        {
+          "id": "permissions-osfundamentals-permissions-ex3-sharedir",
+          "type": "permissions",
+          "path": "/home/student/osfundamentals/permissions/ex3/sharedir",
+          "expected": "755",
+          "points": 1,
+          "description": "`sharedir` has `drwxr-xr-x`.",
+          "regex": false
+        },
+        {
+          "id": "permissions-osfundamentals-permissions-ex3-sharedir-file1-txt",
+          "type": "permissions",
+          "path": "/home/student/osfundamentals/permissions/ex3/sharedir/file1.txt",
+          "expected": "644",
+          "points": 1,
+          "description": "`file1.txt` is readable by all users.",
+          "regex": false
+        },
+        {
+          "id": "permissions-osfundamentals-permissions-ex3-sharedir-file2-txt",
+          "type": "permissions",
+          "path": "/home/student/osfundamentals/permissions/ex3/sharedir/file2.txt",
+          "expected": "644",
+          "points": 1,
+          "description": "`file2.txt` is readable by all users.",
+          "regex": false
+        }
+      ],
+      "solution": [
+        "chmod o-w ~/osfundamentals/permissions/ex1/readme.txt",
+        "chmod 640 ~/osfundamentals/permissions/ex1/project/notes.txt",
+        "sudo chown devuser:projectteam ~/osfundamentals/permissions/ex2/shared/teamdoc.txt",
+        "sudo chgrp projectteam ~/osfundamentals/permissions/ex2/shared/secret.txt",
+        "chmod 660 ~/osfundamentals/permissions/ex2/shared/teamdoc.txt",
+        "chmod 400 ~/osfundamentals/permissions/ex2/shared/secret.txt",
+        "chmod 755 ~/osfundamentals/permissions/ex3/sharedir",
+        "chmod 644 ~/osfundamentals/permissions/ex3/sharedir/file1.txt ~/osfundamentals/permissions/ex3/sharedir/file2.txt"
+      ],
+      "explanation": "The correction checks the permission bits of every file and directory. The ownership changes of Task 2 are part of the exercise and should match the expected `ls -l` output."
     },
     "os-term-1-1102": {
       "course": "os",
@@ -2209,84 +2389,92 @@
           "chmod 1777 /srv/shared/sticky_test",
           "chmod 755 /home/student/osfundamentals /home/student/osfundamentals/permissions_special /home/student/osfundamentals/permissions_special/ex3",
           "chmod 644 /home/student/.bashrc"
-        ],
-        "checks": [
-          {
-            "id": "file-srv-shared-sticky-test-file-devuser-txt",
-            "type": "file",
-            "path": "/srv/shared/sticky_test/file_devuser.txt",
-            "points": 1,
-            "description": "`file_devuser.txt` still exists (the student could not delete it)."
-          },
-          {
-            "id": "not_exists-srv-shared-sticky-test-file-student-txt",
-            "type": "not_exists",
-            "path": "/srv/shared/sticky_test/file_student.txt",
-            "points": 1,
-            "description": "`file_student.txt` was deleted by the student."
-          },
-          {
-            "id": "permissions-osfundamentals-permissions-special-ex2-project-area",
-            "type": "permissions",
-            "path": "/home/student/osfundamentals/permissions_special/ex2/project_area",
-            "expected": "2775",
-            "points": 1,
-            "description": "`project_area` has the SGID bit and mode `rwxrwxr-x`."
-          },
-          {
-            "id": "content-osfundamentals-permissions-special-ex2-project-area-report1-txt",
-            "type": "content",
-            "path": "/home/student/osfundamentals/permissions_special/ex2/project_area/report1.txt",
-            "expected": "report1\n",
-            "points": 1,
-            "description": "`~/osfundamentals/permissions_special/ex2/project_area/report1.txt` has the expected content."
-          },
-          {
-            "id": "content-osfundamentals-permissions-special-ex2-project-area-report2-txt",
-            "type": "content",
-            "path": "/home/student/osfundamentals/permissions_special/ex2/project_area/report2.txt",
-            "expected": "report2\n",
-            "points": 1,
-            "description": "`~/osfundamentals/permissions_special/ex2/project_area/report2.txt` has the expected content."
-          },
-          {
-            "id": "content-osfundamentals-permissions-special-ex3-umask-test-txt",
-            "type": "content",
-            "path": "/home/student/osfundamentals/permissions_special/ex3/umask_test.txt",
-            "expected": "testing umask\n",
-            "points": 1,
-            "description": "`~/osfundamentals/permissions_special/ex3/umask_test.txt` has the expected content."
-          },
-          {
-            "id": "permissions-osfundamentals-permissions-special-ex3-umask-test-txt",
-            "type": "permissions",
-            "path": "/home/student/osfundamentals/permissions_special/ex3/umask_test.txt",
-            "expected": "640",
-            "points": 1,
-            "description": "`umask_test.txt` has `rw-r-----` (created with umask 0027)."
-          },
-          {
-            "id": "content-bashrc",
-            "type": "content",
-            "path": "/home/student/.bashrc",
-            "expected": "# ~/.bashrc\numask 0027\n",
-            "points": 1,
-            "description": "`~/.bashrc` makes umask `0027` persistent."
-          }
-        ],
-        "explanation": "The correction checks the sticky-directory deletions, the SGID mode of `project_area`, the permissions of the file created under umask `0027` and the persistent umask in `~/.bashrc`.",
-        "solution": [
-          "rm /srv/shared/sticky_test/file_student.txt",
-          "mkdir -p ~/osfundamentals/permissions_special/ex2/project_area",
-          "sudo chown student:projectteam ~/osfundamentals/permissions_special/ex2/project_area",
-          "chmod 2775 ~/osfundamentals/permissions_special/ex2/project_area",
-          "echo \"report1\" > ~/osfundamentals/permissions_special/ex2/project_area/report1.txt",
-          "echo \"report2\" > ~/osfundamentals/permissions_special/ex2/project_area/report2.txt",
-          "umask 0027",
-          "echo \"testing umask\" > ~/osfundamentals/permissions_special/ex3/umask_test.txt",
-          "echo \"umask 0027\" >> ~/.bashrc"
         ]
-      }
+      },
+      "checks": [
+        {
+          "id": "file-srv-shared-sticky-test-file-devuser-txt",
+          "type": "file",
+          "path": "/srv/shared/sticky_test/file_devuser.txt",
+          "points": 1,
+          "description": "`file_devuser.txt` still exists (the student could not delete it).",
+          "regex": false
+        },
+        {
+          "id": "not_exists-srv-shared-sticky-test-file-student-txt",
+          "type": "not_exists",
+          "path": "/srv/shared/sticky_test/file_student.txt",
+          "points": 1,
+          "description": "`file_student.txt` was deleted by the student.",
+          "regex": false
+        },
+        {
+          "id": "permissions-osfundamentals-permissions-special-ex2-project-area",
+          "type": "permissions",
+          "path": "/home/student/osfundamentals/permissions_special/ex2/project_area",
+          "expected": "2775",
+          "points": 1,
+          "description": "`project_area` has the SGID bit and mode `rwxrwxr-x`.",
+          "regex": false
+        },
+        {
+          "id": "content-osfundamentals-permissions-special-ex2-project-area-report1-txt",
+          "type": "content",
+          "path": "/home/student/osfundamentals/permissions_special/ex2/project_area/report1.txt",
+          "expected": "report1\n",
+          "points": 1,
+          "description": "`~/osfundamentals/permissions_special/ex2/project_area/report1.txt` has the expected content.",
+          "regex": false
+        },
+        {
+          "id": "content-osfundamentals-permissions-special-ex2-project-area-report2-txt",
+          "type": "content",
+          "path": "/home/student/osfundamentals/permissions_special/ex2/project_area/report2.txt",
+          "expected": "report2\n",
+          "points": 1,
+          "description": "`~/osfundamentals/permissions_special/ex2/project_area/report2.txt` has the expected content.",
+          "regex": false
+        },
+        {
+          "id": "content-osfundamentals-permissions-special-ex3-umask-test-txt",
+          "type": "content",
+          "path": "/home/student/osfundamentals/permissions_special/ex3/umask_test.txt",
+          "expected": "testing umask\n",
+          "points": 1,
+          "description": "`~/osfundamentals/permissions_special/ex3/umask_test.txt` has the expected content.",
+          "regex": false
+        },
+        {
+          "id": "permissions-osfundamentals-permissions-special-ex3-umask-test-txt",
+          "type": "permissions",
+          "path": "/home/student/osfundamentals/permissions_special/ex3/umask_test.txt",
+          "expected": "640",
+          "points": 1,
+          "description": "`umask_test.txt` has `rw-r-----` (created with umask 0027).",
+          "regex": false
+        },
+        {
+          "id": "content-bashrc",
+          "type": "content",
+          "path": "/home/student/.bashrc",
+          "expected": "# ~/.bashrc\numask 0027\n",
+          "points": 1,
+          "description": "`~/.bashrc` makes umask `0027` persistent.",
+          "regex": false
+        }
+      ],
+      "solution": [
+        "rm /srv/shared/sticky_test/file_student.txt",
+        "mkdir -p ~/osfundamentals/permissions_special/ex2/project_area",
+        "sudo chown student:projectteam ~/osfundamentals/permissions_special/ex2/project_area",
+        "chmod 2775 ~/osfundamentals/permissions_special/ex2/project_area",
+        "echo \"report1\" > ~/osfundamentals/permissions_special/ex2/project_area/report1.txt",
+        "echo \"report2\" > ~/osfundamentals/permissions_special/ex2/project_area/report2.txt",
+        "umask 0027",
+        "echo \"testing umask\" > ~/osfundamentals/permissions_special/ex3/umask_test.txt",
+        "echo \"umask 0027\" >> ~/.bashrc"
+      ],
+      "explanation": "The correction checks the sticky-directory deletions, the SGID mode of `project_area`, the permissions of the file created under umask `0027` and the persistent umask in `~/.bashrc`."
     },
     "os-term-1-1199": {
       "course": "os",
@@ -2320,93 +2508,102 @@
           "chmod 1777 /srv/shared/uploads",
           "chmod 755 /home/student/osfundamentals /home/student/osfundamentals/permissions_capstone",
           "chmod 644 /home/student/.bashrc"
-        ],
-        "checks": [
-          {
-            "id": "permissions-osfundamentals-permissions-capstone-team-project",
-            "type": "permissions",
-            "path": "/home/student/osfundamentals/permissions_capstone/team_project",
-            "expected": "2775",
-            "points": 1,
-            "description": "`team_project` has the SGID bit and mode `rwxrwxr-x`."
-          },
-          {
-            "id": "content-osfundamentals-permissions-capstone-team-project-student-report-txt",
-            "type": "content",
-            "path": "/home/student/osfundamentals/permissions_capstone/team_project/student_report.txt",
-            "expected": "Student contribution\n",
-            "points": 1,
-            "description": "`~/osfundamentals/permissions_capstone/team_project/student_report.txt` has the expected content."
-          },
-          {
-            "id": "permissions-osfundamentals-permissions-capstone-team-project-student-report-txt",
-            "type": "permissions",
-            "path": "/home/student/osfundamentals/permissions_capstone/team_project/student_report.txt",
-            "expected": "660",
-            "points": 1,
-            "description": "`student_report.txt` is `rw-rw----`."
-          },
-          {
-            "id": "content-osfundamentals-permissions-capstone-team-project-dev-report-txt",
-            "type": "content",
-            "path": "/home/student/osfundamentals/permissions_capstone/team_project/dev_report.txt",
-            "expected": "Devuser contribution\n",
-            "points": 1,
-            "description": "`~/osfundamentals/permissions_capstone/team_project/dev_report.txt` has the expected content."
-          },
-          {
-            "id": "permissions-osfundamentals-permissions-capstone-team-project-dev-report-txt",
-            "type": "permissions",
-            "path": "/home/student/osfundamentals/permissions_capstone/team_project/dev_report.txt",
-            "expected": "660",
-            "points": 1,
-            "description": "`dev_report.txt` is `rw-rw----`."
-          },
-          {
-            "id": "file-srv-shared-uploads-file-devuser-txt",
-            "type": "file",
-            "path": "/srv/shared/uploads/file_devuser.txt",
-            "points": 1,
-            "description": "`file_devuser.txt` still exists (the student could not delete it)."
-          },
-          {
-            "id": "not_exists-srv-shared-uploads-file-student-txt",
-            "type": "not_exists",
-            "path": "/srv/shared/uploads/file_student.txt",
-            "points": 1,
-            "description": "`file_student.txt` was deleted by the student."
-          },
-          {
-            "id": "content-osfundamentals-permissions-capstone-umask-test-umask-test-txt",
-            "type": "content",
-            "path": "/home/student/osfundamentals/permissions_capstone/umask_test/umask_test.txt",
-            "expected": "Testing umask\n",
-            "points": 1,
-            "description": "`~/osfundamentals/permissions_capstone/umask_test/umask_test.txt` has the expected content."
-          },
-          {
-            "id": "permissions-osfundamentals-permissions-capstone-umask-test-umask-test-txt",
-            "type": "permissions",
-            "path": "/home/student/osfundamentals/permissions_capstone/umask_test/umask_test.txt",
-            "expected": "660",
-            "points": 1,
-            "description": "`umask_test.txt` is `rw-rw----` (umask 0007)."
-          }
-        ],
-        "explanation": "The correction checks the SGID mode of `team_project`, the contents and `660` permissions of the files created by both users, the sticky-bit deletion results and the file created under umask `0007`.",
-        "solution": [
-          "mkdir -p ~/osfundamentals/permissions_capstone/team_project",
-          "sudo chown student:projectteam ~/osfundamentals/permissions_capstone/team_project",
-          "chmod 2775 ~/osfundamentals/permissions_capstone/team_project",
-          "echo \"Student contribution\" > ~/osfundamentals/permissions_capstone/team_project/student_report.txt",
-          "sudo -u devuser bash -c \"umask 0007; echo 'Devuser contribution' > /home/student/osfundamentals/permissions_capstone/team_project/dev_report.txt\"",
-          "echo \"Student file\" > /srv/shared/uploads/file_student.txt",
-          "sudo -u devuser bash -c \"umask 0007; echo 'Devuser file' > /srv/shared/uploads/file_devuser.txt\"",
-          "rm /srv/shared/uploads/file_student.txt",
-          "mkdir -p ~/osfundamentals/permissions_capstone/umask_test",
-          "echo \"Testing umask\" > ~/osfundamentals/permissions_capstone/umask_test/umask_test.txt"
         ]
-      }
+      },
+      "checks": [
+        {
+          "id": "permissions-osfundamentals-permissions-capstone-team-project",
+          "type": "permissions",
+          "path": "/home/student/osfundamentals/permissions_capstone/team_project",
+          "expected": "2775",
+          "points": 1,
+          "description": "`team_project` has the SGID bit and mode `rwxrwxr-x`.",
+          "regex": false
+        },
+        {
+          "id": "content-osfundamentals-permissions-capstone-team-project-student-report-txt",
+          "type": "content",
+          "path": "/home/student/osfundamentals/permissions_capstone/team_project/student_report.txt",
+          "expected": "Student contribution\n",
+          "points": 1,
+          "description": "`~/osfundamentals/permissions_capstone/team_project/student_report.txt` has the expected content.",
+          "regex": false
+        },
+        {
+          "id": "permissions-osfundamentals-permissions-capstone-team-project-student-report-txt",
+          "type": "permissions",
+          "path": "/home/student/osfundamentals/permissions_capstone/team_project/student_report.txt",
+          "expected": "660",
+          "points": 1,
+          "description": "`student_report.txt` is `rw-rw----`.",
+          "regex": false
+        },
+        {
+          "id": "content-osfundamentals-permissions-capstone-team-project-dev-report-txt",
+          "type": "content",
+          "path": "/home/student/osfundamentals/permissions_capstone/team_project/dev_report.txt",
+          "expected": "Devuser contribution\n",
+          "points": 1,
+          "description": "`~/osfundamentals/permissions_capstone/team_project/dev_report.txt` has the expected content.",
+          "regex": false
+        },
+        {
+          "id": "permissions-osfundamentals-permissions-capstone-team-project-dev-report-txt",
+          "type": "permissions",
+          "path": "/home/student/osfundamentals/permissions_capstone/team_project/dev_report.txt",
+          "expected": "660",
+          "points": 1,
+          "description": "`dev_report.txt` is `rw-rw----`.",
+          "regex": false
+        },
+        {
+          "id": "file-srv-shared-uploads-file-devuser-txt",
+          "type": "file",
+          "path": "/srv/shared/uploads/file_devuser.txt",
+          "points": 1,
+          "description": "`file_devuser.txt` still exists (the student could not delete it).",
+          "regex": false
+        },
+        {
+          "id": "not_exists-srv-shared-uploads-file-student-txt",
+          "type": "not_exists",
+          "path": "/srv/shared/uploads/file_student.txt",
+          "points": 1,
+          "description": "`file_student.txt` was deleted by the student.",
+          "regex": false
+        },
+        {
+          "id": "content-osfundamentals-permissions-capstone-umask-test-umask-test-txt",
+          "type": "content",
+          "path": "/home/student/osfundamentals/permissions_capstone/umask_test/umask_test.txt",
+          "expected": "Testing umask\n",
+          "points": 1,
+          "description": "`~/osfundamentals/permissions_capstone/umask_test/umask_test.txt` has the expected content.",
+          "regex": false
+        },
+        {
+          "id": "permissions-osfundamentals-permissions-capstone-umask-test-umask-test-txt",
+          "type": "permissions",
+          "path": "/home/student/osfundamentals/permissions_capstone/umask_test/umask_test.txt",
+          "expected": "660",
+          "points": 1,
+          "description": "`umask_test.txt` is `rw-rw----` (umask 0007).",
+          "regex": false
+        }
+      ],
+      "solution": [
+        "mkdir -p ~/osfundamentals/permissions_capstone/team_project",
+        "sudo chown student:projectteam ~/osfundamentals/permissions_capstone/team_project",
+        "chmod 2775 ~/osfundamentals/permissions_capstone/team_project",
+        "echo \"Student contribution\" > ~/osfundamentals/permissions_capstone/team_project/student_report.txt",
+        "sudo -u devuser bash -c \"umask 0007; echo 'Devuser contribution' > /home/student/osfundamentals/permissions_capstone/team_project/dev_report.txt\"",
+        "echo \"Student file\" > /srv/shared/uploads/file_student.txt",
+        "sudo -u devuser bash -c \"umask 0007; echo 'Devuser file' > /srv/shared/uploads/file_devuser.txt\"",
+        "rm /srv/shared/uploads/file_student.txt",
+        "mkdir -p ~/osfundamentals/permissions_capstone/umask_test",
+        "echo \"Testing umask\" > ~/osfundamentals/permissions_capstone/umask_test/umask_test.txt"
+      ],
+      "explanation": "The correction checks the SGID mode of `team_project`, the contents and `660` permissions of the files created by both users, the sticky-bit deletion results and the file created under umask `0007`."
     }
   }
 }

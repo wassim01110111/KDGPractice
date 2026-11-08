@@ -284,16 +284,16 @@ function renderExerciseInstructions(target, source) {
 
 const expectedText = (ex) =>
   ex.type === "java-ex"
-    ? `Your edited Java source is checked against ${Array.isArray(ex.java?.checks) ? ex.java.checks.length : 0} automatic tests.`
+    ? `Your edited Java source is checked against ${Array.isArray(ex.checks) ? ex.checks.length : 0} automatic tests.`
     : ex.type === "sql-query"
-      ? formatSQL(ex.referenceSolution)
+      ? formatSQL(ex.solution)
       : ex.type.startsWith("mcq")
-        ? ex.expected.map((i) => ex.options[i]).join("; ")
+        ? ex.checks.map((i) => ex.options[i]).join("; ")
         : ex.type === "command-text"
-          ? [...(ex.expected.accepted || [])].join("\n")
+          ? (ex.checks || []).filter((check) => check.regex !== true).map((check) => check.expected).join("\n")
           : ex.type === "fill-blank"
-            ? ex.expected.blanks.map((b) => b[0]).join(", ")
-            : ex.expected;
+            ? ex.checks.blanks.map((b) => b[0]).join(", ")
+            : ex.checks;
 const answerText = (ex, answer) => {
   if (ex.type.startsWith("mcq")) {
     if (!Array.isArray(answer)) return "(no answer)";
@@ -1155,7 +1155,7 @@ function qView(
         inp.querySelectorAll("input").forEach((i) => (i.checked = false));
       };
     } else if (ex.type === "fill-blank") {
-      const n = ex.expected.blanks.length;
+      const n = ex.checks.blanks.length;
       inp = h(
         "div",
         { class: "answer-blanks" },
@@ -1222,11 +1222,11 @@ function qView(
         "button",
         {
           onclick: async () => {
-            const g = gradeOS(ex, readAns());
+            const g = gradeExerciseAnswer(ex, readAns());
             if (g === null) {
               fb.replaceChildren(
                 h("p", {}, h("b", {}, "Model answer:")),
-                h("pre", {}, ex.expected),
+                h("pre", {}, expectedText(ex)),
                 h(
                   "div",
                   {},
@@ -1275,7 +1275,7 @@ function qView(
                 { class: g ? "ok" : "bad" },
                 g ? "\u2714 Correct" : "\u2718 Incorrect",
               ),
-              !g && hasSimilarOSAnswer(ex, readAns())
+              !g && hasSimilarExerciseAnswer(ex, readAns())
                 ? h(
                     "small",
                     { class: "answer-review-note" },
@@ -1394,7 +1394,7 @@ function qView(
     }
   }
   // Result snippet: shown in practice and exam, open by default.
-  if (ex.type === "sql-query" && ex.referenceSolution) {
+  if (ex.type === "sql-query" && ex.solution) {
     const snippet = h("div", {
       id: `sql-result-snippet-${ex.id}`,
       class: "sql-result-panel",
@@ -1420,7 +1420,7 @@ function qView(
       loadingSnippet = true;
       showPreviewLoading();
       try {
-        const { res } = await runStudent(ex, ex.referenceSolution);
+        const { res } = await runStudent(ex, ex.solution);
         snippet.replaceChildren(
           h("strong", {}, "Expected result preview"),
           h("small", {}, "A preview of rows returned by the reference query."),
@@ -1510,7 +1510,7 @@ function qView(
     schedulePreviewLoad();
   }
   if (mode === "practice") {
-    const hasSol = ex.type === "sql-query" ? !!ex.referenceSolution : true;
+    const hasSol = ex.type === "sql-query" ? !!ex.solution : true;
     if (
       hasSol &&
       ex.type !== "short-answer-self-check" &&
@@ -1544,17 +1544,16 @@ function qView(
       supplementalPanels.push(solution);
     }
   }
-  // Java source solutions live in the Java-specific configuration, keeping
-  // them separate from SQL reference queries and terminal exercise data.
-  // As with the other exercise types, solutions are only revealed in practice.
+  // Java solutions share the exercise-level solution field with SQL and
+  // terminal exercises; rendering remains type-specific.
   if (
     mode === "practice" &&
     ex.type === "java-ex" &&
-    typeof ex.java?.solution === "string" &&
-    ex.java.solution.trim()
+    typeof ex.solution === "string" &&
+    ex.solution.trim()
   ) {
     const solutionCode = h("code", {});
-    solutionCode.innerHTML = Core.highlightJava(ex.java.solution);
+    solutionCode.innerHTML = Core.highlightJava(ex.solution);
     const solution = h(
       "div",
       { class: "solution-panel java-solution-panel", hidden: true },
