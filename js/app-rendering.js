@@ -290,7 +290,10 @@ const expectedText = (ex) =>
       : ex.type.startsWith("mcq")
         ? ex.checks.map((i) => ex.options[i]).join("; ")
         : ex.type === "command-text"
-          ? (ex.checks || []).filter((check) => check.regex !== true).map((check) => check.expected).join("\n")
+          ? (ex.checks || [])
+              .filter((check) => check.regex !== true)
+              .map((check) => check.expected)
+              .join("\n")
           : ex.type === "fill-blank"
             ? ex.checks.blanks.map((b) => b[0]).join(", ")
             : ex.checks;
@@ -819,7 +822,9 @@ function qView(
   const recordPracticeResult = async (correct, meta = {}) => {
     if (mode !== "practice") return;
     if (typeof onPracticeResult !== "function") {
-      console.error("Practice view is missing its app-practice result handler.");
+      console.error(
+        "Practice view is missing its app-practice result handler.",
+      );
       return;
     }
     await onPracticeResult(correct, meta);
@@ -2210,8 +2215,17 @@ function md(src) {
       );
       if (tb) {
         fl();
+        const href = tb[1];
+        const parts = href.split("/").filter(Boolean);
+
+        const exerciseId = parts.at(-1);
+        const packageId = parts.at(-2);
+
+        // Match the exact completion key format.
+        const rewardKey = JSON.stringify([packageId, exerciseId]);
+        const isDone = Boolean(S.xpRewards?.[rewardKey]);
         o.push(
-          `<p><a class="try-exercise-button" href="${esc(tb[1]).replace(/"/g, "&quot;")}">${esc(tb[2])}</a></p>`,
+          `<p><a class="try-exercise-button ${isDone ? " done" : ""}" href="${esc(tb[1]).replace(/"/g, "&quot;")}">${esc(tb[2])}</a></p>`,
         );
         continue;
       }
@@ -2336,4 +2350,3 @@ function withoutContentsSection(src) {
   }
   return kept.join("\n");
 }
-

@@ -8,7 +8,7 @@
     "pf-term1-0103-sum": {
       "category": "Basic Programming and Conditionals",
       "title": "Sum",
-      "instructions": "The original Sum03 reference example from the course slides was not included in the supplied materials. For this exercise, read two integers from standard input and print their sum in the format `Sum: <value>`. Implement the input and output in the `Sum03` class.",
+      "instructions": "The original Sum03 reference example from the course slides was not included in the supplied materials.\n\nFor this exercise, read two integers from standard input and print their sum in the format `Sum: <value>`.\n\nImplement the input and output in the `Sum03` class.",
       "hints": [
         "Use `Scanner.nextInt()` to read each input integer.",
         "Print the label `Sum: ` followed by the calculated sum."
@@ -62,7 +62,7 @@
     "pf-term1-0104-welcome-read-text": {
       "category": "Input and Output",
       "title": "Welcome (read text)",
-      "instructions": "Prompt the user with `What is your name?`, read the complete name with `Scanner.nextLine()`, and print `Welcome <name>!`. The name may contain spaces or punctuation.",
+      "instructions": "Prompt the user with `What is your name?`, read the complete name with `Scanner.nextLine()`, and print `Welcome <name>!`.\n\nThe name may contain spaces or punctuation.\n\nExample 1:\n```text\nWhat is your name? Luka\n\n\nWelcome Luka!\n```",
       "hints": [
         "Create a Scanner using System.in.",
         "Use nextLine() to read the complete name."
@@ -109,7 +109,7 @@
     "pf-term1-0105-product-read-int": {
       "category": "Input and Output",
       "title": "Product (read int)",
-      "instructions": "Prompt the user for three integers: a number, another number, and a final number. Multiply the three values and print the result in the format `The product is: <value>`.",
+      "instructions": "Prompt the user for three integers: a number, another number, and a final number.\n\nMultiply the three values and print the result in the format `The product is: <value>`.\n\nExample 1:\n```text\nEnter a number: 3\n\nEnter another number: 2\n\nEnter a final number: 5\n\n\nThe product is: 30\n```",
       "hints": [
         "Read three integers with nextInt().",
         "Multiply the values using the * operator."
@@ -156,7 +156,7 @@
     "pf-term1-0106-age-localdate": {
       "category": "Input and Output",
       "title": "Age (LocalDate)",
-      "instructions": "Ask the user for their name and birth year. Use `LocalDate.now().getYear()` to obtain the current year, then calculate the age the person will reach by the end of this year. Print the personalized message using the format shown in the exercise. Do not hard-code the example year or age.",
+      "instructions": "Ask the user for their name and birth year.\n\nUse `LocalDate.now().getYear()` to obtain the current year, then calculate the age the person will reach by the end of this year.\n\nPrint the personalized message using the format shown in the exercise.\n\nDo not hard-code the example year or age.\n\nExample 1:\n```text\nPlease enter your name: Romelu\n\nDear Romelu, please enter the year you were born: 2011\n\nIf all goes well you'll be 11 by the end of the year.\n```",
       "hints": [
         "Use LocalDate.now().getYear() to obtain the current year.",
         "Subtract the birth year from the current year."
@@ -203,7 +203,7 @@
     "pf-term1-0107-bmi-v1-read-double": {
       "category": "Basic Programming and Conditionals",
       "title": "BMI v1 (read double)",
-      "instructions": "Calculate BMI as weight in kilograms divided by the square of height in meters. Read the height as a `double`, then print the result as `Your BMI is: <value>`. Enter decimal heights with a period, for example `1.79`.",
+      "instructions": "Calculate BMI as weight in kilograms divided by the square of height in meters.\n\nRead the height as a `double`, then print the result as `Your BMI is: <value>`.\n\nEnter decimal heights with a period, for example `1.79`.\n\nExample 1:\n```text\nDear patient, this program will calculate your BMI.\nEnter your weight in kilograms:76\nEnter your length in meters: 1,79\nYour BMI is: 23.719609250647608\n```",
       "hints": [
         "Read the weight as a number and the height as a double.",
         "Calculate weight / (height * height)."
@@ -250,7 +250,7 @@
     "pf-term1-0108-bmiv2-if": {
       "category": "Basic Programming and Conditionals",
       "title": "BMIv2 (if)",
-      "instructions": "Extend BMI v1 by printing a BMI category after calculating the value: below `18` is `underweight`; from `18` up to but not including `25` is `healthy weight`; from `25` up to but not including `30` is `overweight`; and `30` or above is `obese`. Use conditional statements so exactly one category is printed.",
+      "instructions": "Extend BMI v1 by printing a BMI category after calculating the value: below `18` is `underweight`; from `18` up to but not including `25` is `healthy weight`; from `25` up to but not including `30` is `overweight`; and `30` or above is `obese`.\n\nUse conditional statements so exactly one category is printed.",
       "hints": [
         "Calculate BMI before applying the conditions.",
         "Use an if/else-if chain for the four ranges."
@@ -321,7 +321,7 @@
     "pf-term1-0109-between-if-extra": {
       "category": "Basic Programming and Conditionals",
       "title": "Between (if) / EXTRA",
-      "instructions": "Read three distinct integers in the range `1`..`100` and print the middle value: the value that is neither the smallest nor the largest. Prompt for the first, second, and third numbers in that order.",
+      "instructions": "Read three distinct integers in the range `1`..`100` and print the middle value: the value that is neither the smallest nor the largest.\n\nPrompt for the first, second, and third numbers in that order.\n\nExample 1:\n```text\nEnter the first number (1..100): 67\nEnter the second number (1..100): 23\nEnter the third number (1..100): 45\n\nThe middle number is 45\n```",
       "hints": [
         "Read all three numbers.",
         "Use Math.min() and Math.max() or conditional comparisons to find the middle value."
@@ -384,7 +384,7 @@
     "pf-term1-0110-calculate-if": {
       "category": "Basic Programming and Conditionals",
       "title": "Calculate (if)",
-      "instructions": "Read two integers, display a menu of four operations, and read the user’s choice: `1` for addition, `2` for subtraction, `3` for multiplication, and `4` for integer division. Print the calculation in the format `first operator second = result`. Optional extension: add choice `5` for exponentiation, using a loop or `Math.pow()`.",
+      "instructions": "Read two integers, display a menu of four operations, and read the user’s choice: `1` for addition, `2` for subtraction, `3` for multiplication, and `4` for integer division.\n\nPrint the calculation in the format `first operator second = result`.\n\nOptional extension: add choice `5` for exponentiation, using a loop or `Math.pow()`.\n\nExample 1:\n```text\nEnter a number: 15\nEnter another number: 4\nChoose an operation:\nadd\nsubstract\nmultiply\ndivide\nYour choice: 3\n\n15 * 4 = 60\n```",
       "hints": [
         "Read the operation choice as an integer.",
         "Use if/else-if branches for the selected operation."
@@ -439,7 +439,7 @@
     "pf-term1-0201-variables": {
       "category": "Variables, Data Types and Input",
       "title": "Variables",
-      "instructions": "Read one value for each Java primitive type using `Scanner`, in this order: `boolean`, `char`, `byte`, `short`, `int`, `long`, `float`, and `double`. Print the eight values in that same order on one line. The starter code already declares the `final` constant `PI`; print its value after the eight input values. The commented reassignment in the starter code is only a compile-time experiment: leave it commented in your submitted solution.",
+      "instructions": "Read one value for each Java primitive type using `Scanner`, in this order: `boolean`, `char`, `byte`, `short`, `int`, `long`, `float`, and `double`.\n\nPrint the eight values in that same order on one line.\n\nThe starter code already declares the `final` constant `PI`; print its value after the eight input values.\n\nThe commented reassignment in the starter code is only a compile-time experiment: leave it commented in your submitted solution.",
       "hints": [
         "Declare one variable for each required primitive type.",
         "A final variable cannot be reassigned after initialization."
@@ -478,7 +478,7 @@
     "pf-term1-0202-numbers-v1": {
       "category": "Variables, Data Types and Input",
       "title": "numbers v1",
-      "instructions": "Read six values from standard input: two `int` values for Part `1`, two `long` values for Part `2`, and two more `int` values for Parts `3` and `4`. In Part `1`, print the `int` sum to demonstrate overflow, then print the correct sum using `long`. In Part `2`, add the two `long` values and explicitly cast the result to `int`. In Part `3`, print the sum, the difference (`first - second`), the product, the integer quotient, and the remainder. In Part `4`, demonstrate prefix and postfix increment and decrement using those same two integers. Do not hard-code the input values.",
+      "instructions": "Read six values from standard input: two `int` values for Part `1`, two `long` values for Part `2`, and two more `int` values for Parts `3` and `4`.\n\nIn Part `1`, print the `int` sum to demonstrate overflow, then print the correct sum using `long`.\n\nIn Part `2`, add the two `long` values and explicitly cast the result to `int`.\n\nIn Part `3`, print the sum, the difference (`first - second`), the product, the integer quotient, and the remainder.\n\nIn Part `4`, demonstrate prefix and postfix increment and decrement using those same two integers.\n\nDo not hard-code the input values.",
       "hints": [
         "Integer arithmetic can overflow.",
         "Use long for large values and explicit casts when narrowing."
@@ -517,7 +517,7 @@
     "pf-term1-0203-taxes": {
       "category": "Variables, Data Types and Input",
       "title": "Taxes",
-      "instructions": "Read the VAT percentage, an amount, and a choice indicating whether the amount already includes VAT. Use choice `1` for an inclusive amount and choice `2` for an exclusive amount. If the amount is inclusive, calculate the amount before VAT; if it is exclusive, calculate the amount after VAT. Display the result in the format `€100.0 + 21.0% VAT = €121.0`. For any other choice, print `Invalid choice!`. Read all three values with `Scanner` so the same program can handle different rates, amounts and choices.",
+      "instructions": "Read the VAT percentage, an amount, and a choice indicating whether the amount already includes VAT.\n\nUse choice `1` for an inclusive amount and choice `2` for an exclusive amount.\n\nIf the amount is inclusive, calculate the amount before VAT; if it is exclusive, calculate the amount after VAT.\n\nDisplay the result in the format `€100.0 + 21.0% VAT = €121.0`.\n\nFor any other choice, print `Invalid choice!`.\n\nRead all three values with `Scanner` so the same program can handle different rates, amounts and choices.\n\nExample 1:\n```text\nEnter the VAT percentage: 21\nEnter an amount in €: 121\nMake a choice (1 = inclusive, 2 = exclusive): 1\n€100.0 + 21.0% VAT = €121.0\n```\n\nExample 2:\n```text\nEnter the VAT percentage: 6\nEnter an amount in €: 100\nMake a choice (1 = inclusive, 2 = exclusive): 2\n€100.0 + 6.0% VAT = €106.0\n```\n\nExample 3:\n```text\nEnter the VAT percentage: 12\nEnter an amount in €: 100\nMake a choice (1 = inclusive, 2 = exclusive): 3\nInvalid choice!\n```",
       "hints": [
         "Convert the VAT percentage to a multiplier.",
         "Divide an inclusive amount by the multiplier or multiply an exclusive amount."
@@ -564,7 +564,7 @@
     "pf-term1-0204-numbers-v2": {
       "category": "Variables, Data Types and Input",
       "title": "Numbers V2",
-      "instructions": "Read two integers with `Scanner` and verify that each is a six-digit number. The starter code already declares `MINIMUM` and `MAXIMUM`; use these constants to validate both inputs. Stop with an error message as soon as either value is outside the accepted range. If both are valid, calculate their product using `long`, then print the product and its final five digits. Preserve leading zeroes in the five-digit result.",
+      "instructions": "Read two integers with `Scanner` and verify that each is a six-digit number.\n\nThe starter code already declares `MINIMUM` and `MAXIMUM`; use these constants to validate both inputs.\n\nStop with an error message as soon as either value is outside the accepted range.\n\nIf both are valid, calculate their product using `long`, then print the product and its final five digits.\n\nPreserve leading zeroes in the five-digit result.\n\nExample 1:\n```text\nEnter a 6-digit whole number: 123456\nEnter another 6-digit whole number: 654321\nThe product is 80779853376\n\nThe 5 final digits are: 53376\n```\n\nExample 2:\n```text\nEnter a 6-digit whole number: 12345\nEnter another 6-digit whole number: 123456\nOne of the numbers is too small.\n```",
       "hints": [
         "Validate each six-digit number against MINIMUM and MAXIMUM.",
         "Use long for the product and % 100000 for the last five digits."
@@ -643,7 +643,7 @@
     "pf-term1-0205-numbers-v3": {
       "category": "Variables, Data Types and Input",
       "title": "Numbers V3",
-      "instructions": "Read a dividend containing at least `13` digits and a divisor containing at least `8` digits. The starter code already declares `MINIMUM_DIVIDEND` and `MINIMUM_DIVISOR`; use them to validate the inputs. Report an error and stop when either value is too small. Otherwise, calculate the quotient as a decimal number and print it, then print the quotient again as a whole number with no fractional part.",
+      "instructions": "Read a dividend containing at least `13` digits and a divisor containing at least `8` digits.\n\nThe starter code already declares `MINIMUM_DIVIDEND` and `MINIMUM_DIVISOR`; use them to validate the inputs.\n\nReport an error and stop when either value is too small.\n\nOtherwise, calculate the quotient as a decimal number and print it, then print the quotient again as a whole number with no fractional part.\n\nExample 1:\n```text\nEnter a 13-digit whole number: 1234567890123\nEnter an 8-digit whole number: 87654321\nThe quotient is 14084.506913504014\nWithout the fractional part it's 14084\n```\n\nExample 2:\n```text\nEnter a 13-digit number: 123456789012\nThis number is too small.\n```\n\nExample 3:\n```text\nEnter a 13-digit whole number: 1234567890123\nEnter an 8-digit whole number: 1234567\nThis number is too small.\n```",
       "hints": [
         "Use long for the large integer inputs.",
         "Cast the quotient to long to remove its fractional part."
@@ -706,7 +706,7 @@
     "pf-term1-0206-ascii-table": {
       "category": "Variables, Data Types and Input",
       "title": "ASCII table",
-      "instructions": "Write a program that prints an ASCII value of a characters. First, have the user enter a number from `32` (space bar) up until `127`, then print the character which represents that number. If the user enters an invalid number, abort the program.\n\nExtra: If you already have some experience in programming and are familiar with loops; print all characters with a decimal code of `32` up to `127`. See the example below, each line of the output contains six characters.\n\nExtra extra: Expand the table with all characters with a decimal code of `128` up to `255`.\n\nExpected output\n( `32`) ! ( `33`) \" ( `34`) # ( `35`) $ ( `36`) % ( `37`)\n& ( `38`) ' ( `39`) ( ( `40`) ) ( `41`) * ( `42`) + ( `43`)\n, ( `44`) - ( `45`) . ( `46`) / ( `47`) `0` ( `48`) `1` ( `49`)\n`2` ( `50`) `3` ( `51`) `4` ( `52`) `5` ( `53`) `6` ( `54`) `7` ( `55`)\n`8` ( `56`) `9` ( `57`) : ( `58`) ; ( `59`) < ( `60`) = ( `61`)\n> ( `62`) ? ( `63`) @ ( `64`) A ( `65`) B ( `66`) C ( `67`)\nD ( `68`) E ( `69`) F ( `70`) G ( `71`) H ( `72`) I ( `73`)\nJ ( `74`) K ( `75`) L ( `76`) M ( `77`) N ( `78`) O ( `79`)\nP ( `80`) Q ( `81`) R ( `82`) S ( `83`) T ( `84`) U ( `85`)\nV ( `86`) W ( `87`) X ( `88`) Y ( `89`) Z ( `90`) [ ( `91`)\n\\ ( `92`) ] ( `93`) ^ ( `94`) _ ( `95`) ` ( `96`) a ( `97`)\nb ( `98`) c ( `99`) d (`100`) e (`101`) f (`102`) g (`103`)\nh (`104`) i (`105`) j (`106`) k (`107`) l (`108`) m (`109`)\nn (`110`) o (`111`) p (`112`) q (`113`) r (`114`) s (`115`)\nt (`116`) u (`117`) v (`118`) w (`119`) x (`120`) y (`121`)\nz (`122`) { (`123`) | (`124`) } (`125`) ~ (`126`) □ (`127`)",
+      "instructions": "Write a program that prints an ASCII value of a characters.\n\nFirst, have the user enter a number from `32` (space bar) up until `127`, then print the character which represents that number.\n\nIf the user enters an invalid number, abort the program.\n\nExtra: If you already have some experience in programming and are familiar with loops; print all characters with a decimal code of `32` up to `127`.\n\nSee the example below, each line of the output contains six characters.\n\nExtra extra: Expand the table with all characters with a decimal code of `128` up to `255`.\n\nExpected output\n\n```text\n  ( 32) ! ( 33) \" ( 34) # ( 35) $ ( 36) % ( 37)\n& ( 38) ' ( 39) ( ( 40) ) ( 41) * ( 42) + ( 43)\n, ( 44) - ( 45) . ( 46) / ( 47) 0 ( 48) 1 ( 49)\n2 ( 50) 3 ( 51) 4 ( 52) 5 ( 53) 6 ( 54) 7 ( 55)\n8 ( 56) 9 ( 57) : ( 58) ; ( 59) < ( 60) = ( 61)\n> ( 62) ? ( 63) @ ( 64) A ( 65) B ( 66) C ( 67)\nD ( 68) E ( 69) F ( 70) G ( 71) H ( 72) I ( 73)\nJ ( 74) K ( 75) L ( 76) M ( 77) N ( 78) O ( 79)\nP ( 80) Q ( 81) R ( 82) S ( 83) T ( 84) U ( 85)\nV ( 86) W ( 87) X ( 88) Y ( 89) Z ( 90) [ ( 91)\n\\ ( 92) ] ( 93) ^ ( 94) _ ( 95) ` ( 96) a ( 97)\nb ( 98) c ( 99) d (100) e (101) f (102) g (103)\nh (104) i (105) j (106) k (107) l (108) m (109)\nn (110) o (111) p (112) q (113) r (114) s (115)\nt (116) u (117) v (118) w (119) x (120) y (121)\nz (122) { (123) | (124) } (125) ~ (126) □ (127)\n```",
       "hints": [
         "Cast an integer to char to obtain its character.",
         "ASCII/extended character rendering can depend on the console encoding."
@@ -769,7 +769,7 @@
     "pf-term1-0207-digits-v1": {
       "category": "Variables, Data Types and Input",
       "title": "Digits v1",
-      "instructions": "Write a program in which you ask the user for four digits. Your program is then supposed to create a number out of these four digits. The first digit represents 1000s, the next one 100s, etc.\n\nThe sample input/output below should make things more clear.\n\nPossible extras:\n\nValidate the input\nTricky: If you are familiar with loops: make sure that the program repeats until the user enters -`1` as his/her first digit (you can use a `boolean` variable to achieve this)\nHard: For experienced students! instead of an `int`, read the input as a string of text (using nextLine) and then convert the first character to an `int`.\nExamples\nFirst run:\n\nEnter four digits (`0`..`9`).\nThe first digit: `9`\nThe second digit: `5`\nThe third digit: `7`\nThe fourth digit: `9`\nThe number is `9579`\nSecond run:\n\nEnter four digits (`0`..`9`).\nThe first digit: `6`\nThe second digit: `0`\nThe third digit: `2`\nThe fourth digit: `7`\nThe number is `6027`\nThird run:\n\nEnter four digits (`0`..`9`).\nThe first digit: `0`\nThe second digit: `8`\nThe third digit: `0`\nThe fourth digit: `7`\nThe number is `807`",
+      "instructions": "Write a program in which you ask the user for four digits.\n\nYour program is then supposed to create a number out of these four digits.\n\nThe first digit represents 1000s, the next one 100s, etc.\n\nThe sample input/output below should make things more clear.\n\nPossible extras:\n\nValidate the input\n\nTricky: If you are familiar with loops: make sure that the program repeats until the user enters -`1` as his/her first digit (you can use a `boolean` variable to achieve this)\n\nHard: For experienced students! instead of an `int`, read the input as a string of text (using nextLine) and then convert the first character to an `int`.\n\nExamples\n\n```text\nFirst run:\n\nEnter four digits (0..9).\nThe first digit: 9\nThe second digit: 5\nThe third digit: 7\nThe fourth digit: 9\nThe number is 9579\nSecond run:\n\nEnter four digits (0..9).\nThe first digit: 6\nThe second digit: 0\nThe third digit: 2\nThe fourth digit: 7\nThe number is 6027\nThird run:\n\nEnter four digits (0..9).\nThe first digit: 0\nThe second digit: 8\nThe third digit: 0\nThe fourth digit: 7\nThe number is 807\n```",
       "hints": [
         "Each digit contributes a different power of ten.",
         "Use a helper method to read and convert a digit if desired."
@@ -816,7 +816,7 @@
     "pf-term1-0208-digits-v2": {
       "category": "Variables, Data Types and Input",
       "title": "Digits v2",
-      "instructions": "Read a whole number and calculate the sum of its four digits. Accept only values from `1000` through `9999`; the starter code already declares the `MINIMUM` and `MAXIMUM` constants. If the number is outside that range, display an error and ask again. Continue accepting numbers until the user enters `-1` to stop. Do not count the sentinel as a number.",
+      "instructions": "Read a whole number and calculate the sum of its four digits.\n\nAccept only values from `1000` through `9999`; the starter code already declares the `MINIMUM` and `MAXIMUM` constants.\n\nIf the number is outside that range, display an error and ask again.\n\nContinue accepting numbers until the user enters `-1` to stop.\n\nDo not count the sentinel as a number.\n\nExample 1:\n```text\nEnter a 4-digit whole number (1000..9999): 1540\n\nThe sum of the digits of this number is 10\n```\n\nExample 2:\n```text\nEnter a 4-digit whole number (1000..9999): 6187\n\nThe sum of the digits of this number is 22\n```",
       "hints": [
         "Repeatedly divide by 10 and use % 10 to obtain each digit.",
         "Validate the input against the required range."
@@ -879,7 +879,7 @@
     "pf-term1-0209-fuel-consumption": {
       "category": "Variables, Data Types and Input",
       "title": "Fuel consumption",
-      "instructions": "Write a program to calculate a car's fuel consumption.\n\nAsk for the following input:\n\nThe car's mileage the last time its tank was filled.\nThe current mileage of the car.\nThe amount of fuel (in liters) that was used to fill the tank.\nExample\nEnter the previous mileage: `79114`\nEnter the current mileage: `80103`\nEnter the amount of liters refilled: `60.4`\nConsumption for 989km driven: `6.11` liters/100km",
+      "instructions": "Write a program to calculate a car's fuel consumption.\n\nAsk for the following input:\n\nThe car's mileage the last time its tank was filled.\n\nThe current mileage of the car.\n\nThe amount of fuel (in liters) that was used to fill the tank.\n\nExample\n\n```text\nEnter the previous mileage: 79114\nEnter the current mileage: 80103\nEnter the amount of liters refilled: 60.4\nConsumption for 989km driven: 6.11 liters/100km\n```",
       "hints": [
         "Subtract the previous mileage from the current mileage.",
         "Calculate liters used per 100 km."
@@ -926,7 +926,7 @@
     "pf-term1-0210-switches": {
       "category": "Variables, Data Types and Input",
       "title": "Switches",
-      "instructions": "Read the states of three switches as `boolean` values (`true` means on and `false` means off). Then perform these checks in order: print `At least two switches are turned on.` when two or three switches are on; print `Exactly two switches are turned on.` when precisely two are on; and print `At most one switch is turned on.` when zero or one is on. A run may print more than one message when more than one condition is `true`.",
+      "instructions": "Read the states of three switches as `boolean` values (`true` means on and `false` means off).\n\nThen perform these checks in order: print `At least two switches are turned on.` when two or three switches are on; print `Exactly two switches are turned on.` when precisely two are on; and print `At most one switch is turned on.` when zero or one is on.\n\nA run may print more than one message when more than one condition is `true`.\n\nExample 1:\n```text\nEnter the state of switch 1 (true or false): false\nEnter the state of switch 2 (true or false): false\nEnter the state of switch 3 (true or false): false\n\nAt most one switch is turned on.\n```\n\nExample 2:\n```text\nEnter the state of switch 1 (true or false): false\nEnter the state of switch 2 (true or false): true\nEnter the state of switch 3 (true or false): false\n\nAt most one switch is turned on.\n```\n\nExample 3:\n```text\nEnter the state of switch 1 (true or false): true\nEnter the state of switch 2 (true or false): false\nEnter the state of switch 3 (true or false): true\n\nAt least two switches are turned on.\nExactly two switches are turned on.\n```\n\nExample 4:\n```text\nEnter the state of switch 1 (true or false): true\nEnter the state of switch 2 (true or false): true\nEnter the state of switch 3 (true or false): true\n\nAt least two switches are turned on.\n```",
       "hints": [
         "Count how many boolean values are true.",
         "Use independent if statements so all applicable messages are printed."
@@ -981,7 +981,7 @@
     "pf-term1-0211-scramble-name-extra": {
       "category": "Variables, Data Types and Input",
       "title": "Scramble name /EXTRA",
-      "instructions": "This exercise uses API's we have not covered in class yet, and is intended as a challenge for students with prior Java knowledge!\n\nWrite a program to shuffle the letters of a person's name.\n\nSpaces should be removed.\n\nHint: check the documentation of the class `Random`.\n\nExamples\nFirst run:\n\nEnter your name: Lars Willemsens\nHi Lars Willemsens, your scrambled name is snraeissWLmell.\nSecond run:\n\nEnter your name: Jan de Rijke\nHi Jan de Rijke, your scrambled name is iRanjJedek.",
+      "instructions": "This exercise uses API's we have not covered in class yet, and is intended as a challenge for students with prior Java knowledge!\n\nWrite a program to shuffle the letters of a person's name.\n\nSpaces should be removed.\n\nHint: check the documentation of the class `Random`.\n\nExamples\n\n```text\nFirst run:\n\nEnter your name: Lars Willemsens\nHi Lars Willemsens, your scrambled name is snraeissWLmell.\nSecond run:\n\nEnter your name: Jan de Rijke\nHi Jan de Rijke, your scrambled name is iRanjJedek.\n```",
       "hints": [
         "Remove spaces before shuffling.",
         "Use Random to select and remove a character until none remain."
@@ -1028,7 +1028,7 @@
     "pf-term1-0212-investment": {
       "category": "Variables, Data Types and Input",
       "title": "Investment",
-      "instructions": "Ask for the user’s name, initial investment, annual interest rate, number of years, and currency character. Use appropriate types such as `String`, `double`, `int`, and `char`. Calculate the final balance using compound interest: `investment × (1 + interestRate / 100)^years`. Display the entered values and the calculated balance. Then calculate and display the balance after adding the number of complete five-year periods and remaining years, after increasing the year count by one with the increment operator, and after increasing the initial investment by `100` with a compound assignment operator. Finally, store the last balance in an `int` to demonstrate conversion without a fractional part.",
+      "instructions": "Ask for the user’s name, initial investment, annual interest rate, number of years, and currency character.\n\nUse appropriate types such as `String`, `double`, `int`, and `char`.\n\nCalculate the final balance using compound interest: `investment × (1 + interestRate / 100)^years`.\n\nDisplay the entered values and the calculated balance.\n\nThen calculate and display the balance after adding the number of complete five-year periods and remaining years, after increasing the year count by one with the increment operator, and after increasing the initial investment by `100` with a compound assignment operator.\n\nFinally, store the last balance in an `int` to demonstrate conversion without a fractional part.",
       "hints": [
         "Use Math.pow(1 + rate / 100, years).",
         "Use / and % to split years into 5-year periods and remaining years."
@@ -1107,7 +1107,7 @@
     "pf-term1-0300-higherlower-variable": {
       "category": "Control Flow, Loops and Methods",
       "title": "HigherLower (variable)",
-      "instructions": "Task `1`\nImplement and run the HigherLower program from the slides\nTask `2`\nSometimes you need to change your algorithm a bit to go well with the structure of your programming language.\n\nwhile (`true`){\n\n// statements omitted\n\nif (test) return;\n\n}\n\nThe while(`true`) / return structure is not elegant. While can be accompanied by a test, so it is often better to put the test there, rather than to put it in an if inside the loop.\n\nRemove the if from the loop and put the test in the while condition.\n\nHint: To test if two values are NOT the same, use the != operator.\n\nTask `3`\nExtend HigherLower with a counter.\nPrint the number of guesses the user needed to guess the secret.",
+      "instructions": "Task `1`\n\nImplement and run the HigherLower program from the slides\n\nTask `2`\n\nSometimes you need to change your algorithm a bit to go well with the structure of your programming language.\n\n```text\nwhile (true){\n\n// statements omitted\n\nif (test) return;\n\n}\n```\n\nThe while(`true`) / return structure is not elegant.\n\nWhile can be accompanied by a test, so it is often better to put the test there, rather than to put it in an if inside the loop.\n\nRemove the if from the loop and put the test in the while condition.\n\nHint: To test if two values are NOT the same, use the != operator.\n\nTask `3`\n\nExtend HigherLower with a counter.\n\nPrint the number of guesses the user needed to guess the secret.",
       "hints": [
         "Keep the loop running while the guess differs from the secret.",
         "Increment the counter for every guess."
@@ -1154,7 +1154,7 @@
     "pf-term1-0108-higherlower-variable": {
       "category": "Basic Programming and Conditionals",
       "title": "HigherLower (variable)",
-      "instructions": "Task `1`\nImplement and run the HigherLower program from the slides\nTask `2`\nSometimes you need to change your algorithm a bit to go well with the structure of your programming language.\n\nwhile (`true`){\n\n// statements omitted\n\nif (test) return;\n\n}\n\nThe while(`true`) / return structure is not elegant. While can be accompanied by a test, so it is often better to put the test there, rather than to put it in an if inside the loop.\n\nRemove the if from the loop and put the test in the while condition.\n\nHint: To test if two values are NOT the same, use the != operator.\n\nTask `3`\nExtend HigherLower with a counter.\nPrint the number of guesses the user needed to guess the secret.",
+      "instructions": "Task `1`\n\nImplement and run the HigherLower program from the slides\n\nTask `2`\n\nSometimes you need to change your algorithm a bit to go well with the structure of your programming language.\n\n```text\nwhile (true){\n\n// statements omitted\n\nif (test) return;\n\n}\n```\n\nThe while(`true`) / return structure is not elegant.\n\nWhile can be accompanied by a test, so it is often better to put the test there, rather than to put it in an if inside the loop.\n\nRemove the if from the loop and put the test in the while condition.\n\nHint: To test if two values are NOT the same, use the != operator.\n\nTask `3`\n\nExtend HigherLower with a counter.\n\nPrint the number of guesses the user needed to guess the secret.",
       "hints": [
         "Calculate BMI before applying the conditions.",
         "Use an if/else-if chain for the four ranges."
@@ -1201,7 +1201,7 @@
     "pf-term1-0302-scrabble-switch": {
       "category": "Control Flow, Loops and Methods",
       "title": "Scrabble (switch)",
-      "instructions": "Ask the user for a letter and show the scrabble value for that letter.\nThe user should get the same result whether entering a lower or upper-case letter.\n\nPoints\n\nLetters\n\n`1` point\n\nA, E, I, L, N, O, R, S, T, U\n\n`2` points\n\nD, G\n\n`3` points\n\nB, C, M, P\n\n`4` points\n\nF, H, V, W, Y\n\n`5` points\n\nK\n\n`8` points\n\nJ, X\n\n`10` points\n\nQ, Z",
+      "instructions": "Ask the user for a letter and show the scrabble value for that letter.\n\nThe user should get the same result whether entering a lower or upper-case letter.\n\nPoints\n\nLetters\n\n`1` point\n\nA, E, I, L, N, O, R, S, T, U\n\n`2` points\n\nD, G\n\n`3` points\n\nB, C, M, P\n\n`4` points\n\nF, H, V, W, Y\n\n`5` points\n\nK\n\n`8` points\n\nJ, X\n\n`10` points\n\nQ, Z",
       "hints": [
         "Convert the input letter to lower case.",
         "Use a switch statement or a character-to-points lookup."
@@ -1288,7 +1288,7 @@
     "pf-term1-0303-loops-while-for": {
       "category": "Control Flow, Loops and Methods",
       "title": "Loops (while/for)",
-      "instructions": "Task `1`: while\nWrite a program that\n\nDisplays a line with all numbers from `120` to `100` (descending)\nDisplays a line with all multiples of `3` below `50`\nDisplays a line with the powers of `5` below `10`,`000`\nDisplays a line with the alphabet\nHint: you can increment a `char`\n\nTask `2`: do-while\nMake a copy of the program you wrote in task `1` and replace all while loops with do-while loops.\n\nTask `3`: for\nMake a copy of the program you wrote in task `1` and replace all while loops with for loops.",
+      "instructions": "Task `1`: while\n\nWrite a program that\n\nDisplays a line with all numbers from `120` to `100` (descending)\n\nDisplays a line with all multiples of `3` below `50`\n\nDisplays a line with the powers of `5` below `10`,`000`\n\nDisplays a line with the alphabet\n\nHint: you can increment a `char`\n\nTask `2`: do-while\n\nMake a copy of the program you wrote in task `1` and replace all while loops with do-while loops.\n\nTask `3`: for\n\nMake a copy of the program you wrote in task `1` and replace all while loops with for loops.",
       "hints": [
         "Implement the same four sequences with while, do-while and for loops.",
         "A char variable can be incremented to print the alphabet."
@@ -1343,7 +1343,7 @@
     "pf-term1-0304-multiples-while": {
       "category": "Control Flow, Loops and Methods",
       "title": "Multiples (while)",
-      "instructions": "Ask the user for a positive integer. Declare a constant `MAX` with the value `100`, then print all positive multiples of the entered number that are less than `MAX`.",
+      "instructions": "Ask the user for a positive integer.\n\nDeclare a constant `MAX` with the value `100`, then print all positive multiples of the entered number that are less than `MAX`.\n\nExample 1:\n```text\nWhich number would you like to see the multiples of? 28\n28\n56\n84\n```",
       "hints": [
         "Start with the number itself and add it repeatedly.",
         "Stop before the value reaches MAX."
@@ -1390,7 +1390,7 @@
     "pf-term1-0305-factorial-for": {
       "category": "Control Flow, Loops and Methods",
       "title": "Factorial (for)",
-      "instructions": "Ask the user for a maximum value from `1` through `20`. Print the factorials from `1!` up to that value, one per line. Use a `for` loop to calculate each factorial and a `long` variable so the result for `20!` does not overflow. Reject values outside the permitted range and ask again.",
+      "instructions": "Ask the user for a maximum value from `1` through `20`.\n\nPrint the factorials from `1!` up to that value, one per line.\n\nUse a `for` loop to calculate each factorial and a `long` variable so the result for `20!` does not overflow.\n\nReject values outside the permitted range and ask again.\n\nExample 1:\n```text\n1! = 1\n2! = 2\n3! = 6\n4! = 24\n5! = 120\n6! = 720\n7! = 5040\n8! = 40320\n9! = 362880\n10! = 3628800\n11! = 39916800\n12! = 479001600\n13! = 6227020800\n14! = 87178291200\n15! = 1307674368000\n16! = 20922789888000\n17! = 355687428096000\n18! = 6402373705728000\n19! = 121645100408832000\n20! = 2432902008176640000\n```",
       "hints": [
         "Start the factorial accumulator at 1.",
         "Use long because 20! is larger than the int range."
@@ -1453,7 +1453,7 @@
     "pf-term1-0306-days-in-month-switch-conditional-operator": {
       "category": "Control Flow, Loops and Methods",
       "title": "Days in month (switch/conditional operator)",
-      "instructions": "Task `1`: Days in month\nAsk a user for the number of a month.\n\nPrint the name of the month and the number of days.\n\nThere should be only one println statement in your program for printing the result.\n\nExample (`2` runs):\n\nEnter a month number (`1` = January): `2`\nFebruary has `28` days.:\n\nEnter a month number (`1` = January): `5`\nMay has `31` days\nTask `2`: Days in month in year\nExtend your program to also ask the user for a year.\n\nIf the year is a leap year, February should have `29` days.\n\nA year is a leap year if it is a multiple of `400`. It is also a leap year if it is a multiple of `4` and not a multiple of `100`.\n\nExample (`2` runs):\n\nEnter a month number (`1` = January): `2`\nEnter a year (`4` digits): `2020`\nIn `2020` February has `29` days.\n\nEnter a month number (`1` = January): `2`\nEnter a year (`4` digits):`2021`\nIn `2021` February has `28` days.",
+      "instructions": "Task `1`: Days in month\n\nAsk a user for the number of a month.\n\nPrint the name of the month and the number of days.\n\nThere should be only one println statement in your program for printing the result.\n\nExample (`2` runs):\n\n```text\nEnter a month number (1 = January): 2\nFebruary has 28 days.:\n\nEnter a month number (1 = January): 5\nMay has 31 days\n```\n\nTask `2`: Days in month in year\n\nExtend your program to also ask the user for a year.\n\nIf the year is a leap year, February should have `29` days.\n\nA year is a leap year if it is a multiple of `400`.\n\nIt is also a leap year if it is a multiple of `4` and not a multiple of `100`.\n\nExample (`2` runs):\n\n```text\nEnter a month number (1 = January): 2\nEnter a year (4 digits): 2020\nIn 2020 February has 29 days.\n\nEnter a month number (1 = January): 2\nEnter a year (4 digits):2021\nIn 2021 February has 28 days.\n```",
       "hints": [
         "Use a switch or lookup structure for month names and day counts.",
         "A leap year is divisible by 400, or divisible by 4 but not 100."
@@ -1596,7 +1596,7 @@
     "pf-term1-0307-hexadecimal-for": {
       "category": "Control Flow, Loops and Methods",
       "title": "Hexadecimal (for)",
-      "instructions": "Read how many hexadecimal digits to display, from `1` through `16`. Print that many leading digits from the sequence `0 1 2 3 4 5 6 7 8 9 A B C D E F`, separated by spaces. Use a `for` loop and character arithmetic to produce the digits; convert values `0` through `9` to characters and values `10` through `15` to `A` through `F`. Reject a count outside the permitted range.",
+      "instructions": "Read how many hexadecimal digits to display, from `1` through `16`.\n\nPrint that many leading digits from the sequence `0 1 2 3 4 5 6 7 8 9 A B C D E F`, separated by spaces.\n\nUse a `for` loop and character arithmetic to produce the digits; convert values `0` through `9` to characters and values `10` through `15` to `A` through `F`.\n\nReject a count outside the permitted range.",
       "hints": [
         "Print the digits 0–9.",
         "Cast character arithmetic back to char for A–F."
@@ -1651,7 +1651,7 @@
     "pf-term1-0308-divisible-loops-nested-if": {
       "category": "Control Flow, Loops and Methods",
       "title": "Divisible (loops/nested if)",
-      "instructions": "Task `1`: Divisible\nAsk the user for two numbers.\n\nPrint all numbers between `1` and `1000` that are divisible by both numbers (the remainder of dividing is `0`)\n\nExpected output:\n\nEnter the first divider: `7`\nEnter the second divider: `3`\n`21` `42` `63` `84` `105` `126` `147` `168` `189` `210` `231` `252` `273` `294` `315` `336` `357` `378` `399` `420` `441` `462` `483` `504` `525` `546` `567` `588` `609` `630` `651` `672` `693` `714` `735` `756` `777` `798` `819` `840` `861` `882` `903` `924` `945` `966` `987`\nTask `2`: format the output\nModify the program to print maximum `10` numbers on a line\n\nEnter the first divider: `3`\nEnter the second divider: `8`\n`24` `48` `72` `96` `120` `144` `168` `192` `216` `240`\n`264` `288` `312` `336` `360` `384` `408` `432` `456` `480`\n`504` `528` `552` `576` `600` `624` `648` `672` `696` `720`\n`744` `768` `792` `816` `840` `864` `888` `912` `936` `960`\nTask `3`: Rinse and repeat\nAsk the user for a new set of dividers until the user enters a zero\nif the user enters a negative number for one of the dividers, print an error message and restart the loop\nWe'll print all numbers below `1000` that are divisible between `2` numbers of your choosing.\n\nEnter the first divider (end the program with `0`): `9`\nEnter the second divider: `11`\n`99` `198` `297` `396` `495` `594` `693` `792` `891` `990`\n\nEnter the first divider (end the program with `0`): -`3`\nEnter the second divider: `5`\nPlease enter positive numbers\n\nEnter the first divider (end the program with `0`): `14`\nEnter the second divider: `60`\n`420` `840`\n\nEnter the first divider (end the program with `0`): `0`",
+      "instructions": "Task `1`: Divisible\n\nAsk the user for two numbers.\n\nPrint all numbers between `1` and `1000` that are divisible by both numbers (the remainder of dividing is `0`)\n\nExpected output:\n\n```text\nEnter the first divider: 7\nEnter the second divider: 3\n21 42 63 84 105 126 147 168 189 210 231 252 273 294 315 336 357 378 399 420 441 462 483 504 525 546 567 588 609 630 651 672 693 714 735 756 777 798 819 840 861 882 903 924 945 966 987\n```\n\nTask `2`: format the output\n\nModify the program to print maximum `10` numbers on a line\n\n```text\nEnter the first divider: 3\nEnter the second divider: 8\n24 48 72 96 120 144 168 192 216 240\n264 288 312 336 360 384 408 432 456 480\n504 528 552 576 600 624 648 672 696 720\n744 768 792 816 840 864 888 912 936 960\n```\n\nTask `3`: Rinse and repeat\n\nAsk the user for a new set of dividers until the user enters a zero\n\nif the user enters a negative number for one of the dividers, print an error message and restart the loop\n\n```text\nWe'll print all numbers below 1000 that are divisible between 2 numbers of your choosing.\n\nEnter the first divider (end the program with 0): 9\nEnter the second divider: 11\n99 198 297 396 495 594 693 792 891 990\n\nEnter the first divider (end the program with 0): -3\nEnter the second divider: 5\nPlease enter positive numbers\n\nEnter the first divider (end the program with 0): 14\nEnter the second divider: 60\n420 840\n\nEnter the first divider (end the program with 0): 0\n```",
       "hints": [
         "A number must have remainder zero with both dividers.",
         "Reset the line counter after printing ten values."
@@ -1706,7 +1706,7 @@
     "pf-term1-0309-interest-extra": {
       "category": "Control Flow, Loops and Methods",
       "title": "Interest / EXTRA",
-      "instructions": "Task `1`: Compound interest\nCalculate the growth of capital over the years at a given interest rate.\n\nAsk the user to enter these data:\n\nstarting capital (`double`)\ninterest rate (`double`)\nnumber of years (`int`)\nCalculate the captial after the given number of years. Cast the capital to `long` before printing.\n\nExample run:\n\nEnter the starting capital in €: `10000`\nEnter the interest rate: `1`,`1`\nEnter the number of years: `8`\nThe capital will amount to `€10914`\nTask `2`: years to `double`\nExtend the program by adding the number of years it will take to `double` the amount at this interest rate.\n\nExample run:\n\nEnter the amount in €: `1000`\nEnter the interest: `2`,`5`\nEnter the number of years: `3`\nThe capital will amount to `€1076`\nIt takes `29` years to `double` the money.;",
+      "instructions": "Task `1`: Compound interest\n\nCalculate the growth of capital over the years at a given interest rate.\n\nAsk the user to enter these data:\n\nstarting capital (`double`)\n\ninterest rate (`double`)\n\nnumber of years (`int`)\n\nCalculate the captial after the given number of years.\n\nCast the capital to `long` before printing.\n\nExample run:\n\n```text\nEnter the starting capital in €: 10000\nEnter the interest rate: 1,1\nEnter the number of years: 8\nThe capital will amount to €10914\n```\n\nTask `2`: years to `double`\n\nExtend the program by adding the number of years it will take to `double` the amount at this interest rate.\n\nExample run:\n\n```text\nEnter the amount in €: 1000\nEnter the interest: 2,5\nEnter the number of years: 3\nThe capital will amount to €1076\nIt takes 29 years to double the money.;\n```",
       "hints": [
         "Compound interest uses Math.pow().",
         "The doubling time can be calculated with logarithms."
@@ -1753,7 +1753,7 @@
     "pf-term1-0310-ascii-box-extra": {
       "category": "Control Flow, Loops and Methods",
       "title": "ASCII box / EXTRA",
-      "instructions": "Task `1`: Draw a filled box\nDraw a filled box using an ascii character.\n\nFirst ask whether to draw a filled box (`1`) or an outline (`2`). Then ask for the character to use, the height and the width.\nwidth is between `2` and `60`, height is between `2` and `20`. Check and ask again if needed.\nDraw as many lines as the height. Use a loop.\nFor each line, draw as many characters on a line as the width. You'll need another loop within he first one.\nExample output:\n\nWe'll draw an ASCII box using a character and dimensions of your choice.\nEnter a character: @\nEnter the width (`2`..`60`): `44`\nEnter the height (`2`..`20`): `499`\nInvalid height\nEnter the height (`2`..`20`): `4`\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\nTask `2`: Draw a box outline\nModify the previous program to only draw the box borders.\n\nThe contents of the box should be blank.\n\nExample output:\n\nWe'll draw an ASCII box using a character and dimensions of your choice.\nEnter a character: +\nEnter the width (`2`..`60`): `51`\nEnter the height (`2`..`20`): `6`\n+++++++++++++++++++++++++++++++++++++++++++++++++++\n+ +\n+ +\n+ +\n+ +\n+++++++++++++++++++++++++++++++++++++++++++++++++++",
+      "instructions": "Task `1`: Draw a filled box\n\nDraw a filled box using an ascii character.\n\nFirst ask whether to draw a filled box (`1`) or an outline (`2`).\n\nThen ask for the character to use, the height and the width.\n\nwidth is between `2` and `60`, height is between `2` and `20`.\n\nCheck and ask again if needed.\n\nDraw as many lines as the height.\n\nUse a loop.\n\nFor each line, draw as many characters on a line as the width.\n\nYou'll need another loop within he first one.\n\nExample output:\n\n```text\nWe'll draw an ASCII box using a character and dimensions of your choice.\nEnter a character: @\nEnter the width (2..60): 44\nEnter the height (2..20): 499\nInvalid height\nEnter the height (2..20): 4\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n```\n\nTask `2`: Draw a box outline\n\nModify the previous program to only draw the box borders.\n\nThe contents of the box should be blank.\n\nExample output:\n\n```text\nWe'll draw an ASCII box using a character and dimensions of your choice.\nEnter a character: +\nEnter the width (2..60): 51\nEnter the height (2..20): 6\n+++++++++++++++++++++++++++++++++++++++++++++++++++\n+                                                 +\n+                                                 +\n+                                                 +\n+                                                 +\n+++++++++++++++++++++++++++++++++++++++++++++++++++\n```",
       "hints": [
         "Use nested loops for rows and columns.",
         "For an outline, print a space for non-border cells."
@@ -1808,7 +1808,7 @@
     "pf-term1-0311-sequence-extra": {
       "category": "Control Flow, Loops and Methods",
       "title": "Sequence / EXTRA",
-      "instructions": "Write a program that implements the following behavior:\n\nHow many numbers do you want to print? `5`\nWhat is the starting value? `100`\nWhat is the increment? `50`\n`100` `150` `200` `250` `300`",
+      "instructions": "Write a program that implements the following behavior:\n\n```text\nHow many numbers do you want to print? 5\nWhat is the starting value? 100\nWhat is the increment? 50\n100 150 200 250 300\n```",
       "hints": [
         "Use a counter to control how many values are printed.",
         "Add the increment after each value."
@@ -1855,7 +1855,7 @@
     "pf-term1-0312-multiplication-table-extra": {
       "category": "Control Flow, Loops and Methods",
       "title": "Multiplication table / EXTRA",
-      "instructions": "Ask for a table size from `1` through `30`. If the user enters an invalid size, display an error and ask again. Print a square multiplication table with that many rows and columns. Use nested loops: the outer loop controls rows and the inner loop controls cells. The starter code contains a comment showing the suggested fixed-width `printf` call for each cell.",
+      "instructions": "Ask for a table size from `1` through `30`.\n\nIf the user enters an invalid size, display an error and ask again.\n\nPrint a square multiplication table with that many rows and columns.\n\nUse nested loops: the outer loop controls rows and the inner loop controls cells.\n\nThe starter code contains a comment showing the suggested fixed-width `printf` call for each cell.\n\nExample 1:\n```text\nEnter a number between 1 and 30: 55\nInvalid number\n\nEnter a number between 1 and 30: 5\n| 1| 2| 3| 4| 5|\n| 2| 4| 6| 8| 10|\n| 3| 6| 9| 12| 15|\n| 4| 8| 12| 16| 20|\n| 5| 10| 15| 20| 25|\n```",
       "hints": [
         "Use nested loops to print rows and columns.",
         "Use printf with a fixed width for aligned cells."
@@ -1902,7 +1902,7 @@
     "pf-term1-0313-multiplication-table-quiz-extra": {
       "category": "Control Flow, Loops and Methods",
       "title": "Multiplication table + Quiz / EXTRA",
-      "instructions": "Task `1`: print the multiplication tables for a number between `1` and `10`\nExample run:\n\nWhich multiplication table would you like to see? `7`\n`1` x `7` = `7`\n`2` x `7` = `14`\n`3` x `7` = `21`\n`4` x `7` = `28`\n`5` x `7` = `35`\n`6` x `7` = `42`\n`7` x `7` = `49`\n`8` x `7` = `56`\n`9` x `7` = `63`\n`10` x `7` = `70`\nTask `2`: Quiz\nWrite a quiz, where the user has to supply the values of a table, one by one. Check the values and repeat a question until you get the right answer.\nExample run:\n\nWhich multiplication table would you like to practice? `7`\n`1` x `7` = `7`\nCorrect!\n`2` x `7` = `12`\nWrong!\n3x7 = ...\n\n... continue to `10`, then quit.\n\nTask `3`: Quiz + score\nAt the end of the quiz, print the number of errors the user made.",
+      "instructions": "Task `1`: print the multiplication tables for a number between `1` and `10`\n\nExample run:\n\n```text\nWhich multiplication table would you like to see? 7\n1 x 7 = 7\n2 x 7 = 14\n3 x 7 = 21\n4 x 7 = 28\n5 x 7 = 35\n6 x 7 = 42\n7 x 7 = 49\n8 x 7 = 56\n9 x 7 = 63\n10 x 7 = 70\n```\n\nTask `2`: Quiz\n\nWrite a quiz, where the user has to supply the values of a table, one by one.\n\nCheck the values and repeat a question until you get the right answer.\n\nExample run:\n\n```text\nWhich multiplication table would you like to practice? 7\n1 x 7 = 7\nCorrect!\n2 x 7 = 12\nWrong!\n3x7 = ...\n\n... continue to 10, then quit.\n```\n\nTask `3`: Quiz + score\n\nAt the end of the quiz, print the number of errors the user made.",
       "hints": [
         "Ask each multiplication question in a loop.",
         "Repeat the same question until the answer is correct and count wrong attempts."
@@ -1957,7 +1957,7 @@
     "pf-term1-0314-ascii-christmas-tree-extra": {
       "category": "Control Flow, Loops and Methods",
       "title": "ASCII Christmas tree / EXTRA",
-      "instructions": "Write a program to draw a christmas tree using * and space characters.\n\nWhen writing the program avoid hard coding values in your program. Define them as constants.\n\nAsk the user for the width of the tree, this should be an uneven number between `13` and `29`\nIf the numbered entered is not within these boundaries, take the minimum width\nIf the number is not uneven make the width one smaller\nExample output\nEnter the width of the Christmas Tree (uneven number between `13` and `29`): `23`\n*\n***\n*****\n*******\n*********\n***********\n*************\n***************\n*****************\n*******************\n*********************\n***********************\n***\n***\n***\n***\ndraw the treetop\nstart with a line with one star\neach new line has two more stars\nstop drawing lines when the stars fill the entire width\non each line the number of spaces is the width - the number of stars\ndraw half of the spaces\ndraw all the stars\ndraw the remaining spaces (or draw nothing at all)\ndraw the trunk\nthe height of the trunk is always `4`\nthe width of the trunk (number of stars) is always `3`",
+      "instructions": "Write a program to draw a christmas tree using * and space characters.\n\nWhen writing the program avoid hard coding values in your program.\n\nDefine them as constants.\n\nAsk the user for the width of the tree, this should be an uneven number between `13` and `29`\n\nIf the numbered entered is not within these boundaries, take the minimum width\n\nIf the number is not uneven make the width one smaller\n\nExample output\n\n```text\nEnter the width of the Christmas Tree (uneven number between 13 and 29): 23\n           *\n          ***\n         *****\n        *******\n       *********\n      ***********\n     *************\n    ***************\n   *****************\n  *******************\n *********************\n***********************\n          ***\n          ***\n          ***\n          ***\n```\n\ndraw the treetop\n\nstart with a line with one star\n\neach new line has two more stars\n\nstop drawing lines when the stars fill the entire width\n\non each line the number of spaces is the width - the number of stars\n\ndraw half of the spaces\n\ndraw all the stars\n\ndraw the remaining spaces (or draw nothing at all)\n\ndraw the trunk\n\nthe height of the trunk is always `4`\n\nthe width of the trunk (number of stars) is always `3`",
       "hints": [
         "Normalize the requested width before drawing.",
         "The number of stars increases by two on each row; center the trunk below it."
@@ -2012,7 +2012,7 @@
     "pf-term1-0315-functions": {
       "category": "Control Flow, Loops and Methods",
       "title": "Functions",
-      "instructions": "Rewrite exercises `03`.01Age and/or `03.02` Scrabble using `3` functions:\n\none function to read the input\none function to calculate the result (the age category, the score)\none function to print the result\nAlso do this for exercise `03.06` Month in year. Choose for yourself what you think is a good candidate to be written as a separate function.",
+      "instructions": "Rewrite exercises `03`.01Age and/or `03.02` Scrabble using `3` functions:\n\none function to read the input\n\none function to calculate the result (the age category, the score)\n\none function to print the result\n\nAlso do this for exercise `03.06` Month in year.\n\nChoose for yourself what you think is a good candidate to be written as a separate function.",
       "hints": [
         "Separate input, calculation and output into methods.",
         "Reuse the age, Scrabble and month logic from the earlier exercises."
@@ -2064,9 +2064,7 @@
           "type": "methodExists",
           "className": "Main",
           "method": "ageCat",
-          "parameterTypes": [
-            "int"
-          ],
+          "parameterTypes": ["int"],
           "points": 1,
           "description": "Main.ageCat() is present."
         },
@@ -2074,12 +2072,8 @@
           "type": "methodReturn",
           "className": "Main",
           "method": "ageCat",
-          "parameterTypes": [
-            "int"
-          ],
-          "args": [
-            11
-          ],
+          "parameterTypes": ["int"],
+          "args": [11],
           "expected": "Child",
           "points": 1,
           "description": "Checks the return value of Main.ageCat."
@@ -2088,12 +2082,8 @@
           "type": "methodReturn",
           "className": "Main",
           "method": "ageCat",
-          "parameterTypes": [
-            "int"
-          ],
-          "args": [
-            12
-          ],
+          "parameterTypes": ["int"],
+          "args": [12],
           "expected": "Teenager",
           "points": 1,
           "description": "Checks the return value of Main.ageCat."
@@ -2102,12 +2092,8 @@
           "type": "methodReturn",
           "className": "Main",
           "method": "ageCat",
-          "parameterTypes": [
-            "int"
-          ],
-          "args": [
-            17
-          ],
+          "parameterTypes": ["int"],
+          "args": [17],
           "expected": "Adult",
           "points": 1,
           "description": "Checks the return value of Main.ageCat."
@@ -2116,12 +2102,8 @@
           "type": "methodReturn",
           "className": "Main",
           "method": "scrabbleScore",
-          "parameterTypes": [
-            "char"
-          ],
-          "args": [
-            "q"
-          ],
+          "parameterTypes": ["char"],
+          "args": ["q"],
           "expected": "This letter counts for 10 points",
           "points": 1,
           "description": "Checks the return value of Main.scrabbleScore."
@@ -2130,9 +2112,7 @@
           "type": "methodExists",
           "className": "Main",
           "method": "getMonths",
-          "parameterTypes": [
-            "int"
-          ],
+          "parameterTypes": ["int"],
           "points": 1,
           "description": "Main.getMonths() is present."
         },
@@ -2140,9 +2120,7 @@
           "type": "methodExists",
           "className": "Main",
           "method": "printRes",
-          "parameterTypes": [
-            "java.lang.Object"
-          ],
+          "parameterTypes": ["java.lang.Object"],
           "points": 1,
           "description": "Main.printRes() is present."
         }
@@ -2153,7 +2131,7 @@
     "pf-term1-0501-book-class": {
       "category": "Classes and Objects",
       "title": "Book (class)",
-      "instructions": "Create the `Book` class in the same source file as the supplied `TestBook01` driver. Declare private attributes `author` (`String`), `title` (`String`), `pages` (`int`), and `onLoan` (`boolean`). Add a constructor that accepts `author`, `title`, and `pages`, plus a no-argument constructor that reuses it with `\"unknown\"`, `\"unknown\"`, and `0`. Add getters and setters for all four attributes. Implement `toString()` so the title and author appear in uppercase, followed by the page count and either `on loan` or `available`. The supplied driver reads three book records. For each record, enter the author on one line, the title on the next line, then the page count and loan status (`true` or `false`) on separate lines. Keep every class in `Main.java`; do not declare a package or create another source file.",
+      "instructions": "Create the `Book` class in the same source file as the supplied `TestBook01` driver.\n\nDeclare private attributes `author` (`String`), `title` (`String`), `pages` (`int`), and `onLoan` (`boolean`).\n\nAdd a constructor that accepts `author`, `title`, and `pages`, plus a no-argument constructor that reuses it with `\"unknown\"`, `\"unknown\"`, and `0`.\n\nAdd getters and setters for all four attributes.\n\nImplement `toString()` so the title and author appear in uppercase, followed by the page count and either `on loan` or `available`.\n\nThe supplied driver reads three book records.\n\nFor each record, enter the author on one line, the title on the next line, then the page count and loan status (`true` or `false`) on separate lines.\n\nKeep every class in `Main.java`; do not declare a package or create another source file.",
       "hints": [
         "Keep attributes private.",
         "Use constructor chaining in the no-argument constructor."
@@ -2273,11 +2251,7 @@
         {
           "type": "constructorExists",
           "className": "Book",
-          "parameterTypes": [
-            "java.lang.String",
-            "java.lang.String",
-            "int"
-          ],
+          "parameterTypes": ["java.lang.String", "java.lang.String", "int"],
           "points": 1,
           "description": "Book has the required constructor."
         },
@@ -2293,9 +2267,7 @@
           "type": "methodExists",
           "className": "Book",
           "method": "setAuthor",
-          "parameterTypes": [
-            "java.lang.String"
-          ],
+          "parameterTypes": ["java.lang.String"],
           "points": 1,
           "description": "Book.setAuthor() is present."
         },
@@ -2311,9 +2283,7 @@
           "type": "methodExists",
           "className": "Book",
           "method": "setTitle",
-          "parameterTypes": [
-            "java.lang.String"
-          ],
+          "parameterTypes": ["java.lang.String"],
           "points": 1,
           "description": "Book.setTitle() is present."
         },
@@ -2329,9 +2299,7 @@
           "type": "methodExists",
           "className": "Book",
           "method": "setPages",
-          "parameterTypes": [
-            "int"
-          ],
+          "parameterTypes": ["int"],
           "points": 1,
           "description": "Book.setPages() is present."
         },
@@ -2347,9 +2315,7 @@
           "type": "methodExists",
           "className": "Book",
           "method": "setLoan",
-          "parameterTypes": [
-            "boolean"
-          ],
+          "parameterTypes": ["boolean"],
           "points": 1,
           "description": "Book.setLoan() is present."
         },
@@ -2399,16 +2365,8 @@
           "points": 1,
           "description": "Checks the return value of Book.toString.",
           "constructor": {
-            "parameterTypes": [
-              "java.lang.String",
-              "java.lang.String",
-              "int"
-            ],
-            "args": [
-              "test author",
-              "test title",
-              123
-            ]
+            "parameterTypes": ["java.lang.String", "java.lang.String", "int"],
+            "args": ["test author", "test title", 123]
           },
           "contains": true
         },
@@ -2422,16 +2380,8 @@
           "points": 1,
           "description": "Returns the title supplied to another parameterized constructor.",
           "constructor": {
-            "parameterTypes": [
-              "java.lang.String",
-              "java.lang.String",
-              "int"
-            ],
-            "args": [
-              "Sample Author",
-              "Sample Title",
-              275
-            ]
+            "parameterTypes": ["java.lang.String", "java.lang.String", "int"],
+            "args": ["Sample Author", "Sample Title", 275]
           }
         },
         {
@@ -2455,7 +2405,7 @@
     "pf-term1-0502-bank-account-class": {
       "category": "Classes and Objects",
       "title": "Bank Account (class)",
-      "instructions": "Create a `BankAccount` class with private attributes `holder` (`String`), `iban` (`String`), and `balance` (`double`). Add a constructor that initializes all three attributes and a second constructor that accepts only `holder` and `iban`, setting the balance to `0` by reusing the first constructor. Add getters for all attributes, `deposit(double amount)`, and `withdraw(double amount)`. A withdrawal must be refused when it would make the balance negative; return a `boolean` to indicate whether it succeeded. Implement `toString()` to display the account holder, IBAN and balance using the format shown by the supplied `DemoBankAccount` driver. The driver reads the first holder and IBAN, then deposit, successful-withdrawal and attempted-overdraw amounts; it then reads a second holder, IBAN, opening balance and deposit amount. Keep all classes in `Main.java` and do not declare a package.",
+      "instructions": "Create a `BankAccount` class with private attributes `holder` (`String`), `iban` (`String`), and `balance` (`double`).\n\nAdd a constructor that initializes all three attributes and a second constructor that accepts only `holder` and `iban`, setting the balance to `0` by reusing the first constructor.\n\nAdd getters for all attributes, `deposit(double amount)`, and `withdraw(double amount)`.\n\nA withdrawal must be refused when it would make the balance negative; return a `boolean` to indicate whether it succeeded.\n\nImplement `toString()` to display the account holder, IBAN and balance using the format shown by the supplied `DemoBankAccount` driver.\n\nThe driver reads the first holder and IBAN, then deposit, successful-withdrawal and attempted-overdraw amounts; it then reads a second holder, IBAN, opening balance and deposit amount.\n\nKeep all classes in `Main.java` and do not declare a package.\n\nExample 1:\n```text\nThe account BE15 6474 3001 5840 of Gregory Persons has a balance of € 0,00\nThe account BE15 6474 3001 5840 of Gregory Persons has a balance of € 3000,00\nThe account BE15 6474 3001 5840 of Gregory Persons has a balance of € 1000,00\nInsufficient credit\n\nThe account BE45 8477 0157 5478 of Carl Deleu has a balance of € 35652,00\nThe account BE45 8477 0157 5478 of Carl Deleu has a balance of € 42139,00\n```",
       "hints": [
         "Use constructor chaining or delegate to the full constructor.",
         "withdraw() should change the balance only when the balance remains non-negative."
@@ -2552,21 +2502,14 @@
         {
           "type": "constructorExists",
           "className": "BankAccount",
-          "parameterTypes": [
-            "java.lang.String",
-            "java.lang.String"
-          ],
+          "parameterTypes": ["java.lang.String", "java.lang.String"],
           "points": 1,
           "description": "BankAccount has the required constructor."
         },
         {
           "type": "constructorExists",
           "className": "BankAccount",
-          "parameterTypes": [
-            "java.lang.String",
-            "java.lang.String",
-            "double"
-          ],
+          "parameterTypes": ["java.lang.String", "java.lang.String", "double"],
           "points": 1,
           "description": "BankAccount has the required constructor."
         },
@@ -2598,9 +2541,7 @@
           "type": "methodExists",
           "className": "BankAccount",
           "method": "deposit",
-          "parameterTypes": [
-            "double"
-          ],
+          "parameterTypes": ["double"],
           "points": 1,
           "description": "BankAccount.deposit() is present."
         },
@@ -2608,9 +2549,7 @@
           "type": "methodExists",
           "className": "BankAccount",
           "method": "withdraw",
-          "parameterTypes": [
-            "double"
-          ],
+          "parameterTypes": ["double"],
           "points": 1,
           "description": "BankAccount.withdraw() is present."
         },
@@ -2632,26 +2571,16 @@
           "points": 1,
           "description": "Checks the return value of BankAccount.getBalance.",
           "constructor": {
-            "parameterTypes": [
-              "java.lang.String",
-              "java.lang.String"
-            ],
-            "args": [
-              "Sam",
-              "BE00"
-            ]
+            "parameterTypes": ["java.lang.String", "java.lang.String"],
+            "args": ["Sam", "BE00"]
           }
         },
         {
           "type": "methodReturn",
           "className": "BankAccount",
           "method": "deposit",
-          "parameterTypes": [
-            "double"
-          ],
-          "args": [
-            25.0
-          ],
+          "parameterTypes": ["double"],
+          "args": [25.0],
           "expected": 125.0,
           "points": 1,
           "description": "Checks the return value of BankAccount.deposit.",
@@ -2661,23 +2590,15 @@
               "java.lang.String",
               "double"
             ],
-            "args": [
-              "Sam Example",
-              "BE00 0000 0000 0000",
-              100.0
-            ]
+            "args": ["Sam Example", "BE00 0000 0000 0000", 100.0]
           }
         },
         {
           "type": "methodReturn",
           "className": "BankAccount",
           "method": "withdraw",
-          "parameterTypes": [
-            "double"
-          ],
-          "args": [
-            30.0
-          ],
+          "parameterTypes": ["double"],
+          "args": [30.0],
           "expected": true,
           "points": 1,
           "description": "Checks the return value of BankAccount.withdraw.",
@@ -2687,23 +2608,15 @@
               "java.lang.String",
               "double"
             ],
-            "args": [
-              "Sam Example",
-              "BE00 0000 0000 0000",
-              100.0
-            ]
+            "args": ["Sam Example", "BE00 0000 0000 0000", 100.0]
           }
         },
         {
           "type": "methodReturn",
           "className": "BankAccount",
           "method": "withdraw",
-          "parameterTypes": [
-            "double"
-          ],
-          "args": [
-            101.0
-          ],
+          "parameterTypes": ["double"],
+          "args": [101.0],
           "expected": false,
           "points": 1,
           "description": "Checks the return value of BankAccount.withdraw.",
@@ -2713,11 +2626,7 @@
               "java.lang.String",
               "double"
             ],
-            "args": [
-              "Sam Example",
-              "BE00 0000 0000 0000",
-              100.0
-            ]
+            "args": ["Sam Example", "BE00 0000 0000 0000", 100.0]
           }
         },
         {
@@ -2735,11 +2644,7 @@
               "java.lang.String",
               "double"
             ],
-            "args": [
-              "Jordan Example",
-              "IBAN-J",
-              75.0
-            ]
+            "args": ["Jordan Example", "IBAN-J", 75.0]
           }
         },
         {
@@ -2757,11 +2662,7 @@
               "java.lang.String",
               "double"
             ],
-            "args": [
-              "Jordan Example",
-              "IBAN-J",
-              75.0
-            ]
+            "args": ["Jordan Example", "IBAN-J", 75.0]
           }
         },
         {
@@ -2779,23 +2680,15 @@
               "java.lang.String",
               "double"
             ],
-            "args": [
-              "Taylor Example",
-              "IBAN-T",
-              250.0
-            ]
+            "args": ["Taylor Example", "IBAN-T", 250.0]
           }
         },
         {
           "type": "methodReturn",
           "className": "BankAccount",
           "method": "deposit",
-          "parameterTypes": [
-            "double"
-          ],
-          "args": [
-            50.0
-          ],
+          "parameterTypes": ["double"],
+          "args": [50.0],
           "expected": 300.0,
           "points": 1,
           "description": "Checks another return value of BankAccount.deposit.",
@@ -2805,23 +2698,15 @@
               "java.lang.String",
               "double"
             ],
-            "args": [
-              "Taylor Example",
-              "IBAN-T",
-              250.0
-            ]
+            "args": ["Taylor Example", "IBAN-T", 250.0]
           }
         },
         {
           "type": "methodReturn",
           "className": "BankAccount",
           "method": "withdraw",
-          "parameterTypes": [
-            "double"
-          ],
-          "args": [
-            75.0
-          ],
+          "parameterTypes": ["double"],
+          "args": [75.0],
           "expected": true,
           "points": 1,
           "description": "Checks another return value of BankAccount.withdraw.",
@@ -2831,23 +2716,15 @@
               "java.lang.String",
               "double"
             ],
-            "args": [
-              "Taylor Example",
-              "IBAN-T",
-              100.0
-            ]
+            "args": ["Taylor Example", "IBAN-T", 100.0]
           }
         },
         {
           "type": "methodReturn",
           "className": "BankAccount",
           "method": "withdraw",
-          "parameterTypes": [
-            "double"
-          ],
-          "args": [
-            101.0
-          ],
+          "parameterTypes": ["double"],
+          "args": [101.0],
           "expected": false,
           "points": 1,
           "description": "Checks another return value of BankAccount.withdraw.",
@@ -2857,11 +2734,7 @@
               "java.lang.String",
               "double"
             ],
-            "args": [
-              "Taylor Example",
-              "IBAN-T",
-              100.0
-            ]
+            "args": ["Taylor Example", "IBAN-T", 100.0]
           }
         }
       ],
@@ -2871,7 +2744,7 @@
     "pf-term1-0503-box-class": {
       "category": "Classes and Objects",
       "title": "Box (class)",
-      "instructions": "Create a `Box` class with private attributes `type` (`String`), `length`, `width`, and `height` (all `double`). Add a constructor for all four attributes and a cube constructor that accepts `type` and `length`. Implement `surface()`, `volume()`, `tapeLength()`, and `toString()` with the expected measurements. The supplied `BoxDemo` driver reads three boxes: a cube (type and one edge length), a flat box (type, length, width, height), and a parcel box (type, length, width, height). Enter each type on its own line and each dimension on a separate line. Keep all classes in `Main.java` and do not declare a package.",
+      "instructions": "Create a `Box` class with private attributes `type` (`String`), `length`, `width`, and `height` (all `double`).\n\nAdd a constructor for all four attributes and a cube constructor that accepts `type` and `length`.\n\nImplement `surface()`, `volume()`, `tapeLength()`, and `toString()` with the expected measurements.\n\nThe supplied `BoxDemo` driver reads three boxes: a cube (type and one edge length), a flat box (type, length, width, height), and a parcel box (type, length, width, height).\n\nEnter each type on its own line and each dimension on a separate line.\n\nKeep all classes in `Main.java` and do not declare a package.\n\nExample 1:\n```text\nType: Cube\nLength: 10,0cm\nWidth: 10,0cm\nHeight: 10,0cm\nSurface: 600,0cm²\nVolume: 1000,0cm³\nMinimum tapelength: 40,0cm\n\nType: Flat box\nLength: 30,0cm\nWidth: 30,0cm\nHeight: 3,5cm\nSurface: 2220,0cm²\nVolume: 3150,0cm³\nMinimum tapelength: 67,0cm\n\nType: Parcel Service box\nLength: 30,5cm\nWidth: 21,5cm\nHeight: 17,0cm\nSurface: 3079,5cm²\nVolume: 11147,8cm³\nMinimum tapelength: 77,0cm\n```",
       "hints": [
         "The surface is twice the sum of the three face areas.",
         "The volume is length × width × height."
@@ -2984,22 +2857,14 @@
         {
           "type": "constructorExists",
           "className": "Box",
-          "parameterTypes": [
-            "java.lang.String",
-            "double"
-          ],
+          "parameterTypes": ["java.lang.String", "double"],
           "points": 1,
           "description": "Box has the required constructor."
         },
         {
           "type": "constructorExists",
           "className": "Box",
-          "parameterTypes": [
-            "java.lang.String",
-            "double",
-            "double",
-            "double"
-          ],
+          "parameterTypes": ["java.lang.String", "double", "double", "double"],
           "points": 1,
           "description": "Box has the required constructor."
         },
@@ -3045,14 +2910,8 @@
           "points": 1,
           "description": "Checks the return value of Box.surface.",
           "constructor": {
-            "parameterTypes": [
-              "java.lang.String",
-              "double"
-            ],
-            "args": [
-              "Cube",
-              10.0
-            ]
+            "parameterTypes": ["java.lang.String", "double"],
+            "args": ["Cube", 10.0]
           }
         },
         {
@@ -3065,14 +2924,8 @@
           "points": 1,
           "description": "Checks the return value of Box.volume.",
           "constructor": {
-            "parameterTypes": [
-              "java.lang.String",
-              "double"
-            ],
-            "args": [
-              "Cube",
-              10.0
-            ]
+            "parameterTypes": ["java.lang.String", "double"],
+            "args": ["Cube", 10.0]
           }
         },
         {
@@ -3085,14 +2938,8 @@
           "points": 1,
           "description": "Checks the return value of Box.tapeLength.",
           "constructor": {
-            "parameterTypes": [
-              "java.lang.String",
-              "double"
-            ],
-            "args": [
-              "Cube",
-              10.0
-            ]
+            "parameterTypes": ["java.lang.String", "double"],
+            "args": ["Cube", 10.0]
           }
         },
         {
@@ -3111,12 +2958,7 @@
               "double",
               "double"
             ],
-            "args": [
-              "Flat box",
-              30.0,
-              30.0,
-              3.5
-            ]
+            "args": ["Flat box", 30.0, 30.0, 3.5]
           }
         },
         {
@@ -3135,12 +2977,7 @@
               "double",
               "double"
             ],
-            "args": [
-              "Flat box",
-              30.0,
-              30.0,
-              3.5
-            ]
+            "args": ["Flat box", 30.0, 30.0, 3.5]
           }
         },
         {
@@ -3159,12 +2996,7 @@
               "double",
               "double"
             ],
-            "args": [
-              "Flat box",
-              30.0,
-              30.0,
-              3.5
-            ]
+            "args": ["Flat box", 30.0, 30.0, 3.5]
           }
         },
         {
@@ -3183,12 +3015,7 @@
               "double",
               "double"
             ],
-            "args": [
-              "Parcel",
-              30.5,
-              21.5,
-              17.0
-            ]
+            "args": ["Parcel", 30.5, 21.5, 17.0]
           }
         },
         {
@@ -3207,12 +3034,7 @@
               "double",
               "double"
             ],
-            "args": [
-              "Parcel",
-              30.5,
-              21.5,
-              17.0
-            ]
+            "args": ["Parcel", 30.5, 21.5, 17.0]
           }
         },
         {
@@ -3231,12 +3053,7 @@
               "double",
               "double"
             ],
-            "args": [
-              "Parcel",
-              30.5,
-              21.5,
-              17.0
-            ]
+            "args": ["Parcel", 30.5, 21.5, 17.0]
           }
         }
       ],
@@ -3246,7 +3063,7 @@
     "pf-term1-0504-operations-class": {
       "category": "Classes and Objects",
       "title": "Operations (class)",
-      "instructions": "Create an `Operations` class with private integer attributes `numberOne` and `numberTwo`, plus a constructor that initializes both. Implement `sum()`, `difference()`, `product()`, and `quotient()`. The `quotient()` method must return a `double`. In `DemoOperations`, read two integers with `Scanner` and print all four results. The first number is read before the second number; do not hard-code the example values. Keep every class in `Main.java` and do not declare a package.",
+      "instructions": "Create an `Operations` class with private integer attributes `numberOne` and `numberTwo`, plus a constructor that initializes both.\n\nImplement `sum()`, `difference()`, `product()`, and `quotient()`.\n\nThe `quotient()` method must return a `double`.\n\nIn `DemoOperations`, read two integers with `Scanner` and print all four results.\n\nThe first number is read before the second number; do not hard-code the example values.\n\nKeep every class in `Main.java` and do not declare a package.\n\nExample 1:\n```text\nPlease enter the first integer: 236\nPlease enter the second integer: 6978\nThe sum is 7214\nThe difference is -6742\nThe product is 1646808\nThe quotiënt is 0,03\n```",
       "hints": [
         "Keep the two operands as private fields.",
         "Cast one operand to double before division."
@@ -3327,10 +3144,7 @@
         {
           "type": "constructorExists",
           "className": "Operations",
-          "parameterTypes": [
-            "int",
-            "int"
-          ],
+          "parameterTypes": ["int", "int"],
           "points": 1,
           "description": "Operations has the required constructor."
         },
@@ -3344,14 +3158,8 @@
           "points": 1,
           "description": "Checks the return value of Operations.sum.",
           "constructor": {
-            "parameterTypes": [
-              "int",
-              "int"
-            ],
-            "args": [
-              236,
-              6978
-            ]
+            "parameterTypes": ["int", "int"],
+            "args": [236, 6978]
           }
         },
         {
@@ -3364,14 +3172,8 @@
           "points": 1,
           "description": "Checks the return value of Operations.difference.",
           "constructor": {
-            "parameterTypes": [
-              "int",
-              "int"
-            ],
-            "args": [
-              236,
-              6978
-            ]
+            "parameterTypes": ["int", "int"],
+            "args": [236, 6978]
           }
         },
         {
@@ -3384,14 +3186,8 @@
           "points": 1,
           "description": "Checks the return value of Operations.product.",
           "constructor": {
-            "parameterTypes": [
-              "int",
-              "int"
-            ],
-            "args": [
-              236,
-              6978
-            ]
+            "parameterTypes": ["int", "int"],
+            "args": [236, 6978]
           }
         },
         {
@@ -3412,14 +3208,8 @@
           "points": 1,
           "description": "Checks another return value of Operations.sum.",
           "constructor": {
-            "parameterTypes": [
-              "int",
-              "int"
-            ],
-            "args": [
-              -15,
-              6
-            ]
+            "parameterTypes": ["int", "int"],
+            "args": [-15, 6]
           }
         },
         {
@@ -3432,14 +3222,8 @@
           "points": 1,
           "description": "Checks another return value of Operations.difference.",
           "constructor": {
-            "parameterTypes": [
-              "int",
-              "int"
-            ],
-            "args": [
-              -15,
-              6
-            ]
+            "parameterTypes": ["int", "int"],
+            "args": [-15, 6]
           }
         },
         {
@@ -3452,14 +3236,8 @@
           "points": 1,
           "description": "Checks another return value of Operations.product.",
           "constructor": {
-            "parameterTypes": [
-              "int",
-              "int"
-            ],
-            "args": [
-              -15,
-              6
-            ]
+            "parameterTypes": ["int", "int"],
+            "args": [-15, 6]
           }
         },
         {
@@ -3472,14 +3250,8 @@
           "points": 1,
           "description": "Checks another return value of Operations.quotient.",
           "constructor": {
-            "parameterTypes": [
-              "int",
-              "int"
-            ],
-            "args": [
-              236,
-              6978
-            ]
+            "parameterTypes": ["int", "int"],
+            "args": [236, 6978]
           }
         },
         {
@@ -3492,14 +3264,8 @@
           "points": 1,
           "description": "Checks another return value of Operations.quotient.",
           "constructor": {
-            "parameterTypes": [
-              "int",
-              "int"
-            ],
-            "args": [
-              -15,
-              6
-            ]
+            "parameterTypes": ["int", "int"],
+            "args": [-15, 6]
           }
         }
       ],
@@ -3509,7 +3275,7 @@
     "pf-term1-0505-maximum-constructor-method-overloading": {
       "category": "Classes and Objects",
       "title": "Maximum (constructor/method overloading)",
-      "instructions": "Create a `Maximum` class with private `int` attributes `one`, `two`, and `three`. Add a no-argument constructor and overloaded constructors that accept three `int`, three `long`, or three `double` values. Add `max()` to return the largest stored attribute as a `double`. Also overload `max()` to accept three values of each of those types and return the largest argument as a `double`. The supplied `TestMaximum` driver reads three integer values, three long values, and three double values with `Scanner`. It uses each triple with both a matching constructor and a matching `max()` overload. Enter each value on its own line. Keep all classes in `Main.java` and do not declare a package.",
+      "instructions": "Create a `Maximum` class with private `int` attributes `one`, `two`, and `three`.\n\nAdd a no-argument constructor and overloaded constructors that accept three `int`, three `long`, or three `double` values.\n\nAdd `max()` to return the largest stored attribute as a `double`.\n\nAlso overload `max()` to accept three values of each of those types and return the largest argument as a `double`.\n\nThe supplied `TestMaximum` driver reads three integer values, three long values, and three double values with `Scanner`.\n\nIt uses each triple with both a matching constructor and a matching `max()` overload.\n\nEnter each value on its own line.\n\nKeep all classes in `Main.java` and do not declare a package.\n\nExample 1:\n```text\nint constructor called\n\nmaximum = 3.0\nlong constructor called\nmaximum = 3.0\ndouble constructor called\nmaximum = 3.0\nconstructor without parameters called\nint parameters method called\nmaximum = 3.0\nconstructor without parameters called\nlong parameters method called\nmaximum = 3.0\nconstructor without parameters called\ndouble parameters method called\nmaximum = 3.0\n```",
       "hints": [
         "Create overloaded constructors and max() methods.",
         "Use Math.max() to compare the three values."
@@ -3613,33 +3379,21 @@
         {
           "type": "constructorExists",
           "className": "Maximum",
-          "parameterTypes": [
-            "int",
-            "int",
-            "int"
-          ],
+          "parameterTypes": ["int", "int", "int"],
           "points": 1,
           "description": "Maximum has the required constructor."
         },
         {
           "type": "constructorExists",
           "className": "Maximum",
-          "parameterTypes": [
-            "long",
-            "long",
-            "long"
-          ],
+          "parameterTypes": ["long", "long", "long"],
           "points": 1,
           "description": "Maximum has the required constructor."
         },
         {
           "type": "constructorExists",
           "className": "Maximum",
-          "parameterTypes": [
-            "double",
-            "double",
-            "double"
-          ],
+          "parameterTypes": ["double", "double", "double"],
           "points": 1,
           "description": "Maximum has the required constructor."
         },
@@ -3655,11 +3409,7 @@
           "type": "methodExists",
           "className": "Maximum",
           "method": "max",
-          "parameterTypes": [
-            "int",
-            "int",
-            "int"
-          ],
+          "parameterTypes": ["int", "int", "int"],
           "points": 1,
           "description": "Maximum.max() is present."
         },
@@ -3667,11 +3417,7 @@
           "type": "methodExists",
           "className": "Maximum",
           "method": "max",
-          "parameterTypes": [
-            "long",
-            "long",
-            "long"
-          ],
+          "parameterTypes": ["long", "long", "long"],
           "points": 1,
           "description": "Maximum.max() is present."
         },
@@ -3679,11 +3425,7 @@
           "type": "methodExists",
           "className": "Maximum",
           "method": "max",
-          "parameterTypes": [
-            "double",
-            "double",
-            "double"
-          ],
+          "parameterTypes": ["double", "double", "double"],
           "points": 1,
           "description": "Maximum.max() is present."
         },
@@ -3697,32 +3439,16 @@
           "points": 1,
           "description": "Checks the return value of Maximum.max.",
           "constructor": {
-            "parameterTypes": [
-              "int",
-              "int",
-              "int"
-            ],
-            "args": [
-              1,
-              3,
-              2
-            ]
+            "parameterTypes": ["int", "int", "int"],
+            "args": [1, 3, 2]
           }
         },
         {
           "type": "methodReturn",
           "className": "Maximum",
           "method": "max",
-          "parameterTypes": [
-            "int",
-            "int",
-            "int"
-          ],
-          "args": [
-            1,
-            3,
-            2
-          ],
+          "parameterTypes": ["int", "int", "int"],
+          "args": [1, 3, 2],
           "expected": 3.0,
           "points": 1,
           "description": "Checks the return value of Maximum.max.",
@@ -3735,16 +3461,8 @@
           "type": "methodReturn",
           "className": "Maximum",
           "method": "max",
-          "parameterTypes": [
-            "long",
-            "long",
-            "long"
-          ],
-          "args": [
-            1,
-            9,
-            2
-          ],
+          "parameterTypes": ["long", "long", "long"],
+          "args": [1, 9, 2],
           "expected": 9.0,
           "points": 1,
           "description": "Checks the return value of Maximum.max.",
@@ -3757,16 +3475,8 @@
           "type": "methodReturn",
           "className": "Maximum",
           "method": "max",
-          "parameterTypes": [
-            "double",
-            "double",
-            "double"
-          ],
-          "args": [
-            1.0,
-            9.5,
-            2.0
-          ],
+          "parameterTypes": ["double", "double", "double"],
+          "args": [1.0, 9.5, 2.0],
           "expected": 9.5,
           "points": 1,
           "description": "Checks the return value of Maximum.max.",
@@ -3785,16 +3495,8 @@
           "points": 1,
           "description": "Checks another return value of Maximum.max.",
           "constructor": {
-            "parameterTypes": [
-              "long",
-              "long",
-              "long"
-            ],
-            "args": [
-              10,
-              2,
-              8
-            ]
+            "parameterTypes": ["long", "long", "long"],
+            "args": [10, 2, 8]
           }
         },
         {
@@ -3807,32 +3509,16 @@
           "points": 1,
           "description": "Checks another return value of Maximum.max.",
           "constructor": {
-            "parameterTypes": [
-              "double",
-              "double",
-              "double"
-            ],
-            "args": [
-              3.5,
-              9.5,
-              1.2
-            ]
+            "parameterTypes": ["double", "double", "double"],
+            "args": [3.5, 9.5, 1.2]
           }
         },
         {
           "type": "methodReturn",
           "className": "Maximum",
           "method": "max",
-          "parameterTypes": [
-            "int",
-            "int",
-            "int"
-          ],
-          "args": [
-            -8,
-            -3,
-            -5
-          ],
+          "parameterTypes": ["int", "int", "int"],
+          "args": [-8, -3, -5],
           "expected": -3.0,
           "points": 1,
           "description": "Checks another return value of Maximum.max.",
@@ -3845,16 +3531,8 @@
           "type": "methodReturn",
           "className": "Maximum",
           "method": "max",
-          "parameterTypes": [
-            "double",
-            "double",
-            "double"
-          ],
-          "args": [
-            -1.5,
-            -0.5,
-            -2.5
-          ],
+          "parameterTypes": ["double", "double", "double"],
+          "args": [-1.5, -0.5, -2.5],
           "expected": -0.5,
           "points": 1,
           "description": "Checks another return value of Maximum.max.",
@@ -3870,7 +3548,7 @@
     "pf-term1-0506-salesperson-class": {
       "category": "Classes and Objects",
       "title": "Salesperson (class)",
-      "instructions": "Create a `SalesPerson` class with private attributes `name` (`String`) and `revenue` (`double`). Add a constructor that initializes both attributes, getters, and `hasMoreRevenueThan(SalesPerson other)`, which returns whether this salesperson has a higher revenue than the other salesperson. The supplied `TestSalesPerson` driver in the starter code reads three revenue values with `Scanner` and prints the top earner. The checks use different inputs so that each salesperson can be the top earner. Keep all classes in `Main.java` with no package declaration.",
+      "instructions": "Create a `SalesPerson` class with private attributes `name` (`String`) and `revenue` (`double`).\n\nAdd a constructor that initializes both attributes, getters, and `hasMoreRevenueThan(SalesPerson other)`, which returns whether this salesperson has a higher revenue than the other salesperson.\n\nThe supplied `TestSalesPerson` driver in the starter code reads three revenue values with `Scanner` and prints the top earner.\n\nThe checks use different inputs so that each salesperson can be the top earner.\n\nKeep all classes in `Main.java` with no package declaration.\n\nExample 1:\n```text\nEnter Jan's revenue: 885,56\nEnter Laetitia's revenue: 4885,53\nEnter Lotte's revenue: 78965,3\nOur top earner is Lotte!\n```",
       "hints": [
         "Compare SalesPerson objects through hasMoreRevenueThan().",
         "Keep track of the current highest earner as each value is read."
@@ -3928,10 +3606,7 @@
           "type": "fieldModifier",
           "className": "SalesPerson",
           "fieldName": "name",
-          "expected": [
-            "private",
-            "final"
-          ],
+          "expected": ["private", "final"],
           "points": 1,
           "description": "SalesPerson.name has the required ['private', 'final'] modifier."
         },
@@ -3947,20 +3622,14 @@
           "type": "fieldModifier",
           "className": "SalesPerson",
           "fieldName": "revenue",
-          "expected": [
-            "private",
-            "final"
-          ],
+          "expected": ["private", "final"],
           "points": 1,
           "description": "SalesPerson.revenue has the required ['private', 'final'] modifier."
         },
         {
           "type": "constructorExists",
           "className": "SalesPerson",
-          "parameterTypes": [
-            "java.lang.String",
-            "double"
-          ],
+          "parameterTypes": ["java.lang.String", "double"],
           "points": 1,
           "description": "SalesPerson has the required constructor."
         },
@@ -3984,9 +3653,7 @@
           "type": "methodExists",
           "className": "SalesPerson",
           "method": "hasMoreRevenueThan",
-          "parameterTypes": [
-            "SalesPerson"
-          ],
+          "parameterTypes": ["SalesPerson"],
           "points": 1,
           "description": "SalesPerson.hasMoreRevenueThan() is present."
         }
@@ -3997,7 +3664,7 @@
     "pf-term1-0507-circle-data-validation": {
       "category": "Classes and Objects",
       "title": "Circle (data validation)",
-      "instructions": "Create a `Circle` class with private attributes `radius` (`int`) and `colour` (`String`). Add constructors for a radius alone and for a radius with a colour. The valid radius range is `10` through `1000`; reject values outside this range and report the invalid radius. Implement `getColour()`, `circumference()`, `surface()`, `deltaCircumference(Circle other)`, `deltaSurface(Circle other)`, and `toString()`. The supplied `CircleApp` driver reads two invalid radii, then the radius and colour for two valid circles. Enter each value on its own line. It prints both circles and the differences in circumference and surface. Keep all classes in `Main.java` and do not declare a package.",
+      "instructions": "Create a `Circle` class with private attributes `radius` (`int`) and `colour` (`String`).\n\nAdd constructors for a radius alone and for a radius with a colour.\n\nThe valid radius range is `10` through `1000`; reject values outside this range and report the invalid radius.\n\nImplement `getColour()`, `circumference()`, `surface()`, `deltaCircumference(Circle other)`, `deltaSurface(Circle other)`, and `toString()`.\n\nThe supplied `CircleApp` driver reads two invalid radii, then the radius and colour for two valid circles.\n\nEnter each value on its own line.\n\nIt prints both circles and the differences in circumference and surface.\n\nKeep all classes in `Main.java` and do not declare a package.\n\nExample 1:\n```text\nInvalid radius 5\nColour:Black Radius:0 Circumference:0,00 Surface: 0,00\nInvalid radius 1200\nColour:Black Radius:0 Circumference:0,00 Surface: 0,00\nColour:Red Radius:10 Circumference:62,83 Surface: 314,16\nColour:Blue Radius:200 Circumference:1256,64 Surface: 125663,71\nDifference in circumference (Blue - Red): 1193,81\nDifference in surface (Blue - Red): 125349,55\n```",
       "hints": [
         "Validate the radius in setRadius().",
         "Use Math.abs() for differences between two measurements."
@@ -4078,19 +3745,14 @@
         {
           "type": "constructorExists",
           "className": "Circle",
-          "parameterTypes": [
-            "int"
-          ],
+          "parameterTypes": ["int"],
           "points": 1,
           "description": "Circle has the required constructor."
         },
         {
           "type": "constructorExists",
           "className": "Circle",
-          "parameterTypes": [
-            "int",
-            "java.lang.String"
-          ],
+          "parameterTypes": ["int", "java.lang.String"],
           "points": 1,
           "description": "Circle has the required constructor."
         },
@@ -4098,9 +3760,7 @@
           "type": "methodExists",
           "className": "Circle",
           "method": "setRadius",
-          "parameterTypes": [
-            "int"
-          ],
+          "parameterTypes": ["int"],
           "points": 1,
           "description": "Circle.setRadius() is present."
         },
@@ -4132,9 +3792,7 @@
           "type": "methodExists",
           "className": "Circle",
           "method": "deltaCircumference",
-          "parameterTypes": [
-            "Circle"
-          ],
+          "parameterTypes": ["Circle"],
           "points": 1,
           "description": "Circle.deltaCircumference() is present."
         },
@@ -4142,9 +3800,7 @@
           "type": "methodExists",
           "className": "Circle",
           "method": "deltaSurface",
-          "parameterTypes": [
-            "Circle"
-          ],
+          "parameterTypes": ["Circle"],
           "points": 1,
           "description": "Circle.deltaSurface() is present."
         },
@@ -4158,14 +3814,8 @@
           "points": 1,
           "description": "Checks the return value of Circle.getColour.",
           "constructor": {
-            "parameterTypes": [
-              "int",
-              "java.lang.String"
-            ],
-            "args": [
-              10,
-              "Red"
-            ]
+            "parameterTypes": ["int", "java.lang.String"],
+            "args": [10, "Red"]
           }
         },
         {
@@ -4178,14 +3828,8 @@
           "points": 1,
           "description": "Checks the return value of Circle.circumference.",
           "constructor": {
-            "parameterTypes": [
-              "int",
-              "java.lang.String"
-            ],
-            "args": [
-              10,
-              "Red"
-            ]
+            "parameterTypes": ["int", "java.lang.String"],
+            "args": [10, "Red"]
           }
         },
         {
@@ -4198,14 +3842,8 @@
           "points": 1,
           "description": "Checks the return value of Circle.surface.",
           "constructor": {
-            "parameterTypes": [
-              "int",
-              "java.lang.String"
-            ],
-            "args": [
-              10,
-              "Red"
-            ]
+            "parameterTypes": ["int", "java.lang.String"],
+            "args": [10, "Red"]
           }
         },
         {
@@ -4218,14 +3856,8 @@
           "points": 1,
           "description": "Checks another return value of Circle.getColour.",
           "constructor": {
-            "parameterTypes": [
-              "int",
-              "java.lang.String"
-            ],
-            "args": [
-              25,
-              "Green"
-            ]
+            "parameterTypes": ["int", "java.lang.String"],
+            "args": [25, "Green"]
           }
         },
         {
@@ -4238,14 +3870,8 @@
           "points": 1,
           "description": "Checks another return value of Circle.circumference.",
           "constructor": {
-            "parameterTypes": [
-              "int",
-              "java.lang.String"
-            ],
-            "args": [
-              25,
-              "Green"
-            ]
+            "parameterTypes": ["int", "java.lang.String"],
+            "args": [25, "Green"]
           }
         },
         {
@@ -4258,14 +3884,8 @@
           "points": 1,
           "description": "Checks another return value of Circle.surface.",
           "constructor": {
-            "parameterTypes": [
-              "int",
-              "java.lang.String"
-            ],
-            "args": [
-              25,
-              "Green"
-            ]
+            "parameterTypes": ["int", "java.lang.String"],
+            "args": [25, "Green"]
           }
         }
       ],
@@ -4275,7 +3895,7 @@
     "pf-term1-0508-perfect-number-extra": {
       "category": "Classes and Objects",
       "title": "Perfect number / EXTRA",
-      "instructions": "A number is perfect when the sum of its positive divisors, excluding the number itself, equals the number. For example, `6` is perfect because `1 + 2 + 3 = 6`. Implement `PerfectNumber.getPerfect(int number)`: return a `String` containing the divisors separated by spaces when the number is perfect, or `null` otherwise. Use `StringBuilder`. The supplied `TestPerfectNumber` driver reads an upper limit with `Scanner` and checks every integer from `2` through that limit. For each perfect number it prints the number and its divisors. Keep all classes in `Main.java` and do not declare a package.",
+      "instructions": "A number is perfect when the sum of its positive divisors, excluding the number itself, equals the number.\n\nFor example, `6` is perfect because `1 + 2 + 3 = 6`.\n\nImplement `PerfectNumber.getPerfect(int number)`: return a `String` containing the divisors separated by spaces when the number is perfect, or `null` otherwise.\n\nUse `StringBuilder`.\n\nThe supplied `TestPerfectNumber` driver reads an upper limit with `Scanner` and checks every integer from `2` through that limit.\n\nFor each perfect number it prints the number and its divisors.\n\nKeep all classes in `Main.java` and do not declare a package.\n\nExample 1:\n```text\n6 --> 1 2 3\n28 --> 1 2 4 7 14\n496 --> 1 2 4 8 16 31 62 124 248\n8128 --> 1 2 4 8 16 32 64 127 254 508 1016 2032 4064\n```",
       "hints": [
         "Append every proper divisor to a StringBuilder.",
         "Return null unless the sum of the divisors equals the number."
@@ -4332,9 +3952,7 @@
           "type": "methodExists",
           "className": "PerfectNumber",
           "method": "getPerfect",
-          "parameterTypes": [
-            "int"
-          ],
+          "parameterTypes": ["int"],
           "points": 1,
           "description": "PerfectNumber.getPerfect() is present."
         },
@@ -4342,12 +3960,8 @@
           "type": "methodReturn",
           "className": "PerfectNumber",
           "method": "getPerfect",
-          "parameterTypes": [
-            "int"
-          ],
-          "args": [
-            6
-          ],
+          "parameterTypes": ["int"],
+          "args": [6],
           "expected": "1 2 3 ",
           "points": 1,
           "description": "Checks the return value of PerfectNumber.getPerfect.",
@@ -4360,12 +3974,8 @@
           "type": "methodReturn",
           "className": "PerfectNumber",
           "method": "getPerfect",
-          "parameterTypes": [
-            "int"
-          ],
-          "args": [
-            28
-          ],
+          "parameterTypes": ["int"],
+          "args": [28],
           "expected": "1 2 4 7 14 ",
           "points": 1,
           "description": "Checks the return value of PerfectNumber.getPerfect.",
@@ -4378,12 +3988,8 @@
           "type": "methodReturn",
           "className": "PerfectNumber",
           "method": "getPerfect",
-          "parameterTypes": [
-            "int"
-          ],
-          "args": [
-            12
-          ],
+          "parameterTypes": ["int"],
+          "args": [12],
           "expected": null,
           "points": 1,
           "description": "Checks the return value of PerfectNumber.getPerfect.",
@@ -4396,12 +4002,8 @@
           "type": "methodReturn",
           "className": "PerfectNumber",
           "method": "getPerfect",
-          "parameterTypes": [
-            "int"
-          ],
-          "args": [
-            496
-          ],
+          "parameterTypes": ["int"],
+          "args": [496],
           "expected": "1 2 4 8 16 31 62 124 248 ",
           "points": 1,
           "description": "Checks another return value of PerfectNumber.getPerfect.",
@@ -4414,12 +4016,8 @@
           "type": "methodReturn",
           "className": "PerfectNumber",
           "method": "getPerfect",
-          "parameterTypes": [
-            "int"
-          ],
-          "args": [
-            1
-          ],
+          "parameterTypes": ["int"],
+          "args": [1],
           "expected": null,
           "points": 1,
           "description": "Checks another return value of PerfectNumber.getPerfect.",
@@ -4435,7 +4033,7 @@
     "pf-term1-0509-for-experienced-programmers-word-hut-game-extra": {
       "category": "Classes and Objects",
       "title": "For experienced programmers: Word Hut Game / Extra",
-      "instructions": "Challenge: choose a starting word and let two players play against each other. On each turn, draw a random letter from the `26`-letter alphabet. If the letter appears in the current player’s word, remove one occurrence. Otherwise, if it appears in the other player’s word, remove one occurrence there. If it appears in neither word, add it to the current player’s word. The first player whose word becomes empty wins.\n\nUse a `StringBuilder` to represent each player’s mutable word. Create a `LetterBag` class with a method that returns a randomly generated letter; a `Note` class with the `theWord` (`StringBuilder`) attribute and methods for checking, deleting, adding and testing for deleted letters; and a `Player` class that owns a note.\n\nExtension: track how many letters each player removes from their own note, removes from the other player’s note, adds to their note, and draws without finding in either word. Keep all classes in one Java source file with no package declaration.",
+      "instructions": "Challenge: choose a starting word and let two players play against each other.\n\nOn each turn, draw a random letter from the `26`-letter alphabet.\n\nIf the letter appears in the current player’s word, remove one occurrence.\n\nOtherwise, if it appears in the other player’s word, remove one occurrence there.\n\nIf it appears in neither word, add it to the current player’s word.\n\nThe first player whose word becomes empty wins.\n\nUse a `StringBuilder` to represent each player’s mutable word.\n\nCreate a `LetterBag` class with a method that returns a randomly generated letter; a `Note` class with the `theWord` (`StringBuilder`) attribute and methods for checking, deleting, adding and testing for deleted letters; and a `Player` class that owns a note.\n\nExtension: track how many letters each player removes from their own note, removes from the other player’s note, adds to their note, and draws without finding in either word.\n\nKeep all classes in one Java source file with no package declaration.",
       "hints": [
         "Use StringBuilder to remove or add letters.",
         "The supplied example is only a partial scaffold; it does not contain the full game logic."
@@ -4479,19 +4077,14 @@
         {
           "type": "constructorExists",
           "className": "Note",
-          "parameterTypes": [
-            "java.lang.String"
-          ],
+          "parameterTypes": ["java.lang.String"],
           "points": 1,
           "description": "Note has the required constructor."
         },
         {
           "type": "constructorExists",
           "className": "Player",
-          "parameterTypes": [
-            "java.lang.String",
-            "java.lang.String"
-          ],
+          "parameterTypes": ["java.lang.String", "java.lang.String"],
           "points": 1,
           "description": "Player has the required constructor."
         },
@@ -4507,9 +4100,7 @@
           "type": "methodExists",
           "className": "Note",
           "method": "contains",
-          "parameterTypes": [
-            "char"
-          ],
+          "parameterTypes": ["char"],
           "points": 1,
           "description": "Note.contains() is present."
         },
@@ -4517,10 +4108,7 @@
           "type": "methodExists",
           "className": "Note",
           "method": "deleteOne",
-          "parameterTypes": [
-            "char",
-            "boolean"
-          ],
+          "parameterTypes": ["char", "boolean"],
           "points": 1,
           "description": "Note.deleteOne() is present."
         },
@@ -4528,9 +4116,7 @@
           "type": "methodExists",
           "className": "Note",
           "method": "add",
-          "parameterTypes": [
-            "char"
-          ],
+          "parameterTypes": ["char"],
           "points": 1,
           "description": "Note.add() is present."
         },
@@ -4568,56 +4154,36 @@
           "points": 1,
           "description": "Checks the return value of Note.toString.",
           "constructor": {
-            "parameterTypes": [
-              "java.lang.String"
-            ],
-            "args": [
-              "banana"
-            ]
+            "parameterTypes": ["java.lang.String"],
+            "args": ["banana"]
           }
         },
         {
           "type": "methodReturn",
           "className": "Note",
           "method": "contains",
-          "parameterTypes": [
-            "char"
-          ],
-          "args": [
-            "a"
-          ],
+          "parameterTypes": ["char"],
+          "args": ["a"],
           "expected": true,
           "points": 1,
           "description": "Checks the return value of Note.contains.",
           "constructor": {
-            "parameterTypes": [
-              "java.lang.String"
-            ],
-            "args": [
-              "banana"
-            ]
+            "parameterTypes": ["java.lang.String"],
+            "args": ["banana"]
           }
         },
         {
           "type": "methodReturn",
           "className": "Note",
           "method": "contains",
-          "parameterTypes": [
-            "char"
-          ],
-          "args": [
-            "z"
-          ],
+          "parameterTypes": ["char"],
+          "args": ["z"],
           "expected": false,
           "points": 1,
           "description": "Checks the return value of Note.contains.",
           "constructor": {
-            "parameterTypes": [
-              "java.lang.String"
-            ],
-            "args": [
-              "banana"
-            ]
+            "parameterTypes": ["java.lang.String"],
+            "args": ["banana"]
           }
         },
         {
@@ -4630,12 +4196,8 @@
           "points": 1,
           "description": "Checks the return value of Note.isEmpty.",
           "constructor": {
-            "parameterTypes": [
-              "java.lang.String"
-            ],
-            "args": [
-              "banana"
-            ]
+            "parameterTypes": ["java.lang.String"],
+            "args": ["banana"]
           }
         }
       ],
@@ -4645,7 +4207,7 @@
     "pf-term1-0601-chess-club": {
       "category": "Object-Oriented Programming and Validation",
       "title": "Chess club",
-      "instructions": "A hobbyist chess club wants a basic simulation of members playing against each other. Complete the `Player` class used by the supplied `Main` test driver in the starter code. Keep `Player` and `Main` in the same source file and do not declare a package.\n\nThe `Player` class must store a name (`String`), birth year (`int`), win ratio (`float` between `0` and `1`), and retired status (`boolean`). Validate the name, birth year and win ratio in the appropriate setters or constructor logic. A birth year cannot be in the future or more than `120` years ago; you may use a `CURRENT_YEAR` constant.\n\nImplement `toString()` so it displays the player name, calculated age, win ratio and either `active` or `retired`. Implement `play()` to generate a random result compared with this player’s win ratio. Implement `play(Player other)` by generating one random value for each player, subtracting each random value from that player’s win ratio, and returning whether this player wins. The supplied test driver uses random numbers, so the exact winner may vary between runs. Do not change the test driver; implement `Player` so it behaves as required.",
+      "instructions": "A hobbyist chess club wants a basic simulation of members playing against each other.\n\nComplete the `Player` class used by the supplied `Main` test driver in the starter code.\n\nKeep `Player` and `Main` in the same source file and do not declare a package.\n\nThe `Player` class must store a name (`String`), birth year (`int`), win ratio (`float` between `0` and `1`), and retired status (`boolean`).\n\nValidate the name, birth year and win ratio in the appropriate setters or constructor logic.\n\nA birth year cannot be in the future or more than `120` years ago; you may use a `CURRENT_YEAR` constant.\n\nImplement `toString()` so it displays the player name, calculated age, win ratio and either `active` or `retired`.\n\nImplement `play()` to generate a random result compared with this player’s win ratio.\n\nImplement `play(Player other)` by generating one random value for each player, subtracting each random value from that player’s win ratio, and returning whether this player wins.\n\nThe supplied test driver uses random numbers, so the exact winner may vary between runs.\n\nDo not change the test driver; implement `Player` so it behaves as required.\n\nExample 1:\n```text\nInvalid age!\nInvalid winratio!\nSebastiaan (1993: Winratio: 0.5 active.) win? true\nWim (1963: Winratio: 0.73 active.) win? true\nSebastiaan (1993: Winratio: 0.5 active.) wins!\n```",
       "hints": [
         "Validate birth years against the current year and a 120-year limit.",
         "Use random values to compare each player’s win ratio."
@@ -4750,12 +4312,7 @@
         {
           "type": "constructorExists",
           "className": "Player",
-          "parameterTypes": [
-            "java.lang.String",
-            "int",
-            "float",
-            "boolean"
-          ],
+          "parameterTypes": ["java.lang.String", "int", "float", "boolean"],
           "points": 1,
           "description": "Player has the required constructor."
         },
@@ -4763,9 +4320,7 @@
           "type": "methodExists",
           "className": "Player",
           "method": "setName",
-          "parameterTypes": [
-            "java.lang.String"
-          ],
+          "parameterTypes": ["java.lang.String"],
           "points": 1,
           "description": "Player.setName() is present."
         },
@@ -4773,9 +4328,7 @@
           "type": "methodExists",
           "className": "Player",
           "method": "setAge",
-          "parameterTypes": [
-            "int"
-          ],
+          "parameterTypes": ["int"],
           "points": 1,
           "description": "Player.setAge() is present."
         },
@@ -4783,9 +4336,7 @@
           "type": "methodExists",
           "className": "Player",
           "method": "setWinRatio",
-          "parameterTypes": [
-            "float"
-          ],
+          "parameterTypes": ["float"],
           "points": 1,
           "description": "Player.setWinRatio() is present."
         },
@@ -4809,9 +4360,7 @@
           "type": "methodExists",
           "className": "Player",
           "method": "play",
-          "parameterTypes": [
-            "Player"
-          ],
+          "parameterTypes": ["Player"],
           "points": 1,
           "description": "Player.play() is present."
         },
@@ -4833,18 +4382,8 @@
           "points": 1,
           "description": "Checks the return value of Player.getWinRatio.",
           "constructor": {
-            "parameterTypes": [
-              "java.lang.String",
-              "int",
-              "float",
-              "boolean"
-            ],
-            "args": [
-              "Jordan Player",
-              1993,
-              0.5,
-              false
-            ]
+            "parameterTypes": ["java.lang.String", "int", "float", "boolean"],
+            "args": ["Jordan Player", 1993, 0.5, false]
           }
         }
       ],
@@ -4854,7 +4393,7 @@
     "pf-term1-0602-student-grade-evaluator": {
       "category": "Object-Oriented Programming and Validation",
       "title": "Student Grade Evaluator",
-      "instructions": "Create a `Student` class and a `Main` class in the same Java source file. Do not declare a package or create separate `.java` files.\n\nThe `Student` class must store `name` (`String`), `id` (`int`), and `grade` (`float`). A name must not be empty and must contain at least one space; an ID must not be negative; and a grade must be between `0` and `100`. Add a constructor, getters, setters, `isCorrect()`, and `getPerformanceCategory()`. The validation method must display an error for invalid data and return whether all values are valid. Use a switch expression based on the grade divided by ten to return `Excellent` for grades of at least `90`, `Good` for grades of at least `75`, `Sufficient` for grades of at least `50`, and `Insufficient` otherwise.\n\nIn `Main.main()`, create a `Scanner` and use a `do-while` loop to read the student’s name, ID and grade. Create a `Student` object, repeat the input when its values are invalid, and display the student’s information and performance category when valid. Use a `for` loop to count down from `3` to `1` before showing the results. Ask `Do you want to enter another student? (yes/no)` and continue while the answer is `yes`. When the answer is `no`, print `Program terminated. Goodbye!`.",
+      "instructions": "Create a `Student` class and a `Main` class in the same Java source file.\n\nDo not declare a package or create separate `.java` files.\n\nThe `Student` class must store `name` (`String`), `id` (`int`), and `grade` (`float`).\n\nA name must not be empty and must contain at least one space; an ID must not be negative; and a grade must be between `0` and `100`.\n\nAdd a constructor, getters, setters, `isCorrect()`, and `getPerformanceCategory()`.\n\nThe validation method must display an error for invalid data and return whether all values are valid.\n\nUse a switch expression based on the grade divided by ten to return `Excellent` for grades of at least `90`, `Good` for grades of at least `75`, `Sufficient` for grades of at least `50`, and `Insufficient` otherwise.\n\nIn `Main.main()`, create a `Scanner` and use a `do-while` loop to read the student’s name, ID and grade.\n\nCreate a `Student` object, repeat the input when its values are invalid, and display the student’s information and performance category when valid.\n\nUse a `for` loop to count down from `3` to `1` before showing the results.\n\nAsk `Do you want to enter another student?\n\n(yes/no)` and continue while the answer is `yes`.\n\nWhen the answer is `no`, print `Program terminated.\n\nGoodbye!`.\n\nExample 1:\n```text\nEnter the student's name: Alice\nEnter the student’s ID: 101\nEnter the student's grade (0–100): 95\n\nError! The name must contain at least 1 space!\n\nEnter the student's name: Alice Verberckmoes\nEnter the student's ID: 101\nEnter the student's grade (0–100): 95\n\nCalculating results...\n3\n2\n1\n\nResults!\n\n---\n\nStudent information\n\n---\n\nName : Alice Verberckmoes\nID : 101\nGrade : 95.0\nPerformance : Excellent\n\n---\n\nDo you want to enter another student? (yes/no): yes\n\nEnter the student's name: Bob Lowen\nEnter the student's ID: 102\nEnter the student's grade (0–100): 63\n\nCalculating results...\n3\n2\n1\n\nResults!\n\n---\n\nStudent information\n\n---\n\nName : Bob Lowen\nID : 102\nGrade : 63.0\nPerformance : Sufficent\n\n---\n\nDo you want to enter another student? (yes/no): no\n\nProgram terminated. Goodbye!\n```",
       "hints": [
         "Validate all three fields in Student.",
         "Use a switch expression on the grade divided by ten to select the category."
@@ -4983,11 +4522,7 @@
         {
           "type": "constructorExists",
           "className": "Student",
-          "parameterTypes": [
-            "java.lang.String",
-            "int",
-            "float"
-          ],
+          "parameterTypes": ["java.lang.String", "int", "float"],
           "points": 1,
           "description": "Student has the required constructor."
         },
@@ -5003,9 +4538,7 @@
           "type": "methodExists",
           "className": "Student",
           "method": "setName",
-          "parameterTypes": [
-            "java.lang.String"
-          ],
+          "parameterTypes": ["java.lang.String"],
           "points": 1,
           "description": "Student.setName() is present."
         },
@@ -5021,9 +4554,7 @@
           "type": "methodExists",
           "className": "Student",
           "method": "setId",
-          "parameterTypes": [
-            "int"
-          ],
+          "parameterTypes": ["int"],
           "points": 1,
           "description": "Student.setId() is present."
         },
@@ -5039,9 +4570,7 @@
           "type": "methodExists",
           "className": "Student",
           "method": "setGrade",
-          "parameterTypes": [
-            "float"
-          ],
+          "parameterTypes": ["float"],
           "points": 1,
           "description": "Student.setGrade() is present."
         },
@@ -5071,16 +4600,8 @@
           "points": 1,
           "description": "Checks the return value of Student.isCorrect.",
           "constructor": {
-            "parameterTypes": [
-              "java.lang.String",
-              "int",
-              "float"
-            ],
-            "args": [
-              "Alice Verberckmoes",
-              101,
-              95
-            ]
+            "parameterTypes": ["java.lang.String", "int", "float"],
+            "args": ["Alice Verberckmoes", 101, 95]
           }
         },
         {
@@ -5093,16 +4614,8 @@
           "points": 1,
           "description": "Checks the return value of Student.isCorrect.",
           "constructor": {
-            "parameterTypes": [
-              "java.lang.String",
-              "int",
-              "float"
-            ],
-            "args": [
-              "Alice",
-              101,
-              95
-            ]
+            "parameterTypes": ["java.lang.String", "int", "float"],
+            "args": ["Alice", 101, 95]
           }
         },
         {
@@ -5115,16 +4628,8 @@
           "points": 1,
           "description": "Checks the return value of Student.getPerformanceCategory.",
           "constructor": {
-            "parameterTypes": [
-              "java.lang.String",
-              "int",
-              "float"
-            ],
-            "args": [
-              "Alice Verberckmoes",
-              101,
-              95
-            ]
+            "parameterTypes": ["java.lang.String", "int", "float"],
+            "args": ["Alice Verberckmoes", 101, 95]
           }
         },
         {
@@ -5137,16 +4642,8 @@
           "points": 1,
           "description": "Checks the return value of Student.getPerformanceCategory.",
           "constructor": {
-            "parameterTypes": [
-              "java.lang.String",
-              "int",
-              "float"
-            ],
-            "args": [
-              "Bob Lowen",
-              102,
-              75
-            ]
+            "parameterTypes": ["java.lang.String", "int", "float"],
+            "args": ["Bob Lowen", 102, 75]
           }
         },
         {
@@ -5159,16 +4656,8 @@
           "points": 1,
           "description": "Checks the return value of Student.getPerformanceCategory.",
           "constructor": {
-            "parameterTypes": [
-              "java.lang.String",
-              "int",
-              "float"
-            ],
-            "args": [
-              "Bob Lowen",
-              102,
-              50
-            ]
+            "parameterTypes": ["java.lang.String", "int", "float"],
+            "args": ["Bob Lowen", 102, 50]
           }
         },
         {
@@ -5181,16 +4670,8 @@
           "points": 1,
           "description": "Checks the return value of Student.getPerformanceCategory.",
           "constructor": {
-            "parameterTypes": [
-              "java.lang.String",
-              "int",
-              "float"
-            ],
-            "args": [
-              "Bob Lowen",
-              102,
-              49
-            ]
+            "parameterTypes": ["java.lang.String", "int", "float"],
+            "args": ["Bob Lowen", 102, 49]
           }
         }
       ],
@@ -5200,7 +4681,7 @@
     "pf-term1-0301-age-if": {
       "category": "Control Flow, Loops and Methods",
       "title": "Age (if)",
-      "instructions": "**Source gap:** The pasted exercise instructions do not contain a task description for Ex `03.01` Age (if). The existing Markdown guide does contain a heading and a Java example. The following task summary is reconstructed only from that supplied example: read an age and display `Baby` for ages below `2`, `Child` for ages `2`–`11`, `Teenager` for ages `12`–`16`, or `Adult` for ages `17` and above. Please verify these thresholds against the original course instructions.",
+      "instructions": "**Source gap:** The pasted exercise instructions do not contain a task description for Ex `03.01` Age (if).\n\nThe existing Markdown guide does contain a heading and a Java example.\n\nThe following task summary is reconstructed only from that supplied example: read an age and display `Baby` for ages below `2`, `Child` for ages `2`–`11`, `Teenager` for ages `12`–`16`, or `Adult` for ages `17` and above.\n\nPlease verify these thresholds against the original course instructions.",
       "hints": [
         "Use an if/else-if chain to determine the age category.",
         "The supplied example uses the categories Baby, Child, Teenager and Adult."
@@ -5271,7 +4752,7 @@
     "pf-term1-bf-t1w2-nimb": {
       "category": "Variables and Operators",
       "title": "Nimb",
-      "instructions": "Play Nimb against the computer. Start with `21` matches. On each turn, remove between `1` and `3` matches; the player who takes the last match loses. Let the human player choose who starts. For the extended version, randomize the starting player, randomize the maximum allowed removal and initial number of matches (the initial number must be at least five times the maximum), and ask whether to play again. The computer should use the strategy based on (matches - `1`) modulo (maximum + `1`).",
+      "instructions": "Play Nimb against the computer.\n\nStart with `21` matches.\n\nOn each turn, remove between `1` and `3` matches; the player who takes the last match loses.\n\nLet the human player choose who starts.\n\nFor the extended version, randomize the starting player, randomize the maximum allowed removal and initial number of matches (the initial number must be at least five times the maximum), and ask whether to play again.\n\nThe computer should use the strategy based on (matches - `1`) modulo (maximum + `1`).",
       "hints": [
         "Break the task into small methods with clear responsibilities.",
         "Validate user input before using it.",
@@ -5327,7 +4808,7 @@
     "pf-term1-bf-t1w3-101": {
       "category": "Statements and Flow Control",
       "title": "101",
-      "instructions": "Play a dice game against the computer. Players take turns rolling a six-sided die. During a turn, a player may roll repeatedly and add each result to a turn total. If a player rolls a `6`, the turn total is lost and the turn ends. Otherwise, the player may stop and add the turn total to their banked score. The first player to reach at least `101` points wins. For the extension, randomize who starts, use a different die size and target score, and ask whether to play again. Keep all code in one Java source file.",
+      "instructions": "Play a dice game against the computer.\n\nPlayers take turns rolling a six-sided die.\n\nDuring a turn, a player may roll repeatedly and add each result to a turn total.\n\nIf a player rolls a `6`, the turn total is lost and the turn ends.\n\nOtherwise, the player may stop and add the turn total to their banked score.\n\nThe first player to reach at least `101` points wins.\n\nFor the extension, randomize who starts, use a different die size and target score, and ask whether to play again.\n\nKeep all code in one Java source file.",
       "hints": [
         "Break the task into small methods with clear responsibilities.",
         "Validate user input before using it.",
@@ -5375,7 +4856,7 @@
     "pf-term1-bf-t1w4-highest-house-number": {
       "category": "Object-Oriented Programming",
       "title": "Highest house number",
-      "instructions": "Each player rolls a six-sided die three times to create a three-digit house number between `111` and `666`. After each of the first two rolls, the human player chooses whether the result becomes the hundreds, tens or units digit; the last roll fills the remaining position. The computer follows the supplied strategy: on its first roll, `5` or `6` goes in the hundreds, `1` or `2` in the units, and `3` or `4` in the tens; on its second roll, `4`, `5` or `6` goes in the hundreds if available, otherwise use the tens if available. Compare the completed numbers and report the winner. For the optional `4`-, `8`- or `10`-sided-die extension, display and compare each place value position by position (use separators when a roll can be `10`). Keep everything in one Java source file.",
+      "instructions": "Each player rolls a six-sided die three times to create a three-digit house number between `111` and `666`.\n\nAfter each of the first two rolls, the human player chooses whether the result becomes the hundreds, tens or units digit; the last roll fills the remaining position.\n\nThe computer follows the supplied strategy: on its first roll, `5` or `6` goes in the hundreds, `1` or `2` in the units, and `3` or `4` in the tens; on its second roll, `4`, `5` or `6` goes in the hundreds if available, otherwise use the tens if available.\n\nCompare the completed numbers and report the winner.\n\nFor the optional `4`-, `8`- or `10`-sided-die extension, display and compare each place value position by position (use separators when a roll can be `10`).\n\nKeep everything in one Java source file.",
       "hints": [
         "Break the task into small methods with clear responsibilities.",
         "Validate user input before using it.",
@@ -5423,7 +4904,7 @@
     "pf-term1-bf-t1w5-word-hut-game": {
       "category": "Writing Classes",
       "title": "Word Hut Game",
-      "instructions": "Play the Word Hut game against the computer. Both players start with the same word, represented by a mutable note. On each turn, draw a random letter. If it appears in the current player’s note, delete one occurrence. Otherwise, if it appears in the other player’s note, delete one occurrence from that note. If it appears in neither note, append it to the current player’s note. The first player whose note becomes empty wins. Use helper classes such as LetterBag, Note and Player, all declared in the same Java source file. Optional extension: count letters deleted from the player’s own note, letters deleted with the other player’s help, letters added, and draws absent from the current player’s own note.",
+      "instructions": "Play the Word Hut game against the computer.\n\nBoth players start with the same word, represented by a mutable note.\n\nOn each turn, draw a random letter.\n\nIf it appears in the current player’s note, delete one occurrence.\n\nOtherwise, if it appears in the other player’s note, delete one occurrence from that note.\n\nIf it appears in neither note, append it to the current player’s note.\n\nThe first player whose note becomes empty wins.\n\nUse helper classes such as LetterBag, Note and Player, all declared in the same Java source file.\n\nOptional extension: count letters deleted from the player’s own note, letters deleted with the other player’s help, letters added, and draws absent from the current player’s own note.",
       "hints": [
         "Break the task into small methods with clear responsibilities.",
         "Validate user input before using it.",
@@ -5468,19 +4949,14 @@
         {
           "type": "constructorExists",
           "className": "Note",
-          "parameterTypes": [
-            "java.lang.String"
-          ],
+          "parameterTypes": ["java.lang.String"],
           "points": 1,
           "description": "Note has the required constructor."
         },
         {
           "type": "constructorExists",
           "className": "Player",
-          "parameterTypes": [
-            "java.lang.String",
-            "java.lang.String"
-          ],
+          "parameterTypes": ["java.lang.String", "java.lang.String"],
           "points": 1,
           "description": "Player has the required constructor."
         },
@@ -5496,9 +4972,7 @@
           "type": "methodExists",
           "className": "Note",
           "method": "contains",
-          "parameterTypes": [
-            "char"
-          ],
+          "parameterTypes": ["char"],
           "points": 1,
           "description": "Note.contains() is present."
         },
@@ -5506,10 +4980,7 @@
           "type": "methodExists",
           "className": "Note",
           "method": "deleteOne",
-          "parameterTypes": [
-            "char",
-            "boolean"
-          ],
+          "parameterTypes": ["char", "boolean"],
           "points": 1,
           "description": "Note.deleteOne() is present."
         },
@@ -5517,9 +4988,7 @@
           "type": "methodExists",
           "className": "Note",
           "method": "add",
-          "parameterTypes": [
-            "char"
-          ],
+          "parameterTypes": ["char"],
           "points": 1,
           "description": "Note.add() is present."
         },
@@ -5557,56 +5026,36 @@
           "points": 1,
           "description": "Checks the return value of Note.toString.",
           "constructor": {
-            "parameterTypes": [
-              "java.lang.String"
-            ],
-            "args": [
-              "banana"
-            ]
+            "parameterTypes": ["java.lang.String"],
+            "args": ["banana"]
           }
         },
         {
           "type": "methodReturn",
           "className": "Note",
           "method": "contains",
-          "parameterTypes": [
-            "char"
-          ],
-          "args": [
-            "a"
-          ],
+          "parameterTypes": ["char"],
+          "args": ["a"],
           "expected": true,
           "points": 1,
           "description": "Checks the return value of Note.contains.",
           "constructor": {
-            "parameterTypes": [
-              "java.lang.String"
-            ],
-            "args": [
-              "banana"
-            ]
+            "parameterTypes": ["java.lang.String"],
+            "args": ["banana"]
           }
         },
         {
           "type": "methodReturn",
           "className": "Note",
           "method": "contains",
-          "parameterTypes": [
-            "char"
-          ],
-          "args": [
-            "z"
-          ],
+          "parameterTypes": ["char"],
+          "args": ["z"],
           "expected": false,
           "points": 1,
           "description": "Checks the return value of Note.contains.",
           "constructor": {
-            "parameterTypes": [
-              "java.lang.String"
-            ],
-            "args": [
-              "banana"
-            ]
+            "parameterTypes": ["java.lang.String"],
+            "args": ["banana"]
           }
         },
         {
@@ -5619,12 +5068,8 @@
           "points": 1,
           "description": "Checks the return value of Note.isEmpty.",
           "constructor": {
-            "parameterTypes": [
-              "java.lang.String"
-            ],
-            "args": [
-              "banana"
-            ]
+            "parameterTypes": ["java.lang.String"],
+            "args": ["banana"]
           }
         }
       ],
@@ -5634,7 +5079,7 @@
     "pf-term1-bf-t2w1-simulation": {
       "category": "Arrays",
       "title": "Simulation",
-      "instructions": "Simulate the coin game for a chosen number of players. Every player starts with `10` coins and takes turns rolling a six-sided die: `1`, `2` or `3` does nothing; `4` transfers one coin to the player on the left; `5` transfers one coin to the player on the right; `6` puts one coin in the central jar. If a player puts their last coin in the jar, they receive all coins in the jar. A player with no coins after a transfer is eliminated. The last remaining player wins. Use an array to manage the players and keep all classes in one Java source file.",
+      "instructions": "Simulate the coin game for a chosen number of players.\n\nEvery player starts with `10` coins and takes turns rolling a six-sided die: `1`, `2` or `3` does nothing; `4` transfers one coin to the player on the left; `5` transfers one coin to the player on the right; `6` puts one coin in the central jar.\n\nIf a player puts their last coin in the jar, they receive all coins in the jar.\n\nA player with no coins after a transfer is eliminated.\n\nThe last remaining player wins.\n\nUse an array to manage the players and keep all classes in one Java source file.",
       "hints": [
         "Break the task into small methods with clear responsibilities.",
         "Validate user input before using it.",
@@ -5684,20 +5129,14 @@
         {
           "type": "constructorExists",
           "className": "Simulation",
-          "parameterTypes": [
-            "int",
-            "int"
-          ],
+          "parameterTypes": ["int", "int"],
           "points": 1,
           "description": "Simulation has the required constructor."
         },
         {
           "type": "constructorExists",
           "className": "GameTable",
-          "parameterTypes": [
-            "int",
-            "int"
-          ],
+          "parameterTypes": ["int", "int"],
           "points": 1,
           "description": "GameTable has the required constructor."
         },
@@ -5725,14 +5164,8 @@
           "points": 1,
           "description": "Checks the initial value of GameTable.playerCount.",
           "constructor": {
-            "parameterTypes": [
-              "int",
-              "int"
-            ],
-            "args": [
-              3,
-              10
-            ]
+            "parameterTypes": ["int", "int"],
+            "args": [3, 10]
           }
         },
         {
@@ -5747,10 +5180,7 @@
           "type": "methodExists",
           "className": "GameTable",
           "method": "transferCoin",
-          "parameterTypes": [
-            "int",
-            "int"
-          ],
+          "parameterTypes": ["int", "int"],
           "points": 1,
           "description": "GameTable.transferCoin() is present."
         },
@@ -5758,9 +5188,7 @@
           "type": "methodExists",
           "className": "GameTable",
           "method": "putCoinInJar",
-          "parameterTypes": [
-            "int"
-          ],
+          "parameterTypes": ["int"],
           "points": 1,
           "description": "GameTable.putCoinInJar() is present."
         },
@@ -5768,9 +5196,7 @@
           "type": "methodExists",
           "className": "GameTable",
           "method": "eliminateIfBroke",
-          "parameterTypes": [
-            "int"
-          ],
+          "parameterTypes": ["int"],
           "points": 1,
           "description": "GameTable.eliminateIfBroke() is present."
         },
@@ -5778,24 +5204,14 @@
           "type": "methodReturn",
           "className": "GameTable",
           "method": "eliminateIfBroke",
-          "parameterTypes": [
-            "int"
-          ],
-          "args": [
-            0
-          ],
+          "parameterTypes": ["int"],
+          "args": [0],
           "expected": false,
           "points": 1,
           "description": "Checks the return value of GameTable.eliminateIfBroke.",
           "constructor": {
-            "parameterTypes": [
-              "int",
-              "int"
-            ],
-            "args": [
-              2,
-              10
-            ]
+            "parameterTypes": ["int", "int"],
+            "args": [2, 10]
           }
         }
       ],
@@ -5805,7 +5221,7 @@
     "pf-term1-tut-t1w2-purchase": {
       "category": "Variables and Operators",
       "title": "Purchase",
-      "instructions": "Write a cash-register program for up to three products. Ask for each product price. If a price is negative, show an error and use `0`. Calculate and display the price including `21%` VAT for each product, then calculate the total including VAT. If the total is more than `€100`, apply a `10%` discount. Display the final price. If the total is exactly `0`, display `No products purchased.` If the final price is more than `€200`, display `You will receive an extra gift!` Use one Java source file.",
+      "instructions": "Write a cash-register program for up to three products.\n\nAsk for each product price.\n\nIf a price is negative, show an error and use `0`.\n\nCalculate and display the price including `21%` VAT for each product, then calculate the total including VAT.\n\nIf the total is more than `€100`, apply a `10%` discount.\n\nDisplay the final price.\n\nIf the total is exactly `0`, display `No products purchased.` If the final price is more than `€200`, display `You will receive an extra gift!` Use one Java source file.",
       "hints": [
         "Break the task into small methods with clear responsibilities.",
         "Validate user input before using it.",
@@ -5877,7 +5293,7 @@
     "pf-term1-tut-t1w2-digital-addiction": {
       "category": "Conditional Logic and Arrays",
       "title": "Digital Addiction",
-      "instructions": "Create a yes/no survey using the ten questions in this exercise. Count the yes answers and display the corresponding result: `0` = not digitally addicted; `1`–`2` = mild; `3`–`5` = should not be underestimated; `6`–`8` = severe; `9`–`10` = extreme. Add the extensions: personalize the survey with the user’s name; allow another survey; track the number of completed surveys and the percentage with severe or extreme results; for extreme results ask for daily smartphone hours and calculate the percentage of the day; and print a summary containing the name, every question and answer, yes count, any smartphone percentage, and advice. Keep all code in one Java source file.",
+      "instructions": "Create a yes/no survey using the ten questions in this exercise.\n\nCount the yes answers and display the corresponding result: `0` = not digitally addicted; `1`–`2` = mild; `3`–`5` = should not be underestimated; `6`–`8` = severe; `9`–`10` = extreme.\n\nAdd the extensions: personalize the survey with the user’s name; allow another survey; track the number of completed surveys and the percentage with severe or extreme results; for extreme results ask for daily smartphone hours and calculate the percentage of the day; and print a summary containing the name, every question and answer, yes count, any smartphone percentage, and advice.\n\nKeep all code in one Java source file.",
       "hints": [
         "Break the task into small methods with clear responsibilities.",
         "Validate user input before using it.",
@@ -5965,7 +5381,7 @@
     "pf-term1-tut-t1w4-snack-bar": {
       "category": "Switch Expressions and Loops",
       "title": "Snack Bar",
-      "instructions": "Write a cinema snack-bar till program. Display the menu once and repeatedly ask the customer for a choice until they enter `0` to pay. Use a switch expression to determine the chosen item and price. For a valid choice, display `<item> added to basket.` For an invalid choice, display `Invalid choice.` and count neither an item nor a price. Track the number of items and the total. Implement calculateDiscount(`double` total), returning `10%` when the total is more than `€20` and `0` otherwise. When the customer pays, display `Nothing ordered.` if no items were selected; otherwise print item count, total, discount and amount to pay with two decimals. Keep the code in one Java source file.",
+      "instructions": "Write a cinema snack-bar till program.\n\nDisplay the menu once and repeatedly ask the customer for a choice until they enter `0` to pay.\n\nUse a switch expression to determine the chosen item and price.\n\nFor a valid choice, display `<item> added to basket.` For an invalid choice, display `Invalid choice.` and count neither an item nor a price.\n\nTrack the number of items and the total.\n\nImplement calculateDiscount(`double` total), returning `10%` when the total is more than `€20` and `0` otherwise.\n\nWhen the customer pays, display `Nothing ordered.` if no items were selected; otherwise print item count, total, discount and amount to pay with two decimals.\n\nKeep the code in one Java source file.",
       "hints": [
         "Break the task into small methods with clear responsibilities.",
         "Validate user input before using it.",
@@ -6018,12 +5434,8 @@
           "type": "methodReturn",
           "className": "Main",
           "method": "calculateDiscount",
-          "parameterTypes": [
-            "double"
-          ],
-          "args": [
-            20.0
-          ],
+          "parameterTypes": ["double"],
+          "args": [20.0],
           "expected": 0.0,
           "points": 1,
           "description": "Checks the return value of Main.calculateDiscount.",
@@ -6036,12 +5448,8 @@
           "type": "methodReturn",
           "className": "Main",
           "method": "calculateDiscount",
-          "parameterTypes": [
-            "double"
-          ],
-          "args": [
-            25.0
-          ],
+          "parameterTypes": ["double"],
+          "args": [25.0],
           "expected": 2.5,
           "points": 1,
           "description": "Checks the return value of Main.calculateDiscount.",
@@ -6057,7 +5465,7 @@
     "pf-term1-tut-t1w4-account-generator": {
       "category": "Strings and Random Numbers",
       "title": "Account Generator",
-      "instructions": "Build a student account generator. Ask for the student’s first and last names, trim leading and trailing whitespace, and generate a lowercase username from the first letter of the first name, the last name, and exactly two random digits. Require a password length from `8` to `16` inclusive, repeating the prompt until the length is valid. Generate the password from `abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!?#$%&` using a `StringBuilder`. Count uppercase letters and digits. A password is `STRONG` only when it has at least `12` characters, at least one uppercase letter, and at least one digit; otherwise it is `WEAK`. Display the username, password, counts, and strength. Optional extensions: accept a user-supplied `Random` seed and display a masked password showing only its first and last characters.",
+      "instructions": "Build a student account generator.\n\nAsk for the student’s first and last names, trim leading and trailing whitespace, and generate a lowercase username from the first letter of the first name, the last name, and exactly two random digits.\n\nRequire a password length from `8` to `16` inclusive, repeating the prompt until the length is valid.\n\nGenerate the password from `abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!?#$%&` using a `StringBuilder`.\n\nCount uppercase letters and digits.\n\nA password is `STRONG` only when it has at least `12` characters, at least one uppercase letter, and at least one digit; otherwise it is `WEAK`.\n\nDisplay the username, password, counts, and strength.\n\nOptional extensions: accept a user-supplied `Random` seed and display a masked password showing only its first and last characters.",
       "hints": [
         "Break the task into small methods with clear responsibilities.",
         "Validate user input before using it.",
@@ -6113,7 +5521,7 @@
     "pf-term1-tut-t1w6-hangman-1": {
       "category": "Strings and Loops",
       "title": "Hangman 1",
-      "instructions": "Create a simple word-guessing game. Ask one player for a word containing `5` to `10` letters; keep asking until the length is valid. Clear the screen by printing `20` blank lines, then show one dot per letter. Give the guessing player up to five attempts to enter the complete word. Compare without case sensitivity and report the number of turns used when the word is guessed. If it is not guessed after five turns, display a losing message and reveal the word. Use one Java source file.",
+      "instructions": "Create a simple word-guessing game.\n\nAsk one player for a word containing `5` to `10` letters; keep asking until the length is valid.\n\nClear the screen by printing `20` blank lines, then show one dot per letter.\n\nGive the guessing player up to five attempts to enter the complete word.\n\nCompare without case sensitivity and report the number of turns used when the word is guessed.\n\nIf it is not guessed after five turns, display a losing message and reveal the word.\n\nUse one Java source file.",
       "hints": [
         "Break the task into small methods with clear responsibilities.",
         "Validate user input before using it.",
@@ -6169,7 +5577,7 @@
     "pf-term1-tut-t1w6-hangman-2": {
       "category": "StringBuilder and Loops",
       "title": "Hangman 2",
-      "instructions": "Extend Hangman `1` so that the guessing player enters one letter per turn. Start with a `StringBuilder` containing one dot per letter. After each guess, replace every matching dot with the guessed letter and display the updated progress. Continue until the word is revealed or eight valid letter guesses have been used. Compare letters without case sensitivity. Keep all code in one Java source file.",
+      "instructions": "Extend Hangman `1` so that the guessing player enters one letter per turn.\n\nStart with a `StringBuilder` containing one dot per letter.\n\nAfter each guess, replace every matching dot with the guessed letter and display the updated progress.\n\nContinue until the word is revealed or eight valid letter guesses have been used.\n\nCompare letters without case sensitivity.\n\nKeep all code in one Java source file.",
       "hints": [
         "Break the task into small methods with clear responsibilities.",
         "Validate user input before using it.",
@@ -6225,7 +5633,7 @@
     "pf-term1-tut-t1w6-hangman-3": {
       "category": "Strings and Loops",
       "title": "Hangman 3",
-      "instructions": "Extend Hangman `2` by drawing a hangman after each incorrect guess. Use the supplied eight-line HANGMAN drawing and reveal one additional line per incorrect guess. The player wins by revealing the full word before all eight lines have been shown. If all eight lines are displayed first, the player loses. Continue to accept one letter per turn and display the updated word. Keep all code in one Java source file.",
+      "instructions": "Extend Hangman `2` by drawing a hangman after each incorrect guess.\n\nUse the supplied eight-line HANGMAN drawing and reveal one additional line per incorrect guess.\n\nThe player wins by revealing the full word before all eight lines have been shown.\n\nIf all eight lines are displayed first, the player loses.\n\nContinue to accept one letter per turn and display the updated word.\n\nKeep all code in one Java source file.",
       "hints": [
         "Break the task into small methods with clear responsibilities.",
         "Validate user input before using it.",

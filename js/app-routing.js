@@ -7,7 +7,7 @@ const ROUTE_OUT_MS = 140,
 // Check content/version.json at most once per hour, independently of navigation.
 // The first successful fetch establishes this page's version for its lifetime.
 // All version-check state stays in memory and is reset by a full page reload.
-const SITE_VERSION_CHECK_INTERVAL = 30 * 60 * 1000;
+const SITE_VERSION_CHECK_INTERVAL = 10 * 60 * 1000;
 const SITE_VERSION_NOTICE_DURATION = 60 * 1000;
 let siteVersion = null;
 // Set only during the first successful version fetch after a page load.
@@ -225,11 +225,16 @@ async function checkSiteVersion() {
         siteVersionLastRetrievedAt = Date.now();
         const versionKey = "acs-site-version";
         let storedVersion = null;
-        try { storedVersion = localStorage.getItem(versionKey); } catch (_) {}
-        newVer = storedVersion === null || storedVersion !== String(incomingVersion);
+        try {
+          storedVersion = localStorage.getItem(versionKey);
+        } catch (_) {}
+        newVer =
+          storedVersion === null || storedVersion !== String(incomingVersion);
         window.newVer = newVer;
         window.__ACS_SITE_VERSION__ = incomingVersion;
-        try { localStorage.setItem(versionKey, String(incomingVersion)); } catch (_) {}
+        try {
+          localStorage.setItem(versionKey, String(incomingVersion));
+        } catch (_) {}
         // Preload the Java modules once the startup version decision is known.
         // newVer -> java.js empties its module cache and refetches; otherwise
         // the cached modules are used. Java exercises opened meanwhile join this

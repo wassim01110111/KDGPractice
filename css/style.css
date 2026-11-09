@@ -5719,7 +5719,10 @@ html[data-theme="dark"] :is(.md, .stmt) code .tok-tag {
   color: #e06c75;
 }
 /* ---------- Try exercise button (clean version) ---------- */
-.md a.try-exercise-button {
+
+.try-exercise-button {
+  --try-ex-accent: var(--ac);
+
   position: relative;
   isolation: isolate;
   overflow: hidden;
@@ -5729,66 +5732,106 @@ html[data-theme="dark"] :is(.md, .stmt) code .tok-tag {
   padding: 0.65rem 1.2rem 0.65rem 1rem;
   border: 1px solid var(--bd);
   border-radius: 999px;
-  background: var(--soft);
-  color: var(--ac);
+
+  background-color: var(--soft);
+  background-image: linear-gradient(var(--try-ex-accent), var(--try-ex-accent));
+  background-repeat: no-repeat;
+  background-position: left center;
+  background-size: 0% 100%;
+
+  color: var(--try-ex-accent);
   font-weight: 600;
   font-size: 0.92rem;
   line-height: 1;
   text-decoration: none;
   box-shadow: var(--shadow);
+
   transition:
     transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1),
     box-shadow 0.22s ease,
     border-color 0.22s ease,
-    color 0.2s ease;
+    color 0.2s ease,
+    background-size 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+
   animation: try-ex-pulse 1.6s ease-out 0.4s 2;
   -webkit-tap-highlight-color: transparent;
 }
 
-/* ▶ icon */
-.md a.try-exercise-button::before {
+/* ▶ Play icon */
+.try-exercise-button::before {
   content: "▶";
   font-size: 0.7em;
   transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* colour fill sweeping in from the left */
-.md a.try-exercise-button::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: var(--ac);
-  transform: scaleX(0);
-  transform-origin: left center;
-  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+/* Completion label: hidden by default */
+.try-exercise-button::after {
+  content: none;
 }
 
-.md a.try-exercise-button:hover,
-.md a.try-exercise-button:focus-visible {
+/* Hover and keyboard focus */
+.try-exercise-button:hover,
+.try-exercise-button:focus-visible {
   transform: translateY(-3px);
   color: var(--card);
-  border-color: var(--ac);
+  border-color: var(--try-ex-accent);
   box-shadow:
     0 12px 28px rgb(25 45 85 / 22%),
-    0 0 0 4px color-mix(in srgb, var(--ac) 22%, transparent);
+    0 0 0 4px color-mix(in srgb, var(--try-ex-accent) 22%, transparent);
+  background-size: 100% 100%;
   animation: none;
 }
-.md a.try-exercise-button:hover::after,
-.md a.try-exercise-button:focus-visible::after {
-  transform: scaleX(1);
-}
-.md a.try-exercise-button:hover::before,
-.md a.try-exercise-button:focus-visible::before {
+
+.try-exercise-button:hover::before,
+.try-exercise-button:focus-visible::before {
   transform: translateX(3px) scale(1.2);
 }
-.md a.try-exercise-button:active {
+
+.try-exercise-button:active {
   transform: translateY(1px) scale(0.96);
   transition-duration: 0.08s;
 }
-.md a.try-exercise-button:focus-visible {
-  outline: 2px solid var(--ac);
+
+.try-exercise-button:focus-visible {
+  outline: 2px solid var(--try-ex-accent);
   outline-offset: 3px;
+}
+
+/* =================================
+   COMPLETED STATE
+   ================================= */
+
+.try-exercise-button.done {
+  --try-ex-accent: var(--success, #2e7d32);
+
+  background-color: color-mix(in srgb, var(--try-ex-accent) 12%, var(--soft));
+
+  border-color: color-mix(in srgb, var(--try-ex-accent) 45%, var(--bd));
+
+  color: var(--try-ex-accent);
+  animation: none;
+}
+
+/* Replace play icon with checkmark */
+.try-exercise-button.done::before {
+  content: "✓";
+  font-size: 0.95em;
+  font-weight: 800;
+}
+
+/* Completion text */
+.try-exercise-button.done::after {
+  content: "Completed";
+  font-size: 0.82em;
+  font-weight: 700;
+}
+
+/* Completed hover */
+.try-exercise-button.done:hover,
+.try-exercise-button.done:focus-visible {
+  color: var(--card);
+  border-color: var(--try-ex-accent);
+  background-size: 100% 100%;
 }
 
 @keyframes try-ex-pulse {
