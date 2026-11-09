@@ -1093,6 +1093,7 @@ export async function mountJavaExercise({
       : String(initialCode);
   let editor = null;
   let editorView = null;
+  let redoCommand = null;
   let disposed = false;
   let running = false;
   let currentOperation = 0;
@@ -1534,6 +1535,21 @@ export async function mountJavaExercise({
     (event) => {
       if (
         (event.ctrlKey || event.metaKey) &&
+        event.shiftKey &&
+        !event.altKey &&
+        event.key.toLowerCase() === "z"
+      ) {
+        if (editorView && redoCommand) {
+          event.preventDefault();
+          event.stopPropagation();
+          event.stopImmediatePropagation();
+          redoCommand(editorView);
+        }
+        // In the textarea fallback, leave the native browser redo shortcut intact.
+        return;
+      }
+      if (
+        (event.ctrlKey || event.metaKey) &&
         !event.altKey &&
         event.key.toLowerCase() === "l"
       ) {
@@ -1600,7 +1616,9 @@ export async function mountJavaExercise({
       oneDark,
       Compartment,
       indentLess,
+      redo,
     } = await loadCodeMirror();
+    redoCommand = redo;
     if (disposed) return { getSource, dispose: () => {} };
     themeCompartment = new Compartment();
     const activeTheme = () =>
