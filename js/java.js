@@ -1101,6 +1101,11 @@ export async function mountJavaExercise({
   let themeObserver = null;
   let themeCompartment = null;
   let latestResult = null;
+  let solutionPanelObserver = null;
+  let showSolutionClickHandler = null;
+  let solutionTestButton = null;
+  let solutionRevealed = false;
+  let solutionPanel = null;
   const root = element("div", "java-exercise");
   const editorPanel = element("section", "java-panel java-editor-panel");
   const editorHeader = element("div", "java-panel-heading", [
@@ -1339,6 +1344,7 @@ export async function mountJavaExercise({
     checkButton.disabled = busy || checkButton.hidden;
     resetButton.disabled = busy;
     stopButton.disabled = !busy;
+    if (solutionTestButton) solutionTestButton.disabled = busy;
     root.setAttribute("aria-busy", String(busy));
   };
 
@@ -1412,7 +1418,7 @@ export async function mountJavaExercise({
   };
   unsubscribeStatus = subscribeJavaStatus(handleStatus);
 
-  const execute = async (operation) => {
+  const execute = async (operation, { recordGrade = true } = {}) => {
     if (running || disposed) return;
     const current = ++currentOperation;
     const code = getSource();
@@ -1466,10 +1472,12 @@ export async function mountJavaExercise({
           ...result,
           explanation: config.explanation,
         });
-        try {
-          await onGrade(result);
-        } catch (error) {
-          console.warn("Could not record Java exercise grade:", error);
+        if (recordGrade) {
+          try {
+            await onGrade(result);
+          } catch (error) {
+            console.warn("Could not record Java exercise grade:", error);
+          }
         }
       }
       statusLine.textContent =
@@ -1523,6 +1531,99 @@ export async function mountJavaExercise({
       if (!disposed && current === currentOperation) setBusy(false);
     }
   };
+
+  // The exercise page owns the solution panel and its Show solution control.
+  // Add this exercise's reference-solution test button only after that panel is
+  // revealed. The button loads the reference solution into the current editor
+  // and sends it through the same automatic checks as learner code.
+  const isPanelVisible = (panel) => {
+    if (!panel) return false;
+    for (let current = panel; current instanceof Element; current = current.parentElement) {
+      if (current.hidden || current.getAttribute("aria-hidden") === "true")
+        return false;
+      if (current instanceof HTMLDetailsElement && !current.open)
+        return false;
+      const style = window.getComputedStyle?.(current);
+      if (style && (style.display === "none" || style.visibility === "hidden"))
+        return false;
+    }
+    return true;
+  };
+
+  const attachSolutionTestButton = () => {
+    if (disposed || !solutionRevealed || typeof config.solution !== "string" || !config.solution.trim())
+      return;
+    const panel = document.querySelector(".java-solution-panel");
+    if (!panel || !isPanelVisible(panel)) return;
+    solutionPanel = panel;
+
+    const existing = panel.querySelector('[data-java-test-solution="true"]');
+    if (existing && existing !== solutionTestButton) existing.remove();
+    if (solutionTestButton && solutionTestButton.parentElement !== panel)
+      solutionTestButton.remove();
+    if (solutionTestButton?.isConnected && solutionTestButton.parentElement === panel)
+      return;
+
+    solutionTestButton = element("button", "sec", "Test solution");
+    solutionTestButton.type = "button";
+    solutionTestButton.dataset.javaTestSolution = "true";
+    solutionTestButton.title = "Load the reference solution into the editor and run all automatic checks.";
+    solutionTestButton.setAttribute("aria-label", "Test solution");
+    solutionTestButton.addEventListener("click", () => {
+      if (running || disposed || typeof config.solution !== "string") return;
+      setSource(config.solution);
+      consolePanel.open = true;
+      resultsPanel.open = true;
+      execute("check", { recordGrade: false });
+    });
+    panel.append(solutionTestButton);
+    solutionTestButton.disabled = running;
+  };
+
+  showSolutionClickHandler = (event) => {
+    const target = event.target instanceof Element ? event.target : event.target?.parentElement;
+    const trigger = target?.closest("button, [role='button'], summary, a");
+    if (!trigger) return;
+    const label = [
+      trigger.textContent,
+      trigger.getAttribute("aria-label"),
+      trigger.getAttribute("title"),
+    ].filter(Boolean).join(" ");
+    if (!/show\s+solution/i.test(label)) return;
+    solutionRevealed = true;
+    requestAnimationFrame(attachSolutionTestButton);
+  };
+  document.addEventListener("click", showSolutionClickHandler, true);
+
+  // Observe the page-owned panel as it is revealed or populated. The delegated
+  // click handler above covers the normal Show solution action; this observer
+  // also handles panels revealed by keyboard or restored page state.
+  if (typeof MutationObserver !== "undefined" && document.documentElement) {
+    solutionPanelObserver = new MutationObserver(() => {
+      if (solutionRevealed) attachSolutionTestButton();
+      else {
+        const panel = document.querySelector(".java-solution-panel");
+        const hasVisibleSolution = isPanelVisible(panel) &&
+          Boolean(panel?.querySelector("pre, code, .java-solution-code"));
+        if (hasVisibleSolution) {
+          solutionRevealed = true;
+          attachSolutionTestButton();
+        }
+      }
+    });
+    solutionPanelObserver.observe(document.documentElement, {
+      subtree: true,
+      childList: true,
+      attributes: true,
+      attributeFilter: ["class", "style", "hidden", "aria-hidden"],
+    });
+  }
+  const initiallyVisibleSolution = document.querySelector(".java-solution-panel");
+  if (isPanelVisible(initiallyVisibleSolution) &&
+      initiallyVisibleSolution?.querySelector("pre, code, .java-solution-code")) {
+    solutionRevealed = true;
+    attachSolutionTestButton();
+  }
 
   runButton.addEventListener("click", () => execute("run"));
   checkButton.addEventListener("click", () => execute("check"));
@@ -1794,6 +1895,14 @@ export async function mountJavaExercise({
       unsubscribeStatus?.();
       themeObserver?.disconnect();
       themeObserver = null;
+      solutionPanelObserver?.disconnect();
+      solutionPanelObserver = null;
+      if (showSolutionClickHandler)
+        document.removeEventListener("click", showSolutionClickHandler, true);
+      showSolutionClickHandler = null;
+      solutionTestButton?.remove();
+      solutionTestButton = null;
+      solutionPanel = null;
       if (running) stopJavaExecution("Java exercise closed.");
       editor?.destroy?.();
       root.remove();
