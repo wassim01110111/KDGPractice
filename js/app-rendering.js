@@ -719,6 +719,7 @@ function qView(
   hasNextExercise = () => true,
   attemptId = mode === "exam" ? "exam" : "practice",
   extraActionControls = [],
+  onPracticeResult = null,
 ) {
   let q = h("div", { class: "q" });
   const out = h("div"),
@@ -815,6 +816,15 @@ function qView(
     exerciseCorrect = true;
     updateNextExercise();
   };
+  const recordPracticeResult = async (correct, meta = {}) => {
+    if (mode !== "practice") return;
+    if (typeof onPracticeResult !== "function") {
+      console.error("Practice view is missing its app-practice result handler.");
+      return;
+    }
+    await onPracticeResult(correct, meta);
+    if (correct === true) markExerciseCorrect();
+  };
   // preventScroll: focusing the button must not yank the page away from the
   // feedback we just scrolled to.
   const focusNextExercise = () =>
@@ -900,15 +910,7 @@ function qView(
             if (currentGrading !== gradingId || !q.isConnected) return;
             // Show the result table of the submitted query, like Run does.
             out.replaceChildren(g.res ? table(g.res) : "");
-            if (g.correct !== null)
-              await rec(ex, g.correct, "practice", onAttempt, {
-                error: Boolean(g.error),
-                blank: !ta.value.trim(),
-              });
             if (currentGrading !== gradingId || !q.isConnected) return;
-            if (g.correct === true) {
-              markExerciseCorrect();
-            }
             fb.replaceChildren(
               g.error
                 ? h("pre", { class: "err" }, g.error)
@@ -927,7 +929,13 @@ function qView(
                 ? h("p", {}, h("b", {}, "Explanation: "), ex.explanation)
                 : "",
             );
-            scrollToFeedback();
+            if (g.correct !== null)
+              await recordPracticeResult(g.correct, {
+                error: Boolean(g.error),
+                blank: !ta.value.trim(),
+              });
+            if (currentGrading !== gradingId || !q.isConnected) return;
+            if (g.correct !== true) scrollToFeedback();
             focusNextExercise();
           },
         },
@@ -982,7 +990,7 @@ function qView(
             if (mode !== "practice" || javaDisposed || !q.isConnected) return;
             const passed = result?.success === true;
             const score = result?.score || {};
-            await rec(ex, passed, "practice", onAttempt, {
+            await recordPracticeResult(passed, {
               java: true,
               partialScore: score.earned ?? 0,
               maxScore: score.total ?? 0,
@@ -991,7 +999,6 @@ function qView(
                 result?.status === "runtime-error",
               blank: !readAns().trim(),
             });
-            if (passed) markExerciseCorrect();
           },
         });
         if (
@@ -1065,13 +1072,6 @@ function qView(
           onGrade: async (result) => {
             if (mode !== "practice" || terminalDisposed || !q.isConnected)
               return;
-            await rec(ex, result.passed, "practice", onAttempt, {
-              terminal: true,
-              partialScore: result.score,
-              maxScore: result.maxScore,
-              blank: false,
-            });
-            if (result.passed) markExerciseCorrect();
             // A new check replaces the previous summary instead of stacking.
             fb.querySelectorAll(".terminal-grade-summary").forEach((node) =>
               node.remove(),
@@ -1085,7 +1085,13 @@ function qView(
                 `Workspace score: ${result.score} / ${result.maxScore}${result.passed ? " \u00B7 All checks passed" : " \u00B7 Review the failed checks above"}`,
               ),
             );
-            scrollToFeedback();
+            await recordPracticeResult(result.passed, {
+              terminal: true,
+              partialScore: result.score,
+              maxScore: result.maxScore,
+              blank: false,
+            });
+            if (!result.passed) scrollToFeedback();
             if (result.passed) focusNextExercise();
           },
         });
@@ -1235,11 +1241,8 @@ function qView(
                     "button",
                     {
                       onclick: async () => {
-                        await rec(ex, true, "practice", onAttempt);
-
-                        markExerciseCorrect();
-
                         fb.append(h("p", { class: "ok" }, "Saved as correct"));
+                        await recordPracticeResult(true);
                         focusNextExercise();
                       },
                     },
@@ -1250,10 +1253,11 @@ function qView(
                     {
                       class: "sec",
                       onclick: async () => {
-                        await rec(ex, false, "practice", onAttempt);
                         fb.append(
                           h("p", { class: "bad" }, "Saved as incorrect"),
                         );
+                        await recordPracticeResult(false);
+                        scrollToFeedback();
                         focusNextExercise();
                       },
                     },
@@ -1263,11 +1267,6 @@ function qView(
               );
               scrollToFeedback();
               return;
-            }
-            await rec(ex, g, "practice", onAttempt);
-
-            if (g === true) {
-              markExerciseCorrect();
             }
             fb.replaceChildren(
               h(
@@ -1286,7 +1285,8 @@ function qView(
                 ? h("p", {}, h("b", {}, "Explanation: "), ex.explanation)
                 : "",
             );
-            scrollToFeedback();
+            await recordPracticeResult(g);
+            if (g !== true) scrollToFeedback();
             focusNextExercise();
           },
         },

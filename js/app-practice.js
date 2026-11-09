@@ -1008,6 +1008,65 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
         : "smooth",
     });
   }
+  function scrollLearningPathNavigator(navigator) {
+    requestAnimationFrame(() =>
+      requestAnimationFrame(() => {
+        if (!navigator?.isConnected) return;
+
+        const behavior = matchMedia("(prefers-reduced-motion: reduce)").matches
+          ? "auto"
+          : "smooth";
+
+        // The exercise pane may scroll independently of the document. Find
+        // the nearest ancestor that can actually scroll instead of assuming
+        // window is the active scroll container.
+        let scroller = navigator.parentElement;
+        while (
+          scroller &&
+          scroller !== document.body &&
+          scroller !== document.documentElement
+        ) {
+          const overflowY = getComputedStyle(scroller).overflowY;
+          if (
+            scroller.scrollHeight > scroller.clientHeight + 1 &&
+            ["auto", "scroll", "overlay", "hidden"].includes(overflowY)
+          )
+            break;
+          scroller = scroller.parentElement;
+        }
+
+        if (
+          scroller &&
+          scroller !== document.body &&
+          scroller !== document.documentElement
+        ) {
+          const scrollerRect = scroller.getBoundingClientRect();
+          const navigatorRect = navigator.getBoundingClientRect();
+          const scrollportTop = scrollerRect.top + scroller.clientTop;
+          const top =
+            scroller.scrollTop + navigatorRect.top - scrollportTop - 12;
+          scroller.scrollTo({ top: Math.max(0, top), behavior });
+          return;
+        }
+
+        // Fall back to document scrolling when no nested scroll container
+        // owns the navigator. Account for a sticky/fixed site header.
+        const header = document.querySelector("header");
+        const pinned =
+          header &&
+          ["sticky", "fixed"].includes(getComputedStyle(header).position);
+        const offset = pinned ? header.getBoundingClientRect().height : 0;
+        const scrollingElement =
+          document.scrollingElement || document.documentElement;
+        const top =
+          navigator.getBoundingClientRect().top +
+          scrollingElement.scrollTop -
+          offset -
+          12;
+        window.scrollTo({ top: Math.max(0, top), behavior });
+      }),
+    );
+  }
   // Filter, search and status-slider changes start again from page one.
   function redraw() {
     practiceVisibleCount = PRACTICE_PAGE_SIZE;
@@ -1036,15 +1095,32 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
       const index = items.findIndex((item) => keyOf(item) === keyOf(exercise));
       return index >= 0 ? items[index + 1] : undefined;
     };
+    let pathNavigator = null;
+    const handlePracticeResult = async (correct, meta = {}) => {
+      const save = rec(
+        exercise,
+        correct,
+        "practice",
+        () => {
+          draw();
+          syncCompletionFlag();
+        },
+        meta,
+      );
+      setTimeout(() => {
+        if (pathNavigator?.isConnected) {
+          pathNavigator.classList.toggle("right", correct === true);
+          if (correct === true) scrollLearningPathNavigator(pathNavigator);
+        }
+      }, 200);
+      await save;
+    };
     const view = qView(
       exercise,
       "practice",
       () => answers[keyOf(exercise)],
       (v) => saveDraft(keyOf(exercise), v),
-      () => {
-        draw();
-        syncCompletionFlag();
-      },
+      undefined,
       () => {
         const next = nextExerciseAfter();
         if (next)
@@ -1053,6 +1129,9 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
           );
       },
       () => !!nextExerciseAfter(),
+      "practice",
+      [],
+      handlePracticeResult,
     );
 
     const exerciseKey = keyOf(exercise);
@@ -1221,7 +1300,7 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
         if (nextPathExercise)
           void selectExercise(nextPathExercise.exercise, true);
       });
-      const pathNavigator = h(
+      pathNavigator = h(
         "nav",
         {
           class: "learning-path-navigator",

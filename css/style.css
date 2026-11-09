@@ -8095,6 +8095,44 @@ body.exercise-split-dragging {
 .learning-path-navigator__actions > button {
   margin: 0;
 }
+.learning-path-navigator.right {
+  transform-origin: center center;
+  animation: learning-path-navigator-right 900ms ease-out both;
+}
+
+@keyframes learning-path-navigator-right {
+  0% {
+    transform: scale(0.94) translateX(0);
+  }
+
+  18% {
+    transform: scale(1.09) translateX(0);
+  }
+
+  30% {
+    transform: scale(1.07) translateX(-5px) rotate(-1deg);
+  }
+
+  42% {
+    transform: scale(1.07) translateX(5px) rotate(1deg);
+  }
+
+  54% {
+    transform: scale(1.05) translateX(-3px) rotate(-0.5deg);
+  }
+
+  66% {
+    transform: scale(1.04) translateX(3px) rotate(0.5deg);
+  }
+
+  80% {
+    transform: scale(1.02) translateX(-1px);
+  }
+
+  100% {
+    transform: scale(1) translateX(0) rotate(0);
+  }
+}
 
 /* Exam cards use the same neutral outer wrapper for every shared split layout. */
 .exercise-question-panel:has(.exercise-split-layout) {
@@ -9180,17 +9218,7 @@ textarea:hover:not(:disabled) {
 .practice-type-filter-control.is-open {
   border-color: color-mix(in srgb, var(--ac) 50%, var(--bd));
 }
-@media (prefers-reduced-motion: reduce) {
-  button:active:not(:disabled),
-  .item:active,
-  .term-pill:active,
-  .progress-filter:active,
-  .learning-continue-button:active:not(.is-disabled),
-  .item:not(.on):hover {
-    transition: none !important;
-    transform: none;
-  }
-}
+
 @media (max-width: 900px) {
   .exercise-session-layout {
     grid-template-columns: minmax(0, 1fr);
@@ -10121,16 +10149,6 @@ textarea:hover:not(:disabled) {
     transform: translateY(0) scale(1);
   }
 }
-@media (prefers-reduced-motion: reduce) {
-  .java-operation-progress-fill {
-    animation: none;
-    width: 100%;
-    opacity: 0.45;
-  }
-  .header-tools > #wassim-sign.is-secret-holding {
-    transform: none;
-  }
-}
 
 /* Theme-aware ANSI highlight fills keep coloured terminal output readable. */
 .os-terminal {
@@ -10253,12 +10271,6 @@ textarea:hover:not(:disabled) {
   content: "";
   animation: app-spin 0.8s linear infinite;
 }
-@media (prefers-reduced-motion: reduce) {
-  .java-editor-loading:not(.java-editor-error)::before {
-    animation: none;
-    border-right-color: var(--ac);
-  }
-}
 
 /* Site-version update notice */
 .site-update-notice {
@@ -10330,6 +10342,30 @@ textarea:hover:not(:disabled) {
   }
 }
 @media (prefers-reduced-motion: reduce) {
+  button:active:not(:disabled),
+  .item:active,
+  .term-pill:active,
+  .progress-filter:active,
+  .learning-continue-button:active:not(.is-disabled),
+  .item:not(.on):hover {
+    transition: none !important;
+    transform: none;
+  }
+  .learning-path-navigator.right {
+    animation: none;
+  }
+  .java-operation-progress-fill {
+    animation: none;
+    width: 100%;
+    opacity: 0.45;
+  }
+  .header-tools > #wassim-sign.is-secret-holding {
+    transform: none;
+  }
+  .java-editor-loading:not(.java-editor-error)::before {
+    animation: none;
+    border-right-color: var(--ac);
+  }
   .site-update-notice {
     animation: none;
   }
