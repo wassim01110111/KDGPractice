@@ -1106,6 +1106,11 @@ export async function mountJavaExercise({
     element("h4", "", "Java editor"),
     element("small", "", config.sourceFile || "Main.java"),
   ]);
+  const selectLineButton = element("button", "sec", "Select current line");
+  selectLineButton.type = "button";
+  selectLineButton.title = "Select the current line";
+  selectLineButton.setAttribute("aria-label", "Select current line");
+  editorHeader.append(selectLineButton);
   const editorHost = element("div", "java-codemirror-host");
   const fallbackNotice = element(
     "p",
@@ -1218,6 +1223,107 @@ export async function mountJavaExercise({
 
   const getSource = () =>
     editorView ? editorView.state.doc.toString() : source;
+
+  // Ctrl/Cmd+L adds the following line; Ctrl/Cmd+Shift+L adds the
+  // preceding line. The toolbar button selects only the current line.
+  const selectCurrentLine = () => {
+    if (editorView?.state?.doc?.lineAt && editorView?.dispatch) {
+      const line = editorView.state.doc.lineAt(
+        editorView.state.selection.main.head,
+      );
+      editorView.dispatch({
+        selection: { anchor: line.from, head: line.to },
+        scrollIntoView: true,
+      });
+      editorView.focus();
+      return;
+    }
+
+    const fallback = editorHost.querySelector("textarea");
+    if (!fallback) return;
+    const value = fallback.value;
+    const position = fallback.selectionStart;
+    const lineStart = value.lastIndexOf("\n", position - 1) + 1;
+    const newline = value.indexOf("\n", position);
+    const lineEnd = newline < 0 ? value.length : newline;
+    fallback.setSelectionRange(lineStart, lineEnd);
+    fallback.focus();
+  };
+
+  const extendLineSelection = (direction) => {
+    if (editorView?.state?.doc?.lineAt && editorView?.dispatch) {
+      const doc = editorView.state.doc;
+      const selection = editorView.state.selection.main;
+      const startLine = doc.lineAt(selection.from);
+      const endLine = doc.lineAt(selection.to);
+
+      if (selection.empty) {
+        editorView.dispatch({
+          selection: { anchor: startLine.from, head: startLine.to },
+          scrollIntoView: true,
+        });
+      } else if (direction === "down") {
+        const nextLine =
+          selection.to >= endLine.to && endLine.number < doc.lines
+            ? doc.line(endLine.number + 1)
+            : null;
+        editorView.dispatch({
+          selection: {
+            anchor: startLine.from,
+            head: nextLine ? nextLine.to : endLine.to,
+          },
+          scrollIntoView: true,
+        });
+      } else {
+        const previousLine =
+          selection.from <= startLine.from && startLine.number > 1
+            ? doc.line(startLine.number - 1)
+            : null;
+        editorView.dispatch({
+          selection: {
+            anchor: previousLine ? previousLine.from : startLine.from,
+            head: endLine.to,
+          },
+          scrollIntoView: true,
+        });
+      }
+      editorView.focus();
+      return;
+    }
+
+    const fallback = editorHost.querySelector("textarea");
+    if (!fallback) return;
+    const value = fallback.value;
+    const from = fallback.selectionStart;
+    const to = fallback.selectionEnd;
+    const startLineStart = value.lastIndexOf("\n", from - 1) + 1;
+    const endLineStart = value.lastIndexOf("\n", Math.max(from, to - 1)) + 1;
+    const endNewline = value.indexOf("\n", endLineStart);
+    const endLineEnd = endNewline < 0 ? value.length : endNewline;
+
+    if (from === to) {
+      fallback.setSelectionRange(startLineStart, endLineEnd);
+    } else if (direction === "down") {
+      const nextLineStart = endLineEnd + 1;
+      const nextNewline = value.indexOf("\n", nextLineStart);
+      const nextLineEnd = nextNewline < 0 ? value.length : nextNewline;
+      const newEnd =
+        to >= endLineEnd && endNewline >= 0 ? nextLineEnd : endLineEnd;
+      fallback.setSelectionRange(startLineStart, newEnd);
+    } else {
+      const previousLineStart =
+        startLineStart > 0
+          ? value.lastIndexOf("\n", startLineStart - 2) + 1
+          : startLineStart;
+      const newStart =
+        from <= startLineStart ? previousLineStart : startLineStart;
+      fallback.setSelectionRange(newStart, endLineEnd);
+    }
+    fallback.focus();
+  };
+
+  selectLineButton.addEventListener("click", selectCurrentLine);
+
   const setSource = (value) => {
     source = String(value ?? "");
     if (editorView)
@@ -1426,6 +1532,17 @@ export async function mountJavaExercise({
   editorHost.addEventListener(
     "keydown",
     (event) => {
+      if (
+        (event.ctrlKey || event.metaKey) &&
+        !event.altKey &&
+        event.key.toLowerCase() === "l"
+      ) {
+        event.preventDefault();
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+        extendLineSelection(event.shiftKey ? "up" : "down");
+        return;
+      }
       if (
         !(event.ctrlKey || event.metaKey) ||
         event.key !== "Enter" ||
