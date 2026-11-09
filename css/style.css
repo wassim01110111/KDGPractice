@@ -5852,15 +5852,6 @@ html[data-theme="dark"] :is(.md, .stmt) code .tok-tag {
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .md a.try-exercise-button,
-  .md a.try-exercise-button::before,
-  .md a.try-exercise-button::after {
-    transition: none;
-    animation: none;
-  }
-}
-
 /* ============================================================
    HEADER LAYOUT
    Desktop: brand on the left, controls grouped on the right.
@@ -10410,6 +10401,12 @@ textarea:hover:not(:disabled) {
     border-right-color: var(--ac);
   }
   .site-update-notice {
+    animation: none;
+  }
+  .try-exercise-button,
+  .try-exercise-button::before,
+  .try-exercise-button::after {
+    transition: none;
     animation: none;
   }
 }
