@@ -44,7 +44,6 @@ This guide contains the Term 1 exercises and their browser-playground links.
     - [Ex 03.07 Hexadecimal (for)](#ex-0307-hexadecimal-for)
     - [Ex 03.08 Divisible (loops/nested if)](#ex-0308-divisible-loopsnested-if)
     - [Ex 03.09 Interest / EXTRA](#ex-0309-interest--extra)
-    - [Ex 03.10 ASCII box / EXTRA](#ex-0310-ascii-box--extra)
     - [Ex 03.11 Sequence / EXTRA](#ex-0311-sequence--extra)
     - [Ex 03.12 Multiplication table / EXTRA](#ex-0312-multiplication-table--extra)
     - [Ex 03.13 Multiplication table + Quiz / EXTRA](#ex-0313-multiplication-table--quiz--extra)
@@ -74,7 +73,6 @@ Implement the Sum program demonstrated in the course slides in the single Java s
 
 <a class="try-exercise-button" href="#/practice/programming-fundamentals-term-1-canvas/pf-term1-0103-sum">Try exercise</a>
 
-
 ### Ex 01.04 Welcome (read text)
 
 Write a program that exhibits the following user interaction:
@@ -99,25 +97,23 @@ String firstName;
 
 <a class="try-exercise-button" href="#/practice/programming-fundamentals-term-1-canvas/pf-term1-0104-welcome-read-text">Try exercise</a>
 
-
 ### Ex 01.05 Product (read int)
 
 Write a program that implements the following behaviour:
 
-````text
+```text
 Enter a number: 3
 
 Enter another number: 2
 
 Enter a final number: 5
 
-
-```The product is: 30
+The product is: 30
+```
 
 **Browser implementation:** Submit one Java source file only. If multiple classes are required, declare them consecutively in that same file; do not create separate files or use a package declaration.
 
 <a class="try-exercise-button" href="#/practice/programming-fundamentals-term-1-canvas/pf-term1-0105-product-read-int">Try exercise</a>
-
 
 ### Ex 01.06 Age (LocalDate)
 
@@ -148,25 +144,24 @@ year = LocalDate.now().getYear();
 
 <a class="try-exercise-button" href="#/practice/programming-fundamentals-term-1-canvas/pf-term1-0106-age-localdate">Try exercise</a>
 
-
 ### Ex 01.07 BMI v1 (read double)
 
 The BMI is defined as the body mass divided by the square of the body height and is universally expressed in units of kg/m2. (Wikipedia)
 
 Write a program that calculates the BMI. Here is an example session:
 
-````text
+```text
 Dear patient, this program will calculate your BMI.
 Enter your weight in kilograms:76
 Enter your length in meters: 1,79
 Your BMI is: 23.719609250647608
+```
 
-```Tip: Length can be a floating point number. Use a variable of type double instead of int.
+Tip: Length can be a floating point number. Use a variable of type double instead of int.
 
 **Browser implementation:** Submit one Java source file only. If multiple classes are required, declare them consecutively in that same file; do not create separate files or use a package declaration.
 
 <a class="try-exercise-button" href="#/practice/programming-fundamentals-term-1-canvas/pf-term1-0107-bmi-v1-read-double">Try exercise</a>
-
 
 ### Ex 01.08 BMIv2 (if)
 
@@ -187,7 +182,6 @@ Hint: You can use the && operator (AND) if you want to test 2 conditions. Exampl
 ```java
 if (bmi >= 18 && bmi<25) {
 // conditional code
-
 }
 ```
 
@@ -195,22 +189,17 @@ if (bmi >= 18 && bmi<25) {
 
 <a class="try-exercise-button" href="#/practice/programming-fundamentals-term-1-canvas/pf-term1-0108-bmiv2-if">Try exercise</a>
 
-
 ### Ex 01.08 HigherLower (variable)
 
 **Task 1**
-Implement and run the HigherLower program from the slides  
+Implement and run the HigherLower program from the slides
 **Task 2**
 Sometimes you need to change your algorithm a bit to go well with the structure of your programming language.
 
 ```java
 while (true){
-
 // statements ommitted
-
-if (test) return;
-
-
+  if (test) return;
 }
 ```
 
@@ -228,24 +217,22 @@ Print the number of guesses the user needed to guess the secret.
 
 <a class="try-exercise-button" href="#/practice/programming-fundamentals-term-1-canvas/pf-term1-0108-higherlower-variable">Try exercise</a>
 
-
 ### Ex 01.09 Between (if) / EXTRA
 
 Write a program that reads 3 numbers in the range 1..100, and prints the number whose value is between the other two (i.e. it is neither the largest nor the smallest).
 
 Example run:
 
-````text
+```text
 Enter the first number (1..100): 67
 Enter the second number (1..100): 23
 Enter the third number (1..100): 45
-
-```The middle number is 45
+The middle number is 45
+```
 
 **Browser implementation:** Submit one Java source file only. If multiple classes are required, declare them consecutively in that same file; do not create separate files or use a package declaration.
 
 <a class="try-exercise-button" href="#/practice/programming-fundamentals-term-1-canvas/pf-term1-0109-between-if-extra">Try exercise</a>
-
 
 ### Ex 01.10 Calculate (if)
 
@@ -261,7 +248,6 @@ substract
 multiply
 divide
 Your choice: 3
-
 15 \* 4 = 60
 ```
 
@@ -275,7 +261,6 @@ Hint: Use a loop or Math.pow()
 **Browser implementation:** Submit one Java source file only. If multiple classes are required, declare them consecutively in that same file; do not create separate files or use a package declaration.
 
 <a class="try-exercise-button" href="#/practice/programming-fundamentals-term-1-canvas/pf-term1-0110-calculate-if">Try exercise</a>
-
 
 ## Week 2
 
@@ -303,7 +288,6 @@ Are you able to compile and/or run your program? Why (not)?
 
 <a class="try-exercise-button" href="#/practice/programming-fundamentals-term-1-canvas/pf-term1-0201-variables">Try exercise</a>
 
-
 ### Ex 02.02 numbers v1
 
 **Part 1**
@@ -325,26 +309,25 @@ Write a new program in which you declare two int variables. Name them first and 
 
 Now print ... :
 
-... their sum  
-... their difference (second subtracted from first)  
-... their product  
-... their quotient (first divided by second)  
-... the remainder of first divided by second  
+... their sum
+... their difference (second subtracted from first)
+... their product
+... their quotient (first divided by second)
+... the remainder of first divided by second
 **Part 4**
 Add an int variable called result to the program you wrote in part 3.
 
 Assign result the value of ... :
 
-... ++first ... and print the value of result  
-... first++ ... and print the value of result  
-... --second ... and print the value of result  
-... second-- ... and print the value of result  
+... ++first ... and print the value of result
+... first++ ... and print the value of result
+... --second ... and print the value of result
+... second-- ... and print the value of result
 Explain each value printed.
 
 **Browser implementation:** Submit one Java source file only. If multiple classes are required, declare them consecutively in that same file; do not create separate files or use a package declaration.
 
 <a class="try-exercise-button" href="#/practice/programming-fundamentals-term-1-canvas/pf-term1-0202-numbers-v1">Try exercise</a>
-
 
 ### Ex 02.03 Taxes
 
@@ -352,11 +335,11 @@ Write a program that adds VAT (value-added tax) to a monetary value or that calc
 
 Ask the user to enter the following data:
 
-The VAT percentage  
-The amount (may or may not include VAT)  
+The VAT percentage
+The amount (may or may not include VAT)
 You should also give the user the option to indicate whether or not the amount entered already includes VAT. Display an error message in case the user entered an invalid option.
 
-Examples  
+Examples
 (the amount in bold is the amount you calculate)
 
 First run:
@@ -390,37 +373,36 @@ Invalid choice!
 
 <a class="try-exercise-button" href="#/practice/programming-fundamentals-term-1-canvas/pf-term1-0203-taxes">Try exercise</a>
 
-
 ### Ex 02.04 Numbers V2
 
 Write a program that can multiply two six-digit numbers.
 
-Create a constant MINIMUM with a value of 100000.  
-Create a constant MAXIMUM with a value of 999999.  
-Ask the user for two six-digit numbers.  
-Check if both numbers do, in fact, have exactly six digits. Display an error message if this is not the case and abort the program. (See the example below)  
-If both digits are accepted, then multiply them and show the five final digits of the result. (Hint: you can use one of the five most basic operators to do this)  
-Examples  
+Create a constant MINIMUM with a value of 100000.
+Create a constant MAXIMUM with a value of 999999.
+Ask the user for two six-digit numbers.
+Check if both numbers do, in fact, have exactly six digits. Display an error message if this is not the case and abort the program. (See the example below)
+If both digits are accepted, then multiply them and show the five final digits of the result. (Hint: you can use one of the five most basic operators to do this)
+Examples
 First run:
 
-````text
+```text
 Enter a 6-digit whole number: 123456
 Enter another 6-digit whole number: 654321
 The product is 80779853376
+The 5 final digits are: 53376
+```
 
-```The 5 final digits are: 53376
 Second run:
 
 ```text
 Enter a 6-digit whole number: 12345
 Enter another 6-digit whole number: 123456
 One of the numbers is too small.
-````
+```
 
 **Browser implementation:** Submit one Java source file only. If multiple classes are required, declare them consecutively in that same file; do not create separate files or use a package declaration.
 
 <a class="try-exercise-button" href="#/practice/programming-fundamentals-term-1-canvas/pf-term1-0204-numbers-v2">Try exercise</a>
-
 
 ### Ex 02.05 Numbers V3
 
@@ -459,7 +441,6 @@ This number is too small.
 
 <a class="try-exercise-button" href="#/practice/programming-fundamentals-term-1-canvas/pf-term1-0205-numbers-v3">Try exercise</a>
 
-
 ### Ex 02.06 ASCII table
 
 Write a program that prints an ASCII value of a characters. First, have the user enter a number from 32 (space bar) up until 127, then print the character which represents that number. If the user enters an invalid number, abort the program.
@@ -495,7 +476,6 @@ z (122) { (123) | (124) } (125) ~ (126) □ (127)
 
 <a class="try-exercise-button" href="#/practice/programming-fundamentals-term-1-canvas/pf-term1-0206-ascii-table">Try exercise</a>
 
-
 ### Ex 02.07 Digits v1
 
 Write a program in which you ask the user for four digits. Your program is then supposed to create a number out of these four digits. The first digit represents 1000s, the next one 100s, etc.
@@ -510,14 +490,15 @@ Hard: For experienced students! instead of an int, read the input as a string of
 Examples  
 First run:
 
-````text
+```text
 Enter four digits (0..9).
 The first digit: 9
 The second digit: 5
 The third digit: 7
 The fourth digit: 9
+The number is 9579
+```
 
-```The number is 9579
 Second run:
 
 ```text
@@ -526,8 +507,9 @@ The first digit: 6
 The second digit: 0
 The third digit: 2
 The fourth digit: 7
+The number is 6027
+```
 
-```The number is 6027
 Third run:
 
 ```text
@@ -536,13 +518,12 @@ The first digit: 0
 The second digit: 8
 The third digit: 0
 The fourth digit: 7
-
-```The number is 807
+The number is 807
+```
 
 **Browser implementation:** Submit one Java source file only. If multiple classes are required, declare them consecutively in that same file; do not create separate files or use a package declaration.
 
 <a class="try-exercise-button" href="#/practice/programming-fundamentals-term-1-canvas/pf-term1-0207-digits-v1">Try exercise</a>
-
 
 ### Ex 02.08 Digits v2
 
@@ -552,26 +533,26 @@ Make sure that the number entered by the user is made up of four digits, so it s
 
 Possible extras:
 
-Make sure that the program repeats until the user enters -1 (you can use a boolean variable to help you)  
-Hard: Allow the user to enter the amount of digits so that it's not always supposed to be a 4-digit number.  
-Examples  
+Make sure that the program repeats until the user enters -1 (you can use a boolean variable to help you)
+Hard: Allow the user to enter the amount of digits so that it's not always supposed to be a 4-digit number.
+Examples
 First run:
 
-````text
+```text
 Enter a 4-digit whole number (1000..9999): 1540
+The sum of the digits of this number is 10
+```
 
-```The sum of the digits of this number is 10
 Second run:
 
 ```text
 Enter a 4-digit whole number (1000..9999): 6187
-
-```The sum of the digits of this number is 22
+The sum of the digits of this number is 22
+```
 
 **Browser implementation:** Submit one Java source file only. If multiple classes are required, declare them consecutively in that same file; do not create separate files or use a package declaration.
 
 <a class="try-exercise-button" href="#/practice/programming-fundamentals-term-1-canvas/pf-term1-0208-digits-v2">Try exercise</a>
-
 
 ### Ex 02.09 Fuel consumption
 
@@ -579,9 +560,9 @@ Write a program to calculate a car's fuel consumption.
 
 Ask for the following input:
 
-The car's mileage the last time its tank was filled.  
-The current mileage of the car.  
-The amount of fuel (in liters) that was used to fill the tank.  
+The car's mileage the last time its tank was filled.
+The current mileage of the car.
+The amount of fuel (in liters) that was used to fill the tank.
 Example
 
 ```text
@@ -595,55 +576,56 @@ Consumption for 989km driven: 6.11 liters/100km
 
 <a class="try-exercise-button" href="#/practice/programming-fundamentals-term-1-canvas/pf-term1-0209-fuel-consumption">Try exercise</a>
 
-
 ### Ex 02.10 Switches
 
 Write a program to simulate three switches. Ask for the state of each switch by reading a literal of type boolean.
 
 Next, perform the following checks in sequence:
 
-Check if at least two switches are turned on (on = true)  
-Check if exactly two switches are turned on  
-Check if at most one switch is turned on  
-Examples  
+Check if at least two switches are turned on (on = true)
+Check if exactly two switches are turned on
+Check if at most one switch is turned on
+Examples
 First run:
 
-````text
+```text
 Enter the state of switch 1 (true or false): false
 Enter the state of switch 2 (true or false): false
 Enter the state of switch 3 (true or false): false
+At most one switch is turned on.
+```
 
-```At most one switch is turned on.
 Second run:
 
 ```text
 Enter the state of switch 1 (true or false): false
 Enter the state of switch 2 (true or false): true
 Enter the state of switch 3 (true or false): false
+At most one switch is turned on.
+```
 
-```At most one switch is turned on.
 Third run:
 
 ```text
 Enter the state of switch 1 (true or false): true
 Enter the state of switch 2 (true or false): false
 Enter the state of switch 3 (true or false): true
-
-```At least two switches are turned on.
+At least two switches are turned on.
 Exactly two switches are turned on.
+```
+
 Fourth run:
 
 ```text
 Enter the state of switch 1 (true or false): true
 Enter the state of switch 2 (true or false): true
 Enter the state of switch 3 (true or false): true
-
-```At least two switches are turned on.
+At least two switches are turned on.
+```
 
 **Browser implementation:** Submit one Java source file only. If multiple classes are required, declare them consecutively in that same file; do not create separate files or use a package declaration.
 
 <a class="try-exercise-button" href="#/practice/programming-fundamentals-term-1-canvas/pf-term1-0210-switches">Try exercise</a>
-
 
 ### Ex 02.11 Scramble name /EXTRA
 
@@ -655,7 +637,7 @@ Spaces should be removed.
 
 Hint: check the documentation of the class Random.
 
-Examples  
+Examples
 First run:
 
 ```text
@@ -673,7 +655,6 @@ Hi Jan de Rijke, your scrambled name is iRanjJedek.
 **Browser implementation:** Submit one Java source file only. If multiple classes are required, declare them consecutively in that same file; do not create separate files or use a package declaration.
 
 <a class="try-exercise-button" href="#/practice/programming-fundamentals-term-1-canvas/pf-term1-0211-scramble-name-extra">Try exercise</a>
-
 
 ### Ex 02.12 Investment
 
@@ -703,13 +684,12 @@ Use appropriate data types for the different values, such as String, double, int
 
 <a class="try-exercise-button" href="#/practice/programming-fundamentals-term-1-canvas/pf-term1-0212-investment">Try exercise</a>
 
-
 ## Week 3
 
 ### Ex 03.00 HigherLower (variable)
 
 **Task 1**
-Implement and run the HigherLower program from the slides  
+Implement and run the HigherLower program from the slides
 **Task 2**
 Sometimes you need to change your algorithm a bit to go well with the structure of your programming language.
 
@@ -738,65 +718,40 @@ Print the number of guesses the user needed to guess the secret.
 
 <a class="try-exercise-button" href="#/practice/programming-fundamentals-term-1-canvas/pf-term1-0300-higherlower-variable">Try exercise</a>
 
-
 ### Ex 03.01 Age (if)
 
 **Source gap:** The pasted exercise instructions do not contain a task description for Ex 03.01 Age (if). The existing Markdown guide does contain a heading and a Java example. The following task summary is reconstructed only from that supplied example: read an age and display `Baby` for ages below 2, `Child` for ages 2–11, `Teenager` for ages 12–16, or `Adult` for ages 17 and above. Please verify these thresholds against the original course instructions.
 
 <a class="try-exercise-button" href="#/practice/programming-fundamentals-term-1-canvas/pf-term1-0301-age-if">Try exercise</a>
 
-
 ### Ex 03.02 Scrabble (switch)
 
-Ask the user for a letter and show the scrabble value for that letter.  
+Ask the user for a letter and show the scrabble value for that letter.
 The user should get the same result whether entering a lower or upper-case letter.
 
-Points
-
-Letters
-
-1 point
-
-A, E, I, L, N, O, R, S, T, U
-
-2 points
-
-D, G
-
-3 points
-
-B, C, M, P
-
-4 points
-
-F, H, V, W, Y
-
-5 points
-
-K
-
-8 points
-
-J, X
-
-10 points
-
-Q, Z
+| Points    | Letters                      |
+| --------- | ---------------------------- |
+| 1 point   | A, E, I, L, N, O, R, S, T, U |
+| 2 points  | D, G                         |
+| 3 points  | B, C, M, P                   |
+| 4 points  | F, H, V, W, Y                |
+| 5 points  | K                            |
+| 8 points  | J, X                         |
+| 10 points | Q, Z                         |
 
 **Browser implementation:** Submit one Java source file only. If multiple classes are required, declare them consecutively in that same file; do not create separate files or use a package declaration.
 
 <a class="try-exercise-button" href="#/practice/programming-fundamentals-term-1-canvas/pf-term1-0302-scrabble-switch">Try exercise</a>
-
 
 ### Ex 03.03 Loops (while/for)
 
 **Task 1: while**
 Write a program that
 
-Displays a line with all numbers from 120 to 100 (descending)  
-Displays a line with all multiples of 3 below 50  
-Displays a line with the powers of 5 below 10,000  
-Displays a line with the alphabet  
+Displays a line with all numbers from 120 to 100 (descending)
+Displays a line with all multiples of 3 below 50
+Displays a line with the powers of 5 below 10,000
+Displays a line with the alphabet
 Hint: you can increment a char
 
 **Task 2: do-while**
@@ -809,7 +764,6 @@ Make a copy of the program you wrote in task 1 and replace all while loops with 
 
 <a class="try-exercise-button" href="#/practice/programming-fundamentals-term-1-canvas/pf-term1-0303-loops-while-for">Try exercise</a>
 
-
 ### Ex 03.04 Multiples (while)
 
 Ask a user for a number.
@@ -820,15 +774,14 @@ In your program initialise a constant MAX to 100.
 
 Example run:
 
-Which number would you like to see the multiples of? 28  
-28  
-56  
+Which number would you like to see the multiples of? 28
+28
+56
 84
 
 **Browser implementation:** Submit one Java source file only. If multiple classes are required, declare them consecutively in that same file; do not create separate files or use a package declaration.
 
 <a class="try-exercise-button" href="#/practice/programming-fundamentals-term-1-canvas/pf-term1-0304-multiples-while">Try exercise</a>
-
 
 ### Ex 03.05 Factorial (for)
 
@@ -863,10 +816,9 @@ Expected output:
 
 <a class="try-exercise-button" href="#/practice/programming-fundamentals-term-1-canvas/pf-term1-0305-factorial-for">Try exercise</a>
 
-
 ### Ex 03.06 Days in month (switch/conditional operator)
 
-Task 1: Days in month  
+Task 1: Days in month
 Ask a user for the number of a month.
 
 Print the name of the month and the number of days.
@@ -914,28 +866,26 @@ In 2021 February has 28 days.
 
 <a class="try-exercise-button" href="#/practice/programming-fundamentals-term-1-canvas/pf-term1-0306-days-in-month-switch-conditional-operator">Try exercise</a>
 
-
 ### Ex 03.07 Hexadecimal (for)
 
 Write a program that prints all hexadecimal numbers:
 
-0 1 2 3 4 5 6 7 8 9 A B C D E F  
+0 1 2 3 4 5 6 7 8 9 A B C D E F
 Hints:
 
-use loop(s)  
-You can use char arithmetic  
-(char)( 'A' + 2) will result in 'C'  
-when you do arithmetic the result is promoted to the largest type. char (2 byte) + int (4 byte) produces an int (4 byte).  
+use loop(s)
+You can use char arithmetic
+(char)( 'A' + 2) will result in 'C'
+when you do arithmetic the result is promoted to the largest type. char (2 byte) + int (4 byte) produces an int (4 byte).
 You can get back to char by casting (prepending (char)).
 
 **Browser implementation:** Submit one Java source file only. If multiple classes are required, declare them consecutively in that same file; do not create separate files or use a package declaration.
 
 <a class="try-exercise-button" href="#/practice/programming-fundamentals-term-1-canvas/pf-term1-0307-hexadecimal-for">Try exercise</a>
 
-
 ### Ex 03.08 Divisible (loops/nested if)
 
-Task 1: Divisible  
+Task 1: Divisible
 Ask the user for two numbers.
 
 Print all numbers between 1 and 1000 that are divisible by both numbers (the remainder of dividing is 0)
@@ -997,33 +947,33 @@ Enter the first divider (end the program with 0): 0
 
 <a class="try-exercise-button" href="#/practice/programming-fundamentals-term-1-canvas/pf-term1-0308-divisible-loops-nested-if">Try exercise</a>
 
-
 ### Ex 03.09 Interest / EXTRA
 
-Task 1: Compound interest  
+Task 1: Compound interest
 Calculate the growth of capital over the years at a given interest rate.
 
 Ask the user to enter these data:
 
-starting capital (double)  
-interest rate (double)  
-number of years (int)  
+starting capital (double)
+interest rate (double)
+number of years (int)
 Calculate the captial after the given number of years. Cast the capital to long before printing.
 
 Example run:
 
-````text
+```text
 Enter the starting capital in €: 10000
 Enter the interest rate: 1,1
 Enter the number of years: 8
+The capital will amount to €10914
+```
 
-```The capital will amount to €10914
 Task 2: years to double
 Extend the program by adding the number of years it will take to double the amount at this interest rate.
 
 Example run:
 
-```text
+````text
 Enter the amount in €: 1000
 Enter the interest: 2,5
 Enter the number of years: 3
@@ -1038,13 +988,13 @@ It takes 29 years to double the money.;
 
 ### Ex 03.10 ASCII box / EXTRA
 
-Task 1: Draw a filled box  
+Task 1: Draw a filled box
 Draw a filled box using an ascii character.
 
-Ask the user for the character to use, the height and the width.  
-width is between 2 and 60, height is between 2 and 20. Check and ask again if needed.  
-Draw as many lines as the height. Use a loop.  
-For each line, draw as many characters on a line as the width. You'll need another loop within he first one.  
+Ask the user for the character to use, the height and the width.
+width is between 2 and 60, height is between 2 and 20. Check and ask again if needed.
+Draw as many lines as the height. Use a loop.
+For each line, draw as many characters on a line as the width. You'll need another loop within he first one.
 Example output:
 
 We'll draw an ASCII box using a character and dimensions of your choice.
@@ -1060,7 +1010,7 @@ Enter the height (2..20): 4
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-```
+````
 
 Task 2: Draw a box outline
 Modify the previous program to only draw the box borders.
@@ -1088,20 +1038,18 @@ Enter the height (2..20): 6
 
 <a class="try-exercise-button" href="#/practice/programming-fundamentals-term-1-canvas/pf-term1-0310-ascii-box-extra">Try exercise</a>
 
-
 ### Ex 03.11 Sequence / EXTRA
 
 Write a program that implements the following behaviour:
 
-How many numbers do you want to print? 5  
-What is the starting value? 100  
-What is the increment? 50  
+How many numbers do you want to print? 5
+What is the starting value? 100
+What is the increment? 50
 100 150 200 250 300
 
 **Browser implementation:** Submit one Java source file only. If multiple classes are required, declare them consecutively in that same file; do not create separate files or use a package declaration.
 
 <a class="try-exercise-button" href="#/practice/programming-fundamentals-term-1-canvas/pf-term1-0311-sequence-extra">Try exercise</a>
-
 
 ### Ex 03.12 Multiplication table / EXTRA
 
@@ -1109,8 +1057,8 @@ Print a multiplication table:
 
 multiplication table
 
-Ask the user for a number between 1 and 30. Test the number and ask again if it is not correct.  
-Print the multiplication table from 1 up to the given number  
+Ask the user for a number between 1 and 30. Test the number and ask again if it is not correct.
+Print the multiplication table from 1 up to the given number
 Example run:
 
 ```text
@@ -1142,43 +1090,41 @@ printf interprets sequences starting with % as placeholder for variables. It wil
 
 <a class="try-exercise-button" href="#/practice/programming-fundamentals-term-1-canvas/pf-term1-0312-multiplication-table-extra">Try exercise</a>
 
-
 ### Ex 03.13 Multiplication table + Quiz / EXTRA
 
-Task 1: print the multiplication tables for a number between 1 and 10  
+Task 1: print the multiplication tables for a number between 1 and 10
 Example run:
 
-Which multiplication table would you like to see? 7  
-1 x 7 = 7  
-2 x 7 = 14  
-3 x 7 = 21  
-4 x 7 = 28  
-5 x 7 = 35  
-6 x 7 = 42  
-7 x 7 = 49  
-8 x 7 = 56  
-9 x 7 = 63  
-10 x 7 = 70  
-Task 2: Quiz  
-Write a quiz, where the user has to supply the values of a table, one by one. Check the values and repeat a question until you get the right answer.  
+Which multiplication table would you like to see? 7
+1 x 7 = 7
+2 x 7 = 14
+3 x 7 = 21
+4 x 7 = 28
+5 x 7 = 35
+6 x 7 = 42
+7 x 7 = 49
+8 x 7 = 56
+9 x 7 = 63
+10 x 7 = 70
+Task 2: Quiz
+Write a quiz, where the user has to supply the values of a table, one by one. Check the values and repeat a question until you get the right answer.
 Example run:
 
-Which multiplication table would you like to practice? 7  
-1 x 7 = 7  
-Correct!  
-2 x 7 = 12  
-Wrong!  
+Which multiplication table would you like to practice? 7
+1 x 7 = 7
+Correct!
+2 x 7 = 12
+Wrong!
 3x7 = ...
 
 ... continue to 10, then quit.
 
-Task 3: Quiz + score  
+Task 3: Quiz + score
 At the end of the quiz, print the number of errors the user made.
 
 **Browser implementation:** Submit one Java source file only. If multiple classes are required, declare them consecutively in that same file; do not create separate files or use a package declaration.
 
 <a class="try-exercise-button" href="#/practice/programming-fundamentals-term-1-canvas/pf-term1-0313-multiplication-table-quiz-extra">Try exercise</a>
-
 
 ### Ex 03.14 ASCII Christmas tree / EXTRA
 
@@ -1186,9 +1132,9 @@ Write a program to draw a christmas tree using \* and space characters.
 
 When writing the program avoid hard coding values in your program. Define them as constants.
 
-Ask the user for the width of the tree, this should be an uneven number between 13 and 29  
-If the numbered entered is not within these boundaries, take the minimum width  
-If the number is not uneven make the width one smaller  
+Ask the user for the width of the tree, this should be an uneven number between 13 and 29
+If the numbered entered is not within these boundaries, take the minimum width
+If the number is not uneven make the width one smaller
 Example output
 
 ```text
@@ -1226,36 +1172,34 @@ Enter the width of the Christmas Tree (uneven number between 13 and 29): 23
 
   ***
 
-draw the treetop  
-start with a line with one star  
-each new line has two more stars  
-stop drawing lines when the stars fill the entire width  
-on each line the number of spaces is the width - the number of stars  
-draw half of the spaces  
-draw all the stars  
-draw the remaining spaces (or draw nothing at all)  
-draw the trunk  
-the height of the trunk is always 4  
+draw the treetop
+start with a line with one star
+each new line has two more stars
+stop drawing lines when the stars fill the entire width
+on each line the number of spaces is the width - the number of stars
+draw half of the spaces
+draw all the stars
+draw the remaining spaces (or draw nothing at all)
+draw the trunk
+the height of the trunk is always 4
 the width of the trunk (number of stars) is always 3
 
 **Browser implementation:** Submit one Java source file only. If multiple classes are required, declare them consecutively in that same file; do not create separate files or use a package declaration.
 
 <a class="try-exercise-button" href="#/practice/programming-fundamentals-term-1-canvas/pf-term1-0314-ascii-christmas-tree-extra">Try exercise</a>
 
-
 ### Ex 03.15 Functions
 
 Rewrite exercises 03.01Age and/or 03.02 Scrabble using 3 functions:
 
-one function to read the input  
-one function to calculate the result (the age category, the score)  
-one function to print the result  
+one function to read the input
+one function to calculate the result (the age category, the score)
+one function to print the result
 Also do this for exercise 03.06 Month in year. Choose for yourself what you think is a good candidate to be written as a separate function.
 
 **Browser implementation:** Submit one Java source file only. If multiple classes are required, declare them consecutively in that same file; do not create separate files or use a package declaration.
 
 <a class="try-exercise-button" href="#/practice/programming-fundamentals-term-1-canvas/pf-term1-0315-functions">Try exercise</a>
-
 
 ## Week 5
 
@@ -1263,23 +1207,23 @@ Also do this for exercise 03.06 Month in year. Choose for yourself what you thin
 
 Task 1: Create the `Book` class in the same single Java source file as the test code. Do not create a Java package or a separate `.java` file.
 
-Add these attributes  
-author  
-title  
-pages (number of pages)  
-onLoan (true/false)  
-Add a constructor with author, title and pages as parameters.  
-Hint: if you press ALT+INSERT and choose constructor IntelliJ can help you here  
-Add a contructor without parameters. Call the constructor you wrote earlier and set author and title to unknown and the number of pages to 0.  
-Add getters and setters for all attributes  
-Hint: if you press ALT+INSERT and choose Getter and Setter IntelliJ can help you here  
-Add a method toString() that returns a description of the book with title and author in upper case. Example:  
-Book JAVA, HOW TO PROGRAM (1186 pages), written by DEITEL & DEITEL is on loan.  
-Task 3: Test the Book class  
-Add a test class with a main method in the same source file (the supplied example names this driver TestBook01)  
-Make some books and print them to the screen. Example output:  
-Book JAVA, HOW TO PROGRAM (1186 pages), written by DEITEL & DEITEL is on loan.  
-Book WOLF HALL (604 pages), written by HILLARY MANTEL is available.  
+Add these attributes
+author
+title
+pages (number of pages)
+onLoan (true/false)
+Add a constructor with author, title and pages as parameters.
+Hint: if you press ALT+INSERT and choose constructor IntelliJ can help you here
+Add a contructor without parameters. Call the constructor you wrote earlier and set author and title to unknown and the number of pages to 0.
+Add getters and setters for all attributes
+Hint: if you press ALT+INSERT and choose Getter and Setter IntelliJ can help you here
+Add a method toString() that returns a description of the book with title and author in upper case. Example:
+Book JAVA, HOW TO PROGRAM (1186 pages), written by DEITEL & DEITEL is on loan.
+Task 3: Test the Book class
+Add a test class with a main method in the same source file (the supplied example names this driver TestBook01)
+Make some books and print them to the screen. Example output:
+Book JAVA, HOW TO PROGRAM (1186 pages), written by DEITEL & DEITEL is on loan.
+Book WOLF HALL (604 pages), written by HILLARY MANTEL is available.
 Book LEAVE IT TO PSMITH (352 pages), written by P.G. WODEHOUSE is on loan.
 
 **Single-file requirement:** Keep every class needed for this exercise in this one Java source file. Do not create separate Java files or declare a Java package.
@@ -1288,22 +1232,21 @@ Book LEAVE IT TO PSMITH (352 pages), written by P.G. WODEHOUSE is on loan.
 
 <a class="try-exercise-button" href="#/practice/programming-fundamentals-term-1-canvas/pf-term1-0501-book-class">Try exercise</a>
 
-
 ### Ex 05.02 Bank Account (class)
 
-Task 1: Create the BankAccount class  
-Create a `BankAccount` class in the same single Java source file as the demo code. Do not use a package declaration or a separate file.  
-Add these attributes  
-holder(String)  
-iban (String)  
-balance (double)  
-Add a constructor that initializes all attributes  
-Add a constructor with only holder and iban. The balance should be 0. Reuse code rather than repeating it.  
-Add getters for all attributes  
-Add a method deposit(double amount) that adds money to the account  
-Add a method withdraw(double amount) that removes money from the account. The withdrawal should be refused if the balance would become negative. Return a boolean indicating whether the withdrawal succeeded.  
-Add a toString method to obtain the output below  
-Task 2: Test the BankAccount class  
+Task 1: Create the BankAccount class
+Create a `BankAccount` class in the same single Java source file as the demo code. Do not use a package declaration or a separate file.
+Add these attributes
+holder(String)
+iban (String)
+balance (double)
+Add a constructor that initializes all attributes
+Add a constructor with only holder and iban. The balance should be 0. Reuse code rather than repeating it.
+Add getters for all attributes
+Add a method deposit(double amount) that adds money to the account
+Add a method withdraw(double amount) that removes money from the account. The withdrawal should be refused if the balance would become negative. Return a boolean indicating whether the withdrawal succeeded.
+Add a toString method to obtain the output below
+Task 2: Test the BankAccount class
 Add this class and run it
 
 ```java
@@ -1352,25 +1295,24 @@ The account BE45 8477 0157 5478 of Carl Deleu has a balance of € 42139,00
 
 <a class="try-exercise-button" href="#/practice/programming-fundamentals-term-1-canvas/pf-term1-0502-bank-account-class">Try exercise</a>
 
-
 ### Ex 05.03 Box (class)
 
 Write a class box with
 
-private attributes  
-type (String)  
-length (double)  
-width (double)  
-height (double)  
-constructors  
-a constructor with parameters for all attributes  
-constructor for a cube with parameters type and length  
-methods  
-surface (calculates total surface)  
-volume  
+private attributes
+type (String)
+length (double)
+width (double)
+height (double)
+constructors
+a constructor with parameters for all attributes
+constructor for a cube with parameters type and length
+methods
+surface (calculates total surface)
+volume
 tapeLength (calculates minimum length of tape needed to wrap around the box in one direction)
 
-toString (see expected output)  
+toString (see expected output)
 Test your class using this code
 
 ```java
@@ -1420,31 +1362,30 @@ Minimum tapelength: 77,0cm
 
 <a class="try-exercise-button" href="#/practice/programming-fundamentals-term-1-canvas/pf-term1-0503-box-class">Try exercise</a>
 
-
 ### Ex 05.04 Operations (class)
 
-Task 1: write the Operations class  
-attributes (remember to define them private!)  
-numberOne  
-numberTwo  
-constructors  
-a constructor with parameters for all attributes  
-methods  
-sum  
-difference  
-product  
-quotient (result should be a double)  
-Task 2: write the DemoOperations class  
+Task 1: write the Operations class
+attributes (remember to define them private!)
+numberOne
+numberTwo
+constructors
+a constructor with parameters for all attributes
+methods
+sum
+difference
+product
+quotient (result should be a double)
+Task 2: write the DemoOperations class
 Make a new class DemoOperations with a main method that:
 
-Asks the user for both numbers  
-Prints the result of all operations  
-Expected output:  
-Please enter the first integer: 236  
-Please enter the second integer: 6978  
-The sum is 7214  
-The difference is -6742  
-The product is 1646808  
+Asks the user for both numbers
+Prints the result of all operations
+Expected output:
+Please enter the first integer: 236
+Please enter the second integer: 6978
+The sum is 7214
+The difference is -6742
+The product is 1646808
 The quotiënt is 0,03
 
 **Single-file requirement:** Keep every class needed for this exercise in this one Java source file. Do not create separate Java files or declare a Java package.
@@ -1453,25 +1394,24 @@ The quotiënt is 0,03
 
 <a class="try-exercise-button" href="#/practice/programming-fundamentals-term-1-canvas/pf-term1-0504-operations-class">Try exercise</a>
 
-
 ### Ex 05.05 Maximum (constructor/method overloading)
 
-Task 1: write the Maximum class  
-private int attributes  
-one  
-two  
-three  
-constructors  
-empty constructor without parameters  
-a constructor with parameters for all attributes  
-a constructor with long parameters for all attributes  
-a constructor with double parameters for all attributes  
-methods  
-max: returns biggest attribute as a double  
-max with 3 int parameters: returns biggest argument as a double  
-max with 3 long parameters: returns biggest argument as a double  
-max with 3 double parameters: returns biggest argument as a double  
-Task 2: Test your class  
+Task 1: write the Maximum class
+private int attributes
+one
+two
+three
+constructors
+empty constructor without parameters
+a constructor with parameters for all attributes
+a constructor with long parameters for all attributes
+a constructor with double parameters for all attributes
+methods
+max: returns biggest attribute as a double
+max with 3 int parameters: returns biggest argument as a double
+max with 3 long parameters: returns biggest argument as a double
+max with 3 double parameters: returns biggest argument as a double
+Task 2: Test your class
 Test using this class
 
 ```java
@@ -1527,20 +1467,19 @@ maximum = 3.0
 
 <a class="try-exercise-button" href="#/practice/programming-fundamentals-term-1-canvas/pf-term1-0505-maximum-constructor-method-overloading">Try exercise</a>
 
-
 ### Ex 05.06 Salesperson (class)
 
-Task 1: write the SalesPerson class  
-attributes (private!)  
-name  
-revenue  
-constructors  
-a constructor with parameters for all attributes  
-methods  
-getters for all attributes  
-hasMoreRevenueThan(SalesPerson other):boolean  
-it returns whether this Salesperson has more revenue than the other  
-Task 2: Print the top earner  
+Task 1: write the SalesPerson class
+attributes (private!)
+name
+revenue
+constructors
+a constructor with parameters for all attributes
+methods
+getters for all attributes
+hasMoreRevenueThan(SalesPerson other):boolean
+it returns whether this Salesperson has more revenue than the other
+Task 2: Print the top earner
 Write a class that reads the revenue of 3 salesman and prints the name of the top earner. Complete this test class to obtain the expected output (test for all three salespersons being top earner):
 
 ```java
@@ -1585,28 +1524,27 @@ Our top earner is Lotte!
 
 <a class="try-exercise-button" href="#/practice/programming-fundamentals-term-1-canvas/pf-term1-0506-salesperson-class">Try exercise</a>
 
-
 ### Ex 05.07 Circle (data validation)
 
-Task 1: write the Circle class  
-attributes (private!)  
-radius (int)  
-colour (String, default "Black")  
-constructors  
-a constructor with parameters for all attributes  
-a constructor with only radius as parameter  
-methods  
-circumference //  
-surface //  
-deltaCircumference(Circle other) : give the absolute difference in circumference between this circle and the other  
-deltaSurface(Circle other) : gives difference in circumference between this circle and the other  
-extra  
-a Circle may not accept a radius less than 10, nor greater than 1000, nor via the constructor, nor via the setter  
-If passed an invalid value, print an error message to inform the user that the value is invalid  
--->Hint: see slides about Validating Constructor/Setter  
+Task 1: write the Circle class
+attributes (private!)
+radius (int)
+colour (String, default "Black")
+constructors
+a constructor with parameters for all attributes
+a constructor with only radius as parameter
+methods
+circumference //
+surface //
+deltaCircumference(Circle other) : give the absolute difference in circumference between this circle and the other
+deltaSurface(Circle other) : gives difference in circumference between this circle and the other
+extra
+a Circle may not accept a radius less than 10, nor greater than 1000, nor via the constructor, nor via the setter
+If passed an invalid value, print an error message to inform the user that the value is invalid
+-->Hint: see slides about Validating Constructor/Setter
 add a toString() method that prints out the state of the Circle object
 
-Task 2: Test the class  
+Task 2: Test the class
 Use this class to test the class you wrote
 
 ```java
@@ -1631,14 +1569,14 @@ System.out.printf("Difference in surface (%s - %s): %.2f%n", big.getColour(), sm
 } // class
 ```
 
-Expected output  
-Invalid radius 5  
-Colour:Black Radius:0 Circumference:0,00 Surface: 0,00  
-Invalid radius 1200  
-Colour:Black Radius:0 Circumference:0,00 Surface: 0,00  
-Colour:Red Radius:10 Circumference:62,83 Surface: 314,16  
-Colour:Blue Radius:200 Circumference:1256,64 Surface: 125663,71  
-Difference in circumference (Blue - Red): 1193,81  
+Expected output
+Invalid radius 5
+Colour:Black Radius:0 Circumference:0,00 Surface: 0,00
+Invalid radius 1200
+Colour:Black Radius:0 Circumference:0,00 Surface: 0,00
+Colour:Red Radius:10 Circumference:62,83 Surface: 314,16
+Colour:Blue Radius:200 Circumference:1256,64 Surface: 125663,71
+Difference in circumference (Blue - Red): 1193,81
 Difference in surface (Blue - Red): 125349,55
 
 **Single-file requirement:** Keep every class needed for this exercise in this one Java source file. Do not create separate Java files or declare a Java package.
@@ -1647,25 +1585,24 @@ Difference in surface (Blue - Red): 125349,55
 
 <a class="try-exercise-button" href="#/practice/programming-fundamentals-term-1-canvas/pf-term1-0507-circle-data-validation">Try exercise</a>
 
-
 ### Ex 05.08 Perfect number / EXTRA
 
-Introduction: What is a perfect number?  
-A number is a perfect number if the sum of all its divisors (including 1, excluding the number itself) is equal to the number itself.  
+Introduction: What is a perfect number?
+A number is a perfect number if the sum of all its divisors (including 1, excluding the number itself) is equal to the number itself.
 Example: 6 is a perfect number because 6=1+2+3. More info on wikipedia.
 
-Task 1: Write the PerfectNumber class  
-Write a class PerfectNumber  
-The class only contains one method: String getPerfect(int number)  
-If the number is a perfect number, the class should return a String with all its divisors. Otherwise the method should return null. Use a Stringbuilder to make the string to be returned.  
-Task 2: Test your class  
-Make a class TestPerfectNumber with a main method.  
-In the main method make a PerfectNumber object  
-Examine all numbers between 2 and 10000. If a number is a perfect number, print out the number and its divisors.  
-Expected output  
-6 --> 1 2 3  
-28 --> 1 2 4 7 14  
-496 --> 1 2 4 8 16 31 62 124 248  
+Task 1: Write the PerfectNumber class
+Write a class PerfectNumber
+The class only contains one method: String getPerfect(int number)
+If the number is a perfect number, the class should return a String with all its divisors. Otherwise the method should return null. Use a Stringbuilder to make the string to be returned.
+Task 2: Test your class
+Make a class TestPerfectNumber with a main method.
+In the main method make a PerfectNumber object
+Examine all numbers between 2 and 10000. If a number is a perfect number, print out the number and its divisors.
+Expected output
+6 --> 1 2 3
+28 --> 1 2 4 7 14
+496 --> 1 2 4 8 16 31 62 124 248
 8128 --> 1 2 4 8 16 32 64 127 254 508 1016 2032 4064
 
 **Single-file requirement:** Keep every class needed for this exercise in this one Java source file. Do not create separate Java files or declare a Java package.
@@ -1674,10 +1611,9 @@ Expected output
 
 <a class="try-exercise-button" href="#/practice/programming-fundamentals-term-1-canvas/pf-term1-0508-perfect-number-extra">Try exercise</a>
 
-
 ### Ex 05.09 For experienced programmers: Word Hut Game / Extra
 
-Challenge  
+Challenge
 A word is chosen and each player writes it on a note. In turn, the players draw a letter (from a pocket with the 26 letters from the alphabet). When the drawn letter appears in his word, the player may delete this letter (if a letter is present multiple times in the word, delete it only once!).
 
 If the letter (or all the same letters) has already been deleted, the player's left neighbor may delete this letter on his note. If all the same letters have already been deleted from this neighbor, the player must add the letter back to his note.
@@ -1686,18 +1622,18 @@ The person whose letters were all deleted first wins the game.
 
 Play against the computer –so only 2 players-
 
-Coding tips  
-After entering the word, create a StringBuilder object for each player. Delete and add in this item.  
-Create, among others, the following classes:  
-LetterBag (methods: newLetter –randomly generated letter-)  
-Note (attributes: theWord -StringBuilder-) (methods: constructor (with as parameter initialWord), letterInWord, deleteLetter, addLetter, allLettersDeleted, toString)  
-Player (attributes: note)  
-Extension  
+Coding tips
+After entering the word, create a StringBuilder object for each player. Delete and add in this item.
+Create, among others, the following classes:
+LetterBag (methods: newLetter –randomly generated letter-)
+Note (attributes: theWord -StringBuilder-) (methods: constructor (with as parameter initialWord), letterInWord, deleteLetter, addLetter, allLettersDeleted, toString)
+Player (attributes: note)
+Extension
 For each player, count
 
-how many times he has deleted a letter (via his note-object)  
-how many times he has deleted a letter thanks to his neighbor  
-how many times he has had to write a letter  
+how many times he has deleted a letter (via his note-object)
+how many times he has deleted a letter thanks to his neighbor
+how many times he has had to write a letter
 how many times he has drawn a letter than did not appear in the word.
 
 **Single-file requirement:** Keep every class needed for this exercise in this one Java source file. Do not create separate Java files or declare a Java package.
@@ -1706,34 +1642,33 @@ how many times he has drawn a letter than did not appear in the word.
 
 <a class="try-exercise-button" href="#/practice/programming-fundamentals-term-1-canvas/pf-term1-0509-for-experienced-programmers-word-hut-game-extra">Try exercise</a>
 
-
 ## Week 6
 
 ### Ex 06.01 Chess club
 
-Chess club (old Exam Question)  
+Chess club (old Exam Question)
 A hobbyist chess club wants to make their own custom simulation program to simulate their various members playing against each other. You will complete a basic prototype that will do just that.
 
 The `Main` class contains a main method with the supplied test code. Keep `Main` and the `Player` class in the same Java source file, with no package declaration. Uncommenting this code will cause several errors as the “Player” class does not exist. Create the `Player` class in that same source file and complete it so the main runs as it is supposed to.
 
-The Player class contains four properties  
-Their name in text; it can not be empty.  
-Their birth year as a whole number; it can not be in the future or more than 120 years ago.  
-You may make a constant CURRENT_YEAR to store the current year in the class Player.  
-Their win ratio as a fractional number between 0 and 1 (for example 0.64).  
-A toggle which indicates whether the player is retired from the game or not.  
-When a Player object is created, all properties should be passed along  
-Make sure that the properties are assigned the proper way and no invalid data can be entered.  
-Make sure the checks on the data are done in the appropriate method  
-When printing a Player, the result should look like this:  
-Sebastiaan (31: Winratio: 0.5 active.)  
-Wim (61: Winratio: 0.73 active.)  
-Retiree (99: Winratio: 0.43 retired.)  
-Implement this in the appropriate place  
-The play method is the method which will be used to simulate the games. It has two modes, implement them correctly.  
-The first is simply calling play on a single Player. In this method, generate a random number between 0 and 1 and compare it to the win ratio of the Player. If the generated number is higher, the player loses, if it’s lower, the player wins.  
-The second is calling play on a Player with a different Player as a parameter. In this implementation, generate two random numbers and subtract the first number from the first player’s win ratio and the second number from the second player’s win ratio. The number with the highest resulting number wins.  
-For more tips on what the play method should return, closely look at the main and what result is expected of the method.  
+The Player class contains four properties
+Their name in text; it can not be empty.
+Their birth year as a whole number; it can not be in the future or more than 120 years ago.
+You may make a constant CURRENT_YEAR to store the current year in the class Player.
+Their win ratio as a fractional number between 0 and 1 (for example 0.64).
+A toggle which indicates whether the player is retired from the game or not.
+When a Player object is created, all properties should be passed along
+Make sure that the properties are assigned the proper way and no invalid data can be entered.
+Make sure the checks on the data are done in the appropriate method
+When printing a Player, the result should look like this:
+Sebastiaan (31: Winratio: 0.5 active.)
+Wim (61: Winratio: 0.73 active.)
+Retiree (99: Winratio: 0.43 retired.)
+Implement this in the appropriate place
+The play method is the method which will be used to simulate the games. It has two modes, implement them correctly.
+The first is simply calling play on a single Player. In this method, generate a random number between 0 and 1 and compare it to the win ratio of the Player. If the generated number is higher, the player loses, if it’s lower, the player wins.
+The second is calling play on a Player with a different Player as a parameter. In this implementation, generate two random numbers and subtract the first number from the first player’s win ratio and the second number from the second player’s win ratio. The number with the highest resulting number wins.
+For more tips on what the play method should return, closely look at the main and what result is expected of the method.
 Your final result upon executing the code could look like this:
 
 ```text
@@ -1752,65 +1687,61 @@ Main.java:
 ```java
 public class Main {
 
-public static void main(String[] args) {
+    public static void main(String[] args) {
 
-//TODO make the player class and make the code below function as instructed.
+        // TODO make the player class and make the code below function as instructed.
 
-//TODO Uncomment the code below to test your solution. Do NOT change any code here beyond uncommenting it.
+        // TODO Uncomment the code below to test your solution. Do NOT change any code
+        // here beyond uncommenting it.
 
+        // Negative age should not be allowed!
 
-//Negative age should not be allowed!
+        Player player1 = new Player("Sebastiaan", 2993, 0.5f, false);
 
-Player player1 = new Player("Sebastiaan", 2993, 0.5f, false);
+        // Fixing negative age
 
-//Fixing negative age
+        player1.setAge(1993);
 
-player1.setAge(1993);
+        // Win ratio should not be higher than 1!
 
-//Win ratio should not be higher than 1!
+        Player player2 = new Player("Wim", 1963, 75, false);
 
-Player player2 = new Player("Wim", 1963, 75, false);
+        // Fixing win ratio
 
-//Fixing win ratio
+        player2.setWinRatio(0.73f);
 
-player2.setWinRatio(0.73f);
+        System.out.println(player1 + " win? " + player1.play());
 
-System.out.println(player1 + " win? " + player1.play());
+        System.out.println(player2 + " win? " + player2.play());
 
-System.out.println(player2 + " win? " + player2.play());
+        if (player1.play(player2)) {
 
-if(player1.play(player2)){
+            System.out.println(player1 + " wins!");
 
-System.out.println(player1 + " wins!");
+        } else {
 
-} else {
+            System.out.println(player2 + " wins!");
 
-System.out.println(player2 + " wins!");
+        }
 
-}
-}
+        player2.setWinRatio(0.73f);
 
-}
+        System.out.println(player1 + " win? " + player1.play());
 
-player2.setWinRatio(0.73f);
+        System.out.println(player2 + " win? " + player2.play());
 
-System.out.println(player1 + " win? " + player1.play());
+        if (player1.play(player2)) {
 
-System.out.println(player2 + " win? " + player2.play());
+            System.out.println(player1 + " wins!");
 
-if(player1.play(player2)){
+        } else {
 
-System.out.println(player1 + " wins!");
+            System.out.println(player2 + " wins!");
 
-} else {
-
-System.out.println(player2 + " wins!");
-
-}
-}
+        }
+    }
 
 }
-
 ```
 
 **Single-file requirement:** Keep every class needed for this exercise in this one Java source file. Do not create separate Java files or declare a Java package.
@@ -1818,7 +1749,6 @@ System.out.println(player2 + " wins!");
 **Browser implementation:** Submit one Java source file only. If multiple classes are required, declare them consecutively in that same file; do not create separate files or use a package declaration.
 
 <a class="try-exercise-button" href="#/practice/programming-fundamentals-term-1-canvas/pf-term1-0601-chess-club">Try exercise</a>
-
 
 ### Ex 06.02 Student Grade Evaluator
 
@@ -1828,7 +1758,7 @@ A. Make a `Student` class in the same single Java source file as `Main` (no pack
 
 Attributes:
 
-"name" als text. This must not be empty and must contain at least 1 space
+"name" as text. This must not be empty and must contain at least 1 space
 "id" as an integer. This must not be negative.
 "grade" as a decimal number. This must be between 0 and 100.
 Methods:
@@ -1859,6 +1789,7 @@ In this loop, you use a for-loop that counts down from 3 to 1 before the results
 
 Output example:
 
+```text
 Enter the student's name: Alice
 Enter the student’s ID: 101
 Enter the student's grade (0–100): 95
@@ -1918,16 +1849,10 @@ Performance : Sufficent
 Do you want to enter another student? (yes/no): no
 
 Program terminated. Goodbye!
+```
 
 **Single-file requirement:** Keep every class needed for this exercise in this one Java source file. Do not create separate Java files or declare a Java package.
 
 **Browser implementation:** Submit one Java source file only. If multiple classes are required, declare them consecutively in that same file; do not create separate files or use a package declaration.
 
 <a class="try-exercise-button" href="#/practice/programming-fundamentals-term-1-canvas/pf-term1-0602-student-grade-evaluator">Try exercise</a>
-
-
-```
-`
-
-```
-````

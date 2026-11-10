@@ -1201,7 +1201,7 @@
     "pf-term1-0302-scrabble-switch": {
       "category": "Control Flow, Loops and Methods",
       "title": "Scrabble (switch)",
-      "instructions": "Ask the user for a letter and show the scrabble value for that letter.\n\nThe user should get the same result whether entering a lower or upper-case letter.\n\nPoints\n\nLetters\n\n`1` point\n\nA, E, I, L, N, O, R, S, T, U\n\n`2` points\n\nD, G\n\n`3` points\n\nB, C, M, P\n\n`4` points\n\nF, H, V, W, Y\n\n`5` points\n\nK\n\n`8` points\n\nJ, X\n\n`10` points\n\nQ, Z",
+      "instructions": "Ask the user for a letter and show the scrabble value for that letter.\n\nThe user should get the same result whether entering a lower or upper-case letter.\n\n```text\nPoints      Letters\n1 point     A, E, I, L, N, O, R, S, T, U\n2 points    D, G\n3 points    B, C, M, P\n4 points    F, H, V, W, Y\n5 points    K\n8 points    J, X\n10 points   Q, Z",
       "hints": [
         "Convert the input letter to lower case.",
         "Use a switch statement or a character-to-points lookup."
