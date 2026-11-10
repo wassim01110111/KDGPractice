@@ -10,9 +10,7 @@
       "category": "Linux and the shell",
       "title": "Log in to a remote server",
       "instructions": "System administrator Lotte has the account `lpeeters` on `web03.example.com`. Enter the complete SSH command she runs on her laptop to log in.",
-      "hints": [
-        "Use the form `ssh USER@HOST`."
-      ],
+      "hints": ["Use the form `ssh USER@HOST`."],
       "difficulty": "Medium",
       "type": "command-text",
       "contentVersion": 1,
@@ -28,10 +26,8 @@
     "os-mock-1-002": {
       "category": "Linux and the shell",
       "title": "Identify misleading file extensions",
-      "instructions": "The `file *` output shows: `data.txt` is a PNG image, `logo.png` is a JPEG image, and `song.mp3` is ASCII text. Enter exactly these three filenames, separated by spaces. Their order does not matter.",
-      "hints": [
-        "Check the file type, not just the extension."
-      ],
+      "instructions": "```text\n$ file *\nbackup.tar.gz: gzip compressed data, from Unix\nclip.mp4: ISO Media, MP4 v2 [ISO 14496-14]\ndata.txt: PNG image data, 640 x 480, 8-bit/color RGBA\ninstall.sh: Bourne-Again shell script, ASCII text executable\nlogo.png: JPEG image data, JFIF standard 1.01\nnotes: ASCII text\nphoto.jpg: JPEG image data, JFIF standard 1.01\nsong.mp3: ASCII text\n```\nWhich files have a misleading extension? Give all names (separated by a space).",
+      "hints": ["Check the file type, not just the extension."],
       "difficulty": "Medium",
       "type": "command-text",
       "contentVersion": 1,
@@ -47,10 +43,8 @@
     "os-mock-1-003": {
       "category": "Linux and the shell",
       "title": "Convert a relative file path to an absolute path",
-      "instructions": "You are in `/home/rudy/scripts`. Convert the relative file path `../docs/gas.txt` into its absolute path. Enter only the absolute path.",
-      "hints": [
-        "Resolve `..` first, then append the filename."
-      ],
+      "instructions": "```text\n/\n├── etc\n│   ├── passwd\n│   └── ssh\n│       └── sshd_config\n├── srv\n│   └── www\n│       ├── html\n│       │   └── index.html\n│       └── logs\n│           └── access.log\n├── tmp\n└── home\n    ├── anna\n    │   └── metal.txt\n    └── rudy\n        ├── docs\n        │   └── gas.txt\n        └── scripts\n            └── test.sh\n```\nYou are in `/home/rudy/scripts`. Convert the relative file path `../docs/gas.txt` into its absolute path. Enter only the absolute path.",
+      "hints": ["Resolve `..` first, then append the filename."],
       "difficulty": "Medium",
       "type": "command-text",
       "contentVersion": 1,
@@ -66,10 +60,8 @@
     "os-mock-1-004": {
       "category": "Linux and the shell",
       "title": "Find a relative path to index.html",
-      "instructions": "You are in `/etc/ssh`. Enter the relative path from this directory to `/srv/www/html/index.html`.",
-      "hints": [
-        "Go up to `/`, then down through `srv/www/html`."
-      ],
+      "instructions": "```text\n/\n├── etc\n│   ├── passwd\n│   └── ssh\n│       └── sshd_config\n├── srv\n│   └── www\n│       ├── html\n│       │   └── index.html\n│       └── logs\n│           └── access.log\n├── tmp\n└── home\n    ├── anna\n    │   └── metal.txt\n    └── rudy\n        ├── docs\n        │   └── gas.txt\n        └── scripts\n            └── test.sh\n```\nYou are in `/etc/ssh`. Enter the relative path from this directory to `/srv/www/html/index.html`.",
+      "hints": ["Go up to `/`, then down through `srv/www/html`."],
       "difficulty": "Medium",
       "type": "command-text",
       "contentVersion": 1,
@@ -85,10 +77,8 @@
     "os-mock-1-005": {
       "category": "Linux and the shell",
       "title": "Choose the shortest path to access.log",
-      "instructions": "You are in `/srv/www/html`. Enter the shortest path, relative or absolute, to `/srv/www/logs/access.log`.",
-      "hints": [
-        "The `logs` directory is a sibling of `html`."
-      ],
+      "instructions": "```text\n/\n├── etc\n│   ├── passwd\n│   └── ssh\n│       └── sshd_config\n├── srv\n│   └── www\n│       ├── html\n│       │   └── index.html\n│       └── logs\n│           └── access.log\n├── tmp\n└── home\n    ├── anna\n    │   └── metal.txt\n    └── rudy\n        ├── docs\n        │   └── gas.txt\n        └── scripts\n            └── test.sh\n```\nYou are in `/srv/www/html`. Enter the shortest path, relative or absolute, to `/srv/www/logs/access.log`.",
+      "hints": ["The `logs` directory is a sibling of `html`."],
       "difficulty": "Medium",
       "type": "command-text",
       "contentVersion": 1,
@@ -104,10 +94,8 @@
     "os-mock-1-006": {
       "category": "Linux and the shell",
       "title": "Resolve a sequence of directory changes",
-      "instructions": "You start in `/home/rudy/scripts` and run `cd ../../anna/../rudy/docs`. What does `pwd` show afterwards? Enter the absolute path only.",
-      "hints": [
-        "Process each path component from left to right."
-      ],
+      "instructions": "```text\n/\n├── etc\n│   ├── passwd\n│   └── ssh\n│       └── sshd_config\n├── srv\n│   └── www\n│       ├── html\n│       │   └── index.html\n│       └── logs\n│           └── access.log\n├── tmp\n└── home\n    ├── anna\n    │   └── metal.txt\n    └── rudy\n        ├── docs\n        │   └── gas.txt\n        └── scripts\n            └── test.sh\n```\nYou start in `/home/rudy/scripts` and run `cd ../../anna/../rudy/docs`. What does `pwd` show afterwards?",
+      "hints": ["Process each path component from left to right."],
       "difficulty": "Medium",
       "type": "command-text",
       "contentVersion": 1,
@@ -123,10 +111,8 @@
     "os-mock-1-007": {
       "category": "Linux and the shell",
       "title": "List the entries in /home",
-      "instructions": "In the directory structure shown in the question, `/home` contains the two directories `anna` and `rudy`. What does `ls /home` show? Enter the two directory names separated by a space.",
-      "hints": [
-        "List the immediate entries in `/home`."
-      ],
+      "instructions": "```text\n/\n├── etc\n│   ├── passwd\n│   └── ssh\n│       └── sshd_config\n├── srv\n│   └── www\n│       ├── html\n│       │   └── index.html\n│       └── logs\n│           └── access.log\n├── tmp\n└── home\n    ├── anna\n    │   └── metal.txt\n    └── rudy\n        ├── docs\n        │   └── gas.txt\n        └── scripts\n            └── test.sh\n```\nWhat does `ls /home` show?",
+      "hints": ["List the immediate entries in `/home`."],
       "difficulty": "Easy",
       "type": "command-text",
       "contentVersion": 1,
@@ -142,7 +128,7 @@
     "os-mock-1-008": {
       "category": "Files and directories",
       "title": "Move and rename a file in one command",
-      "instructions": "You are in `/home/rudy`. The file `docs/gas.txt` exists. Move it into `scripts` and rename it to `elements.txt` in the same command.",
+      "instructions": "```text\n/\n├── etc\n│   ├── passwd\n│   └── ssh\n│       └── sshd_config\n├── srv\n│   └── www\n│       ├── html\n│       │   └── index.html\n│       └── logs\n│           └── access.log\n├── tmp\n└── home\n    ├── anna\n    │   └── metal.txt\n    └── rudy\n        ├── docs\n        │   └── gas.txt\n        └── scripts\n            └── test.sh\n```\nYou are in `/home/rudy`. Give one command that moves gas.txt to the directory scripts and at the same time renames it to elements.txt.",
       "hints": [],
       "difficulty": "Medium",
       "type": "terminal",
@@ -197,15 +183,13 @@
           "intendedOutputFlags": ""
         }
       ],
-      "solution": [
-        "mv docs/gas.txt scripts/elements.txt"
-      ],
+      "solution": ["mv docs/gas.txt scripts/elements.txt"],
       "explanation": "The terminal grader checks the resulting virtual filesystem and, where specified, the command and output recorded during the attempt."
     },
     "os-mock-1-009": {
       "category": "Files and directories",
       "title": "Create a nested directory path",
-      "instructions": "In your current directory, create `work` and its subdirectory `todo`. Neither directory exists yet. Use one command.",
+      "instructions": "Give one command that creates in your current directory the directory work and, inside it, the sub directory todo, when neither of them exist yet.",
       "hints": [],
       "difficulty": "Easy",
       "type": "terminal",
@@ -232,7 +216,7 @@
           "path": "/etc/passwd",
           "expected": "(?=\\S)[\\s\\S]*",
           "regex": true,
-          "commandExpected": "^\\s*mkdir\\s+-p\\s+work/todo\\s*$",
+          "commandExpected": "^\\s*mkdir\\s+(?=.*\\s-p(?:\\s|$))(?:(?:-p\\s+work/todo)|(work/todo\\s+-p))\\s*$",
           "commandFlags": "",
           "points": 1,
           "description": "Create both directory levels with one mkdir command.",
@@ -240,90 +224,31 @@
           "intendedOutputFlags": ""
         }
       ],
-      "solution": [
-        "mkdir -p work/todo"
-      ],
+      "solution": ["mkdir -p work/todo"],
       "explanation": "The terminal grader checks the resulting virtual filesystem and, where specified, the command and output recorded during the attempt."
     },
     "os-mock-1-010": {
       "category": "Shell expansion",
       "title": "Match filenames with a shell wildcard",
-      "instructions": "The `data` directory contains `a1.txt`, `a10.txt`, `ab.txt`, `b1.txt`, and `b2.csv`. Run exactly `ls data/?[0-9].*`. Then inspect which files are listed.",
+      "instructions": "```text\nls data\na1.txt a10.txt ab.txt b1.txt b2.csv\n```\nWhich files does the command `ls data/?[0-9].*` show?.",
       "hints": [],
       "difficulty": "Medium",
-      "type": "terminal",
+      "type": "command-text",
       "contentVersion": 1,
-      "terminal": {
-        "profile": "basic-linux",
-        "initialDirectory": "/home/student",
-        "initialFilesystem": [
-          {
-            "path": "/home/student/data",
-            "type": "directory",
-            "owner": "student",
-            "group": "student"
-          },
-          {
-            "path": "/home/student/data/a1.txt",
-            "type": "file",
-            "content": "",
-            "owner": "student",
-            "group": "student"
-          },
-          {
-            "path": "/home/student/data/a10.txt",
-            "type": "file",
-            "content": "",
-            "owner": "student",
-            "group": "student"
-          },
-          {
-            "path": "/home/student/data/ab.txt",
-            "type": "file",
-            "content": "",
-            "owner": "student",
-            "group": "student"
-          },
-          {
-            "path": "/home/student/data/b1.txt",
-            "type": "file",
-            "content": "",
-            "owner": "student",
-            "group": "student"
-          },
-          {
-            "path": "/home/student/data/b2.csv",
-            "type": "file",
-            "content": "",
-            "owner": "student",
-            "group": "student"
-          }
-        ],
-        "preSetupCommands": []
-      },
       "checks": [
         {
-          "type": "contains",
-          "path": "/etc/passwd",
-          "expected": "(?=\\S)[\\s\\S]*",
+          "expected": "^(?=.*\\bdata/a1\\.txt\\b)(?=.*\\bdata/b1\\.txt\\b)(?=.*\\bdata/b2\\.csv\\b)\\S+(?:\\s+\\S+)*$",
           "regex": true,
-          "commandExpected": "^\\s*ls\\s+data/\\?\\[0-9\\]\\.\\*\\s*$",
-          "commandFlags": "",
-          "points": 1,
-          "description": "Show the files matched by the supplied wildcard.",
-          "intendedOutput": "^data/a1\\.txt\\ndata/b1\\.txt\\ndata/b2\\.csv\\n$",
-          "intendedOutputFlags": ""
+          "flags": "i"
         }
       ],
-      "solution": [
-        "ls data/?[0-9].*"
-      ],
+      "solution": ["data/a1.txt data/b1.txt data/b2.csv"],
       "explanation": "The terminal grader checks the resulting virtual filesystem and, where specified, the command and output recorded during the attempt."
     },
     "os-mock-1-011": {
       "category": "Shell expansion",
       "title": "Create three numbered empty files",
-      "instructions": "Use one `touch` command with brace expansion to create exactly these three empty files in the current directory: `report1.txt`, `report2.txt`, and `report3.txt`.",
+      "instructions": "Use one `touch` command with brace expansion to create exactly these three empty files in the current directory: `report1.txt`, `report2.txt`, and `report3.txt`. Complete it from `touch report{____}.txt`.",
       "hints": [],
       "difficulty": "Easy",
       "type": "terminal",
@@ -366,18 +291,14 @@
           "intendedOutputFlags": ""
         }
       ],
-      "solution": [
-        "touch report{1,2,3}.txt"
-      ],
+      "solution": ["touch report{1,2,3}.txt"],
       "explanation": "The terminal grader checks the resulting virtual filesystem and, where specified, the command and output recorded during the attempt."
     },
     "os-mock-1-012": {
       "category": "Linux and the shell",
       "title": "Recognise a symbolic link",
       "instructions": "In the given `ls -l` listing, `gas-hard` has link count 2, `data` is shown as `data -> gas.txt`, and `gas.txt` is a regular file. Which entry is the symbolic (soft) link? Enter its filename.",
-      "hints": [
-        "A symbolic link is displayed with `->` and its target."
-      ],
+      "hints": ["A symbolic link is displayed with `->` and its target."],
       "difficulty": "Medium",
       "type": "command-text",
       "contentVersion": 1,
@@ -447,11 +368,7 @@
           "intendedOutputFlags": "is"
         }
       ],
-      "solution": [
-        "rm gas.txt",
-        "cat gas-hard",
-        "cat data"
-      ],
+      "solution": ["rm gas.txt", "cat gas-hard", "cat data"],
       "explanation": "A hard link continues to refer to the file data after the original name is removed. A symbolic link stores the target path, so it becomes dangling when that target name is removed."
     },
     "os-mock-1-014": {
@@ -496,9 +413,7 @@
           "intendedOutputFlags": ""
         }
       ],
-      "solution": [
-        "echo B >> elements.txt"
-      ],
+      "solution": ["echo B >> elements.txt"],
       "explanation": "The terminal grader checks the resulting virtual filesystem and, where specified, the command and output recorded during the attempt."
     },
     "os-mock-1-015": {
@@ -529,9 +444,7 @@
           "intendedOutputFlags": "s"
         }
       ],
-      "solution": [
-        "find /etc -name \"passwd\" 2>/dev/null"
-      ],
+      "solution": ["find /etc -name \"passwd\" 2>/dev/null"],
       "explanation": "The terminal grader checks the resulting virtual filesystem and, where specified, the command and output recorded during the attempt."
     },
     "os-mock-1-016": {
@@ -570,18 +483,14 @@
           "intendedOutputFlags": ""
         }
       ],
-      "solution": [
-        "cut -d \",\" -f 1 flights.csv | sort -u"
-      ],
+      "solution": ["cut -d \",\" -f 1 flights.csv | sort -u"],
       "explanation": "The terminal grader checks the resulting virtual filesystem and, where specified, the command and output recorded during the attempt."
     },
     "os-mock-1-017": {
       "category": "Linux and the shell",
       "title": "Count files and directories under /var/log",
       "instructions": "Enter one command that counts all files and directories found under `/var/log`. Use `find` and `wc`; the command should count the entries returned by `find`.",
-      "hints": [
-        "Pipe the find results to `wc -l`."
-      ],
+      "hints": ["Pipe the find results to `wc -l`."],
       "difficulty": "Medium",
       "type": "command-text",
       "contentVersion": 1,
@@ -641,19 +550,14 @@
           "intendedOutputFlags": ""
         }
       ],
-      "solution": [
-        "SYMBOL=He",
-        "echo \"${SYMBOL}lium\""
-      ],
+      "solution": ["SYMBOL=He", "echo \"${SYMBOL}lium\""],
       "explanation": "The terminal grader checks the resulting virtual filesystem and, where specified, the command and output recorded during the attempt."
     },
     "os-mock-1-020": {
       "category": "Linux and the shell",
       "title": "Resolve a command through PATH",
       "instructions": "The PATH is `/home/rudy/bin:/usr/local/bin:/usr/bin`. Both `/home/rudy/bin/ls` and `/usr/bin/ls` exist. Rudy types `ls`. Enter the absolute path of the program that is executed.",
-      "hints": [
-        "The shell searches PATH directories from left to right."
-      ],
+      "hints": ["The shell searches PATH directories from left to right."],
       "difficulty": "Medium",
       "type": "command-text",
       "contentVersion": 1,
@@ -670,9 +574,7 @@
       "category": "Linux and the shell",
       "title": "Add supplementary groups without removing memberships",
       "instructions": "Complete the administrator command that adds user `rudy` to both supplementary groups `teachers` and `operator` while preserving all existing group memberships. Include `sudo` and the full command.",
-      "hints": [
-        "Use `usermod` with append and supplementary-group options."
-      ],
+      "hints": ["Use `usermod` with append and supplementary-group options."],
       "difficulty": "Medium",
       "type": "command-text",
       "contentVersion": 1,
@@ -708,9 +610,7 @@
       "category": "Linux and the shell",
       "title": "Change the owner of a file",
       "instructions": "The current owner of `report.txt` is `rudy`, and the required new owner is `anna`. Enter the complete command, including `sudo`, that changes only the owner.",
-      "hints": [
-        "Use `chown NEW_OWNER FILE`."
-      ],
+      "hints": ["Use `chown NEW_OWNER FILE`."],
       "difficulty": "Medium",
       "type": "command-text",
       "contentVersion": 1,
@@ -757,11 +657,7 @@
           "intendedOutputFlags": ""
         }
       ],
-      "solution": [
-        "umask 0027",
-        "mkdir shared",
-        "ls -ld shared"
-      ],
+      "solution": ["umask 0027", "mkdir shared", "ls -ld shared"],
       "explanation": "The terminal grader checks the resulting virtual filesystem and, where specified, the command and output recorded during the attempt."
     },
     "os-mock-1-025": {
@@ -815,9 +711,7 @@
           "intendedOutputFlags": ""
         }
       ],
-      "solution": [
-        "chmod u+w shared"
-      ],
+      "solution": ["chmod u+w shared"],
       "explanation": "Removing a directory entry requires write and execute permission on its parent directory. The directory already has execute permission, so adding owner write permission is the one required change."
     },
     "os-mock-1-026": {
@@ -866,9 +760,7 @@
           "intendedOutputFlags": ""
         }
       ],
-      "solution": [
-        "touch /srv/project/report.txt"
-      ],
+      "solution": ["touch /srv/project/report.txt"],
       "explanation": "A directory with the setgid bit causes newly created entries to inherit the directory group. The simulation uses a writable setgid directory so the student can create the file."
     },
     "os-mock-1-027": {
@@ -912,9 +804,7 @@
           "intendedOutputFlags": ""
         }
       ],
-      "solution": [
-        "find /home/rudy -type d"
-      ],
+      "solution": ["find /home/rudy -type d"],
       "explanation": "The terminal grader checks the resulting virtual filesystem and, where specified, the command and output recorded during the attempt."
     },
     "os-mock-1-028": {
