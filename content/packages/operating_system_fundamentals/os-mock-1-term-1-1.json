@@ -1,0 +1,940 @@
+{
+  "schemaVersion": 1,
+  "packageId": "os-mock-1-term-1-1",
+  "version": "1.0.0",
+  "term": 1,
+  "datasets": {},
+  "course": "operating_system_fundamentals",
+  "exercises": {
+    "os-mock-1-001": {
+      "category": "Linux and the shell",
+      "title": "Log in to a remote server",
+      "instructions": "System administrator Lotte has the account `lpeeters` on `web03.example.com`. Enter the complete SSH command she runs on her laptop to log in.",
+      "hints": [
+        "Use the form `ssh USER@HOST`."
+      ],
+      "difficulty": "Medium",
+      "type": "command-text",
+      "contentVersion": 1,
+      "checks": [
+        {
+          "expected": "^\\s*ssh\\s+(?:lpeeters@web03\\.example\\.com|-l\\s+lpeeters\\s+web03\\.example\\.com)\\s*$",
+          "regex": true,
+          "flags": "i"
+        }
+      ],
+      "explanation": "Enter the requested command, path, or brief answer."
+    },
+    "os-mock-1-002": {
+      "category": "Linux and the shell",
+      "title": "Identify misleading file extensions",
+      "instructions": "The `file *` output shows: `data.txt` is a PNG image, `logo.png` is a JPEG image, and `song.mp3` is ASCII text. Enter exactly these three filenames, separated by spaces. Their order does not matter.",
+      "hints": [
+        "Check the file type, not just the extension."
+      ],
+      "difficulty": "Medium",
+      "type": "command-text",
+      "contentVersion": 1,
+      "checks": [
+        {
+          "expected": "^(?=.*\\bdata\\.txt\\b)(?=.*\\blogo\\.png\\b)(?=.*\\bsong\\.mp3\\b)\\s*(?:data\\.txt[ ,]+logo\\.png[ ,]+song\\.mp3|data\\.txt[ ,]+song\\.mp3[ ,]+logo\\.png|logo\\.png[ ,]+data\\.txt[ ,]+song\\.mp3|logo\\.png[ ,]+song\\.mp3[ ,]+data\\.txt|song\\.mp3[ ,]+data\\.txt[ ,]+logo\\.png|song\\.mp3[ ,]+logo\\.png[ ,]+data\\.txt)\\s*$",
+          "regex": true,
+          "flags": "i"
+        }
+      ],
+      "explanation": "Enter the requested command, path, or brief answer."
+    },
+    "os-mock-1-003": {
+      "category": "Linux and the shell",
+      "title": "Convert a relative file path to an absolute path",
+      "instructions": "You are in `/home/rudy/scripts`. Convert the relative file path `../docs/gas.txt` into its absolute path. Enter only the absolute path.",
+      "hints": [
+        "Resolve `..` first, then append the filename."
+      ],
+      "difficulty": "Medium",
+      "type": "command-text",
+      "contentVersion": 1,
+      "checks": [
+        {
+          "expected": "^\\s*/home/rudy/docs/gas\\.txt\\s*$",
+          "regex": true,
+          "flags": "i"
+        }
+      ],
+      "explanation": "Enter the requested command, path, or brief answer."
+    },
+    "os-mock-1-004": {
+      "category": "Linux and the shell",
+      "title": "Find a relative path to index.html",
+      "instructions": "You are in `/etc/ssh`. Enter the relative path from this directory to `/srv/www/html/index.html`.",
+      "hints": [
+        "Go up to `/`, then down through `srv/www/html`."
+      ],
+      "difficulty": "Medium",
+      "type": "command-text",
+      "contentVersion": 1,
+      "checks": [
+        {
+          "expected": "^\\s*\\.\\./\\.\\./srv/www/html/index\\.html\\s*$",
+          "regex": true,
+          "flags": "i"
+        }
+      ],
+      "explanation": "Enter the requested command, path, or brief answer."
+    },
+    "os-mock-1-005": {
+      "category": "Linux and the shell",
+      "title": "Choose the shortest path to access.log",
+      "instructions": "You are in `/srv/www/html`. Enter the shortest path, relative or absolute, to `/srv/www/logs/access.log`.",
+      "hints": [
+        "The `logs` directory is a sibling of `html`."
+      ],
+      "difficulty": "Medium",
+      "type": "command-text",
+      "contentVersion": 1,
+      "checks": [
+        {
+          "expected": "^\\s*\\.\\./logs/access\\.log\\s*$",
+          "regex": true,
+          "flags": "i"
+        }
+      ],
+      "explanation": "Enter the requested command, path, or brief answer."
+    },
+    "os-mock-1-006": {
+      "category": "Linux and the shell",
+      "title": "Resolve a sequence of directory changes",
+      "instructions": "You start in `/home/rudy/scripts` and run `cd ../../anna/../rudy/docs`. What does `pwd` show afterwards? Enter the absolute path only.",
+      "hints": [
+        "Process each path component from left to right."
+      ],
+      "difficulty": "Medium",
+      "type": "command-text",
+      "contentVersion": 1,
+      "checks": [
+        {
+          "expected": "^\\s*/home/rudy/docs\\s*$",
+          "regex": true,
+          "flags": "i"
+        }
+      ],
+      "explanation": "Enter the requested command, path, or brief answer."
+    },
+    "os-mock-1-007": {
+      "category": "Linux and the shell",
+      "title": "List the entries in /home",
+      "instructions": "In the directory structure shown in the question, `/home` contains the two directories `anna` and `rudy`. What does `ls /home` show? Enter the two directory names separated by a space.",
+      "hints": [
+        "List the immediate entries in `/home`."
+      ],
+      "difficulty": "Easy",
+      "type": "command-text",
+      "contentVersion": 1,
+      "checks": [
+        {
+          "expected": "^\\s*anna\\s+rudy\\s*$",
+          "regex": true,
+          "flags": "i"
+        }
+      ],
+      "explanation": "Enter the requested command, path, or brief answer."
+    },
+    "os-mock-1-008": {
+      "category": "Files and directories",
+      "title": "Move and rename a file in one command",
+      "instructions": "You are in `/home/rudy`. The file `docs/gas.txt` exists. Move it into `scripts` and rename it to `elements.txt` in the same command.",
+      "hints": [],
+      "difficulty": "Medium",
+      "type": "terminal",
+      "contentVersion": 1,
+      "terminal": {
+        "profile": "basic-linux",
+        "initialDirectory": "/home/student",
+        "initialFilesystem": [
+          {
+            "path": "/home/student/docs",
+            "type": "directory",
+            "owner": "student",
+            "group": "student"
+          },
+          {
+            "path": "/home/student/scripts",
+            "type": "directory",
+            "owner": "student",
+            "group": "student"
+          },
+          {
+            "path": "/home/student/docs/gas.txt",
+            "type": "file",
+            "content": "He\nNe\n",
+            "owner": "student",
+            "group": "student"
+          }
+        ],
+        "preSetupCommands": []
+      },
+      "checks": [
+        {
+          "type": "file",
+          "path": "/home/student/scripts/elements.txt",
+          "points": 1
+        },
+        {
+          "type": "not_exists",
+          "path": "/home/student/docs/gas.txt",
+          "points": 1
+        },
+        {
+          "type": "contains",
+          "path": "/etc/passwd",
+          "expected": "(?=\\S)[\\s\\S]*",
+          "regex": true,
+          "commandExpected": "^\\s*mv\\s+docs/gas\\.txt\\s+scripts/elements\\.txt\\s*$",
+          "commandFlags": "",
+          "points": 1,
+          "description": "Move and rename the file with mv.",
+          "intendedOutput": "^$",
+          "intendedOutputFlags": ""
+        }
+      ],
+      "solution": [
+        "mv docs/gas.txt scripts/elements.txt"
+      ],
+      "explanation": "The terminal grader checks the resulting virtual filesystem and, where specified, the command and output recorded during the attempt."
+    },
+    "os-mock-1-009": {
+      "category": "Files and directories",
+      "title": "Create a nested directory path",
+      "instructions": "In your current directory, create `work` and its subdirectory `todo`. Neither directory exists yet. Use one command.",
+      "hints": [],
+      "difficulty": "Easy",
+      "type": "terminal",
+      "contentVersion": 1,
+      "terminal": {
+        "profile": "basic-linux",
+        "initialDirectory": "/home/student",
+        "initialFilesystem": [],
+        "preSetupCommands": []
+      },
+      "checks": [
+        {
+          "type": "directory",
+          "path": "/home/student/work",
+          "points": 1
+        },
+        {
+          "type": "directory",
+          "path": "/home/student/work/todo",
+          "points": 1
+        },
+        {
+          "type": "contains",
+          "path": "/etc/passwd",
+          "expected": "(?=\\S)[\\s\\S]*",
+          "regex": true,
+          "commandExpected": "^\\s*mkdir\\s+-p\\s+work/todo\\s*$",
+          "commandFlags": "",
+          "points": 1,
+          "description": "Create both directory levels with one mkdir command.",
+          "intendedOutput": "^$",
+          "intendedOutputFlags": ""
+        }
+      ],
+      "solution": [
+        "mkdir -p work/todo"
+      ],
+      "explanation": "The terminal grader checks the resulting virtual filesystem and, where specified, the command and output recorded during the attempt."
+    },
+    "os-mock-1-010": {
+      "category": "Shell expansion",
+      "title": "Match filenames with a shell wildcard",
+      "instructions": "The `data` directory contains `a1.txt`, `a10.txt`, `ab.txt`, `b1.txt`, and `b2.csv`. Run exactly `ls data/?[0-9].*`. Then inspect which files are listed.",
+      "hints": [],
+      "difficulty": "Medium",
+      "type": "terminal",
+      "contentVersion": 1,
+      "terminal": {
+        "profile": "basic-linux",
+        "initialDirectory": "/home/student",
+        "initialFilesystem": [
+          {
+            "path": "/home/student/data",
+            "type": "directory",
+            "owner": "student",
+            "group": "student"
+          },
+          {
+            "path": "/home/student/data/a1.txt",
+            "type": "file",
+            "content": "",
+            "owner": "student",
+            "group": "student"
+          },
+          {
+            "path": "/home/student/data/a10.txt",
+            "type": "file",
+            "content": "",
+            "owner": "student",
+            "group": "student"
+          },
+          {
+            "path": "/home/student/data/ab.txt",
+            "type": "file",
+            "content": "",
+            "owner": "student",
+            "group": "student"
+          },
+          {
+            "path": "/home/student/data/b1.txt",
+            "type": "file",
+            "content": "",
+            "owner": "student",
+            "group": "student"
+          },
+          {
+            "path": "/home/student/data/b2.csv",
+            "type": "file",
+            "content": "",
+            "owner": "student",
+            "group": "student"
+          }
+        ],
+        "preSetupCommands": []
+      },
+      "checks": [
+        {
+          "type": "contains",
+          "path": "/etc/passwd",
+          "expected": "(?=\\S)[\\s\\S]*",
+          "regex": true,
+          "commandExpected": "^\\s*ls\\s+data/\\?\\[0-9\\]\\.\\*\\s*$",
+          "commandFlags": "",
+          "points": 1,
+          "description": "Show the files matched by the supplied wildcard.",
+          "intendedOutput": "^data/a1\\.txt\\ndata/b1\\.txt\\ndata/b2\\.csv\\n$",
+          "intendedOutputFlags": ""
+        }
+      ],
+      "solution": [
+        "ls data/?[0-9].*"
+      ],
+      "explanation": "The terminal grader checks the resulting virtual filesystem and, where specified, the command and output recorded during the attempt."
+    },
+    "os-mock-1-011": {
+      "category": "Shell expansion",
+      "title": "Create three numbered empty files",
+      "instructions": "Use one `touch` command with brace expansion to create exactly these three empty files in the current directory: `report1.txt`, `report2.txt`, and `report3.txt`.",
+      "hints": [],
+      "difficulty": "Easy",
+      "type": "terminal",
+      "contentVersion": 1,
+      "terminal": {
+        "profile": "basic-linux",
+        "initialDirectory": "/home/student",
+        "initialFilesystem": [],
+        "preSetupCommands": []
+      },
+      "checks": [
+        {
+          "type": "empty",
+          "path": "/home/student/report1.txt",
+          "expected": true,
+          "points": 1
+        },
+        {
+          "type": "empty",
+          "path": "/home/student/report2.txt",
+          "expected": true,
+          "points": 1
+        },
+        {
+          "type": "empty",
+          "path": "/home/student/report3.txt",
+          "expected": true,
+          "points": 1
+        },
+        {
+          "type": "contains",
+          "path": "/etc/passwd",
+          "expected": "(?=\\S)[\\s\\S]*",
+          "regex": true,
+          "commandExpected": "^\\s*touch\\s+report\\{1,2,3\\}\\.txt\\s*$",
+          "commandFlags": "",
+          "points": 1,
+          "description": "Use brace expansion in a single touch command.",
+          "intendedOutput": "^$",
+          "intendedOutputFlags": ""
+        }
+      ],
+      "solution": [
+        "touch report{1,2,3}.txt"
+      ],
+      "explanation": "The terminal grader checks the resulting virtual filesystem and, where specified, the command and output recorded during the attempt."
+    },
+    "os-mock-1-012": {
+      "category": "Linux and the shell",
+      "title": "Recognise a symbolic link",
+      "instructions": "In the given `ls -l` listing, `gas-hard` has link count 2, `data` is shown as `data -> gas.txt`, and `gas.txt` is a regular file. Which entry is the symbolic (soft) link? Enter its filename.",
+      "hints": [
+        "A symbolic link is displayed with `->` and its target."
+      ],
+      "difficulty": "Medium",
+      "type": "command-text",
+      "contentVersion": 1,
+      "checks": [
+        {
+          "expected": "^\\s*data\\s*$",
+          "regex": true,
+          "flags": "i"
+        }
+      ],
+      "explanation": "Enter the requested command, path, or brief answer."
+    },
+    "os-mock-1-013": {
+      "category": "Links",
+      "title": "Test hard-link and symbolic-link behaviour",
+      "instructions": "In your home directory, `gas.txt` contains `He` and `Ne`. A hard link named `gas-hard` already points to the same file, and a symbolic link named `data` points to `gas.txt`. Remove `gas.txt`, then run `cat gas-hard` and `cat data`. The first command should still display the contents; the second should report an error.",
+      "hints": [],
+      "difficulty": "Medium",
+      "type": "terminal",
+      "contentVersion": 1,
+      "terminal": {
+        "profile": "basic-linux",
+        "initialDirectory": "/home/student",
+        "initialFilesystem": [
+          {
+            "path": "/home/student/gas.txt",
+            "type": "file",
+            "content": "He\nNe\n",
+            "owner": "student",
+            "group": "student"
+          }
+        ],
+        "preSetupCommands": [
+          "cd /home/student",
+          "ln /home/student/gas.txt /home/student/gas-hard",
+          "ln -s gas.txt /home/student/data"
+        ]
+      },
+      "checks": [
+        {
+          "type": "not_exists",
+          "path": "/home/student/gas.txt",
+          "points": 1
+        },
+        {
+          "type": "contains",
+          "path": "/etc/passwd",
+          "expected": "(?=\\S)[\\s\\S]*",
+          "regex": true,
+          "commandExpected": "^\\s*cat\\s+gas-hard\\s*$",
+          "commandFlags": "",
+          "points": 1,
+          "description": "Read the data through the surviving hard link.",
+          "intendedOutput": "^He\\nNe\\n$",
+          "intendedOutputFlags": ""
+        },
+        {
+          "type": "contains",
+          "path": "/etc/passwd",
+          "expected": "(?=\\S)[\\s\\S]*",
+          "regex": true,
+          "commandExpected": "^\\s*cat\\s+data\\s*$",
+          "commandFlags": "",
+          "points": 1,
+          "description": "Confirm that the symbolic link is broken after its target is removed.",
+          "intendedOutput": ".*no such file or directory.*",
+          "intendedOutputFlags": "is"
+        }
+      ],
+      "solution": [
+        "rm gas.txt",
+        "cat gas-hard",
+        "cat data"
+      ],
+      "explanation": "A hard link continues to refer to the file data after the original name is removed. A symbolic link stores the target path, so it becomes dangling when that target name is removed."
+    },
+    "os-mock-1-014": {
+      "category": "Redirection and pipelines",
+      "title": "Append a line without using an editor",
+      "instructions": "The file `elements.txt` currently contains `H`, `He`, `Li`, and `Be`, one element per line. Append `B` as a new final line without opening an editor.",
+      "hints": [],
+      "difficulty": "Easy",
+      "type": "terminal",
+      "contentVersion": 1,
+      "terminal": {
+        "profile": "basic-linux",
+        "initialDirectory": "/home/student",
+        "initialFilesystem": [
+          {
+            "path": "/home/student/elements.txt",
+            "type": "file",
+            "content": "H\nHe\nLi\nBe\n",
+            "owner": "student",
+            "group": "student"
+          }
+        ],
+        "preSetupCommands": []
+      },
+      "checks": [
+        {
+          "type": "content",
+          "path": "/home/student/elements.txt",
+          "expected": "H\nHe\nLi\nBe\nB\n",
+          "points": 2
+        },
+        {
+          "type": "contains",
+          "path": "/etc/passwd",
+          "expected": "(?=\\S)[\\s\\S]*",
+          "regex": true,
+          "commandExpected": "^\\s*echo\\s+B\\s+>>\\s+elements\\.txt\\s*$",
+          "commandFlags": "",
+          "points": 1,
+          "description": "Append B using the append-redirection operator.",
+          "intendedOutput": "^$",
+          "intendedOutputFlags": ""
+        }
+      ],
+      "solution": [
+        "echo B >> elements.txt"
+      ],
+      "explanation": "The terminal grader checks the resulting virtual filesystem and, where specified, the command and output recorded during the attempt."
+    },
+    "os-mock-1-015": {
+      "category": "Redirection and pipelines",
+      "title": "Discard error messages from find",
+      "instructions": "Run `find /etc -name \"passwd\"` so that any error messages are discarded rather than displayed. Keep the matching standard output on screen.",
+      "hints": [],
+      "difficulty": "Medium",
+      "type": "terminal",
+      "contentVersion": 1,
+      "terminal": {
+        "profile": "basic-linux",
+        "initialDirectory": "/home/student",
+        "initialFilesystem": [],
+        "preSetupCommands": []
+      },
+      "checks": [
+        {
+          "type": "contains",
+          "path": "/etc/passwd",
+          "expected": "(?=\\S)[\\s\\S]*",
+          "regex": true,
+          "commandExpected": "^\\s*find\\s+/etc\\s+-name\\s+\"passwd\"\\s+2>/dev/null\\s*$",
+          "commandFlags": "",
+          "points": 1,
+          "description": "Run find while redirecting standard error to /dev/null.",
+          "intendedOutput": "^(?![\\s\\S]*Permission denied)[\\s\\S]*passwd[\\s\\S]*$",
+          "intendedOutputFlags": "s"
+        }
+      ],
+      "solution": [
+        "find /etc -name \"passwd\" 2>/dev/null"
+      ],
+      "explanation": "The terminal grader checks the resulting virtual filesystem and, where specified, the command and output recorded during the attempt."
+    },
+    "os-mock-1-016": {
+      "category": "Redirection and pipelines",
+      "title": "Sort and deduplicate departure airports",
+      "instructions": "The file `flights.csv` contains the eight flights shown in the question, with the departure airport in column 1. Display only the departure airports, sorted alphabetically, with each airport appearing once.",
+      "hints": [],
+      "difficulty": "Medium",
+      "type": "terminal",
+      "contentVersion": 1,
+      "terminal": {
+        "profile": "basic-linux",
+        "initialDirectory": "/home/student",
+        "initialFilesystem": [
+          {
+            "path": "/home/student/flights.csv",
+            "type": "file",
+            "content": "BRU,JFK,08:15\nAMS,CDG,09:40\nBRU,LHR,10:05\nFRA,BRU,11:30\nAMS,BRU,12:00\nCDG,FRA,13:25\nBRU,AMS,14:50\nFRA,JFK,16:10\n",
+            "owner": "student",
+            "group": "student"
+          }
+        ],
+        "preSetupCommands": []
+      },
+      "checks": [
+        {
+          "type": "contains",
+          "path": "/etc/passwd",
+          "expected": "(?=\\S)[\\s\\S]*",
+          "regex": true,
+          "commandExpected": "^\\s*cut\\s+-d\\s+\",\"\\s+-f\\s+1\\s+flights\\.csv\\s*\\|\\s*sort\\s+-u\\s*$",
+          "commandFlags": "",
+          "points": 1,
+          "description": "Extract column 1, sort it, and remove duplicates.",
+          "intendedOutput": "^AMS\\nBRU\\nCDG\\nFRA\\n$",
+          "intendedOutputFlags": ""
+        }
+      ],
+      "solution": [
+        "cut -d \",\" -f 1 flights.csv | sort -u"
+      ],
+      "explanation": "The terminal grader checks the resulting virtual filesystem and, where specified, the command and output recorded during the attempt."
+    },
+    "os-mock-1-017": {
+      "category": "Linux and the shell",
+      "title": "Count files and directories under /var/log",
+      "instructions": "Enter one command that counts all files and directories found under `/var/log`. Use `find` and `wc`; the command should count the entries returned by `find`.",
+      "hints": [
+        "Pipe the find results to `wc -l`."
+      ],
+      "difficulty": "Medium",
+      "type": "command-text",
+      "contentVersion": 1,
+      "checks": [
+        {
+          "expected": "^\\s*find\\s+/var/log\\s*\\|\\s*wc\\s+-l\\s*$",
+          "regex": true,
+          "flags": "i"
+        }
+      ],
+      "explanation": "Enter the requested command, path, or brief answer."
+    },
+    "os-mock-1-018": {
+      "category": "Linux and the shell",
+      "title": "Predict the output of a cut-sort-tail pipeline",
+      "instructions": "`servers.txt` contains the four sample lines from the question. What single line is printed by `cut -d \"-\" -f 1,3 servers.txt | sort | tail -n 1`? Enter the output only.",
+      "hints": [
+        "Extract fields 1 and 3, sort alphabetically, then take the final line."
+      ],
+      "difficulty": "Medium",
+      "type": "command-text",
+      "contentVersion": 1,
+      "checks": [
+        {
+          "expected": "^\\s*web02-up\\s*$",
+          "regex": true,
+          "flags": "i"
+        }
+      ],
+      "explanation": "Enter the requested command, path, or brief answer."
+    },
+    "os-mock-1-019": {
+      "category": "Variables and the shell environment",
+      "title": "Expand a variable inside a word",
+      "instructions": "Set `SYMBOL=He`, then use the variable in an `echo` command to display exactly `Helium`. Use braces around the variable name so that the following letters are not treated as part of the name.",
+      "hints": [],
+      "difficulty": "Easy",
+      "type": "terminal",
+      "contentVersion": 1,
+      "terminal": {
+        "profile": "basic-linux",
+        "initialDirectory": "/home/student",
+        "initialFilesystem": [],
+        "preSetupCommands": []
+      },
+      "checks": [
+        {
+          "type": "contains",
+          "path": "/etc/passwd",
+          "expected": "(?=\\S)[\\s\\S]*",
+          "regex": true,
+          "commandExpected": "^\\s*echo\\s+\"\\$\\{SYMBOL\\}lium\"\\s*$",
+          "commandFlags": "",
+          "points": 1,
+          "description": "Expand SYMBOL inside the word Helium.",
+          "intendedOutput": "^Helium\\n$",
+          "intendedOutputFlags": ""
+        }
+      ],
+      "solution": [
+        "SYMBOL=He",
+        "echo \"${SYMBOL}lium\""
+      ],
+      "explanation": "The terminal grader checks the resulting virtual filesystem and, where specified, the command and output recorded during the attempt."
+    },
+    "os-mock-1-020": {
+      "category": "Linux and the shell",
+      "title": "Resolve a command through PATH",
+      "instructions": "The PATH is `/home/rudy/bin:/usr/local/bin:/usr/bin`. Both `/home/rudy/bin/ls` and `/usr/bin/ls` exist. Rudy types `ls`. Enter the absolute path of the program that is executed.",
+      "hints": [
+        "The shell searches PATH directories from left to right."
+      ],
+      "difficulty": "Medium",
+      "type": "command-text",
+      "contentVersion": 1,
+      "checks": [
+        {
+          "expected": "^\\s*/home/rudy/bin/ls\\s*$",
+          "regex": true,
+          "flags": "i"
+        }
+      ],
+      "explanation": "Enter the requested command, path, or brief answer."
+    },
+    "os-mock-1-021": {
+      "category": "Linux and the shell",
+      "title": "Add supplementary groups without removing memberships",
+      "instructions": "Complete the administrator command that adds user `rudy` to both supplementary groups `teachers` and `operator` while preserving all existing group memberships. Include `sudo` and the full command.",
+      "hints": [
+        "Use `usermod` with append and supplementary-group options."
+      ],
+      "difficulty": "Medium",
+      "type": "command-text",
+      "contentVersion": 1,
+      "checks": [
+        {
+          "expected": "^\\s*sudo\\s+usermod\\s+(?:-aG\\s+teachers,operator|-a\\s+-G\\s+teachers,operator)\\s+rudy\\s*$",
+          "regex": true,
+          "flags": "i"
+        }
+      ],
+      "explanation": "Enter the requested command, path, or brief answer."
+    },
+    "os-mock-1-022": {
+      "category": "Linux and the shell",
+      "title": "Determine which password sudo requests",
+      "instructions": "The sudoers rule is `%developers ALL=(ALL) /usr/bin/dnf up`. User `dev2` is a member of `developers` and runs `sudo dnf up`. Does dev2 need to enter a password? If so, whose password? Answer in a brief sentence.",
+      "hints": [
+        "There is no `NOPASSWD` tag in the rule. Sudo authenticates the invoking user by default."
+      ],
+      "difficulty": "Medium",
+      "type": "command-text",
+      "contentVersion": 1,
+      "checks": [
+        {
+          "expected": "^\\s*yes[,; ]+dev2(?:\\x27s)?(?: own)? password\\.?\\s*$",
+          "regex": true,
+          "flags": "i"
+        }
+      ],
+      "explanation": "Enter the requested command, path, or brief answer."
+    },
+    "os-mock-1-023": {
+      "category": "Linux and the shell",
+      "title": "Change the owner of a file",
+      "instructions": "The current owner of `report.txt` is `rudy`, and the required new owner is `anna`. Enter the complete command, including `sudo`, that changes only the owner.",
+      "hints": [
+        "Use `chown NEW_OWNER FILE`."
+      ],
+      "difficulty": "Medium",
+      "type": "command-text",
+      "contentVersion": 1,
+      "checks": [
+        {
+          "expected": "^\\s*sudo\\s+chown\\s+anna\\s+report\\.txt\\s*$",
+          "regex": true,
+          "flags": "i"
+        }
+      ],
+      "explanation": "Enter the requested command, path, or brief answer."
+    },
+    "os-mock-1-024": {
+      "category": "Permissions",
+      "title": "Create a directory with a specified umask",
+      "instructions": "Set the umask to `0027`, create a directory named `shared`, and run `ls -ld shared` to inspect its permissions. The resulting permission bits should be `750` (`rwxr-x---`).",
+      "hints": [],
+      "difficulty": "Medium",
+      "type": "terminal",
+      "contentVersion": 1,
+      "terminal": {
+        "profile": "basic-linux",
+        "initialDirectory": "/home/student",
+        "initialFilesystem": [],
+        "preSetupCommands": []
+      },
+      "checks": [
+        {
+          "type": "permissions",
+          "path": "/home/student/shared",
+          "expected": "0750",
+          "points": 1
+        },
+        {
+          "type": "contains",
+          "path": "/etc/passwd",
+          "expected": "(?=\\S)[\\s\\S]*",
+          "regex": true,
+          "commandExpected": "^\\s*ls\\s+-ld\\s+shared\\s*$",
+          "commandFlags": "",
+          "points": 1,
+          "description": "Display the permissions of the directory itself.",
+          "intendedOutput": "^drwxr-x---[^\\n]*shared\\n$",
+          "intendedOutputFlags": ""
+        }
+      ],
+      "solution": [
+        "umask 0027",
+        "mkdir shared",
+        "ls -ld shared"
+      ],
+      "explanation": "The terminal grader checks the resulting virtual filesystem and, where specified, the command and output recorded during the attempt."
+    },
+    "os-mock-1-025": {
+      "category": "Permissions",
+      "title": "Fix the directory permission that blocks file removal",
+      "instructions": "The directory `shared` is owned by you and has permissions `555`; it contains `notes.txt`. Add the one permission needed for you to remove an entry from this directory. Enter the `chmod` command only; do not remove the file.",
+      "hints": [],
+      "difficulty": "Medium",
+      "type": "terminal",
+      "contentVersion": 1,
+      "terminal": {
+        "profile": "basic-linux",
+        "initialDirectory": "/home/student",
+        "initialFilesystem": [
+          {
+            "path": "/home/student/shared",
+            "type": "directory",
+            "mode": "0555",
+            "owner": "student",
+            "group": "student"
+          },
+          {
+            "path": "/home/student/shared/notes.txt",
+            "type": "file",
+            "content": "notes\n",
+            "mode": "0666",
+            "owner": "student",
+            "group": "student"
+          }
+        ],
+        "preSetupCommands": []
+      },
+      "checks": [
+        {
+          "type": "permissions",
+          "path": "/home/student/shared",
+          "expected": "0755",
+          "points": 1,
+          "description": "The owner write bit is added while the other permission bits stay unchanged."
+        },
+        {
+          "type": "contains",
+          "path": "/etc/passwd",
+          "expected": "(?=\\S)[\\s\\S]*",
+          "regex": true,
+          "commandExpected": "^\\s*chmod\\s+u\\+w\\s+shared\\s*$",
+          "commandFlags": "",
+          "points": 1,
+          "description": "Run chmod u+w shared to allow removal of entries from the directory.",
+          "intendedOutput": "^$",
+          "intendedOutputFlags": ""
+        }
+      ],
+      "solution": [
+        "chmod u+w shared"
+      ],
+      "explanation": "Removing a directory entry requires write and execute permission on its parent directory. The directory already has execute permission, so adding owner write permission is the one required change."
+    },
+    "os-mock-1-026": {
+      "category": "Permissions",
+      "title": "Check group inheritance in a setgid directory",
+      "instructions": "The directory `/srv/project` has the setgid bit set and its group is `projectteam`. Create `/srv/project/report.txt`, then inspect the file with `ls -l`. The new file must belong to group `projectteam`.",
+      "hints": [],
+      "difficulty": "Medium",
+      "type": "terminal",
+      "contentVersion": 1,
+      "terminal": {
+        "profile": "basic-linux",
+        "initialDirectory": "/home/student",
+        "initialFilesystem": [
+          {
+            "path": "/srv/project",
+            "type": "directory",
+            "owner": "root",
+            "mode": "0777",
+            "group": "student"
+          }
+        ],
+        "preSetupCommands": [
+          "groupadd -f projectteam",
+          "chgrp projectteam /srv/project",
+          "chmod 2777 /srv/project"
+        ]
+      },
+      "checks": [
+        {
+          "type": "group",
+          "path": "/srv/project/report.txt",
+          "expected": "projectteam",
+          "points": 2
+        },
+        {
+          "type": "contains",
+          "path": "/etc/passwd",
+          "expected": "(?=\\S)[\\s\\S]*",
+          "regex": true,
+          "commandExpected": "^\\s*touch\\s+/srv/project/report\\.txt\\s*$",
+          "commandFlags": "",
+          "points": 1,
+          "description": "Create the file inside the setgid directory.",
+          "intendedOutput": "^$",
+          "intendedOutputFlags": ""
+        }
+      ],
+      "solution": [
+        "touch /srv/project/report.txt"
+      ],
+      "explanation": "A directory with the setgid bit causes newly created entries to inherit the directory group. The simulation uses a writable setgid directory so the student can create the file."
+    },
+    "os-mock-1-027": {
+      "category": "Finding, archiving and transferring files",
+      "title": "Find every directory under /home/rudy",
+      "instructions": "Use `find` to display all directories under `/home/rudy`, including `/home/rudy` itself. Restrict the results to directories.",
+      "hints": [],
+      "difficulty": "Medium",
+      "type": "terminal",
+      "contentVersion": 1,
+      "terminal": {
+        "profile": "basic-linux",
+        "initialDirectory": "/home/student",
+        "initialFilesystem": [
+          {
+            "path": "/home/rudy/docs",
+            "type": "directory",
+            "owner": "student",
+            "group": "student"
+          },
+          {
+            "path": "/home/rudy/scripts",
+            "type": "directory",
+            "owner": "student",
+            "group": "student"
+          }
+        ],
+        "preSetupCommands": []
+      },
+      "checks": [
+        {
+          "type": "contains",
+          "path": "/etc/passwd",
+          "expected": "(?=\\S)[\\s\\S]*",
+          "regex": true,
+          "commandExpected": "^\\s*find\\s+/home/rudy\\s+-type\\s+d\\s*$",
+          "commandFlags": "",
+          "points": 1,
+          "description": "Find paths whose type is directory.",
+          "intendedOutput": "^/home/rudy\n/home/rudy/docs\n/home/rudy/scripts\n$",
+          "intendedOutputFlags": ""
+        }
+      ],
+      "solution": [
+        "find /home/rudy -type d"
+      ],
+      "explanation": "The terminal grader checks the resulting virtual filesystem and, where specified, the command and output recorded during the attempt."
+    },
+    "os-mock-1-028": {
+      "category": "Linux and the shell",
+      "title": "Determine where tar extracts a stripped absolute path",
+      "instructions": "The archive `/tmp/backup.tar` contains the member `home/rudy/docs/gas.txt` because tar removed the leading slash from `/home/rudy/docs`. The archive is extracted while the current directory is `/tmp`. Enter the absolute path of the extracted `gas.txt`.",
+      "hints": [
+        "Tar extracts the relative archive member beneath the current directory."
+      ],
+      "difficulty": "Medium",
+      "type": "command-text",
+      "contentVersion": 1,
+      "checks": [
+        {
+          "expected": "^\\s*/tmp/home/rudy/docs/gas\\.txt\\s*$",
+          "regex": true,
+          "flags": "i"
+        }
+      ],
+      "explanation": "Enter the requested command, path, or brief answer."
+    }
+  }
+}

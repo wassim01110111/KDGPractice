@@ -1212,6 +1212,13 @@ th {
   display: grid;
   gap: 0.8rem;
 }
+.exam-history-list.mock-exam-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.8rem;
+}
 .exam-history-card {
   min-width: 0;
   padding: 0.9rem 1rem;

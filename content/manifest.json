@@ -6,7 +6,9 @@
       "files": [
         "os-course.json",
         "os-term-1-canvas.json",
-        "os-learning-term-1.json"
+        "os-learning-term-1.json",
+        "os-mock-1-term-1-1.json",
+        "os-mock-1-term-1-2.json"
       ]
     },
     "relational_database_fundamentals": {
@@ -95,6 +97,17 @@
         {
           "name": "Term 1",
           "exams": [{ "file": "sql-mock-term-1.json", "time": 45 }]
+        }
+      ]
+    },
+    "operating_system_fundamentals": {
+      "terms": [
+        {
+          "exams": [
+            { "file": "os-mock-1-term-1-1.json", "time": 45 },
+            { "file": "os-mock-1-term-1-2.json", "time": 45 }
+          ],
+          "name": "Term 1"
         }
       ]
     }
