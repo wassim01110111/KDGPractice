@@ -1,5 +1,59 @@
 "use strict";
 
+function resolveMockExamPackagePath(subjectId, file) {
+  const raw = String(file ?? "").trim().replace(/\\/g, "/").replace(/^\.\//, "");
+  if (!raw || raw.startsWith("/") || /^[a-z][a-z0-9+.-]*:/i.test(raw))
+    return null;
+
+  const root = "content/packages/";
+  const path = raw.startsWith(root)
+    ? raw
+    : raw.startsWith(`${subjectId}/`)
+      ? `${root}${raw}`
+      : `${root}${subjectId}/${raw}`;
+  const segments = path.split("/");
+  if (segments.some((segment) => !segment || segment === "." || segment === ".."))
+    return null;
+  return path;
+}
+
+function normalizeMockExamFiles(map) {
+  return Object.entries(map || {}).map(([id, entry]) => {
+    const rawTerms = Array.isArray(entry?.terms)
+      ? entry.terms.map((term, index) => [null, term, index])
+      : entry?.terms && typeof entry.terms === "object"
+        ? Object.entries(entry.terms).map(([name, term], index) => [name, term, index])
+        : [];
+
+    const terms = rawTerms.map(([termKey, term, index]) => {
+      const value = term && typeof term === "object" && !Array.isArray(term)
+        ? term
+        : {};
+      const label = String(value.name ?? value.label ?? termKey ?? `Term ${index + 1}`);
+      const exams = (Array.isArray(value.exams) ? value.exams : []).map((exam, examIndex) => {
+        const record = typeof exam === "string" ? { file: exam } : (exam || {});
+        const file = String(record.file ?? "").trim();
+        const time = Number(record.time);
+        return {
+          ...record,
+          file,
+          path: resolveMockExamPackagePath(id, file),
+          title: String(record.title ?? record.name ?? `Mock Exam ${examIndex + 1}`),
+          time: Number.isFinite(time) && time > 0 ? time : null,
+        };
+      });
+      return { ...value, label, exams };
+    });
+
+    return {
+      ...entry,
+      id,
+      title: String(entry?.title ?? entry?.name ?? id.replace(/[-_]+/g, " ").replace(/\b[a-z]/g, (c) => c.toUpperCase())),
+      terms,
+    };
+  });
+}
+
 function normalizeLibrary(map) {
   const isSingleSubject = Boolean(
     map &&
@@ -101,13 +155,31 @@ async function loadContent() {
       referenceFiles: normalizeLibrary(manifest.referenceFiles),
       canvasFiles: normalizeLibrary(manifest.canvasFiles),
       learningFiles: normalizeLibrary(manifest.learningFiles),
+      mockExamFiles: normalizeMockExamFiles(manifest.mockExamFiles),
     };
 
     const packageEntries = Object.entries(manifest.packages || {});
-    const totalPackageFiles = packageEntries.reduce(
-      (count, [, entry]) => count + (entry.files || []).length,
-      0,
+    const mockExamReferences = S.manifest.mockExamFiles.flatMap((subject) =>
+      subject.terms.flatMap((term, termIndex) =>
+        term.exams.map((exam, examIndex) => ({
+          subjectId: subject.id,
+          termIndex,
+          examIndex,
+          path: exam.path,
+        })),
+      ),
     );
+    const mockExamPaths = new Set(
+      mockExamReferences.map((item) => item.path).filter(Boolean),
+    );
+    const loadedPackagePaths = new Set();
+    const declaredPackagePaths = packageEntries.flatMap(([manifestId, entry]) =>
+      (entry.files || []).map((file) => `content/packages/${manifestId}/${file}`),
+    );
+    const totalPackageFiles = new Set([
+      ...declaredPackagePaths,
+      ...mockExamPaths,
+    ]).size;
     let loadedPackageFiles = 0;
     startupProgress.update({
       title: "Loading exercise packages",
@@ -120,6 +192,8 @@ async function loadContent() {
     for (const [manifestId, entry] of packageEntries) {
       for (const f of entry.files || []) {
         const loc = "content/packages/" + manifestId + "/" + f;
+        if (loadedPackagePaths.has(loc)) continue;
+        loadedPackagePaths.add(loc);
         try {
           const r = await fetchAppResource(loc);
 
@@ -138,6 +212,7 @@ async function loadContent() {
               ...pkg,
               canvas: pkg.canvas ?? entry.canvas,
             },
+            mockExam: mockExamPaths.has(loc),
           });
         } catch (e) {
           S.errors.push({
@@ -157,6 +232,57 @@ async function loadContent() {
         }
       }
     }
+
+    // Mock exam files are full exercise packages too, but may be listed only
+    // under mockExamFiles rather than packages. Load them once and pass them
+    // through addPackage() below so validation, datasets, and exercise types
+    // behave exactly as they do for ordinary packages.
+    for (const reference of mockExamReferences) {
+      const loc = reference.path;
+      if (!loc) {
+        S.errors.push({
+          file: `mockExamFiles.${reference.subjectId}`,
+          id: "(file)",
+          field: "file",
+          msg: "Mock exam entry has an empty or unsafe package file path.",
+        });
+        continue;
+      }
+      if (loadedPackagePaths.has(loc)) continue;
+      loadedPackagePaths.add(loc);
+      const entry = manifest.packages?.[reference.subjectId] || {};
+      try {
+        const r = await fetchAppResource(loc);
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        const pkg = await r.json();
+        files.push({
+          name: loc,
+          src: "bundled",
+          mockExam: true,
+          pkg: {
+            packageId: reference.subjectId,
+            version: entry.version,
+            ...pkg,
+            canvas: pkg.canvas ?? entry.canvas,
+          },
+        });
+      } catch (e) {
+        S.errors.push({
+          file: loc,
+          id: "(file)",
+          field: "$",
+          msg: "Cannot load mock exam package: " + e.message,
+        });
+      } finally {
+        loadedPackageFiles++;
+        startupProgress.update({
+          detail: `Loaded ${loadedPackageFiles} of ${totalPackageFiles} package files…`,
+          value: totalPackageFiles
+            ? 5 + (loadedPackageFiles / totalPackageFiles) * 70
+            : 80,
+        });
+      }
+    }
   } catch (e) {
     S.errors.push({
       file: "content/manifest.json",
@@ -170,6 +296,7 @@ async function loadContent() {
       referenceFiles: [],
       canvasFiles: [],
       learningFiles: [],
+      mockExamFiles: [],
     };
     startupProgress.update({
       title: "Restoring available practice content",
@@ -690,6 +817,8 @@ function addPackage(f, ctx) {
     term: packageTerm,
     canvas: ex.canvas ?? packageCanvas,
     packageId: pkg.packageId,
+    sourceFile: f.name,
+    mockExam: f.mockExam === true,
     key: exerciseKey({ id }, pkg.packageId),
   }));
   S.exercises.push(...exercises);
@@ -701,6 +830,7 @@ function addPackage(f, ctx) {
     version: pkg.version,
     term: packageTerm,
     canvas: packageCanvas,
+    mockExam: f.mockExam === true,
     n: exercises.length,
   });
 

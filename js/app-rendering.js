@@ -727,28 +727,121 @@ function qView(
   let q = h("div", { class: "q" });
   const out = h("div"),
     fb = h("div");
-  const scrollToOutput = () =>
-    out.scrollIntoView({
-      behavior: matchMedia("(prefers-reduced-motion: reduce)").matches
-        ? "auto"
-        : "smooth",
-      block: "nearest",
-    });
-  const scrollToFeedback = () =>
-    // Wait for the new feedback to be laid out, then bring it into view. If it
-    // is taller than the screen (long explanation), align its top so the
-    // correct/incorrect verdict is visible rather than centring it off-screen.
-    requestAnimationFrame(() =>
-      fb.scrollIntoView({
-        behavior: matchMedia("(prefers-reduced-motion: reduce)").matches
-          ? "auto"
-          : "smooth",
-        block:
-          fb.getBoundingClientRect().height > innerHeight * 0.7
-            ? "start"
-            : "center",
-      }),
+  // Split exercises can have an independently scrolling workspace/instructions
+  // pane. Scroll the result inside its own pane and the learning navigator in its
+  // own scroll container in the same frame. On mobile, keep the navigator in view
+  // and deliberately do not jump down to the result.
+  const findScrollContainer = (element) => {
+    let scroller = element?.parentElement;
+    while (
+      scroller &&
+      scroller !== document.body &&
+      scroller !== document.documentElement
+    ) {
+      const overflowY = getComputedStyle(scroller).overflowY;
+      if (
+        scroller.scrollHeight > scroller.clientHeight + 1 &&
+        ["auto", "scroll", "overlay", "hidden"].includes(overflowY)
+      )
+        return scroller;
+      scroller = scroller.parentElement;
+    }
+    return window;
+  };
+  const findLearningPathNavigator = () => {
+    const splitLayout = q.closest?.(".exercise-split-layout");
+    if (splitLayout)
+      return splitLayout.querySelector(".learning-path-navigator");
+    return (
+      q.querySelector?.(".learning-path-navigator") ||
+      q.parentElement?.querySelector?.(".learning-path-navigator") ||
+      null
     );
+  };
+  const scrollWithinContainer = (element, scroller, block, behavior) => {
+    if (!element?.isConnected) return;
+    const rect = element.getBoundingClientRect();
+    if (scroller === window) {
+      const header = document.querySelector("header");
+      const pinned =
+        header &&
+        ["sticky", "fixed"].includes(getComputedStyle(header).position);
+      const offset = pinned ? header.getBoundingClientRect().height : 0;
+      let top = rect.top + window.scrollY - offset - 12;
+      if (block === "center")
+        top =
+          rect.top +
+          window.scrollY -
+          offset -
+          Math.max(0, (window.innerHeight - rect.height) / 2);
+      else if (block === "nearest") {
+        if (rect.top >= offset + 8 && rect.bottom <= window.innerHeight - 8)
+          return;
+        if (rect.top < offset + 8)
+          top = rect.top + window.scrollY - offset - 8;
+        else top = rect.bottom + window.scrollY - window.innerHeight + 8;
+      }
+      window.scrollTo({ top: Math.max(0, top), behavior });
+      return;
+    }
+
+    const containerRect = scroller.getBoundingClientRect();
+    const viewportTop = containerRect.top + scroller.clientTop;
+    const viewportBottom = viewportTop + scroller.clientHeight;
+    let top = scroller.scrollTop;
+    if (block === "center") {
+      top += rect.top - viewportTop - (scroller.clientHeight - rect.height) / 2;
+    } else if (block === "nearest") {
+      if (rect.top >= viewportTop + 8 && rect.bottom <= viewportBottom - 8)
+        return;
+      if (rect.top < viewportTop + 8)
+        top += rect.top - viewportTop - 8;
+      else top += rect.bottom - viewportBottom + 8;
+    } else {
+      top += rect.top - viewportTop - 12;
+    }
+    scroller.scrollTo({
+      top: Math.max(0, Math.min(scroller.scrollHeight - scroller.clientHeight, top)),
+      behavior,
+    });
+  };
+  const scrollToExerciseTarget = (target, block = "nearest") =>
+    requestAnimationFrame(() => {
+      if (!target?.isConnected) return;
+      const navigator = findLearningPathNavigator();
+      const behavior = matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? "auto"
+        : "smooth";
+      const mobile = matchMedia("(max-width: 760px)").matches;
+      const resultScroller = findScrollContainer(target);
+      const navigatorScroller = navigator?.isConnected
+        ? findScrollContainer(navigator)
+        : null;
+
+      if (navigator?.isConnected && mobile) {
+        scrollWithinContainer(navigator, navigatorScroller, "start", behavior);
+        return;
+      }
+
+      scrollWithinContainer(target, resultScroller, block, behavior);
+      // When the result and navigator share a scroll owner, only one can be
+      // aligned at a time. Split desktop exercises have separate owners, so
+      // both scroll operations are issued together without fighting each other.
+      if (navigator?.isConnected && navigatorScroller !== resultScroller)
+        scrollWithinContainer(navigator, navigatorScroller, "start", behavior);
+    });
+  const scrollToOutput = () => scrollToExerciseTarget(out, "nearest");
+  const scrollToFeedback = (correct = false) => {
+    // Keep the old no-path behavior: incorrect answers reveal their feedback,
+    // while a correct answer does not force a result scroll. With a path active,
+    // desktop reveals both panes and mobile moves only to the path navigator.
+    const navigator = findLearningPathNavigator();
+    if (correct && !navigator) return;
+    scrollToExerciseTarget(
+      fb,
+      fb.getBoundingClientRect().height > innerHeight * 0.7 ? "start" : "center",
+    );
+  };
   let schemaPanel,
     runId = 0,
     gradingId = 0;
@@ -940,7 +1033,7 @@ function qView(
                 blank: !ta.value.trim(),
               });
             if (currentGrading !== gradingId || !q.isConnected) return;
-            if (g.correct !== true) scrollToFeedback();
+            scrollToFeedback(g.correct === true);
             focusNextExercise();
           },
         },
@@ -1096,7 +1189,7 @@ function qView(
               maxScore: result.maxScore,
               blank: false,
             });
-            if (!result.passed) scrollToFeedback();
+            scrollToFeedback(result.passed === true);
             if (result.passed) focusNextExercise();
           },
         });
@@ -1248,6 +1341,7 @@ function qView(
                       onclick: async () => {
                         fb.append(h("p", { class: "ok" }, "Saved as correct"));
                         await recordPracticeResult(true);
+                        scrollToFeedback(true);
                         focusNextExercise();
                       },
                     },
@@ -1291,7 +1385,7 @@ function qView(
                 : "",
             );
             await recordPracticeResult(g);
-            if (g !== true) scrollToFeedback();
+            scrollToFeedback(g === true);
             focusNextExercise();
           },
         },

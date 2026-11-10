@@ -20,14 +20,78 @@ const LEGACY_LEARNING_PACKAGE_IDS = Object.freeze({
   os: "os-learning-term-1",
 });
 
-// The Learning page is a Markdown article enhanced with live progress controls.
-// Exercise completion reuses the same XP keys as Practice/Progress; the separate
-// "section reviewed" checklist is saved through the existing IndexedDB key-value store.
-async function enhanceLearningProgress(body, term, subject) {
+// Learning and Canvas Markdown articles share the same progress UI and path-session
+// contract. Exercise completion reuses the same XP keys as Practice/Progress; the
+// separate "section reviewed" checklist is saved through the existing IndexedDB store.
+async function enhanceLearningProgress(
+  body,
+  term,
+  subject,
+  context = "learning",
+) {
   if (!body || !term?.file) return;
-  const headings = [...body.querySelectorAll("h2")].filter((heading) =>
-    heading.textContent.trim().startsWith("Section "),
-  );
+  const allHeadings = [...body.querySelectorAll("h2")];
+  // The guided Learning articles use explicit "Section ..." headings. Canvas
+  // articles are less prescriptive: they may use ordinary Markdown headings,
+  // or they may contain only Try exercise links. Never let heading wording (or
+  // the absence of headings) suppress the Canvas progress UI.
+  let headings =
+    context === "canvas"
+      ? [...allHeadings]
+      : allHeadings.filter((heading) =>
+          heading.textContent.trim().startsWith("Section "),
+        );
+
+  const exerciseFromPracticeHref = (href, label = "") => {
+    const match = String(href || "").match(/#\/practice\/([^/?#]+)\/([^/?#]+)/);
+    if (!match) return null;
+    try {
+      const packageId = decodeURIComponent(match[1]);
+      const exerciseId = decodeURIComponent(match[2]);
+      const existing = S.exercises.find(
+        (exercise) =>
+          exercise.packageId === packageId && exercise.id === exerciseId,
+      );
+      // Keep a route record even if the package has not finished loading yet.
+      // The exercise itself will still be resolved by Practice when the route
+      // opens; the route IDs are sufficient to preserve path order meanwhile.
+      return (
+        existing || {
+          packageId,
+          id: exerciseId,
+          title: String(label || exerciseId).trim(),
+          key: JSON.stringify([packageId, exerciseId]),
+        }
+      );
+    } catch {
+      return null;
+    }
+  };
+
+  const canvasLinks =
+    context === "canvas"
+      ? [...body.querySelectorAll('a[href*="#/practice/"]')]
+      : [];
+  const linkedCanvasExercises = [
+    ...new Map(
+      canvasLinks
+        .map((link) =>
+          exerciseFromPracticeHref(link.getAttribute("href"), link.textContent),
+        )
+        .filter(Boolean)
+        .map((exercise) => [`${exercise.packageId}::${exercise.id}`, exercise]),
+    ).values(),
+  ];
+
+  if (context === "canvas" && !headings.length) {
+    // A single fallback module gives link-only Canvas Markdown a real section
+    // anchor for its progress card and review state.
+    const fallbackHeading = h("h2", {}, "Canvas exercises");
+    const documentTitle = body.querySelector("h1");
+    if (documentTitle) documentTitle.after(fallbackHeading);
+    else body.prepend(fallbackHeading);
+    headings = [fallbackHeading];
+  }
   if (!headings.length) return;
 
   const storageKey = `learning-complete:${term.file}`;
@@ -38,32 +102,83 @@ async function enhanceLearningProgress(body, term, subject) {
     term?.exercisePackageId ??
     subject?.packageId ??
     subject?.exercisePackageId ??
-    LEGACY_LEARNING_PACKAGE_IDS[subject?.id];
-  const packageExercises = S.exercises
-    .filter((exercise) => exercise.packageId === learningPackageId)
-    .sort((a, b) => a.id.localeCompare(b.id, undefined, { numeric: true }));
+    LEGACY_LEARNING_PACKAGE_IDS[subject?.id] ??
+    linkedCanvasExercises[0]?.packageId;
+  const packageExercises = (
+    context === "canvas" && linkedCanvasExercises.length
+      ? linkedCanvasExercises.filter((exercise) => !exercise.mockExam)
+      : learningPackageId
+        ? S.exercises.filter(
+            (exercise) =>
+              !exercise.mockExam && exercise.packageId === learningPackageId,
+          )
+        : []
+  ).sort((a, b) => a.id.localeCompare(b.id, undefined, { numeric: true }));
+
+  // Assign every Canvas link to the closest preceding h2. This works for
+  // standalone HTML exercise-button lines, links inside paragraphs/lists, and
+  // ordinary Markdown section titles. The document's link order is retained.
+  const canvasExercisesByHeading = new Map(
+    headings.map((heading) => [heading, []]),
+  );
+  if (context === "canvas") {
+    const seenCanvasExercises = new Set();
+    for (const link of canvasLinks) {
+      const exercise = exerciseFromPracticeHref(
+        link.getAttribute("href"),
+        link.textContent,
+      );
+      if (!exercise) continue;
+      const routeKey = `${exercise.packageId}::${exercise.id}`;
+      if (seenCanvasExercises.has(routeKey)) continue;
+      seenCanvasExercises.add(routeKey);
+
+      let owner = headings[0];
+      for (const heading of headings) {
+        const relation = heading.compareDocumentPosition(link);
+        if (relation & Node.DOCUMENT_POSITION_FOLLOWING) owner = heading;
+        else if (relation & Node.DOCUMENT_POSITION_PRECEDING) break;
+      }
+      canvasExercisesByHeading.get(owner)?.push(exercise);
+    }
+  }
+
   const solved = new Set(Object.keys(S.xpRewards || {}));
   const modules = headings.map((heading, index) => {
     const sectionNumber = String(index + 1).padStart(2, "0");
     const sectionId = `s${sectionNumber}`;
     // SQL exercises traditionally start with "s01-"; OS exercises use
-    // "os-learning-s01-001". Prefer the explicit category assigned to the
-    // exercise, while accepting either ID convention as a backwards-compatible
-    // fallback for existing learning packages.
-    const exercises = packageExercises.filter((exercise) => {
-      const category = String(exercise.category || "");
-      const categoryMatches = new RegExp(
-        `^Section\\s+${sectionNumber}\\b`,
-        "i",
-      ).test(category);
-      const id = String(exercise.id || "");
-
-      const idMatches =
-        new RegExp(`(?:^|-)s${sectionNumber}-`).test(id) ||
-        new RegExp(`(?:^|-)t\\d+-${sectionNumber}-\\d+$`).test(id);
-
-      return categoryMatches || idMatches;
-    });
+    // "os-learning-s01-001". Prefer explicit category/ID matching for Learning.
+    const linkedSectionExercises =
+      context === "canvas" ? canvasExercisesByHeading.get(heading) || [] : [];
+    const exercises =
+      context === "canvas" && linkedCanvasExercises.length
+        ? linkedSectionExercises
+        : context === "canvas"
+          ? packageExercises.filter((exercise) => {
+              const category = String(exercise.category || "");
+              const categoryMatches = new RegExp(
+                `^Section\\s+${sectionNumber}\\b`,
+                "i",
+              ).test(category);
+              const id = String(exercise.id || "");
+              const idMatches =
+                new RegExp(`(?:^|-)s${sectionNumber}-`).test(id) ||
+                new RegExp(`(?:^|-)t\\d+-${sectionNumber}-\\d+$`).test(id);
+              return categoryMatches || idMatches;
+            })
+          : packageExercises.filter((exercise) => {
+              const category = String(exercise.category || "");
+              const categoryMatches = new RegExp(
+                `^Section\\s+${sectionNumber}\\b`,
+                "i",
+              ).test(category);
+              const id = String(exercise.id || "");
+              const idMatches =
+                new RegExp(`(?:^|-)s${sectionNumber}-`).test(id) ||
+                new RegExp(`(?:^|-)t\\d+-${sectionNumber}-\\d+$`).test(id);
+              return categoryMatches || idMatches;
+            });
     return { heading, sectionId, exercises, index };
   });
   const pathExercises = modules.flatMap((pathModule) =>
@@ -79,6 +194,7 @@ async function enhanceLearningProgress(body, term, subject) {
         "learning-path-session",
         JSON.stringify({
           termFile: term.file,
+          context,
           packageId: learningPackageId,
           exercises: pathExercises,
           completedSectionIds: [...completed],
@@ -90,6 +206,30 @@ async function enhanceLearningProgress(body, term, subject) {
       console.warn("Could not save learning path position:", error);
     }
   };
+  // Canvas content often links directly to Practice via try-exercise buttons.
+  // Preserve the section order for those links too, not only for links generated
+  // by the progress cards above.
+  body.addEventListener(
+    "click",
+    (event) => {
+      const link = event.target?.closest?.('a[href*="#/practice/"]');
+      if (!link || !body.contains(link)) return;
+      const exercise = exerciseFromPracticeHref(
+        link.getAttribute("href"),
+        link.textContent,
+      );
+      if (
+        exercise &&
+        pathExercises.some(
+          (item) =>
+            item.packageId === exercise.packageId &&
+            item.exerciseId === exercise.id,
+        )
+      )
+        saveLearningPathSession(exercise);
+    },
+    true,
+  );
   const totalExercises = modules.reduce(
     (sum, module) => sum + module.exercises.length,
     0,
@@ -112,8 +252,16 @@ async function enhanceLearningProgress(body, term, subject) {
       h(
         "div",
         {},
-        h("span", { class: "learning-kicker" }, "YOUR LEARNING PATH"),
-        h("h2", {}, "Term 1 progress"),
+        h(
+          "span",
+          { class: "learning-kicker" },
+          context === "canvas" ? "YOUR CANVAS PATH" : "YOUR LEARNING PATH",
+        ),
+        h(
+          "h2",
+          {},
+          `${term.label || (context === "canvas" ? "Canvas" : "Term 1")} progress`,
+        ),
         h(
           "p",
           { class: "learning-overview-subtitle" },
@@ -191,7 +339,9 @@ async function enhanceLearningProgress(body, term, subject) {
   const courseResume = h("a", {
     class: "learning-continue-button learning-course-continue",
     "aria-label":
-      "Continue the learning path from the first unfinished section and exercise",
+      context === "canvas"
+        ? "Continue the Canvas path from the first unfinished section and exercise"
+        : "Continue the learning path from the first unfinished section and exercise",
   });
   const syncCourseResume = () => {
     const target = firstResumeTarget();
@@ -199,16 +349,20 @@ async function enhanceLearningProgress(body, term, subject) {
       courseResume.href = `#/practice/${encodeURIComponent(target.exercise.packageId)}/${encodeURIComponent(target.exercise.id)}`;
       courseResume.classList.remove("is-disabled");
       courseResume.removeAttribute("aria-disabled");
+      const actionLabel = context === "canvas" ? "canvas" : "learning";
       courseResume.textContent = hasAnyLearningProgress()
-        ? "Continue learning \u2192"
-        : "Start learning \u2192";
+        ? `Continue ${actionLabel} \u2192`
+        : `Start ${actionLabel} \u2192`;
       courseResume.onclick = () => saveLearningPathSession(target.exercise);
       courseResume.title = `Section ${String(target.module.index + 1).padStart(2, "0")} \u00B7 ${target.exercise.title}`;
     } else {
       courseResume.removeAttribute("href");
       courseResume.classList.add("is-disabled");
       courseResume.setAttribute("aria-disabled", "true");
-      courseResume.textContent = "Learning path completed";
+      courseResume.textContent =
+        context === "canvas"
+          ? "Canvas path completed"
+          : "Learning path completed";
       courseResume.onclick = (event) => event.preventDefault();
       courseResume.title =
         "Every section is reviewed or every exercise is complete.";
@@ -465,6 +619,243 @@ const pageCanvas = (root, arg, term) =>
   pageLibrary(root, arg, term, LIBRARY_VIEWS.canvas);
 const pageLearning = (root, arg, term) =>
   pageLibrary(root, arg, term, LIBRARY_VIEWS.learning);
+
+function pageMockExam(root, subjectArg = "") {
+  const subjects = S.manifest?.mockExamFiles || [];
+  if (!subjects.length) {
+    return root.append(
+      empty(
+        "No mock exams configured.",
+        "Add mockExamFiles entries to the content manifest to make mock exams available.",
+      ),
+    );
+  }
+
+  const current =
+    subjects.find((subject) => subject.id === subjectArg) || subjects[0];
+  let termIndex = 0;
+  const subjectLabel = (subject) =>
+    subject.title ||
+    globalThis.Core.initcap(String(subject.id).replace(/[-_]+/g, " "));
+  const subjectTabs = h(
+    "nav",
+    { class: "reference-tabs", "aria-label": "Choose a mock exam subject" },
+    subjects.map((subject) =>
+      h(
+        "a",
+        {
+          href: `#/mock-exam/${encodeURIComponent(subject.id)}`,
+          class: "reference-tab" + (subject.id === current.id ? " on" : ""),
+          "aria-current": subject.id === current.id ? "page" : false,
+        },
+        h("strong", {}, subjectLabel(subject)),
+      ),
+    ),
+  );
+
+  const termCount = current.terms.length;
+  if (!termCount) {
+    root.append(
+      h(
+        "section",
+        { class: "reference-heading" },
+        h(
+          "div",
+          {},
+          h("p", { class: "eyebrow" }, "MOCK EXAMS"),
+          h("h1", {}, "Mock Exam"),
+          h(
+            "p",
+            { class: "reference-intro" },
+            `${subjectLabel(current)} has no terms configured.`,
+          ),
+        ),
+        subjectTabs,
+      ),
+    );
+    return;
+  }
+
+  const content = h("article", { class: "md mock-exam-list" });
+  const termThumb = h("span", { class: "term-thumb", "aria-hidden": "true" });
+  const termPos = h("span", {
+    class: "term-picker-pos",
+    "aria-hidden": "true",
+  });
+  const termPills = h("div", {
+    class: "term-pills",
+    role: "tablist",
+    "aria-label": "Mock exam term",
+    onkeydown: (event) => {
+      const step =
+        event.key === "ArrowRight" || event.key === "ArrowDown"
+          ? 1
+          : event.key === "ArrowLeft" || event.key === "ArrowUp"
+            ? -1
+            : 0;
+      if (event.key === "Home" || event.key === "End" || step) {
+        event.preventDefault();
+        const next =
+          event.key === "Home"
+            ? 0
+            : event.key === "End"
+              ? termCount - 1
+              : (termIndex + step + termCount) % termCount;
+        renderTerm(next);
+        termPills.children[next + 1]?.focus({ preventScroll: true });
+      }
+    },
+  });
+  const termPicker = h(
+    "div",
+    { class: "term-picker", "data-n": String(termCount) },
+    h("span", { class: "term-picker-label" }, "TERM"),
+    termPos,
+    h("div", { class: "term-frame" }, termPills),
+  );
+  const examList = h("div", { class: "exam-history-list mock-exam-cards" });
+
+  const syncTermPicker = () => {
+    const active = termPills.querySelector(".term-pill.on");
+    termPos.textContent = `${termIndex + 1} / ${termCount}`;
+    if (!active?.offsetWidth) return;
+    termPills.style.setProperty("--thumb-x", `${active.offsetLeft}px`);
+    termPills.style.setProperty("--thumb-w", `${active.offsetWidth}px`);
+    if (!termPills.classList.contains("is-ready")) {
+      void termPills.offsetWidth;
+      termPills.classList.add("is-ready");
+    }
+  };
+
+  const renderTerm = (nextIndex) => {
+    termIndex = Math.max(0, Math.min(termCount - 1, nextIndex));
+    termPills.replaceChildren(
+      termThumb,
+      ...current.terms.map((term, index) =>
+        h(
+          "button",
+          {
+            type: "button",
+            role: "tab",
+            class: "term-pill" + (index === termIndex ? " on" : ""),
+            "aria-selected": String(index === termIndex),
+            tabindex: index === termIndex ? "0" : "-1",
+            onclick: () => renderTerm(index),
+          },
+          term.label,
+        ),
+      ),
+    );
+    const term = current.terms[termIndex];
+    const exams = Array.isArray(term.exams) ? term.exams : [];
+    examList.replaceChildren(
+      ...(exams.length
+        ? exams.map((exam, examIndex) => {
+            const exercises = exam.path
+              ? S.exercises.filter(
+                  (exercise) => exercise.sourceFile === exam.path,
+                )
+              : [];
+            const validTime = Number.isFinite(exam.time) && exam.time > 0;
+            const available = exercises.length > 0 && validTime;
+            const status = !exam.path
+              ? "The package file path is empty or invalid."
+              : !exercises.length
+                ? "The package could not be loaded or contains no exercises."
+                : !validTime
+                  ? "Set a positive time value (in minutes) in the manifest."
+                  : `${exercises.length} questions · ${exam.time} minutes`;
+            return h(
+              "section",
+              { class: "exam-setup-card card" },
+              h(
+                "div",
+                { class: "exam-setup-heading" },
+                h(
+                  "p",
+                  { class: "eyebrow" },
+                  `MOCK EXAM ${String(examIndex + 1).padStart(2, "0")}`,
+                ),
+                h("h2", {}, exam.title),
+                h("p", {}, status),
+              ),
+              h(
+                "div",
+                { class: "exam-config-summary" },
+                h("strong", {}, `${exercises.length} questions`),
+                h(
+                  "span",
+                  {},
+                  validTime ? `${exam.time} minutes` : "Duration unavailable",
+                ),
+              ),
+              h(
+                "div",
+                { class: "exam-setup-footer" },
+                h(
+                  "button",
+                  {
+                    type: "button",
+                    class: "exam-start-button",
+                    disabled: !available,
+                    onclick: () => {
+                      const request = {
+                        type: "mock-exam",
+                        subjectId: current.id,
+                        termIndex,
+                        examIndex,
+                        launchId: Date.now(),
+                      };
+                      location.hash = `#/exam/${encodeURIComponent(JSON.stringify(request))}`;
+                    },
+                  },
+                  h("span", { "aria-hidden": "true" }, "▶"),
+                  " Start mock exam",
+                ),
+              ),
+            );
+          })
+        : [
+            h(
+              "p",
+              { class: "exam-history-empty" },
+              "No mock exam files are configured for this term.",
+            ),
+          ]),
+    );
+    syncTermPicker();
+  };
+
+  const heading = h(
+    "section",
+    { class: "reference-heading" },
+    h(
+      "div",
+      {},
+      h("p", { class: "eyebrow" }, "MOCK EXAMS"),
+      h("h1", {}, "Mock Exam"),
+      h(
+        "p",
+        { class: "reference-intro" },
+        "Choose a subject and term, then start a timed exam containing every exercise.",
+      ),
+    ),
+    subjectTabs,
+    termPicker,
+  );
+  const sidebar = h(
+    "aside",
+    { class: "reference-sidebar", "aria-label": "Mock exam information" },
+    h("h2", {}, subjectLabel(current)),
+    h("p", {}, "Those are a list of mock exams done during class."),
+  );
+  content.append(examList);
+  root.append(
+    heading,
+    h("div", { class: "reference-layout" }, sidebar, content),
+  );
+  renderTerm(0);
+}
 
 // Shared by the Summaries and Canvas pages. Each subject has several terms
 // (a slider switches between them); each term points at a .md or .html file.
@@ -1182,8 +1573,8 @@ async function pageLibrary(root, arg, termArg, view) {
       if (diagram) source.replaceWith(diagram);
       else source.classList.add("reference-code-fallback");
     });
-    if (view.route === "learning")
-      await enhanceLearningProgress(body, term, cur);
+    if (view.route === "learning" || view.route === "canvas")
+      await enhanceLearningProgress(body, term, cur, view.route);
     return toc;
   };
   // An .html canvas runs in an iframe, so its own CSS and JS execute normally

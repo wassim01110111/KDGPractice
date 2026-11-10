@@ -698,7 +698,7 @@ while (true){
 
 // statements ommitted
 
-if (test) return;
+  if (test) return;
 
 
 }
@@ -1251,28 +1251,28 @@ Add this class and run it
 
 ```java
 public class DemoBankAccount {
-public static void main(String[] args) {
-BankAccount greg = new BankAccount("Gregory Persons", "BE15 6474 3001 5840");
-System.out.println(greg);
-greg.deposit(3000);
-System.out.println(greg);
-if (greg.withdraw(2000)) {
-// withdraw returns true
-System.out.println(greg);
-} else {
-System.out.println("Insufficient credit");
-}
-if (greg.withdraw(1500)) {
-// withdraw returns false
-System.out.println(greg);
-} else {
-System.out.println("Insufficient credit");
-}
-BankAccount carl = new BankAccount("Carl Deleu", "BE45 8477 0157 5478", 35652);
-System.out.println("\n" + carl);
-carl.deposit(6487);
-System.out.println(carl);
-}
+  public static void main(String[] args) {
+    BankAccount greg = new BankAccount("Gregory Persons", "BE15 6474 3001 5840");
+    System.out.println(greg);
+    greg.deposit(3000);
+    System.out.println(greg);
+    if (greg.withdraw(2000)) {
+    // withdraw returns true
+      System.out.println(greg);
+    } else {
+      System.out.println("Insufficient credit");
+    }
+    if (greg.withdraw(1500)) {
+    // withdraw returns false
+      System.out.println(greg);
+    } else {
+      System.out.println("Insufficient credit");
+    }
+    BankAccount carl = new BankAccount("Carl Deleu", "BE45 8477 0157 5478", 35652);
+    System.out.println("\n" + carl);
+    carl.deposit(6487);
+    System.out.println(carl);
+  }
 }
 ```
 

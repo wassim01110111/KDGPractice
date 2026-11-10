@@ -449,7 +449,15 @@ async function pageSandbox(root) {
 }
 
 async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
-  if (!S.exercises.length)
+  const requestedExercise =
+    routePackageId && routeExerciseId
+      ? S.exercises.find(
+          (exercise) =>
+            exercise.packageId === routePackageId &&
+            exercise.id === routeExerciseId,
+        )
+      : null;
+  if (!S.exercises.length && !requestedExercise)
     return root.append(
       empty(
         "No exercises installed yet.",
@@ -1008,65 +1016,7 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
         : "smooth",
     });
   }
-  function scrollLearningPathNavigator(navigator) {
-    requestAnimationFrame(() =>
-      requestAnimationFrame(() => {
-        if (!navigator?.isConnected) return;
 
-        const behavior = matchMedia("(prefers-reduced-motion: reduce)").matches
-          ? "auto"
-          : "smooth";
-
-        // The exercise pane may scroll independently of the document. Find
-        // the nearest ancestor that can actually scroll instead of assuming
-        // window is the active scroll container.
-        let scroller = navigator.parentElement;
-        while (
-          scroller &&
-          scroller !== document.body &&
-          scroller !== document.documentElement
-        ) {
-          const overflowY = getComputedStyle(scroller).overflowY;
-          if (
-            scroller.scrollHeight > scroller.clientHeight + 1 &&
-            ["auto", "scroll", "overlay", "hidden"].includes(overflowY)
-          )
-            break;
-          scroller = scroller.parentElement;
-        }
-
-        if (
-          scroller &&
-          scroller !== document.body &&
-          scroller !== document.documentElement
-        ) {
-          const scrollerRect = scroller.getBoundingClientRect();
-          const navigatorRect = navigator.getBoundingClientRect();
-          const scrollportTop = scrollerRect.top + scroller.clientTop;
-          const top =
-            scroller.scrollTop + navigatorRect.top - scrollportTop - 12;
-          scroller.scrollTo({ top: Math.max(0, top), behavior });
-          return;
-        }
-
-        // Fall back to document scrolling when no nested scroll container
-        // owns the navigator. Account for a sticky/fixed site header.
-        const header = document.querySelector("header");
-        const pinned =
-          header &&
-          ["sticky", "fixed"].includes(getComputedStyle(header).position);
-        const offset = pinned ? header.getBoundingClientRect().height : 0;
-        const scrollingElement =
-          document.scrollingElement || document.documentElement;
-        const top =
-          navigator.getBoundingClientRect().top +
-          scrollingElement.scrollTop -
-          offset -
-          12;
-        window.scrollTo({ top: Math.max(0, top), behavior });
-      }),
-    );
-  }
   // Filter, search and status-slider changes start again from page one.
   function redraw() {
     practiceVisibleCount = PRACTICE_PAGE_SIZE;
@@ -1107,12 +1057,10 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
         },
         meta,
       );
-      setTimeout(() => {
-        if (pathNavigator?.isConnected) {
+      requestAnimationFrame(() => {
+        if (pathNavigator?.isConnected)
           pathNavigator.classList.toggle("right", correct === true);
-          if (correct === true) scrollLearningPathNavigator(pathNavigator);
-        }
-      }, 200);
+      });
       await save;
     };
     const view = qView(
@@ -1208,8 +1156,8 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
     };
     syncCompletionFlag();
 
-    // Guided Learning exercises retain their sequence in the practice view.
-    // Reviewed sections are skipped; solved exercises remain available.
+    // Guided Learning and Canvas exercises retain their source-document order
+    // in Practice. Reviewed sections and already-solved next steps are skipped.
     let learningSession = null;
     try {
       learningSession = JSON.parse(
@@ -1226,10 +1174,7 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
         item.packageId === exercise.packageId &&
         item.exerciseId === exercise.id,
     );
-    if (
-      learningSession?.packageId === exercise.packageId &&
-      learningPathIndex >= 0
-    ) {
+    if (learningPathIndex >= 0) {
       const reviewedSections = new Set(
         Array.isArray(learningSession.completedSectionIds)
           ? learningSession.completedSectionIds
@@ -1288,7 +1233,7 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
         () => Boolean(nextPathExercise),
       );
       pathPosition.textContent =
-        `Learning path \u00B7 Exercise ${learningPathIndex + 1} of ${learningPathExercises.length}` +
+        `${learningSession.context === "canvas" ? "Canvas path" : "Learning path"} \u00B7 Exercise ${learningPathIndex + 1} of ${learningPathExercises.length}` +
         (reviewedSections.size
           ? ` \u00B7 ${reviewedSections.size} section${reviewedSections.size === 1 ? "" : "s"} marked done`
           : "");
@@ -1304,12 +1249,21 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
         "nav",
         {
           class: "learning-path-navigator",
-          "aria-label": "Learning path navigation",
+          "aria-label":
+            learningSession.context === "canvas"
+              ? "Canvas path navigation"
+              : "Learning path navigation",
         },
         h(
           "div",
           { class: "learning-path-navigator__details" },
-          h("strong", {}, "Continue learning"),
+          h(
+            "strong",
+            {},
+            learningSession.context === "canvas"
+              ? "Continue canvas"
+              : "Continue learning",
+          ),
           pathPosition,
         ),
         h(
@@ -1341,13 +1295,18 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
           scrollSelectedNavigationItem(keyOf(exercise));
         }
         if (scrollToExercise && view.isConnected) {
-          const title = view.querySelector("h3") || view,
-            header = document.querySelector("header"),
-            pinned =
-              header &&
-              ["sticky", "fixed"].includes(getComputedStyle(header).position),
-            offset = pinned ? header.getBoundingClientRect().height : 0,
-            top = title.getBoundingClientRect().top + scrollY - offset - 12;
+          const mobile = matchMedia("(max-width: 760px)").matches;
+          const target =
+            mobile && pathNavigator?.isConnected
+              ? pathNavigator
+              : view.querySelector("h3") || view;
+          const header = document.querySelector("header");
+          const pinned =
+            header &&
+            ["sticky", "fixed"].includes(getComputedStyle(header).position);
+          const offset = pinned ? header.getBoundingClientRect().height : 0;
+          const top =
+            target.getBoundingClientRect().top + scrollY - offset - 12;
           window.scrollTo({
             top: Math.max(0, top),
             behavior: matchMedia("(prefers-reduced-motion: reduce)").matches
@@ -1375,7 +1334,17 @@ async function pagePractice(root, routePackageId = "", routeExerciseId = "") {
   root.append(flt, h("div", { class: "cols" }, list, pane));
 }
 
-async function pageExam(root, isCurrent = () => true) {
+async function pageExam(root, isCurrent = () => true, mockExamRoute = "") {
+  let mockExamRequest = null;
+  if (mockExamRoute) {
+    try {
+      const parsed = JSON.parse(mockExamRoute);
+      if (parsed?.type === "mock-exam") mockExamRequest = parsed;
+    } catch {
+      // A non-JSON route argument is an ordinary Exam page deep link.
+    }
+  }
+
   let saved;
   try {
     const [indexedDbExam, checkpoint] = await Promise.all([
@@ -1393,6 +1362,119 @@ async function pageExam(root, isCurrent = () => true) {
     return;
   }
   if (!isCurrent()) return;
+
+  if (mockExamRequest) {
+    const subjects = S.manifest?.mockExamFiles || [];
+    const subject = subjects.find(
+      (item) => item.id === mockExamRequest.subjectId,
+    );
+    const termIndex = Number(mockExamRequest.termIndex);
+    const examIndex = Number(mockExamRequest.examIndex);
+    const term = Number.isInteger(termIndex)
+      ? subject?.terms?.[termIndex]
+      : null;
+    const exam = Number.isInteger(examIndex) ? term?.exams?.[examIndex] : null;
+    const exercises = exam?.path
+      ? S.exercises.filter((exercise) => exercise.sourceFile === exam.path)
+      : [];
+
+    if (
+      !subject ||
+      !term ||
+      !exam ||
+      !exam.path ||
+      !Number.isFinite(exam.time) ||
+      exam.time <= 0 ||
+      !exercises.length
+    ) {
+      return root.append(
+        empty(
+          "This mock exam is unavailable.",
+          !exam?.path
+            ? "The manifest does not contain a valid package file path."
+            : !Number.isFinite(exam?.time) || exam.time <= 0
+              ? "The manifest must provide a positive time value in minutes."
+              : "The package could not be loaded or contains no exercises.",
+        ),
+      );
+    }
+
+    const mockExamKey = JSON.stringify([
+      subject.id,
+      termIndex,
+      examIndex,
+      exam.path,
+    ]);
+    if (saved && !saved.submitted) {
+      if (saved.mockExam?.key === mockExamKey) return runExam(root, saved);
+      const shouldContinue = await confirmInApp({
+        title: "Another exam is in progress",
+        message:
+          "There is an unfinished exam saved on this device. Continue that exam, or discard it and start this mock exam?",
+        confirmLabel: "Continue saved exam",
+        cancelLabel: "Discard and start mock exam",
+        danger: true,
+        reverseDanger: true,
+      });
+      if (!isCurrent()) return;
+      if (shouldContinue) {
+        // The saved exam may be a different mock exam (or a regular exam).
+        // Remove the requested mock-exam payload so a reload cannot relaunch it.
+        try {
+          history.replaceState(
+            history.state,
+            "",
+            `${location.pathname}${location.search}#/exam`,
+          );
+        } catch {
+          // Continuing the saved session is still possible if URL replacement fails.
+        }
+        return runExam(root, saved);
+      }
+      try {
+        await discardExamState();
+        achTrack((s) => void s.discards++, { full: false });
+      } catch (error) {
+        root.append(empty("Could not discard the saved exam.", error.message));
+        return;
+      }
+    }
+
+    const startedAt = Date.now();
+    const st = {
+      id: `mock-${startedAt}`,
+      ids: exercises.map(keyOf),
+      answers: {},
+      flags: {},
+      visited: {},
+      touched: {},
+      cur: 0,
+      cfg: { mins: exam.time, kind: "mock", title: exam.title },
+      mockExam: {
+        key: mockExamKey,
+        title: exam.title,
+        subjectId: subject.id,
+        subjectTitle: subject.title,
+        termLabel: term.label,
+        file: exam.file,
+        packageId: exercises[0].packageId,
+      },
+      deadline: startedAt + exam.time * 60000,
+      startedAt,
+      submitted: false,
+    };
+    try {
+      await saveExamState(st);
+    } catch (error) {
+      return root.append(
+        empty("Could not start the mock exam.", error.message),
+      );
+    }
+    if (!isCurrent()) return;
+    root.replaceChildren();
+    return runExam(root, st);
+  }
+
   if (saved && !saved.submitted) {
     const shouldContinue = await confirmInApp({
       title: "Exam in progress",
@@ -1416,7 +1498,7 @@ async function pageExam(root, isCurrent = () => true) {
     }
   }
 
-  const examPool = S.exercises;
+  const examPool = S.exercises.filter((exercise) => !exercise.mockExam);
   if (!examPool.length)
     return root.append(
       empty(
@@ -1426,7 +1508,7 @@ async function pageExam(root, isCurrent = () => true) {
       await historyView(),
     );
 
-  const courses = uniq(S.exercises, (exercise) => exercise.course);
+  const courses = uniq(examPool, (exercise) => exercise.course);
   // Term options come from all installed exercise packages.
   // Sort numerically so Term 2 appears before Term 10.
   const terms = [
@@ -1500,8 +1582,8 @@ async function pageExam(root, isCurrent = () => true) {
 
   const getTermFilteredExercises = () =>
     !terms.length
-      ? S.exercises
-      : S.exercises.filter((exercise) => cfg.terms.includes(exercise.term));
+      ? examPool
+      : examPool.filter((exercise) => cfg.terms.includes(exercise.term));
 
   const updateExamSummary = () => {
     const count = cfg.Easy + cfg.Medium + cfg.Hard + cfg.Extreme;
@@ -2023,9 +2105,11 @@ async function historyView() {
                 savedQuestions.forEach((question) => {
                   question.legacy = true;
                 });
-              const dateLabel = exam.date
-                ? new Date(exam.date).toLocaleString()
-                : `Exam ${hist.length - examIndex}`;
+              const dateLabel = exam.title
+                ? `${exam.title} · ${exam.date ? new Date(exam.date).toLocaleString() : `Exam ${hist.length - examIndex}`}`
+                : exam.date
+                  ? new Date(exam.date).toLocaleString()
+                  : `Exam ${hist.length - examIndex}`;
               const visitedCount = savedQuestions.filter(
                 (question) => question.visited,
               ).length;
@@ -2243,6 +2327,17 @@ async function runExam(root, st) {
   const submit = async () => {
     if (done || st.submitted) return;
     done = true;
+    if (st.mockExam && location.hash !== "#/exam") {
+      try {
+        history.replaceState(
+          history.state,
+          "",
+          `${location.pathname}${location.search}#/exam`,
+        );
+      } catch {
+        // Keep the in-memory result view even if URL replacement is unavailable.
+      }
+    }
     clearInterval(iv);
     clearInterval(autosaveTimer);
     showGeneration++;
@@ -2531,6 +2626,8 @@ async function runExam(root, st) {
       });
       hist.push({
         date: Date.now(),
+        title: st.mockExam?.title || undefined,
+        mockExam: st.mockExam || undefined,
         ids: st.ids,
         score,
         total: gradable,
@@ -2560,7 +2657,11 @@ async function runExam(root, st) {
           h(
             "div",
             { class: "exam-score-card card" },
-            h("p", { class: "eyebrow" }, "EXAM COMPLETE"),
+            h(
+              "p",
+              { class: "eyebrow" },
+              st.mockExam ? "MOCK EXAM COMPLETE" : "EXAM COMPLETE",
+            ),
             h("h1", {}, `Score: ${score} / ${gradable}`),
             h(
               "p",
@@ -2845,9 +2946,19 @@ async function runExam(root, st) {
     h(
       "div",
       { class: "exam-heading" },
-      h("p", { class: "eyebrow" }, "EXAM IN PROGRESS"),
-      h("h1", {}, "Stay focused. You\u2019ve got this."),
-      h("p", {}, "Your work saves automatically as you answer."),
+      h(
+        "p",
+        { class: "eyebrow" },
+        st.mockExam ? "MOCK EXAM IN PROGRESS" : "EXAM IN PROGRESS",
+      ),
+      h("h1", {}, st.mockExam?.title || "Stay focused. You\u2019ve got this."),
+      h(
+        "p",
+        {},
+        st.mockExam
+          ? `All ${exs.length} questions from ${st.mockExam.subjectTitle || st.mockExam.subjectId} · ${st.mockExam.termLabel || "Mock exam"}. Your work saves automatically.`
+          : "Your work saves automatically as you answer.",
+      ),
     ),
     h(
       "div",

@@ -308,11 +308,17 @@ let routeEnterAnim = null; // enter animation still running, if any
 let routeLeaving = null; // { target, anim }: the exit that is in flight
 // Reference/Canvas subject, normalised so "" and the first subject match.
 const routeSubject = (page, arg) => {
+  const id = decodeRouteSegment(arg);
   const lib = LIBRARY_VIEWS[page];
-  if (!lib) return "";
-  const refs = S.manifest?.[lib.key] || [],
-    id = decodeRouteSegment(arg);
-  return (refs.find((r) => r.id === id) || refs[0])?.id ?? "";
+  if (lib) {
+    const refs = S.manifest?.[lib.key] || [];
+    return (refs.find((r) => r.id === id) || refs[0])?.id ?? "";
+  }
+  if (page === "mock-exam") {
+    const refs = S.manifest?.mockExamFiles || [];
+    return (refs.find((r) => r.id === id) || refs[0])?.id ?? "";
+  }
+  return "";
 };
 // What kind of transition this navigation needs (null = none). dir is +1 when
 // the new page sits after the old one, -1 before it, 0 for the first load.
@@ -327,11 +333,15 @@ function routeMotion(page, subject) {
     return { kind: "page", dir: to >= from ? 1 : -1 };
   }
   const lib = LIBRARY_VIEWS[page];
-  if (lib && routeShown.subject !== subject) {
-    const ids = (S.manifest?.[lib.key] || []).map((r) => r.id);
+  const subjectIds = lib
+    ? (S.manifest?.[lib.key] || []).map((r) => r.id)
+    : page === "mock-exam"
+      ? (S.manifest?.mockExamFiles || []).map((r) => r.id)
+      : null;
+  if (subjectIds && routeShown.subject !== subject) {
     return {
       kind: "subject",
-      dir: ids.indexOf(subject) >= ids.indexOf(routeShown.subject) ? 1 : -1,
+      dir: subjectIds.indexOf(subject) >= subjectIds.indexOf(routeShown.subject) ? 1 : -1,
     };
   }
   return null;
@@ -427,7 +437,7 @@ async function route() {
           decodeRouteSegment(exerciseArg),
         )
       : p === "exam"
-        ? pageExam(view, () => tok === routeTok)
+        ? pageExam(view, () => tok === routeTok, decodeRouteSegment(arg))
         : (pages[p] || pageReader)(
             view,
             decodeRouteSegment(arg),

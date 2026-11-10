@@ -16,7 +16,8 @@
         "sql-theory-course.json",
         "sql-canvas-1.json",
         "sql-extreme-t1.json",
-        "sql-relational-learning-term-1.json"
+        "sql-relational-learning-term-1.json",
+        "sql-mock-term-1.json"
       ]
     },
     "programming_fundamentals": {
@@ -84,6 +85,16 @@
         {
           "file": "os-term-1-canvas.md",
           "name": "Term 1"
+        }
+      ]
+    }
+  },
+  "mockExamFiles": {
+    "relational_database_fundamentals": {
+      "terms": [
+        {
+          "name": "Term 1",
+          "exams": [{ "file": "sql-mock-term-1.json", "time": 45 }]
         }
       ]
     }

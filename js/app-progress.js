@@ -1,7 +1,7 @@
 "use strict";
 
 function computeProgress(examHistory) {
-  const ex = S.exercises;
+  const ex = S.exercises.filter((exercise) => !exercise.mockExam);
   const xp = Object.values(S.xpRewards).reduce(
     (sum, reward) => sum + (Number.isFinite(reward?.xp) ? reward.xp : 0),
     0,
@@ -503,7 +503,7 @@ function computeProgress(examHistory) {
   };
 }
 async function pageProgress(root) {
-  const ex = S.exercises,
+  const ex = S.exercises.filter((exercise) => !exercise.mockExam),
     reset = resetLocalDataControl(root);
   await achReady; // stats must be loaded before the stat-based achievements are drawn
   const savedExamHistory = await kv.get("examHistory", []);
@@ -1122,6 +1122,7 @@ const pages = {
   reader: pageReader,
   canvas: pageCanvas,
   learning: pageLearning,
+  "mock-exam": pageMockExam,
   practice: pagePractice,
   exam: pageExam,
   progress: pageProgress,
@@ -1144,6 +1145,14 @@ const pages = {
     if (canvasLink) canvasLink.after(learningLink);
     else if (practiceLink) practiceLink.before(learningLink);
     else navEl.append(learningLink);
+  }
+  if (!navEl.querySelector('a[href="#/mock-exam"]')) {
+    const mockExamLink = h("a", { href: "#/mock-exam" }, "Mock Exam");
+    const examLink = navEl.querySelector('a[href="#/exam"]');
+    const learningLink = navEl.querySelector('a[href="#/learning"]');
+    if (examLink) examLink.after(mockExamLink);
+    else if (learningLink) learningLink.after(mockExamLink);
+    else navEl.append(mockExamLink);
   }
   if (!navEl.querySelector('a[href="#/sandbox"]')) {
     const sandboxLink = h("a", { href: "#/sandbox" }, "Sandbox");
