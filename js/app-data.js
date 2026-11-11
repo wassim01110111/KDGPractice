@@ -1,7 +1,10 @@
 "use strict";
 
 function resolveMockExamPackagePath(subjectId, file) {
-  const raw = String(file ?? "").trim().replace(/\\/g, "/").replace(/^\.\//, "");
+  const raw = String(file ?? "")
+    .trim()
+    .replace(/\\/g, "/")
+    .replace(/^\.\//, "");
   if (!raw || raw.startsWith("/") || /^[a-z][a-z0-9+.-]*:/i.test(raw))
     return null;
 
@@ -12,7 +15,9 @@ function resolveMockExamPackagePath(subjectId, file) {
       ? `${root}${raw}`
       : `${root}${subjectId}/${raw}`;
   const segments = path.split("/");
-  if (segments.some((segment) => !segment || segment === "." || segment === ".."))
+  if (
+    segments.some((segment) => !segment || segment === "." || segment === "..")
+  )
     return null;
   return path;
 }
@@ -22,33 +27,46 @@ function normalizeMockExamFiles(map) {
     const rawTerms = Array.isArray(entry?.terms)
       ? entry.terms.map((term, index) => [null, term, index])
       : entry?.terms && typeof entry.terms === "object"
-        ? Object.entries(entry.terms).map(([name, term], index) => [name, term, index])
+        ? Object.entries(entry.terms).map(([name, term], index) => [
+            name,
+            term,
+            index,
+          ])
         : [];
 
     const terms = rawTerms.map(([termKey, term, index]) => {
-      const value = term && typeof term === "object" && !Array.isArray(term)
-        ? term
-        : {};
-      const label = String(value.name ?? value.label ?? termKey ?? `Term ${index + 1}`);
-      const exams = (Array.isArray(value.exams) ? value.exams : []).map((exam, examIndex) => {
-        const record = typeof exam === "string" ? { file: exam } : (exam || {});
-        const file = String(record.file ?? "").trim();
-        const time = Number(record.time);
-        return {
-          ...record,
-          file,
-          path: resolveMockExamPackagePath(id, file),
-          title: String(record.title ?? record.name ?? `Mock Exam ${examIndex + 1}`),
-          time: Number.isFinite(time) && time > 0 ? time : null,
-        };
-      });
+      const value =
+        term && typeof term === "object" && !Array.isArray(term) ? term : {};
+      const label = String(
+        value.name ?? value.label ?? termKey ?? `Term ${index + 1}`,
+      );
+      const exams = (Array.isArray(value.exams) ? value.exams : []).map(
+        (exam, examIndex) => {
+          const record = typeof exam === "string" ? { file: exam } : exam || {};
+          const file = String(record.file ?? "").trim();
+          const time = Number(record.time);
+          return {
+            ...record,
+            file,
+            path: resolveMockExamPackagePath(id, file),
+            title: String(
+              record.title ?? record.name ?? `Mock Exam ${examIndex + 1}`,
+            ),
+            time: Number.isFinite(time) && time > 0 ? time : null,
+          };
+        },
+      );
       return { ...value, label, exams };
     });
 
     return {
       ...entry,
       id,
-      title: String(entry?.title ?? entry?.name ?? id.replace(/[-_]+/g, " ").replace(/\b[a-z]/g, (c) => c.toUpperCase())),
+      title: String(
+        entry?.title ??
+          entry?.name ??
+          id.replace(/[-_]+/g, " ").replace(/\b[a-z]/g, (c) => c.toUpperCase()),
+      ),
       terms,
     };
   });
@@ -174,7 +192,9 @@ async function loadContent() {
     );
     const loadedPackagePaths = new Set();
     const declaredPackagePaths = packageEntries.flatMap(([manifestId, entry]) =>
-      (entry.files || []).map((file) => `content/packages/${manifestId}/${file}`),
+      (entry.files || []).map(
+        (file) => `content/packages/${manifestId}/${file}`,
+      ),
     );
     const totalPackageFiles = new Set([
       ...declaredPackagePaths,
@@ -614,7 +634,7 @@ function commandChecksAsLegacyExpected(checks) {
       .map((check) => check.expected),
     patterns: rows
       .filter((check) => check && check.regex === true)
-      .map((check) => check.expected),
+      .map((check) => ({ regex: check.expected, flags: check.flags || "" })),
   };
 }
 

@@ -6635,24 +6635,70 @@ async function createExerciseWorkspace(config, io) {
   const fs = new VirtualFS();
   initialFilesystem(fs, config.initialFilesystem);
 
-  // Trusted, developer-authored setup commands run once as simulated root.
-  // They use the exact same shell and filesystem implementation as students,
-  // but are not included in the student's command history.
+  // Run setup commands as simulated root.
   fs.currentUid = 0;
   fs.cwd = "/";
+
   const setupShell = new Shell(fs, io);
   setupShell.env.HOME = "/home/root";
   setupShell.env.USER = "root";
   setupShell.env.LOGNAME = "root";
   setupShell.env.PWD = "/";
+
+  // Run setup from the directory the student will start in, so relative paths
+  // in preSetupCommands (e.g. "ls -ld shared") resolve the way authors expect.
+  // Fall back to "/" when that directory does not exist yet.
+  const setupStart = config.initialDirectory || "/home/student";
+  try {
+    if (fs.resolve(setupStart).node.type === "directory") {
+      fs.cwd = setupStart;
+      setupShell.env.PWD = setupStart;
+    }
+  } catch {
+    // Keep "/" as the working directory.
+  }
+
+  // Setup runs as simulated root, except when it is shown to the student
+  // (showSetup: true): then it runs as "student" so permission errors appear
+  // exactly as the student would see them. terminal.setupAs overrides either
+  // default (e.g. "root" to keep root while showing the transcript).
+  const setupAsName =
+    config.setupAs ?? (config.showSetup === true ? "student" : undefined);
+  if (setupAsName !== undefined) {
+    const setupUser = fs.getUser(setupAsName);
+    if (!setupUser)
+      throw new Error(`terminal.setupAs: unknown user '${setupAsName}'`);
+    fs.currentUid = setupUser.uid;
+    setupShell.env.HOME = setupUser.home;
+    setupShell.env.USER = setupUser.name;
+    setupShell.env.LOGNAME = setupUser.name;
+  }
+
+  // Collected only when the exercise opts in with showSetup: true.
+  const setupOutput = [];
+
   for (const [index, command] of (config.preSetupCommands || []).entries()) {
-    const result = await setupShell.executeLine(command, { fromSource: true });
-    if (result.status !== 0) {
+    const result = await setupShell.executeLine(command, {
+      fromSource: true,
+    });
+
+    if (config.showSetup === true) {
+      setupOutput.push({
+        command: safeText(command),
+        stdout: safeText(result.stdout),
+        stderr: safeText(result.stderr),
+        status: result.status,
+      });
+    }
+    // When setup is shown to the student it is a transcript, so a failing
+    // command (e.g. "Permission denied") is displayed instead of aborting.
+    if (result.status !== 0 && config.showSetup !== true) {
       const detail = (
         result.stderr ||
         result.stdout ||
         "command failed"
       ).trim();
+
       throw new Error(
         `preSetupCommands[${index}] failed (status ${result.status}): ${detail}`,
       );
@@ -6660,25 +6706,50 @@ async function createExerciseWorkspace(config, io) {
   }
 
   const student = fs.getUser("student");
-  if (!student)
+
+  if (!student) {
     throw new Error(
       "Pre-environment setup must not remove the student account",
     );
+  }
+
   fs.currentUid = student.uid;
+
   const startPath = config.initialDirectory || student.home;
   const startNode = fs.resolve(startPath).node;
-  if (startNode.type !== "directory")
+
+  if (startNode.type !== "directory") {
     throw new Error(
       `terminal.initialDirectory '${startPath}' is not a directory`,
     );
+  }
+
   fs.cwd = startPath;
 
+  // Create the student's shell.
   const shell = new Shell(fs, io);
+
   shell.env.HOME = shell.user.home;
   shell.env.PWD = fs.cwd;
   shell.env.USER = shell.user.name;
   shell.env.LOGNAME = shell.user.name;
-  return { fs, shell };
+
+  // Transfer custom environment variables from setup.
+  for (const [key, value] of Object.entries(setupShell.env)) {
+    if (["HOME", "USER", "LOGNAME", "PWD", "OLDPWD"].includes(key)) {
+      continue;
+    }
+
+    shell.env[key] = value;
+
+    if (setupShell.exported.has(key)) {
+      shell.exported.add(key);
+    } else {
+      shell.exported.delete(key);
+    }
+  }
+
+  return { fs, shell, setupOutput };
 }
 
 function makeIdb() {
@@ -7324,6 +7395,15 @@ export async function mountTerminalExercise({
       filesystem: fs.serialize(),
       shell: shell.serialize(),
       lastGrade,
+      setupOutput:
+        config.showSetup === true
+          ? setupOutput.map((item) => ({
+              command: safeText(item.command),
+              stdout: safeText(item.stdout),
+              stderr: safeText(item.stderr),
+              status: Number.isInteger(item.status) ? item.status : 0,
+            }))
+          : [],
     };
     await idbRequest(db, "readwrite", (store) => store.put(record));
     savedRecord = record;
@@ -7981,10 +8061,31 @@ export async function mountTerminalExercise({
     openEditor: editorPromise,
     clear: clearScreen,
   });
+  let setupOutput = [];
+  let needsSetupOutputSave = false;
+
   const mountWorkspace = async () => {
     const workspace = await createExerciseWorkspace(config, createIO());
+
     fs = workspace.fs;
     shell = workspace.shell;
+    setupOutput = workspace.setupOutput || [];
+  };
+
+  const renderSetupOutput = () => {
+    if (config.showSetup !== true) return;
+
+    for (const item of setupOutput) {
+      if (item.command) appendCommandEcho(screen, "$", item.command);
+
+      if (item.stdout) {
+        output(item.stdout);
+      }
+
+      if (item.stderr) {
+        output(item.stderr, true);
+      }
+    }
   };
   const renderGrade = (result) => {
     gradeArea.hidden = false;
@@ -8066,6 +8167,7 @@ export async function mountTerminalExercise({
     clearScreen();
     output("Workspace reset to the exercise's initial state.\n");
     setPrompt();
+    renderSetupOutput();
     input.disabled = false;
     try {
       await saveNow();
@@ -8533,6 +8635,37 @@ export async function mountTerminalExercise({
         fs = VirtualFS.restore(savedRecord.filesystem);
         shell = new Shell(fs, createIO());
         shell.restore(savedRecord.shell);
+        const storedSetup = Array.isArray(savedRecord.setupOutput)
+          ? savedRecord.setupOutput.filter((item) => ownPlain(item))
+          : null;
+        const storedHasCommands =
+          storedSetup &&
+          storedSetup.length ===
+            (config.preSetupCommands || []).length &&
+          storedSetup.every((item) => typeof item.command === "string");
+        if (config.showSetup !== true) {
+          setupOutput = [];
+        } else if (storedHasCommands) {
+          setupOutput = storedSetup.map((item) => ({
+            command: safeText(item.command),
+            stdout: safeText(item.stdout),
+            stderr: safeText(item.stderr),
+            status: Number.isInteger(item.status) ? item.status : 0,
+          }));
+        } else {
+          // Saved by an older version that stored no setup output, or only
+          // output without the commands.
+          // Rebuild it from a throwaway workspace; the saved filesystem and
+          // shell are left untouched.
+          try {
+            setupOutput =
+              (await createExerciseWorkspace(config, createIO()))
+                .setupOutput || [];
+          } catch {
+            setupOutput = [];
+          }
+          needsSetupOutputSave = true;
+        }
         const candidateGrade = savedRecord.lastGrade;
         const validGrade =
           ownPlain(candidateGrade) &&
@@ -8585,11 +8718,13 @@ export async function mountTerminalExercise({
         ? "A clean workspace was created because the previous save was invalid.\n"
         : "ACS Practice virtual Linux environment. This is a JavaScript simulation, not a real Linux kernel.\nType help for supported commands.\nSimulated account passwords: student/student and root/root (local exercise data only).\n",
     );
+    renderSetupOutput();
     if (shell.history.length) {
       commandHistory = shell.history.slice();
       historyIndex = commandHistory.length;
     }
-    if (!savedRecord || !notice.hidden) await saveNow();
+    if (!savedRecord || !notice.hidden || needsSetupOutputSave)
+      await saveNow();
     status.textContent = "Ready";
     input.disabled = false;
     focusInput();

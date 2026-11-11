@@ -1371,7 +1371,9 @@
         const n = norm(a);
         return (
           (x.accepted || []).some((c) => norm(c) === n) ||
-          (x.patterns || []).some((p) => new RegExp(p).test(n))
+          (x.patterns || []).some((p) =>
+            new RegExp(p.regex, p.flags || "").test(n),
+          )
         );
       }
       case "fill-blank":

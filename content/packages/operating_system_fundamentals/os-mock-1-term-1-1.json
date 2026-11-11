@@ -283,7 +283,7 @@
           "path": "/etc/passwd",
           "expected": "(?=\\S)[\\s\\S]*",
           "regex": true,
-          "commandExpected": "^\\s*touch\\s+report\\{1,2,3\\}\\.txt\\s*$",
+          "commandExpected": "^\\s*touch\\s+report(\\{1,2,3\\})|(\\{1\\.\\.3\\})\\.txt\\s*$",
           "commandFlags": "",
           "points": 1,
           "description": "Use brace expansion in a single touch command.",
@@ -297,7 +297,7 @@
     "os-mock-1-012": {
       "category": "Linux and the shell",
       "title": "Recognise a symbolic link",
-      "instructions": "In the given `ls -l` listing, `gas-hard` has link count 2, `data` is shown as `data -> gas.txt`, and `gas.txt` is a regular file. Which entry is the symbolic (soft) link? Enter its filename.",
+      "instructions": "```text\n$ cat gas.txt\nHe\nNe\n$ ls -l\n-rw-r--r--. 2 rudy rudy 6 Oct 11 06:00 gas-hard\nlrwxrwxrwx. 1 rudy rudy 7 Oct 11 06:01 data -> gas.txt\n-rw-r--r--. 2 rudy rudy 6 Oct 11 06:00 gas.txt\n```\nWhich file is a soft link?",
       "hints": ["A symbolic link is displayed with `->` and its target."],
       "difficulty": "Medium",
       "type": "command-text",
@@ -314,67 +314,25 @@
     "os-mock-1-013": {
       "category": "Links",
       "title": "Test hard-link and symbolic-link behaviour",
-      "instructions": "In your home directory, `gas.txt` contains `He` and `Ne`. A hard link named `gas-hard` already points to the same file, and a symbolic link named `data` points to `gas.txt`. Remove `gas.txt`, then run `cat gas-hard` and `cat data`. The first command should still display the contents; the second should report an error.",
+      "instructions": "```text\n$ cat gas.txt\nHe\nNe\n$ ls -l\n-rw-r--r--. 2 rudy rudy 6 Oct 11 06:00 gas-hard\nlrwxrwxrwx. 1 rudy rudy 7 Oct 11 06:01 data -> gas.txt\n-rw-r--r--. 2 rudy rudy 6 Oct 11 06:00 gas.txt\n```\nRudy runs rm gas.txt. Which of the two commands cat gas-hard and cat data gives an error message afterwards?",
       "hints": [],
       "difficulty": "Medium",
-      "type": "terminal",
+      "type": "command-text",
       "contentVersion": 1,
-      "terminal": {
-        "profile": "basic-linux",
-        "initialDirectory": "/home/student",
-        "initialFilesystem": [
-          {
-            "path": "/home/student/gas.txt",
-            "type": "file",
-            "content": "He\nNe\n",
-            "owner": "student",
-            "group": "student"
-          }
-        ],
-        "preSetupCommands": [
-          "cd /home/student",
-          "ln /home/student/gas.txt /home/student/gas-hard",
-          "ln -s gas.txt /home/student/data"
-        ]
-      },
       "checks": [
         {
-          "type": "not_exists",
-          "path": "/home/student/gas.txt",
-          "points": 1
-        },
-        {
-          "type": "contains",
-          "path": "/etc/passwd",
-          "expected": "(?=\\S)[\\s\\S]*",
+          "expected": "^\\s*cat\\s+data\\s*$",
           "regex": true,
-          "commandExpected": "^\\s*cat\\s+gas-hard\\s*$",
-          "commandFlags": "",
-          "points": 1,
-          "description": "Read the data through the surviving hard link.",
-          "intendedOutput": "^He\\nNe\\n$",
-          "intendedOutputFlags": ""
-        },
-        {
-          "type": "contains",
-          "path": "/etc/passwd",
-          "expected": "(?=\\S)[\\s\\S]*",
-          "regex": true,
-          "commandExpected": "^\\s*cat\\s+data\\s*$",
-          "commandFlags": "",
-          "points": 1,
-          "description": "Confirm that the symbolic link is broken after its target is removed.",
-          "intendedOutput": ".*no such file or directory.*",
-          "intendedOutputFlags": "is"
+          "flags": "i"
         }
       ],
-      "solution": ["rm gas.txt", "cat gas-hard", "cat data"],
+      "solution": ["cat data"],
       "explanation": "A hard link continues to refer to the file data after the original name is removed. A symbolic link stores the target path, so it becomes dangling when that target name is removed."
     },
     "os-mock-1-014": {
       "category": "Redirection and pipelines",
       "title": "Append a line without using an editor",
-      "instructions": "The file `elements.txt` currently contains `H`, `He`, `Li`, and `Be`, one element per line. Append `B` as a new final line without opening an editor.",
+      "instructions": "```text\n$ cat elements.txt\nH\nHe\nLi\nBe\n```\nAdd the element B (boron) at the bottom of elements.txt, without using an editor.",
       "hints": [],
       "difficulty": "Easy",
       "type": "terminal",
@@ -405,7 +363,7 @@
           "path": "/etc/passwd",
           "expected": "(?=\\S)[\\s\\S]*",
           "regex": true,
-          "commandExpected": "^\\s*echo\\s+B\\s+>>\\s+elements\\.txt\\s*$",
+          "commandExpected": "^\\s*echo\\s+B\\s+>>\\s*elements\\.txt\\s*$",
           "commandFlags": "",
           "points": 1,
           "description": "Append B using the append-redirection operator.",
@@ -419,7 +377,7 @@
     "os-mock-1-015": {
       "category": "Redirection and pipelines",
       "title": "Discard error messages from find",
-      "instructions": "Run `find /etc -name \"passwd\"` so that any error messages are discarded rather than displayed. Keep the matching standard output on screen.",
+      "instructions": "```text\n$ find /etc -name \"passwd\"\n/etc/pam.d/passwd\n/etc/passwd\nfind: '/etc/sudoers.d': Permission denied\n```\nComplete the command so that the error messages do not appear on the screen and are discarded: \n\n `find /etc -name \"passwd\" ________`",
       "hints": [],
       "difficulty": "Medium",
       "type": "terminal",
@@ -436,7 +394,7 @@
           "path": "/etc/passwd",
           "expected": "(?=\\S)[\\s\\S]*",
           "regex": true,
-          "commandExpected": "^\\s*find\\s+/etc\\s+-name\\s+\"passwd\"\\s+2>/dev/null\\s*$",
+          "commandExpected": "^\\s*find\\s+/etc\\s+-name\\s+\"passwd\"\\s+2>\\s*/dev/null\\s*$",
           "commandFlags": "",
           "points": 1,
           "description": "Run find while redirecting standard error to /dev/null.",
@@ -450,7 +408,7 @@
     "os-mock-1-016": {
       "category": "Redirection and pipelines",
       "title": "Sort and deduplicate departure airports",
-      "instructions": "The file `flights.csv` contains the eight flights shown in the question, with the departure airport in column 1. Display only the departure airports, sorted alphabetically, with each airport appearing once.",
+      "instructions": "```text\n$ cat flights.csv\nRU,JFK,08:15\nAMS,CDG,09:40\nBRU,LHR,10:05\nFRA,BRU,11:30\nAMS,BRU,12:00\nCDG,FRA,13:25\nBRU,AMS,14:50\nFRA,JFK,16:10\n```\nGive the command that shows the sorted list of only departure airports, each airport once.",
       "hints": [],
       "difficulty": "Medium",
       "type": "terminal",
@@ -475,7 +433,7 @@
           "path": "/etc/passwd",
           "expected": "(?=\\S)[\\s\\S]*",
           "regex": true,
-          "commandExpected": "^\\s*cut\\s+-d\\s+\",\"\\s+-f\\s+1\\s+flights\\.csv\\s*\\|\\s*sort\\s+-u\\s*$",
+          "commandExpected": "^\\s*cut\\s+(?:(?:-d\\s*(\\.|\"|')?,(\\.|\"|')?\\s+-f\\s*1)|(?:-f\\s*1\\s+-d\\s*(\\.|\"|')?,(\\.|\"|')?))\\s+flights\\.csv\\s*\\|\\s*sort\\s+(-u|\\|\\s*uniq)\\s*$",
           "commandFlags": "",
           "points": 1,
           "description": "Extract column 1, sort it, and remove duplicates.",
@@ -489,14 +447,14 @@
     "os-mock-1-017": {
       "category": "Linux and the shell",
       "title": "Count files and directories under /var/log",
-      "instructions": "Enter one command that counts all files and directories found under `/var/log`. Use `find` and `wc`; the command should count the entries returned by `find`.",
-      "hints": ["Pipe the find results to `wc -l`."],
+      "instructions": "Enter one command that counts all files and directories found under `/var/log`.",
+      "hints": ["Use `ls` and `wc`."],
       "difficulty": "Medium",
       "type": "command-text",
       "contentVersion": 1,
       "checks": [
         {
-          "expected": "^\\s*find\\s+/var/log\\s*\\|\\s*wc\\s+-l\\s*$",
+          "expected": "^\\s*(ls|find -mindepth 1)\\s+/var/log\\s*\\|\\s*wc\\s+-l\\s*$",
           "regex": true,
           "flags": "i"
         }
@@ -506,7 +464,7 @@
     "os-mock-1-018": {
       "category": "Linux and the shell",
       "title": "Predict the output of a cut-sort-tail pipeline",
-      "instructions": "`servers.txt` contains the four sample lines from the question. What single line is printed by `cut -d \"-\" -f 1,3 servers.txt | sort | tail -n 1`? Enter the output only.",
+      "instructions": "```text\n$ cat servers.txt\nweb01-10.0.0.21-up-12\ndb01-10.0.0.35-down-7\nweb02-10.0.0.22-up-110\nmail01-10.0.0.40-up-25\n```\nWhat will be the output of the following command: `$ cut -d \"-\" -f 1,3 servers.txt | sort | tail -n 1`",
       "hints": [
         "Extract fields 1 and 3, sort alphabetically, then take the final line."
       ],
@@ -525,7 +483,7 @@
     "os-mock-1-019": {
       "category": "Variables and the shell environment",
       "title": "Expand a variable inside a word",
-      "instructions": "Set `SYMBOL=He`, then use the variable in an `echo` command to display exactly `Helium`. Use braces around the variable name so that the following letters are not treated as part of the name.",
+      "instructions": "He is the chemical symbol of helium. Complete the command so that the last command shows the word Helium: `echo \"_____lium\"`",
       "hints": [],
       "difficulty": "Easy",
       "type": "terminal",
@@ -534,7 +492,7 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": []
+        "preSetupCommands": ["SYMBOL=He"]
       },
       "checks": [
         {
@@ -556,7 +514,7 @@
     "os-mock-1-020": {
       "category": "Linux and the shell",
       "title": "Resolve a command through PATH",
-      "instructions": "The PATH is `/home/rudy/bin:/usr/local/bin:/usr/bin`. Both `/home/rudy/bin/ls` and `/usr/bin/ls` exist. Rudy types `ls`. Enter the absolute path of the program that is executed.",
+      "instructions": "```text\n$ echo $PATH\n/home/rudy/bin:/usr/local/bin:/usr/bin\n$ ls -l /home/rudy/bin/ls /usr/bin/ls\n-rwxr-xr-x. 1 rudy rudy 120 Oct 14 10:00 /home/rudy/bin/ls\n-rwxr-xr-x. 1 root root 140920 Oct 1 09:00 /usr/bin/ls\n```\nRudy types `ls`. Enter the absolute path of the program that is executed.",
       "hints": ["The shell searches PATH directories from left to right."],
       "difficulty": "Medium",
       "type": "command-text",
@@ -573,7 +531,7 @@
     "os-mock-1-021": {
       "category": "Linux and the shell",
       "title": "Add supplementary groups without removing memberships",
-      "instructions": "Complete the administrator command that adds user `rudy` to both supplementary groups `teachers` and `operator` while preserving all existing group memberships. Include `sudo` and the full command.",
+      "instructions": "```text\n$ id rudy\nuid=1004(rudy) gid=1004(rudy) groups=1004(rudy),1200(students)\n$ sudo ________ ________ ________ rudy\n$ id rudy\nuid=1004(rudy) gid=1004(rudy)\ngroups=1004(rudy),1050(teachers),1100(operator),1200(students)\n```\nComplete the administrator command that adds user `rudy` to both supplementary groups `teachers` and `operator` while preserving all existing group memberships.",
       "hints": ["Use `usermod` with append and supplementary-group options."],
       "difficulty": "Medium",
       "type": "command-text",
@@ -590,7 +548,7 @@
     "os-mock-1-022": {
       "category": "Linux and the shell",
       "title": "Determine which password sudo requests",
-      "instructions": "The sudoers rule is `%developers ALL=(ALL) /usr/bin/dnf up`. User `dev2` is a member of `developers` and runs `sudo dnf up`. Does dev2 need to enter a password? If so, whose password? Answer in a brief sentence.",
+      "instructions": "```text\n$ cat /etc/sudoers.d/developers\n%developers ALL=(ALL) /usr/bin/dnf up\n```\n User `dev2` is a member of `developers` and runs `sudo dnf up`. Does dev2 need to enter a password? If so, whose password? Answer in a brief sentence.",
       "hints": [
         "There is no `NOPASSWD` tag in the rule. Sudo authenticates the invoking user by default."
       ],
@@ -599,7 +557,7 @@
       "contentVersion": 1,
       "checks": [
         {
-          "expected": "^\\s*yes[,; ]+dev2(?:\\x27s)?(?: own)? password\\.?\\s*$",
+          "expected": "^\\s*\\byes\\b\\s+.*(\\bdev2\\b|\\bown\\b)\\s*$",
           "regex": true,
           "flags": "i"
         }
@@ -609,7 +567,7 @@
     "os-mock-1-023": {
       "category": "Linux and the shell",
       "title": "Change the owner of a file",
-      "instructions": "The current owner of `report.txt` is `rudy`, and the required new owner is `anna`. Enter the complete command, including `sudo`, that changes only the owner.",
+      "instructions": "```text\nbefore: -rw-r--r--. 1 rudy team 120 Oct 14 10:00 report.txt\n$ sudo ________ ________ report.txt\nafter: -rw-r--r--. 1 anna team 120 Oct 14 10:00 report.txt\n```\n Complete the full command (command and argument)",
       "hints": ["Use `chown NEW_OWNER FILE`."],
       "difficulty": "Medium",
       "type": "command-text",
@@ -626,35 +584,16 @@
     "os-mock-1-024": {
       "category": "Permissions",
       "title": "Create a directory with a specified umask",
-      "instructions": "Set the umask to `0027`, create a directory named `shared`, and run `ls -ld shared` to inspect its permissions. The resulting permission bits should be `750` (`rwxr-x---`).",
+      "instructions": "```text\n$ umask 0027\n$ mkdir shared\n$ ls -ld shared\nd________. 2 rudy rudy 6 Oct 14 10:00 shared\n```\nComplete the permission",
       "hints": [],
       "difficulty": "Medium",
-      "type": "terminal",
+      "type": "command-text",
       "contentVersion": 1,
-      "terminal": {
-        "profile": "basic-linux",
-        "initialDirectory": "/home/student",
-        "initialFilesystem": [],
-        "preSetupCommands": []
-      },
       "checks": [
         {
-          "type": "permissions",
-          "path": "/home/student/shared",
-          "expected": "0750",
-          "points": 1
-        },
-        {
-          "type": "contains",
-          "path": "/etc/passwd",
-          "expected": "(?=\\S)[\\s\\S]*",
+          "expected": "rwxr-x---",
           "regex": true,
-          "commandExpected": "^\\s*ls\\s+-ld\\s+shared\\s*$",
-          "commandFlags": "",
-          "points": 1,
-          "description": "Display the permissions of the directory itself.",
-          "intendedOutput": "^drwxr-x---[^\\n]*shared\\n$",
-          "intendedOutputFlags": ""
+          "flags": "i"
         }
       ],
       "solution": ["umask 0027", "mkdir shared", "ls -ld shared"],
@@ -663,7 +602,7 @@
     "os-mock-1-025": {
       "category": "Permissions",
       "title": "Fix the directory permission that blocks file removal",
-      "instructions": "The directory `shared` is owned by you and has permissions `555`; it contains `notes.txt`. Add the one permission needed for you to remove an entry from this directory. Enter the `chmod` command only; do not remove the file.",
+      "instructions": "Enter the command that changes one's permission so that student can remove notes.txt",
       "hints": [],
       "difficulty": "Medium",
       "type": "terminal",
@@ -688,7 +627,12 @@
             "group": "student"
           }
         ],
-        "preSetupCommands": []
+        "preSetupCommands": [
+          "ls -ld shared",
+          "ls -l shared/notes.txt",
+          "rm shared/notes.txt"
+        ],
+        "showSetup": true
       },
       "checks": [
         {

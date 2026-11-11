@@ -290,10 +290,12 @@ const expectedText = (ex) =>
       : ex.type.startsWith("mcq")
         ? ex.checks.map((i) => ex.options[i]).join("; ")
         : ex.type === "command-text"
-          ? (ex.checks || [])
-              .filter((check) => check.regex !== true)
-              .map((check) => check.expected)
-              .join("\n")
+          ? (ex.checks || []).every((check) => check.regex === true)
+            ? globalThis.Core.generateFromRegex(ex.checks[0].expected)
+            : (ex.checks || [])
+                .filter((check) => check.regex !== true)
+                .map((check) => check.expected)
+                .join("\n")
           : ex.type === "fill-blank"
             ? ex.checks.blanks.map((b) => b[0]).join(", ")
             : ex.checks;
@@ -777,8 +779,7 @@ function qView(
       else if (block === "nearest") {
         if (rect.top >= offset + 8 && rect.bottom <= window.innerHeight - 8)
           return;
-        if (rect.top < offset + 8)
-          top = rect.top + window.scrollY - offset - 8;
+        if (rect.top < offset + 8) top = rect.top + window.scrollY - offset - 8;
         else top = rect.bottom + window.scrollY - window.innerHeight + 8;
       }
       window.scrollTo({ top: Math.max(0, top), behavior });
@@ -794,14 +795,16 @@ function qView(
     } else if (block === "nearest") {
       if (rect.top >= viewportTop + 8 && rect.bottom <= viewportBottom - 8)
         return;
-      if (rect.top < viewportTop + 8)
-        top += rect.top - viewportTop - 8;
+      if (rect.top < viewportTop + 8) top += rect.top - viewportTop - 8;
       else top += rect.bottom - viewportBottom + 8;
     } else {
       top += rect.top - viewportTop - 12;
     }
     scroller.scrollTo({
-      top: Math.max(0, Math.min(scroller.scrollHeight - scroller.clientHeight, top)),
+      top: Math.max(
+        0,
+        Math.min(scroller.scrollHeight - scroller.clientHeight, top),
+      ),
       behavior,
     });
   };
@@ -839,7 +842,9 @@ function qView(
     if (correct && !navigator) return;
     scrollToExerciseTarget(
       fb,
-      fb.getBoundingClientRect().height > innerHeight * 0.7 ? "start" : "center",
+      fb.getBoundingClientRect().height > innerHeight * 0.7
+        ? "start"
+        : "center",
     );
   };
   let schemaPanel,
