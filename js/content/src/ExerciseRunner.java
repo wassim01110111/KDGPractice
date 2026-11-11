@@ -32,6 +32,7 @@ import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 import javax.tools.Diagnostic;
+import javax.tools.DiagnosticListener;
 import javax.tools.DiagnosticCollector;
 import javax.tools.JavaCompiler;
 import javax.tools.JavaFileObject;
@@ -56,6 +57,30 @@ import javax.tools.ToolProvider;
  */
 public final class ExerciseRunner {
     private ExerciseRunner() { }
+
+    /*
+     * The worker executes requests sequentially, so javac can safely share one
+     * compiler file manager for the lifetime of the CheerpJ JVM. OpenJDK's
+     * JavaCompiler API specifically recommends this: the file manager can
+     * retain its JAR/platform-file caches between sequential compilation tasks.
+     * Each task still gets its own CompilationTask and diagnostics collector.
+     */
+    private static final Object COMPILER_LOCK = new Object();
+    private static final JavaCompiler COMPILER = ToolProvider.getSystemJavaCompiler();
+    private static StandardJavaFileManager sharedFileManager;
+    private static volatile DiagnosticCollector<JavaFileObject> activeFileManagerDiagnostics;
+    private static final DiagnosticListener<JavaFileObject> FILE_MANAGER_DIAGNOSTICS = diagnostic -> {
+        DiagnosticCollector<JavaFileObject> collector = activeFileManagerDiagnostics;
+        if (collector != null) collector.report(diagnostic);
+    };
+
+    private static StandardJavaFileManager sharedFileManager() throws IOException {
+        if (sharedFileManager == null) {
+            sharedFileManager = COMPILER.getStandardFileManager(
+                    FILE_MANAGER_DIAGNOSTICS, Locale.ROOT, StandardCharsets.UTF_8);
+        }
+        return sharedFileManager;
+    }
 
     public static void main(String[] args) {
         if (args.length != 5) {
@@ -121,11 +146,12 @@ public final class ExerciseRunner {
 
     /** Source names and the "no sources" case are validated by java.js before this runs. */
     private static Map<String, Object> compile(Map<String, Object> sourcesDoc, Path classesDir) {
-        JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+        JavaCompiler compiler = COMPILER;
         if (compiler == null) {
             return compileResult(false, List.of(diagnostic("(compiler)", 0, 0,
                     "The Java compiler is unavailable in this runtime (ToolProvider.getSystemJavaCompiler() returned null).")));
         }
+        long start = System.nanoTime();
         try {
             deleteTree(classesDir);
             Files.createDirectories(classesDir);
@@ -134,21 +160,37 @@ public final class ExerciseRunner {
             for (Map<String, Object> source : maps(sourcesDoc.get("sources"))) {
                 units.add(new MemorySource(string(source.get("name"), "Main.java"), string(source.get("code"), "")));
             }
-            try (StandardJavaFileManager manager = compiler.getStandardFileManager(collector, Locale.ROOT, StandardCharsets.UTF_8)) {
-                List<String> options = List.of("-proc:none", "--release", "21", "-encoding", "UTF-8", "-d", classesDir.toString());
-                boolean ok = Boolean.TRUE.equals(compiler.getTask(null, manager, collector, options, null, units).call());
-                List<Object> diagnostics = new ArrayList<>();
-                for (Diagnostic<? extends JavaFileObject> item : collector.getDiagnostics()) {
-                    Map<String, Object> row = diagnostic(item.getSource() == null ? "" : item.getSource().toUri().getPath(),
-                            item.getLineNumber(), item.getColumnNumber(), item.getMessage(Locale.ROOT));
-                    row.put("kind", item.getKind().name());
-                    diagnostics.add(row);
+
+            boolean ok;
+            List<Object> diagnostics = new ArrayList<>();
+            // Compilation requests are serialized by java.worker.js. Keep the
+            // shared StandardJavaFileManager alive between tasks so javac can
+            // reuse cached platform/JAR filesystem data instead of reopening it.
+            synchronized (COMPILER_LOCK) {
+                activeFileManagerDiagnostics = collector;
+                try {
+                    StandardJavaFileManager manager = sharedFileManager();
+                    List<String> options = List.of("-proc:none", "--release", "21", "-encoding", "UTF-8", "-d", classesDir.toString());
+                    ok = Boolean.TRUE.equals(compiler.getTask(null, manager, collector, options, null, units).call());
+                } finally {
+                    activeFileManagerDiagnostics = null;
                 }
-                if (!ok) deleteTree(classesDir);
-                return compileResult(ok, diagnostics);
             }
+
+            for (Diagnostic<? extends JavaFileObject> item : collector.getDiagnostics()) {
+                Map<String, Object> row = diagnostic(item.getSource() == null ? "" : item.getSource().toUri().getPath(),
+                        item.getLineNumber(), item.getColumnNumber(), item.getMessage(Locale.ROOT));
+                row.put("kind", item.getKind().name());
+                diagnostics.add(row);
+            }
+            if (!ok) deleteTree(classesDir);
+            Map<String, Object> result = compileResult(ok, diagnostics);
+            result.put("executionTimeMs", elapsedMs(start));
+            return result;
         } catch (Throwable error) {
-            return compileResult(false, List.of(diagnostic("(compiler)", 0, 0, safeMessage(error))));
+            Map<String, Object> result = compileResult(false, List.of(diagnostic("(compiler)", 0, 0, safeMessage(error))));
+            result.put("executionTimeMs", elapsedMs(start));
+            return result;
         }
     }
 

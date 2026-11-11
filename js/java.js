@@ -20,6 +20,15 @@ if (new URL(JAVA_MODULE_URL).searchParams.has("__acs_java_version"))
     "__acs_java_version",
     new URL(JAVA_MODULE_URL).searchParams.get("__acs_java_version"),
   );
+// Optional A/B test for CheerpJ 5.0's experimental WasmGC engine. The normal
+// JavaScript/Wasm engine remains the default for compatibility.
+const enableExperimentalWasmGC =
+  globalThis.__ACS_JAVA_WASM_GC__ === true ||
+  new URL(globalThis.location?.href || JAVA_MODULE_URL).searchParams.get(
+    "java-wasm-gc",
+  ) === "1";
+if (enableExperimentalWasmGC)
+  WORKER_URL.searchParams.set("__acs_java_wasm_gc", "1");
 const statusListeners = new Set();
 let worker = null;
 let readyPromise = null;
@@ -244,8 +253,15 @@ function handleWorkerMessage(target, message) {
 
   if (message.type === "STATUS") {
     if (activeRequest && message.requestId === activeRequest.requestId) {
-      if (message.status !== "INITIALIZING")
+      // Progress details are also sent as heartbeats. Re-arm the watchdog only
+      // when the operation changes phase; otherwise a stuck compile/run could
+      // keep extending its own timeout forever just by reporting elapsed time.
+      if (
+        message.status !== "INITIALIZING" &&
+        activeRequest.phase !== message.status
+      ) {
         armWatchdog(activeRequest, message.status);
+      }
     }
     emitStatus(message.status || "WORKING", message.detail || "");
     return;
@@ -1104,6 +1120,7 @@ export async function mountJavaExercise({
   let solutionPanelObserver = null;
   let showSolutionClickHandler = null;
   let solutionTestButton = null;
+  let solutionCopyButton = null;
   let solutionRevealed = false;
   let solutionPanel = null;
   const root = element("div", "java-exercise");
@@ -1345,6 +1362,7 @@ export async function mountJavaExercise({
     resetButton.disabled = busy;
     stopButton.disabled = !busy;
     if (solutionTestButton) solutionTestButton.disabled = busy;
+    if (solutionCopyButton) solutionCopyButton.disabled = busy;
     root.setAttribute("aria-busy", String(busy));
   };
 
@@ -1557,26 +1575,60 @@ export async function mountJavaExercise({
     if (!panel || !isPanelVisible(panel)) return;
     solutionPanel = panel;
 
-    const existing = panel.querySelector('[data-java-test-solution="true"]');
-    if (existing && existing !== solutionTestButton) existing.remove();
+    const existingTest = panel.querySelector('[data-java-test-solution="true"]');
+    if (existingTest && existingTest !== solutionTestButton) existingTest.remove();
+    const existingCopy = panel.querySelector('[data-java-copy-solution="true"]');
+    if (existingCopy && existingCopy !== solutionCopyButton) existingCopy.remove();
     if (solutionTestButton && solutionTestButton.parentElement !== panel)
       solutionTestButton.remove();
-    if (solutionTestButton?.isConnected && solutionTestButton.parentElement === panel)
-      return;
+    if (solutionCopyButton && solutionCopyButton.parentElement !== panel)
+      solutionCopyButton.remove();
 
-    solutionTestButton = element("button", "sec", "Test solution");
-    solutionTestButton.type = "button";
-    solutionTestButton.dataset.javaTestSolution = "true";
-    solutionTestButton.title = "Load the reference solution into the editor and run all automatic checks.";
-    solutionTestButton.setAttribute("aria-label", "Test solution");
-    solutionTestButton.addEventListener("click", () => {
-      if (running || disposed || typeof config.solution !== "string") return;
-      setSource(config.solution);
-      consolePanel.open = true;
-      resultsPanel.open = true;
-      execute("check", { recordGrade: false });
-    });
-    panel.append(solutionTestButton);
+    if (!solutionCopyButton) {
+      solutionCopyButton = element("button", "sec", "Copy code");
+      solutionCopyButton.type = "button";
+      solutionCopyButton.dataset.javaCopySolution = "true";
+      solutionCopyButton.title =
+        "Copy the reference solution into the Java editor without running it.";
+      solutionCopyButton.setAttribute("aria-label", "Copy code");
+      solutionCopyButton.addEventListener("click", () => {
+        if (running || disposed || typeof config.solution !== "string") return;
+        setSource(config.solution);
+        if (editorView) editorView.focus();
+        else editorHost.querySelector("textarea")?.focus();
+        statusLine.textContent =
+          "Reference solution copied into the editor. Nothing was run.";
+        statusLine.dataset.status = "ready";
+      });
+    }
+
+    if (!solutionTestButton) {
+      solutionTestButton = element("button", "sec", "Test solution");
+      solutionTestButton.type = "button";
+      solutionTestButton.dataset.javaTestSolution = "true";
+      solutionTestButton.title = "Load the reference solution into the editor and run all automatic checks.";
+      solutionTestButton.setAttribute("aria-label", "Test solution");
+      solutionTestButton.addEventListener("click", () => {
+        if (running || disposed || typeof config.solution !== "string") return;
+        setSource(config.solution);
+        consolePanel.open = true;
+        resultsPanel.open = true;
+        execute("check", { recordGrade: false });
+      });
+    }
+
+    // Keep the non-running copy action immediately beside the existing test
+    // action, even when the page re-renders or reveals the panel later. Avoid
+    // moving already-positioned nodes: this panel is observed by a
+    // MutationObserver, so needless appends would retrigger that observer.
+    if (solutionTestButton.parentElement !== panel)
+      panel.append(solutionTestButton);
+    if (
+      solutionCopyButton.parentElement !== panel ||
+      solutionCopyButton.nextElementSibling !== solutionTestButton
+    )
+      panel.insertBefore(solutionCopyButton, solutionTestButton);
+    solutionCopyButton.disabled = running;
     solutionTestButton.disabled = running;
   };
 
@@ -1902,6 +1954,8 @@ export async function mountJavaExercise({
       showSolutionClickHandler = null;
       solutionTestButton?.remove();
       solutionTestButton = null;
+      solutionCopyButton?.remove();
+      solutionCopyButton = null;
       solutionPanel = null;
       if (running) stopJavaExecution("Java exercise closed.");
       editor?.destroy?.();
