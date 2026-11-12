@@ -2990,7 +2990,7 @@
         "Group by the descriptive columns, calculate the aggregate, and then apply any group-level filter."
       ],
       "explanation": "The query joins the related tables, groups the requested result columns, and calculates the aggregate.",
-      "solution": "select concat(count(e.employee_id), ' employees'), concat('perform tasks on ', p.project_name) project, concat('which is supported by dept. ', d.department_name)\nfrom tasks t\nleft join employees e on e.employee_id = t.employee_id\njoin projects p on p.project_id = t.project_id\njoin departments d on p.department_id = d.department_id\ngroup by t.project_id, p.project_name, d.department_name\nhaving sum(t.hours) >30\norder by p.project_name;"
+      "solution": "select concat(count(e.employee_id) \"#employees\", ' employees'), concat('perform tasks on ', p.project_name) project, concat('which is supported by dept. ', d.department_name) department\nfrom tasks t\nleft join employees e on e.employee_id = t.employee_id\njoin projects p on p.project_id = t.project_id\njoin departments d on p.department_id = d.department_id\ngroup by t.project_id, p.project_name, d.department_name\nhaving sum(t.hours) >30\norder by p.project_name;"
     },
     "w5-sa-e01-a": {
       "category": "aggregate",

@@ -314,7 +314,7 @@
     "os-mock-1-013": {
       "category": "Links",
       "title": "Test hard-link and symbolic-link behaviour",
-      "instructions": "```text\n$ cat gas.txt\nHe\nNe\n$ ls -l\n-rw-r--r--. 2 rudy rudy 6 Oct 11 06:00 gas-hard\nlrwxrwxrwx. 1 rudy rudy 7 Oct 11 06:01 data -> gas.txt\n-rw-r--r--. 2 rudy rudy 6 Oct 11 06:00 gas.txt\n```\nRudy runs rm gas.txt. Which of the two commands cat gas-hard and cat data gives an error message afterwards?",
+      "instructions": "```text\n$ cat gas.txt\nHe\nNe\n$ ls -l\n-rw-r--r--. 2 rudy rudy 6 Oct 11 06:00 gas-hard\nlrwxrwxrwx. 1 rudy rudy 7 Oct 11 06:01 data -> gas.txt\n-rw-r--r--. 2 rudy rudy 6 Oct 11 06:00 gas.txt\n```\nRudy runs rm gas.txt. Which of the two commands `cat gas-hard` and `cat data` gives an error message afterwards?",
       "hints": [],
       "difficulty": "Medium",
       "type": "command-text",
