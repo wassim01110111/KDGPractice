@@ -160,6 +160,77 @@
   // `examEligible` property is accepted as inert legacy package metadata.
 
   function generateFromRegex(input, options = {}) {
+    try {
+      const maxLength = options.maxLength ?? 10000;
+
+      const source = input instanceof RegExp ? input.source : String(input);
+
+      const flags =
+        input instanceof RegExp
+          ? input.flags.replace(/[gy]/g, "")
+          : options.flags || "";
+
+      const regex = new RegExp(source, flags);
+
+      // First attempt: extract literal requirements from positive
+      // lookaheads, including patterns such as (?=.*\bfilename\b).
+      function extractLookaheadLiterals(pattern) {
+        const results = [];
+        const lookaheadRegex = /\(\?=([\s\S]*?)\)/g;
+        let match;
+
+        while ((match = lookaheadRegex.exec(pattern)) !== null) {
+          let body = match[1];
+
+          // Remove common regex boundary and wildcard syntax.
+          body = body.replace(/\\b/g, "");
+          body = body.replace(/\.\*/g, "");
+          body = body.replace(/\.\+/g, "");
+          body = body.replace(/^\^|\$$/g, "");
+
+          // Extract escaped punctuation and ordinary literal text.
+          const literal = body
+            .replace(/\\([.^$|?*+()[\]{}\\/-])/g, "$1")
+            .replace(/\\[dDwWsS]/g, "")
+            .replace(/[()[\]{}^$|?*+]/g, "")
+            .trim();
+
+          if (literal && !results.includes(literal) && !/[\\]/.test(literal)) {
+            results.push(literal);
+          }
+        }
+
+        return results;
+      }
+
+      const required = extractLookaheadLiterals(source);
+
+      if (required.length > 0) {
+        const separator = options.separator ?? " ";
+
+        const candidate = required.join(separator);
+
+        if (candidate.length <= maxLength && regex.test(candidate)) {
+          return candidate;
+        }
+      }
+
+      // Second attempt: use the original regex generator.
+      return generateFromRegexUnsafe(input, options);
+    } catch (error) {
+      console.log(
+        "[Regex Generator] Generation failed. Returning original regex.",
+        {
+          error: error.message,
+          input,
+        },
+      );
+
+      return input;
+    }
+  }
+
+  function generateFromRegexUnsafe(input, options = {}) {
     const maxRepeat = options.maxRepeat ?? 3;
     const maxAttempts = options.maxAttempts ?? 100;
     const maxLength = options.maxLength ?? 10000;

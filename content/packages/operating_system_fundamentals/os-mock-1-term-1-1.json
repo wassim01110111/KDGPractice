@@ -33,7 +33,7 @@
       "contentVersion": 1,
       "checks": [
         {
-          "expected": "^(?=.*\\bdata\\.txt\\b)(?=.*\\blogo\\.png\\b)(?=.*\\bsong\\.mp3\\b)\\s*(?:data\\.txt[ ,]+logo\\.png[ ,]+song\\.mp3|data\\.txt[ ,]+song\\.mp3[ ,]+logo\\.png|logo\\.png[ ,]+data\\.txt[ ,]+song\\.mp3|logo\\.png[ ,]+song\\.mp3[ ,]+data\\.txt|song\\.mp3[ ,]+data\\.txt[ ,]+logo\\.png|song\\.mp3[ ,]+logo\\.png[ ,]+data\\.txt)\\s*$",
+          "expected": "^(?=.*\\bdata\\.txt\\b)(?=.*\\blogo\\.png\\b)(?=.*\\bsong\\.mp3\\b)(?=.*\\bclip\\.mp4\\b)\\s*(?:data\\.txt[ ,]+logo\\.png[ ,]+song\\.mp3[ ,]+clip\\.mp4|data\\.txt[ ,]+logo\\.png[ ,]+clip\\.mp4[ ,]+song\\.mp3|data\\.txt[ ,]+song\\.mp3[ ,]+logo\\.png[ ,]+clip\\.mp4|data\\.txt[ ,]+song\\.mp3[ ,]+clip\\.mp4[ ,]+logo\\.png|data\\.txt[ ,]+clip\\.mp4[ ,]+logo\\.png[ ,]+song\\.mp3|data\\.txt[ ,]+clip\\.mp4[ ,]+song\\.mp3[ ,]+logo\\.png|logo\\.png[ ,]+data\\.txt[ ,]+song\\.mp3[ ,]+clip\\.mp4|logo\\.png[ ,]+data\\.txt[ ,]+clip\\.mp4[ ,]+song\\.mp3|logo\\.png[ ,]+song\\.mp3[ ,]+data\\.txt[ ,]+clip\\.mp4|logo\\.png[ ,]+song\\.mp3[ ,]+clip\\.mp4[ ,]+data\\.txt|logo\\.png[ ,]+clip\\.mp4[ ,]+data\\.txt[ ,]+song\\.mp3|logo\\.png[ ,]+clip\\.mp4[ ,]+song\\.mp3[ ,]+data\\.txt|song\\.mp3[ ,]+data\\.txt[ ,]+logo\\.png[ ,]+clip\\.mp4|song\\.mp3[ ,]+data\\.txt[ ,]+clip\\.mp4[ ,]+logo\\.png|song\\.mp3[ ,]+logo\\.png[ ,]+data\\.txt[ ,]+clip\\.mp4|song\\.mp3[ ,]+logo\\.png[ ,]+clip\\.mp4[ ,]+data\\.txt|song\\.mp3[ ,]+clip\\.mp4[ ,]+data\\.txt[ ,]+logo\\.png|song\\.mp3[ ,]+clip\\.mp4[ ,]+logo\\.png[ ,]+data\\.txt|clip\\.mp4[ ,]+data\\.txt[ ,]+logo\\.png[ ,]+song\\.mp3|clip\\.mp4[ ,]+data\\.txt[ ,]+song\\.mp3[ ,]+logo\\.png|clip\\.mp4[ ,]+logo\\.png[ ,]+data\\.txt[ ,]+song\\.mp3|clip\\.mp4[ ,]+logo\\.png[ ,]+song\\.mp3[ ,]+data\\.txt|clip\\.mp4[ ,]+song\\.mp3[ ,]+data\\.txt[ ,]+logo\\.png|clip\\.mp4[ ,]+song\\.mp3[ ,]+logo\\.png[ ,]+data\\.txt)\\s*$",
           "regex": true,
           "flags": "i"
         }
@@ -216,7 +216,7 @@
           "path": "/etc/passwd",
           "expected": "(?=\\S)[\\s\\S]*",
           "regex": true,
-          "commandExpected": "^\\s*mkdir\\s+(?=.*\\s-p(?:\\s|$))(?:(?:-p\\s+work/todo)|(work/todo\\s+-p))\\s*$",
+          "commandExpected": "^\\s*mkdir\\s+(?:(?:-p\\s+work/todo)|(?:work/todo\\s+-p))\\s*$",
           "commandFlags": "",
           "points": 1,
           "description": "Create both directory levels with one mkdir command.",
