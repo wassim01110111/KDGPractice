@@ -128,7 +128,7 @@
     "os-mock-1-008": {
       "category": "Files and directories",
       "title": "Move and rename a file in one command",
-      "instructions": "```text\n/\n├── etc\n│   ├── passwd\n│   └── ssh\n│       └── sshd_config\n├── srv\n│   └── www\n│       ├── html\n│       │   └── index.html\n│       └── logs\n│           └── access.log\n├── tmp\n└── home\n    ├── anna\n    │   └── metal.txt\n    └── rudy\n        ├── docs\n        │   └── gas.txt\n        └── scripts\n            └── test.sh\n```\nYou are in `/home/rudy`. Give one command that moves gas.txt to the directory scripts and at the same time renames it to elements.txt.",
+      "instructions": "```text\n/\n├── etc\n│   ├── passwd\n│   └── ssh\n│       └── sshd_config\n├── srv\n│   └── www\n│       ├── html\n│       │   └── index.html\n│       └── logs\n│           └── access.log\n├── tmp\n└── home\n    ├── anna\n    │   └── metal.txt\n    └── student\n        ├── docs\n        │   └── gas.txt\n        └── scripts\n            └── test.sh\n```\nYou are in `/home/student`. Give one command that moves gas.txt to the directory scripts and at the same time renames it to elements.txt.",
       "hints": [],
       "difficulty": "Medium",
       "type": "terminal",
@@ -603,7 +603,7 @@
     "os-mock-1-025": {
       "category": "Permissions",
       "title": "Fix the directory permission that blocks file removal",
-      "instructions": "Enter the command that changes one's permission so that student can remove notes.txt",
+      "instructions": "Enter the command that changes one's permission and then remove notes.txt",
       "hints": [],
       "difficulty": "Medium",
       "type": "terminal",
@@ -613,19 +613,9 @@
         "initialDirectory": "/home/student",
         "initialFilesystem": [
           {
-            "path": "/home/student/shared",
-            "type": "directory",
-            "mode": "0555",
-            "owner": "student",
-            "group": "student"
-          },
-          {
+            "type": "not_exists",
             "path": "/home/student/shared/notes.txt",
-            "type": "file",
-            "content": "notes\n",
-            "mode": "0666",
-            "owner": "student",
-            "group": "student"
+            "points": 1
           }
         ],
         "preSetupCommands": [
