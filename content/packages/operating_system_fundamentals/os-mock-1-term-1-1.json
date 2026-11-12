@@ -592,7 +592,7 @@
       "contentVersion": 1,
       "checks": [
         {
-          "expected": "rwxr-x---",
+          "expected": "^\\s*rwxr-x---\\s*$",
           "regex": true,
           "flags": "i"
         }
@@ -655,47 +655,15 @@
       "instructions": "```text\n$ ls -ld /srv/project\ndrwxrwsr-x. 2 root projectteam 6 Oct 14 10:00 /srv/project\n$ touch /srv/project/report.txt\n$ ls -l /srv/project/report.txt\n-rw-r--r--. 1 rudy ________ 0 Oct 14 10:05 /srv/project/report.txt\n```\nRudy is a member of the group `projectteam`. Complete the group of the new file",
       "hints": [],
       "difficulty": "Medium",
-      "type": "terminal",
+      "type": "command-text",
       "contentVersion": 1,
-      "terminal": {
-        "profile": "basic-linux",
-        "initialDirectory": "/home/student",
-        "initialFilesystem": [
-          {
-            "path": "/srv/project",
-            "type": "directory",
-            "owner": "root",
-            "mode": "0777",
-            "group": "student"
-          }
-        ],
-        "preSetupCommands": [
-          "groupadd -f projectteam",
-          "chgrp projectteam /srv/project",
-          "chmod 2777 /srv/project"
-        ]
-      },
       "checks": [
         {
-          "type": "group",
-          "path": "/srv/project/report.txt",
-          "expected": "projectteam",
-          "points": 2
-        },
-        {
-          "type": "contains",
-          "path": "/etc/passwd",
-          "expected": "(?=\\S)[\\s\\S]*",
-          "regex": true,
-          "commandExpected": "^\\s*touch\\s+/srv/project/report\\.txt\\s*$",
-          "commandFlags": "",
-          "points": 1,
-          "description": "Create the file inside the setgid directory.",
-          "intendedOutput": "^$",
-          "intendedOutputFlags": ""
+          "expected": "^\\s*projectteam\\s*$",
+          "regex": true
         }
       ],
-      "solution": ["touch /srv/project/report.txt"],
+      "solution": ["projectteam"],
       "explanation": "A directory with the setgid bit causes newly created entries to inherit the directory group. The simulation uses a writable setgid directory so the student can create the file."
     },
     "os-mock-1-027": {
