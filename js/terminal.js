@@ -425,11 +425,15 @@ function splitPath(path) {
 function modeString(mode, type) {
   const kind = type === "directory" ? "d" : type === "symlink" ? "l" : "-";
   let result = kind;
-  for (const shift of [6, 3, 0]) {
+  const specials = [0o4000, 0o2000, 0o1000];
+  [6, 3, 0].forEach((shift, i) => {
+    const exec = Boolean(mode & (1 << shift));
+    const special = Boolean(mode & specials[i]);
     result += mode & (4 << shift) ? "r" : "-";
     result += mode & (2 << shift) ? "w" : "-";
-    result += mode & (1 << shift) ? "x" : "-";
-  }
+    if (i < 2) result += special ? (exec ? "s" : "S") : exec ? "x" : "-";
+    else result += special ? (exec ? "t" : "T") : exec ? "x" : "-";
+  });
   return result;
 }
 function modeOctal(mode) {
@@ -7285,6 +7289,10 @@ export async function mountTerminalExercise({
   screen.setAttribute("role", "log");
   screen.setAttribute("aria-label", "Terminal output");
   screen.setAttribute("aria-live", "polite");
+  // Keep terminal output selectable even when host styles disable selection.
+  screen.style.userSelect = "text";
+  screen.style.webkitUserSelect = "text";
+  screen.style.cursor = "text";
   const inputRow = createElement("div", "ot-input-row");
   const prompt = createElement("span", "ot-prompt", "student@acs-linux:~$");
   const inputWrap = createElement("div", "ot-input-wrap");
@@ -7450,7 +7458,18 @@ export async function mountTerminalExercise({
   };
   input.addEventListener("input", syncInputHighlight);
   input.addEventListener("scroll", syncInputHighlight);
+  const hasTerminalTextSelection = () => {
+    const selection = globalThis.getSelection?.();
+    return Boolean(
+      selection &&
+      !selection.isCollapsed &&
+      (screen.contains(selection.anchorNode) ||
+        screen.contains(selection.focusNode)),
+    );
+  };
   const focusInput = () => {
+    // Preserve focus on the selected output so Ctrl+C can copy it.
+    if (hasTerminalTextSelection()) return;
     try {
       input.focus({ preventScroll: true });
     } catch {
@@ -8569,6 +8588,8 @@ export async function mountTerminalExercise({
       (event.ctrlKey || event.metaKey) &&
       event.key.toLowerCase() === "c"
     ) {
+      // Let the browser copy selected terminal output; otherwise Ctrl+C interrupts.
+      if (hasTerminalTextSelection()) return;
       event.preventDefault();
       if (activePrompt) completeSecret("");
       else {

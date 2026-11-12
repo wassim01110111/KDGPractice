@@ -483,7 +483,7 @@
     "os-mock-1-019": {
       "category": "Variables and the shell environment",
       "title": "Expand a variable inside a word",
-      "instructions": "He is the chemical symbol of helium. Complete the command so that the last command shows the word Helium: `echo \"_____lium\"`",
+      "instructions": "He is the chemical symbol of helium. Complete the command so that the last command shows the word Helium: `echo \"_____lium\"` by using the variable.",
       "hints": [],
       "difficulty": "Easy",
       "type": "terminal",
@@ -492,7 +492,8 @@
         "profile": "basic-linux",
         "initialDirectory": "/home/student",
         "initialFilesystem": [],
-        "preSetupCommands": ["SYMBOL=He"]
+        "preSetupCommands": ["SYMBOL=He"],
+        "showSetup": true
       },
       "checks": [
         {
