@@ -652,7 +652,7 @@
     "os-mock-1-026": {
       "category": "Permissions",
       "title": "Check group inheritance in a setgid directory",
-      "instructions": "The directory `/srv/project` has the setgid bit set and its group is `projectteam`. Create `/srv/project/report.txt`, then inspect the file with `ls -l`. The new file must belong to group `projectteam`.",
+      "instructions": "```text\n$ ls -ld /srv/project\ndrwxrwsr-x. 2 root projectteam 6 Oct 14 10:00 /srv/project\n$ touch /srv/project/report.txt\n$ ls -l /srv/project/report.txt\n-rw-r--r--. 1 rudy ________ 0 Oct 14 10:05 /srv/project/report.txt\n```\nRudy is a member of the group `projectteam`. Complete the group of the new file",
       "hints": [],
       "difficulty": "Medium",
       "type": "terminal",
@@ -701,7 +701,7 @@
     "os-mock-1-027": {
       "category": "Finding, archiving and transferring files",
       "title": "Find every directory under /home/rudy",
-      "instructions": "Use `find` to display all directories under `/home/rudy`, including `/home/rudy` itself. Restrict the results to directories.",
+      "instructions": "Use `find` to display all directories under `/home/rudy`",
       "hints": [],
       "difficulty": "Medium",
       "type": "terminal",
