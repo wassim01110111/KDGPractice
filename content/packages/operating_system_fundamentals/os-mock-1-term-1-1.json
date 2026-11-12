@@ -745,7 +745,7 @@
     "os-mock-1-028": {
       "category": "Linux and the shell",
       "title": "Determine where tar extracts a stripped absolute path",
-      "instructions": "The archive `/tmp/backup.tar` contains the member `home/rudy/docs/gas.txt` because tar removed the leading slash from `/home/rudy/docs`. The archive is extracted while the current directory is `/tmp`. Enter the absolute path of the extracted `gas.txt`.",
+      "instructions": "```text\n$ tar -cf /tmp/backup.tar /home/rudy/docs\ntar: Removing leading `/' from member names\n$ cd /tmp\n$ tar -xf backup.tar\n```\nThe directory /home/rudy/docs contains the file gas.txt. Give the absolute path of the extracted gas.txt",
       "hints": [
         "Tar extracts the relative archive member beneath the current directory."
       ],
