@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "packageId": "sql-term-1-canvas",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "term": 1,
   "datasets": {
     "sql-sa": {
@@ -2972,7 +2972,7 @@
         "Choose the table whose rows must all remain in the result before selecting LEFT, RIGHT or FULL JOIN."
       ],
       "explanation": "The outer join preserves rows from the selected side or sides even when no matching row exists.",
-      "solution": "select e.employee_id, e.last_name\nfrom employees e\n         left join employees e2 on e2.manager_id = e.employee_id\nwhere e2.manager_id is null\norder by e.last_name;"
+      "solution": "select e2.last_name \"Has no manager\", e.last_name \"Does not manage employees\"\nfrom employees e\nfull join employees e2 on e2.manager_id = e.employee_id\nwhere  e2.manager_id is null\norder by e.last_name;"
     },
     "w5-enterprise-combo": {
       "category": "aggregate-join",
