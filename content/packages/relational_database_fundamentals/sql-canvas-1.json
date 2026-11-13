@@ -2965,6 +2965,7 @@
       "provenance": "relational-database-term-1-ex.md; Week 5; Enterprise BIG - Part I: Exercises on aggregate functions; Exercise 34",
       "contentVersion": 1,
       "datasetId": "sql-entreprise-big",
+      "maxRow": 30,
       "orderMatters": true,
       "compareColumnNames": true,
       "columnOrderMatters": true,

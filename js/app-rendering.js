@@ -1528,7 +1528,7 @@ function qView(
         snippet.replaceChildren(
           h("strong", {}, "Expected result preview"),
           h("small", {}, "A preview of rows returned by the reference query."),
-          table(res, 5),
+          table(res, ex?.maxRow ?? 5),
         );
         snippet.dataset.loaded = "true";
       } catch (e) {
