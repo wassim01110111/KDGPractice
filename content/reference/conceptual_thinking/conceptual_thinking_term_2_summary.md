@@ -5,13 +5,12 @@
 - [Conceptual Thinking: Term 2 Summary](#conceptual-thinking-term-2-summary)
   - [Table of contents](#table-of-contents)
 - [Week 7](#week-7)
-  - [System Sequence Diagram (SSD)](#system-sequence-diagram-ssd)
-    - [How to draw an SSD](#how-to-draw-an-ssd)
-    - [Basic SSD example](#basic-ssd-example)
-    - [Input message rules](#input-message-rules)
-    - [Parameters](#parameters)
-    - [Full SSD example — Register New Member](#full-ssd-example--register-new-member)
-    - [`ref` and `loop`](#ref-and-loop)
+  - [How to draw an SSD](#how-to-draw-an-ssd)
+  - [Basic SSD example](#basic-ssd-example)
+  - [Input message rules](#input-message-rules)
+  - [Parameters](#parameters)
+  - [Full SSD example — Register New Member](#full-ssd-example--register-new-member)
+  - [`ref` and `loop`](#ref-and-loop)
   - [System Events and System Operations](#system-events-and-system-operations)
   - [Stateful vs. Stateless](#stateful-vs-stateless)
   - [Operation Contract (OC)](#operation-contract-oc)
@@ -22,8 +21,6 @@
   - [CRUD check](#crud-check)
 
 # Week 7
-
-
 An **SSD** shows the interaction between an actor and the system for one use-case scenario.
 
 The system is a **black box**: we only show what goes in and what comes out, not what happens inside.
