@@ -1,8 +1,8 @@
-# Week 07 — From Analysis to Design
+# Conceptual Thinking: Term 2 Summary
 
 ## Table of contents
 
-- [Week 07 — From Analysis to Design](#week-07--from-analysis-to-design)
+- [Conceptual Thinking: Term 2 Summary](#conceptual-thinking-term-2-summary)
   - [Table of contents](#table-of-contents)
   - [System Sequence Diagram (SSD)](#system-sequence-diagram-ssd)
     - [How to draw an SSD](#how-to-draw-an-ssd)
