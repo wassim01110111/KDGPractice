@@ -206,17 +206,155 @@ const h = (t, a = {}, ...k) => {
   );
   return e;
 };
-function plantUmlImageUrl(encoded) {
-  const format = currentTheme() === "dark" ? "dsvg" : "svg";
-  return `https://www.plantuml.com/plantuml/${format}/${encoded}`;
+// PlantUML server image URL. `format` is "svg" (default, used by the ER
+// diagrams) or "png"; the dark theme uses the server's dark variants
+// (dsvg / dpng).
+function plantUmlImageUrl(encoded, format = "svg") {
+  const dark = currentTheme() === "dark";
+  const kind =
+    format === "png" ? (dark ? "dpng" : "png") : dark ? "dsvg" : "svg";
+  return `https://www.plantuml.com/plantuml/${kind}/${encoded}`;
 }
 function updatePlantUmlImageTheme() {
   document
     .querySelectorAll(".plantuml-preview img[data-plantuml-encoded]")
     .forEach((image) => {
-      const url = plantUmlImageUrl(image.dataset.plantumlEncoded);
+      const url = plantUmlImageUrl(
+        image.dataset.plantumlEncoded,
+        image.dataset.plantumlFormat || "svg",
+      );
       if (image.src !== url) image.src = url;
     });
+}
+// Wheel / pinch zoom and drag-to-pan for a diagram, same behaviour as the ER
+// diagram viewer (desktop only). Double-click resets the view.
+function enablePlantUmlPanZoom(viewer, image) {
+  let zoom = 1,
+    panX = 0,
+    panY = 0,
+    dragStart;
+  const desktopZoom = matchMedia(
+    "(min-width: 901px) and (hover: hover) and (pointer: fine)",
+  );
+  const apply = () => {
+    image.style.transform = `translate(${panX}px, ${panY}px) scale(${zoom})`;
+  };
+  viewer.addEventListener(
+    "wheel",
+    (event) => {
+      if (!desktopZoom.matches) return;
+      event.preventDefault();
+      // Classic mouse wheel: fixed steps. Trackpad (two-finger scroll or
+      // pinch, which sets ctrlKey): smooth, proportional and gentler.
+      const isMouseWheel =
+        !event.ctrlKey &&
+        (event.deltaMode !== 0 ||
+          (event.wheelDeltaY && event.wheelDeltaY % 120 === 0));
+      let factor;
+      if (isMouseWheel) factor = event.deltaY < 0 ? 1.15 : 1 / 1.15;
+      else {
+        const delta = Math.max(-30, Math.min(30, event.deltaY));
+        factor = Math.exp(-delta * 0.004 * (event.ctrlKey ? 2.5 : 1));
+      }
+      zoom = Math.min(4, Math.max(0.5, zoom * factor));
+      apply();
+    },
+    { passive: false },
+  );
+  viewer.addEventListener("pointerdown", (event) => {
+    if (!desktopZoom.matches || event.button !== 0) return;
+    dragStart = { x: event.clientX - panX, y: event.clientY - panY };
+    viewer.setPointerCapture(event.pointerId);
+    viewer.classList.add("is-dragging");
+  });
+  viewer.addEventListener("pointermove", (event) => {
+    if (!dragStart) return;
+    panX = event.clientX - dragStart.x;
+    panY = event.clientY - dragStart.y;
+    apply();
+  });
+  const endDrag = () => {
+    dragStart = undefined;
+    viewer.classList.remove("is-dragging");
+  };
+  viewer.addEventListener("pointerup", endDrag);
+  viewer.addEventListener("pointercancel", endDrag);
+  viewer.addEventListener("dblclick", () => {
+    zoom = 1;
+    panX = panY = 0;
+    apply();
+  });
+}
+// Markdown ```plantuml fences become plain PNG images from the PlantUML
+// server (png in light mode, dpng in dark mode) that you can zoom and pan.
+// plantumlEncode lives in app-rendering.js; updateThemeToggle() calls
+// updatePlantUmlImageTheme() when the theme changes.
+async function createPlantUmlPreview(source) {
+  const text = String(source).replace(/\r/g, "").trim();
+  let full = /^\s*@start\w+/m.test(text)
+    ? text
+    : `@startuml\n${text}\n@enduml`;
+  // Render at a higher DPI (like the ER diagrams) so the PNG stays sharp when zoomed.
+  if (!/skinparam\s+dpi\b/i.test(full))
+    full = full.replace(/^(\s*@start\w+[^\n]*)$/m, "$1\nskinparam dpi 160");
+  const box = h("div", {
+    class: "plantuml-preview plantuml-md",
+    role: "group",
+    "aria-label": "PlantUML diagram. On desktop, scroll to zoom, drag to pan, double-click to reset.",
+    title: "Scroll to zoom, drag to move, double-click to reset",
+  });
+  const fail = (message) => {
+    box.classList.add("plantuml-failed");
+    box.replaceChildren(
+      h("span", { class: "err" }, message),
+      h(
+        "details",
+        { class: "plantuml-source", open: true },
+        h("summary", {}, "PlantUML source"),
+        h("pre", {}, h("code", {}, text)),
+      ),
+    );
+  };
+  const image = h("img", {
+    alt: "PlantUML diagram",
+    decoding: "async",
+    draggable: "false",
+    referrerpolicy: "no-referrer",
+  });
+  image.dataset.plantumlFormat = "png";
+  image.style.display = "none";
+  const placeholder = loadingNote("Rendering the PlantUML diagram\u2026");
+  const slowTimer = setTimeout(
+    () =>
+      placeholder.append(
+        h(
+          "small",
+          { class: "loading-sub" },
+          " Still working: the PlantUML server is slow right now.",
+        ),
+      ),
+    8000,
+  );
+  image.addEventListener("load", () => {
+    clearTimeout(slowTimer);
+    placeholder.remove();
+    image.style.display = "";
+  });
+  image.addEventListener("error", () => {
+    clearTimeout(slowTimer);
+    fail("The PlantUML diagram could not be loaded (offline or server error).");
+  });
+  box.append(placeholder, image);
+  enablePlantUmlPanZoom(box, image);
+  try {
+    const encoded = await plantumlEncode(full);
+    image.dataset.plantumlEncoded = encoded;
+    image.src = plantUmlImageUrl(encoded, "png");
+  } catch (error) {
+    clearTimeout(slowTimer);
+    fail(`Could not prepare the PlantUML diagram: ${error.message}`);
+  }
+  return box;
 }
 const empty = (a, b) =>
   h("div", { class: "empty" }, h("strong", {}, a), h("div", {}, b || ""));

@@ -1561,6 +1561,20 @@ async function pageLibrary(root, arg, termArg, view) {
           /* keep the original text if formatting fails */
         }
       });
+    // PlantUML fences become theme-aware diagram images (before code highlighting).
+    await Promise.all(
+      [
+        ...body.querySelectorAll(
+          "pre code.language-plantuml, pre code.language-puml",
+        ),
+      ].map(async (code) => {
+        const pre = code.closest("pre");
+        const preview = await createPlantUmlPreview(code.textContent);
+        if (token === loadToken && pre?.isConnected) pre.replaceWith(preview);
+      }),
+    );
+    if (token !== loadToken) return null;
+    updatePlantUmlImageTheme(); // also covers markup that already has data-plantuml-encoded
     body.querySelectorAll('pre code[class^="language-"]').forEach((code) => {
       const html = highlightCode(
         code.textContent,

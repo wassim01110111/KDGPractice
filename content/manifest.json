@@ -32,6 +32,12 @@
     }
   },
   "referenceFiles": {
+    "conceptual_thinking": {
+      "terms": [
+        { "file": "conceptual_thinking_term_1_summary.md", "name": "Term 1" },
+        { "file": "conceptual_thinking_term_2_summary.md", "name": "Term 2" }
+      ]
+    },
     "relational_database_fundamentals": {
       "terms": [
         {

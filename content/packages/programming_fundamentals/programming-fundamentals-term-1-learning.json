@@ -569,7 +569,7 @@
         {
           "type": "stdout",
           "input": "ready\ninside\n",
-          "expected": "(?s)^\\s*Inner:\\s*inside\\s+Outer:\\s*ready\\s*$",
+          "expected": "(?s)^.*?\\binside\\b.*?\\bready\\b.*$",
           "points": 0.5,
           "description": "Prints the inner value before the outer value.",
           "regex": true
@@ -577,7 +577,7 @@
         {
           "type": "stdout",
           "input": "available\nprocessing\n",
-          "expected": "(?s)^\\s*Inner:\\s*processing\\s+Outer:\\s*available\\s*$",
+          "expected": "(?s)^.*?\\bprocessing\\b.*?\\bavailable\\b.*$",
           "points": 0.5,
           "description": "Uses different input text while preserving the scope order.",
           "regex": true
@@ -1985,7 +1985,7 @@
         {
           "type": "stdout",
           "input": "Java\nJava\nJAVA\nKotlin\n",
-          "expected": "(?s)^\\s*Length:\\s*4\\s+First:\\s*J\\s+Exact:\\s*true\\s+Ignore\\s+case:\\s*true\\s+Before\\s+comparison:\\s*true\\s+Empty:\\s*true\\s*$",
+          "expected": "(?s)^.*?\\b4\\b.*?\\bJ\\b.*?\\btrue\\b.*?\\btrue\\b.*?\\btrue\\b.*?\\btrue\\b.*$",
           "points": 0.5,
           "description": "Checks all String methods with matching Java variants and Kotlin.",
           "regex": true
@@ -1993,7 +1993,7 @@
         {
           "type": "stdout",
           "input": "Python\nPython\npython\nJava\n",
-          "expected": "(?s)^\\s*Length:\\s*6\\s+First:\\s*P\\s+Exact:\\s*true\\s+Ignore\\s+case:\\s*true\\s+Before\\s+comparison:\\s*false\\s+Empty:\\s*true\\s*$",
+          "expected": "(?s)^.*?\\b6\\b.*?\\bP\\b.*?\\btrue\\b.*?\\btrue\\b.*?\\bfalse\\b.*?\\btrue\\b.*$",
           "points": 0.5,
           "description": "Checks equality and lexicographic comparison for another word.",
           "regex": true

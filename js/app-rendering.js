@@ -2110,7 +2110,7 @@ const escapeHtml = (value) =>
 
 function appendSanitizedReferenceHtml(target, source) {
   const allowedElements = new Set(
-      "a b blockquote br code details div em h1 h2 h3 h4 h5 h6 hr i li ol p pre section span strong style summary table tbody td th thead tr ul".split(
+      "a abbr address article aside b bdi bdo big blockquote br caption center cite code col colgroup dd del details dfn div dl dt em figcaption figure font footer h1 h2 h3 h4 h5 h6 header hr i img ins kbd li main mark nav ol p pre q rp rt ruby s samp section small span strike strong style sub summary sup table tbody td tfoot th thead time tr tt u ul var wbr".split(
         " ",
       ),
     ),
@@ -2125,6 +2125,28 @@ function appendSanitizedReferenceHtml(target, source) {
       "rowspan",
       "data-a",
       "open",
+      "align",
+      "valign",
+      "width",
+      "height",
+      "bgcolor",
+      "color",
+      "size",
+      "face",
+      "border",
+      "cellpadding",
+      "cellspacing",
+      "alt",
+      "src",
+      "lang",
+      "dir",
+      "start",
+      "type",
+      "reversed",
+      "datetime",
+      "scope",
+      "abbr",
+      "headers",
     ]),
     parsed = new DOMParser().parseFromString(source, "text/html"),
     cleanNode = (node) => {
@@ -2171,11 +2193,23 @@ function appendSanitizedReferenceHtml(target, source) {
           name.startsWith("on") ||
           (!allowedAttributes.has(name) && !name.startsWith("aria-")) ||
           (name === "href" && !/^(?:#|https?:\/\/)/i.test(value.trim())) ||
+          // Images: http(s), raster data URIs or relative paths. Never javascript:.
+          (name === "src" &&
+            !(
+              tag === "img" &&
+              /^(?:https?:\/\/|data:image\/(?:png|jpe?g|gif|webp|avif);base64,|[^:]*$)/i.test(
+                value.trim(),
+              )
+            )) ||
           (name === "style" &&
             /url\s*\(|expression\s*\(|javascript:|@import/i.test(value))
         )
           continue;
         clean.setAttribute(name, value);
+      }
+      if (tag === "img") {
+        clean.setAttribute("loading", "lazy");
+        clean.setAttribute("referrerpolicy", "no-referrer");
       }
       [...element.childNodes].forEach((child) => {
         const sanitized = cleanNode(child);
@@ -2199,6 +2233,15 @@ function md(src) {
       .replace(/[^\p{L}\p{N}\s_-]/gu, "")
       .trim()
       .replace(/\s/g, "-");
+  // Inline HTML that may pass through md() untouched. Every result is run
+  // through appendSanitizedReferenceHtml(), which cleans attributes and URLs.
+  const INLINE_HTML_TAGS = new Set(
+    "a abbr b bdi bdo big br cite code del dfn em font i img ins kbd mark q rp rt ruby s samp small span strike strong sub sup time tt u var wbr".split(
+      " ",
+    ),
+  );
+  const INLINE_HTML_TAG =
+    /<\/?([a-z][a-z0-9]*)(?:\s+[^\s"'<>\/=]+(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s"'<>=`]+))?)*\s*\/?>/gi;
   // Inline Markdown renderer. Protect code spans and links before escaping
   // or applying emphasis, so backticks inside link destinations cannot split
   // the surrounding Markdown syntax.
@@ -2209,7 +2252,7 @@ function md(src) {
       protectedParts.push(html);
       return key;
     };
-    let text = String(s);
+    let text = String(s).replace(/<!--[\s\S]*?-->/g, "");
 
     // Some generated summaries escape redundant inner emphasis markers:
     // **\*\*text\*\***. Collapse those pairs to the intended **text**.
@@ -2236,6 +2279,11 @@ function md(src) {
     // Protect inline code before escaping Markdown punctuation.
     text = text.replace(/`([^`]+)`/g, (_, code) =>
       hold("<code>" + esc(code) + "</code>"),
+    );
+
+    // Raw inline HTML such as <span style="color:#800080">text</span>.
+    text = text.replace(INLINE_HTML_TAG, (tag, name) =>
+      INLINE_HTML_TAGS.has(name.toLowerCase()) ? hold(tag) : tag,
     );
 
     text = esc(text)
@@ -2286,6 +2334,28 @@ function md(src) {
       continue;
     }
     fs();
+    if (/^\s*<!--/.test(l)) {
+      // HTML comment block (possibly multi-line): hidden, like in VS Code.
+      fl();
+      let end = i;
+      while (end < L.length && !L[end].includes("-->")) end++;
+      if (end >= L.length) {
+        i = L.length; // unclosed comment hides the rest, like HTML does
+        continue;
+      }
+      const rest = L[end].slice(L[end].indexOf("-->") + 3).trim();
+      i = end;
+      if (rest) {
+        L[i] = rest; // text after "-->" is re-read as a normal line
+        i--;
+      }
+      continue;
+    }
+    if (/^\s*<hr\b[^>]*>\s*$/i.test(l)) {
+      fl();
+      o.push("<hr>");
+      continue;
+    }
     if (/^ {0,3}```/.test(l)) {
       fl();
       const language =
@@ -2329,10 +2399,17 @@ function md(src) {
         continue;
       }
     }
-    if (/^\s*<details\b[^>]*>\s*$/i.test(l)) {
-      fl();
-      o.push(/\bopen\b/i.test(l) ? "<details open>" : "<details>");
-      continue;
+    {
+      // <details> alone on a line, or followed by its <summary> on the same line.
+      const dm = l.match(
+        /^\s*<details\b([^>]*)>\s*(?:<summary>(.*?)<\/summary>)?\s*$/i,
+      );
+      if (dm) {
+        fl();
+        o.push(/\bopen\b/i.test(dm[1]) ? "<details open>" : "<details>");
+        if (dm[2] != null) o.push("<summary>" + inl(dm[2]) + "</summary>");
+        continue;
+      }
     }
     if (/^\s*<\/details>\s*$/i.test(l)) {
       fl();
@@ -2347,7 +2424,11 @@ function md(src) {
         continue;
       }
     }
-    if (/^\s*<(style|div|section|table|figure|blockquote)\b/i.test(l)) {
+    if (
+      /^\s*<(style|div|section|table|figure|blockquote|center|aside|article|header|footer|nav|main|fieldset|ul|ol|dl|pre|p|h[1-6]|address)\b/i.test(
+        l,
+      )
+    ) {
       fl();
       const tag = l
         .trim()
@@ -2359,6 +2440,8 @@ function md(src) {
         (l.match(new RegExp(`</${tag}\\s*>`, "gi")) || []).length;
       while (depth > 0 && i + 1 < L.length) {
         const next = L[++i];
+        // <p> is often left unclosed: end it at the next blank line.
+        if (tag === "p" && !next.trim()) break;
         block.push(next);
         depth +=
           (next.match(new RegExp(`<${tag}\\b`, "gi")) || []).length -
@@ -2403,6 +2486,7 @@ function md(src) {
       // contents list and the anchor id should only use the visible text.
       const plain = hm[2]
         .replace(/!?\[([^\]]*)\]\([^)]*\)/g, "$1")
+        .replace(/<[^>]+>/g, "")
         .replace(/[`*]/g, "");
       const n = hm[1].length,
         id = slug(plain);
