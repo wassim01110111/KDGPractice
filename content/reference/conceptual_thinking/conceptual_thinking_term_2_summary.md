@@ -24,8 +24,6 @@
 # Week 7
 
 
-## System Sequence Diagram (SSD)
-
 An **SSD** shows the interaction between an actor and the system for one use-case scenario.
 
 The system is a **black box**: we only show what goes in and what comes out, not what happens inside.
@@ -188,7 +186,5 @@ Use CRUD to decide whether an operation needs an OC:
 | -------------- | ---------------------------------------------------------------------------- | ------------------- |
 | **C — Create** | Creates a new object.                                                        | Yes                 |
 | **R — Read**   | Only retrieves information.                                                  | No                  |
-| **U — Update** | Changes an attribute.                                                        | Yes                 |
-| **D — Delete** | Deletes an object (often archived instead, except for data privacy reasons). | Yes                 |
 | **U — Update** | Changes an attribute.                                                        | Yes                 |
 | **D — Delete** | Deletes an object (often archived instead, except for data privacy reasons). | Yes                 |
