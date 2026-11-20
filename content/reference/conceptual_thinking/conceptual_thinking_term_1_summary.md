@@ -2,8 +2,10 @@
 
 ## Table of contents
 
+
 - [Conceptual Thinking: Term 1 Summary](#conceptual-thinking-term-1-summary)
   - [Table of contents](#table-of-contents)
+- [Week 1](#week-1)
   - [1. Conceptual Thinking and the SDLC](#1-conceptual-thinking-and-the-sdlc)
     - [What is Conceptual Thinking?](#what-is-conceptual-thinking)
     - [Software Development Life Cycle (SDLC)](#software-development-life-cycle-sdlc)
@@ -13,6 +15,7 @@
     - [Decomposition](#decomposition)
     - [Object-Oriented (OO) thinking](#object-oriented-oo-thinking)
     - [Domain model vs. design class diagram](#domain-model-vs-design-class-diagram)
+- [Week 2](#week-2)
   - [3. Requirements and FURPS](#3-requirements-and-furps)
     - [FURPS](#furps)
   - [4. User Stories, Epics and Sprints](#4-user-stories-epics-and-sprints)
@@ -24,12 +27,14 @@
     - [PlantUML example — Student Portal](#plantuml-example--student-portal)
   - [6. Use Case Description](#6-use-case-description)
     - [Points to remember](#points-to-remember)
+- [Week 3](#week-3)
   - [7. Story Mapping](#7-story-mapping)
     - [Levels of a story map](#levels-of-a-story-map)
     - [How to create a story map](#how-to-create-a-story-map)
     - [MVP and releases](#mvp-and-releases)
   - [8. Wireframes](#8-wireframes)
     - [Creating a wireframe](#creating-a-wireframe)
+- [Week 4](#week-4)
   - [9. Class Diagram / Conceptual Domain Model](#9-class-diagram--conceptual-domain-model)
     - [What should not become a class?](#what-should-not-become-a-class)
     - [Five-step method](#five-step-method)
@@ -37,6 +42,7 @@
     - [QuickBite class diagram from your notes](#quickbite-class-diagram-from-your-notes)
   - [10. Composition](#10-composition)
   - [11. Multiplicity and Business Rules](#11-multiplicity-and-business-rules)
+- [Week 5](#week-5)
   - [12. Generalisation](#12-generalisation)
     - [The four rules of generalisation](#the-four-rules-of-generalisation)
     - [When it is not generalisation: enumeration or association](#when-it-is-not-generalisation-enumeration-or-association)
@@ -51,6 +57,8 @@
   - [16. Enumerations](#16-enumerations)
   - [17 Glossary](#17-glossary)
   - [Quick reminders](#quick-reminders)
+
+# Week 1
 
 ## 1. Conceptual Thinking and the SDLC
 
@@ -132,6 +140,8 @@ A **class** is the blueprint for objects. An **object** is an instance of that c
 ### Domain model vs. design class diagram
 
 Your notes use _domain class diagram_ as a general UML description. In the Week 04–05 **conceptual domain model**, keep the model focused on business concepts, attributes and associations: do not add methods or visibility symbols. Methods and implementation details belong to the later design class diagram.
+
+# Week 2
 
 ## 3. Requirements and FURPS
 
@@ -328,6 +338,8 @@ Example of a Happy Flow — ATM:
 11. ATM returns card.
 12. Customer takes card and cash.
 
+# Week 3
+
 ## 7. Story Mapping
 
 A **Story Map** is another visual way to organise user stories. It arranges the stories in the order of the user's journey, so the team can see the whole product instead of focusing only on separate small requirements.
@@ -376,6 +388,8 @@ Sketch  →  Wireframe  →  Mock-up  →  Prototype
 6. **Test with users:** collect feedback and adjust the wireframes.
 
 Keep wireframes clear and simple. They can change as the team learns more about the users.
+
+# Week 4
 
 ## 9. Class Diagram / Conceptual Domain Model
 
@@ -528,6 +542,8 @@ RestaurantChain "<color:#FF0000>1</color>" -- "<color:#FF0000>1..*</color>" Rest
 
 @enduml
 ```
+
+# Week 5
 
 ## 12. Generalisation
 

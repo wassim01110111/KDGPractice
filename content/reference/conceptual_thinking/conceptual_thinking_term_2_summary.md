@@ -4,6 +4,7 @@
 
 - [Conceptual Thinking: Term 2 Summary](#conceptual-thinking-term-2-summary)
   - [Table of contents](#table-of-contents)
+- [Week 7](#week-7)
   - [System Sequence Diagram (SSD)](#system-sequence-diagram-ssd)
     - [How to draw an SSD](#how-to-draw-an-ssd)
     - [Basic SSD example](#basic-ssd-example)
@@ -19,6 +20,9 @@
     - [Example — OC1: `registerMember`](#example--oc1-registermember)
     - [OC rules to remember](#oc-rules-to-remember)
   - [CRUD check](#crud-check)
+
+# Week 7
+
 
 ## System Sequence Diagram (SSD)
 
