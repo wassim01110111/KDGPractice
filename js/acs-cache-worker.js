@@ -16,20 +16,79 @@ const CACHE_SIZE_HEADER = "X-ACS-Cache-Size";
 let cacheIndex = null;
 let cacheIndexPromise = null;
 let cacheWriteQueue = Promise.resolve();
+let forceNetworkUntil = 0;
+
+// A page can request a one-shot hard refresh through its controlling worker.
+// The short bypass window covers the document and its dependent assets.
+self.addEventListener("message", (event) => {
+  if (event.data?.type !== "ACS_HARD_REFRESH") return;
+  event.waitUntil(
+    (async () => {
+      forceNetworkUntil = Date.now() + 30_000;
+      await cacheWriteQueue.catch(() => {});
+      const names = await self.caches.keys().catch(() => []);
+      await Promise.all(names.map((name) => self.caches.delete(name)));
+      cacheIndex = null;
+      cacheIndexPromise = null;
+      event.ports?.[0]?.postMessage({ ok: true });
+    })(),
+  );
+});
 
 function cacheableRequest(request, url) {
-  if (request.method !== "GET" || request.headers.has("Range") || url.origin !== self.location.origin) return false;
+  if (
+    request.method !== "GET" ||
+    request.headers.has("Range") ||
+    url.origin !== self.location.origin
+  )
+    return false;
   const scopePath = new URL(self.registration.scope).pathname;
   if (!url.pathname.startsWith(scopePath)) return false;
-  if (url.searchParams.has("__acs_nocache") || url.searchParams.has("_version_check") || url.searchParams.has("_acs_retry")) return false;
+  if (
+    url.searchParams.has("__acs_nocache") ||
+    url.searchParams.has("_version_check") ||
+    url.searchParams.has("_acs_retry")
+  )
+    return false;
   if (/\/content\/version\.json$/i.test(url.pathname)) return false;
-  if (url.pathname.includes("/api/") || url.pathname.includes("/auth/")) return false;
+  if (url.pathname.includes("/api/") || url.pathname.includes("/auth/"))
+    return false;
   const pathname = url.pathname;
   const contentAsset = pathname.includes("/content/");
   const extension = pathname.match(/\.([a-z0-9]+)$/i)?.[1]?.toLowerCase();
   if (["json", "md", "html"].includes(extension) && !contentAsset) return false;
-  if (["svg", "png", "jpg", "jpeg", "webp", "avif", "gif", "woff", "woff2"].includes(extension) && !contentAsset && !pathname.includes("/assets/")) return false;
-  return ["js", "css", "json", "md", "html", "svg", "png", "jpg", "jpeg", "webp", "avif", "gif", "woff", "woff2"].includes(extension);
+  if (
+    [
+      "svg",
+      "png",
+      "jpg",
+      "jpeg",
+      "webp",
+      "avif",
+      "gif",
+      "woff",
+      "woff2",
+    ].includes(extension) &&
+    !contentAsset &&
+    !pathname.includes("/assets/")
+  )
+    return false;
+  return [
+    "js",
+    "css",
+    "json",
+    "md",
+    "html",
+    "svg",
+    "png",
+    "jpg",
+    "jpeg",
+    "webp",
+    "avif",
+    "gif",
+    "woff",
+    "woff2",
+  ].includes(extension);
 }
 
 async function openRuntimeCache() {
@@ -59,10 +118,16 @@ async function loadCacheIndex(cache) {
   };
   if (!cacheIndex) {
     if (!cacheIndexPromise) {
-      cacheIndexPromise = cache.keys().then(rebuild).then((index) => {
-        cacheIndex = index;
-        return index;
-      }).finally(() => { cacheIndexPromise = null; });
+      cacheIndexPromise = cache
+        .keys()
+        .then(rebuild)
+        .then((index) => {
+          cacheIndex = index;
+          return index;
+        })
+        .finally(() => {
+          cacheIndexPromise = null;
+        });
     }
     await cacheIndexPromise;
   }
@@ -89,7 +154,10 @@ async function pruneCache(cache, incomingBytes = 0, incomingUrl = "") {
         totalBytes -= item.size;
       }
     }
-    while (index.size >= MAX_CACHE_ENTRIES || totalBytes + incomingBytes > MAX_CACHE_BYTES) {
+    while (
+      index.size >= MAX_CACHE_ENTRIES ||
+      totalBytes + incomingBytes > MAX_CACHE_BYTES
+    ) {
       let oldestUrl = null;
       let oldestTime = Infinity;
       for (const [url, item] of index) {
@@ -116,7 +184,8 @@ async function readBoundedCacheBody(response, maxBytes) {
   const declaredText = response.headers.get("Content-Length");
   const declaredSize = declaredText == null ? null : Number(declaredText);
   if (Number.isFinite(declaredSize) && declaredSize > maxBytes) return null;
-  if (!response.body || typeof response.body.getReader !== "function") return null;
+  if (!response.body || typeof response.body.getReader !== "function")
+    return null;
 
   const reader = response.body.getReader();
   const chunks = [];
@@ -127,16 +196,28 @@ async function readBoundedCacheBody(response, maxBytes) {
       if (done) break;
       size += value.byteLength;
       if (size > maxBytes) {
-        try { await reader.cancel(); } catch (_) { /* clone only */ }
+        try {
+          await reader.cancel();
+        } catch (_) {
+          /* clone only */
+        }
         return null;
       }
       chunks.push(value);
     }
   } catch (_) {
-    try { await reader.cancel(); } catch (_) { /* already closed */ }
+    try {
+      await reader.cancel();
+    } catch (_) {
+      /* already closed */
+    }
     return null;
   } finally {
-    try { reader.releaseLock(); } catch (_) { /* already released */ }
+    try {
+      reader.releaseLock();
+    } catch (_) {
+      /* already released */
+    }
   }
   if (size <= 0) return null;
   const bytes = new Uint8Array(size);
@@ -150,9 +231,13 @@ async function readBoundedCacheBody(response, maxBytes) {
 
 async function storeResponse(cache, request, response) {
   const write = async () => {
-    if (!response || response.status !== 200 || response.type === "opaque") return;
-    const directives = (response.headers.get("Cache-Control") || "").toLowerCase();
-    if (directives.includes("no-store") || directives.includes("private")) return;
+    if (!response || response.status !== 200 || response.type === "opaque")
+      return;
+    const directives = (
+      response.headers.get("Cache-Control") || ""
+    ).toLowerCase();
+    if (directives.includes("no-store") || directives.includes("private"))
+      return;
     if ((response.headers.get("Vary") || "").trim() === "*") return;
 
     const bounded = await readBoundedCacheBody(response, MAX_RESOURCE_BYTES);
@@ -206,14 +291,21 @@ self.addEventListener("install", (event) => {
 });
 
 self.addEventListener("activate", (event) => {
-  event.waitUntil((async () => {
-    // Remove only older ACS cache generations; never touch unrelated site caches.
-    const names = await self.caches.keys().catch(() => []);
-    await Promise.all(names
-      .filter((name) => name.startsWith("acs-practice-runtime-") && name !== CACHE_NAME)
-      .map((name) => self.caches.delete(name)));
-    await self.clients.claim();
-  })());
+  event.waitUntil(
+    (async () => {
+      // Remove only older ACS cache generations; never touch unrelated site caches.
+      const names = await self.caches.keys().catch(() => []);
+      await Promise.all(
+        names
+          .filter(
+            (name) =>
+              name.startsWith("acs-practice-runtime-") && name !== CACHE_NAME,
+          )
+          .map((name) => self.caches.delete(name)),
+      );
+      await self.clients.claim();
+    })(),
+  );
 });
 
 self.addEventListener("fetch", (event) => {
@@ -224,6 +316,16 @@ self.addEventListener("fetch", (event) => {
   } catch (_) {
     return;
   }
+  // During a user-requested hard refresh, bypass Cache Storage and the browser
+  // HTTP cache for every same-origin GET request; do not repopulate caches.
+  if (
+    Date.now() < forceNetworkUntil &&
+    request.method === "GET" &&
+    url.origin === self.location.origin
+  ) {
+    event.respondWith(fetch(request, { cache: "no-store" }));
+    return;
+  }
   if (!cacheableRequest(request, url)) return;
 
   const cachePromise = openRuntimeCache();
@@ -232,37 +334,40 @@ self.addEventListener("fetch", (event) => {
   // the response itself can be delivered without waiting for disk persistence.
   const cacheWriteLifetime = Promise.all([cachePromise, networkPromise])
     .then(([cache, response]) => {
-      if (cache && response.ok) return storeResponse(cache, request, response.clone());
+      if (cache && response.ok)
+        return storeResponse(cache, request, response.clone());
       return undefined;
     })
     .catch(() => undefined);
   event.waitUntil(cacheWriteLifetime);
 
-  event.respondWith((async () => {
-    // Always try the ordinary network request first. Don't await Cache Storage
-    // at all on the successful path; cache opening is needed only after failure.
-    try {
-      const response = await networkPromise;
-      if (response.ok || response.status < 400) return response;
-      const cache = await cachePromise;
-      if (cache) {
-        const cached = await getFreshCached(cache, request);
-        if (cached) return cached;
-      }
-      return response;
-    } catch (networkError) {
-      const cache = await cachePromise;
-      if (cache) {
-        const cached = await getFreshCached(cache, request);
-        if (cached) return cached;
-      }
-      // No usable cached copy: retry a normal network load once. This also
-      // handles transient connection resets without manufacturing a response.
+  event.respondWith(
+    (async () => {
+      // Always try the ordinary network request first. Don't await Cache Storage
+      // at all on the successful path; cache opening is needed only after failure.
       try {
-        return await fetch(request.clone(), { cache: "no-store" });
-      } catch (_) {
-        throw networkError;
+        const response = await networkPromise;
+        if (response.ok || response.status < 400) return response;
+        const cache = await cachePromise;
+        if (cache) {
+          const cached = await getFreshCached(cache, request);
+          if (cached) return cached;
+        }
+        return response;
+      } catch (networkError) {
+        const cache = await cachePromise;
+        if (cache) {
+          const cached = await getFreshCached(cache, request);
+          if (cached) return cached;
+        }
+        // No usable cached copy: retry a normal network load once. This also
+        // handles transient connection resets without manufacturing a response.
+        try {
+          return await fetch(request.clone(), { cache: "no-store" });
+        } catch (_) {
+          throw networkError;
+        }
       }
-    }
-  })());
+    })(),
+  );
 });
